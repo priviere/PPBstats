@@ -9,6 +9,8 @@ Author: Pierre Riviere and Olivier David
 Maintainer: Pierre Riviere <pierre@semencespaysannes.org>
 Description: This package applies statistical methods to analyse unbalanced trials from decentralized participatory plant breeding  programmes
 License: GPL-3
+URL: http://github.com/priviere/PPBstats
+BugReports: http://github.com/priviere/PPBstats/issues
 Depends: 
     rjags,
     FactoMineR, 
