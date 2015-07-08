@@ -1,0 +1,74 @@
+The phenotypic value $Y_{ij}$ for a given variable $Y$, germplasm $i$ and environment $j$, was modeled as :
+
+\begin{displaymath}
+Y_{ij} = \alpha_{i} + \theta_{j} + \eta_{i}\theta_{j} + \varepsilon_{ij} ; \quad \varepsilon_{ij} \sim \mathcal{N} (0,\sigma^2_{e}),
+\label{modele_gxe}
+\end{displaymath}
+
+for $i = 1,\ldots, I$ and $j = 1,\ldots, J$, where 
+$I$ was the number of germplasms, 
+$J$ was the number of environments,
+$\alpha_{i}$ was the main effect of germplasm $i$,
+$\theta_{j}$ was the main effect of environnment $j$,
+$\varepsilon_{ij}$ was the residual and 
+$\mathcal{N} (0,\sigma^2_{e})$ was the normal distribution with mean 0 and variance $\sigma^2_{e}$.
+The interaction between germplasm $i$ and environment $j$ was divided into a multiplicative term $\eta_{i}\theta_{j}$ and a remaining term that contributed to the residual $\varepsilon_{ij}$.
+
+This model was written as :
+
+\begin{equation}
+Y_{ij}  = \alpha_{i} + \beta_{i} \theta_{j} + \varepsilon_{ij}; \quad \varepsilon_{ij} \sim \mathcal{N} (0,\sigma_{\varepsilon}),
+	\label{model2}
+\end{equation}
+
+Where $\beta_{i} = (1 + \eta_{i})$ was the sensitivity of germplasm $i$ to environments.
+This model is known as the Finlay Wilkinson model or as joint regression \citep{finlay_analysis_1963}.
+Germplasm sensitivities quantified the stability of germplasm performances over environments.
+The average sensitivity was equal to 1 so that a gemplasm with $\beta_{i} > 1$ ($\beta_{i} < 1$) was more (less) sensitive to environments than a germplasm with the average sensitivity \citep{nabugoomu_analysis_1999}.
+
+Given the high disequilibrium of the data and the large amount of data, we decided to implement this model with a hierarchical Bayesian approach.
+In the following, this Hierarchical Finlay Wilkinson model was denoted by HFW.
+
+We used hierarchical priors for $\alpha_i$, $\beta_i$ and $\theta_j$ and a vague prior for $\sigma_{\varepsilon}$.
+
+\begin{displaymath}
+\alpha_{i} \sim \mathcal{N} (\mu,\sigma^2_{\alpha}), \quad 
+\beta_{i} \sim \mathcal{N} (1,\sigma^2_{\beta}), \quad 
+\theta_{j} \sim \mathcal{N} (0,\sigma^2_{\theta}), \quad 
+\sigma^{-2}_{\varepsilon} \sim \mathcal{G}amma (10^{-6},10^{-6}),
+\end{displaymath}
+
+where $\mu$, $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ were unknown parameters.
+The mean of $\beta_i$ was set to 1 \citep{nabugoomu_analysis_1999}.
+
+
+Then, we placed weakly-informative priors on the hyperparmeters  $\mu$, $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$:
+
+\begin{displaymath}
+\mu \sim \mathcal{N} (\nu,\nu^2), \quad 
+\sigma_{\alpha} \sim \mathcal{U}niforme (0,\nu), \quad 
+\sigma_{\beta} \sim \mathcal{U}niforme (0,1), \quad 
+\sigma_{\theta} \sim \mathcal{U}niforme (0,\nu),
+\end{displaymath}
+
+where $\nu$ was the arithmetic mean of the data : $\nu = \sum_{ij} {Y_{ij}/n}$ where $n$ was the number of observations.
+Uniform priors were used for $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ to reduce the influence of these priors on posterior results \citep{gelman__2006}.
+The support of these priors took account of the prior knowledge that $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ were expected to be respectively smaller than $\nu$, 1, $\nu$. \\
+
+Initial values for each chain were taken randomly except for $\mu$, $\sigma_{\alpha}$ and $\sigma_{\theta}$ whose initial values were equal to their posterior median from additive model (i.e. model \ref{model2} with $\forall i, \beta_{i}=1$). \\
+
+
+The main parameter of interest were 
+germplasm main effects ($\alpha_{i}, i = 1,\ldots, I$), 
+environment main effects ($\theta_{j}, j = 1,\ldots, J$) and 
+germplasm sensitivities ($\beta_{i}, i = 1,\ldots, I$).
+For $\alpha_i$, the average posterior response of each germplasm over the environments of the network was considered:
+
+\begin{displaymath}
+\gamma_i = \alpha_i + \beta_{i} \bar{\theta},
+\end{displaymath}
+where
+$\bar{\theta} = \sum_{}^{J} \theta_j/J$.
+
+To simplify, the $\alpha_i$ notation is kept instead of $\gamma_i$ (i.e. $\alpha_i = \gamma_i$).
+But keep in mind it has been corrected.
