@@ -1,0 +1,22 @@
+\contentsline {section}{\numberline {1}Philosophy of \texttt {PPBstats}}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Function relations in \texttt {PPBstats}}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Bayesian statistics}{4}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Let's go!}{5}{subsection.1.3}
+\contentsline {section}{\numberline {2}At the farm level : model\nobreakspace {}\ref {model1} to perform mean comparisons on farms }{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}The model}{5}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}With \texttt {PPBstats}}{6}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Run the model}{7}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Analysis of the model outputs}{8}{subsubsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.2.3}Get mean comparisons}{15}{subsubsection.2.2.3}
+\contentsline {section}{\numberline {3}At the network level : model\nobreakspace {}\ref {model2} to analyse $G \times E$ interaction in the network of farms }{22}{section.3}
+\contentsline {subsection}{\numberline {3.1}The model}{22}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}With \texttt {PPBstats}}{23}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Run the model}{24}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}Analysis of model outputs}{24}{subsubsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.3}Perform cross validation studies}{28}{subsubsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.4}Get mean comparisons}{29}{subsubsection.3.2.4}
+\contentsline {subsubsection}{\numberline {3.2.5}Get groups of parameters}{30}{subsubsection.3.2.5}
+\contentsline {subsubsection}{\numberline {3.2.6}Predict the past}{33}{subsubsection.3.2.6}
+\contentsline {section}{To cite \texttt {PPBstats}}{37}{section*.2}
+\contentsline {section}{Aknowledgement}{37}{section*.3}
+\contentsline {section}{References}{38}{section*.4}

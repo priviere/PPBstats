@@ -1,0 +1,14 @@
+base
+lattice
+coda
+rjags
+FactoMineR
+ggplot2
+dplyr
+plyr
+gridExtra
+PPBstats
+devtools
+roxygen2
+knitr
+xtable
