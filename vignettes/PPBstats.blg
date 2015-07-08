@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: PPBstats.aux
+The style file: plainnat.bst
+Database file #1: biblio.bib
+Warning--I didn't find a database entry for "gelman__2006"
+Warning--there's a number but no volume in gelman_inference_1992
+Warning--empty institution in husson_principal_2010
+You've used 10 entries,
+            2773 wiz_defined-function locations,
+            655 strings with 6773 characters,
+and the built_in function-call counts, 4650 in all, are:
+= -- 411
+> -- 287
+< -- 4
++ -- 98
+- -- 87
+* -- 409
+:= -- 736
+add.period$ -- 31
+call.type$ -- 10
+change.case$ -- 60
+chr.to.int$ -- 9
+cite$ -- 22
+duplicate$ -- 199
+empty$ -- 362
+format.name$ -- 101
+if$ -- 945
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 10
+newline$ -- 58
+num.names$ -- 40
+pop$ -- 104
+preamble$ -- 1
+purify$ -- 49
+quote$ -- 0
+skip$ -- 146
+stack$ -- 0
+substring$ -- 170
+swap$ -- 12
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 105
+warning$ -- 2
+while$ -- 42
+width$ -- 0
+write$ -- 137
+(There were 3 warnings)
