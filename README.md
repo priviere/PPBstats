@@ -20,16 +20,14 @@ You can participate in three ways:
 First, load the development version:
 
   `
-  devtools::install_github("priviere/PPBstats/")
+  devtools::install_github("priviere/PPBstats")
   `
 
-The easiest way to start is to look at the vignette to know how the package works:
+The easiest way to start is to look at the vignette to know how the package works.
 
-  `
-  vignette("PPBstats")
-  `
+You can see the vignette [here](https://github.com/priviere/PPBstats/blob/master/vignettes/PPBstats.pdf). You can download it by clicking on 'Raw' in the top right corner.
 
-Do not hesitate to let a message [here](https://github.com/priviere/PPBstats/issues) or to send me an email if
+Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
 - some points are not clear in the vignette or you find bugs
 - you find bugs with your data (If so, you can send it to me so that I can see where could be the problems)
