@@ -7,7 +7,7 @@ The R code is under licence GPL-3.
 The vignette of this package is under licence creative commons BY-NC-SA 4.0. More informations about this licence [here](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 
-## Participate to the development
+## Participate to development
 
 You can participate in three ways:
 
