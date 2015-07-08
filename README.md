@@ -13,7 +13,7 @@ You can participate in three ways:
 
 1. test this development version
 2. help to make translation of the package
-3. add new functions that may be useful in the analysis of unbalanced trials that can be found in PPB programms
+3. add new functions that may be useful in the analysis of unbalanced trials that can be found in PPB programmes
 
 ### 1. Test
 
@@ -32,7 +32,7 @@ The easiest way to start is to look at the vignette to know how the package work
 Do not hesitate to let a message [here](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
 - some points are not clear in the vignette or you find bugs
-- you find bugs with your data (If so, you can send it to me so that I can see where could be the problem)
+- you find bugs with your data (If so, you can send it to me so that I can see where could be the problems)
 
 ### 2. Translate
 
