@@ -247,7 +247,7 @@ get.ggplot = function(
             subx = droplevels(x_loc_year[[i]])
             
             # get rid of non sens information
-            # This is useful if a germplasm is in group 'a' and 'b' alone. This is possible because other germplasm in groups 'a' and 'b' are in another year)
+            # This is useful if a germplasm is in group 'a' and 'b' alone. This is possible because other germplasm in groups 'a' and 'b' are in another year
             subx = arrange(subx, median) # To get the letter in the right order
             groups = as.character(subx$groups)
             
@@ -436,6 +436,11 @@ get.ggplot = function(
   
   return(OUT)
 }
+
+# a faire
+# utiliser get.ggplot de shinemas2R pour faire les plots sans stats, et réfléchir à ajouter une layer pour ajouter les stats 
+# truc du genre : shinemas2R::get.ggplot + stats_info()
+# ajouter AMMI avec tout les graphs ici, faire la meme logique avec model, check model puis graph
 
 
 # ########################################################################
