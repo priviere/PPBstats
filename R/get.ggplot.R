@@ -437,12 +437,23 @@ get.ggplot = function(
   return(OUT)
 }
 
-# a faire
-# utiliser get.ggplot de shinemas2R pour faire les plots sans stats, et réfléchir à ajouter une layer pour ajouter les stats 
+# A faire :
+#
+# 1. utiliser get.ggplot de shinemas2R pour faire les plots sans stats, et réfléchir à ajouter une layer pour ajouter les stats 
 # truc du genre : shinemas2R::get.ggplot + stats_info()
-# ajouter AMMI avec tout les graphs ici, faire la meme logique avec model, check model puis graph
-
-
+#
+# 2. ajouter AMMI avec tout les graphs ici, faire la meme logique avec model, check model puis graph
+#
+# 3. La vignette sera en fait le doc de formation pour l'analyse des données: faire dans vignette
+# Analyse descriptive des données (tout avec shinemas2R::get.ggplot mais dans ce cas revoir les atributes pour que ça soit plus générique ?!? A creuser ... avoir une fonction qui permet de checker les attribus avant de les rentrer dans get.ggplot, fonction qui check si on a bien les sorties de type BDD? Mettre un argument data.from.shinemas2R pour vérifier les attributes?
+#
+#et du coup que get.data dans shinemas2R? Qui finalement, pourrait être directement dans la BDD avec juste une fonction dans R qui demande à la base de sortir les infos? donc shinemas2R aurait une seule fonction de 1 ligne !? A rediscuter avec Yannick pour caler un stage là dessus)
+#
+# Faire des graphs de relation entre fonctions pour chaque niveau d'analyse (decriptif, balance, unbalanced)
+# Ajouter une fonction qui te dit si c'est balance ou unbalanced? Cf experimental_design plot
+# 
+# Analyse statistique des données
+#
 # ########################################################################
 # # get.groups pour récupérer les groupes de significativité
 # ########################################################################
