@@ -36,7 +36,7 @@ Do not hesitate to let a message [in the issues](https://github.com/priviere/PPB
 
 The package is in english. 
 Every contributions to other languages are welcome!
-More information on R package translation [here](http://developer.r-project.org/Translations30.html).
+More informations on R package translation [here](http://developer.r-project.org/Translations30.html).
 
 
 ### 3. Add functions
