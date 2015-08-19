@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2014.12.4)  19 AUG 2015 21:26
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2014.12.4)  19 AUG 2015 21:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1915,7 +1915,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1374.
 Here is how much of TeX's memory you used:
  19174 strings out of 493485
  354035 string characters out of 3143526
- 482444 words of memory out of 3000000
+ 482446 words of memory out of 3000000
  21929 multiletter control sequences out of 15000+200000
  17266 words of font info for 42 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -1941,7 +1941,7 @@ super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb><
 /usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texmf/fon
 ts/type1/public/cm-super/sftt1200.pfb></usr/share/texmf/fonts/type1/public/cm-s
 uper/sftt1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt2488.pfb>
-Output written on PPBstats.pdf (38 pages, 6554241 bytes).
+Output written on PPBstats.pdf (38 pages, 6554238 bytes).
 PDF statistics:
  807 PDF objects out of 1000 (max. 8388607)
  637 compressed objects within 7 object streams
