@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2014.12.4)  8 JUL 2015 09:53
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2014.12.4)  19 AUG 2015 21:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1208,32 +1208,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--24
 
  []
 
-<./figures/cc-by-nc-sa.png, id=97, 97.0827pt x 33.9669pt>
+<./figures/cc-by-nc-sa.png, id=98, 97.0827pt x 33.9669pt>
 File: ./figures/cc-by-nc-sa.png Graphic file (type png)
 
 <use ./figures/cc-by-nc-sa.png>
-Package pdftex.def Info: ./figures/cc-by-nc-sa.png used on input line 28.
+Package pdftex.def Info: ./figures/cc-by-nc-sa.png used on input line 31.
 (pdftex.def)             Requested size: 70.8018pt x 24.77281pt.
 
 <./figures/Logo-RSP.png, id=100, 1127.99016pt x 1140.13152pt>
 File: ./figures/Logo-RSP.png Graphic file (type png)
 
 <use ./figures/Logo-RSP.png>
-Package pdftex.def Info: ./figures/Logo-RSP.png used on input line 35.
+Package pdftex.def Info: ./figures/Logo-RSP.png used on input line 38.
 (pdftex.def)             Requested size: 70.8018pt x 71.55379pt.
 
 <./figures/Logo-UMRGV.jpg, id=102, 1277.77374pt x 496.85625pt>
 File: ./figures/Logo-UMRGV.jpg Graphic file (type jpg)
 
 <use ./figures/Logo-UMRGV.jpg>
-Package pdftex.def Info: ./figures/Logo-UMRGV.jpg used on input line 47.
+Package pdftex.def Info: ./figures/Logo-UMRGV.jpg used on input line 50.
 (pdftex.def)             Requested size: 70.8018pt x 27.52808pt.
 
 <./figures/Logo-maiage.png, id=104, 301.125pt x 52.195pt>
 File: ./figures/Logo-maiage.png Graphic file (type png)
 
 <use ./figures/Logo-maiage.png>
-Package pdftex.def Info: ./figures/Logo-maiage.png used on input line 62.
+Package pdftex.def Info: ./figures/Logo-maiage.png used on input line 68.
 (pdftex.def)             Requested size: 70.8018pt x 12.27219pt.
  [1
 Non-PDF special ignored!
@@ -1256,7 +1256,7 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
 <./figures/wheat.JPG, id=144, 2826.56pt x 2119.92pt>
 File: ./figures/wheat.JPG Graphic file (type jpg)
  <use ./figures/wheat.JPG>
-Package pdftex.def Info: ./figures/wheat.JPG used on input line 80.
+Package pdftex.def Info: ./figures/wheat.JPG used on input line 85.
 (pdftex.def)             Requested size: 377.62642pt x 283.2009pt.
 
 [2 <./figures/wheat.JPG>])
@@ -1941,7 +1941,7 @@ super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb><
 /usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texmf/fon
 ts/type1/public/cm-super/sftt1200.pfb></usr/share/texmf/fonts/type1/public/cm-s
 uper/sftt1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt2488.pfb>
-Output written on PPBstats.pdf (38 pages, 6554444 bytes).
+Output written on PPBstats.pdf (38 pages, 6554241 bytes).
 PDF statistics:
  807 PDF objects out of 1000 (max. 8388607)
  637 compressed objects within 7 object streams
