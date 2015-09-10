@@ -114,6 +114,7 @@ if(analysis == "all" | analysis == "convergence") {
   conv_not_ok = names(which(test > 1.05))
       
   if( length(conv_not_ok) > 0 ) {
+    message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test: ", paste(conv_not_ok, collapse = ", ") ,".")
     mcmc = MCMC[,is.element(colnames(MCMC), conv_not_ok)]
             
     out.convergence = NULL
