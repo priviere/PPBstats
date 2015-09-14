@@ -42,6 +42,7 @@
 #' @return The function returns a list with 
 #' 
 #' \itemize{
+#' \item "data.model1": the dataframe used to run model 1
 #' \item "presence.abscence.matrix": a matrix entry x environment with the number of occurence
 #' \item "vec_env_with_no_data": a vector with the environments without data for the given variable
 #' \item "vec_env_with_no_controls": a vector with the environments with no controls
@@ -125,14 +126,17 @@ MC = function(
   
   DD = join(b, D, by = "ID")
   
-  # Get regional famrs (RF) and satellite farms (SF)
+  data.model1 = DD
+  data.model1$parameter = paste("[", data.model1$germplasm, ",", data.model1$environment, "]", sep = "") # To have a compatible format for get.ggplot
+  attributes(data.model1)$PPBstats.object = "data.model1"
+  
+  # Get regional farms (RF) and satellite farms (SF)
   out = get.env.info(DD, nb_ind = 1)
   vec_env_with_no_data = out$vec_env_with_no_data
   
   vec_env_with_no_controls = out$vec_env_with_no_controls
   data_env_with_no_controls = droplevels(filter(DD, environment %in% vec_env_with_no_controls))
   data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
-    
   attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls.model1"
   
   vec_env_with_controls = out$vec_env_with_controls
@@ -289,7 +293,7 @@ MC = function(
     mcmc = coda.samples(model, parameters, n.iter = nb_iterations, thin = thin)
     
     # 5. Rename the parameters ----------
-    # one again, the name of the parameters must be in the alphabetic order
+    # once again, the name of the parameters must be in the alphabetic order
     n = colnames(mcmc[[1]])
     
     para.name = NULL
@@ -342,6 +346,7 @@ MC = function(
   
   # 7. Get the outptus ----------
   OUT = list(
+    "data.model1" = data.model1,
     "presence.abscence.matrix" = presence.abscence.matrix,
     "vec_env_with_no_data" = vec_env_with_no_data,
     "vec_env_with_no_controls" = vec_env_with_no_controls,
