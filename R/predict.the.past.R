@@ -39,8 +39,8 @@ predict.the.past = function(
     
   # 3. Get the estimation based on MCMC outputs ----------
   
-  w = out.analyse.outputs$experimental_design$presence.abscence.matrix
-  if(is.null(w)) { stop(paste(mess, "Argument analysis must be NULL or \"experimental.design\".")) }
+  w = out.analyse.outputs$model.presence.abscence.matrix
+  if(is.null(w)) { stop(paste(mess, "Argument analysis in analyse.outputs must be NULL or \"experimental.design\".")) }
   
   pb <- txtProgressBar(min = 0, max = ncol(w), style = 3)
   
