@@ -48,6 +48,8 @@
 #'  }
 #'  
 #' \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models).
+#' 
+#' \item "model1.data_env_whose_param_did_not_converge" : a list with data frame with environments where some parameters did not converge for mu and beta.
 #' }
 #' 
 #' 
@@ -67,8 +69,10 @@ nb_parameters_per_plot = 10
 if( is.null(attributes(out.model)$PPBstats.object) ) { stop("out.model should be an output from model 1 (PPBstats::MC) or model 2 (PPBstats::FWH).") } 
 
 
-if(!is.null(analysis)) { if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }  }
-if( is.null(analysis) ) { analysis = "all" }
+if(!is.null(analysis)) { 
+  if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }  
+  if( !is.element(analysis, c("convergence")) ){ warning("\"convergence\" is not chosen! You may make mistakes in the interpretation of the results !!!") }  
+} else { analysis = "all" }
 
 
 # 1. experimental design ----------
@@ -110,7 +114,7 @@ if(attributes(out.model)$PPBstats.object == "model2") { attributes(MCMC)$model =
 # 3. convergence ----------
 out.convergence = NULL
 if(analysis == "all" | analysis == "convergence") {
-    
+  message("The Gelman-Rubin test is running for each parameter ...")
   test = gelman.diag(out.model$MCMC, multivariate = FALSE)$psrf[,1]
   conv_ok = names(which(test < 1.05))
   conv_not_ok = names(which(test > 1.05))
@@ -163,6 +167,34 @@ if(analysis == "all" | analysis == "posteriors") {
   # 4.1. model 1 ----------
   
   if(attributes(out.model)$PPBstats.object == "model1") {
+    # 4.1.1.data frame with environments where some parameters did not converge ----------
+    model1.data_env_whose_param_did_not_converge = NULL
+    if(analysis == "all" | analysis == "convergence") {
+      if( length(conv_not_ok) > 0 ) {
+        
+        mu_not_ok = conv_not_ok[grep("mu\\[", conv_not_ok)]
+        if( length(mu_not_ok) > 0 ) {
+          env_not_ok_mu = unique(sub("\\]", "", sub("mu\\[", "", sapply(mu_not_ok, function(x){unlist(strsplit(as.character(x), ","))[2]}))))
+        } else { env_not_ok_mu = NULL }
+
+        beta_not_ok = conv_not_ok[grep("beta\\[", conv_not_ok)]
+        if( length(beta_not_ok) > 0 ) {
+          env_not_ok_beta = unique(sub("\\]", "", sub("beta\\[", "", sapply(beta_not_ok, function(x){unlist(strsplit(as.character(x), ","))[2]}))))
+        } else { env_not_ok_beta = NULL }
+
+        sigma_not_ok = conv_not_ok[grep("sigma\\[", conv_not_ok)]
+        if( length(beta_not_ok) > 0 ) {
+          env_not_ok_sigma = unique(sub("\\]", "", sub("sigma\\[", "", sigma_not_ok)))
+        } else { env_not_ok_sigma = NULL }
+        
+        env_not_ok = unique(c(env_not_ok_mu, env_not_ok_beta, env_not_ok_sigma))
+        if( length(env_not_ok) > 0 ) {
+        model1.data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
+        attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
+      }
+    }
+    }
+    # 4.1.2. Format MCMC for further use ----------
     sq_MCMC$entry_mu = sub("mu\\[", "", sapply(sq_MCMC$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
     
     env_beta = sub("\\]", "", sub("beta\\[", "", sapply(sq_MCMC$parameter[grep("beta\\[", sq_MCMC$parameter)], function(x){unlist(strsplit(as.character(x), ","))[1]})))
@@ -174,7 +206,7 @@ if(analysis == "all" | analysis == "posteriors") {
     sq_MCMC$location = sapply(sq_MCMC$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
     sq_MCMC$year = sapply(sq_MCMC$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
     
-    # 4.1.1. sigma_j distribution ----------   
+    # 4.1.3. sigma_j distribution ----------   
     out_sigma_distribution = NULL
     if( length(grep("nu", rownames(sq_MCMC))) > 0 & length(grep("rho", rownames(sq_MCMC))) > 0 & length(grep("sigma", rownames(sq_MCMC))) > 0 ) {
       nu = sq_MCMC["nu", "q3"]
@@ -201,7 +233,7 @@ if(analysis == "all" | analysis == "posteriors") {
       message("The values of sigma in the inverse Gamme distribution are done.")
     }
     
-    # 4.1.2. mu_ij, beta_jk and sigma_j caterpillar plot distribution ----------
+    # 4.1.4. mu_ij, beta_jk and sigma_j caterpillar plot distribution ----------
     out_para_posteriors = NULL
         
     if ( length(grep("mu", rownames(sq_MCMC))) > 0  ) {
@@ -239,7 +271,7 @@ if(analysis == "all" | analysis == "posteriors") {
       message("The sigma_j posterior distributions are done.")
     }
     
-    # 4.1.3. standardized epsilon_ijk distribution ----------
+    # 4.1.5. standardized epsilon_ijk distribution ----------
     out_stand_res = NULL
     
     if ( !is.null(out.model$epsilon)  ) {      
@@ -329,7 +361,8 @@ out = list("data.experimental_design" = out.experimental.design,
            "model.presence.abscence.matrix" = out.model$model.presence.abscence.matrix,
            "convergence" = out.convergence, 
            "posteriors" = out.posteriors, 
-           "MCMC" = MCMC)
+           "MCMC" = MCMC,
+           "model1.data_env_whose_param_did_not_converge" = model1.data_env_whose_param_did_not_converge)
 return(out)
 }
 
