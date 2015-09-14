@@ -1,7 +1,13 @@
+PPBstats 0.9.2 ----------------------------------------
+-----------------------------------------------------
+* fix little bugs
+* add the presence.abscence.matrix for the model in FWH, analyse.outputs and predict.the.past
+
+
 PPBstats 0.9.1 ----------------------------------------
 -----------------------------------------------------
-* Little changes in vignette and readme
-* Little changes in the comments of some functions
+* little changes in vignette and readme
+* little changes in the comments of some functions
 
 
 PPBstats 0.9 ----------------------------------------
