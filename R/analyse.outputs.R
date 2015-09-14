@@ -23,7 +23,9 @@
 #' @return The function returns a list with 
 #' 
 #' \itemize{
-#' \item "experimental_design" : a plot representing the presence/abscence matrix of GxE combinaisons.
+#' \item "data.experimental_design" : a plot representing the presence/abscence matrix of GxE combinaisons in the data.
+#' 
+#' \item "model.presence.abscence.matrix" : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 #' 
 #' \item "convergence" : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. If all the chains converge, it is NULL
 #' 
@@ -73,7 +75,7 @@ if( is.null(analysis) ) { analysis = "all" }
 out.experimental.design = NULL
 if(analysis == "all" | analysis == "experimental_design") {
 
-  m = out.model$presence.abscence.matrix
+  m = out.model$data.presence.abscence.matrix
   
   if(attributes(out.model)$PPBstats.object == "model1"){
     d <- data.frame(germplasm = rep(row.names(m), ncol(m)), 
@@ -94,7 +96,7 @@ if(analysis == "all" | analysis == "experimental_design") {
   nb_NA = round(length(which(d$score == 0)) / ( length(which(d$score == 0)) + length(which(d$score != 0)) ), 2) * 100
   p = ggplot(d, aes(x = germplasm, y = environment))  
   p = p + geom_raster(aes(fill = score)) + ggtitle(paste("GxE combinaisons (",  nb_NA, "% of 0)", sep = ""))
-  out.experimental.design = list("plot" = p, "presence.abscence.matrix" = m)
+  out.experimental.design = list("plot" = p, "data.presence.abscence.matrix" = m)
   message("The experimental design plot is done.")
 }
 
@@ -323,7 +325,11 @@ if(analysis == "all" | analysis == "posteriors") {
 
 
 # 5. Return outptus ----------
-out = list("experimental_design" = out.experimental.design, "convergence" = out.convergence, "posteriors" = out.posteriors, "MCMC" = MCMC)
+out = list("data.experimental_design" = out.experimental.design,
+           "model.presence.abscence.matrix" = out.model$model.presence.abscence.matrix,
+           "convergence" = out.convergence, 
+           "posteriors" = out.posteriors, 
+           "MCMC" = MCMC)
 return(out)
 }
 
