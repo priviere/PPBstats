@@ -4,7 +4,7 @@ citEntry(
   entry = 'manual',
   title = 'PPBstats: An R package for statistical analysis 
           of unbalanced trials in decentralized participatory plant 
-          breeding programmes. Version 0.9.',
+          breeding programmes. Version 0.9.2',
   author = '{Pierre Riviere} and {Olivier David}',
   organisation = '{Reseau Semences Paysannes}, {INRA}',
   year = '2015',
