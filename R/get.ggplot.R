@@ -4,7 +4,7 @@
 #' @description
 #' \code{get.ggplot} returns ggplot objects to visualize output from the analysis
 #'
-#' @param data The data to plot. It can come from \code{get.mean.comparison} or \code{get.parameter.groups}
+#' @param data The data to plot. It can come from \code{get.mean.comparison}, \code{get.parameter.groups}, \code{predict.the.past}, \code{MC}$data_env_with_no_controls or \code{analye.outputs$model1.data_env_whose_param_did_not_converge}.
 #'  
 #' @param ggplot.type The type of plot you wish:
 #' \itemize{
@@ -19,6 +19,8 @@
 #'  \item from \code{predict.the.past}$predict.the.past : "barplot", "interaction"
 #'  
 #'  \item from \code{MC}$data_env_with_no_controls : "barplot", "interaction"
+#'  
+#'  \item from \code{analye.outputs$model1.data_env_whose_param_did_not_converge} : "barplot", "interaction"
 #'  
 #'  }
 #' 
@@ -58,7 +60,7 @@ get.ggplot = function(
 {
   
   # 1. Error message and update arguments ----------
-  if (is.null(attributes(data)$PPBstats.object)) { stop("data must come from functions get.parameter.groups, get.mean.comparisons or predict.the.past. See ?get.ggplot for more details.") }
+  if (is.null(attributes(data)$PPBstats.object)) { stop("data must come from functions get.parameter.groups, get.mean.comparisons, predict.the.past or analyse.outputs. See ?get.ggplot for more details.") }
   
   if( !is.element(ggplot.type, c("barplot", "interaction", "score", "PCA"))) { stop("ggplot.type must be either \"barplot\", \"interaction\", \"score\" or \"PCA\".") }
   if( attributes(data)$PPBstats.object == "parameter.groups.model2" & ggplot.type != "PCA" ) { stop("ggplot.type = \"PCA\" must be used with data from get.parameter.groups") }
@@ -68,6 +70,10 @@ get.ggplot = function(
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" & ggplot.type == "PCA" ) { stop("With data coming from get.mean.comparisons, you must use ggplot.type = \"barplot\", \"interaction\" or \"score\".") }
   
   if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::MC$data_env_with_no_controls, you must use ggplot.type = \"barplot\", \"interaction\".") }
+
+  if( attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::analyse.outputs$model1.data_env_whose_param_did_not_converge, you must use ggplot.type = \"barplot\", \"interaction\".") }
+  
+  if( attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" & is.null(data) ) { stop("model1.data_env_whose_param_did_not_converge is NULL : no ggplot can be done ! ") }
   
   if( attributes(data)$PPBstats.object == "predict.the.past" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::MC$data_env_with_no_controls, you must use ggplot.type = \"barplot\", \"interaction\".") }
   
@@ -78,7 +84,8 @@ get.ggplot = function(
   } else { test.mu.m1 = test.beta.m1 = FALSE }
   
   if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
-        attributes(data)$PPBstats.object == "predict.the.past" 
+      attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
+      attributes(data)$PPBstats.object == "predict.the.past" 
   ) {
     test.mu.m1 = TRUE # Just to pass the error message
   }
@@ -96,8 +103,9 @@ get.ggplot = function(
   
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
-        attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
-        attributes(data)$PPBstats.object == "predict.the.past"
+      attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
+      attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
+      attributes(data)$PPBstats.object == "predict.the.past"
   ) {
     
     para = unlist(strsplit(as.character(data$parameter)[1], "\\["))[1]
@@ -107,7 +115,8 @@ get.ggplot = function(
     data$location = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
     data$year = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
     
-    if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1") { # To have the same format for next steps
+    if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
+       attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") { # To have the same format for next steps
       data = plyr::rename(data, replace = c("variable_mean" = "median"))
     }
     if(attributes(data)$PPBstats.object == "predict.the.past") { # To have the same format for next steps
@@ -137,9 +146,10 @@ get.ggplot = function(
   
   # 2.1. barplot ----------
   
-  if(  attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
-         attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
-         attributes(data)$PPBstats.object == "predict.the.past"
+  if( attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
+      attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
+      attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
+      attributes(data)$PPBstats.object == "predict.the.past"
        & ggplot.type == "barplot"
   ) {  
     
@@ -162,12 +172,12 @@ get.ggplot = function(
           p = p + ggtitle(paste(dx[1, "environment"], "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"])) + ylab("")
         }
         
-        if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1") {
+        if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
+           attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") {
           p = p + ggtitle(dx[1, "environment"]) + ylab("")
         }
         
         if(attributes(data)$PPBstats.object == "predict.the.past") {
-          
           p = p + ggtitle(dx[1, "environment"]) + ylab("predicted value")
         }
         
@@ -219,6 +229,7 @@ get.ggplot = function(
         }
         
         if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
+            attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
               attributes(data)$PPBstats.object == "predict.the.past"
         ) {
           x_loc$alpha.info_year = x_loc$year
