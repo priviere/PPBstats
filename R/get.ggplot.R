@@ -238,6 +238,7 @@ get.ggplot = function(
         if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ){
           SEG = NULL
           
+          letters = c(letters, paste(rep(LETTERS, times = 15), rep(c(1:5), each = 15), sep = ""))
           gp_letters = letters[1:max(x_loc$nb_group)]
           xadjust = seq(0.05, 0.9, length = 25) # it is assumed max 25 letters (i.e. groups)
           xadjust = xadjust[c(1:length(gp_letters))]
