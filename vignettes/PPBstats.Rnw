@@ -29,7 +29,7 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.9}
+\newcommand{\versionnumber}{0.9.2}
 
 \begin{document}
 
