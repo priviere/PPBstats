@@ -47,7 +47,7 @@
 #'    
 #'  }
 #'  
-#' \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models). The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done).
+#' \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models). The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done). For model 1, all environments where at least one parameter do not converge are deleted.
 #' 
 #' \item "model1.data_env_whose_param_did_not_converge" : a list with data frame with environments where some parameters did not converge for mu and beta.
 #' }
@@ -193,10 +193,15 @@ if(analysis == "all" | analysis == "posteriors") {
         model1.data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
         attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
         
+        # Update MCMC, delete all environments where at least one parameter do not converge
+        message("MCMC are updated, the following environment were deleted :", paste(env_not_ok, collapse = ", "))
+        message("model1.data_env_whose_param_did_not_converge contains the raw data for these environments.")
         m1 = unlist(sapply(paste("sigma\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
         m2 = unlist(sapply(paste("beta\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
         m3 = grep("mu\\[", colnames(MCMC))
-        m3 = unlist(sapply(paste(",", env_not_ok, "]", sep = ""), function(x){grep(x, colnames(MCMC)[m3])} ))
+        m3 = colnames(MCMC)[m3][unlist(sapply(paste(",", env_not_ok, "]", sep = ""), function(x){grep(x, colnames(MCMC)[m3])} ))]
+        m3 = c(1:ncol(MCMC))[is.element(colnames(MCMC), m3)]
+        
         mcmc_to_delete = c(m1, m2, m3)
         MCMC = MCMC[,-mcmc_to_delete] 
         if(attributes(out.model)$PPBstats.object == "model1") { attributes(MCMC)$model = "model1" }
