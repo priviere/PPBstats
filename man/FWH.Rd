@@ -40,7 +40,8 @@ FWH(data, variable, nb_iterations = 1e+05, thin = 10, return.alpha = TRUE,
 The function returns a list with
 
 \itemize{
-\item "presence.abscence.matrix": a matrix germplasm x environment with the number of occurence
+\item "data.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data
+\item "model.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 \item "germplasm.not.used": the vector of germplasms not used in the analysis because they were not on at least two environments. If NULL, all the germplasms were used in the analysis.
 \item "MCMC": a list with the two MCMC chains (mcmc object) from the FWH model
 \item "epsilon": a vector with the median value of the epsilon_ijk
