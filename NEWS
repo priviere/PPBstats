@@ -4,6 +4,7 @@ PPBstats 0.9.2 --------------------------------------
 * add the presence.abscence.matrix for the model in FWH, analyse.outputs and predict.the.past
 * add model1.data_env_whose_param_did_not_converge in MC, analyse.outputs and get.ggplot
 * return MCMC only for parameters that converge
+* possible to choose NULL for get.at.least.X.groups
 
 
 PPBstats 0.9.1 --------------------------------------
