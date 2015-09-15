@@ -76,7 +76,7 @@ if(!is.null(analysis)) {
 
 # Default settings
 model1.data_env_whose_param_did_not_converge = NULL
-model2.presence.abscence.matrix = NULL
+model2.presence.abscence.matrix = out.model$model2.presence.abscence.matrix
 
 # 1. experimental design ----------
 out.experimental.design = NULL
