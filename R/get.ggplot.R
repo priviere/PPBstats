@@ -146,10 +146,10 @@ get.ggplot = function(
   
   # 2.1. barplot ----------
   
-  if( attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
+  if( (attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
       attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
       attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
-      attributes(data)$PPBstats.object == "predict.the.past"
+      attributes(data)$PPBstats.object == "predict.the.past")
        & ggplot.type == "barplot"
   ) {  
     
