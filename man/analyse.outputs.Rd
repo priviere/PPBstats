@@ -17,7 +17,9 @@ analyse.outputs(out.model, analysis = NULL, nb_parameters_per_plot = 10)
 The function returns a list with
 
 \itemize{
-\item "experimental_design" : a plot representing the presence/abscence matrix of GxE combinaisons.
+\item "data.experimental_design" : a plot representing the presence/abscence matrix of GxE combinaisons in the data.
+
+\item "model.presence.abscence.matrix" : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 
 \item "convergence" : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. If all the chains converge, it is NULL
 
@@ -40,6 +42,8 @@ The function returns a list with
  }
 
 \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models).
+
+\item "model1.data_env_whose_param_did_not_converge" : a list with data frame with environments where some parameters did not converge for mu and beta.
 }
 }
 \description{
