@@ -16,7 +16,7 @@
 #' 
 #' @param p.adj For type = 1. NULL for no adjustement of the type one error. "soft.bonf" for a soft bonferonni correction to take into account multiple comparisons (alpha / nb of parameters).
 #' 
-#' @param get.at.least.X.groups For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence)
+#' @param get.at.least.X.groups For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence). If NULL, nothing is done.
 #' 
 #' @param precision For type = 1. The precision of the alpha with the correspondong groups from get.at.least.X.groups. The smaller the better, but the smaller the more time consuming due to computing matters
 #' 
@@ -93,7 +93,7 @@ get.mean.comparisons = function(
       nb_group = length(unique(a))
       
       # get at least X groups
-      if(nb_group == 1) {
+      if(nb_group == 1 & !is.null(get.at.least.X.groups)) {
         message(paste("Get at least X groups for ", sub("\\\\\\[", "", element),". It may take some time ...", sep = "")) # The sub is useful for model2
         ALPHA = get.at.least.X.groups(Mpvalue, MCMC_element, p.adj = p.adj, precision = precision)  
         alp = ALPHA[paste(get.at.least.X.groups, "_groups", sep = "")]  
