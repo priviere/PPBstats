@@ -7,7 +7,7 @@
 get.ggplot(data, ggplot.type = "interaction", nb_parameters_per_plot = 8)
 }
 \arguments{
-\item{data}{The data to plot. It can come from \code{get.mean.comparison} or \code{get.parameter.groups}}
+\item{data}{The data to plot. It can come from \code{get.mean.comparison}, \code{get.parameter.groups}, \code{predict.the.past}, \code{MC}$data_env_with_no_controls or \code{analye.outputs$model1.data_env_whose_param_did_not_converge}.}
 
 \item{ggplot.type}{The type of plot you wish:
 \itemize{
@@ -22,6 +22,8 @@ get.ggplot(data, ggplot.type = "interaction", nb_parameters_per_plot = 8)
  \item from \code{predict.the.past}$predict.the.past : "barplot", "interaction"
 
  \item from \code{MC}$data_env_with_no_controls : "barplot", "interaction"
+
+ \item from \code{analye.outputs$model1.data_env_whose_param_did_not_converge} : "barplot", "interaction"
 
  }}
 
