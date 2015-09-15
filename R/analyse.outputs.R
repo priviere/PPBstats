@@ -47,7 +47,7 @@
 #'    
 #'  }
 #'  
-#' \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models).
+#' \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models). The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done).
 #' 
 #' \item "model1.data_env_whose_param_did_not_converge" : a list with data frame with environments where some parameters did not converge for mu and beta.
 #' }
@@ -74,6 +74,9 @@ if(!is.null(analysis)) {
   if( !is.element(analysis, c("convergence")) ){ warning("\"convergence\" is not chosen! You may make mistakes in the interpretation of the results !!!") }  
 } else { analysis = "all" }
 
+# Default settings
+model1.data_env_whose_param_did_not_converge = NULL
+model2.presence.abscence.matrix = NULL
 
 # 1. experimental design ----------
 out.experimental.design = NULL
@@ -120,9 +123,9 @@ if(analysis == "all" | analysis == "convergence") {
   conv_not_ok = names(which(test > 1.05))
       
   if( length(conv_not_ok) > 0 ) {
-    message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test: ", paste(conv_not_ok, collapse = ", ") ,".")
+    message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test: ", paste(conv_not_ok, collapse = ", ") ,". Therefore, they are not present in MCMC output.")
     mcmc = MCMC[,is.element(colnames(MCMC), conv_not_ok)]
-            
+    
     out.convergence = NULL
     for (para in conv_not_ok) {
     
@@ -138,7 +141,6 @@ if(analysis == "all" | analysis == "convergence") {
     names(plot) = para
     out.convergence = c(out.convergence, plot)
     }
-  
   } else { message("The two MCMC for each parameter converge thanks to the Gelman-Rubin test."); out.convergence = NULL }
 }
 
@@ -167,8 +169,7 @@ if(analysis == "all" | analysis == "posteriors") {
   # 4.1. model 1 ----------
   
   if(attributes(out.model)$PPBstats.object == "model1") {
-    # 4.1.1.data frame with environments where some parameters did not converge ----------
-    model1.data_env_whose_param_did_not_converge = NULL
+    # 4.1.1. Update MCMC and get data frame with environments where some parameters did not converge ----------
     if(analysis == "all" | analysis == "convergence") {
       if( length(conv_not_ok) > 0 ) {
         
@@ -179,7 +180,7 @@ if(analysis == "all" | analysis == "posteriors") {
 
         beta_not_ok = conv_not_ok[grep("beta\\[", conv_not_ok)]
         if( length(beta_not_ok) > 0 ) {
-          env_not_ok_beta = unique(sub("\\]", "", sub("beta\\[", "", sapply(beta_not_ok, function(x){unlist(strsplit(as.character(x), ","))[2]}))))
+          env_not_ok_beta = unique(sub("\\]", "", sub("beta\\[", "", sapply(beta_not_ok, function(x){unlist(strsplit(as.character(x), ","))[1]}))))
         } else { env_not_ok_beta = NULL }
 
         sigma_not_ok = conv_not_ok[grep("sigma\\[", conv_not_ok)]
@@ -191,9 +192,18 @@ if(analysis == "all" | analysis == "posteriors") {
         if( length(env_not_ok) > 0 ) {
         model1.data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
         attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
+        
+        m1 = unlist(sapply(paste("sigma\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
+        m2 = unlist(sapply(paste("beta\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
+        m3 = grep("mu\\[", colnames(MCMC))
+        m3 = unlist(sapply(paste(",", env_not_ok, "]", sep = ""), function(x){grep(x, colnames(MCMC)[m3])} ))
+        mcmc_to_delete = c(m1, m2, m3)
+        MCMC = MCMC[,-mcmc_to_delete] 
+        if(attributes(out.model)$PPBstats.object == "model1") { attributes(MCMC)$model = "model1" }
       }
     }
     }
+    
     # 4.1.2. Format MCMC for further use ----------
     sq_MCMC$entry_mu = sub("mu\\[", "", sapply(sq_MCMC$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
     
@@ -294,7 +304,38 @@ if(analysis == "all" | analysis == "posteriors") {
   # 4.2. model 2 ----------
   if(attributes(out.model)$PPBstats.object == "model2") {
     
-    # 4.2.1. alpha_i, beta_i, theta_j caterpillar plot distribution ----------
+    # 4.2.1. Update MCMC and model2.presence.abscence.matrix ----------
+    if(analysis == "all" | analysis == "convergence") {
+      if( length(conv_not_ok) > 0 ) {
+  
+        MCMC = MCMC[,!is.element(colnames(MCMC), conv_not_ok)] 
+        if(attributes(out.model)$PPBstats.object == "model2") { attributes(MCMC)$model = "model2" }
+        
+            alpha_not_ok = conv_not_ok[grep("alpha\\[", conv_not_ok)]
+            if( length(alpha_not_ok) > 0 ) {
+              germ_not_ok_alpha = sub("\\]", "", sub("alpha\\[", "", alpha_not_ok))
+            } else { germ_not_ok_alpha = NULL }
+        
+            beta_not_ok = conv_not_ok[grep("beta\\[", conv_not_ok)]
+            if( length(beta_not_ok) > 0 ) {
+              germ_not_ok_beta = sub("\\]", "", sub("beta\\[", "", beta_not_ok))
+            } else { germ_not_ok_beta = NULL }
+            
+            theta_not_ok = conv_not_ok[grep("theta\\[", conv_not_ok)]
+            if( length(theta_not_ok) > 0 ) {
+              env_not_ok = sub("\\]", "", sub("theta\\[", "", theta_not_ok))
+            } else { env_not_ok = NULL }
+
+            germ_not_ok = unique(c(germ_not_ok_alpha, germ_not_ok_beta))
+            
+            mat = out.model$model2.presence.abscence.matrix
+            if( !is.null(germ_not_ok) ) { mat = mat[!is.element(rownames(mat), germ_not_ok),] }
+            if( !is.null(env_not_ok) ) { mat = mat[,!is.element(colnames(mat), env_not_ok)] }
+            model2.presence.abscence.matrix = mat
+      }
+    }
+    
+    # 4.2.2. alpha_i, beta_i, theta_j caterpillar plot distribution ----------
     out_para_posteriors = NULL
     
     if ( length(grep("alpha\\[", rownames(sq_MCMC))) > 0  ) {      
@@ -336,7 +377,7 @@ if(analysis == "all" | analysis == "posteriors") {
       message("The theta_j posterior distributions are done.")
     }
     
-    # 4.2.2. standardized epsilon_ijk distribution ----------
+    # 4.2.3. standardized epsilon_ijk distribution ----------
     out_stand_res = NULL
     
     if ( !is.null(out.model$epsilon)  ) {      
@@ -358,7 +399,7 @@ if(analysis == "all" | analysis == "posteriors") {
 
 # 5. Return outptus ----------
 out = list("data.experimental_design" = out.experimental.design,
-           "model.presence.abscence.matrix" = out.model$model.presence.abscence.matrix,
+           "model2.presence.abscence.matrix" = model2.presence.abscence.matrix,
            "convergence" = out.convergence, 
            "posteriors" = out.posteriors, 
            "MCMC" = MCMC,
