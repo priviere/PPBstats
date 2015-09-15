@@ -123,7 +123,7 @@ if(analysis == "all" | analysis == "convergence") {
   conv_not_ok = names(which(test > 1.05))
       
   if( length(conv_not_ok) > 0 ) {
-    message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test: ", paste(conv_not_ok, collapse = ", ") ,". Therefore, they are not present in MCMC output.")
+    message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : ", paste(conv_not_ok, collapse = ", ") ,". Therefore, they are not present in MCMC output.")
     mcmc = MCMC[,is.element(colnames(MCMC), conv_not_ok)]
     
     out.convergence = NULL
@@ -194,7 +194,7 @@ if(analysis == "all" | analysis == "posteriors") {
         attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
         
         # Update MCMC, delete all environments where at least one parameter do not converge
-        message("MCMC are updated, the following environment were deleted :", paste(env_not_ok, collapse = ", "))
+        message("MCMC are updated, the following environment were deleted : ", paste(env_not_ok, collapse = ", "))
         message("model1.data_env_whose_param_did_not_converge contains the raw data for these environments.")
         m1 = unlist(sapply(paste("sigma\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
         m2 = unlist(sapply(paste("beta\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
