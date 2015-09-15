@@ -334,7 +334,7 @@ FWH = function(
   
   OUT = list(
     "data.presence.abscence.matrix" = data.presence.abscence.matrix,
-    "model.presence.abscence.matrix" = model.presence.abscence.matrix,
+    "model2.presence.abscence.matrix" = model.presence.abscence.matrix,
     "germplasm.not.used" = germplasm.not.used,
     "MCMC" = mcmc_fwh,
     "epsilon" = epsilon,
