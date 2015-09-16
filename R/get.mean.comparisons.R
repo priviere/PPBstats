@@ -111,7 +111,7 @@ get.mean.comparisons = function(
 
     } else { TAB = NULL }
     
-    if(type == 2) { TAB = cbind.data.frame("proba" = Mpvalue) }
+    if(type == 2) { TAB = cbind.data.frame("proba" = Mpvalue); TAB = arrange(TAB, proba) }
     
     OUT = rbind.data.frame(OUT, TAB)
     
