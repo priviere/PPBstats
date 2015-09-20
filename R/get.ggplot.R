@@ -393,7 +393,7 @@ get.ggplot = function(
         env$score = gp_nb  
         
         alpha.info = paste(env$alpha, "|", env$alpha.correction)
-        env$alpha.info_year = paste(alpha.info, env$year, sep = " - ")
+        env$alpha.info_year = paste(env$year, alpha.info, sep = " - ")
         
         p = ggplot(env, aes(y = entry, x = alpha.info_year)) + geom_tile(aes(fill = score))
         p = p + scale_fill_gradient(low = "blue",high = "red")
