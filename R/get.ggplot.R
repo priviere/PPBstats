@@ -357,7 +357,7 @@ get.ggplot = function(
           
           
           if(!is.null(SEG)) {
-            p = p + geom_segment(aes(x = x, y = ymin, xend = x, yend = ymax, group = NULL), colour =  as.numeric(as.factor(SEG$groups)), data = SEG, linetype = "dashed")
+            p = p + geom_segment(aes(x = x, y = ymin, xend = x, yend = ymax, group = NULL), colour =  as.numeric(as.factor(SEG$groups)), data = SEG)
             p = p + ylim(ymin - ymin/10, ymax + ymax/10) # To be sure to see the line of the groups
           }      
         }
