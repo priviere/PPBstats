@@ -21,7 +21,7 @@ get.mean.comparisons(MCMC, parameter, alpha = 0.05, type = 1,
 
 \item{p.adj}{For type = 1. NULL for no adjustement of the type one error. "soft.bonf" for a soft bonferonni correction to take into account multiple comparisons (alpha / nb of parameters).}
 
-\item{get.at.least.X.groups}{For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence)}
+\item{get.at.least.X.groups}{For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence). If NULL, nothing is done.}
 
 \item{precision}{For type = 1. The precision of the alpha with the correspondong groups from get.at.least.X.groups. The smaller the better, but the smaller the more time consuming due to computing matters}
 }
