@@ -13,11 +13,11 @@ The copyright of the R code and the vignette are owned by Réseau Semences Paysa
 
 You can participate in three ways:
 
-1. test this development version
+1. test this development version and report bugs
 2. help to make translation of the package
 3. add new functions that may be useful in the analysis of unbalanced trials that can be found in PPB programmes
 
-### 1. Test
+### 1. Test and report bugs
 
 First, load the development version:
 
