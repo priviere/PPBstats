@@ -32,15 +32,15 @@
 #' An environment is a combinaison of a location and a year.
 #' 
 #' The different effects are taken in different distributions of respective variances sigma_alpha, sigma_theta and sigma_beta. 
-#' This model takes into acount all the information on the network in order to cope with the high disiquelebrium in the dataset (i.e. high percentage of missing GxE combinaisons on the network). 
+#' This model takes into acount all the information on the network in order to cope with the high disequilibrium in the dataset (i.e. high percentage of missing GxE combinaisons on the network). 
 #' 
 #' First, the additive model is done. This model gives intitial values of some parameters of the FWH model which is done next.
 #' 
 #' The model is run on data set where germplasms are on at least two environments
 #' 
-#' More informations can be found in the vignette (type vignette("PPBstats)).
+#' More informations can be found in the vignette (type vignette("PPBstats")).
 #' 
-#' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more informations.
+#' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 #' 
 #' @return The function returns a list with 
 #' 
