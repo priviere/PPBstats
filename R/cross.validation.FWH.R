@@ -2,7 +2,7 @@
 #' Run complete cross validation with model 2 (FWH)
 #'
 #' @description
-#' \code{cross.valisation.FWH} runs complete cross validation with model 2 (FWH)
+#' \code{cross.validation.FWH} runs complete cross validation with model 2 (FWH)
 #' 
 #' @param data The data frame on which the model will be run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
@@ -14,15 +14,15 @@
 #' 
 #' @details
 #' 
-#' The convergence is not check for each validation. If the parameters in the FWH converge (cf \code{analyse.outputs}), then it is assumed that the FWH in the cross validation converge as well.
+#' The convergence is not checked for each validation. If the parameters in the FWH converge (cf \code{analyse.outputs}), then it is assumed that the FWH in the cross validation converge as well.
 #' 
-#' The model is run on data set where germplasms are on at least three environments so the smallest data set where the cross valisation is run has germplasms on at least two environments. 
+#' The model is run on data sets where germplasms are on at least three environments so the smallest data set where the cross validation is run has germplasms on at least two environments. 
 #' 
-#' Parallelisation is done with the function \code{parallel::mclapply}.
+#' Parallelization is done with the function \code{parallel::mclapply}.
 #' 
 #' The percentage of confidence is estimated from the bias of estimated values in relation to real values.
 #' A t.test is performed with the null hypothesis H0: the bias = 0.
-#' More informations can be found in the vignette (type vignette("PPBstats)).
+#' More informations can be found in the vignette (type vignette("PPBstats")).
 #' 
 #' 
 #' @return The function returns a list with
