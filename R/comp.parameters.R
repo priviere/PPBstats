@@ -13,12 +13,12 @@
 #' @param threshold For type = 2, the threshold to which a parameter is different
 #' 
 #' @details
-#' The comparisons is based on the probability to have a common distribution for each pair of parameters (type 1) or to be different to a specific threshold (type 2). More details in the vignette (type vignette ("PPBstats")).
+#' The comparisons is based on the probability of having a common distribution for each pair of parameters (type 1) or to be different from a specific threshold (type 2). More details in the vignette (type vignette ("PPBstats")).
 #' 
 #' @return The function returns 
 #' \itemize{
-#' \item for type = 1 : a square matrix with the probability to have a common distribution for each pair of parameter.
-#' \item for type = 2 : a vector with the probability to be different from the given threshold.
+#' \item for type = 1 : a square matrix with the probability of having a common distribution for each pair of parameter.
+#' \item for type = 2 : a vector with the probability of being different from the given threshold.
 #'} 
 #'
 #' @author Pierre Riviere
