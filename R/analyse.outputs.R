@@ -28,7 +28,7 @@
 #' \item "convergence" : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. If all the chains converge, it is NULL
 #' 
 #' \item "posteriors" a list with
-#' \itemize{
+#' \itemize{git@github.com:gaelleVF/PPBstats.git
 #' 
 #'  \item for model 1
 #'  \itemize{
@@ -63,7 +63,7 @@ nb_parameters_per_plot = 10
 {
 # 1. Error message and update arguments ----------
 if( is.null(attributes(out.model)$PPBstats.object) ) { stop("out.model should be an output from model 1 (PPBstats::MC) or model 2 (PPBstats::FWH).") } 
-
+# Essai github
 
 if(!is.null(analysis)) { if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }  }
 if( is.null(analysis) ) { analysis = "all" }
