@@ -2,7 +2,7 @@
 #' Check with plots if the model went well based on the Gelman-Rubin test and plots of posteriors distributions 
 #'
 #' @description
-#' \code{analyse.outputs} displays plots to see if the model went well based ont the Gelman-Rubin test and plots of posteriors distributions. It is important to run this step before going ahead in the analysis otherwise you may make mistakes in the interpretation of the results.
+#' \code{analyse.outputs} displays plots to see if the model went well based on the Gelman-Rubin test and plots of posteriors distributions. It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #'
 #' @param out.model outputs from model 1 (\code{MC}) or model 2 (\code{FWH})
 #'  
@@ -12,10 +12,10 @@
 #' 
 #' @details
 #' For analyse = "convergence", the test used is the Gelman-Rubin test. 
-#' It may take some times to run.
+#' It may take some time to run.
 #' More details with ?\code{gelman.diag} from the \code{coda} package. 
 #' Note that for \code{gelman.diag}, the argument \code{multivariate = FALSE} is used.
-#' If you wish exhaustive information, looked at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out.model$MCMC)}. 
+#' If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out.model$MCMC)}. 
 #' But be careful with the size of your MCMC output which are often too big to be performed in R. 
 #' 
 #' More information in  the vignette. Type vignette("PPBstats").
@@ -33,7 +33,7 @@
 #'  \item for model 1
 #'  \itemize{
 #'    \item "sigma_distribution" : the distribution of the sigma is displayed on the Inverse Gamma distribution
-#'    \item "parameter_posteriors" : a caterpillar plot is display for each mu_ij, beta_jk for each environment and for sigma_j 
+#'    \item "parameter_posteriors" : a caterpillar plot is displayed for each mu_ij, beta_jk for each environment and for sigma_j 
 #'    \item "standardized_residuals" : a plot to check the normality of the residuals
 #'  }
 #'  
@@ -45,7 +45,7 @@
 #'    
 #'  }
 #'  
-#' \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models).
+#' \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns as parameters and as many rows as iterations/10 (10 being the thin value by default in the models).
 #' }
 #' 
 #' 
@@ -63,7 +63,7 @@ nb_parameters_per_plot = 10
 {
 # 1. Error message and update arguments ----------
 if( is.null(attributes(out.model)$PPBstats.object) ) { stop("out.model should be an output from model 1 (PPBstats::MC) or model 2 (PPBstats::FWH).") } 
-# Essai github
+
 
 if(!is.null(analysis)) { if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }  }
 if( is.null(analysis) ) { analysis = "all" }
