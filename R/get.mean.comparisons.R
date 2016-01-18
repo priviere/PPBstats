@@ -6,7 +6,7 @@
 #'
 #' @param MCMC MCMC outputs from \code{analysis.outputs}.
 #'  
-#' @param parameter The parameter on which gets mean comparisons 
+#' @param parameter The parameter on which the mean comparison is done 
 #' 
 #' @param alpha The level of type one error. 0.05 (5\%) by default
 #' 
@@ -16,13 +16,13 @@
 #' 
 #' @param p.adj For type = 1. NULL for no adjustement of the type one error. "soft.bonf" for a soft bonferonni correction to take into account multiple comparisons (alpha / nb of parameters).
 #' 
-#' @param get.at.least.X.groups For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence)
+#' @param get.at.least.X.groups For type = 1. If there is only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence)
 #' 
 #' @param precision For type = 1. The precision of the alpha with the correspondong groups from get.at.least.X.groups. The smaller the better, but the smaller the more time consuming due to computing matters
 #' 
 #' 
 #' @details
-#' The comparisons is based on the probability to have a common distribution for each pair of parameters. 
+#' The comparisons is based on the probability of having a common distribution for each pair of parameters. 
 #' When there is only one group with the value of alpha, the function (via \code{get.at.least.X.groups argument}) returns at least X groups with a new value of alpha.
 #' More details in the vignette (type vignette ("PPBstats")).
 #' 
