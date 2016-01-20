@@ -6,17 +6,17 @@
 #' 
 #' @param out.analyse.outputs object from \code{analyse.outputs}
 #' 
-#' @param output.format Format of the outptu: "summary" or "raw". See details.
+#' @param output.format Format of the output: "summary" or "raw". See details.
 #' 
 #' 
 #' @return The function returns a list with for each environment, the estimated value of the germplasms that were not grown in this environment.
 #' 
 #' @details
-#' The estimation of the values are based ont the MCMC outputs.
-#' More informations can be found in the vignette (type vignette("PPBstats)).
+#' The estimations of the values are based on the MCMC outputs.
+#' More informations can be found in the vignette (type vignette("PPBstats")).
 #' 
 #' Due to memory issues, it may be better to choose output.format = "summary".
-#' This allows caterpillar plots, barplot and interaction plots but no mean comparisons that are base on the whole MCMC.
+#' This allows caterpillar plots, barplots and interaction plots but no mean comparisons that are based on the whole MCMC.
 #' 
 #' @author Pierre Riviere
 #' 
