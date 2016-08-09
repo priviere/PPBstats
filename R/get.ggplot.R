@@ -37,7 +37,7 @@
 #' \item From \code{get.parameter.groups} from model 2 (\code{FWH}) "PCA" display the PCA and the groups of parameters.
 #' }
 #' 
-#' On each plot, the alpha value and the alpha correctiongit@github.com:gaelleVF/PPBstats.git are displayed.
+#' On each plot, the alpha value and the alpha correction are displayed.
 #' alpha = Imp means that no differences were possible to find.
 #' For ggplot.type = "interaction" and ggplot.type = "score", it is display under the form: alpha | alpha correction
 #' 
