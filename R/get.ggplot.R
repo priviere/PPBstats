@@ -117,7 +117,7 @@ get.ggplot = function(
     
     if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
        attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") { # To have the same format for next steps
-      data = plyr::rename(data, replace = c("variable_mean" = "median"))
+      data = plyr::rename(data, replace = c("variable" = "median"))
     }
     if(attributes(data)$PPBstats.object == "predict.the.past") { # To have the same format for next steps
       data = plyr::rename(data, replace = c("50%" = "median"))
