@@ -6,7 +6,7 @@
 #'
 #' @param out.model outputs from model 1 (\code{MC}) or model 2 (\code{FWH})
 #'  
-#' @param analysis "experimental.design", convergence" or "posteriors". If NULL, the three are done.
+#' @param analysis "experimental_design", convergence" or "posteriors". If NULL, the three are done.
 #' 
 #' @param nb_parameters_per_plot The number of parameters per plot to facilitate the visualisation
 #' 
@@ -82,8 +82,8 @@ model2.presence.abscence.matrix = out.model$model2.presence.abscence.matrix
 out.experimental.design = NULL
 if(analysis == "all" | analysis == "experimental_design") {
 
-  m = out.model$data.presence.abscence.matrix
-  
+  m = out.model$presence.abscence.matrix
+
   if(attributes(out.model)$PPBstats.object == "model1"){
     d <- data.frame(germplasm = rep(row.names(m), ncol(m)), 
                     environment = rep(colnames(m), each=nrow(m)),
