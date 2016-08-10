@@ -120,7 +120,7 @@ MC = function(
   # Mean for each entry (i.e. each germplasm in each environment in each block)
   D$ID = paste(D$entry, D$germplasm, D$environment, D$block, D$X, D$Y, sep = ":")
   formule = as.formula("variable ~ entry + germplasm + environment + block + X + Y + ID")
-  DD = droplevels(aggregate(formule, FUN = mean, data = D))
+  DD = droplevels(aggregate(formule, FUN = mean, data = D, na.action = na.pass))
 
   data.model1 = DD
   data.model1$parameter = paste("[", data.model1$germplasm, ",", data.model1$environment, "]", sep = "") # To have a compatible format for get.ggplot
