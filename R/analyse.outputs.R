@@ -76,7 +76,6 @@ if(!is.null(analysis)) {
 
 # Default settings
 model1.data_env_whose_param_did_not_converge = NULL
-attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
 
 model2.presence.abscence.matrix = out.model$model2.presence.abscence.matrix
 
@@ -173,6 +172,7 @@ if(analysis == "all" | analysis == "posteriors") {
   if(attributes(out.model)$PPBstats.object == "model1") {
     # 4.1.1. Update MCMC and get data frame with environments where some parameters did not converge ----------
     if(analysis == "all" | analysis == "convergence") {
+      
       if( length(conv_not_ok) > 0 ) {
         
         mu_not_ok = conv_not_ok[grep("mu\\[", conv_not_ok)]
