@@ -32,11 +32,11 @@ get.env.info = function(
 {
 
   # 1. Get informations on environments ----------
-  
   vec_env_all = levels(D$environment)
   Dna = droplevels(D[which(!is.na(D$variable)),]) # Get rid of NA, keep the farm only where there is data
   vec_env_na = levels(Dna$environment)
   vec_env_with_no_data = vec_env_all[!is.element(vec_env_all, vec_env_na)]
+
   if ( length(vec_env_with_no_data) == 0 ) { vec_env_with_no_data = NULL }
 
   # 2. Get environment with controls ----------
