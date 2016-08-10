@@ -2,7 +2,7 @@
 % Please edit documentation in R/get.ggplot.R
 \name{get.ggplot}
 \alias{get.ggplot}
-\title{Get ggplot objects to visualize output from the analysis}
+\title{Get ggplot objects to visualize outputs from the analysis}
 \usage{
 get.ggplot(data, ggplot.type = "interaction", nb_parameters_per_plot = 8)
 }
@@ -13,7 +13,7 @@ get.ggplot(data, ggplot.type = "interaction", nb_parameters_per_plot = 8)
 \itemize{
  \item from \code{get.mean.comparison}
  \itemize{
-   \item from model 1 (\code{MC}) :  "barplot", interaction", "score"
+   \item from model 1 (\code{MC}) :  "barplot", "interaction", "score"
    \item from model 2 (\code{FWH}): "barplot"
    }
 
@@ -27,7 +27,7 @@ get.ggplot(data, ggplot.type = "interaction", nb_parameters_per_plot = 8)
 
  }}
 
-\item{nb_parameters_per_plot}{The number of parameters per plot to facilitate the visualisation}
+\item{nb_parameters_per_plot}{The number of parameters per plot to facilitate the visualization}
 }
 \value{
 The function returns a list of ggplot objects
@@ -43,7 +43,7 @@ This is meaningful if you have data for several years.
 
 ggplot.type = "score" display a plot with a score according to which group the entry was allocated.
 An high score means that the entry was in a group with an high mean.
-A low socre means that the entry was in a group with an low mean.
+A low score means that the entry was in a group with an low mean.
 \item From \code{get.parameter.groups} from model 2 (\code{FWH}) "PCA" display the PCA and the groups of parameters.
 }
 
