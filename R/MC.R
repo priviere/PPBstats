@@ -116,16 +116,12 @@ MC = function(
     Y = as.factor(as.character(data$Y)),
     variable = as.numeric(as.character(data[,variable]))
   )
-  
-  # Mean for each entry (i.e. each germplasm in each environment)
-  D$ID = paste(D$germplasm, D$environment, D$block, D$X, D$Y, sep = ":")
-  a = tapply(D$variable, D$ID, mean, na.rm = TRUE)
-  b = matrix(a, ncol = 1)
-  b = cbind.data.frame(names(a), b)
-  colnames(b) = c("ID", "variable_mean")
-  
-  DD = join(b, D, by = "ID")
-  
+
+  # Mean for each entry (i.e. each germplasm in each environment in each block)
+  D$ID = paste(D$entry, D$germplasm, D$environment, D$block, D$X, D$Y, sep = ":")
+  formule = as.formula("variable ~ entry + germplasm + environment + block + X + Y + ID")
+  DD = droplevels(aggregate(formule, FUN = mean, data = D))
+
   data.model1 = DD
   data.model1$parameter = paste("[", data.model1$germplasm, ",", data.model1$environment, "]", sep = "") # To have a compatible format for get.ggplot
   attributes(data.model1)$PPBstats.object = "data.model1"
@@ -133,7 +129,7 @@ MC = function(
   # Get regional farms (RF) and satellite farms (SF)
   out = get.env.info(DD, nb_ind = 1)
   vec_env_with_no_data = out$vec_env_with_no_data
-  
+
   vec_env_with_no_controls = out$vec_env_with_no_controls
   data_env_with_no_controls = droplevels(filter(DD, environment %in% vec_env_with_no_controls))
   data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
