@@ -4,7 +4,7 @@
 #' @name PPBstats
 #' @docType package
 #' @description
-#' The R package \code{PPBstats} analyses unbalanced trials from decentralized participatory plant breeding programmes.
+#' The R package \code{PPBstats} analyzes unbalanced trials from decentralized participatory plant breeding programs.
 #' 
 #' @author Pierre Riviere and Olivier David
 #' 

@@ -2,7 +2,7 @@
 #' Get ggplot objects to visualize output from the analysis
 #'
 #' @description
-#' \code{get.ggplot} returns ggplot objects to visualize output from the analysis
+#' \code{get.ggplot} returns ggplot objects to visualize outputs from the analysis
 #'
 #' @param data The data to plot. It can come from \code{get.mean.comparison}, \code{get.parameter.groups}, \code{predict.the.past}, \code{MC}$data_env_with_no_controls or \code{analye.outputs$model1.data_env_whose_param_did_not_converge}.
 #'  
@@ -10,7 +10,7 @@
 #' \itemize{
 #'  \item from \code{get.mean.comparison}
 #'  \itemize{
-#'    \item from model 1 (\code{MC}) :  "barplot", interaction", "score"
+#'    \item from model 1 (\code{MC}) :  "barplot", "interaction", "score"
 #'    \item from model 2 (\code{FWH}): "barplot"
 #'    }
 #'      
@@ -24,7 +24,7 @@
 #'  
 #'  }
 #' 
-#' @param nb_parameters_per_plot The number of parameters per plot to facilitate the visualisation
+#' @param nb_parameters_per_plot The number of parameters per plot to facilitate the visualization
 #' 
 #' @details
 #' \itemize{
@@ -34,7 +34,7 @@
 #' 
 #' ggplot.type = "score" display a plot with a score according to which group the entry was allocated.
 #' An high score means that the entry was in a group with an high mean.
-#' A low socre means that the entry was in a group with an low mean.
+#' A low score means that the entry was in a group with an low mean.
 
 #' \item From \code{get.parameter.groups} from model 2 (\code{FWH}) "PCA" display the PCA and the groups of parameters.
 #' }
@@ -168,7 +168,7 @@ get.ggplot = function(
         p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
         
         if(attributes(data)$PPBstats.object == "mean.comparisons.model1") { # Add letters of significant groups
-          p = p + geom_text(date = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
+          p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
           p = p + ggtitle(paste(dx[1, "environment"], "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"])) + ylab("")
         }
         
@@ -201,7 +201,7 @@ get.ggplot = function(
     
     OUT = lapply(data_split, function(dx){
       p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
-      p = p + geom_text(date = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
+      p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
       p = p + ggtitle(paste(para.name, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
       p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, data[1,"max"]) + ylab("")
       return(p)
