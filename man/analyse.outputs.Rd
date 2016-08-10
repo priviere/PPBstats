@@ -9,7 +9,7 @@ analyse.outputs(out.model, analysis = NULL, nb_parameters_per_plot = 10)
 \arguments{
 \item{out.model}{outputs from model 1 (\code{MC}) or model 2 (\code{FWH})}
 
-\item{analysis}{"experimental.design", convergence" or "posteriors". If NULL, the three are done.}
+\item{analysis}{"experimental_design", convergence" or "posteriors". If NULL, the three are done.}
 
 \item{nb_parameters_per_plot}{The number of parameters per plot to facilitate the visualisation}
 }
