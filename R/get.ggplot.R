@@ -158,7 +158,7 @@ get.ggplot = function(
         p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
         
         if(attributes(data)$PPBstats.object == "mean.comparisons.model1") { # Add letters of significant groups
-          p = p + geom_text(date = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
+          p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
           p = p + ggtitle(paste(dx[1, "environment"], "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"])) + ylab("")
         }
         
@@ -191,7 +191,7 @@ get.ggplot = function(
     
     OUT = lapply(data_split, function(dx){
       p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
-      p = p + geom_text(date = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
+      p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
       p = p + ggtitle(paste(para.name, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
       p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, data[1,"max"]) + ylab("")
       return(p)
