@@ -1,10 +1,18 @@
+PPBstats 0.10.0 --------------------------------------
+-----------------------------------------------------
+* vignette
+  - update the vignette following previous developments
+
+
 PPBstats 0.9.2 --------------------------------------
 -----------------------------------------------------
 * fix little bugs
 * add the presence.abscence.matrix for the model in FWH, analyse.outputs and predict.the.past
-* add model1.data_env_whose_param_did_not_converge in MC, analyse.outputs and get.ggplot
+* add model1.data_env_whose_param_did_not_converge in analyse.outputs and get.ggplot
 * return MCMC only for parameters that converge
 * possible to choose NULL for get.at.least.X.groups
+* "cluster" is displayed in the legend for ggplots from get.parameter.groups
+* fix huge bug in MC where the mean of the observation were not correctly done
 
 
 PPBstats 0.9.1 --------------------------------------
