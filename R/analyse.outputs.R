@@ -76,13 +76,15 @@ if(!is.null(analysis)) {
 
 # Default settings
 model1.data_env_whose_param_did_not_converge = NULL
+attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
+
 model2.presence.abscence.matrix = out.model$model2.presence.abscence.matrix
 
 # 1. experimental design ----------
 out.experimental.design = NULL
 if(analysis == "all" | analysis == "experimental_design") {
 
-  m = out.model$presence.abscence.matrix
+  m = out.model$data.presence.abscence.matrix
 
   if(attributes(out.model)$PPBstats.object == "model1"){
     d <- data.frame(germplasm = rep(row.names(m), ncol(m)), 
@@ -184,7 +186,7 @@ if(analysis == "all" | analysis == "posteriors") {
         } else { env_not_ok_beta = NULL }
 
         sigma_not_ok = conv_not_ok[grep("sigma\\[", conv_not_ok)]
-        if( length(beta_not_ok) > 0 ) {
+        if( length(sigma_not_ok) > 0 ) {
           env_not_ok_sigma = unique(sub("\\]", "", sub("sigma\\[", "", sigma_not_ok)))
         } else { env_not_ok_sigma = NULL }
         
@@ -192,7 +194,7 @@ if(analysis == "all" | analysis == "posteriors") {
         if( length(env_not_ok) > 0 ) {
         model1.data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
         attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
-        
+                
         # Update MCMC, delete all environments where at least one parameter do not converge
         message("MCMC are updated, the following environment were deleted : ", paste(env_not_ok, collapse = ", "))
         message("model1.data_env_whose_param_did_not_converge contains the raw data for these environments.")
