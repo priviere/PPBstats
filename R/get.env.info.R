@@ -4,7 +4,7 @@
 #' @description
 #' \code{get.env.info} look at a data set and separate regional farms and satellite farms in two datasets. This function is used in \code{MC}.
 #'
-#' @param D The data.frame with its specific column names used in \code{MC}
+#' @param D The data frame with its specific column names used in \code{MC}
 #'  
 #' @param nb_ind The minimal number of individuals per variable
 #' 
