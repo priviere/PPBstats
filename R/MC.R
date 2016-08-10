@@ -343,7 +343,7 @@ MC = function(
   # 7. Get the outptus ----------
   OUT = list(
     "data.model1" = data.model1,
-    "presence.abscence.matrix" = presence.abscence.matrix,
+    "data.presence.abscence.matrix" = presence.abscence.matrix,
     "vec_env_with_no_data" = vec_env_with_no_data,
     "vec_env_with_no_controls" = vec_env_with_no_controls,
     "data_env_with_no_controls" = data_env_with_no_controls,
