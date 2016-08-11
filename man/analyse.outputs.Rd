@@ -29,7 +29,7 @@ The function returns a list with
  \item for model 1
  \itemize{
    \item "sigma_distribution" : the distribution of the sigma is displayed on the Inverse Gamma distribution
-   \item "parameter_posteriors" : a caterpillar plot is display for each mu_ij, beta_jk for each environment and for sigma_j
+   \item "parameter_posteriors" : a caterpillar plot is displayed for each mu_ij, beta_jk for each environment and for sigma_j
    \item "standardized_residuals" : a plot to check the normality of the residuals
  }
 
@@ -47,14 +47,14 @@ The function returns a list with
 }
 }
 \description{
-\code{analyse.outputs} displays plots to see if the model went well based ont the Gelman-Rubin test and plots of posteriors distributions. It is important to run this step before going ahead in the analysis otherwise you may make mistakes in the interpretation of the results.
+\code{analyse.outputs} displays plots to see if the model went well based on the Gelman-Rubin test and plots of posteriors distributions. It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 }
 \details{
 For analyse = "convergence", the test used is the Gelman-Rubin test.
-It may take some times to run.
+It may take some time to run.
 More details with ?\code{gelman.diag} from the \code{coda} package.
 Note that for \code{gelman.diag}, the argument \code{multivariate = FALSE} is used.
-If you wish exhaustive information, looked at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out.model$MCMC)}.
+If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out.model$MCMC)}.
 But be careful with the size of your MCMC output which are often too big to be performed in R.
 
 More information in  the vignette. Type vignette("PPBstats").
