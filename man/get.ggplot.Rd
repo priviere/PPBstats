@@ -2,7 +2,7 @@
 % Please edit documentation in R/get.ggplot.R
 \name{get.ggplot}
 \alias{get.ggplot}
-\title{Get ggplot objects to visualize outputs from the analysis}
+\title{Get ggplot objects to visualize output from the analysis}
 \usage{
 get.ggplot(data, ggplot.type = "interaction", nb_parameters_per_plot = 8)
 }
@@ -33,7 +33,7 @@ get.ggplot(data, ggplot.type = "interaction", nb_parameters_per_plot = 8)
 The function returns a list of ggplot objects
 }
 \description{
-\code{get.ggplot} returns ggplot objects to visualize output from the analysis
+\code{get.ggplot} returns ggplot objects to visualize outputs from the analysis
 }
 \details{
 \itemize{
