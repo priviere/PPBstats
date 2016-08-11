@@ -30,7 +30,7 @@
 #' \item "convergence" : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. If all the chains converge, it is NULL
 #' 
 #' \item "posteriors" a list with
-#' \itemize{git@github.com:gaelleVF/PPBstats.git
+#' \itemize{
 #' 
 #'  \item for model 1
 #'  \itemize{
