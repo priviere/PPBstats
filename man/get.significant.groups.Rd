@@ -7,7 +7,7 @@
 get.significant.groups(Mpvalue, MCMC, alpha = 0.05, p.adj = NULL)
 }
 \arguments{
-\item{Mpvalue}{Square matrix with the probability to have a common distribution for each pair of parameter. It comes from \code{comp.parameters}}
+\item{Mpvalue}{Square matrix with the probability of having a common distribution for each pair of parameter. It comes from \code{comp.parameters}}
 
 \item{MCMC}{MCMC outputs from \code{analysis.outputs}. It is a data frame.}
 
