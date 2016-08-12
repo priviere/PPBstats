@@ -30,6 +30,13 @@ You can participate in three ways:
 2. translate the package
 3. add new functions that may be useful in the analysis of unbalanced trials that can be found in PPB programmes
 
+If you update the code, you can refer to 
+[the issues](https://github.com/priviere/shinemas2R/issues)
+and do it in on the [branch v0.10.1](https://github.com/priviere/PPBstats/tree/v0.10.1)
+so that the master branch remains unchanged for tests.
+Anyhow, send me an email if you wish to participate in order to coordinate our efforts!
+
+
 ### 1. Test and report bugs
 
 First, load the development version:
