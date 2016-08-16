@@ -82,6 +82,9 @@ FWH = function(
   if(!is.element("year", colnames(data))) { stop(mess) }
   if(!is.element("germplasm", colnames(data))) { stop(mess) }
   if(!is.element("location", colnames(data))) { stop(mess) }
+  if(!is.element("block", colnames(data))) { stop(mess) }
+  if(!is.element("X", colnames(data))) { stop(mess) }
+  if(!is.element("Y", colnames(data))) { stop(mess) }
   
   if(!is.element(variable, colnames(data))) { stop(variable," is not in data") }
   
