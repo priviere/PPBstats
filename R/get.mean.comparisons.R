@@ -70,7 +70,7 @@ get.mean.comparisons = function(
   if(attributes(MCMC)$model == "model2" & parameter == "beta") { vec_element = "beta\\[" }
   if(attributes(MCMC)$model == "model2" & parameter == "theta") { vec_element = "theta\\[" }
   
-  OUT = NULL
+  OUT = MPVALUE = NULL
   for (e in 1:length(vec_element)) {
     
     element = vec_element[e]
@@ -82,7 +82,7 @@ get.mean.comparisons = function(
     
     Mpvalue = comp.parameters(MCMC = MCMC_element, parameter = parameter, type = type, threshold = threshold)
     
-    if(type == 1 & is.null(Mpvalue)) { message("mean comparisons not done for ", element, " because there are less than two parameters to compare.") }
+    if(type == 1 & is.null(Mpvalue)) { message("mean comparisons not done for ", sub("\\\\\\[", "", element), " because there are less than two parameters to compare.") }
     
         
     if(type == 1 & !is.null(Mpvalue)) {
@@ -119,10 +119,17 @@ get.mean.comparisons = function(
       }
     
     OUT = rbind.data.frame(OUT, TAB)
-    
+    MPVALUE = c(MPVALUE, list(Mpvalue))
   }
   if( attributes(MCMC)$model == "model1") { attributes(OUT)$PPBstats.object = "mean.comparisons.model1" }
   if( attributes(MCMC)$model == "model2") { attributes(OUT)$PPBstats.object = "mean.comparisons.model2" }
+  
+  names(MPVALUE) = vec_element
+  out = list(OUT, MPVALUE)
+  names(out) = c("mean.comparisons", "Mpvalue")
+  
+  if( attributes(MCMC)$model == "model1") { attributes(out)$PPBstats.object = "mean.comparisons.model1" }
+  if( attributes(MCMC)$model == "model2") { attributes(out)$PPBstats.object = "mean.comparisons.model2" }
 
-  return(OUT)
+  return(out)
 }
