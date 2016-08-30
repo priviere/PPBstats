@@ -1,3 +1,13 @@
+PPBstats 0.10.1 --------------------------------------
+-----------------------------------------------------
+* update functions
+  - get.ggplot : add data_version argument
+  - get.mean.comparisons
+  
+* add new functions
+  - AMMI.R
+  - AMMI_called_functions.R
+
 PPBstats 0.10.0 --------------------------------------
 -----------------------------------------------------
 * vignette
