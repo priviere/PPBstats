@@ -7,17 +7,17 @@
 AMMI(data, vec_variables)
 }
 \arguments{
-\item{data}{data with at least the following columns: environment, germplasm, year, block}
+\item{data}{data with at least the following columns: year, location, germplasm, block, X, Y}
 
 \item{vec_variables}{vectors of variables to analyse}
 }
 \value{
 The function returns two lists with
-\itemze{
+\itemize{
  \item for each variable a list with
-  \itemze{
+  \itemize{
    \item "model" being a list with
-    \itemze{
+    \itemize{
      \item "anova_model"
      \item "residuals" being a list with
       \itemize{
@@ -28,7 +28,7 @@ The function returns two lists with
       }
      \item "variability_repartition"
      \item "interaction_matrix"
-     \item "environment_effects"
+     \item "location_effects"
      \item "germplasm_effects"
      \item "intra_germplasm_variance"
     }
@@ -40,7 +40,7 @@ The function returns two lists with
       \item "variance_intra"
      }
 
-   \item environment being a list with
+   \item location being a list with
     \itemize{
       \item "boxplot"
       \item "barplot_LSD_significant_group"
@@ -77,7 +77,7 @@ The function returns two lists with
  }
 }
 \description{
-\code{AMMI} runs AMMI model on a data set and gives back results on germplasms, environments, years and GxE interactions effects
+\code{AMMI} runs AMMI model on a data set and gives back results on germplasms, locations, years and GxE interactions effects
 }
 \details{
 See the vignette for more details on the AMMI model
