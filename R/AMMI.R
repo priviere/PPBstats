@@ -2,9 +2,9 @@
 #' Run AMMI model on a data set
 #'
 #' @description
-#' \code{AMMI} runs AMMI model on a data set and gives back results on germplasms, environments, years and GxE interactions effects
+#' \code{AMMI} runs AMMI model on a data set and gives back results on germplasms, locations, years and GxE interactions effects
 #' 
-#' @param data data with at least the following columns: environment, germplasm, year, block
+#' @param data data with at least the following columns: year, location, germplasm, block, X, Y
 #' 
 #' @param vec_variables vectors of variables to analyse
 #' 
@@ -27,7 +27,7 @@
 #'       }
 #'      \item "variability_repartition"
 #'      \item "interaction_matrix"
-#'      \item "environment_effects"
+#'      \item "location_effects"
 #'      \item "germplasm_effects"
 #'      \item "intra_germplasm_variance"
 #'     }
@@ -39,7 +39,7 @@
 #'       \item "variance_intra"
 #'      }
 #'    
-#'    \item environment being a list with 
+#'    \item location being a list with 
 #'     \itemize{
 #'       \item "boxplot"
 #'       \item "barplot_LSD_significant_group"
@@ -93,23 +93,23 @@ AMMI = function(
     {
     # 1.1. Set up data set ----------
       colnames(data)[which(colnames(data) == variable)] = "variable"
-      data = droplevels(unique(na.omit(data[c("environment", "germplasm", "year", "block", "variable")])))
+      data = data[c("location", "germplasm", "year", "block", "variable")]
       data$variable = as.numeric(as.character(data$variable))
     
     # 1.2. AMMI model which depends on the years available in the data set ----------
     
     # 1.2.1. Run the model ----------
-    data$block_in_env = factor(paste(data$block, data$environment, sep = ";")) # hierarchise block within environemnt
-    data$YxE = factor(paste(data$year, data$environment, sep = ";"))
+    data$block_in_env = factor(paste(data$block, data$location, sep = ";")) # hierarchise block within environemnt
+    data$YxE = factor(paste(data$year, data$location, sep = ";"))
     data$YxG = factor(paste(data$year, data$germplasm, sep = ";"))
     
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
     
     if(nlevels(data$year) > 1) { 
-      model = lm(variable ~ germplasm*environment + block_in_env + year + YxG + YxE, data = data)
+      model = lm(variable ~ germplasm*location + block_in_env + year + YxG + YxE, data = data)
     } else {
-      model = lm(variable ~ germplasm*environment + bloc_in_env, data = data)
+      model = lm(variable ~ germplasm*location + bloc_in_env, data = data)
     }
     options(contrasts = c("contr.treatment", "contr.poly")) # Come back to default options
     
@@ -138,7 +138,7 @@ AMMI = function(
       ),
       "variability_repartition" = pie,
       "interaction_matrix" = data_interaction,
-      "environment_effects" = vec_E,
+      "location_effects" = vec_E,
       "germplasm_effects" = vec_G,
       "intra_germplasm_variance" = vec_var_G_intra
     )
@@ -155,11 +155,11 @@ AMMI = function(
       "variance_intra" = p3_G
     )
     
-    # 1.4. Study environment effect ----------
-    p1_E = gboxplot(data, "environment", variable) # environment boxplot
-    p2_E = gLSDplot(model, "environment", variable, "bonferroni") # environment significant groups
+    # 1.4. Study location effect ----------
+    p1_E = gboxplot(data, "location", variable) # location boxplot
+    p2_E = gLSDplot(model, "location", variable, "bonferroni") # location significant groups
     
-    out_environment = list(
+    out_location = list(
       "boxplot" = p1_E,
       "barplot_LSD_significant_group" = p2_E
     )
@@ -167,7 +167,7 @@ AMMI = function(
     # 1.5. Study interaction effects ----------
     
     # 1.5.1. Interaction plot ----------
-    p1_GxE = ggplot(data = data, aes(x = environment, y = variable, colour = germplasm, group = germplasm))
+    p1_GxE = ggplot(data = data, aes(x = location, y = variable, colour = germplasm, group = germplasm))
     #  p1_GxE = p1_GxE + stat_summary(fun.y= mean, geom = "point")
     p1_GxE = p1_GxE + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
     
@@ -207,7 +207,7 @@ AMMI = function(
     out = list(
       "model" = out_model,
       "germplasm" = out_germplasm,
-      "environment" = out_environment,
+      "location" = out_location,
       "GxE" = out_GxE
     )
     
@@ -229,7 +229,7 @@ AMMI = function(
     colnames(dtmp)[c(1, 2)] = c("var", "facteur")
     
     fr = c("année", "bloc", "ferme", "population", "population x ferme", "résiduelle", "anée x ferme", "population x année")
-    names(fr) = c("year", "block", "environment", "germplasm", "germplasm:environment", "residuals", "YxE", "YxG")
+    names(fr) = c("year", "block", "location", "germplasm", "germplasm:location", "residuals", "YxE", "YxG")
     dtmp$facteur = factor(fr[dtmp$facteur])
     
     p = ggplot(dtmp, aes(x = var, y = percentage_Sum_sq)) + geom_bar(stat = "identity", aes(fill = facteur))
