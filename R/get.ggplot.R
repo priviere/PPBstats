@@ -189,11 +189,13 @@ get.ggplot = function(
             data_version_tmp = droplevels(filter(data_version, environment == env))
             
             gp = unique(data_version_tmp$group)
-            STARS = NULL
+            GP_name = STARS = NULL
             for(g in gp){
               dtmp = droplevels(filter(data_version_tmp, group == g))
               v1 = as.character(filter(dtmp, version == "v1")$mu)
               v2 = as.character(filter(dtmp, version == "v2")$mu)
+              gp_name = paste(filter(dtmp, version == "v1")$germplasm, filter(dtmp, version == "v2")$germplasm, sep = " - ")
+              GP_name = c(GP_name, gp_name)
               pvalue = data_Mpvalue_env[v1, v2]
               if(is.null(pvalue)) { stars = " "} else {
                 if(pvalue < 0.001) { stars = "***" }
@@ -201,17 +203,22 @@ get.ggplot = function(
                 if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
                 if(pvalue > 0.01) { stars = "." }
               }
-              names(stars) = g
+              names(GP_name) = g
+              names(stars) = gp_name
               STARS = c(STARS, stars)
             }
             
             colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
             d = join(data_version_tmp, dx, "mu")
+            d$group = factor(GP_name[d$group])
             
             p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
             
             y = tapply(d$median, d$group, mean, na.rm = TRUE) * 1.2
             label_stars = data.frame(group = names(STARS), median = y, STARS = STARS)
+            
+            print(label_stars)
+            
             p = p + geom_text(data = label_stars, aes(label = STARS))
           }
           
