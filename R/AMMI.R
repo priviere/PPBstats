@@ -12,11 +12,11 @@
 #' 
 #' @return 
 #' The function returns two lists with
-#' \itemze{
+#' \itemize{
 #'  \item for each variable a list with
-#'   \itemze{
+#'   \itemize{
 #'    \item "model" being a list with 
-#'     \itemze{
+#'     \itemize{
 #'      \item "anova_model"
 #'      \item "residuals" being a list with 
 #'       \itemize{
