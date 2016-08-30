@@ -5,6 +5,8 @@
 #' \code{get.ggplot} returns ggplot objects to visualize outputs from the analysis
 #'
 #' @param data The data to plot. It can come from \code{get.mean.comparison}, \code{get.parameter.groups}, \code{predict.the.past}, \code{MC}$data_env_with_no_controls or \code{analye.outputs$model1.data_env_whose_param_did_not_converge}.
+#' 
+#' @param data_version data set with the following columns: "year", "location", "germplasm", "group", "version"
 #'  
 #' @param ggplot.type The type of plot you wish:
 #' \itemize{
