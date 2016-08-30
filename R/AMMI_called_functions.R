@@ -79,8 +79,6 @@ ecovalence = function(matrix, variable){
 
 gpieplot = function(anov, var){
   #anov : anova du modèle complet, var : nom de la variable étudiée
-  write.table(anov, file = paste(var, "_anova.csv", sep = ""), sep = "\t")
-  
   total_Sum_Sq = sum(anov$"Sum Sq")
   Sum_sq = anov$"Sum Sq"
   pvalue = anov$"Pr(>F)"
@@ -88,8 +86,7 @@ gpieplot = function(anov, var){
   factor = rownames(anov)
   
   DFtemp = cbind.data.frame(factor, pvalue, Sum_sq, percentage_Sum_sq)
-  write.table(DFtemp, file = paste(var, "_Sum_sq.csv", sep = ""), sep = "\t")
-  
+
   pie = ggplot(data = DFtemp, aes(x = "", y = percentage_Sum_sq, fill = factor)) 
   pie = pie + theme_minimal() + theme(axis.title.x = element_blank(), 
                                       axis.title.y = element_blank(), 
