@@ -222,7 +222,7 @@ AMMI = function(
     {
     dtmp = data.frame()
     for(i in 1:length(out_ammi)){
-      d = out_year_and_env[[i]]$model$variability_repartition$data
+      d = out_ammi[[i]]$model$variability_repartition$data
       d = cbind.data.frame(names(out_ammi)[i], d)
       dtmp = rbind.data.frame(dtmp, d)
     }
