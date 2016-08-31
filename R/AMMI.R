@@ -95,6 +95,7 @@ AMMI = function(
       colnames(data)[which(colnames(data) == variable)] = "variable"
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data$variable = as.numeric(as.character(data$variable))
+      data = droplevels(na.omit(data))
     
     # 1.2. AMMI model which depends on the years available in the data set ----------
     
@@ -109,12 +110,12 @@ AMMI = function(
     if(nlevels(data$year) > 1) { 
       model = lm(variable ~ germplasm*location + block_in_env + year + YxG + YxE, data = data)
     } else {
-      model = lm(variable ~ germplasm*location + bloc_in_env, data = data)
+      model = lm(variable ~ germplasm*location + block_in_env, data = data)
     }
     options(contrasts = c("contr.treatment", "contr.poly")) # Come back to default options
     
     anova_model = anova(model)
-    
+
     # 1.2.2. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
     outRes = gverifResidualsnormality(model)
     
