@@ -52,6 +52,7 @@ NULL
 "PPBdata2"
 NULL
 
+
 # data_version ----------
 #' Data with group of entry separeted in different versions
 #'
@@ -61,7 +62,7 @@ NULL
 #' @usage
 #' data(data_version)
 #'
-#' @format1
+#' @format
 #' A data frame with 1574 rows and 5 columns
 #' 
 #' @author Pierre Rivière
