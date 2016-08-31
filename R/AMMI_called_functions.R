@@ -3,8 +3,8 @@ gboxplot = function(data, x, variable){
     p = ggplot(data = data, aes(x = germplasm, y = variable, color = germplasm))
     p = p + labs(title = paste("Boite a moustache de la variable :" , variable,", en fonction du germplasme"))
   }
-  else if (x == "environment"){
-    p = ggplot(data = data, aes(x = environnement, y = variable, color = environment))
+  else if (x == "location"){
+    p = ggplot(data = data, aes(x = environnement, y = variable, color = location))
     p = p + labs(title = paste("Boite a moustache de la variable :" , variable,", en fonction de l'environnement"))
   }
   
@@ -30,7 +30,7 @@ gLSDplot = function(model, x, variable, adjust){
     p = p + geom_text(data = LSD$groups, aes(x = germplasm, y = means, label = M, vjust = -1))
     p = p + labs(title = paste("Groupes de germplasmes significativement differents pour la variable :", variable))
   }
-  else if (x == "environment"){
+  else if (x == "location"){
     LSD$groups$environnement = LSD$groups$trt
     p = ggplot(data = LSD$groups, aes(x = environnement, y = means))
     p = p + geom_text(data = LSD$groups, aes(x = environnement, y = means, label = M, vjust = -1))
@@ -315,23 +315,23 @@ build_interaction_matrix = function(model){
   # variance intra germplasm
   var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
   
-  # environment ----------
-  coef_env = c[grep("environment", names(c))]
+  # location ----------
+  coef_env = c[grep("location", names(c))]
   todel = grep(":", names(coef_env))
   if(length(todel) > 0) { coef_env = coef_env[-todel] }
   coef_env = c(coef_env, - sum(coef_env))
-  names(coef_env) = model$xlevels$environment
+  names(coef_env) = model$xlevels$location
   
-  # germplasm x environment ----------
+  # germplasm x location ----------
   coef_gxe = c[grep("germplasm", names(c))]
   coef_gxe = coef_gxe[grep(":", names(coef_gxe))]
-  
-  Mgxe = matrix(0, ncol = length(model$xlevels$environment), nrow = length(model$xlevels$germplasm))
-  colnames(Mgxe) = paste("env", c(1:length(model$xlevels$environment)), sep="")
+
+  Mgxe = matrix(0, ncol = length(model$xlevels$location), nrow = length(model$xlevels$germplasm))
+  colnames(Mgxe) = paste("env", c(1:length(model$xlevels$location)), sep="")
   rownames(Mgxe) = paste("germ", c(1:length(model$xlevels$germplasm)), sep="")
   
   compteur = 1
-  for(i in 1:(length(model$xlevels$environment)-1)){
+  for(i in 1:(length(model$xlevels$location)-1)){
     for(j in 1:(length(model$xlevels$germplasm)-1)){
       Mgxe[j,i] = coef_gxe[compteur]
       compteur = compteur + 1
@@ -342,7 +342,7 @@ build_interaction_matrix = function(model){
   Mgxe[,ncol(Mgxe)] = -apply(Mgxe, 1, sum)
   
   rownames(Mgxe) = model$xlevels$germplasm
-  colnames(Mgxe) = model$xlevels$environment
+  colnames(Mgxe) = model$xlevels$location
   
   # outputs ----------
   out = list(coef_env, coef_germ, var_intra, Mgxe)
