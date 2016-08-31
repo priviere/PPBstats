@@ -187,7 +187,7 @@ AMMI = function(
     
     # 1.5.2. PCA on interaction matrix ----------
     pca = PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
-    outPCA = dographPCA(pca, "germplasm")
+    outPCA = dographPCA(pca)
     
     outPCA$screeplot = outPCA$screeplot + labs(title = paste("Pourcentage de la variance expliquee par chaque composante principale, ACP sur le facteur germplasme,\n variable etudiee :",variable)) # graphique représentant le pourcentage de variabilité totale pour chaque composante principale
     
@@ -221,26 +221,82 @@ AMMI = function(
   fun_post_ammi = function(out_ammi)
     # go! ----------
     {
+  # 2.1. barplot_variation_repartition
     dtmp = data.frame()
     for(i in 1:length(out_ammi)){
       d = out_ammi[[i]]$model$variability_repartition$data
       d = cbind.data.frame(names(out_ammi)[i], d)
       dtmp = rbind.data.frame(dtmp, d)
     }
-    colnames(dtmp)[c(1, 2)] = c("var", "facteur")
-    
-    fr = c("année", "bloc", "ferme", "population", "population x ferme", "résiduelle", "anée x ferme", "population x année")
-    names(fr) = c("year", "block", "location", "germplasm", "germplasm:location", "residuals", "YxE", "YxG")
-    dtmp$facteur = factor(fr[dtmp$facteur])
-    
-    p = ggplot(dtmp, aes(x = var, y = percentage_Sum_sq)) + geom_bar(stat = "identity", aes(fill = facteur))
+    colnames(dtmp)[1] = "var"
+    p = ggplot(dtmp, aes(x = var, y = percentage_Sum_sq)) + geom_bar(stat = "identity", aes(fill = factor))
     p = p + ylab("pourcentage de variation") + theme(axis.text.x = element_text(angle = 90))
     cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
     barplot_variation_repartition = p + scale_fill_manual(values = cbbPalette)
     
-    PCA_G_effect = NULL
-    PCA_intraG_effect = NULL
-    PCA_E_effect = NULL
+    # 2.2. PCA on effects
+    
+    # 2.2.1. Get data sets
+    n_G = n_E = n_varG = NULL
+    for(i in 1:length(out_ammi)){
+      n_G = c(n_G, names(out_ammi[[i]]$model$germplasm_effects))
+      n_E = c(n_E, names(out_ammi[[i]]$model$location_effects))
+      n_varG = c(n_varG, names(out_ammi[[i]]$model$intra_germplasm_variance))
+    }
+    
+
+    n_G = unique(n_G)
+    n_E = unique(n_E)
+    n_varG = unique(n_varG)
+    
+    df_G = matrix(NA, ncol = length(out_ammi), nrow = length(n_G))
+    colnames(df_G) = names(out_ammi)
+    rownames(df_G) = n_G
+      
+    df_E = matrix(NA, ncol = length(out_ammi), nrow = length(n_E))
+    colnames(df_E) = names(out_ammi)
+    rownames(df_E) = n_E
+    
+    df_varG = matrix(NA, ncol = length(out_ammi), nrow = length(n_varG))
+    colnames(df_varG) = names(out_ammi)
+    rownames(df_varG) = n_varG
+    
+    for(i in 1:length(out_ammi)){
+      g = out_ammi[[i]]$model$germplasm_effects
+      df_G[names(g),i] = g
+      e = out_ammi[[i]]$model$location_effects
+      df_E[names(e),i] = e
+      vg = out_ammi[[i]]$model$intra_germplasm_variance
+      df_varG[names(vg),i] = vg
+    }
+    
+    # 2.2.2. Run PCA
+    PCA_G = PCA(df_G, scale.unit = TRUE, graph = FALSE)
+    out_PCA_G = dographPCA(PCA_G)
+
+    PCA_E = PCA(df_E, scale.unit = TRUE, graph = FALSE)
+    out_PCA_E = dographPCA(PCA_E)
+
+    PCA_varG = PCA(df_varG, scale.unit = TRUE, graph = FALSE)
+    out_PCA_varG = dographPCA(PCA_varG)
+    
+    PCA_G_effect = list(
+      "variation_dim" = out_PCA_G$screeplot,
+      "CP1-CP2" = list("ind" = out_PCA_G$ind1_2, "var" = out_PCA_G$var1_2),
+      "CP2-CP3" = list("ind" = out_PCA_G$ind2_3, "var" = out_PCA_G$var2_3)
+    )
+    
+    PCA_intraG_effect = list(
+      "variation_dim" = out_PCA_varG$screeplot,
+      "CP1-CP2" = list("ind" = out_PCA_varG$ind1_2, "var" = out_PCA_varG$var1_2),
+      "CP2-CP3" = list("ind" = out_PCA_varG$ind2_3, "var" = out_PCA_varG$var2_3)
+    )
+    
+    PCA_E_effect = list(
+      "variation_dim" = out_PCA_E$screeplot,
+      "CP1-CP2" = list("ind" = out_PCA_E$ind1_2, "var" = out_PCA_E$var1_2),
+      "CP2-CP3" = list("ind" = out_PCA_E$ind2_3, "var" = out_PCA_E$var2_3)
+    )
     
     out = list(
       "barplot_variation_repartition" = barplot_variation_repartition,
@@ -252,9 +308,11 @@ AMMI = function(
   }
     
   # 3. Apply AMMI and Post AMMI to vec_variables ----------
+  message("I. Run AMMI model on each variable")
   out_ammi = lapply(vec_variables, fun_ammi, data)
   names(out_ammi) = vec_variables
   
+  message("\n II. Post AMMI analysis on all outputs")
   out_post_ammi = fun_post_ammi(out_ammi)
   
   OUT = list("AMMI" = out_ammi, "Post_AMMI" = out_post_ammi)
