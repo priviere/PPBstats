@@ -80,6 +80,15 @@ get.ggplot = function(
   
   if( attributes(data)$PPBstats.object == "predict.the.past" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::MC$data_env_with_no_controls, you must use ggplot.type = \"barplot\", \"interaction\".") }
   
+  if( !is.null(data_version) ){
+    mess = "The following column are compulsory in data_version : c(\"year\", \"germplasm\", \"location\", \"group\", \"version\"."
+    if(!is.element("year", colnames(data))) { stop(mess) }
+    if(!is.element("germplasm", colnames(data))) { stop(mess) }
+    if(!is.element("location", colnames(data))) { stop(mess) }
+    if(!is.element("group", colnames(data))) { stop(mess) }
+    if(!is.element("version", colnames(data))) { stop(mess) }
+  }
+  
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ) {
     data_Mpvalue = data$Mpvalue
