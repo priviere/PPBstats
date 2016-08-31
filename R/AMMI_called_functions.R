@@ -186,7 +186,7 @@ gverifResidualsnormality = function(model){
 }
 
 
-dographPCA=function(pca,var){
+dographPCA=function(pca){
   
   # déjà un graph PCA dans PPBstats::get.ggplot, voir à le compléter avec ce code ?
   
@@ -265,7 +265,7 @@ dographPCA=function(pca,var){
   gscree_plot=gscree_plot + geom_point(size=4)
   gscree_plot=gscree_plot + geom_line(size=1,linetype = "dotted")
   gscree_plot=gscree_plot + geom_text(label=paste("CP",CP,":",round(vec_Var),"%"), vjust=-1, hjust=-0.25)
-  gscree_plot=gscree_plot + labs(title = paste("Pourcentage de la variance expliquee par chaque composante principale, ACP sur le facteur",var))
+  gscree_plot=gscree_plot + labs(title = "Pourcentage de la variance expliquee par chaque composante principale, ACP")
   gscree_plot=gscree_plot + theme(plot.title = element_text(lineheight=.8, face="bold"))
   gscree_plot=gscree_plot + ylab("Variance expliquee (en % de la Variance totale)")
   
