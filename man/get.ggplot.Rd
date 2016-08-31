@@ -10,7 +10,7 @@ get.ggplot(data, data_version = NULL, ggplot.type = "interaction",
 \arguments{
 \item{data}{The data to plot. It can come from \code{get.mean.comparison}, \code{get.parameter.groups}, \code{predict.the.past}, \code{MC}$data_env_with_no_controls or \code{analye.outputs$model1.data_env_whose_param_did_not_converge}.}
 
-\item{data_version}{data set with the following columns: "year", "location", "germplasm", "group", "version"}
+\item{data_version}{data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains the different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.}
 
 \item{ggplot.type}{The type of plot you wish:
 \itemize{
