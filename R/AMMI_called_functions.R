@@ -4,7 +4,7 @@ gboxplot = function(data, x, variable){
     p = p + labs(title = paste("Boite a moustache de la variable :" , variable,", en fonction du germplasme"))
   }
   else if (x == "location"){
-    p = ggplot(data = data, aes(x = environnement, y = variable, color = location))
+    p = ggplot(data = data, aes(x = location, y = variable, color = location))
     p = p + labs(title = paste("Boite a moustache de la variable :" , variable,", en fonction de l'environnement"))
   }
   
@@ -31,9 +31,9 @@ gLSDplot = function(model, x, variable, adjust){
     p = p + labs(title = paste("Groupes de germplasmes significativement differents pour la variable :", variable))
   }
   else if (x == "location"){
-    LSD$groups$environnement = LSD$groups$trt
-    p = ggplot(data = LSD$groups, aes(x = environnement, y = means))
-    p = p + geom_text(data = LSD$groups, aes(x = environnement, y = means, label = M, vjust = -1))
+    LSD$groups$location = LSD$groups$trt
+    p = ggplot(data = LSD$groups, aes(x = location, y = means))
+    p = p + geom_text(data = LSD$groups, aes(x = location, y = means, label = M, vjust = -1))
     p = p + labs(title = paste("Groupes d'environnements significativement differents pour la variable :", variable))
   }
   
