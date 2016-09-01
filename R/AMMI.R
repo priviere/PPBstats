@@ -82,6 +82,7 @@ AMMI = function(
   data, 
   vec_variables
 )
+
 # Lets' go ----------
   {
     
@@ -312,7 +313,7 @@ AMMI = function(
   out_ammi = lapply(vec_variables, fun_ammi, data)
   names(out_ammi) = vec_variables
   
-  message("\n II. Post AMMI analysis on all outputs")
+  message("\nII. Post AMMI analysis on all outputs")
   out_post_ammi = fun_post_ammi(out_ammi)
   
   OUT = list("AMMI" = out_ammi, "Post_AMMI" = out_post_ammi)
