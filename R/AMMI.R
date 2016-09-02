@@ -124,7 +124,7 @@ AMMI = function(
     pie = gpieplot(anova_model, variable)
     
     # 1.2.4. Get effects ----------
-    outinter = build_interaction_matrix(model)
+    outinter = build_interaction_matrix(model, data)
     data_interaction = outinter$data_interaction
     vec_E = outinter$vec_E
     vec_G = outinter$vec_G
@@ -171,12 +171,12 @@ AMMI = function(
     # 1.5.1. Interaction plot ----------
     p1_GxE = ggplot(data = data, aes(x = location, y = variable, colour = germplasm, group = germplasm))
     #  p1_GxE = p1_GxE + stat_summary(fun.y= mean, geom = "point")
-    p1_GxE = p1_GxE + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
+    p1_GxE = p1_GxE + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
     
-    cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-    cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
+    #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+    #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
     
-    p1_GxE = p1_GxE + scale_color_manual(values=rep(cbbPalette, each = 2))
+    #p1_GxE = p1_GxE + scale_color_manual(values=rep(cbbPalette, each = 2))
     
     p1_GxE = p1_GxE + labs(title = paste("Graphique d'interaction pour la variable :" ,variable,"en fonction du germplasme et de l'environnement"))
     p1_GxE = p1_GxE + theme(axis.text.x=element_text(size=15,angle=90), plot.title = element_text(lineheight=.8, face="bold"))
@@ -314,7 +314,8 @@ AMMI = function(
   names(out_ammi) = vec_variables
   
   message("\nII. Post AMMI analysis on all outputs")
-  out_post_ammi = fun_post_ammi(out_ammi)
+  #out_post_ammi = fun_post_ammi(out_ammi)
+  out_post_ammi = NULL
   
   OUT = list("AMMI" = out_ammi, "Post_AMMI" = out_post_ammi)
   
