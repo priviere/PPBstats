@@ -113,8 +113,9 @@ AMMI = function(
     } else {
       model = lm(variable ~ germplasm*location + block_in_env, data = data)
     }
+    print(summary(model))
     options(contrasts = c("contr.treatment", "contr.poly")) # Come back to default options
-    
+
     anova_model = anova(model)
 
     # 1.2.2. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
