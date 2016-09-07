@@ -48,26 +48,11 @@ gLSDplot = function(model, x, variable, adjust){
 ecovalence = function(matrix, variable){
   #matrix : matrice ou data contenant les termes d'interaction
   
-  ecoV=0
-  for(i in 1:nrow(matrix)){
-    for(j in 1:ncol(matrix)){
-      ecoV = ecoV+matrix[i,j]*matrix[i,j]
-    }
-    rownames(matrix)[i] = paste(rownames(matrix)[i],"(",signif(ecoV, digits = 3),")")
-    ecoV = 0
-  }
-  ecoV = 0
-  for(j in 1:ncol(matrix)){
-    for(i in 1:nrow(matrix)){
-      ecoV = ecoV+matrix[i,j]*matrix[i,j]
-    }
-    colnames(matrix)[j] = paste(colnames(matrix)[j],"(",signif(ecoV, digits = 3),")")
-    ecoV = 0
-  }
+  matrix = matrix^2
   
   melted_matrix = melt(data = matrix)
   matrix_inter_plot = ggplot(data = melted_matrix, aes(x = Var2, y = Var1, fill = value)) + geom_tile()
-  matrix_inter_plot = matrix_inter_plot + scale_fill_gradient2(low = "red", high = "blue", mid = "white", midpoint = 0) 
+  matrix_inter_plot = matrix_inter_plot + scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) 
   matrix_inter_plot = matrix_inter_plot + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), panel.border = element_blank(), panel.grid=element_blank(), axis.ticks = element_blank())
   matrix_inter_plot = matrix_inter_plot + labs(title = paste("Representation de la matrice des termes d'interaction du modele pour la variable :",variable,",\nla valeur entre parenthese correspond a l'ecovalence de Wricke du facteur"))
   matrix_inter_plot = matrix_inter_plot + theme(plot.title = element_text(lineheight=.8, face="bold"))
@@ -364,11 +349,11 @@ build_interaction_matrix = function(model, data){
     for(i in 1:nrow(w)){ Mgxe[as.character(w[i,"germplasm"]), as.character(w[i, "location"])] = 0 }
     
     # Knowing this, correct the col or row to set the constrains sum = 0
-    a = Mgxe[as.character(w[i,"germplasm"]), 1:(ncol(Mgxe)-1)]
+    a = Mgxe[as.character(w[i,"germplasm"]), 1:(ncol(Mgxe) - 1)]
     x = 0 - sum(a)
     Mgxe[as.character(w[i,"germplasm"]), 1:(ncol(Mgxe)-1)] = a + x/3
   }
-  # quid si 0 aussi dans SH JEV et AML? ... A tester !
+  # quid si 0 aussi dans SH JEV et AML? ... A tester ! ----------
   
   for(i in 1:nrow(Mgxe)){
     if(is.na(Mgxe[i, ncol(Mgxe)])) { Mgxe[i, ncol(Mgxe)] = 0 - sum(Mgxe[i, 1:(ncol(Mgxe)-1)])}
