@@ -320,6 +320,9 @@ build_interaction_matrix = function(model, data){
   # germplasm x location ----------
   coef_gxe = c[grep("germplasm", names(c))]
   coef_gxe = coef_gxe[grep(":", names(coef_gxe))]
+  
+  print(coef_gxe)
+  
   coef_gxe[which(is.na(coef_gxe))] = 0 # If NA, it means that coef is not defined because of singularities, then it means no interaction, so 0 based on the construction of the model.
   
   Mgxe = as.data.frame(matrix(NA, ncol = length(model$xlevels$location), nrow = length(model$xlevels$germplasm)))
