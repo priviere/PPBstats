@@ -113,10 +113,13 @@ AMMI = function(
     } else {
       model = lm(variable ~ germplasm*location + block_in_env, data = data)
     }
-    print(summary(model))
     options(contrasts = c("contr.treatment", "contr.poly")) # Come back to default options
 
     anova_model = anova(model)
+    
+    # Test for homogeneity of variances
+    #ft = fligner.test(variable ~ interaction(germplasm,location), data=data)
+    #print(ft)
 
     # 1.2.2. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
     outRes = gverifResidualsnormality(model)
@@ -179,7 +182,7 @@ AMMI = function(
     
     #p1_GxE = p1_GxE + scale_color_manual(values=rep(cbbPalette, each = 2))
     
-    p1_GxE = p1_GxE + labs(title = paste("Graphique d'interaction pour la variable :" ,variable,"en fonction du germplasme et de l'environnement"))
+    #p1_GxE = p1_GxE + labs(title = paste("Graphique d'interaction pour la variable :" ,variable,"en fonction du germplasme et de l'environnement"))
     p1_GxE = p1_GxE + theme(axis.text.x=element_text(size=15,angle=90), plot.title = element_text(lineheight=.8, face="bold"))
     # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
     
