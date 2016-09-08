@@ -25,22 +25,22 @@ gLSDplot = function(model, x, variable, adjust){
   LSD$groups$trt = factor(LSD$groups$trt, levels = LSD$groups$trt)
   
   if (x == "germplasm"){
-    LSD$groups$germplasm = LSD$groups$trt
-    p = ggplot(data = LSD$groups, aes(x = germplasm, y = means))
-    p = p + geom_text(data = LSD$groups, aes(x = germplasm, y = means, label = M, vjust = -1))
-    p = p + labs(title = paste("Groupes de germplasmes significativement differents pour la variable :", variable))
+    d = LSD$groups
+    d$germplasm = d$trt
+    d$ymean = d$means / 2
+    p = ggplot(data = d, aes(x = germplasm, y = means, label = M)) + geom_bar(stat = "identity")
+    p = p + geom_text(aes(y = ymean), angle = 90, color = "white")
   }
   else if (x == "location"){
-    LSD$groups$location = LSD$groups$trt
-    p = ggplot(data = LSD$groups, aes(x = location, y = means))
-    p = p + geom_text(data = LSD$groups, aes(x = location, y = means, label = M, vjust = -1))
-    p = p + labs(title = paste("Groupes d'environnements significativement differents pour la variable :", variable))
+    d = LSD$groups
+    d$location = d$trt
+    d$ymean = d$means / 2
+    p = ggplot(data = d, aes(x = location, y = means, label = M)) + geom_bar(stat = "identity")
+    p = p + geom_text(aes(y = ymean), angle = 90, color = "white")
   }
   
-  p = p + geom_bar(stat = "identity")
-  p = p + theme(legend.position = "none", axis.text.x = element_text(size = 15, angle = 90), plot.title = element_text(lineheight = .8, face = "bold"))
-  p = p + scale_y_continuous(name = variable)
-  
+  p = p + theme(legend.position = "none", axis.text.x = element_text(size = 15, angle = 90), plot.title = element_text(lineheight = .8, face = "bold")) + labs(title =variable)
+
   return(p)
 }
 
@@ -320,9 +320,6 @@ build_interaction_matrix = function(model, data){
   # germplasm x location ----------
   coef_gxe = c[grep("germplasm", names(c))]
   coef_gxe = coef_gxe[grep(":", names(coef_gxe))]
-  
-  print(coef_gxe)
-  
   coef_gxe[which(is.na(coef_gxe))] = 0 # If NA, it means that coef is not defined because of singularities, then it means no interaction, so 0 based on the construction of the model.
   
   Mgxe = as.data.frame(matrix(NA, ncol = length(model$xlevels$location), nrow = length(model$xlevels$germplasm)))
