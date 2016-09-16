@@ -205,7 +205,7 @@ MC = function(
   for (i in 1:nb_RF) # regional farm
     {
     y[i] ~ dnorm(mean[i],tau[environment[i]]) # data y[i] of mean mean[i] and a variance depending of the trial (tau[environment[i]])
-    mean[i] <- mu[entry[i]]+pow(-1,block[i])*beta[environment[i]] # pow(x,2) is equal to x^2
+    mean[i] <- mu[entry[i]]+beta[block[i]]
     epsilon[i] <- (y[i] - mean[i])
     }
   "

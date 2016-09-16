@@ -52,11 +52,15 @@ predict.the.past = function(
     germ = rownames(w)[which(w[,j] == 0)]
     
     if(length(germ) > 0) { # if length(geno) == 0, it means no germplasms must be estimated
-      estimated.value = MCMC[,paste("alpha[",germ,"]",sep="")] + MCMC[,paste("beta[",germ,"]",sep="")] * MCMC[,paste("theta[",env,"]",sep="")]
-      if( output.format == "summary") { estimated.value = t(apply(estimated.value, 2, function(x){quantile(x, probs=c(0, 0.05, 0.10, 0.50, 0.90, 0.95, 1)) })) }
-            
-      OUT = rbind.data.frame(OUT, estimated.value)
-      n = c(n, paste("[", germ, ",", env,"]", sep = ""))
+      test = (is.element(germ, colnames(MCMC)) & is.element(env, colnames(MCMC)))
+      if( test ) {
+        estimated.value = MCMC[,paste("alpha[",germ,"]",sep="")] + MCMC[,paste("beta[",germ,"]",sep="")] * MCMC[,paste("theta[",env,"]",sep="")]
+        if( output.format == "summary") { estimated.value = t(apply(estimated.value, 2, function(x){quantile(x, probs=c(0, 0.05, 0.10, 0.50, 0.90, 0.95, 1)) })) }
+        
+        OUT = rbind.data.frame(OUT, estimated.value)
+        n = c(n, paste("[", germ, ",", env,"]", sep = ""))
+      } else { warning("Estimated value for germplasm ", germ, " in environment ", env, " is not possible. This is because the estimation of germplasm and or environment effects did not converge and therefore were not in the MCMC.") }
+      
     }
     setTxtProgressBar(pb, j)
   }
