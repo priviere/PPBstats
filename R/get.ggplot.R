@@ -6,14 +6,16 @@
 #'
 #' @param data The data to plot. It can come from \code{get.mean.comparison}, \code{get.parameter.groups}, \code{predict.the.past}, \code{MC}$data_env_with_no_controls or \code{analye.outputs$model1.data_env_whose_param_did_not_converge}.
 #' 
+#' @param data_2 Outputs from \code{get.mean.comparisons} from model 2.For ggplot.type = "biplot-alpha-beta"
+#' 
 #' @param data_version data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains the different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
-#'  
+#'
 #' @param ggplot.type The type of plot you wish:
 #' \itemize{
 #'  \item from \code{get.mean.comparison}
 #'  \itemize{
 #'    \item from model 1 (\code{MC}) :  "barplot", "interaction", "score"
-#'    \item from model 2 (\code{FWH}): "barplot"
+#'    \item from model 2 (\code{FWH}): "barplot", "biplot-alpha-beta"
 #'    }
 #'      
 #'  \item from \code{get.parameter.groups} only from model 2 (\code{FWH}): "PCA"
@@ -39,6 +41,8 @@
 #' A low score means that the entry was in a group with an low mean.
 
 #' \item From \code{get.parameter.groups} from model 2 (\code{FWH}) "PCA" display the PCA and the groups of parameters.
+#' 
+#' \item ggplot.type = "biplot-alpha-beta" display the biplot with alpha_i on the x axis and beta_i on the y axis.
 #' }
 #' 
 #' On each plot, the alpha value and the alpha correction are displayed.
@@ -55,22 +59,21 @@
 #' 
 get.ggplot = function(
   data,
+  data_2 = NULL,
   data_version = NULL,
   ggplot.type = "interaction",
   nb_parameters_per_plot = 8
 )
   # let's go !!! ----------
 {
-  
   # 1. Error message and update arguments ----------
   if (is.null(attributes(data)$PPBstats.object)) { stop("data must come from functions get.parameter.groups, get.mean.comparisons, predict.the.past or analyse.outputs. See ?get.ggplot for more details.") }
   
-  if( !is.element(ggplot.type, c("barplot", "interaction", "score", "PCA"))) { stop("ggplot.type must be either \"barplot\", \"interaction\", \"score\" or \"PCA\".") }
+  if( !is.element(ggplot.type, c("barplot", "biplot-alpha-beta", "interaction", "score", "PCA"))) { stop("ggplot.type must be either \"barplot\", \"biplot-alpha-beta\", \"interaction\", \"score\" or \"PCA\".") }
+  
   if( attributes(data)$PPBstats.object == "parameter.groups.model2" & ggplot.type != "PCA" ) { stop("ggplot.type = \"PCA\" must be used with data from get.parameter.groups") }
   
-  if( attributes(data)$PPBstats.object == "parameter.groups.model2" & is.element(ggplot.type, c("barplot", "interaction", "score")) ) { stop("With data coming from get.parameter.groups, you must use ggplot.type = \"PCA\".") }
-  
-  if( attributes(data)$PPBstats.object == "mean.comparisons.model1" & ggplot.type == "PCA" ) { stop("With data coming from get.mean.comparisons, you must use ggplot.type = \"barplot\", \"interaction\" or \"score\".") }
+  if( (attributes(data)$PPBstats.object == "mean.comparisons.model1" | attributes(data)$PPBstats.object == "mean.comparisons.model2") & ggplot.type == "PCA" ) { stop("With data coming from get.mean.comparisons, you must use ggplot.type = \"barplot\", \"biplot-alpha-beta\", \"interaction\" or \"score\".") }
   
   if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::MC$data_env_with_no_controls, you must use ggplot.type = \"barplot\", \"interaction\".") }
 
@@ -78,7 +81,16 @@ get.ggplot = function(
   
   if( attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" & is.null(data) ) { stop("model1.data_env_whose_param_did_not_converge is NULL : no ggplot can be done ! ") }
   
-  if( attributes(data)$PPBstats.object == "predict.the.past" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::MC$data_env_with_no_controls, you must use ggplot.type = \"barplot\", \"interaction\".") }
+  if( attributes(data)$PPBstats.object == "predict.the.past" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from predict.the.past, you must use ggplot.type = \"barplot\" or \"interaction\".") }
+
+  if( ggplot.type == "biplot-alpha-beta" ) {
+    if( !is.null(data) ) { if( attributes(data_2)$PPBstats.object != "mean.comparisons.model2") {
+      stop("With gplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons from model 2.")
+    } }
+    if( !is.null(data_2) ) { if( attributes(data_2)$PPBstats.object != "mean.comparisons.model2") {
+      stop("data_2 must come from get.mean.comparisons from model 2.")
+    } }
+  }
   
   if( !is.null(data_version) ){
     mess = "The following column are compulsory in data_version : c(\"year\", \"germplasm\", \"location\", \"group\", \"version\"."
@@ -574,6 +586,33 @@ get.ggplot = function(
     
     OUT = list("ind" = pind, "var" = pvar)
     return(OUT)
+  }
+  
+
+  # 2.5. biplot-alpha-beta ----------
+  if(ggplot.type == "biplot-alpha-beta"){
+    
+    a = data$mean.comparisons
+    test_a = unlist(strsplit(as.character(a[1,"parameter"]), "\\["))[1]
+    if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
+    a$germplasm = gsub("alpha", "", a$parameter)
+    colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
+    colnames(a)[which(colnames(a) == "median")] = "alpha_i"
+    
+    b = data_2$mean.comparisons
+    test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
+    if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
+    b$germplasm = gsub("beta", "", b$parameter)
+    colnames(b)[which(colnames(b) == "parameter")] = "parameter_b"
+    colnames(b)[which(colnames(b) == "median")] = "beta_i"
+    
+    ab = join(a, b, "germplasm")
+    ab$germplasm = gsub("\\[", "", ab$germplasm)
+    ab$germplasm = gsub("\\]", "", ab$germplasm)
+    
+    p = ggplot(ab, aes(x = alpha_i, y = beta_i, label = germplasm)) 
+    p = p + geom_text() + geom_hline(yintercept = 0)
+    OUT = list("biplot-alpha-beta" = p)
   }
   
   return(OUT)
