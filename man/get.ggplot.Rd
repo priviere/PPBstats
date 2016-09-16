@@ -51,12 +51,15 @@ An high score means that the entry was in a group with an high mean.
 A low score means that the entry was in a group with an low mean.
 \item From \code{get.parameter.groups} from model 2 (\code{FWH}) "PCA" display the PCA and the groups of parameters.
 
-\item ggplot.type = "biplot-alpha-beta" display the biplot with alpha_i on the x axis and beta_i on the y axis.
-}
-
 On each plot, the alpha value and the alpha correction are displayed.
 alpha = Imp means that no differences were possible to find.
 For ggplot.type = "interaction" and ggplot.type = "score", it is display under the form: alpha | alpha correction
+
+\item ggplot.type = "biplot-alpha-beta" display the biplot with alpha_i on the x axis and beta_i on the y axis.
+
+\item When using data_version, and ggplot.type = "barplot"; the pvalue is computed based on the MCMC.
+For data that did not converge or without environments, it is a \texttt{t.test} which is perform.
+}
 }
 \author{
 Pierre Riviere
