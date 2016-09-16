@@ -94,11 +94,11 @@ get.ggplot = function(
   
   if( !is.null(data_version) ){
     mess = "The following column are compulsory in data_version : c(\"year\", \"germplasm\", \"location\", \"group\", \"version\"."
-    if(!is.element("year", colnames(data))) { stop(mess) }
-    if(!is.element("germplasm", colnames(data))) { stop(mess) }
-    if(!is.element("location", colnames(data))) { stop(mess) }
-    if(!is.element("group", colnames(data))) { stop(mess) }
-    if(!is.element("version", colnames(data))) { stop(mess) }
+    if(!is.element("year", colnames(data_version))) { stop(mess) }
+    if(!is.element("germplasm", colnames(data_version))) { stop(mess) }
+    if(!is.element("location", colnames(data_version))) { stop(mess) }
+    if(!is.element("group", colnames(data_version))) { stop(mess) }
+    if(!is.element("version", colnames(data_version))) { stop(mess) }
   }
   
   
@@ -237,15 +237,14 @@ get.ggplot = function(
               
               colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
               d = join(data_version_tmp, dx, "mu")
-              
               p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
               
               y = tapply(d$median, d$group, mean, na.rm = TRUE)
               y = y + (max(y) * 0.2)
               label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
               p = p + geom_text(data = label_stars, aes(label = STARS))
-              p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, dx[1,"max"])
-          }
+              p = p + xlab("") + theme(axis.text.x = element_text(angle = 90))
+              }
           
           if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
              attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") {
@@ -283,8 +282,8 @@ get.ggplot = function(
             y = y + (max(y) * 0.2)
             label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
             p = p + geom_text(data = label_stars, aes(label = STARS))
-          }
             p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, dx[1,"max"])
+          }
             
           return(p)
         })
