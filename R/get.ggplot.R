@@ -121,8 +121,11 @@ get.ggplot = function(
     test.mu.m1 = TRUE # Just to pass the error message
   }
   
-  
   if( attributes(data)$PPBstats.object == "mean.comparisons.model2" ){
+    data_Mpvalue = data$Mpvalue
+    data = data$mean.comparisons
+    attributes(data)$PPBstats.object = "mean.comparisons.model2"
+
     test.alpha.m2 = length(grep("alpha\\[", data$parameter)) > 0
     test.beta.m2 = length(grep("beta\\[", data$parameter)) > 0
     test.theta.m2 = length(grep("theta\\[", data$parameter)) > 0  
@@ -337,7 +340,6 @@ get.ggplot = function(
   
   
     if(attributes(data)$PPBstats.object == "mean.comparisons.model2" & ggplot.type == "barplot") {  
-    
     data = arrange(data, median)  
     data$max = max(data$median, na.rm = TRUE)
     data$split = add_split_col(data, nb_parameters_per_plot)
