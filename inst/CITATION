@@ -4,18 +4,18 @@ citEntry(
   entry = 'manual',
   title = 'PPBstats: An R package for statistical analysis 
           of unbalanced trials in decentralized participatory plant 
-          breeding programmes. Version 0.10.2',
+          breeding programmes. Version 0.11.0',
   author = '{Pierre Riviere} and {Olivier David}',
   organisation = '{Reseau Semences Paysannes}, {INRA}',
   year = '2016',
-  url = 'github.com/priviere/PPBstats',
+  url = 'https://github.com/priviere/PPBstats',
   note = 'R code is under licence GPL-3. 
           Vignette is under licence creative commons BY-NC-SA 4.0.',
   textVersion =   'Pierre Riviere and Olivier David, 2015, 
                   PPBstats: An R package for statistical analysis of 
                   unbalanced trials in decentralized participatory 
                   plant breeding programmes.
-                  Version 0.10.2,
-                  URL: github.com/priviere/PPBstats'
+                  Version 0.11.0,
+                  URL: https://github.com/priviere/PPBstats'
 )
 
