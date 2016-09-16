@@ -1,8 +1,13 @@
 PPBstats 0.10.1 --------------------------------------
 -----------------------------------------------------
+* update some little bugs regarding tests
+
 * update functions
-  - get.ggplot : add data_version argument
-  - get.mean.comparisons
+  - get.ggplot.R
+    . add data_version argument
+  - get.mean.comparisons.R
+  - predict.the.past.R
+    . take into account when there are no parameters in the MCMC
   
 * add new functions
   - AMMI.R
