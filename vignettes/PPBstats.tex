@@ -78,7 +78,7 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.10.0}
+\newcommand{\versionnumber}{0.11}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
@@ -557,6 +557,12 @@ It goes pretty well!
 
 \input{./sections/mean_comp}
 
+\paragraph{Computation}
+
+In \pack, mean comparisons are done with \texttt{get.mean.comparisons}.
+You can choose on which parameters to run the comparison (\texttt{parameter} argument) and the $\alpha$ type one error (\texttt{alpha} argument).
+The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
+More informations on this function by typing \texttt{?get.mean.comparisons}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -576,6 +582,10 @@ It goes pretty well!
 \end{kframe}
 \end{knitrout}
 
+\paragraph{Plots}
+
+\subparagraph{All entries in a given environment}
+
 To see the output, use \texttt{get.ggplot}.
 On each plot, the \texttt{alpha} (type one error) value and the alpha correction are displayed.
 \texttt{alpha = Imp} means that no differences were possible to find.
@@ -585,6 +595,12 @@ For \texttt{ggplot.type = "interaction"} and \texttt{ggplot.type = "score"}, it 
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_barplot} \hlkwb{=} \hlkwd{get.ggplot}\hlstd{(comp.mu,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\hlkwd{length}\hlstd{(p_barplot)}
+\end{alltt}
+\begin{verbatim}
+## [1] 58
+\end{verbatim}
+\begin{alltt}
 \hlkwd{names}\hlstd{(p_barplot)}
 \end{alltt}
 \begin{verbatim}
@@ -792,6 +808,92 @@ Here it is not useful as there is only one year.
 \end{figure}
 
 
+\subparagraph{Pairs of entries in a given environment}
+It is possible to get comparison of paris of entries in a given location.
+This is useful if you want to compare two versions within a group.
+For exemple:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{data}\hlstd{(data_version)}
+\hlkwd{head}\hlstd{(data_version)}
+\end{alltt}
+\begin{verbatim}
+##   year location germplasm group version
+## 1 2010   env1-1     tem-1     1      v1
+## 2 2010   env1-1     tem-2     1      v2
+## 3 2010   env1-1     pop-1     2      v1
+## 4 2010   env1-1     pop-2     2      v2
+## 5 2010   env1-2     tem-1     3      v1
+## 6 2010   env1-2     tem-2     3      v2
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two version belonging to the same groupe.
+
+Lets' make the plots:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{g} \hlkwb{=} \hlkwd{get.ggplot}\hlstd{(}\hlkwc{data} \hlstd{= comp.mu,} \hlkwc{data_version} \hlstd{= data_version,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in get.ggplot(data = comp.mu, data\_version = data\_version, ggplot.type = "{}barplot"{}): The following environments in data\_version are not taken: env5:2010.}}\begin{alltt}
+\hlstd{g}\hlopt{$}\hlstd{`env1-1:2010`}\hlopt{$}\hlstd{`1`}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-30-1} 
+
+}
+
+
+
+\end{knitrout}
+
+The stars corresponds to the pvalue:
+
+\begin{center}
+\begin{tabular}{cc}
+\hline
+pvalue & stars \\
+\hline
+$< 0.001$ & *** \\
+$[0.001 , 0.05]$ & ** \\
+$[0.05 , 0.01]$ & * \\
+$> 0.01$ & . \\
+\hline
+\end{tabular}
+\end{center}
+
+The pvalue is computed as describe in section \ref{mean_comp} if the parameters have been estimated with the model.
+
+It is also possible to make this kind of plots for data that did not converge or without environments.
+In this case, it is a \texttt{t.test} which is perform.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{g} \hlkwb{=} \hlkwd{get.ggplot}\hlstd{(out1_bis}\hlopt{$}\hlstd{model1.data_env_whose_param_did_not_converge,} \hlkwc{data_version} \hlstd{= data_version,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in get.ggplot(out1\_bis\$model1.data\_env\_whose\_param\_did\_not\_converge, : The following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env5:2010.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): No t.test are done as there are not enough observations.}}\begin{alltt}
+\hlstd{g} \hlkwb{=} \hlkwd{get.ggplot}\hlstd{(out.model1}\hlopt{$}\hlstd{data_env_with_no_controls,} \hlkwc{data_version} \hlstd{= data_version,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in get.ggplot(out.model1\$data\_env\_with\_no\_controls, data\_version = data\_version, : The following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): No t.test are done as there are not enough observations.}}\end{kframe}
+\end{knitrout}
+
+
 \section{At the network level : model~\ref{model2} to analyse $G \times E$ interaction in the network of farms }
 \label{section_model2}
 
@@ -945,7 +1047,7 @@ Note that it displays only germplasms that are on at least two environments.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-33-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-36-1} 
 
 }
 
@@ -983,8 +1085,8 @@ Below an example for $\alpha_i$.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-35-1} 
-\includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-35-2} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-38-1} 
+\includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-38-2} 
 
 }
 
@@ -1004,7 +1106,7 @@ Below an example for $\alpha_i$.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-36-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-39-1} 
 
 }
 
@@ -1057,7 +1159,7 @@ Let’s have a look at the relation between both values.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-39-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-42-1} 
 
 }
 
@@ -1151,7 +1253,7 @@ Here it is bad as only 10 iterations have been done to save computing time ...
 \end{verbatim}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-42-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-45-1} 
 
 }
 
@@ -1195,7 +1297,7 @@ Lets' have a look at the firt values of $\alpha_i$.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-45-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-48-1} 
 
 }
 
@@ -1203,6 +1305,30 @@ Lets' have a look at the firt values of $\alpha_i$.
 
 \end{knitrout}
 \end{figure}
+
+\subsubsection{Get biplot $\beta = f(\alpha)$}
+
+It is interessting to compare genetic effect versus sensibility to interaction.
+A germplasm with an high genetic effect and a low sensitivity to interaction (i.e. close to 0) may be a good candidate to sown.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{comp.alpha} \hlkwb{=} \hlkwd{get.mean.comparisons}\hlstd{(out2}\hlopt{$}\hlstd{MCMC,} \hlstr{"alpha"}\hlstd{)}
+\hlstd{comp.beta} \hlkwb{=} \hlkwd{get.mean.comparisons}\hlstd{(out2}\hlopt{$}\hlstd{MCMC,} \hlstr{"beta"}\hlstd{)}
+
+\hlstd{g} \hlkwb{=} \hlkwd{get.ggplot}\hlstd{(}\hlkwc{data} \hlstd{= comp.alpha,} \hlkwc{data_2} \hlstd{= comp.beta,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"biplot-alpha-beta"}\hlstd{)}
+\hlstd{g}\hlopt{$}\hlstd{biplot}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-49-1} 
+
+}
+
+
+
+\end{knitrout}
 
 
 \subsubsection{Get groups of parameters}
@@ -1266,8 +1392,8 @@ A farmer may find a germplasm that behaves well according to informations from m
 \end{kframe}
 
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-47-1} 
-\includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-47-2} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-51-1} 
+\includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-51-2} 
 
 }
 
@@ -1314,7 +1440,7 @@ If you choose \texttt{output.format = "summary"}, it is possible to look at the 
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-49-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-53-1} 
 
 }
 
@@ -1330,7 +1456,7 @@ If you choose \texttt{output.format = "summary"}, it is possible to look at the 
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-50-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-54-1} 
 
 }
 
@@ -1352,21 +1478,25 @@ To cite this package and or this vignette:
 \end{alltt}
 \begin{verbatim}
 ## 
-## To cite package 'PPBstats' in publications use:
+## To cite the PPBstats package in publications use:
 ## 
-##   Pierre Riviere (2016). PPBstats: An R package for
-##   statistical analysis of unbalanced trials in decentralized
-##   participatory plant breeding programmes. R package version
-##   0.10.0. http://github.com/priviere/PPBstats
+##   Pierre Riviere and Olivier David, 2016, PPBstats: An R
+##   package for statistical analysis of unbalanced trials in
+##   decentralized participatory plant breeding programmes.
+##   Version 0.11.0, URL: https://github.com/priviere/PPBstats
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
 ##   @Manual{,
-##     title = {PPBstats: An R package for statistical analysis of unbalanced trials in decentralized participatory plant breeding programmes},
-##     author = {Pierre Riviere},
+##     title = {PPBstats: An R package for statistical analysis 
+##           of unbalanced trials in decentralized participatory plant 
+##           breeding programmes. Version 0.11.0},
+##     author = {{Pierre Riviere and Olivier David}},
+##     organisation = {{Reseau Semences Paysannes}, {INRA}},
 ##     year = {2016},
-##     note = {R package version 0.10.0},
-##     url = {http://github.com/priviere/PPBstats},
+##     url = {https://github.com/priviere/PPBstats},
+##     note = {R code is under licence GPL-3. 
+##           Vignette is under licence creative commons BY-NC-SA 4.0.},
 ##   }
 \end{verbatim}
 \end{kframe}

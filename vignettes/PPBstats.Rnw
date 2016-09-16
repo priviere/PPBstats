@@ -29,7 +29,7 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.10.0}
+\newcommand{\versionnumber}{0.11}
 
 \begin{document}
 
@@ -322,6 +322,12 @@ p + stat_smooth(method = "lm") + geom_point()
 
 \input{./sections/mean_comp}
 
+\paragraph{Computation}
+
+In \pack, mean comparisons are done with \texttt{get.mean.comparisons}.
+You can choose on which parameters to run the comparison (\texttt{parameter} argument) and the $\alpha$ type one error (\texttt{alpha} argument).
+The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
+More informations on this function by typing \texttt{?get.mean.comparisons}.
 
 <<message=TRUE,cache=FALSE>>=
 # comp.mu = get.mean.comparisons(out1$MCMC, "mu")
@@ -337,6 +343,10 @@ p + stat_smooth(method = "lm") + geom_point()
 load("./data_PPBstats/comp.mu.RData") # To save time
 @
 
+\paragraph{Plots}
+
+\subparagraph{All entries in a given environment}
+
 To see the output, use \texttt{get.ggplot}.
 On each plot, the \texttt{alpha} (type one error) value and the alpha correction are displayed.
 \texttt{alpha = Imp} means that no differences were possible to find.
@@ -344,6 +354,7 @@ For \texttt{ggplot.type = "interaction"} and \texttt{ggplot.type = "score"}, it 
 
 <<message=TRUE,cache=FALSE>>=
 p_barplot = get.ggplot(comp.mu, ggplot.type = "barplot")
+length(p_barplot)
 names(p_barplot)
 @
 
@@ -427,6 +438,51 @@ names(g)
 g$`env1-1:2012`$`1`
 @
 \end{figure}
+
+
+\subparagraph{Pairs of entries in a given environment}
+It is possible to get comparison of paris of entries in a given location.
+This is useful if you want to compare two versions within a group.
+For exemple:
+
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+data(data_version)
+head(data_version)
+@
+
+Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two version belonging to the same groupe.
+
+Lets' make the plots:
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+g = get.ggplot(data = comp.mu, data_version = data_version, ggplot.type = "barplot")
+g$`env1-1:2010`$`1`
+@
+
+The stars corresponds to the pvalue:
+
+\begin{center}
+\begin{tabular}{cc}
+\hline
+pvalue & stars \\
+\hline
+$< 0.001$ & *** \\
+$[0.001 , 0.05]$ & ** \\
+$[0.05 , 0.01]$ & * \\
+$> 0.01$ & . \\
+\hline
+\end{tabular}
+\end{center}
+
+The pvalue is computed as describe in section \ref{mean_comp} if the parameters have been estimated with the model.
+
+It is also possible to make this kind of plots for data that did not converge or without environments.
+In this case, it is a \texttt{t.test} which is perform.
+
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+g = get.ggplot(out1_bis$model1.data_env_whose_param_did_not_converge, data_version = data_version, ggplot.type = "barplot")
+
+g = get.ggplot(out.model1$data_env_with_no_controls, data_version = data_version, ggplot.type = "barplot")
+@
 
 
 \section{At the network level : model~\ref{model2} to analyse $G \times E$ interaction in the network of farms }
@@ -683,6 +739,19 @@ Lets' have a look at the firt values of $\alpha_i$.
 grid.arrange(p_barplot$"alpha"[[1]], p_barplot$"alpha"[[2]] , ncol = 2, nrow = 1)
 @
 \end{figure}
+
+\subsubsection{Get biplot $\beta = f(\alpha)$}
+
+It is interessting to compare genetic effect versus sensibility to interaction.
+A germplasm with an high genetic effect and a low sensitivity to interaction (i.e. close to 0) may be a good candidate to sown.
+
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+comp.alpha = get.mean.comparisons(out2$MCMC, "alpha")
+comp.beta = get.mean.comparisons(out2$MCMC, "beta")
+
+g = get.ggplot(data = comp.alpha, data_2 = comp.beta, ggplot.type = "biplot-alpha-beta")
+g$biplot
+@
 
 
 \subsubsection{Get groups of parameters}
