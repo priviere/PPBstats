@@ -1,5 +1,7 @@
 PPBstats 0.11.0 --------------------------------------
 -----------------------------------------------------
+* update some little bugs regarding tests
+
 * update the vignette
   . add example for data_versio
   . add example for ggplot.type = "biplot-alpha-beta"
