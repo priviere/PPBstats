@@ -136,7 +136,6 @@ get.ggplot = function(
   
   if( (!test.mu.m1 & !test.beta.m1) & ggplot.type == "score") { stop("ggplot.type == \"score\" is possible only with output from model1 (MC).") }
   
-  
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
       attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
       attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
@@ -187,7 +186,6 @@ get.ggplot = function(
       attributes(data)$PPBstats.object == "predict.the.past")
        & ggplot.type == "barplot"
   ) {  
-    
     d_env = plyr:::splitter_d(data, .(environment))
     
     if(!is.null(data_version)) {
@@ -300,7 +298,7 @@ get.ggplot = function(
         names(OUT) = names(d_env_b)
         
     } else {
-      
+
       d_env_b = lapply(d_env, function(x){
         x = arrange(x, median)
         x$max = max(x$median, na.rm = TRUE)
@@ -308,11 +306,11 @@ get.ggplot = function(
         x_split = plyr:::splitter_d(x, .(split))
         return(x_split)
       } )
-
+      
       OUT = lapply(d_env_b, function(x){
         out = lapply(x, function(dx){
           p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
-          
+
           if(attributes(data)$PPBstats.object == "mean.comparisons.model1") { # Add letters of significant groups
             p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
             p = p + ggtitle(paste(dx[1, "environment"], "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"])) + ylab("")
@@ -598,7 +596,8 @@ get.ggplot = function(
   # 2.5. biplot-alpha-beta ----------
   if(ggplot.type == "biplot-alpha-beta"){
     
-    a = data$mean.comparisons
+    a = data
+    
     test_a = unlist(strsplit(as.character(a[1,"parameter"]), "\\["))[1]
     if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
     a$germplasm = gsub("alpha", "", a$parameter)
