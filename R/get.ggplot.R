@@ -42,12 +42,15 @@
 
 #' \item From \code{get.parameter.groups} from model 2 (\code{FWH}) "PCA" display the PCA and the groups of parameters.
 #' 
-#' \item ggplot.type = "biplot-alpha-beta" display the biplot with alpha_i on the x axis and beta_i on the y axis.
-#' }
-#' 
 #' On each plot, the alpha value and the alpha correction are displayed.
 #' alpha = Imp means that no differences were possible to find.
 #' For ggplot.type = "interaction" and ggplot.type = "score", it is display under the form: alpha | alpha correction
+#' 
+#' \item ggplot.type = "biplot-alpha-beta" display the biplot with alpha_i on the x axis and beta_i on the y axis.
+#' 
+#' \item When using data_version, and ggplot.type = "barplot"; the pvalue is computed based on the MCMC.
+#' For data that did not converge or without environments, it is a \texttt{t.test} which is perform.
+#' }
 #' 
 #' @return 
 #' The function returns a list of ggplot objects
@@ -76,9 +79,9 @@ get.ggplot = function(
   if( (attributes(data)$PPBstats.object == "mean.comparisons.model1" | attributes(data)$PPBstats.object == "mean.comparisons.model2") & ggplot.type == "PCA" ) { stop("With data coming from get.mean.comparisons, you must use ggplot.type = \"barplot\", \"biplot-alpha-beta\", \"interaction\" or \"score\".") }
   
   if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::MC$data_env_with_no_controls, you must use ggplot.type = \"barplot\", \"interaction\".") }
-
-  if( attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::analyse.outputs$model1.data_env_whose_param_did_not_converge, you must use ggplot.type = \"barplot\", \"interaction\".") }
   
+  if( attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::analyse.outputs$model1.data_env_whose_param_did_not_converge, you must use ggplot.type = \"barplot\", \"interaction\".") }
+
   if( attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" & is.null(data) ) { stop("model1.data_env_whose_param_did_not_converge is NULL : no ggplot can be done ! ") }
   
   if( attributes(data)$PPBstats.object == "predict.the.past" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from predict.the.past, you must use ggplot.type = \"barplot\" or \"interaction\".") }
@@ -105,6 +108,7 @@ get.ggplot = function(
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ) {
     data_Mpvalue = data$Mpvalue
     data = data$mean.comparisons
+    attributes(data)$PPBstats.object = "mean.comparisons.model1"
 
     test.mu.m1 = length(grep("mu\\[", data$parameter)) > 0
     test.beta.m1 = length(grep("beta\\[", data$parameter)) > 0  
@@ -116,6 +120,7 @@ get.ggplot = function(
   ) {
     test.mu.m1 = TRUE # Just to pass the error message
   }
+  
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model2" ){
     test.alpha.m2 = length(grep("alpha\\[", data$parameter)) > 0
