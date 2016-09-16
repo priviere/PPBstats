@@ -4,11 +4,13 @@
 \alias{get.ggplot}
 \title{Get ggplot objects to visualize output from the analysis}
 \usage{
-get.ggplot(data, data_version = NULL, ggplot.type = "interaction",
-  nb_parameters_per_plot = 8)
+get.ggplot(data, data_2 = NULL, data_version = NULL,
+  ggplot.type = "interaction", nb_parameters_per_plot = 8)
 }
 \arguments{
 \item{data}{The data to plot. It can come from \code{get.mean.comparison}, \code{get.parameter.groups}, \code{predict.the.past}, \code{MC}$data_env_with_no_controls or \code{analye.outputs$model1.data_env_whose_param_did_not_converge}.}
+
+\item{data_2}{Outputs from \code{get.mean.comparisons} from model 2.For ggplot.type = "biplot-alpha-beta"}
 
 \item{data_version}{data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains the different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.}
 
@@ -17,7 +19,7 @@ get.ggplot(data, data_version = NULL, ggplot.type = "interaction",
  \item from \code{get.mean.comparison}
  \itemize{
    \item from model 1 (\code{MC}) :  "barplot", "interaction", "score"
-   \item from model 2 (\code{FWH}): "barplot"
+   \item from model 2 (\code{FWH}): "barplot", "biplot-alpha-beta"
    }
 
  \item from \code{get.parameter.groups} only from model 2 (\code{FWH}): "PCA"
@@ -48,6 +50,8 @@ ggplot.type = "score" display a plot with a score according to which group the e
 An high score means that the entry was in a group with an high mean.
 A low score means that the entry was in a group with an low mean.
 \item From \code{get.parameter.groups} from model 2 (\code{FWH}) "PCA" display the PCA and the groups of parameters.
+
+\item ggplot.type = "biplot-alpha-beta" display the biplot with alpha_i on the x axis and beta_i on the y axis.
 }
 
 On each plot, the alpha value and the alpha correction are displayed.
