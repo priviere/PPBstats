@@ -45,7 +45,8 @@
 #' @return The function returns a list with 
 #' 
 #' \itemize{
-#' \item "presence.abscence.matrix": a matrix germplasm x environment with the number of occurence
+#' \item "data.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data
+#' \item "model.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 #' \item "germplasm.not.used": the vector of germplasms not used in the analysis because they were not on at least two environments. If NULL, all the germplasms were used in the analysis.
 #' \item "MCMC": a list with the two MCMC chains (mcmc object) from the FWH model
 #' \item "epsilon": a vector with the median value of the epsilon_ijk
@@ -81,6 +82,9 @@ FWH = function(
   if(!is.element("year", colnames(data))) { stop(mess) }
   if(!is.element("germplasm", colnames(data))) { stop(mess) }
   if(!is.element("location", colnames(data))) { stop(mess) }
+  if(!is.element("block", colnames(data))) { stop(mess) }
+  if(!is.element("X", colnames(data))) { stop(mess) }
+  if(!is.element("Y", colnames(data))) { stop(mess) }
   
   if(!is.element(variable, colnames(data))) { stop(variable," is not in data") }
   
@@ -115,14 +119,16 @@ FWH = function(
   D = droplevels(aggregate(formule, FUN = mean, data = D))
   
   # 2.2. Get only germplasm that are on at least two environments ----------
-  presence.abscence.matrix = with(D, table(germplasm, environment))
-  t = apply(presence.abscence.matrix, 1, sum)
+  data.presence.abscence.matrix = with(D, table(germplasm, environment))
+  t = apply(data.presence.abscence.matrix, 1, sum)
   germ.to.get = names(t[which(t>=2)])
   germplasm.to.get = is.element(D$germplasm, germ.to.get)
   germplasm.not.used = D$germplasm[!is.element(D$germplasm, germ.to.get)]
   if( length(germplasm.not.used) == 0 ) { germplasm.not.used = NULL }
   D = droplevels(D[germplasm.to.get,])
-    
+
+  model.presence.abscence.matrix = with(D, table(germplasm, environment))
+  
   # 3. Get the informations for the model ----------
   D = D[order(D$germplasm, D$environment),]
   
@@ -330,7 +336,8 @@ FWH = function(
   } else {epsilon = NULL}
   
   OUT = list(
-    "presence.abscence.matrix" = presence.abscence.matrix,
+    "data.presence.abscence.matrix" = data.presence.abscence.matrix,
+    "model2.presence.abscence.matrix" = model.presence.abscence.matrix,
     "germplasm.not.used" = germplasm.not.used,
     "MCMC" = mcmc_fwh,
     "epsilon" = epsilon,

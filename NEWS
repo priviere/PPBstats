@@ -1,7 +1,60 @@
-PPBstats 0.9.1 ----------------------------------------
+PPBstats 0.11.0 --------------------------------------
 -----------------------------------------------------
-* Little changes in vignette and readme
-* Little changes in the comments of some functions
+* update some little bugs regarding tests
+
+* update the vignette
+  . add example for data_versio
+  . add example for ggplot.type = "biplot-alpha-beta"
+  
+
+PPBstats 0.10.2 --------------------------------------
+-----------------------------------------------------
+* update functions
+  - get.ggplot.R
+    . add data_2 argument
+    . add ggplot.type = "biplot" which is possible for model 2
+
+
+PPBstats 0.10.1 --------------------------------------
+-----------------------------------------------------
+* update some little bugs regarding tests
+
+* update functions
+  - get.ggplot.R
+    . add data_version argument
+  - get.mean.comparisons.R
+  - predict.the.past.R
+    . take into account when there are no parameters in the MCMC
+  
+* add new functions
+  - AMMI.R
+  - AMMI_called_functions.R
+
+* add new data set
+  - data_version.RData
+  
+
+PPBstats 0.10.0 --------------------------------------
+-----------------------------------------------------
+* vignette
+  - update the vignette following previous developments
+
+
+PPBstats 0.9.2 --------------------------------------
+-----------------------------------------------------
+* fix little bugs
+* add the presence.abscence.matrix for the model in FWH, analyse.outputs and predict.the.past
+* add model1.data_env_whose_param_did_not_converge in analyse.outputs and get.ggplot
+* return MCMC only for parameters that converge
+* possible to choose NULL for get.at.least.X.groups
+* "cluster" is displayed in the legend for ggplots from get.parameter.groups
+* fix huge bug in MC where the mean of the observation were not correctly done
+
+
+PPBstats 0.9.1 --------------------------------------
+-----------------------------------------------------
+* little changes in vignette and readme
+* little changes in the comments of some functions
 
 
 PPBstats 0.9 ----------------------------------------

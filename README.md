@@ -9,15 +9,34 @@ More informations about this licence [here](http://creativecommons.org/licenses/
 
 The copyright of the R code and the vignette are owned by Réseau Semences Paysannes and Institut National de la Recherche Agronomique
 
+## Version
+`PPBstats` is now at version 0.11.0
+
+The version number is under the form A.B.C with
+
+* A: the number of the version on CRAN (0 = no version on CRAN yet)
+
+* B: +1 when the code and/or the vignette change
+
+* C: +1 when the code change but not the vignette
+
+See NEWS [here](https://github.com/priviere/PPBstats/blob/master/NEWS) to know the evolution of the codes.
+
 ## Participate to development
 
 You can participate in three ways:
 
-1. test this development version
-2. help to make translation of the package
+1. test this development version and report bugs
+2. translate the package
 3. add new functions that may be useful in the analysis of unbalanced trials that can be found in PPB programmes
 
-### 1. Test
+If you update the code, you can refer to 
+[the issues](https://github.com/priviere/shinemas2R/issues)
+and do it in on another branch.
+Anyhow, send me an email if you wish to participate in order to coordinate our efforts!
+
+
+### 1. Test and report bugs
 
 First, load the development version:
 
@@ -27,7 +46,7 @@ First, load the development version:
 
 The easiest way to start is to look at the vignette to know how the package works.
 
-You can see the vignette [here](https://github.com/priviere/PPBstats/blob/master/vignettes/PPBstats.pdf). You can download it by clicking on 'Raw' in the top right corner.
+You can see the vignette [here](https://github.com/priviere/PPBstats/blob/master/vignettes/PPBstats.pdf). 
 
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
@@ -50,6 +69,5 @@ If you have any ideas,
 - ...
 
 even if it is not R written, send me an email and we'll see how we can work together!
-
 
 

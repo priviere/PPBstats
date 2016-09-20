@@ -11,7 +11,7 @@ get.mean.comparisons(MCMC, parameter, alpha = 0.05, type = 1,
 \arguments{
 \item{MCMC}{MCMC outputs from \code{analysis.outputs}.}
 
-\item{parameter}{The parameter on which gets mean comparisons}
+\item{parameter}{The parameter on which the mean comparison is done}
 
 \item{alpha}{The level of type one error. 0.05 (5\%) by default}
 
@@ -21,7 +21,7 @@ get.mean.comparisons(MCMC, parameter, alpha = 0.05, type = 1,
 
 \item{p.adj}{For type = 1. NULL for no adjustement of the type one error. "soft.bonf" for a soft bonferonni correction to take into account multiple comparisons (alpha / nb of parameters).}
 
-\item{get.at.least.X.groups}{For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence)}
+\item{get.at.least.X.groups}{For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence). If NULL, nothing is done.}
 
 \item{precision}{For type = 1. The precision of the alpha with the correspondong groups from get.at.least.X.groups. The smaller the better, but the smaller the more time consuming due to computing matters}
 }
@@ -32,7 +32,7 @@ The function returns a data frame with the following columns: parameter, median,
 \code{get.mean.comparisons} performs mean comparisons two by two or to a given threshold based on MCMC outputs
 }
 \details{
-The comparisons is based on the probability to have a common distribution for each pair of parameters.
+The comparisons is based on the probability of having a common distribution for each pair of parameters.
 When there is only one group with the value of alpha, the function (via \code{get.at.least.X.groups argument}) returns at least X groups with a new value of alpha.
 More details in the vignette (type vignette ("PPBstats")).
 }
