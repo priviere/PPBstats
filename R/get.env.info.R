@@ -32,17 +32,19 @@ get.env.info = function(
 {
 
   # 1. Get informations on environments ----------
-  
   vec_env_all = levels(D$environment)
   Dna = droplevels(D[which(!is.na(D$variable)),]) # Get rid of NA, keep the farm only where there is data
   vec_env_na = levels(Dna$environment)
   vec_env_with_no_data = vec_env_all[!is.element(vec_env_all, vec_env_na)]
+
   if ( length(vec_env_with_no_data) == 0 ) { vec_env_with_no_data = NULL }
 
   # 2. Get environment with controls ----------
   
   vec_env_with_controls = NULL
+
   for (env in vec_env_na) {
+    
     d = droplevels(filter(Dna, environment == env))
     
     test_g = length(unique(d$germplasm))
@@ -64,7 +66,7 @@ get.env.info = function(
   }
   
   # 3. Get regional and satellite farms ----------
-  
+
   if( !is.null(vec_env_with_controls) ) {
     vec_env_with_no_controls = vec_env_na[!is.element(vec_env_na, vec_env_with_controls)] 
     
@@ -76,11 +78,13 @@ get.env.info = function(
     
     # regional farms : at leat two blocks
     vec_RF = rownames(w)[which(w[, 2] != 0)]
+
     if( length(vec_RF) > 0 ) {
       D_RF = droplevels(filter(Dc, environment %in% vec_RF))
       D_RF = arrange(D_RF, environment, block, entry)
     } else { vec_RF = D_RF = NULL }
         
+
     # satellite farms : only one block
     vec_SF = rownames(w)[which(w[,2] == 0)]
     if( length(vec_SF) > 0 ) {

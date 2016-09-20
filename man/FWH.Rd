@@ -40,7 +40,8 @@ FWH(data, variable, nb_iterations = 1e+05, thin = 10, return.alpha = TRUE,
 The function returns a list with
 
 \itemize{
-\item "presence.abscence.matrix": a matrix germplasm x environment with the number of occurence
+\item "data.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data
+\item "model.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 \item "germplasm.not.used": the vector of germplasms not used in the analysis because they were not on at least two environments. If NULL, all the germplasms were used in the analysis.
 \item "MCMC": a list with the two MCMC chains (mcmc object) from the FWH model
 \item "epsilon": a vector with the median value of the epsilon_ijk
@@ -55,15 +56,15 @@ Model 2 estimates germplasm (alpha_i), environment (theta_j) and sensitivity to 
 An environment is a combinaison of a location and a year.
 
 The different effects are taken in different distributions of respective variances sigma_alpha, sigma_theta and sigma_beta.
-This model takes into acount all the information on the network in order to cope with the high disiquelebrium in the dataset (i.e. high percentage of missing GxE combinaisons on the network).
+This model takes into acount all the information on the network in order to cope with the high disequilibrium in the dataset (i.e. high percentage of missing GxE combinaisons on the network).
 
 First, the additive model is done. This model gives intitial values of some parameters of the FWH model which is done next.
 
 The model is run on data set where germplasms are on at least two environments
 
-More informations can be found in the vignette (type vignette("PPBstats)).
+More informations can be found in the vignette (type vignette("PPBstats")).
 
-For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more informations.
+For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 }
 \author{
 Pierre Riviere for R code and Olivier David for JAGS code
