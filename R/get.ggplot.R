@@ -4,14 +4,18 @@
 #' @description
 #' \code{get.ggplot} returns ggplot objects to visualize outputs from the analysis
 #'
-#' @param data The data to plot. It can come from \code{get.mean.comparison} or \code{get.parameter.groups}
-#'  
+#' @param data The data to plot. It can come from \code{get.mean.comparison}, \code{get.parameter.groups}, \code{predict.the.past}, \code{MC}$data_env_with_no_controls or \code{analye.outputs$model1.data_env_whose_param_did_not_converge}.
+#' 
+#' @param data_2 Outputs from \code{get.mean.comparisons} from model 2.For ggplot.type = "biplot-alpha-beta"
+#' 
+#' @param data_version data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains the different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
+#'
 #' @param ggplot.type The type of plot you wish:
 #' \itemize{
 #'  \item from \code{get.mean.comparison}
 #'  \itemize{
 #'    \item from model 1 (\code{MC}) :  "barplot", "interaction", "score"
-#'    \item from model 2 (\code{FWH}): "barplot"
+#'    \item from model 2 (\code{FWH}): "barplot", "biplot-alpha-beta"
 #'    }
 #'      
 #'  \item from \code{get.parameter.groups} only from model 2 (\code{FWH}): "PCA"
@@ -19,6 +23,8 @@
 #'  \item from \code{predict.the.past}$predict.the.past : "barplot", "interaction"
 #'  
 #'  \item from \code{MC}$data_env_with_no_controls : "barplot", "interaction"
+#'  
+#'  \item from \code{analye.outputs$model1.data_env_whose_param_did_not_converge} : "barplot", "interaction"
 #'  
 #'  }
 #' 
@@ -35,11 +41,16 @@
 #' A low score means that the entry was in a group with an low mean.
 
 #' \item From \code{get.parameter.groups} from model 2 (\code{FWH}) "PCA" display the PCA and the groups of parameters.
-#' }
 #' 
 #' On each plot, the alpha value and the alpha correction are displayed.
 #' alpha = Imp means that no differences were possible to find.
 #' For ggplot.type = "interaction" and ggplot.type = "score", it is display under the form: alpha | alpha correction
+#' 
+#' \item ggplot.type = "biplot-alpha-beta" display the biplot with alpha_i on the x axis and beta_i on the y axis.
+#' 
+#' \item When using data_version, and ggplot.type = "barplot"; the pvalue is computed based on the MCMC.
+#' For data that did not converge or without environments, it is a \texttt{t.test} which is perform.
+#' }
 #' 
 #' @return 
 #' The function returns a list of ggplot objects
@@ -51,39 +62,70 @@
 #' 
 get.ggplot = function(
   data,
+  data_2 = NULL,
+  data_version = NULL,
   ggplot.type = "interaction",
   nb_parameters_per_plot = 8
 )
   # let's go !!! ----------
 {
-  
   # 1. Error message and update arguments ----------
-  if (is.null(attributes(data)$PPBstats.object)) { stop("data must come from functions get.parameter.groups, get.mean.comparisons or predict.the.past. See ?get.ggplot for more details.") }
+  if (is.null(attributes(data)$PPBstats.object)) { stop("data must come from functions get.parameter.groups, get.mean.comparisons, predict.the.past or analyse.outputs. See ?get.ggplot for more details.") }
   
-  if( !is.element(ggplot.type, c("barplot", "interaction", "score", "PCA"))) { stop("ggplot.type must be either \"barplot\", \"interaction\", \"score\" or \"PCA\".") }
+  if( !is.element(ggplot.type, c("barplot", "biplot-alpha-beta", "interaction", "score", "PCA"))) { stop("ggplot.type must be either \"barplot\", \"biplot-alpha-beta\", \"interaction\", \"score\" or \"PCA\".") }
+  
   if( attributes(data)$PPBstats.object == "parameter.groups.model2" & ggplot.type != "PCA" ) { stop("ggplot.type = \"PCA\" must be used with data from get.parameter.groups") }
   
-  if( attributes(data)$PPBstats.object == "parameter.groups.model2" & is.element(ggplot.type, c("barplot", "interaction", "score")) ) { stop("With data coming from get.parameter.groups, you must use ggplot.type = \"PCA\".") }
-  
-  if( attributes(data)$PPBstats.object == "mean.comparisons.model1" & ggplot.type == "PCA" ) { stop("With data coming from get.mean.comparisons, you must use ggplot.type = \"barplot\", \"interaction\" or \"score\".") }
+  if( (attributes(data)$PPBstats.object == "mean.comparisons.model1" | attributes(data)$PPBstats.object == "mean.comparisons.model2") & ggplot.type == "PCA" ) { stop("With data coming from get.mean.comparisons, you must use ggplot.type = \"barplot\", \"biplot-alpha-beta\", \"interaction\" or \"score\".") }
   
   if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::MC$data_env_with_no_controls, you must use ggplot.type = \"barplot\", \"interaction\".") }
   
-  if( attributes(data)$PPBstats.object == "predict.the.past" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::MC$data_env_with_no_controls, you must use ggplot.type = \"barplot\", \"interaction\".") }
+  if( attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from PPBstats::analyse.outputs$model1.data_env_whose_param_did_not_converge, you must use ggplot.type = \"barplot\", \"interaction\".") }
+
+  if( attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" & is.null(data) ) { stop("model1.data_env_whose_param_did_not_converge is NULL : no ggplot can be done ! ") }
+  
+  if( attributes(data)$PPBstats.object == "predict.the.past" & is.element(ggplot.type, c("score", "PCA") ) ) { stop("With data coming from predict.the.past, you must use ggplot.type = \"barplot\" or \"interaction\".") }
+
+  if( ggplot.type == "biplot-alpha-beta" ) {
+    if( !is.null(data) ) { if( attributes(data_2)$PPBstats.object != "mean.comparisons.model2") {
+      stop("With gplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons from model 2.")
+    } }
+    if( !is.null(data_2) ) { if( attributes(data_2)$PPBstats.object != "mean.comparisons.model2") {
+      stop("data_2 must come from get.mean.comparisons from model 2.")
+    } }
+  }
+  
+  if( !is.null(data_version) ){
+    mess = "The following column are compulsory in data_version : c(\"year\", \"germplasm\", \"location\", \"group\", \"version\"."
+    if(!is.element("year", colnames(data_version))) { stop(mess) }
+    if(!is.element("germplasm", colnames(data_version))) { stop(mess) }
+    if(!is.element("location", colnames(data_version))) { stop(mess) }
+    if(!is.element("group", colnames(data_version))) { stop(mess) }
+    if(!is.element("version", colnames(data_version))) { stop(mess) }
+  }
   
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ) {
+    data_Mpvalue = data$Mpvalue
+    data = data$mean.comparisons
+    attributes(data)$PPBstats.object = "mean.comparisons.model1"
+
     test.mu.m1 = length(grep("mu\\[", data$parameter)) > 0
     test.beta.m1 = length(grep("beta\\[", data$parameter)) > 0  
   } else { test.mu.m1 = test.beta.m1 = FALSE }
   
   if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
-        attributes(data)$PPBstats.object == "predict.the.past" 
+      attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
+      attributes(data)$PPBstats.object == "predict.the.past" 
   ) {
     test.mu.m1 = TRUE # Just to pass the error message
   }
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model2" ){
+    data_Mpvalue = data$Mpvalue
+    data = data$mean.comparisons
+    attributes(data)$PPBstats.object = "mean.comparisons.model2"
+
     test.alpha.m2 = length(grep("alpha\\[", data$parameter)) > 0
     test.beta.m2 = length(grep("beta\\[", data$parameter)) > 0
     test.theta.m2 = length(grep("theta\\[", data$parameter)) > 0  
@@ -94,10 +136,10 @@ get.ggplot = function(
   
   if( (!test.mu.m1 & !test.beta.m1) & ggplot.type == "score") { stop("ggplot.type == \"score\" is possible only with output from model1 (MC).") }
   
-  
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
-        attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
-        attributes(data)$PPBstats.object == "predict.the.past"
+      attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
+      attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
+      attributes(data)$PPBstats.object == "predict.the.past"
   ) {
     
     para = unlist(strsplit(as.character(data$parameter)[1], "\\["))[1]
@@ -107,8 +149,9 @@ get.ggplot = function(
     data$location = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
     data$year = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
     
-    if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1") { # To have the same format for next steps
-      data = plyr::rename(data, replace = c("variable_mean" = "median"))
+    if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
+       attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") { # To have the same format for next steps
+      data = plyr::rename(data, replace = c("variable" = "median"))
     }
     if(attributes(data)$PPBstats.object == "predict.the.past") { # To have the same format for next steps
       data = plyr::rename(data, replace = c("50%" = "median"))
@@ -137,51 +180,164 @@ get.ggplot = function(
   
   # 2.1. barplot ----------
   
-  if(  attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
-         attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
-         attributes(data)$PPBstats.object == "predict.the.past"
+  if( (attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
+      attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
+      attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
+      attributes(data)$PPBstats.object == "predict.the.past")
        & ggplot.type == "barplot"
   ) {  
-    
     d_env = plyr:::splitter_d(data, .(environment))
     
-    d_env_b = lapply(d_env, function(x){
-      x = arrange(x, median)
-      x$max = max(x$median, na.rm = TRUE)
-      x$split = add_split_col(x, nb_parameters_per_plot)
-      x_split = plyr:::splitter_d(x, .(split))
-      return(x_split)
-    } )
-        
-    OUT = lapply(d_env_b, function(x){
-      out = lapply(x, function(dx){
-        p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
-        
-        if(attributes(data)$PPBstats.object == "mean.comparisons.model1") { # Add letters of significant groups
-          p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
-          p = p + ggtitle(paste(dx[1, "environment"], "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"])) + ylab("")
+    if(!is.null(data_version)) {
+      
+      data_version$group = factor(rep(unlist(tapply(data_version$germplasm, data_version$group, function(x){paste(x, collapse = " | ")})), each = 2))
+      data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
+      data_version$mu = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
+      vec_env = unique(data_version$environment)
+      vec_env_to_get = vec_env[is.element(vec_env, names(d_env))]
+      vec_env_not_to_get = vec_env[!is.element(vec_env, names(d_env))]
+      if( length(vec_env_not_to_get) > 0 ){ warning("The following environments in data_version are not taken: ", paste(vec_env_not_to_get, collapse = ", "),".") }
+      
+      if( length(vec_env_to_get) == 0 ) { stop("There are no environment to display.") }
+      
+        d_env = d_env[vec_env_to_get]
+
+        fun = function(x, data_version){
+          test = grep("mu", x$parameter)
+          if( length(test) == 0 ) { x$parameter = paste("mu", x$parameter, sep = "") } # i.e. "data_env_with_no_controls.model1" | "model1.data_env_whose_param_did_not_converge")
+          p_to_get = filter(data_version, environment == x$environment[1])$mu
+          x = filter(x, parameter %in% p_to_get)
+          x$max = max(x$median, na.rm = TRUE)
+          x = arrange(x, median)
+          x$split = add_split_col(x, nb_parameters_per_plot)
+          x_split = plyr:::splitter_d(x, .(split))
+          return(x_split)
         }
         
-        if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1") {
-          p = p + ggtitle(dx[1, "environment"]) + ylab("")
-        }
-        
-        if(attributes(data)$PPBstats.object == "predict.the.past") {
+        d_env_b = lapply(d_env, fun, data_version)
+
+        OUT = lapply(d_env_b, function(x){
+          out = lapply(x, function(dx){
+            if(attributes(data)$PPBstats.object == "mean.comparisons.model1") { # Add letters of significant groups
+              
+              env = dx$environment[1]
+              data_Mpvalue_env = data_Mpvalue[[env]]
+              data_version_tmp = droplevels(filter(data_version, environment == env))
+              
+              gp = unique(data_version_tmp$group)
+              STARS = NULL
+              for(g in gp){
+                dtmp = droplevels(filter(data_version_tmp, group == g))
+                v1 = as.character(filter(dtmp, version == "v1")$mu)
+                v2 = as.character(filter(dtmp, version == "v2")$mu)
+                pvalue = data_Mpvalue_env[v1, v2]
+                if(is.null(pvalue)) { stars = " "} else {
+                  if(pvalue < 0.001) { stars = "***" }
+                  if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
+                  if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
+                  if(pvalue > 0.01) { stars = "." }
+                }
+                names(stars) = g
+                STARS = c(STARS, stars)
+              }
+              
+              colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
+              d = join(data_version_tmp, dx, "mu")
+              p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
+              
+              y = tapply(d$median, d$group, mean, na.rm = TRUE)
+              y = y + (max(y) * 0.2)
+              label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
+              p = p + geom_text(data = label_stars, aes(label = STARS))
+              p = p + xlab("") + theme(axis.text.x = element_text(angle = 90))
+              }
           
-          p = p + ggtitle(dx[1, "environment"]) + ylab("predicted value")
-        }
-        
-        p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, dx[1,"max"])
-        return(p)
+          if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
+             attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") {
+            
+            env = dx$environment[1]
+            data_version_tmp = droplevels(filter(data_version, environment == env))
+            
+            gp = unique(data_version_tmp$group)
+            STARS = NULL
+            for(g in gp){
+              dtmp = droplevels(filter(data_version_tmp, group == g))
+              v1 = as.character(filter(dtmp, version == "v1")$median)
+              v2 = as.character(filter(dtmp, version == "v2")$median)
+              
+              if( length(v1) > 1 & length(v2) > 1) {
+                pvalue = t.test(v1, v2)$p.value
+              } else { pvalue = NULL; warning("No t.test are done as there are not enough observations.") }
+              
+              if(is.null(pvalue)) { stars = " "} else {
+                if(pvalue < 0.001) { stars = "***" }
+                if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
+                if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
+                if(pvalue > 0.01) { stars = "." }
+              }
+              names(stars) = g
+              STARS = c(STARS, stars)
+            }
+            
+            colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
+            d = join(data_version_tmp, dx, "mu")
+
+            p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
+            
+            y = tapply(d$median, d$group, mean, na.rm = TRUE)
+            y = y + (max(y) * 0.2)
+            label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
+            p = p + geom_text(data = label_stars, aes(label = STARS))
+            p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, dx[1,"max"])
+          }
+            
+          return(p)
+        })
+        return(out)
       })
-      return(out)
-    })
-    names(OUT) = names(d_env_b)
+        names(OUT) = names(d_env_b)
+        
+    } else {
+
+      d_env_b = lapply(d_env, function(x){
+        x = arrange(x, median)
+        x$max = max(x$median, na.rm = TRUE)
+        x$split = add_split_col(x, nb_parameters_per_plot)
+        x_split = plyr:::splitter_d(x, .(split))
+        return(x_split)
+      } )
+      
+      OUT = lapply(d_env_b, function(x){
+        out = lapply(x, function(dx){
+          p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
+
+          if(attributes(data)$PPBstats.object == "mean.comparisons.model1") { # Add letters of significant groups
+            p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
+            p = p + ggtitle(paste(dx[1, "environment"], "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"])) + ylab("")
+          }
+          
+          if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
+             attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") {
+            p = p + ggtitle(dx[1, "environment"]) + ylab("")
+          }
+          
+          if(attributes(data)$PPBstats.object == "predict.the.past") {
+            p = p + ggtitle(dx[1, "environment"]) + ylab("predicted value")
+          }
+          
+          p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, dx[1,"max"])
+          return(p)
+        })
+        return(out)
+      })
+      names(OUT) = names(d_env_b)
+    
+    }
+     
   }
   
   
     if(attributes(data)$PPBstats.object == "mean.comparisons.model2" & ggplot.type == "barplot") {  
-    
     data = arrange(data, median)  
     data$max = max(data$median, na.rm = TRUE)
     data$split = add_split_col(data, nb_parameters_per_plot)
@@ -219,6 +375,7 @@ get.ggplot = function(
         }
         
         if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
+            attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
               attributes(data)$PPBstats.object == "predict.the.past"
         ) {
           x_loc$alpha.info_year = x_loc$year
@@ -238,6 +395,7 @@ get.ggplot = function(
         if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ){
           SEG = NULL
           
+          letters = c(letters, paste(rep(LETTERS, times = 15), rep(c(1:5), each = 15), sep = ""))
           gp_letters = letters[1:max(x_loc$nb_group)]
           xadjust = seq(0.05, 0.9, length = 25) # it is assumed max 25 letters (i.e. groups)
           xadjust = xadjust[c(1:length(gp_letters))]
@@ -345,7 +503,7 @@ get.ggplot = function(
           
           
           if(!is.null(SEG)) {
-            p = p + geom_segment(aes(x = x, y = ymin, xend = x, yend = ymax, group = NULL), colour =  as.numeric(as.factor(SEG$groups)), data = SEG, linetype = "dashed")
+            p = p + geom_segment(aes(x = x, y = ymin, xend = x, yend = ymax, group = NULL), colour =  as.numeric(as.factor(SEG$groups)), data = SEG)
             p = p + ylim(ymin - ymin/10, ymax + ymax/10) # To be sure to see the line of the groups
           }      
         }
@@ -381,7 +539,7 @@ get.ggplot = function(
         env$score = gp_nb  
         
         alpha.info = paste(env$alpha, "|", env$alpha.correction)
-        env$alpha.info_year = paste(alpha.info, env$year, sep = " - ")
+        env$alpha.info_year = paste(env$year, alpha.info, sep = " - ")
         
         p = ggplot(env, aes(y = entry, x = alpha.info_year)) + geom_tile(aes(fill = score))
         p = p + scale_fill_gradient(low = "blue",high = "red")
@@ -432,6 +590,34 @@ get.ggplot = function(
     
     OUT = list("ind" = pind, "var" = pvar)
     return(OUT)
+  }
+  
+
+  # 2.5. biplot-alpha-beta ----------
+  if(ggplot.type == "biplot-alpha-beta"){
+    
+    a = data
+    
+    test_a = unlist(strsplit(as.character(a[1,"parameter"]), "\\["))[1]
+    if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
+    a$germplasm = gsub("alpha", "", a$parameter)
+    colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
+    colnames(a)[which(colnames(a) == "median")] = "alpha_i"
+    
+    b = data_2$mean.comparisons
+    test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
+    if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
+    b$germplasm = gsub("beta", "", b$parameter)
+    colnames(b)[which(colnames(b) == "parameter")] = "parameter_b"
+    colnames(b)[which(colnames(b) == "median")] = "beta_i"
+    
+    ab = join(a, b, "germplasm")
+    ab$germplasm = gsub("\\[", "", ab$germplasm)
+    ab$germplasm = gsub("\\]", "", ab$germplasm)
+    
+    p = ggplot(ab, aes(x = alpha_i, y = beta_i, label = germplasm)) 
+    p = p + geom_text() + geom_hline(yintercept = 0)
+    OUT = list("biplot-alpha-beta" = p)
   }
   
   return(OUT)
