@@ -16,7 +16,7 @@
 #' 
 #' @param p.adj For type = 1. NULL for no adjustement of the type one error. "soft.bonf" for a soft bonferonni correction to take into account multiple comparisons (alpha / nb of parameters).
 #' 
-#' @param get.at.least.X.groups For type = 1. If there is only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence)
+#' @param get.at.least.X.groups For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence). If NULL, nothing is done.
 #' 
 #' @param precision For type = 1. The precision of the alpha with the correspondong groups from get.at.least.X.groups. The smaller the better, but the smaller the more time consuming due to computing matters
 #' 
@@ -70,7 +70,7 @@ get.mean.comparisons = function(
   if(attributes(MCMC)$model == "model2" & parameter == "beta") { vec_element = "beta\\[" }
   if(attributes(MCMC)$model == "model2" & parameter == "theta") { vec_element = "theta\\[" }
   
-  OUT = NULL
+  OUT = MPVALUE = NULL
   for (e in 1:length(vec_element)) {
     
     element = vec_element[e]
@@ -78,10 +78,14 @@ get.mean.comparisons = function(
     a = colnames(MCMC)[grep(parameter, colnames(MCMC))]
     toget = a[grepl(element, a)]
     MCMC_element = MCMC[, toget]
+    if( is.null(ncol(MCMC_element)) ) { MCMC_element = as.data.frame(matrix(MCMC_element, ncol = 1)); colnames(MCMC_element) = toget }
     
     Mpvalue = comp.parameters(MCMC = MCMC_element, parameter = parameter, type = type, threshold = threshold)
+    
+    if(type == 1 & is.null(Mpvalue)) { message("mean comparisons not done for ", sub("\\\\\\[", "", element), " because there are less than two parameters to compare.") }
+    
         
-    if(type == 1) {
+    if(type == 1 & !is.null(Mpvalue)) {
       Comparison = get.significant.groups(Mpvalue = Mpvalue, MCMC = MCMC_element, alpha = alpha, p.adj = p.adj)
       
       # number of groups
@@ -89,7 +93,7 @@ get.mean.comparisons = function(
       nb_group = length(unique(a))
       
       # get at least X groups
-      if(nb_group == 1) {
+      if(nb_group == 1 & !is.null(get.at.least.X.groups)) {
         message(paste("Get at least X groups for ", sub("\\\\\\[", "", element),". It may take some time ...", sep = "")) # The sub is useful for model2
         ALPHA = get.at.least.X.groups(Mpvalue, MCMC_element, p.adj = p.adj, precision = precision)  
         alp = ALPHA[paste(get.at.least.X.groups, "_groups", sep = "")]  
@@ -105,15 +109,27 @@ get.mean.comparisons = function(
                              "alpha.correction" = rep(p.adj, nrow(Comparison))
                              )
 
-    } 
+    } else { TAB = NULL }
     
-    if(type == 2) { TAB = cbind.data.frame("proba" = Mpvalue) }
+    if(type == 2) { 
+      TAB = cbind.data.frame("proba" = Mpvalue) 
+      o = order(TAB$proba)
+      tab = as.data.frame(matrix(TAB[o,], ncol = 1)); rownames(tab) = rownames(TAB)[o]
+      TAB = tab
+      }
     
     OUT = rbind.data.frame(OUT, TAB)
-    
+    MPVALUE = c(MPVALUE, list(Mpvalue))
   }
   if( attributes(MCMC)$model == "model1") { attributes(OUT)$PPBstats.object = "mean.comparisons.model1" }
   if( attributes(MCMC)$model == "model2") { attributes(OUT)$PPBstats.object = "mean.comparisons.model2" }
+  
+  names(MPVALUE) = vec_element
+  out = list(OUT, MPVALUE)
+  names(out) = c("mean.comparisons", "Mpvalue")
+  
+  if( attributes(MCMC)$model == "model1") { attributes(out)$PPBstats.object = "mean.comparisons.model1" }
+  if( attributes(MCMC)$model == "model2") { attributes(out)$PPBstats.object = "mean.comparisons.model2" }
 
-  return(OUT)
+  return(out)
 }
