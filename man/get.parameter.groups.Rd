@@ -22,8 +22,8 @@ The function returns a data frame with for each parameter, the median for each v
 \details{
 The function run a PCA on a matrix containing the value of each parameter for each variable.
 
-Cluster are done with the \code{FactoMineR::HCPC} function.
-You can tone the number of clusters with the argument \code{nb.clust}, which is the same than in \code{HCPC}
+Clusters are done with the \code{FactoMineR::HCPC} function.
+You can tone the number of clusters with the argument \code{nb.clust}, which is the same as in \code{HCPC}
 Type ?\code{HCPC} for more informations.
 
 More details in the vignette (type vignette ("PPBstats")).

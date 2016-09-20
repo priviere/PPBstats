@@ -7,7 +7,7 @@
 get.env.info(D, nb_ind)
 }
 \arguments{
-\item{D}{The data.frame with its specific column names used in \code{MC}}
+\item{D}{The data frame with its specific column names used in \code{MC}}
 
 \item{nb_ind}{The minimal number of individuals per variable}
 }

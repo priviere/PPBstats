@@ -39,9 +39,12 @@ if( !is.data.frame(MCMC) ) { stop("MCMC must be a data frame.") }
 if( length(grep(parameter, colnames(MCMC))) == 0 ) { stop(paste(parameter, "is not in the colnames of MCMC.")) }
     
 MCMC1 = MCMC[,grep(parameter, colnames(MCMC))]
+if( is.null(ncol(MCMC1)) ) { MCMC1 = as.data.frame(matrix(MCMC1, ncol = 1)); colnames(MCMC1) = parameter }
 
 vec_para_median = sort(apply(MCMC1, 2, median))
 vec_element = names(vec_para_median)
+
+if( length(vec_element) < 2 & type ==1 ) { warning("With type = 1, MCMC must have at least two parameters."); return(NULL)}
 
 # 2. Comparisons of parameters two by two ----------
 if(type == 1) {

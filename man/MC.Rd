@@ -30,7 +30,7 @@ MC(data, variable, nb_iterations = 1e+05, thin = 10, return.mu = TRUE,
 
 \item{return.epsilon}{Return the value of all residuals in each environment (epsilon_ijk)}
 
-\item{return.DIC}{Return the DIC value of the model. See details for more informations.}
+\item{return.DIC}{Return the DIC value of the model. See details for more information.}
 
 \item{nu.max}{Set the nu.max. It is 10 by default}
 }
@@ -38,6 +38,7 @@ MC(data, variable, nb_iterations = 1e+05, thin = 10, return.mu = TRUE,
 The function returns a list with
 
 \itemize{
+\item "data.model1": the dataframe used to run model 1
 \item "presence.abscence.matrix": a matrix entry x environment with the number of occurence
 \item "vec_env_with_no_data": a vector with the environments without data for the given variable
 \item "vec_env_with_no_controls": a vector with the environments with no controls
@@ -51,15 +52,16 @@ The function returns a list with
 }
 }
 \description{
-\code{MC} runs model 1 to get mean comparisons (MC) on each environment of the network. See details for more informations.
+\code{MC} runs model 1 to get mean comparisons (MC) on each environment of the network. See details for more information.
 }
 \details{
 Model 1 estimates entry effects (mu_ij), block effects (beta_jk), residuals (epsilon_ijk) and within-environment variance (sigma_j) on each environment.
 An environment is a combinaison of a location and a year.
 
 The variance are taken in an inverse Gamma distribution of parameters nu and rho.
-This model takes into acount all the information on the network in order to cope with the high disequilibrium within each environment (i.e. low degree of freedom at the residual in each environment).
-More informations can be found in the vignette (type vignette("PPBstats)).
+This model takes into acount all the information on the network in order to cope wit
+h the high disequilibrium within each environment (i.e. low degree of freedom at the residual in each environment).
+More informations can be found in the vignette (type vignette("PPBstats")).
 
 For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more informations.
 }
