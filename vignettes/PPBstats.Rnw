@@ -29,7 +29,7 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.9}
+\newcommand{\versionnumber}{0.11}
 
 \begin{document}
 
@@ -57,12 +57,7 @@ To continue, load the package:
 <<message=TRUE,cache=FALSE>>=
 library(PPBstats)
 @
-and download from internet the data used in this vignette (this is useful to earn lots of time!)
-<<message=TRUE,cache=FALSE>>=
-# get.PPBstats.data() waiting for the link to be ok
-system("mkdir data")
-system("cp -r /home/pierre/Documents/geek/R-stats/Rdev/PPBstats_data/*RData ./data")
-@
+and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \url{https://www.dropbox.com/sh/6qvl515k5484zg4/AADZKkaM2XZvmr9e6l5aWxN2a?dl=0} and put it in the folder \texttt{data\_PPBstats} and then load() it.
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
@@ -126,7 +121,7 @@ The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
 #  |**************************************************| 100%
 #  |**************************************************| 100%
 
-load("./data/out.model1.RData") # # To save time
+load("./data_PPBstats/out.model1.RData") # To save time
 @
 
 You can get informations of the environments in the dataset :
@@ -148,7 +143,16 @@ Once the model is run, it is necessary to check if the outputs can be taken with
 This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from \texttt{analyse.outputs}!).
 
 <<message=TRUE,cache=FALSE>>=
-out1 = analyse.outputs(out.model1)
+# The experimental design plot is done.
+# The Gelman-Rubin test is running for each parameter ...
+# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
+# The values of sigma in the inverse Gamme distribution are done.
+# The mu_ij posterior distributions are done.
+# The beta_jk posterior distributions are done.
+# The sigma_j posterior distributions are done.
+# The standardised residuals distributions are done.
+
+load("./data_PPBstats/out1.RData")
 @
 
 \texttt{out1} is a list containing:
@@ -163,7 +167,7 @@ A score of 3 is for a given germplasm replicated three times in a given environe
 
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$experimental_design$plot
+out1$data.experimental_design$plot
 @
 \end{figure}
 
@@ -196,10 +200,23 @@ Below is an example where there is no convergence because the MCMC are too small
 #In MC(data = PPBdata, variable = "tkw", nb_iteration = 5000) :
 #  nb_iterations is below 20 000, which seems small to get convergence in the MCMC.
 
-load("./data/out.model1_bis.RData") # To save (little) time
+load("./data_PPBstats/out.model1_bis.RData") # To save time
 
-out1_bis = analyse.outputs(out.model1_bis, analysis = "convergence")
-names(out1_bis$convergence) # parameters that did not converge
+# out1_bis = analyse.outputs(out.model1_bis)
+# The experimental design plot is done.
+# The Gelman-Rubin test is running for each parameter ...
+# The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : 
+# nu, rho, sigma[env1-1:2012], sigma[env1-2:2011], sigma[env2-12:2012], sigma[env2-6:2010]. 
+# Therefore, they are not present in MCMC output.
+# MCMC are updated, the following environment were deleted : 
+# env1-1:2012, env1-2:2011, env2-12:2012, env2-6:2010
+# model1.data_env_whose_param_did_not_converge contains the raw data for these environments.
+# The values of sigma in the inverse Gamme distribution are done.
+# The mu_ij posterior distributions are done.
+# The beta_jk posterior distributions are done.
+# The sigma_j posterior distributions are done.
+
+load("./data_PPBstats/out1_bis.RData") # To save time
 
 # Get one example
 toplot = out1_bis$convergence$"nu"
@@ -305,6 +322,12 @@ p + stat_smooth(method = "lm") + geom_point()
 
 \input{./sections/mean_comp}
 
+\paragraph{Computation}
+
+In \pack, mean comparisons are done with \texttt{get.mean.comparisons}.
+You can choose on which parameters to run the comparison (\texttt{parameter} argument) and the $\alpha$ type one error (\texttt{alpha} argument).
+The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
+More informations on this function by typing \texttt{?get.mean.comparisons}.
 
 <<message=TRUE,cache=FALSE>>=
 # comp.mu = get.mean.comparisons(out1$MCMC, "mu")
@@ -316,8 +339,13 @@ p + stat_smooth(method = "lm") + geom_point()
 # Get at least X groups for  env2-3:2012 is done.
 # Get at least X groups for env2-9:2010. It may take some time ...
 # Get at least X groups for  env2-9:2010 is done.
-load("./data/comp.mu.RData") # To save time
+
+load("./data_PPBstats/comp.mu.RData") # To save time
 @
+
+\paragraph{Plots}
+
+\subparagraph{All entries in a given environment}
 
 To see the output, use \texttt{get.ggplot}.
 On each plot, the \texttt{alpha} (type one error) value and the alpha correction are displayed.
@@ -326,6 +354,7 @@ For \texttt{ggplot.type = "interaction"} and \texttt{ggplot.type = "score"}, it 
 
 <<message=TRUE,cache=FALSE>>=
 p_barplot = get.ggplot(comp.mu, ggplot.type = "barplot")
+length(p_barplot)
 names(p_barplot)
 @
 
@@ -350,25 +379,25 @@ p_interaction = get.ggplot(comp.mu, ggplot.type = "interaction")
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
 # For location env-1-1.
-p_interaction$"env1-1"[1]
+p_interaction$"env1-1"[[1]]
 @
 \end{figure}
 
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[2]
+p_interaction$"env1-1"[[2]]
 @
 \end{figure}
 
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[3]
+p_interaction$"env1-1"[[3]]
 @
 \end{figure}
              
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[4]
+p_interaction$"env1-1"[[4]]
 @
 \end{figure}
 
@@ -387,7 +416,9 @@ grid.arrange(p_score$"env1-1"[[1]], p_score$"env1-1"[[2]] , ncol = 2, nrow = 1)
 
 The same method is used for each $\beta_{jk}$.
 
-For environments with no controls, it may be useful to get the plot as well.
+\vspace{.5cm}
+
+For environments with no controls or where at least one MCMC did not converge, it may be useful to get the plot as well.
 
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
@@ -397,6 +428,61 @@ get.ggplot(out.model1$data_env_with_no_controls, ggplot.type = "barplot")
 
 You can also do a plot with interaction. 
 Here it is not useful as there is only one year.
+
+\begin{figure}[H]
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+g = get.ggplot(out1_bis$model1.data_env_whose_param_did_not_converge, ggplot.type = "barplot")
+
+names(g)
+
+g$`env1-1:2012`$`1`
+@
+\end{figure}
+
+
+\subparagraph{Pairs of entries in a given environment}
+It is possible to get comparison of paris of entries in a given location.
+This is useful if you want to compare two versions within a group.
+For exemple:
+
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+data(data_version)
+head(data_version)
+@
+
+Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two version belonging to the same groupe.
+
+Lets' make the plots:
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+g = get.ggplot(data = comp.mu, data_version = data_version, ggplot.type = "barplot")
+g$`env1-1:2010`$`1`
+@
+
+The stars corresponds to the pvalue:
+
+\begin{center}
+\begin{tabular}{cc}
+\hline
+pvalue & stars \\
+\hline
+$< 0.001$ & *** \\
+$[0.001 , 0.05]$ & ** \\
+$[0.05 , 0.01]$ & * \\
+$> 0.01$ & . \\
+\hline
+\end{tabular}
+\end{center}
+
+The pvalue is computed as describe in section \ref{mean_comp} if the parameters have been estimated with the model.
+
+It is also possible to make this kind of plots for data that did not converge or without environments.
+In this case, it is a \texttt{t.test} which is perform.
+
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+g = get.ggplot(out1_bis$model1.data_env_whose_param_did_not_converge, data_version = data_version, ggplot.type = "barplot")
+
+g = get.ggplot(out.model1$data_env_with_no_controls, data_version = data_version, ggplot.type = "barplot")
+@
 
 
 \section{At the network level : model~\ref{model2} to analyse $G \times E$ interaction in the network of farms }
@@ -474,7 +560,7 @@ The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
 #  |**************************************************| 100%
 #  |**************************************************| 100%
 
-load("./data/out.model2.RData") # To save time
+load("./data_PPBstats/out.model2.RData") # To save time
 @
 
 It may be useful to see which germplasm were not use in the analysis because they were in only one environment.
@@ -490,7 +576,16 @@ This step is needed before going ahead in the analysis (in fact, the MCMC object
 
 
 <<message=TRUE,cache=FALSE>>=
-out2 = analyse.outputs(out.model2)
+# out2 = analyse.outputs(out.model2)
+# The experimental design plot is done.
+# The Gelman-Rubin test is running for each parameter ...
+# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
+# The alpha_i posterior distributions are done.
+# The beta_i posterior distributions are done.
+# The theta_j posterior distributions are done.
+# The standardised residuals distributions are done.
+
+load("./data_PPBstats/out2.RData") # To save time
 @
 
 \texttt{out2} is a list containing :
@@ -502,7 +597,7 @@ Note that it displays only germplasms that are on at least two environments.
 
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out2$experimental_design$plot
+out2$data.experimental_design$plot
 @
 \end{figure}
 
@@ -601,11 +696,13 @@ $t$ follows a Student distribution with $N-1$ degree of freedom.
 
 The percentage of confidence (i.e. the probability $H0$: the bias is equal to zero) comes from this distribution.
 
-An regression is also done between estimated and observed value.
+A regression is also done between estimated and observed value.
+
+Here it is bad as only 10 iterations have been done to save computing time ...
 
 <<message=TRUE,cache=FALSE>>=
 # out.cv = cross.validation.FWH(data = PPBdata2, variable = "y1", nb_iterations = 10)
-load("./data/out.cv.RData") # to save lots of time
+load("./data_PPBstats/out.cv.RData") # to save lots of time
 @
 
 <<message=TRUE,cache=FALSE>>=
@@ -643,6 +740,19 @@ grid.arrange(p_barplot$"alpha"[[1]], p_barplot$"alpha"[[2]] , ncol = 2, nrow = 1
 @
 \end{figure}
 
+\subsubsection{Get biplot $\beta = f(\alpha)$}
+
+It is interessting to compare genetic effect versus sensibility to interaction.
+A germplasm with an high genetic effect and a low sensitivity to interaction (i.e. close to 0) may be a good candidate to sown.
+
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+comp.alpha = get.mean.comparisons(out2$MCMC, "alpha")
+comp.beta = get.mean.comparisons(out2$MCMC, "beta")
+
+g = get.ggplot(data = comp.alpha, data_2 = comp.beta, ggplot.type = "biplot-alpha-beta")
+g$biplot
+@
+
 
 \subsubsection{Get groups of parameters}
 
@@ -654,16 +764,16 @@ The number of clusters is choosen to maximise the variance between clusters and 
 For more information type \texttt{?get.parameter.groups}.
 
 <<message=TRUE,cache=FALSE>>=
-# out.model2 = FWH(PPBdata2, variable = "y1")
-load("./data/out.model2.RData") # to save time
+# out.model2_y1 = FWH(PPBdata2, variable = "y1")
+load("./data_PPBstats/out.model2_y1.RData") # to save time
 
 # out.model2_y2 = FWH(PPBdata2, variable = "y2")
-load("./data/out.model2_y2.RData") # to save time
+load("./data_PPBstats/out.model2_y2.RData") # to save time
 
 # out.model2_y3 = FWH(PPBdata2, variable = "y3")
-load("./data/out.model2_y3.RData") # to save time
+load("./data_PPBstats/out.model2_y3.RData") # to save time
  
-out2_y1 = analyse.outputs(out.model2)
+out2_y1 = analyse.outputs(out.model2_y1)
 out2_y2 = analyse.outputs(out.model2_y2)
 out2_y3 = analyse.outputs(out.model2_y3)
  
@@ -696,7 +806,7 @@ This allows caterpillar plots but no mean comparisons that are base on the whole
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
 # out.predict.the.past = predict.the.past(out2, output.format = "summary")
 # |==========================================================| 100%
-load("./data/out.predict.the.past.RData") # to save time
+load("./data_PPBstats/out.predict.the.past.RData") # to save time
 dim(out.predict.the.past)
 @
 
@@ -707,12 +817,12 @@ If you choose \texttt{output.format = "summary"}, it is possible to look at the 
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
 p_barplot_predict = get.ggplot(out.predict.the.past, ggplot.type = "barplot", 
                                nb_parameters_per_plot = 30)
-p_barplot_predict["loc-11:year-1"]
+p_barplot_predict$`loc-11:year-1`$`1`
 @
 
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
 p_interaction_predict = get.ggplot(out.predict.the.past, ggplot.type = "interaction")
-p_interaction_predict[["loc-46"]][[1]] # One graph 
+p_interaction_predict$`loc-46`$`1`
 @
 
 
