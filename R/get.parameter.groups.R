@@ -78,6 +78,7 @@ get.parameter.groups = function(
   # 5. Get the clusters ----------  
   hcpc = HCPC(obj.pca, nb.clust = nb.clust, consol = 0, min = 2, max = 5, graph = FALSE) # Be careful, if we put 2, it often returns 2! The package propose to put 3
   clust = hcpc$data.clust
+  clust$clust = paste("cluster", clust$clust)
   
   # 6. Return the outputs ----------
   OUT = list("obj.pca" = obj.pca, "clust" = clust)
