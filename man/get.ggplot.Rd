@@ -12,7 +12,7 @@ get.ggplot(data, data_2 = NULL, data_version = NULL,
 
 \item{data_2}{Outputs from \code{get.mean.comparisons} from model 2.For ggplot.type = "biplot-alpha-beta"}
 
-\item{data_version}{data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains the different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.}
+\item{data_version}{data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains two different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.}
 
 \item{ggplot.type}{The type of plot you wish:
 \itemize{
