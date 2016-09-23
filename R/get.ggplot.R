@@ -8,7 +8,7 @@
 #' 
 #' @param data_2 Outputs from \code{get.mean.comparisons} from model 2.For ggplot.type = "biplot-alpha-beta"
 #' 
-#' @param data_version data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains the different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
+#' @param data_version data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains two different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
 #'
 #' @param ggplot.type The type of plot you wish:
 #' \itemize{
@@ -102,8 +102,14 @@ get.ggplot = function(
     if(!is.element("location", colnames(data_version))) { stop(mess) }
     if(!is.element("group", colnames(data_version))) { stop(mess) }
     if(!is.element("version", colnames(data_version))) { stop(mess) }
+    
+    # delete version where there are v1 AND v2
+    vec_group = unique(data_version$group)
+    for(gp in vec_group){
+      d_tmp = droplevels(filter(data_version, group == gp))
+      if(nlevels(d_tmp$version) != 2 ){ stop("There must be 2 levels per group in data_version. This is not the case for group ", gp) }
+    }
   }
-  
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ) {
     data_Mpvalue = data$Mpvalue
@@ -190,7 +196,8 @@ get.ggplot = function(
     
     if(!is.null(data_version)) {
       
-      data_version$group = factor(rep(unlist(tapply(data_version$germplasm, data_version$group, function(x){paste(x, collapse = " | ")})), each = 2))
+      # data_version$group = factor(rep(unlist(tapply(data_version$germplasm, data_version$group, function(x){paste(as.character(x), collapse = " | ")})), each = 2))
+      
       data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
       data_version$mu = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
       vec_env = unique(data_version$environment)
@@ -223,13 +230,13 @@ get.ggplot = function(
               env = dx$environment[1]
               data_Mpvalue_env = data_Mpvalue[[env]]
               data_version_tmp = droplevels(filter(data_version, environment == env))
-              
               gp = unique(data_version_tmp$group)
               STARS = NULL
               for(g in gp){
                 dtmp = droplevels(filter(data_version_tmp, group == g))
-                v1 = unique(as.character(filter(dtmp, version == "v1")$mu))
-                v2 = unique(as.character(filter(dtmp, version == "v2")$mu))
+                vec_version = levels(dtmp$version)
+                v1 = unique(as.character(filter(dtmp, version == vec_version[1])$mu))
+                v2 = unique(as.character(filter(dtmp, version == vec_version[2])$mu))
                 for (i in 1:ncol(data_Mpvalue_env)) { 
                   if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
                   if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
@@ -246,11 +253,24 @@ get.ggplot = function(
                 names(stars) = g
                 STARS = c(STARS, stars)
               }
-              
+
               colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
               d = join(data_version_tmp, dx, "mu")
-              p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
               
+              # delete version where there are v1 AND v2
+              group_to_keep = NULL
+              vec_group = unique(d$group)
+              
+              for(gp in vec_group){
+                d_tmp = droplevels(d[d$group %in% gp,])
+                t = tapply(d_tmp$median, d_tmp$version, mean, na.rm = TRUE)
+                if(!is.na(t[1]) & !is.na(t[2])){ group_to_keep = c(group_to_keep, gp)} 
+              }
+              
+              d = droplevels(d[d$group %in% group_to_keep,])
+              STARS = STARS[is.element(names(STARS), group_to_keep)]
+
+              p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
               y = tapply(d$median, d$group, mean, na.rm = TRUE)
               y = y + (max(y) * 0.2)
               label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
@@ -268,9 +288,10 @@ get.ggplot = function(
             STARS = NULL
             for(g in gp){
               dtmp = droplevels(filter(data_version_tmp, group == g))
-              v1 = as.character(filter(dtmp, version == "v1")$median)
-              v2 = as.character(filter(dtmp, version == "v2")$median)
-              
+              vec_version = levels(dtmp$version)
+              v1 = unique(as.character(filter(dtmp, version == vec_version[1])$median))
+              v2 = unique(as.character(filter(dtmp, version == vec_version[2])$median))
+
               if( length(v1) > 1 & length(v2) > 1) {
                 pvalue = t.test(v1, v2)$p.value
               } else { pvalue = NULL; warning("No t.test are done as there are not enough observations.") }
