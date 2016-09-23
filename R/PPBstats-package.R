@@ -58,6 +58,7 @@ NULL
 #'
 #' @description
 #' A dataset containing values for the following factors: year, location, germplasm, group and version. 
+#' There are twi versions per group.
 #'
 #' @usage
 #' data(data_version)
