@@ -192,7 +192,6 @@ get.ggplot = function(
       
       # data_version$group = factor(rep(unlist(tapply(data_version$germplasm, data_version$group, function(x){paste(as.character(x), collapse = " | ")})), each = 2))
       
-
       data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
       data_version$mu = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
       vec_env = unique(data_version$environment)
@@ -251,6 +250,20 @@ get.ggplot = function(
 
               colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
               d = join(data_version_tmp, dx, "mu")
+              
+              # delete version where there are v1 AND v2
+              group_to_keep = NULL
+              vec_group = unique(d$group)
+              
+              for(gp in vec_group){
+                d_tmp = droplevels(d[d$group %in% gp,])
+                t = tapply(d_tmp$median, d_tmp$version, mean, na.rm = TRUE)
+                if(!is.na(t[1]) & !is.na(t[2])){ group_to_keep = c(group_to_keep, gp)} 
+              }
+              
+              d = droplevels(d[d$group %in% group_to_keep,])
+              STARS = STARS[is.element(names(STARS), group_to_keep)]
+
               p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
               y = tapply(d$median, d$group, mean, na.rm = TRUE)
               y = y + (max(y) * 0.2)
