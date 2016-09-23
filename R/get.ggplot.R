@@ -234,8 +234,7 @@ get.ggplot = function(
                   if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
                   if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
                 }
-                if (c1 > c2) {pvalue = data_Mpvalue_env[c2, c1]}
-                if (c2 > c1) {pvalue = data_Mpvalue_env[c1, c2]}
+                pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
 
                 if(is.null(pvalue)) { stars = " "} else {
                   if(pvalue < 0.001) { stars = "***" }
