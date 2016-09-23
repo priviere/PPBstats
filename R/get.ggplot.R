@@ -236,7 +236,7 @@ get.ggplot = function(
                 }
                 if (c1 > c2) {pvalue = data_Mpvalue_env[c2, c1]}
                 if (c2 > c1) {pvalue = data_Mpvalue_env[c1, c2]}
-                print(pvalue)
+
                 if(is.null(pvalue)) { stars = " "} else {
                   if(pvalue < 0.001) { stars = "***" }
                   if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
