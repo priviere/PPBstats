@@ -228,9 +228,15 @@ get.ggplot = function(
               STARS = NULL
               for(g in gp){
                 dtmp = droplevels(filter(data_version_tmp, group == g))
-                v1 = as.character(filter(dtmp, version == "v1")$mu)
-                v2 = as.character(filter(dtmp, version == "v2")$mu)
-                pvalue = data_Mpvalue_env[v1, v2]
+                v1 = unique(as.character(filter(dtmp, version == "v1")$mu))
+                v2 = unique(as.character(filter(dtmp, version == "v2")$mu))
+                for (i in 1:ncol(data_Mpvalue_env)) { 
+                  if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
+                  if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
+                }
+                if (c1 > c2) {pvalue = data_Mpvalue_env[c2, c1]}
+                if (c2 > c1) {pvalue = data_Mpvalue_env[c1, c2]}
+                print(pvalue)
                 if(is.null(pvalue)) { stars = " "} else {
                   if(pvalue < 0.001) { stars = "***" }
                   if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
