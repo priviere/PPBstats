@@ -10,6 +10,7 @@ data(data_version)
 }
 \description{
 A dataset containing values for the following factors: year, location, germplasm, group and version.
+There are two versions in each groups.
 }
 \author{
 Pierre Rivière
