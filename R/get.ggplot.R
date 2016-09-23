@@ -8,7 +8,7 @@
 #' 
 #' @param data_2 Outputs from \code{get.mean.comparisons} from model 2.For ggplot.type = "biplot-alpha-beta"
 #' 
-#' @param data_version data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains the different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
+#' @param data_version data set with the following columns: "year", "location", "germplasm", "group", "version". The group refers to an id that contains two different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
 #'
 #' @param ggplot.type The type of plot you wish:
 #' \itemize{
@@ -102,8 +102,14 @@ get.ggplot = function(
     if(!is.element("location", colnames(data_version))) { stop(mess) }
     if(!is.element("group", colnames(data_version))) { stop(mess) }
     if(!is.element("version", colnames(data_version))) { stop(mess) }
+    
+    # delete version where there are v1 AND v2
+    vec_group = unique(data_version$group)
+    for(gp in vec_group){
+      d_tmp = droplevels(filter(data_version, group == gp))
+      if(nlevels(d_tmp$version) != 2 ){ stop("There must be 2 levels per group in data_version. This is not the case for group ", gp) }
+    }
   }
-  
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ) {
     data_Mpvalue = data$Mpvalue
