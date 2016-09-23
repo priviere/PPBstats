@@ -10,7 +10,7 @@ More informations about this licence [here](http://creativecommons.org/licenses/
 The copyright of the R code and the vignette are owned by Réseau Semences Paysannes and Institut National de la Recherche Agronomique
 
 ## Version
-`PPBstats` is now at version 0.11.0
+`PPBstats` is now at version 0.11.1
 
 The version number is under the form A.B.C with
 
