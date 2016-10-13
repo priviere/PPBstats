@@ -54,19 +54,19 @@ describe_data = function(
       out.presence.abscence = p
 
       # 2.2. Histogrammes 
-      out_all = ggplot(dtmp, aes(variable)) + geom_histogram()
+      out_all = ggplot(dtmp, aes(variable)) + geom_histogram() + ggtitle(variable)
       
       # per germplasm
       dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameter_per_grid)
-      out_g = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .)})
+      out_g = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .)+ ggtitle(variable) })
 
       # per location
       dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameter_per_grid)
-      out_l = lapply(dtmp_l, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .)})
+      out_l = lapply(dtmp_l, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable) })
       
       # per year
       dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameter_per_grid)
-      out_y = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .)})
+      out_y = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable) })
       
       OUT = list("presence.abscence" = out.presence.abscence, 
                  "histogram_all" = out_all, 
