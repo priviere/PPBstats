@@ -35,9 +35,7 @@
 #'   }
 #' }
 #' 
-#' 
 #' @author Pierre Riviere
-#' 
 #' 
 describe_data = function(
   data,
