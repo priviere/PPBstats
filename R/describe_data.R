@@ -14,14 +14,27 @@
 #' 
 #' 
 #' @return 
-#' The function returns a list with, for each variable, a list with :
+#' The function returns a list with, 
 #' \itemize{
-#'  \item A presence.abscence plot
-#'  \item Histogram of the variable
-#'  \item Histogram of the variable per germplasm
-#'  \item Histogram of the variable per location
-#'  \item Histogram of the variable per year
+#'  \item A summary of the whole data set
+#'  \item for each variable, a list with :
+#'   \itemize{
+#'   \item A presence.abscence plot
+#'   \item A list with histogram for
+#'    \itemize{
+#'     \item germplasm
+#'     \item location
+#'     \item year
+#'     }
+#'   \item A list with boxplot, containg a list with plot and outliers, for
+#'    \itemize{
+#'     \item germplasm
+#'     \item location
+#'     \item year
+#'     }
+#'   }
 #' }
+#' 
 #' 
 #' @author Pierre Riviere
 #' 
