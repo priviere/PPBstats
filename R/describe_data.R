@@ -66,7 +66,7 @@ describe_data = function(
       
       # per year
       dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameter_per_grid)
-      out_y = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable) })
+      out_y = lapply(dtmp_y, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable) })
       
       OUT = list("presence.abscence" = out.presence.abscence, 
                  "histogram_all" = out_all, 
