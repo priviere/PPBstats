@@ -57,27 +57,15 @@ describe_data = function(
       out_all = ggplot(dtmp, aes(variable)) + geom_histogram()
       
       # per germplasm
-      ns = unique(dtmp$germplasm)
-      s = rep(c(1:length(ns)), each = nb_parameter_per_grid)[1:length(ns)]
-      names(s) = ns
-      dtmp$split_germplasm = s[dtmp$germplasm]
-      dtmp_g =  plyr:::splitter_d(dtmp, .(split_germplasm))
+      dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameter_per_grid)
       out_g = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .)})
 
       # per location
-      ns = unique(dtmp$location)
-      s = rep(c(1:length(ns)), each = nb_parameter_per_grid)[1:length(ns)]
-      names(s) = ns
-      dtmp$split_location = s[dtmp$location]
-      dtmp_l =  plyr:::splitter_d(dtmp, .(split_location))
+      dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameter_per_grid)
       out_l = lapply(dtmp_l, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .)})
       
       # per year
-      ns = unique(dtmp$year)
-      s = rep(c(1:length(ns)), each = nb_parameter_per_grid)[1:length(ns)]
-      names(s) = ns
-      dtmp$split_year = s[dtmp$year]
-      dtmp_y =  plyr:::splitter_d(dtmp, .(split_year))
+      dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameter_per_grid)
       out_y = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .)})
       
       OUT = list("presence.abscence" = out.presence.abscence, 
