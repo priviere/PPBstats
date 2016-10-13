@@ -13,4 +13,17 @@
 #' 
 
 # describe_data
+check_data_vec_variables = function(data, vec_variables){
+  mess = "The following column are compulsory : c(\"year\", \"germplasm\", \"location\", \"block\", \"X\", \"Y\"."
+  if(!is.element("year", colnames(data))) { stop(mess) }
+  if(!is.element("germplasm", colnames(data))) { stop(mess) }
+  if(!is.element("location", colnames(data))) { stop(mess) }
+  if(!is.element("block", colnames(data))) { stop(mess) }
+  if(!is.element("X", colnames(data))) { stop(mess) }
+  if(!is.element("Y", colnames(data))) { stop(mess) }
+  
+  for(variable in vec_variables) { if(!is.element(variable, colnames(data))) { stop(variable," is not in data") } }
+}
+
+
 
