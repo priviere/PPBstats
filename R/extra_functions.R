@@ -25,5 +25,15 @@ check_data_vec_variables = function(data, vec_variables){
   for(variable in vec_variables) { if(!is.element(variable, colnames(data))) { stop(variable," is not in data") } }
 }
 
+# describe_data
+split_data_for_ggplot = function(data, factor, nb_param){
+  ns = unique(data[,factor])
+  s = rep(c(1:length(ns)), each = nb_param)[1:length(ns)]
+  names(s) = ns
+  data$split_factor = s[data[,factor]]
+  data_f =  plyr:::splitter_d(data, .(split_factor))
+  return(data_f)
+}
+
 
 
