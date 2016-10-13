@@ -36,7 +36,10 @@ describe_data = function(
     # 1. Error message ----------  
     check_data_vec_variables(data, vec_variables)
     
-    # 2. Description for each variable ----------
+    # 2. Description all variables ----------
+    summary_all = summary(data)
+    
+    # 3. Description for each variable ----------
     fun = function(variable, data){
 
     colnames(data)[which(colnames(data) == variable)] = "variable"
@@ -59,17 +62,32 @@ describe_data = function(
       # per germplasm
       dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameter_per_grid)
       out_g_hist = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .)+ ggtitle(variable) })
-      out_g_box = lapply(dtmp_g, function(x){ggplot(x, aes(x = germplasm, y = variable)) + geom_boxplot() + ggtitle(variable) })
+      out_g_box = lapply(dtmp_g, function(x){
+        plot = ggplot(x, aes(x = germplasm, y = variable)) + geom_boxplot() + ggtitle(variable) 
+        outliers = boxplot(x$variable, x$germplasm, plot = FALSE)$out
+        names(outliers) = x$germplasm[which(x$variable %in% outliers)]
+        return(list("plot" = plot, "outliers" = outliers))
+        })
 
       # per location
       dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameter_per_grid)
       out_l_hist = lapply(dtmp_l, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable) })
-      out_l_box = lapply(dtmp_l, function(x){ggplot(x, aes(x = location, y = variable)) + geom_boxplot() + ggtitle(variable) })
+      out_l_box = lapply(dtmp_l, function(x){
+        plot = ggplot(x, aes(x = location, y = variable)) + geom_boxplot() + ggtitle(variable) 
+        outliers = boxplot(x$variable, x$location, plot = FALSE)$out
+        names(outliers) = x$location[which(x$variable %in% outliers)]
+        return(list("plot" = plot, "outliers" = outliers))
+      })
       
       # per year
       dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameter_per_grid)
       out_y_hist = lapply(dtmp_y, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable) })
-      out_y_box = lapply(dtmp_y, function(x){ggplot(x, aes(x = year, y = variable)) + geom_boxplot() + ggtitle(variable) })
+      out_y_box = lapply(dtmp_y, function(x){
+        plot = ggplot(x, aes(x = year, y = variable)) + geom_boxplot() + ggtitle(variable) 
+        outliers = boxplot(x$variable, x$year, plot = FALSE)$out
+        names(outliers) = x$year[which(x$variable %in% outliers)]
+        return(list("plot" = plot, "outliers" = outliers))
+      })
       
       OUT = list("presence.abscence" = out.presence.abscence, 
                  "histogram" = list(
@@ -86,8 +104,12 @@ describe_data = function(
                  )
     }
     
-    OUT = lapply(vec_variables, fun, data)
-    names(OUT) = vec_variables
+    out_each_variable = lapply(vec_variables, fun, data)
+    names(out_each_variable) = vec_variables
+    
+    OUT = list("all_variables" = summary_all,
+               "each_variable" = out_each_variable
+               )
     
     return(OUT)
     }
