@@ -34,16 +34,7 @@ describe_data = function(
   # let's go !!! ----------
   {
     # 1. Error message ----------  
-    mess = "The following column are compulsory : c(\"year\", \"germplasm\", \"location\", \"block\", \"X\", \"Y\"."
-    if(!is.element("year", colnames(data))) { stop(mess) }
-    if(!is.element("germplasm", colnames(data))) { stop(mess) }
-    if(!is.element("location", colnames(data))) { stop(mess) }
-    if(!is.element("block", colnames(data))) { stop(mess) }
-    if(!is.element("X", colnames(data))) { stop(mess) }
-    if(!is.element("Y", colnames(data))) { stop(mess) }
-    
-    for(variable in vec_variables) { if(!is.element(variable, colnames(data))) { stop(variable," is not in data") } }
-    
+    check_data_vec_variables(data, vec_variables)
     
     # 2. Description for each variable ----------
     fun = function(variable, data){
