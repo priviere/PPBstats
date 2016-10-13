@@ -53,30 +53,41 @@ describe_data = function(
       
       out.presence.abscence = p
 
-      # 2.2. Histogrammes 
-      out_all = ggplot(dtmp, aes(variable)) + geom_histogram() + ggtitle(variable)
-      
+      # 2.2. Histogram and boxplot
+      out_all_hist = ggplot(dtmp, aes(variable)) + geom_histogram() + ggtitle(variable)
+
       # per germplasm
       dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameter_per_grid)
-      out_g = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .)+ ggtitle(variable) })
+      out_g_hist = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .)+ ggtitle(variable) })
+      out_g_box = lapply(dtmp_g, function(x){ggplot(x, aes(x = germplasm, y = variable)) + geom_boxplot() + ggtitle(variable) })
 
       # per location
       dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameter_per_grid)
-      out_l = lapply(dtmp_l, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable) })
+      out_l_hist = lapply(dtmp_l, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable) })
+      out_l_box = lapply(dtmp_l, function(x){ggplot(x, aes(x = location, y = variable)) + geom_boxplot() + ggtitle(variable) })
       
       # per year
       dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameter_per_grid)
-      out_y = lapply(dtmp_y, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable) })
+      out_y_hist = lapply(dtmp_y, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable) })
+      out_y_box = lapply(dtmp_y, function(x){ggplot(x, aes(x = year, y = variable)) + geom_boxplot() + ggtitle(variable) })
       
       OUT = list("presence.abscence" = out.presence.abscence, 
-                 "histogram_all" = out_all, 
-                 "histogram_per_germplasm" = out_g, 
-                 "histogram_per_location" = out_l, 
-                 "histogram_per_year" = out_y)
+                 "histogram" = list(
+                   "all" = out_all_hist, 
+                   "germplasm" = out_g_hist, 
+                   "location" = out_l_hist, 
+                   "year" = out_y_hist
+                   ),
+                 "boxplot" = list(
+                   "germplasm" = out_g_box, 
+                   "location" = out_l_box, 
+                   "year" = out_y_box
+                   )
+                 )
     }
     
     OUT = lapply(vec_variables, fun, data)
     names(OUT) = vec_variables
     
-return(OUT)
+    return(OUT)
     }
