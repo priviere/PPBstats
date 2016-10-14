@@ -628,21 +628,26 @@ get.ggplot = function(
     if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
     a$germplasm = gsub("alpha", "", a$parameter)
     colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
-    colnames(a)[which(colnames(a) == "median")] = "alpha_i"
+    colnames(a)[which(colnames(a) == "median")] = "effet_genetique"
     
     b = data_2$mean.comparisons
     test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
     if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
     b$germplasm = gsub("beta", "", b$parameter)
     colnames(b)[which(colnames(b) == "parameter")] = "parameter_b"
-    colnames(b)[which(colnames(b) == "median")] = "beta_i"
+    colnames(b)[which(colnames(b) == "median")] = "sensibilite"
     
     ab = join(a, b, "germplasm")
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)
+    ab$split = add_split_col(ab,nb_parameters_per_plot)
     
-    p = ggplot(ab, aes(x = alpha_i, y = beta_i, label = germplasm)) 
-    p = p + geom_text() + geom_hline(yintercept = 0)
+    d_ab = plyr:::splitter_d(ab, .(split))
+    
+    p = lapply(d_ab,function(y){
+      p = ggplot(y, aes(x = effet_genetique, y = sensibilite, label = germplasm)) 
+      p = p + geom_text() + geom_hline(yintercept = 0)
+    })
     OUT = list("biplot-alpha-beta" = p)
   }
   
