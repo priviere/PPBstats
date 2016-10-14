@@ -638,10 +638,11 @@ get.ggplot = function(
     colnames(b)[which(colnames(b) == "median")] = "sensibilite"
     
     ab = join(a, b, "germplasm")
+    ab=ab[which(!is.na(ab$sensibilite) & !is.na(ab$effet_genetique)),]
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)
     ab$split = rep(c(1:ceiling(nrow(ab)/nb_parameters_per_plot)),nrow(ab)/floor(nrow(ab)/nb_parameters_per_plot))[1:nrow(ab)]
-    xlim = c(min(ab$effet_genetique),max(ab$effet_genetique))
+    xlim = c(floor(min(ab$effet_genetique)),ceiling(max(ab$effet_genetique)))
     ylim = c(min(ab$sensibilite),max(ab$sensibilite))
     
     d_ab = plyr:::splitter_d(ab, .(split))
