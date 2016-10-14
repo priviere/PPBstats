@@ -643,7 +643,7 @@ get.ggplot = function(
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)
     
-    if(!is.null(nb_parameters_per_plot)){nb_parameters_per_plot = nrow(ab)}
+    if(is.null(nb_parameters_per_plot)){nb_parameters_per_plot = nrow(ab)}
     if(nb_parameters_per_plot > nrow(ab)){nb_parameters_per_plot = nrow(ab)}
     if(nb_parameters_per_plot < nrow(ab)){
       ab$split = rep(c(1:ceiling(nrow(ab)/nb_parameters_per_plot)), floor(nrow(ab)/nb_parameters_per_plot))[1:nrow(ab)]
