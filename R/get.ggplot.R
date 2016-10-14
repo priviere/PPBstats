@@ -640,7 +640,7 @@ get.ggplot = function(
     ab = join(a, b, "germplasm")
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)
-    ab$split = add_split_col(ab,nb_parameters_per_plot)
+    ab$split = rep(c(1:ceiling(nrow(ab)/nb_parameters_per_plot)),nrow(ab)/floor(nrow(ab)/nb_parameters_per_plot))[1:nrow(ab)]
     xlim = c(min(ab$effet_genetique),max(ab$effet_genetique))
     ylim = c(min(ab$sensibilite),max(ab$sensibilite))
     
