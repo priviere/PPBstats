@@ -1,3 +1,5 @@
+\section{Philosophy of \pack}
+
 \pack~aims to facilitate the implementation of statistical methods described in \citet{riviere_hierarchical_2015} and \citet{riviere_hierarchical_2015-1}.
 These methods aim to analyse highly unbalanced datasets that can be found in decentralized participatory plant breeding (PPB).
 
@@ -161,4 +163,14 @@ A burn-in and lots of iterations were needed in the MCMC procedure.
 In our case, the burn-in had 1000 iterations, then 100 000 iterations are done by default\footnote{You can change it with the argument \texttt{nb\_iterations} in functions \texttt{MC} and \texttt{FWH}} with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples were available for inference for each chain by default\footnote{There are \texttt{nb\_iterations}/10 values for each chain. This can be changed with the \texttt{thin} argument of the functions.}.
  
 The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
+
+\subsection{Let's go!}
+To continue, load the package:
+<<message=TRUE,cache=FALSE>>=
+library(PPBstats)
+@
+and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \url{https://www.dropbox.com/sh/6qvl515k5484zg4/AADZKkaM2XZvmr9e6l5aWxN2a?dl=0} and put it in the folder \texttt{data\_PPBstats} and then load() it.
+
+%The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
+%This gives an idea about memory and processor needed to run the analysis.
 
