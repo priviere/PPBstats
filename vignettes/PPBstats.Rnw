@@ -48,6 +48,42 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 
 \input{./sections/1.head}
 
+<<child='sections/2.philo_pack.Rnw'>>=
+@
+
+\newpage
+
+<<child='sections/3.plan_expe.Rnw'>>=
+@
+
+\newpage
+
+<<child='sections/4.describe_data.Rnw'>>=
+@
+
+\newpage
+
+\chapter{Analyse balanced data}
+
+  on farm
+    ANOVA classique BLUEs BLUPs
+  on netowrk of farms
+    AMMI
+    GGE GGEbiplot
+  
+
+\chapter{Analyse ubalanced data}
+
+  experimantal design
+    mother baby RFplan_expeand SF
+  on farm
+    model 1
+    Spatial analysis
+  on netowrk of farms
+    model 2
+    model 3
+    ...
+
 \newpage
 
 <<child='sections/2.philo_pack.Rnw'>>=
