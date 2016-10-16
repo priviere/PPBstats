@@ -1,0 +1,8 @@
+\section{Plan the experiment}
+
+randomize
+
+Set up the randomization
+a) Alpha design
+b) Fully replicated trials
+c) Partially replicated trials
