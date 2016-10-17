@@ -11,13 +11,13 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' 
-#' 
-get.PPBstats.data = function(folder_name = "data")
+get.PPBstats.data = function()
   # let's go !!! ---------- 
 {
-  #system(paste("mkdir ",folder_name"))
-  #download.file(url = "todo", destfile = folder_name)
-  #message("The data are downloaded in ", getwd(), "/", folder_name)
+  system(paste("mkdir ", "data_PPBstats"))
+  path_in = paste(getwd(), "/data_PPBstats/", sep = "")
+  path_out = "https://www.dropbox.com/sh/6qvl515k5484zg4/AADZKkaM2XZvmr9e6l5aWxN2a?dl=0"
+  download.file(url = path_out, destfile = path_in)
+  message("The data are downloaded in ", path_in, "\nYou can now load the data, for example load(\"./data_PPBstats/out1.Rdata\").")
 }
 
