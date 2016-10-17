@@ -9,9 +9,6 @@
 #' @param vec_variables Vector of variables to describe
 #'  
 #' @param nb_parameter_per_grid Nomber of parameter on each histogram on the gird
-#'  
-#' @return The function returns a list with for each environment, the estimated value of the germplasms that were not grown in this environment.
-#' 
 #' 
 #' @return 
 #' The function returns a list with, 
