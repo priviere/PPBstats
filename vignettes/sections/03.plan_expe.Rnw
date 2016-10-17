@@ -1,8 +1,61 @@
 \section{Plan the experiment}
 
-randomize
+Before sowing, you must plan the experiment.
 
-Set up the randomization
-a) Alpha design
-b) Fully replicated trials
-c) Partially replicated trials
+\subsection{Several farms, few entries per farm}
+
+
+These methods aim to analyse highly unbalanced datasets that can be found in decentralized participatory plant breeding (PPB).
+
+It has been developped for dataset with two types of farms, regional and satellite, based on their experimental design.
+
+Regional farms had several populations (i.e. a germplasm in an environment) in two or more blocks with populations replicated in each block.
+Satellite farms had no block and one germplasm replicated twice.
+Farmers chose the other populations to be sown that were not replicated (Figure \ref{plan_SF_RF}).
+The number of populations may vary between farms.
+
+\begin{figure}[H]
+        \begin{center}
+                \begin{tabular}{|m{.25\textwidth}|m{.45\textwidth}|}
+                        \hline
+                        \includegraphics[width=.25\textwidth]{plan_FS.pdf}
+                        &
+                        \vspace{.5cm}\includegraphics[width=.45\textwidth]{plan_FR.pdf} \\
+                        satellite farm & regional farm \\
+                        \hline
+                \end{tabular}
+
+                \caption{Experimental design of satellite and regional farms. Controls replicated are in black boxes : $Rouge$-$du$-$Roc$, $Renan$, $C14$ and $C21$. pop stands for `tested population'.}
+                \label{plan_SF_RF}
+        \end{center}
+\end{figure}
+
+\begin{itemize}
+\item At the \textbf{farm level}, the residual had few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
+Hence, model~\ref{model1} was implemented (section~\ref{section_model1}).
+
+\item At the \textbf{network level}, there is a large germplasm $\times$ environment combinaisons that are missing, leading to a poor estimation of germplasm, environment and interaction effects.
+Hence, model~\ref{model2} was implemented (section~\ref{section_model2}).
+
+\end{itemize}
+
+These methods are of interest if you have a large data set with a high number of environments and germplasms.
+For model \ref{model1}, it gave nice results with more than 20 environment \citep{riviere_hierarchical_2015}.
+For model \ref{model2}, it gave nice results with 75 environments and 120 germplasms present in at least two environments (95\% of missing $G \times E$ combinaisons) \citep{riviere_hierarchical_2016}.
+
+This will be further explore in simulation studies.
+
+
+
+\subsection{Few farms, many entries per farm}
+
+\subsubsection{Few space and few seeds}
+
+\subsubsection{Many space and many seeds}
+
+%randomize
+
+%Set up the randomization
+%a) Alpha design
+%b) Fully replicated trials
+%c) Partially replicated trials
