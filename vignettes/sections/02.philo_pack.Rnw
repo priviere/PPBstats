@@ -1,7 +1,7 @@
 \section{Philosophy of \pack}
 
 \pack~aims to facilitate the implementation of statistical methods commoly foind in Participatory Plant Breeding programmes.
-
+The statistical procedures are based on frequentist and bayesian approaches.
 
 \subsection{Function relations in \pack}
 
@@ -66,7 +66,6 @@ Functions related to both models are in black.
 
 \hline
 
-
 \texttt{get.env.info} & Get regional farms data and satellite farms data \\
 \hline
 
@@ -84,6 +83,11 @@ Functions related to both models are in black.
 \caption{Function descriptions in \pack.}
 \label{function_descriptions}
 \end{table}
+
+
+
+\subsection{Frequentist statistics}
+
 
 
 \subsection{Bayesian statistics}
@@ -127,7 +131,12 @@ To continue, load the package:
 <<message=TRUE,cache=FALSE>>=
 library(PPBstats)
 @
-and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \url{https://www.dropbox.com/sh/6qvl515k5484zg4/AADZKkaM2XZvmr9e6l5aWxN2a?dl=0} and put it in the folder \texttt{data\_PPBstats} and then load() it.
+and download from internet the data used in this vignette (this is useful to earn lots of time!) :
+
+<<message=TRUE,cache=FALSE>>=
+get.PPBstats.data()
+@
+
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
