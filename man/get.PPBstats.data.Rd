@@ -4,7 +4,7 @@
 \alias{get.PPBstats.data}
 \title{Get PPBstats datas to run example of the vignette}
 \usage{
-get.PPBstats.data(folder_name = "data")
+get.PPBstats.data()
 }
 \arguments{
 \item{folder_name}{name of the folder where the RData will be. "data" by default.}

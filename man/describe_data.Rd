@@ -14,8 +14,6 @@ describe_data(data, vec_variables, nb_parameter_per_grid = 5)
 \item{nb_parameter_per_grid}{Nomber of parameter on each histogram on the gird}
 }
 \value{
-The function returns a list with for each environment, the estimated value of the germplasms that were not grown in this environment.
-
 The function returns a list with,
 \itemize{
  \item A summary of the whole data set
