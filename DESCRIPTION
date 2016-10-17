@@ -1,6 +1,6 @@
 Package: PPBstats
 Type: Package
-Title: An R package for statistical analysis of unbalanced trials in decentralized participatory plant breeding programmes
+Title: An R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes
 Version: 0.13
 Date: 2016-09-26
 Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
