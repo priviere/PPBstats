@@ -1,3 +1,165 @@
+\subsection{AMMI}
 
-    AMMI
-    GGE GGEbiplot
+\subsubsection{Theory of the model}
+
+The Additive Main effects and Multiplicative Interaction (AMMI) model is based on two analyses \citep{gauch_statistical_2006} : 
+\begin{enumerate}
+
+\item an ANOVA with the following model :
+
+\begin{equation}
+Y_{ijk} = \mu + \alpha_{i} + \theta_{j} +  rep_{k}(\theta_{j}) + \eta_{i}\nu_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{ammi_anova}
+\end{equation}
+
+With,
+$Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and environment $j$,
+$\mu$ the general mean,
+$\alpha_{i}$ the effect of germplasm $i$,
+$\theta_{j}$ the effect of environment $j$,
+$rep_{k}(\theta_{j})$ effect of replication $k$ nested in environment,
+$\eta_{i}\nu_{j}$ the effect of interaction germplasm $\times$ environment,
+$\varepsilon_{ijk}$ the residuals.\\
+
+\item a PCA which analyse deeper the $G \times E$ interaction: 
+
+\begin{displaymath}
+\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}
+\end{displaymath}
+
+which can also be written:
+
+\begin{displaymath}
+\eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})
+\end{displaymath}
+
+with,
+$\eta_{i}\nu_{j}$ interaction of germplasm $i$ with environment $j$,
+$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
+$\lambda_{n}$ the eigen value for componant $n$,
+$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
+$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
+
+The data are double centered on environment and germplasm.
+The PCA study the structure of the interaction matrix.
+The environment are the variable and the germplasm are the individuals.
+
+This PCA allows to detect
+\begin{itemize}
+\item germplasm that are stable (i.e. contribute less to interaction)
+\item which germplasm interact the most with which environment
+\item which environment have the same profile regarding interaction
+\end{itemize}
+
+\end{enumerate}
+
+
+The AMMI model can be written:
+
+\begin{equation}
+Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{modele_ammi}
+\end{equation}
+
+with,
+
+$Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and environment $j$,
+$\mu$ the general mean,
+$\alpha_{i}$ the effect of germplasm $i$,
+$\theta_{j}$ the effect of environment $j$,
+$rep_{k}(\theta_{j})$ effect of replication $k$ nested in environment,
+$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
+$\lambda_{n}$ the eigen value for componant $n$,
+$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
+$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
+$\varepsilon_{ijk}$ the residuals.\\
+
+
+\subsubsection{Steps with \pack}
+
+
+\subsubsection{Run the model}
+
+
+\subsubsection{Analysis of model outputs}
+
+
+\subsubsection{Get main effects results}
+
+\paragraph{Germplasm effects}
+
+\paragraph{Environment effects}
+
+\subsubsection{Get $G \times E$ effects results}
+
+\paragraph{interaction plot}
+
+\paragraph{ecovalence}
+
+
+Ecovalence from \citet{wricke_uber_1962} give part of interaction variance taken by germplasm and environment.
+It is an indicator of stability: a low ecovalence means low interaction, i.e. more stability.
+
+Ecovalance of germplasm $i$ is $W_{i}=\sum_{i}^{n} (\eta_{i}\nu_{j})^{2}$
+
+Ecovalance of environment $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
+
+Ecovalances are represented in fonction of mean effects by germplasm and environment.
+
+
+\paragraph{PCA}
+
+
+\subsection{GGE}
+
+\subsubsection{Theory of the model}
+
+The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the environment: germplasm and interaction effects are merged.
+
+The GGE model can be written as followed:
+
+\begin{equation}
+Y_{ijk} = \mu + \theta_{j} + rep_{k}(\theta_{j}) + \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{modele_gge}
+\end{equation}
+
+with,
+
+$Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and environment $j$,
+$\mu$ the general mean,
+$\theta_{j}$ the effect of environment $j$,
+$rep_{k}(\theta_{j})$ effect of replication $k$ nested in environment,
+$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
+$\lambda_{n}$ the eigen value for componant $n$,
+$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
+$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
+$\varepsilon_{ijk}$ the residuals.\\
+
+This model allow to detect environment where germplasm (and the interaction) behave better : \guill{which won where} \citep{gauch_statistical_2008,yan_gge_2007}.
+
+\subsubsection{Steps with \pack}
+
+
+\subsubsection{Run the model}
+
+
+\subsubsection{Analysis of model outputs}
+
+
+\subsubsection{Get main effects results}
+
+\paragraph{Germplasm effects}
+
+\paragraph{Environment effects}
+
+\subsubsection{Get $G \times E$ effects results}
+
+\paragraph{interaction plot}
+
+\paragraph{PCA}
+
+
+
+
+
+
