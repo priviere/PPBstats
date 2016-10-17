@@ -3,6 +3,7 @@
 
 \subsubsection{Theory of the model}
 
+The model is describe in \citet{riviere_hierarchical_2015}.
 We restricted ourselves to analysing plot means.
 The phenotypic value $Y_{ijk}$ for variable $Y$, germplasm $i$, environment $j$ and block $k$ was modelled as :
 
