@@ -2,13 +2,16 @@
 
 Before sowing, you must plan the experiment.
 
-\subsection{Several farms, few entries per farm, few seeds}
+\subsection{Several farms, few entries per farm}
+
+\subsubsection{Few space and few seeds}
+
+\subsubsection{Many space and many seeds}
+
 
 <<message=TRUE,cache=FALSE>>=
 plan_experiment()
 @
-
-\subsection{Several farms, few entries per farm, many seeds}
 
 
 These methods aim to analyse highly unbalanced datasets that can be found in decentralized participatory plant breeding (PPB).
