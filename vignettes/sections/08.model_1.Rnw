@@ -1,4 +1,4 @@
-\subsection{At the farm level : model~\ref{model1} to perform mean comparisons on farms }
+\subsection{model~\ref{model1} to perform mean comparisons on farms }
 \label{section_model1}
 
 \subsubsection{Theory of the model}
