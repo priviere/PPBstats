@@ -1,4 +1,4 @@
-\section{Descrie the data}
+\section{Describe the data}
 
 May be different from experiment planned because of NA
 
