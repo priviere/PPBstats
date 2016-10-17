@@ -1,7 +1,7 @@
-\section{At the farm level : model~\ref{model1} to perform mean comparisons on farms }
+\subsection{At the farm level : model~\ref{model1} to perform mean comparisons on farms }
 \label{section_model1}
 
-\subsection{The model}
+\subsubsection{Theory of the model}
 
 We restricted ourselves to analysing plot means.
 The phenotypic value $Y_{ijk}$ for variable $Y$, germplasm $i$, environment $j$ and block $k$ was modelled as :
@@ -50,7 +50,7 @@ This model was therefore a good choice based on both agronomic and statistical c
 The residual variance estimated from the controls was assumed to be representative of the residual variance of the other entries.
 Blocks were included in the model only if the trial had blocks.
 
-\subsection{With \pack}
+\subsubsection{Steps with \pack}
 
 For model~\ref{model1}, you can follow these steps (Figure \ref{function_relations}):
 
