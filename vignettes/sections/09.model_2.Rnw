@@ -2,6 +2,7 @@
 \label{section_model2}
 
 \subsubsection{Theory of the model}
+The model is describe in \citet{riviere_hierarchical_2016}.
 
 The phenotypic value $Y_{ij}$ for a given variable $Y$, germplasm $i$ and environment $j$, was modeled as :
 
