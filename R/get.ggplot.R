@@ -215,7 +215,7 @@ get.ggplot = function(
           p_to_get = filter(data_version, environment == x$environment[1])$mu
           x = filter(x, parameter %in% p_to_get)
           x$max = max(x$median, na.rm = TRUE)
-          x = arrange(x, median)
+          x = arrange(x, parameter)
           x$split = add_split_col(x, nb_parameters_per_plot)
           x_split = plyr:::splitter_d(x, .(split))
           return(x_split)
@@ -254,7 +254,7 @@ get.ggplot = function(
               }
 
               colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
-              d = join(data_version_tmp, dx, "mu")
+              d = join(data_version_tmp, dx, by = "mu")
               
               # delete version where there are v1 AND v2
               group_to_keep = NULL
