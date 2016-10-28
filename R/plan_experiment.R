@@ -49,6 +49,23 @@ plan_experiment = function(
       block = rep(1, times = length(Y))
       if( length(entries) < length((Y))) { entries = c(entries, rep("", length(Y)-length(entries))) }
       d = cbind.data.frame(entries, block, X, Y)
+      d$entries = as.factor(d$entries)
+      d$block = as.factor(d$block)
+      d$X = as.factor(d$X)
+      d$Y = as.factor(d$Y)
+      
+      color_till = rep("white", length(d$entries))
+      color_till[which(d$entries == "control")] = "black"
+      
+      color_text = color_till
+      b = which(color_till == "black")
+      w = which(color_till == "white")
+      color_text[w] = "black"
+      color_text[b] = "white"
+      
+      
+      p = ggplot(d, aes(x = X, y = Y, label = entries)) + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
+      
     }
     
     # 3. expe.type == "regional-farm" ----------
