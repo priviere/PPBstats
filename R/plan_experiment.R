@@ -36,7 +36,7 @@ plan_experiment = function(
     
     # 2. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
-      nb.entries = 10
+      nb.entries = 11
       nb.controls = 1; message("nb.controls = 1 with expe.type == \"satellite-farm\".")
       nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")
       nb.rows = 5
@@ -44,8 +44,8 @@ plan_experiment = function(
       entries = paste("entry-", c(1:nb.entries), sep = "")
       entries = c("control", sample(entries, length(entries), replace = FALSE), "control")
       nb.cols = ceiling(length(entries) / nb.rows)
-      X = rep(LETTERS[1:nb.rows], times = nb.cols)
-      Y = rep(c(1:nb.cols), each = nb.rows)
+      X = rep(LETTERS[1:nb.cols], each = nb.rows)
+      Y = rep(c(1:nb.rows), times = nb.cols)
       block = rep(1, times = length(Y))
       if( length(entries) < length((Y))) { entries = c(entries, rep("", length(Y)-length(entries))) }
       d = cbind.data.frame(entries, block, X, Y)
@@ -63,8 +63,9 @@ plan_experiment = function(
       color_text[w] = "black"
       color_text[b] = "white"
       
+      p = ggplot(d, aes(x = X, y = Y, label = entries)) + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + facet_grid(.~block) + theme_bw()
       
-      p = ggplot(d, aes(x = X, y = Y, label = entries)) + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
+      out = list("data.frame" = d, "plan" = p)
       
     }
     
