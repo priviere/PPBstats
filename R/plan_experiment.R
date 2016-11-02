@@ -34,19 +34,22 @@ plan_experiment = function(
   {
     # 1. Error message ----------  
     
+    OUT = NULL
+    
     # 2. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
-      nb.entries = 11
       nb.controls = 1; message("nb.controls = 1 with expe.type == \"satellite-farm\".")
       nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")
-      nb.rows = 5
+      nb.cols = 2; message("nb.cols = 1 with expe.type == \"satellite-farm\".")
+      nb.rows = NULL; message("nb.rows is set automaticaly with expe.type == \"satellite-farm\".")
       
       entries = paste("entry-", c(1:nb.entries), sep = "")
       entries = c("control", sample(entries, length(entries), replace = FALSE), "control")
-      nb.cols = ceiling(length(entries) / nb.rows)
+      #nb.cols = ceiling(length(entries) / nb.rows)
+      nb.rows = ceiling(length(entries) / nb.cols)
       X = rep(LETTERS[1:nb.cols], each = nb.rows)
       Y = rep(c(1:nb.rows), times = nb.cols)
-      block = rep(1, times = length(Y))
+      block = rep("block 1", times = length(Y))
       if( length(entries) < length((Y))) { entries = c(entries, rep("", length(Y)-length(entries))) }
       d = cbind.data.frame(entries, block, X, Y)
       d$entries = as.factor(d$entries)
@@ -66,6 +69,7 @@ plan_experiment = function(
       p = ggplot(d, aes(x = X, y = Y, label = entries)) + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + facet_grid(.~block) + theme_bw()
       
       out = list("data.frame" = d, "plan" = p)
+      out = list("satellite-farms" = out); OUT = c(OUT, out)
       
     }
     
