@@ -81,7 +81,6 @@ plan_experiment = function(
             mtmp[2,] = m[nrow(m),]
             mtmp[nrow(m),] = m[2,]
             m = mtmp # be sur to have controls in opposite rows
-            if( ncol(m) > 1 ){ m[,2:ncol(m)] = sample(m[,2:ncol(m)]) } # random
           }
           return(m)
         }
@@ -99,8 +98,8 @@ plan_experiment = function(
           }
         
         # For each row, put control in different column
-        possible_col = rep(sample(1:ncol(m)), times = nrow(m))
-        
+        possible_col = rep(1:ncol(m), nrow(m))
+
         for(i in 1:nrow(m)){
           r = m[i,]
           c = which(r=="control")
@@ -117,8 +116,9 @@ plan_experiment = function(
           }
           
           if(!is.null(col_with_c)){ m[i,col_with_c] = r[c]}
-          m[i,col_with_e] = r[e]
+          m[i,col_with_e] = sample(r[e])
         }
+        
         
         if( nlevels(dtmp$X) <= nlevels(dtmp$Y)){ m = m } else { m = t(m) }
 
