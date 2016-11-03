@@ -73,26 +73,27 @@ plan_experiment = function(
       for(b in vec_block){
         dtmp = droplevels(filter(d, block == b))
         ent = c(as.character(dtmp$entries[which(dtmp$entries=="control")]), as.character(dtmp$entries[which(dtmp$entries!="control")]))
-        
+
         # Put at least one control per row
-        if( nlevels(dtmp$X) <= nlevels(dtmp$Y)){
-          m = matrix(ent, ncol = nlevels(dtmp$X), nrow = nlevels(dtmp$Y)) 
-          mtmp = m
+        arrange.m = function(m){
           if( nrow(m) > 1 ){
+            mtmp = m
             mtmp[2,] = m[nrow(m),]
             mtmp[nrow(m),] = m[2,]
             m = mtmp # be sur to have controls in opposite rows
+            if( ncol(m) > 1 ){ m[,2:ncol(m)] = sample(m[,2:ncol(m)]) } # random
           }
+          return(m)
+        }
+        
+        if( nlevels(dtmp$X) <= nlevels(dtmp$Y)){
+          m = matrix(ent, ncol = nlevels(dtmp$X), nrow = nlevels(dtmp$Y)) 
+          m = arrange.m(m)
           rownames(m) = levels(dtmp$Y)
           colnames(m) = levels(dtmp$X)
         } else { 
           m = matrix(ent, ncol = nlevels(dtmp$Y), nrow = nlevels(dtmp$X)) 
-          mtmp = m
-          if( nrow(m) > 1 ){
-            mtmp[2,] = m[nrow(m),]
-            mtmp[nrow(m),] = m[2,]
-            m = mtmp # be sur to have controls in opposite rows
-          }
+          m = arrange.m(m)
           rownames(m) = levels(dtmp$X)
           colnames(m) = levels(dtmp$Y)
           }
