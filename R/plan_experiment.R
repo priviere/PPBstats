@@ -46,6 +46,56 @@ plan_experiment = function(
       return(d)
     }
     
+    place_controls = function(d){
+      # faire une fonction pour mettre en ligne et en colonnes (utilisée aussi dans row-columns avec block = 1)ues
+      dok = data.frame()
+      vec_block = levels(d$block)
+      for(b in vec_block){
+        dtmp = droplevels(filter(d, block == b))
+        ent = c(as.character(dtmp$entries[which(dtmp$entries=="control")]), as.character(dtmp$entries[which(dtmp$entries!="control")]))
+        
+        # Put at least one control per row
+        m = matrix(ent, ncol = nlevels(dtmp$X), nrow = nlevels(dtmp$Y)) 
+        rownames(m) = levels(dtmp$Y)
+        colnames(m) = levels(dtmp$X)
+        
+        # For each row, put control in different column
+        for(i in 1:nrow(m)){
+          r = m[i,]
+          c = which(r=="control")
+          e = which(r!="control")
+          if(length(c)>1){e=c(e, c[2:length(c)])}
+          
+          if(length(c)==0){
+            col_with_c = NULL
+            col_with_e = c(1:ncol(m))
+          } else {
+            col_with_c = i
+            col_with_e = c(1:ncol(m))
+            col_with_e = col_with_e[-i]
+          }
+          
+          if(!is.null(col_with_c)){ m[i,col_with_c] = r[c]}
+          m[i,col_with_e] = r[e]
+        }
+        
+        # Sample the columns
+        m = m[,sample(c(1:ncol(m)))]
+        colnames(m) = sort(colnames(m))
+        
+        dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = ncol(m)), Y = rep(rownames(m), times = nrow(m)))
+        
+        dok = rbind.data.frame(dok, dtmp)
+      }
+      
+      dok$entries = as.factor(dok$entries)
+      dok$block = as.factor(dok$block)
+      dok$X = as.factor(dok$X)
+      dok$Y = as.factor(dok$Y)
+      
+      return(dok)
+    }
+    
     get_ggplot_plan = function(d){
       color_till = rep("white", length(d$entries))
       color_till[which(d$entries == "control")] = "black"
@@ -65,7 +115,7 @@ plan_experiment = function(
     
     # 2. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
-      nb.controls = 1; message("nb.controls = 1 with expe.type == \"satellite-farm\".")
+      nb.controls = 2; message("nb.controls = 2 with expe.type == \"satellite-farm\".")
       nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")
       nb.cols = 2; message("nb.cols = 1 with expe.type == \"satellite-farm\".")
       
@@ -86,7 +136,7 @@ plan_experiment = function(
     
     # 3. expe.type == "regional-farm" ----------
     if( expe.type == "regional-farm" ) {
-      nb.entries = 21
+      nb.entries = 10
       nb.controls = 2
       nb.blocks = 2
       nb.cols = 3
@@ -116,9 +166,11 @@ plan_experiment = function(
       d$X = as.factor(d$X)
       d$Y = as.factor(d$Y)
       
-      # faire une fonction pour mettre en ligne et en colonnes (utilisée aussi dans row-columns avec block = 1)
+      d = place_controls(d)
       
       p = get_ggplot_plan(d)
+      
+      get_ggplot_plan(place_controls(d))
       
       out = list("data.frame" = d, "plan" = p)
       out = list("regional-farms" = out); OUT = c(OUT, out)
