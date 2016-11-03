@@ -73,16 +73,29 @@ plan_experiment = function(
       for(b in vec_block){
         dtmp = droplevels(filter(d, block == b))
         ent = c(as.character(dtmp$entries[which(dtmp$entries=="control")]), as.character(dtmp$entries[which(dtmp$entries!="control")]))
+        
         # Put at least one control per row
-        m = matrix(ent, ncol = nlevels(dtmp$X), nrow = nlevels(dtmp$Y)) 
-        mtmp = m
-        if( nrow(m) > 1 ){
-          mtmp[2,] = m[nrow(m),]
-          mtmp[nrow(m),] = m[2,]
-          m = mtmp # be sur to have controls in opposite rows
-        }
-        rownames(m) = levels(dtmp$Y)
-        colnames(m) = levels(dtmp$X)
+        if( nlevels(dtmp$X) <= nlevels(dtmp$Y)){
+          m = matrix(ent, ncol = nlevels(dtmp$X), nrow = nlevels(dtmp$Y)) 
+          mtmp = m
+          if( nrow(m) > 1 ){
+            mtmp[2,] = m[nrow(m),]
+            mtmp[nrow(m),] = m[2,]
+            m = mtmp # be sur to have controls in opposite rows
+          }
+          rownames(m) = levels(dtmp$Y)
+          colnames(m) = levels(dtmp$X)
+        } else { 
+          m = matrix(ent, ncol = nlevels(dtmp$Y), nrow = nlevels(dtmp$X)) 
+          mtmp = m
+          if( nrow(m) > 1 ){
+            mtmp[2,] = m[nrow(m),]
+            mtmp[nrow(m),] = m[2,]
+            m = mtmp # be sur to have controls in opposite rows
+          }
+          rownames(m) = levels(dtmp$X)
+          colnames(m) = levels(dtmp$Y)
+          }
         
         # For each row, put control in different column
         possible_col = rep(sample(1:ncol(m)), times = nrow(m))
@@ -105,6 +118,8 @@ plan_experiment = function(
           if(!is.null(col_with_c)){ m[i,col_with_c] = r[c]}
           m[i,col_with_e] = r[e]
         }
+        
+        if( nlevels(dtmp$X) <= nlevels(dtmp$Y)){ m = m } else { m = t(m) }
 
         # Sample the columns
         m2 = m[,sample(c(1:ncol(m)))]
@@ -173,7 +188,8 @@ plan_experiment = function(
     
     # 4. expe.type == "row-columns" ----------
     if( expe.type == "row-columns" ) {
-      if( nb.blocks != 1) { stop("nb.blocks must be 1 with expe.type == \"row-columns\".") }
+      if( nb.blocks != 1) { stop("nb.blocks = 1 with expe.type == \"row-columns\".") }
+      if( nb.controls < nb.cols ) { stop(" nb.controls must be superior to nb.cols with expe.type == \"row-columns\".") }
 
       d = get_data.frame(nb.entries, nb.blocks, nb.controls, nb.cols)
       d = place_controls(d)
