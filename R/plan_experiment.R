@@ -8,7 +8,7 @@
 #' 
 #' @param nb.entries Number of entries
 #' 
-#' @param nb.controls Number of controls. This is useful only for expe.type "satellite-farm" and "regional-farm"
+#' @param nb.controls.per.block Number of controls. This is useful only for expe.type "satellite-farm" and "regional-farm"
 #' 
 #' @param nb.blocks Number of blocks
 #' 
@@ -26,7 +26,7 @@
 plan_experiment = function(
   expe.type,
   nb.entries,
-  nb.controls,
+  nb.controls.per.block,
   nb.blocks,
   nb.cols
 )
@@ -36,7 +36,7 @@ plan_experiment = function(
     
     OUT = NULL
     
-    get_data.frame = function(nb.entries, nb.blocks, nb.controls, nb.cols) {
+    get_data.frame = function(nb.entries, nb.blocks, nb.controls.per.block, nb.cols) {
       entries = paste("entry-", c(1:nb.entries), sep = "")
       entries = sample(entries, length(entries), replace = FALSE)
       
@@ -44,7 +44,7 @@ plan_experiment = function(
       if( test > nb.entries ) { entries = c(entries, rep("XXX", times = (test - nb.entries))) }
       
       l = split(entries, (1:nb.blocks))
-      l = lapply(l, function(x){c(x, rep("control", times = nb.controls))})
+      l = lapply(l, function(x){c(x, rep("control", times = nb.controls.per.block))})
       
       L = rep(LETTERS, times = 30)
       vec_X = c(LETTERS, paste(L, rep(c(1:(length(L)/26)), each = 26), sep = ""))
@@ -54,7 +54,7 @@ plan_experiment = function(
       for(i in 1:length(l)){
         entries = l[[i]]
         nb.rows = ceiling(length(entries) / nb.cols)
-        X = rep(vec_X[1:nb.cols], each = nb.rows); vec_X = vec_X[-c(1:nb.cols)]
+        X = rep(vec_X[1:nb.cols], each = nb.rows)
         Y = rep(vec_Y[c(1:nb.rows)], times = nb.cols); vec_Y = vec_Y[-c(1:nb.rows)]
         if( length(X) > length(entries) ) { entries = c(entries, rep("XXX", times = length(X) - length(entries)))}
         block = rep(i, length(X))
@@ -154,18 +154,16 @@ plan_experiment = function(
       
       p = ggplot(d, aes(x = X, y = Y, label = entries)) + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
       
-      # to do: entourer les blocks
-      
       return(p)        
     }
     
     # 2. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
-      nb.controls = 2; message("nb.controls = 2 with expe.type == \"satellite-farm\".")
+      nb.controls.per.block = 2; message("nb.controls.per.block = 2 with expe.type == \"satellite-farm\".")
       nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")
       nb.cols = 2; message("nb.cols = 1 with expe.type == \"satellite-farm\".")
       
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls, nb.cols)
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols)
       d = place_controls(d)
       p = get_ggplot_plan(d)
       
@@ -176,9 +174,9 @@ plan_experiment = function(
     # 3. expe.type == "regional-farm" ----------
     if( expe.type == "regional-farm" ) {
       if( nb.blocks < 2) { stop("nb.blocks must be more than 1 with expe.type == \"regional-farm\".") }
-      if( nb.controls < 2) { stop("nb.controls must be more than 1 with expe.type == \"regional-farm\".") }
+      if( nb.controls.per.block < 2) { stop("nb.controls.per.block must be more than 1 with expe.type == \"regional-farm\".") }
       
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls, nb.cols)
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols)
       d = place_controls(d)
       p = get_ggplot_plan(d)
       
@@ -190,9 +188,9 @@ plan_experiment = function(
     # 4. expe.type == "row-columns" ----------
     if( expe.type == "row-columns" ) {
       if( nb.blocks != 1) { stop("nb.blocks = 1 with expe.type == \"row-columns\".") }
-      if( nb.controls < nb.cols ) { stop(" nb.controls must be superior to nb.cols with expe.type == \"row-columns\".") }
+      if( nb.controls.per.block < nb.cols ) { stop(" nb.controls.per.block must be superior to nb.cols with expe.type == \"row-columns\".") }
 
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls, nb.cols)
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols)
       d = place_controls(d)
       p = get_ggplot_plan(d)
       
