@@ -46,12 +46,15 @@ plan_experiment = function(
       l = split(entries, (1:nb.blocks))
       l = lapply(l, function(x){c(x, rep("control", times = nb.controls))})
       
+      L = rep(LETTERS, times = 30)
+      vec_X = c(LETTERS, paste(L, rep(c(1:(length(L)/26)), each = 26), sep = ""))
+      
       vec_Y = c(1:(nb.entries*2)) # to be ok, it is always less than nb.entries*2
       d = data.frame()
       for(i in 1:length(l)){
         entries = l[[i]]
         nb.rows = ceiling(length(entries) / nb.cols)
-        X = rep(LETTERS[1:nb.cols], each = nb.rows)
+        X = rep(vec_X[1:nb.cols], each = nb.rows); vec_X = vec_X[-c(1:nb.cols)]
         Y = rep(vec_Y[c(1:nb.rows)], times = nb.cols); vec_Y = vec_Y[-c(1:nb.rows)]
         if( length(X) > length(entries) ) { entries = c(entries, rep("XXX", times = length(X) - length(entries)))}
         block = rep(i, length(X))
@@ -70,13 +73,14 @@ plan_experiment = function(
       for(b in vec_block){
         dtmp = droplevels(filter(d, block == b))
         ent = c(as.character(dtmp$entries[which(dtmp$entries=="control")]), as.character(dtmp$entries[which(dtmp$entries!="control")]))
-        
         # Put at least one control per row
         m = matrix(ent, ncol = nlevels(dtmp$X), nrow = nlevels(dtmp$Y)) 
         mtmp = m
-        mtmp[2,] = m[nrow(m),]
-        mtmp[nrow(m),] = m[2,]
-        m = mtmp # be sur to have controls in opposite rows
+        if( nrow(m) > 1 ){
+          mtmp[2,] = m[nrow(m),]
+          mtmp[nrow(m),] = m[2,]
+          m = mtmp # be sur to have controls in opposite rows
+        }
         rownames(m) = levels(dtmp$Y)
         colnames(m) = levels(dtmp$X)
         
@@ -101,11 +105,14 @@ plan_experiment = function(
           if(!is.null(col_with_c)){ m[i,col_with_c] = r[c]}
           m[i,col_with_e] = r[e]
         }
-        
+
         # Sample the columns
-        m = m[,sample(c(1:ncol(m)))]
-        colnames(m) = sort(colnames(m))
-        
+        m2 = m[,sample(c(1:ncol(m)))]
+        if(is.vector(m2)){ m2 = matrix(m2, nrow = nrow(m))}
+        colnames(m2) = sort(colnames(m))
+        rownames(m2) = rownames(m)
+        m = m2
+
         dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
         
         dok = rbind.data.frame(dok, dtmp)
