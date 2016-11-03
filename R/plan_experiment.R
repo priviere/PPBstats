@@ -36,9 +36,27 @@ plan_experiment = function(
     
     OUT = NULL
     
-    get_data.frame = function(entries, block, X, Y) {
-      if( length(entries) < length((Y))) { entries = c(entries, rep("", length(Y)-length(entries))) }
-      d = cbind.data.frame(entries, block, X, Y)
+    get_data.frame = function(nb.entries, nb.blocks, nb.controls, nb.cols) {
+      entries = paste("entry-", c(1:nb.entries), sep = "")
+      entries = sample(entries, length(entries), replace = FALSE)
+      
+      test = ceiling(nb.entries / nb.blocks) * nb.blocks
+      if( test > nb.entries ) { entries = c(entries, rep("XXX", times = (test - nb.entries))) }
+      
+      l = split(entries, (1:nb.blocks))
+      l = lapply(l, function(x){c(x, rep("control", times = nb.controls))})
+      
+      vec_Y = c(1:(nb.entries*2)) # to be ok, it is always less than nb.entries*2
+      d = data.frame()
+      for(i in 1:length(l)){
+        entries = l[[1]]
+        nb.rows = ceiling(length(entries) / nb.cols)
+        X = rep(LETTERS[1:nb.cols], each = nb.rows)
+        Y = rep(vec_Y[c(1:nb.rows)], times = nb.cols); vec_Y = vec_Y[-c(1:nb.rows)]
+        if( length(X) > length(entries) ) { entries = c(entries, rep("XXX", times = length(X) - length(entries)))}
+        block = rep(i, length(X))
+        d = rbind.data.frame(d, cbind.data.frame(entries, block, X, Y))
+      }
       d$entries = as.factor(d$entries)
       d$block = as.factor(d$block)
       d$X = as.factor(d$X)
@@ -47,7 +65,6 @@ plan_experiment = function(
     }
     
     place_controls = function(d){
-      # faire une fonction pour mettre en ligne et en colonnes (utilisée aussi dans row-columns avec block = 1)ues
       dok = data.frame()
       vec_block = levels(d$block)
       for(b in vec_block){
@@ -56,10 +73,16 @@ plan_experiment = function(
         
         # Put at least one control per row
         m = matrix(ent, ncol = nlevels(dtmp$X), nrow = nlevels(dtmp$Y)) 
+        mtmp = m
+        mtmp[2,] = m[nrow(m),]
+        mtmp[nrow(m),] = m[2,]
+        m = mtmp # be sur to have controls in opposite rows
         rownames(m) = levels(dtmp$Y)
         colnames(m) = levels(dtmp$X)
         
         # For each row, put control in different column
+        possible_col = rep(sample(1:ncol(m)), times = nrow(m))
+        
         for(i in 1:nrow(m)){
           r = m[i,]
           c = which(r=="control")
@@ -70,9 +93,9 @@ plan_experiment = function(
             col_with_c = NULL
             col_with_e = c(1:ncol(m))
           } else {
-            col_with_c = i
+            col_with_c = possible_col[i]
             col_with_e = c(1:ncol(m))
-            col_with_e = col_with_e[-i]
+            col_with_e = col_with_e[-which(col_with_e==col_with_c)]
           }
           
           if(!is.null(col_with_c)){ m[i,col_with_c] = r[c]}
@@ -119,15 +142,8 @@ plan_experiment = function(
       nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")
       nb.cols = 2; message("nb.cols = 1 with expe.type == \"satellite-farm\".")
       
-      entries = paste("entry-", c(1:nb.entries), sep = "")
-      entries = c("control", sample(entries, length(entries), replace = FALSE), "control")
-      nb.rows = ceiling(length(entries) / nb.cols)
-      X = rep(LETTERS[1:nb.cols], each = nb.rows)
-      Y = rep(c(1:nb.rows), times = nb.cols)
-      block = rep("block 1", times = length(Y))
-      
-      d = get_data.frame(entries, block, X, Y)
-     
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls, nb.cols)
+      d = place_controls(d)
       p = get_ggplot_plan(d)
       
       out = list("data.frame" = d, "plan" = p)
@@ -136,41 +152,12 @@ plan_experiment = function(
     
     # 3. expe.type == "regional-farm" ----------
     if( expe.type == "regional-farm" ) {
-      nb.entries = 10
-      nb.controls = 2
-      nb.blocks = 2
-      nb.cols = 3
+      if( nb.blocks < 2) { stop("nb.blocks must be more than 1 with expe.type == \"regional-farm\".") }
+      if( nb.controls < 2) { stop("nb.controls must be more than 1 with expe.type == \"regional-farm\".") }
       
-      entries = paste("entry-", c(1:nb.entries), sep = "")
-      entries = sample(entries, length(entries), replace = FALSE)
-      
-      test = ceiling(nb.entries / nb.blocks) * nb.blocks
-      if( test > nb.entries ) { entries = c(entries, rep("XXX", times = (test - nb.entries))) }
-      
-      l = split(entries, (1:nb.blocks))
-      l = lapply(l, function(x){c(x, rep("control", times = nb.controls))})
-      
-      vec_Y = c(1:(nb.entries*2)) # to be ok, it is always less than nb.entries*2
-      d = data.frame()
-      for(i in 1:length(l)){
-        entries = l[[1]]
-        nb.rows = ceiling(length(entries) / nb.cols)
-        X = rep(LETTERS[1:nb.cols], each = nb.rows)
-        Y = rep(vec_Y[c(1:nb.rows)], times = nb.cols); vec_Y = vec_Y[-c(1:nb.rows)]
-        if( length(X) > length(entries) ) { entries = c(entries, rep("XXX", times = length(X) - length(entries)))}
-        block = rep(i, length(X))
-        d = rbind.data.frame(d, cbind.data.frame(entries, block, X, Y))
-      }
-      d$entries = as.factor(d$entries)
-      d$block = as.factor(d$block)
-      d$X = as.factor(d$X)
-      d$Y = as.factor(d$Y)
-      
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls, nb.cols)
       d = place_controls(d)
-      
       p = get_ggplot_plan(d)
-      
-      get_ggplot_plan(place_controls(d))
       
       out = list("data.frame" = d, "plan" = p)
       out = list("regional-farms" = out); OUT = c(OUT, out)
@@ -178,7 +165,20 @@ plan_experiment = function(
     
     
     # 4. expe.type == "row-columns" ----------
+    if( expe.type == "row-columns" ) {
+      if( nb.blocks != 1) { stop("nb.blocks must be 1 with expe.type == \"row-columns\".") }
+
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls, nb.cols)
+      d = place_controls(d)
+      p = get_ggplot_plan(d)
+      
+      out = list("data.frame" = d, "plan" = p)
+      out = list("regional-farms" = out); OUT = c(OUT, out)
+    }
+    
+    
     # 5. expe.type == "fully-repicated" ----------
+    
     # 6. expe.type == "IBD" ----------
  
     return(OUT)
