@@ -49,7 +49,7 @@ plan_experiment = function(
       vec_Y = c(1:(nb.entries*2)) # to be ok, it is always less than nb.entries*2
       d = data.frame()
       for(i in 1:length(l)){
-        entries = l[[1]]
+        entries = l[[i]]
         nb.rows = ceiling(length(entries) / nb.cols)
         X = rep(LETTERS[1:nb.cols], each = nb.rows)
         Y = rep(vec_Y[c(1:nb.rows)], times = nb.cols); vec_Y = vec_Y[-c(1:nb.rows)]
@@ -87,7 +87,7 @@ plan_experiment = function(
           r = m[i,]
           c = which(r=="control")
           e = which(r!="control")
-          if(length(c)>1){e=c(e, c[2:length(c)])}
+          if(length(c)>1){ e = c(e, c[2:length(c)]); c = c[1]}
           
           if(length(c)==0){
             col_with_c = NULL
@@ -106,7 +106,7 @@ plan_experiment = function(
         m = m[,sample(c(1:ncol(m)))]
         colnames(m) = sort(colnames(m))
         
-        dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = ncol(m)), Y = rep(rownames(m), times = nrow(m)))
+        dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
         
         dok = rbind.data.frame(dok, dtmp)
       }
