@@ -160,8 +160,19 @@ plan_experiment = function(
           test_col = which(apply(m, 2, fun_test) == 0)
           test_row = which(apply(m, 1, fun_test) == 0)
           
-          if( length(test_col) > 0 ){ warning("Controls are missing in columns", paste(test_col, collapse = ",")) }
-          if( length(test_row) > 0 ){ warning("Controls are missing in rows ", paste(test_row, collapse = ",")) }
+          mess_col = paste("Controls are missing in columns ", paste(test_col, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
+          mess_row = paste("Controls are missing in rows", paste(test_row, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
+          
+          if( expe.type == "regional-farm" ){
+            if( length(test_col) > 0 ){ warning(mess_col) }
+            if( length(test_row) > 0 ){ warning(mess_row) }
+          }
+          
+          if( expe.type == "row-column" ){
+            if( length(test_col) > 0 ){ stop(mess_col) }
+            if( length(test_row) > 0 ){ stop(mess_row) }
+          }
+          
         }
         
         dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
