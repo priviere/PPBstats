@@ -151,7 +151,7 @@ plan_experiment = function(
           rownames(m2) = rownames(m)
           m = m2
           
-          print(m)
+          # Check number of controls in col and row
           fun_test = function(x){
             a = grep("control", x)
             if(length(a)==0){t=0}else{t=1}
