@@ -21,6 +21,9 @@
 #'  \item A picture of the experimental plan
 #'  }
 #' 
+#' @details 
+#' Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns.
+#' 
 #' @author Pierre Riviere
 #' 
 plan_experiment = function(
@@ -33,10 +36,11 @@ plan_experiment = function(
   # let's go !!! ----------
   {
     # 1. Error message ----------  
+    if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-repicated\" or \"IBD\".") }
     
-    OUT = NULL
+    # 2. Functions used in the code ----------  
     
-    get_data.frame = function(nb.entries, nb.blocks, nb.controls.per.block, nb.cols) {
+    get_data.frame = function(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type) {
       entries = paste("entry-", c(1:nb.entries), sep = "")
       entries = sample(entries, length(entries), replace = FALSE)
       
@@ -44,7 +48,14 @@ plan_experiment = function(
       if( test > nb.entries ) { entries = c(entries, rep("XXX", times = (test - nb.entries))) }
       
       l = split(entries, (1:nb.blocks))
-      l = lapply(l, function(x){c(x, rep("control", times = nb.controls.per.block))})
+      
+      if( expe.type == "row-column" | expe.type == "satellite.farm") {
+        l = lapply(l, function(x){c(x, rep("control", times = nb.controls.per.block))})  
+      }
+      
+      if( expe.type == "regional-farm" ) {
+        l = lapply(l, function(x){c(x, paste("control", c(1:nb.controls.per.block), sep ="-"))})
+      }
       
       L = rep(LETTERS, times = 30)
       vec_X = c(LETTERS, paste(L, rep(c(1:(length(L)/26)), each = 26), sep = ""))
@@ -67,12 +78,14 @@ plan_experiment = function(
       return(d)
     }
     
-    place_controls = function(d){
+    place_controls = function(d, expe.type){
       dok = data.frame()
       vec_block = levels(d$block)
       for(b in vec_block){
         dtmp = droplevels(filter(d, block == b))
-        ent = c(as.character(dtmp$entries[which(dtmp$entries=="control")]), as.character(dtmp$entries[which(dtmp$entries!="control")]))
+        c = grep("control", dtmp$entries)
+        e = c(1:length(dtmp$entries))[-c]
+        ent = c(as.character(dtmp$entries[c]), as.character(dtmp$entries[e]))
 
         # Put at least one control per row
         arrange.m = function(m){
@@ -102,8 +115,9 @@ plan_experiment = function(
 
         for(i in 1:nrow(m)){
           r = m[i,]
-          c = which(r=="control")
-          e = which(r!="control")
+          c = grep("control", r)
+          
+          if(length(c)==0){ e = c(1:length(r)) } else { e = c(1:length(r))[-c] }
           if(length(c)>1){ e = c(e, c[2:length(c)]); c = c[1]}
           
           if(length(c)==0){
@@ -130,11 +144,13 @@ plan_experiment = function(
         m = m2
         
         # Sample the rows
-        m2 = m[sample(c(1:nrow(m))),]
-        if(is.vector(m2)){ m2 = matrix(m2, nrow = nrow(m))}
-        colnames(m2) = sort(colnames(m))
-        rownames(m2) = rownames(m)
-        m = m2
+        if( expe.type != "satellite-farm" ){
+          m2 = m[sample(c(1:nrow(m))),]
+          if(is.vector(m2)){ m2 = matrix(m2, nrow = nrow(m))}
+          colnames(m2) = sort(colnames(m))
+          rownames(m2) = rownames(m)
+          m = m2
+        }
         
         dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
         
@@ -151,7 +167,7 @@ plan_experiment = function(
     
     get_ggplot_plan = function(d){
       color_till = rep("white", length(d$entries))
-      color_till[which(d$entries == "control")] = "black"
+      color_till[grep("control", d$entries)] = "black"
       
       color_text = color_till
       b = which(color_till == "black")
@@ -164,27 +180,32 @@ plan_experiment = function(
       return(p)        
     }
     
-    # 2. expe.type == "satellite-farm" ----------
+    
+    # 3. Cumpute for different expe.type ----------
+    
+    OUT = NULL
+    
+    # 3.1. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
+      if(nb.entries > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 entries. With more than 10 entries, go for expe.type == \"reginonal-farm\".") }
       nb.controls.per.block = 2; message("nb.controls.per.block = 2 with expe.type == \"satellite-farm\".")
       nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")
-      nb.cols = 2; message("nb.cols = 1 with expe.type == \"satellite-farm\".")
+      nb.cols = 2; message("nb.cols = 2 with expe.type == \"satellite-farm\".")
       
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols)
-      d = place_controls(d)
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
+      d = place_controls(d, expe.type)
       p = get_ggplot_plan(d)
       
       out = list("data.frame" = d, "plan" = p)
       out = list("satellite-farms" = out); OUT = c(OUT, out)
     }
     
-    # 3. expe.type == "regional-farm" ----------
+    # 3.2. expe.type == "regional-farm" ----------
     if( expe.type == "regional-farm" ) {
-      if( nb.blocks < 2) { stop("nb.blocks must be more than 1 with expe.type == \"regional-farm\".") }
       if( nb.controls.per.block < 2) { stop("nb.controls.per.block must be more than 1 with expe.type == \"regional-farm\".") }
       
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols)
-      d = place_controls(d)
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
+      d = place_controls(d, expe.type)
       p = get_ggplot_plan(d)
       
       out = list("data.frame" = d, "plan" = p)
@@ -192,13 +213,12 @@ plan_experiment = function(
     }
     
     
-    # 4. expe.type == "row-columns" ----------
-    if( expe.type == "row-columns" ) {
-      if( nb.blocks != 1) { stop("nb.blocks = 1 with expe.type == \"row-columns\".") }
+    # 3.3. expe.type == "row-column" ----------
+    if( expe.type == "row-column" ) {
       if( nb.controls.per.block < nb.cols ) { stop(" nb.controls.per.block must be superior to nb.cols with expe.type == \"row-columns\".") }
 
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols)
-      d = place_controls(d)
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
+      d = place_controls(d, expe.type)
       p = get_ggplot_plan(d)
       
       out = list("data.frame" = d, "plan" = p)
@@ -206,9 +226,11 @@ plan_experiment = function(
     }
     
     
-    # 5. expe.type == "fully-repicated" ----------
+    # 3.4. expe.type == "fully-repicated" ----------
     
-    # 6. expe.type == "IBD" ----------
- 
+    
+    # 3.5. expe.type == "IBD" ----------
+    
+     
     return(OUT)
     }
