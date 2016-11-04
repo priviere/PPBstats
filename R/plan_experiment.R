@@ -184,7 +184,6 @@ plan_experiment = function(
       dok$block = as.factor(dok$block)
       dok$X = as.factor(dok$X)
       dok$Y = as.factor(dok$Y)
-      
       return(dok)
     }
     
