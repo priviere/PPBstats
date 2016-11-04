@@ -4,21 +4,21 @@
 #' @description
 #' \code{plan_experiment} provides experimental plan for several situations
 #' 
-#' @param expe.type The type of experiment to settle "satellite-farm", "regional-farm", "row-columns", "fully-repicated", "IBD".
+#' @param expe.type The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD".
 #' 
 #' @param nb.entries Number of entries
 #' 
-#' @param nb.controls.per.block Number of controls. This is useful only for expe.type "satellite-farm" and "regional-farm"
+#' @param nb.controls.per.block Number of controls.
 #' 
 #' @param nb.blocks Number of blocks
 #' 
-#' @param nb.cols Number of columns
+#' @param nb.cols Number of columns in the design. The number of rows is computed automaticaly
 #'
 #' @return 
 #' The function returns a list with
 #' \itemize{
 #'  \item A data frame with X, Y and block
-#'  \item A picture of the experimental plan, which is also exported to csv files
+#'  \item A picture of the experimental plan
 #'  }
 #' 
 #' @author Pierre Riviere
