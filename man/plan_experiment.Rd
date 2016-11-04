@@ -4,30 +4,32 @@
 \alias{plan_experiment}
 \title{Provides experimental plan for several situations}
 \usage{
-plan_experiment(expe.type, nb.entries, nb.controls)
+plan_experiment(expe.type, nb.entries, nb.controls.per.block, nb.blocks,
+  nb.cols)
 }
 \arguments{
-\item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-columns", "alpha-design", "fully-repicated"}
+\item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD".}
 
 \item{nb.entries}{Number of entries}
 
-\item{nb.controls}{Number of controls. This is useful only for expe.type "satellite-farm" and "regional-farm"}
+\item{nb.controls.per.block}{Number of controls.}
 
 \item{nb.blocks}{Number of blocks}
 
-\item{nb.cols}{Number of columns}
-
-\item{nb.rows}{Number of rows}
+\item{nb.cols}{Number of columns in the design. The number of rows is computed automaticaly}
 }
 \value{
 The function returns a list with
 \itemize{
  \item A data frame with X, Y and block
- \item A picture of the experimental plan, which is also exported to csv files
+ \item A picture of the experimental plan
  }
 }
 \description{
 \code{plan_experiment} provides experimental plan for several situations
+}
+\details{
+Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns.
 }
 \author{
 Pierre Riviere
