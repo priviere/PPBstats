@@ -150,6 +150,18 @@ plan_experiment = function(
           colnames(m2) = sort(colnames(m))
           rownames(m2) = rownames(m)
           m = m2
+          
+          print(m)
+          fun_test = function(x){
+            a = grep("control", x)
+            if(length(a)==0){t=0}else{t=1}
+            return(t)
+          }
+          test_col = which(apply(m, 2, fun_test) == 0)
+          test_row = which(apply(m, 1, fun_test) == 0)
+          
+          if( length(test_col) > 0 ){ warning("Controls are missing in columns", paste(test_col, collapse = ",")) }
+          if( length(test_row) > 0 ){ warning("Controls are missing in rows ", paste(test_row, collapse = ",")) }
         }
         
         dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
@@ -215,8 +227,6 @@ plan_experiment = function(
     
     # 3.3. expe.type == "row-column" ----------
     if( expe.type == "row-column" ) {
-      if( nb.controls.per.block < nb.cols ) { stop(" nb.controls.per.block must be superior to nb.cols with expe.type == \"row-columns\".") }
-
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
       p = get_ggplot_plan(d)
