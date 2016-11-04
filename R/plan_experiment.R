@@ -128,7 +128,14 @@ plan_experiment = function(
         colnames(m2) = sort(colnames(m))
         rownames(m2) = rownames(m)
         m = m2
-
+        
+        # Sample the rows
+        m2 = m[sample(c(1:nrow(m))),]
+        if(is.vector(m2)){ m2 = matrix(m2, nrow = nrow(m))}
+        colnames(m2) = sort(colnames(m))
+        rownames(m2) = rownames(m)
+        m = m2
+        
         dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
         
         dok = rbind.data.frame(dok, dtmp)
