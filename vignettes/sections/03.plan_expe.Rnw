@@ -73,13 +73,13 @@ p{.1\textwidth}
 \hline
 case & number of locations & number of years & comments regarding entries & design of experiment & analysis \\
 \hline
-1 & 1 & 1 & All entries are replicated at least twice & \texttt{fully-repicated} & Anova \\
+1 & 1 & 1 & All entries are replicated at least twice & \multirow{3}{.2\textwidth}{\texttt{fully-repicated}} & Anova \\
+\cline{2-4}\cline{6-6}
+  & 2 or more & 1 or more & Same entries are in all locations. All entries are replicated at least twice in each location & & AMMI; GGE \\
 \hline
 2 & 1 & 1 & Entries not replicated. Only a control is replicated in rows and columns & \texttt{row-column} & Spatial analysis \\
 \hline
-3 & 2 or more & 1 or more & Same entries are in all locations. All entries are replicated at least twice in each location & \texttt{fully-repicated} & AMMI; GGE \\
-\hline
-4 & 25 or more & 1 or more & \multirow{3}{.35\textwidth}{All locations share a control. Entries are not replicated.} & \multirow{3}{.2\textwidth}{\texttt{satellite-farm} and \texttt{regional-farm}} & \multirow{2}{.1\textwidth}{B models 1 and 2} \\
+3 & 25 or more & 1 or more & \multirow{3}{.35\textwidth}{All locations share a control. Entries are not replicated.} & \multirow{3}{.2\textwidth}{\texttt{satellite-farm} and \texttt{regional-farm}} & \multirow{2}{.1\textwidth}{B models 1 and 2} \\
   & 12 or more & 2 or more & & & \\
   \cline{2-3} \cline{6-6}
   & 25 or more & 3 or more & & & B model 3 \\
@@ -114,11 +114,6 @@ p_case2$"row-column"$plan
 @
 
 \subsubsection{Case 3}
-<<message=TRUE,cache=FALSE>>=
-plan_experiment()
-@
-
-\subsubsection{Case 4}
 <<message=TRUE,cache=FALSE>>=
 plan_experiment()
 @
