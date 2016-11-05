@@ -49,7 +49,7 @@ plan_experiment = function(
       
       l = split(entries, (1:nb.blocks))
       
-      if( expe.type == "row-column" | expe.type == "satellite.farm") {
+      if( expe.type == "row-column" | expe.type == "satellite-farm") {
         l = lapply(l, function(x){c(x, rep("control", times = nb.controls.per.block))})  
       }
       
@@ -161,7 +161,7 @@ plan_experiment = function(
           test_row = which(apply(m, 1, fun_test) == 0)
           
           mess_col = paste("Controls are missing in columns ", paste(test_col, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
-          mess_row = paste("Controls are missing in rows", paste(test_row, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
+          mess_row = paste("Controls are missing in rows ", paste(test_row, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
           
           if( expe.type == "regional-farm" ){
             if( length(test_col) > 0 ){ warning(mess_col) }
@@ -209,10 +209,10 @@ plan_experiment = function(
     
     # 3.1. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
-      if(nb.entries > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 entries. With more than 10 entries, go for expe.type == \"reginonal-farm\".") }
-      nb.controls.per.block = 2; message("nb.controls.per.block = 2 with expe.type == \"satellite-farm\".")
-      nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")
-      nb.cols = 2; message("nb.cols = 2 with expe.type == \"satellite-farm\".")
+      if(nb.entries > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 entries. With more than 10 entries, go for expe.type == \"regional-farm\".") }
+      if(nb.controls.per.block!=1){nb.controls.per.block = 1; message("nb.controls.per.block = 1 with expe.type == \"satellite-farm\".")}
+      if(nb.blocks != 1){nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")}
+      if(nb.cols != 2){nb.cols = 2; message("nb.cols = 2 with expe.type == \"satellite-farm\".")}
       
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
