@@ -114,17 +114,108 @@ p_case2$"row-column"$plan
 @
 
 \subsubsection{Case 3}
+Here, six designs are generated: four for satellite farm and two for regional farm.
+
 <<message=TRUE,cache=FALSE>>=
-plan_experiment()
+p_case3_sf1 = plan_experiment(
+  expe.type = "satellite-farm", 
+  nb.entries = 6, 
+  nb.controls.per.block = 1, 
+  nb.blocks = 1, 
+  nb.cols = 2)
+p_case3_sf1 = p_case3_sf1$`satellite-farms`$plan
+
+p_case3_sf2 = plan_experiment(
+  expe.type = "satellite-farm", 
+  nb.entries = 6, 
+  nb.controls.per.block = 1, 
+  nb.blocks = 1, 
+  nb.cols = 2)
+p_case3_sf2 = p_case3_sf2$`satellite-farms`$plan
+
+p_case3_sf3 = plan_experiment(
+  expe.type = "satellite-farm", 
+  nb.entries = 6, 
+  nb.controls.per.block = 1, 
+  nb.blocks = 1, 
+  nb.cols = 2)
+p_case3_sf3 = p_case3_sf3$`satellite-farms`$plan
+
+p_case3_rf1 = plan_experiment(
+  expe.type = "regional-farm", 
+  nb.entries = 16, 
+  nb.controls.per.block = 4, 
+  nb.blocks = 2, 
+  nb.cols = 4)
+p_case3_rf1 = p_case3_rf1$`regional-farms`$plan
+
+p_case3_rf2 = plan_experiment(
+  expe.type = "regional-farm", 
+  nb.entries = 6, 
+  nb.controls.per.block = 3, 
+  nb.blocks = 2, 
+  nb.cols = 3)
+p_case3_rf2 = p_case3_rf2$`regional-farms`$plan
 @
 
+If you have many space and many seeds, you can adapt the satellite farm design with only one column.
+Each row beeing a sower width.
 
-\subsubsection{Few space and few seeds}
+<<message=TRUE,cache=FALSE>>=
+p_case3_sf4 = plan_experiment(
+  expe.type = "satellite-farm", 
+  nb.entries = 6, 
+  nb.controls.per.block = 1, 
+  nb.blocks = 1, 
+  nb.cols = 2)
+p_case3_sf4 = p_case3_sf4$`satellite-farms`$plan
+@
 
-\subsubsection{Many space and many seeds}
+\begin{center}
+\begin{tabular}{cc}
+\texttt{p\_case3\_sf1} & \texttt{p\_case3\_sf2} \\
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_sf1
+@
+&
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_sf2
+@
+\\
+\texttt{p\_case3\_sf3} & \texttt{p\_case3\_rf1} \\
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_sf3
+@
+&
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_rf1
+@
+\\
+\texttt{p\_case3\_sf4} & \texttt{p\_case3\_rf2} \\
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_sf4
+@
+&
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_rf2
+@
+\\
+\end{tabular}
+\end{center}
+
+There some constraints regarding \texttt{expe.type = "satellite-farm"}:
+\begin{itemize}
+\item if \texttt{nb.entries > 10}, a warning message recommand to have less than 10 entries.
+\item There are two controls per block
+\item There is one block
+\item There are two columns
+\end{itemize}
+
+For \texttt{expe.type = "regional-farm"}, there is a warning message if controls are missing in rows or columns.
+It is better to catch as much as possible of the trial variation.
 
 
-
+\newpage
 
 These methods aim to analyse highly unbalanced datasets that can be found in decentralized participatory plant breeding (PPB).
 
@@ -134,7 +225,6 @@ Regional farms had several populations (i.e. a germplasm in an environment) in t
 Satellite farms had no block and one germplasm replicated twice.
 
 Farmers chose the other populations to be sown that were not replicated (Figure \ref{plan_SF_RF}).
-
 
 The number of populations may vary between farms.
 
