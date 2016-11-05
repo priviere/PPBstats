@@ -242,7 +242,7 @@ plan_experiment = function(
       p = get_ggplot_plan(d)
       
       out = list("data.frame" = d, "plan" = p)
-      out = list("regional-farms" = out); OUT = c(OUT, out)
+      out = list("row-column" = out); OUT = c(OUT, out)
     }
     
     
