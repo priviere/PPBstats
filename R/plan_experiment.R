@@ -212,7 +212,7 @@ plan_experiment = function(
       if(nb.entries > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 entries. With more than 10 entries, go for expe.type == \"regional-farm\".") }
       if(nb.controls.per.block!=1){nb.controls.per.block = 1; message("nb.controls.per.block = 1 with expe.type == \"satellite-farm\".")}
       if(nb.blocks != 1){nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")}
-      if(nb.cols != 2){nb.cols = 2; message("nb.cols = 2 with expe.type == \"satellite-farm\".")}
+      if(nb.cols > 2){nb.cols = 2; message("nb.cols = 2 with expe.type == \"satellite-farm\".")}
       
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
