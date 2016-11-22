@@ -22,7 +22,9 @@ Depends:
     plyr,
     dplyr,
     gridExtra,
-    parallel
+    parallel,
+    agricolae,
+    factoextra
 Suggests: 
     ggmcmc,
     knitr
