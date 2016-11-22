@@ -27,6 +27,7 @@ Depends:
     factoextra
 Suggests: 
     ggmcmc,
+    GGEBiplotGUI,
     knitr
 LazyLoad: yes
 LazyData: true
