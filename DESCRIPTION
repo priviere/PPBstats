@@ -24,7 +24,8 @@ Depends:
     gridExtra,
     parallel,
     agricolae,
-    factoextra
+    factoextra,
+    ibd
 Suggests: 
     ggmcmc,
     GGEBiplotGUI,
