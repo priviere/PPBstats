@@ -1,3 +1,5 @@
+# p + coord_fixed() # to see it is really perpendicular !!!
+
 which_won_where = function(res.pca, p){
   
   chull_obj = as.data.frame(res.pca$ind$coord)
@@ -43,63 +45,65 @@ which_won_where = function(res.pca, p){
   
   p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), color = "red", data = per_line)
   
-  # Get entries for each sector that has the largest values (the winner) among all entries
-  
-  # ind ad var per sector
-  per_line$x3 = c(per_line$x2[nrow(per_line)], per_line$x2[1:(nrow(per_line)-1)])
-  per_line$y3 = c(per_line$y2[nrow(per_line)], per_line$y2[1:(nrow(per_line)-1)])
-  
-  var = res.pca$var$coord
-  var$sector = NA
-  
-  
-  ind = as.data.frame(res.pca$ind$coord)
-  ind$sector = NA
-  
-  for(j in 1:nrow(ind)){
-    x = ind[j, "Dim.1"]
-    y = ind[j, "Dim.2"]
+  # Get ind and var for each sector that has the largest values (the winner) among all entries
+  get_sector = function(ind, per_line){
     
-    for(i in 1:nrow(per_line)){
-      x1 = per_line$x1[i]
-      y1 = per_line$y1[i]
-      x2 = per_line$x2[i]
-      y2 = per_line$y2[i]
-      x3 = per_line$x3[i]
-      y3 = per_line$y3[i]
+    ind = as.data.frame(ind)
+    ind$sector = NA
+    
+    per_line$x3 = c(per_line$x2[nrow(per_line)], per_line$x2[1:(nrow(per_line)-1)])
+    per_line$y3 = c(per_line$y2[nrow(per_line)], per_line$y2[1:(nrow(per_line)-1)])
+
+    for(j in 1:nrow(ind)){
+      x = ind[j, "Dim.1"]
+      y = ind[j, "Dim.2"]
       
-      # to be sure to get all points, make the segment longer
-      y2 = y2/x2 * x2*2
-      x2 = x2*2
-      y3 = y3/x3 * x3*2
-      x3 = x3*2
-      
-      is.inside.sector = function(x, y, x1, y1, x2, y2, x3, y3){
-        # resolve it with barycentric coordinates
-        # thanks to andreasdr, cf http://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+      for(i in 1:nrow(per_line)){
+        x1 = per_line$x1[i]
+        y1 = per_line$y1[i]
+        x2 = per_line$x2[i]
+        y2 = per_line$y2[i]
+        x3 = per_line$x3[i]
+        y3 = per_line$y3[i]
         
-        p0y = y1
-        p0x = x1
-        p1y = y2
-        p1x = x2
-        p2y = y3
-        p2x = x3
-        py = y
-        px = x
+        # to be sure to get all points, make the segment longer
+        y2 = y2/x2 * x2*2
+        x2 = x2*2
+        y3 = y3/x3 * x3*2
+        x3 = x3*2
         
-        Area = 0.5 *(-p1y*p2x + p0y*(-p1x + p2x) + p0x*(p1y - p2y) + p1x*p2y);
-        s = 1/(2*Area)*(p0y*p2x - p0x*p2y + (p2y - p0y)*px + (p0x - p2x)*py)
-        t = 1/(2*Area)*(p0x*p1y - p0y*p1x + (p0y - p1y)*px + (p1x - p0x)*py);
-        
-        test = s > 0 & t > 0 & (1-s-t) > 0
-        return(test)
+        is.inside.sector = function(x, y, x1, y1, x2, y2, x3, y3){
+          # resolve it with barycentric coordinates
+          # thanks to andreasdr, cf http://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+          
+          p0y = y1
+          p0x = x1
+          p1y = y2
+          p1x = x2
+          p2y = y3
+          p2x = x3
+          py = y
+          px = x
+          
+          Area = 0.5 *(-p1y*p2x + p0y*(-p1x + p2x) + p0x*(p1y - p2y) + p1x*p2y);
+          s = 1/(2*Area)*(p0y*p2x - p0x*p2y + (p2y - p0y)*px + (p0x - p2x)*py)
+          t = 1/(2*Area)*(p0x*p1y - p0y*p1x + (p0y - p1y)*px + (p1x - p0x)*py);
+          
+          test = s > 0 & t > 0 & (1-s-t) > 0
+          return(test)
+        }
+        if( is.inside.sector(x, y, x1, y1, x2, y2, x3, y3) ) { ind[j, "sector"] = i }
       }
-      
-      if( is.inside.sector(x, y, x1, y1, x2, y2, x3, y3) ) { ind[j, "sector"] = i }
     }
-    
+    return(ind)
   }
   
+  var = get_sector(res.pca$var$coord, per_line)
+  ind = get_sector(res.pca$ind$coord, per_line)
+  
+  # get info only where there are variables
+  ind = droplevels(filter(ind, sector %in% unique(var$sector)))
+
   # entry with the highest value in each sector, i.e. biggest segment from 0, i.e. biggest hypothenus
   ind$id = c(1:nrow(ind))
   ind$hypo = sqrt(abs(ind$Dim.1)^2 + abs(ind$Dim.2)^2)
