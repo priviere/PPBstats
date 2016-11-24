@@ -12,7 +12,7 @@ plan_experiment(expe.type, nb.entries, nb.controls.per.block, nb.blocks,
 
 \item{nb.entries}{Number of entries}
 
-\item{nb.controls.per.block}{Number of controls.}
+\item{nb.controls.per.block}{Number of controls per blocks.}
 
 \item{nb.blocks}{Number of blocks}
 
@@ -21,7 +21,7 @@ plan_experiment(expe.type, nb.entries, nb.controls.per.block, nb.blocks,
 \value{
 The function returns a list with
 \itemize{
- \item A data frame with X, Y and block
+ \item A data frame with entries, block, X, Y
  \item A picture of the experimental plan
  }
 }
@@ -29,7 +29,7 @@ The function returns a list with
 \code{plan_experiment} provides experimental plan for several situations
 }
 \details{
-Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns.
+Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns or rows.
 }
 \author{
 Pierre Riviere
