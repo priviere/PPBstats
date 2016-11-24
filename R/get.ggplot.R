@@ -49,7 +49,7 @@
 #' \item ggplot.type = "biplot-alpha-beta" display the biplot with alpha_i on the x axis and beta_i on the y axis.
 #' 
 #' \item When using data_version, and ggplot.type = "barplot"; the pvalue is computed based on the MCMC.
-#' For data that did not converge or without environments, it is a \texttt{t.test} which is perform.
+#' For data that did not converge or without environments, it is a \code{t.test} which is perform.
 #' }
 #' 
 #' @return 
