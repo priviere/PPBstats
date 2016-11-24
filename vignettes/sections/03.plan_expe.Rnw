@@ -4,45 +4,60 @@ Before sowing, you must plan the experiment regarding your research question, th
 
 \subsection{Analysis carry out in \pack}
 
-Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
+Based on the research question, an analysis is carry on.
 
-The analysis are divided into four families:
+Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
+The different effects that can be estimated are:
 \begin{itemize}
-\item Family 1 gathers analysis that estimate entry effects.
-\item Family 2 gathers analysis that estimate germplasm, environment and interaction effects.
-\item Family 3 gathers one analysis which estimates effects from family 1 and 2.
-\item Family 4 gathers analysis answering specific research questions.
+\item \textbf{entry}: a combinaison of a germplasm and an environment
+\item \textbf{germplasm}
+\item \textbf{location} 
+\item \textbf{environment}: a combinaison of a location and a year
+\item \textbf{interaction}: interaction between germplasm and location or germplasm and environment
+\item \textbf{year}
+\item \textbf{migrant-resident}: migrant refers to germplasm that was not grown on previous generation on location; resident refers to germplasm that was grown  on previous generation on location.
+\item \textbf{version}: version within a germplasm, for example selected vs non-selected
 \end{itemize}
-Within family analysis 1 and 2, the differences are in the experimental designs.
+
+\noindent The analysis are divided into four families:
+\begin{itemize}
+\item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
+\item \textbf{Family 2} gathers analysis that estimate germplasm, location and interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+\item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location and year are separated.
+\item Family 4 gathers analysis answering specific research questions. This is for analysis on one farm or more.
+\end{itemize}
+Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
 
 \begin{table}[H]
 \begin{center}
-\begin{tabular}{ccccccccc}
+\begin{tabular}{ccccccccccc}
 \hline
 Family & Name & Section &
 \rotatebox{90}{entry effects} &
 \rotatebox{90}{germpasm effects} &
+\rotatebox{90}{location effects} &
 \rotatebox{90}{environments effects} &
 \rotatebox{90}{interaction effects} &
+\rotatebox{90}{year effects} &
+\rotatebox{90}{migrant-resident effects} & 
 \rotatebox{90}{version effects} &
-\rotatebox{90}{migrant-resident effects} 
 \\
 \hline
-1 & Anova & \ref{anova} & X & & & & & \\
-  & Spatial analysis & \ref{spatial_analysis} & X & & & & & \\
-  & Bayesian model 1 & \ref{bayesian_model_1} & X & & & & & \\
+1 & Anova & \ref{anova} & X & & & & & & \\
+  & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & \\
+  & Bayesian model 1 & \ref{bayesian_model_1} & X & & & & & & & \\
 \hline
-2 & AMMI & \ref{ammi} & & X & X & X & & \\
-  & GGE & \ref{gge} & & X & X & X & & \\
-  & Bayesian model 2 & \ref{bayesian_model_2} & & X & X & X & & \\
+2 & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
+  & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
+  & Bayesian model 2 & \ref{bayesian_model_2} & & X & X & (X) & X & & & \\
 \hline
-3 & Bayesian model 3 & \ref{bayesian_model_3} & X & X & X & X & & \\
+3 & Bayesian model 3 & \ref{bayesian_model_3} & X & X & X & & X & X & & \\
 \hline
-4 & Migrant-residant & \ref{migrant_residant} & & X & (X) & (X) & X & \\
-  & Version & \ref{version} & X & & (X) & (X) & & X \\
+4 & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
+  & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & X \\
 \hline
 \end{tabular}
-\caption{Analysis carry out in \pack. An entry is a combinaison of a germplasm in an environment. X: effects that are estimated. (X): effects that can be estimated.}
+\caption{Analysis carry out in \pack. X: effects that are estimated. (X): effects that can be estimated.}
 \label{summary_analysis}
 \end{center}
 \end{table}
@@ -51,15 +66,30 @@ Family & Name & Section &
 
 \subsection{Experimental design}
 
-The experimental design is thought in relation to the research questions.
+The experimental design is thought in relation to the analysis.
 The key elements to choose an appropriate experimental designs are:
 \begin{itemize}
-\item the number of location
-\item the number of year
+\item the number of locations
+\item the number of years
 \item the replication of entries within and between locations
 \end{itemize}
 
-Table \ref{cases_expe} summarize the different experimental design regarding analysis.
+\noindent Function \texttt{plan\_experiment} settle experimental design based on :
+\begin{itemize} 
+\item the number of entries
+\item the number of controls per blocks
+\item the number of blocks
+\item the number of columns in the design. The number of rows is computed automaticaly
+\end{itemize} 
+
+\noindent The function returns a list with
+\begin{itemize} 
+\item A data frame with entries, block, X, Y
+\item A picture of the experimental plan
+\end{itemize} 
+
+
+\noindent Table \ref{cases_expe} summarize the different experimental design regarding analysis.
 
 \begin{table}[H]
 \begin{tabular}{
@@ -71,7 +101,7 @@ p{.2\textwidth}
 p{.1\textwidth}
 }
 \hline
-case & number of locations & number of years & comments regarding entries & design of experiment & analysis \\
+case & number of locations & number of years & comments regarding entries replication & design of experiment & analysis \\
 \hline
 1 & 1 & 1 & All entries are replicated at least twice & \multirow{3}{.2\textwidth}{\texttt{fully-repicated}} & Anova \\
 \cline{2-4}\cline{6-6}
@@ -109,9 +139,15 @@ p_case2 = plan_experiment(
 head(p_case2$"row-column"$data.frame)
 @
 
-<<message=TRUE,cache=FALSE>>=
+<<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
 p_case2$"row-column"$plan
 @
+
+Note that if controls are missing in rows or columns.
+The function return an error.
+The controls must catch as much as possible of the trial variation.
+
+
 
 \subsubsection{Case 3}
 Here, six designs are generated: four for satellite farm and two for regional farm.
@@ -120,7 +156,7 @@ Here, six designs are generated: four for satellite farm and two for regional fa
 p_case3_sf1 = plan_experiment(
   expe.type = "satellite-farm", 
   nb.entries = 6, 
-  nb.controls.per.block = 1, 
+  nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
 p_case3_sf1 = p_case3_sf1$`satellite-farms`$plan
@@ -128,7 +164,7 @@ p_case3_sf1 = p_case3_sf1$`satellite-farms`$plan
 p_case3_sf2 = plan_experiment(
   expe.type = "satellite-farm", 
   nb.entries = 6, 
-  nb.controls.per.block = 1, 
+  nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
 p_case3_sf2 = p_case3_sf2$`satellite-farms`$plan
@@ -136,7 +172,7 @@ p_case3_sf2 = p_case3_sf2$`satellite-farms`$plan
 p_case3_sf3 = plan_experiment(
   expe.type = "satellite-farm", 
   nb.entries = 6, 
-  nb.controls.per.block = 1, 
+  nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
 p_case3_sf3 = p_case3_sf3$`satellite-farms`$plan
@@ -165,9 +201,9 @@ Each row beeing a sower width.
 p_case3_sf4 = plan_experiment(
   expe.type = "satellite-farm", 
   nb.entries = 6, 
-  nb.controls.per.block = 1, 
+  nb.controls.per.block = 2, 
   nb.blocks = 1, 
-  nb.cols = 2)
+  nb.cols = 1)
 p_case3_sf4 = p_case3_sf4$`satellite-farms`$plan
 @
 
@@ -208,12 +244,33 @@ There some constraints regarding \texttt{expe.type = "satellite-farm"}:
 \item if \texttt{nb.entries > 10}, a warning message recommand to have less than 10 entries.
 \item There are two controls per block
 \item There is one block
-\item There are two columns
+\item There are maximum two columns
 \end{itemize}
 
 For \texttt{expe.type = "regional-farm"}, there is a warning message if controls are missing in rows or columns.
 It is better to catch as much as possible of the trial variation.
+If there are less than 2 blocks, an error is returned.
 
+\subsubsection{Case ???}
+
+<<message=TRUE,cache=FALSE>>=
+p_ibd = plan_experiment(
+  expe.type = "IBD", 
+  nb.entries = 20, 
+  nb.blocks = 16, 
+  nb.cols = 4)
+@
+
+<<message=TRUE,cache=FALSE>>=
+head(p_ibd$`IBD`$data.frame)
+@
+
+
+<<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
+p_ibd$`IBD`$plan
+@
+
+One or more block per farm.
 
 \newpage
 
