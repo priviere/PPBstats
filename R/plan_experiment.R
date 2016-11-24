@@ -8,7 +8,7 @@
 #' 
 #' @param nb.entries Number of entries
 #' 
-#' @param nb.controls.per.block Number of controls.
+#' @param nb.controls.per.block Number of controls per blocks.
 #' 
 #' @param nb.blocks Number of blocks
 #' 
@@ -17,12 +17,12 @@
 #' @return 
 #' The function returns a list with
 #' \itemize{
-#'  \item A data frame with X, Y and block
+#'  \item A data frame with entries, block, X, Y
 #'  \item A picture of the experimental plan
 #'  }
 #' 
 #' @details 
-#' Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns.
+#' Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns or rows.
 #' 
 #' @author Pierre Riviere
 #' 
@@ -133,46 +133,69 @@ plan_experiment = function(
           m[i,col_with_e] = sample(r[e])
         }
         
-        
         if( nlevels(dtmp$X) <= nlevels(dtmp$Y)){ m = m } else { m = t(m) }
-
-        # Sample the columns
-        m2 = m[,sample(c(1:ncol(m)))]
-        if(is.vector(m2)){ m2 = matrix(m2, nrow = nrow(m))}
-        colnames(m2) = sort(colnames(m))
-        rownames(m2) = rownames(m)
-        m = m2
         
-        # Sample the rows
-        if( expe.type != "satellite-farm" ){
-          m2 = m[sample(c(1:nrow(m))),]
+        # Sample columns and rows
+        sample_col_row = function(m, expe.type){
+          # Sample the columns
+          m2 = m[,sample(c(1:ncol(m)))]
           if(is.vector(m2)){ m2 = matrix(m2, nrow = nrow(m))}
           colnames(m2) = sort(colnames(m))
           rownames(m2) = rownames(m)
           m = m2
           
-          # Check number of controls in col and row
-          fun_test = function(x){
-            a = grep("control", x)
-            if(length(a)==0){t=0}else{t=1}
-            return(t)
+          # Sample the rows
+          if( expe.type != "satellite-farm" ){
+            m2 = m[sample(c(1:nrow(m))),]
+            if(is.vector(m2)){ m2 = matrix(m2, nrow = nrow(m))}
+            colnames(m2) = sort(colnames(m))
+            rownames(m2) = rownames(m)
+            m = m2
           }
-          test_col = which(apply(m, 2, fun_test) == 0)
-          test_row = which(apply(m, 1, fun_test) == 0)
-          
-          mess_col = paste("Controls are missing in columns ", paste(test_col, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
-          mess_row = paste("Controls are missing in rows ", paste(test_row, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
-          
-          if( expe.type == "regional-farm" ){
-            if( length(test_col) > 0 ){ warning(mess_col) }
-            if( length(test_row) > 0 ){ warning(mess_row) }
+        }
+        m = sample_col_row(m, expe.type)
+        
+        # Check controls do not touch each other
+        check_controls = function(m){
+          test = c()
+          for(i in 1:(nrow(m)-1)){
+            for(j in 1:ncol(m)){
+              if(m[i,j] == m[i+1,j]){ test = c(test, TRUE) } else { test = c(test, FALSE) }
+            }
           }
-          
-          if( expe.type == "row-column" ){
-            if( length(test_col) > 0 ){ stop(mess_col) }
-            if( length(test_row) > 0 ){ stop(mess_row) }
+          for(j in 1:(ncol(m)-1)){
+            for(i in 1:nrow(m)){
+              if(m[i,j] == m[i,j+1]){ test = c(test, TRUE) } else { test = c(test, FALSE) }
+            }
           }
+          go = length(which(test))>0
+          return(go)
+        }
+        
+        i = 1
+        while(check_controls(m)& i < 1000){ m = sample_col_row(m, expe.type); i = i +1 }
+
           
+        # Check number of controls in col and row
+        fun_test = function(x){
+          a = grep("control", x)
+          if(length(a)==0){t=0}else{t=1}
+          return(t)
+        }
+        test_col = which(apply(m, 2, fun_test) == 0)
+        test_row = which(apply(m, 1, fun_test) == 0)
+          
+        mess_col = paste("Controls are missing in columns ", paste(test_col, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
+        mess_row = paste("Controls are missing in rows ", paste(test_row, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
+          
+        if( expe.type == "regional-farm" ){
+          if( length(test_col) > 0 ){ warning(mess_col) }
+          if( length(test_row) > 0 ){ warning(mess_row) }
+        }
+          
+        if( expe.type == "row-column" ){
+          if( length(test_col) > 0 ){ stop(mess_col) }
+          if( length(test_row) > 0 ){ stop(mess_row) }
         }
         
         dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
@@ -197,22 +220,33 @@ plan_experiment = function(
       color_text[w] = "black"
       color_text[b] = "white"
       
-      p = ggplot(d, aes(x = X, y = Y, label = entries)) + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
+      a = tapply(as.numeric(d$X), d$block, min) - 0.5
+      d$xmin = a[d$block]
+      a = tapply(as.numeric(d$X), d$block, max) + 0.5
+      d$xmax = a[d$block]
+      a = tapply(as.numeric(d$Y), d$block, min) - 0.45
+      d$ymin = a[d$block]
+      a = tapply(as.numeric(d$Y), d$block, max) + 0.45
+      d$ymax = a[d$block]
+      
+      p = ggplot(data = d, aes(x = X, y = Y, label = entries))
+      p = p + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
+      p = p + geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, color = block), fill = NA, size = 1)
       
       return(p)        
     }
     
     
-    # 3. Cumpute for different expe.type ----------
+    # 3. Compute for different expe.type ----------
     
     OUT = NULL
     
     # 3.1. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
       if(nb.entries > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 entries. With more than 10 entries, go for expe.type == \"regional-farm\".") }
-      if(nb.controls.per.block!=1){nb.controls.per.block = 1; message("nb.controls.per.block = 1 with expe.type == \"satellite-farm\".")}
-      if(nb.blocks != 1){nb.blocks = 1; message("nb.blocks = 1 with expe.type == \"satellite-farm\".")}
-      if(nb.cols > 2){nb.cols = 2; message("nb.cols = 2 with expe.type == \"satellite-farm\".")}
+      if(nb.controls.per.block!=2){stop("nb.controls.per.block = 2 with expe.type == \"satellite-farm\".")}
+      if(nb.blocks != 1){stop("nb.blocks = 1 with expe.type == \"satellite-farm\".")}
+      if(nb.cols > 2){stop("nb.cols = 1 or 2 with expe.type == \"satellite-farm\".")}
       
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
@@ -250,7 +284,26 @@ plan_experiment = function(
     
     
     # 3.5. expe.type == "IBD" ----------
-    
+    if( expe.type == "IBD" ) {
+      d = ibd(v = nb.entries, b = nb.blocks, k = nb.cols)$design
+      if( is.null(nrow(d)) ){ stop("Design not found") }
+
+      d = data.frame(
+        entries = as.vector(d), 
+        block = rep(c(1:nrow(d)), times = ncol(d)),
+        X = rep(LETTERS[1:ncol(d)], each = nrow(d)),
+        Y = rep(c(1:nrow(d)), times = ncol(d))
+      )
+      d$entries = as.factor(d$entries)
+      d$block = as.factor(d$block)
+      d$X = as.factor(d$X)
+      d$Y = as.factor(d$Y)
+      
+      p = get_ggplot_plan(d)
+      
+      out = list("data.frame" = d, "plan" = p)
+      out = list("IBD" = out); OUT = c(OUT, out)
+    }
      
     return(OUT)
     }
