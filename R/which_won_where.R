@@ -36,7 +36,7 @@ which_won_where = function(res.pca, p){
   colnames(per_line) = c("x1", "y1", "x2", "y2")
   
   p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), color = "red", data = per_line)
-  p = p +coord_cartesian(xlim, ylim) # come back to the right scale
+  p = p + coord_cartesian(xlim, ylim) # come back to the right scale
   
   # Get ind and var for each sector that has the largest values (the winner) among all entries
   get_sector = function(ind, per_line){
