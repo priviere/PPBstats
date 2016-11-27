@@ -2,6 +2,9 @@
 
 which_won_where = function(res.pca, p){
   
+  xlim = ggplot_build(p)$layout$panel_ranges[[1]]$x.range
+  ylim = ggplot_build(p)$layout$panel_ranges[[1]]$y.range
+  
   chull_obj = as.data.frame(res.pca$ind$coord)
   chull_obj = chull_obj[chull(x = chull_obj$Dim.1, y = chull_obj$Dim.2),]
   chull_obj$x2 = c(chull_obj$Dim.1[nrow(chull_obj)], chull_obj$Dim.1[1:(nrow(chull_obj)-1)])
@@ -24,26 +27,16 @@ which_won_where = function(res.pca, p){
     x4 = x1 + u * px
     y4 = y1 + u * py
     
-    # Intersection of segments in order to fit the polygon from chull()
-    # https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
-    # A creuser 
-    #test = sp::point.in.polygon(x4, y4, chull_obj$Dim.1, chull_obj$Dim.2)
-    #print(test)
-    #if( i > 1 & test == 1){
-    #  x1 = chull_obj$Dim.1[i-1]
-    #  x2 = chull_obj$x2[i-1]
-    #  y1 = chull_obj$Dim.2[i-1]
-    #  y2 = chull_obj$y2[i-1]
-    #  x3 = y3 = 0
-    #  x4 = ((x1*y2 - y1*x2)*(x3-x4) - (x1-x2)*(x3*y4 - y3*x4)) / ((x1-x2)*(y3-y4) - (y1-y2)*(x3-x4))
-    #  y4 = ((x1*y2 - y1*x2)*(y3-y4) - (y1-y2)*(x3*y4 - y3*x4)) / ((x1-x2)*(y3-y4) - (y1-y2)*(x3-x4))
-    #}
-    
+    # to make the segment longer
+    y4 = y4/x4 * x4*2
+    x4 = x4*2
+
     per_line = rbind.data.frame(per_line, c(x1 = 0, y1 = 0, x2 = x4, y2 = y4))
   }
   colnames(per_line) = c("x1", "y1", "x2", "y2")
   
   p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), color = "red", data = per_line)
+  p = p +coord_cartesian(xlim, ylim) # come back to the right scale
   
   # Get ind and var for each sector that has the largest values (the winner) among all entries
   get_sector = function(ind, per_line){
@@ -65,12 +58,6 @@ which_won_where = function(res.pca, p){
         y2 = per_line$y2[i]
         x3 = per_line$x3[i]
         y3 = per_line$y3[i]
-        
-        # to be sure to get all points, make the segment longer
-        y2 = y2/x2 * x2*2
-        x2 = x2*2
-        y3 = y3/x3 * x3*2
-        x3 = x3*2
         
         is.inside.sector = function(x, y, x1, y1, x2, y2, x3, y3){
           # resolve it with barycentric coordinates
