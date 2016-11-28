@@ -10,14 +10,15 @@ mean_vs_stability = function(res.pca){
   p = p + geom_abline(intercept = 0, slope = xymean$y2 / xymean$x2, color = "red") # add line that passes through the biplot origin and the average location
   p = p + geom_abline(intercept = 0, slope = - 1 / (xymean$y2 / xymean$x2), color = "red") # add line that is perpendicular to previous line and passes through 0
   
+  ind = filter(p$data, color == "black")
   per_line = data.frame()
-  for(i in 1:nrow(var)) {
+  for(i in 1:nrow(ind)) {
     x1 = 0
     x2 = xymean$x2
     y1 = 0
     y2 = xymean$y2
-    x3 = var$x[i]
-    y3 = var$y[i]
+    x3 = ind$x[i]
+    y3 = ind$y[i]
     
     obj = get_perpendicular_segment(x1, y1, x2, y2, x3, y3)
 
@@ -31,8 +32,8 @@ mean_vs_stability = function(res.pca){
   if( slope > 0 ){ per_line = arrange(per_line, -score) } else { per_line = arrange(per_line, score) }
   per_line$rank = c(1:nrow(per_line))
 
-  colnames(var)[2:3] = c("x1", "y1")
-  a = join(var, per_line, by = "x1")[c("label", "score")]
+  colnames(ind)[2:3] = c("x1", "y1")
+  a = join(ind, per_line, by = "x1")[c("label", "score")]
   if( slope > 0 ){ a = arrange(a, -score) } else { a = a(per_line, score) }
   
   vec_rank = as.character(paste("Ranking of germplasms: \n", paste(a$label, collapse = " > "), sep = ""))
