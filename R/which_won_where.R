@@ -21,23 +21,15 @@ which_won_where = function(res.pca){
     y2 = chull_obj$y2[i]
     x3 = y3 = 0
     
-    obj = get_perpendicular_segment(x1, y1, x2, y2, x3, y3)
-    x1 = obj["x1"]
-    y1 = obj["y1"]
-    x2 = obj["x2"]
-    y2 = obj["y2"]
-      
-    # to make the segment longer
-    y2 = y2/x2 * x2*2
-    x2 = x2*2
-      
-    per_line = rbind.data.frame(per_line, c(x1 = 0, y1 = 0, x2 = x2, y2 = y2))
+    obj = get_perpendicular_segment(x1, y1, x2, y2, x3, y3, TRUE)
+
+    per_line = rbind.data.frame(per_line, obj)
   }
   colnames(per_line) = c("x1", "y1", "x2", "y2")
-  
+
   p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), color = "red", data = per_line, inherit.aes = FALSE)
   p = p + coord_cartesian(xlim, ylim) # come back to the right scale
-  
+  print(p)
   # Get ind and var for each sector that has the largest values (the winner) among all entries
   get_sector = function(ind, per_line){
     
@@ -46,7 +38,7 @@ which_won_where = function(res.pca){
     
     per_line$x3 = c(per_line$x2[nrow(per_line)], per_line$x2[1:(nrow(per_line)-1)])
     per_line$y3 = c(per_line$y2[nrow(per_line)], per_line$y2[1:(nrow(per_line)-1)])
-
+    
     for(j in 1:nrow(ind)){
       x = ind[j, "Dim.1"]
       y = ind[j, "Dim.2"]
@@ -79,6 +71,7 @@ which_won_where = function(res.pca){
           test = s > 0 & t > 0 & (1-s-t) > 0
           return(test)
         }
+        
         if( is.inside.sector(x, y, x1, y1, x2, y2, x3, y3) ) { ind[j, "sector"] = i }
       }
     }
