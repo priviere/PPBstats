@@ -57,3 +57,15 @@ get_biplot = function(res.pca){
   return(p)
 }
 
+get_perpendicular_segment = function(x1, y1, x2, y2, x3, y3){
+  # following formulas thanks to jdbertron cf http://stackoverflow.com/questions/10301001/perpendicular-on-a-line-segment-from-a-given-point
+  px = x2-x1
+  py = y2-y1
+  dAB = px*px + py*py
+  u = ((x3 - x1) * px + (y3 - y1) * py) / dAB
+  x4 = x1 + u * px
+  y4 = y1 + u * py
+  
+  return(c(x1 = x1, y1 = y1, x2 = x4, y2 = y4))
+}
+

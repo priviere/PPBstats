@@ -19,14 +19,9 @@ mean_vs_stability = function(res.pca){
     x3 = var$x[i]
     y3 = var$y[i]
     
-    # following formulas thanks to jdbertron cf http://stackoverflow.com/questions/10301001/perpendicular-on-a-line-segment-from-a-given-point
-    px = x2-x1
-    py = y2-y1
-    dAB = px*px + py*py
-    u = ((x3 - x1) * px + (y3 - y1) * py) / dAB
-    x4 = x1 + u * px
-    y4 = y1 + u * py
-    per_line = rbind.data.frame(per_line, c(x1 = x3, y1 = y3, x2 = x4, y2 = y4))
+    obj = get_perpendicular_segment(x1, y1, x2, y2, x3, y3)
+
+    per_line = rbind.data.frame(per_line, obj)
   }
   colnames(per_line) = c("x1", "y1", "x2", "y2")
   
