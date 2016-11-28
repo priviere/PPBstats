@@ -19,21 +19,19 @@ which_won_where = function(res.pca){
     x2 = chull_obj$x2[i]
     y1 = chull_obj$Dim.2[i]
     y2 = chull_obj$y2[i]
-    
-    # following formulas thanks to jdbertron cf http://stackoverflow.com/questions/10301001/perpendicular-on-a-line-segment-from-a-given-point
-    px = x2-x1
-    py = y2-y1
-    dAB = px*px + py*py
     x3 = y3 = 0
-    u = ((x3 - x1) * px + (y3 - y1) * py) / dAB
-    x4 = x1 + u * px
-    y4 = y1 + u * py
     
+    obj = get_perpendicular_segment(x1, y1, x2, y2, x3, y3)
+    x1 = obj["x1"]
+    y1 = obj["y1"]
+    x2 = obj["x2"]
+    y2 = obj["y2"]
+      
     # to make the segment longer
-    y4 = y4/x4 * x4*2
-    x4 = x4*2
-
-    per_line = rbind.data.frame(per_line, c(x1 = 0, y1 = 0, x2 = x4, y2 = y4))
+    y2 = y2/x2 * x2*2
+    x2 = x2*2
+      
+    per_line = rbind.data.frame(per_line, c(x1 = 0, y1 = 0, x2 = x2, y2 = y2))
   }
   colnames(per_line) = c("x1", "y1", "x2", "y2")
   
