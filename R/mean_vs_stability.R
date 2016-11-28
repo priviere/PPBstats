@@ -34,9 +34,17 @@ mean_vs_stability = function(res.pca){
   # the arrow point the greater value (i.e. greater score)
   slope = xymean$y2 / xymean$x2
   if( slope > 0 ){ per_line = arrange(per_line, -score) } else { per_line = arrange(per_line, score) }
-  per_line$color_seg = c(1:nrow(per_line))
+  per_line$rank = c(1:nrow(per_line))
 
-  p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = color_seg), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
+  colnames(var)[2:3] = c("x1", "y1")
+  a = join(var, per_line, by = "x1")[c("label", "score")]
+  if( slope > 0 ){ a = arrange(a, -score) } else { a = a(per_line, score) }
+  
+  # To continue
+  # env and germ inversés !!!
+  print(as.character(paste("Ranking of germplasms:", paste(a$label, collapse = " > "))))
+  
+  p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = rank), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
   p = p + ggtitle("Mean vs stability")
   
