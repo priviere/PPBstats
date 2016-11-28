@@ -99,6 +99,7 @@ which_won_where = function(res.pca){
     winner = rbind.data.frame(winner, info)
   }
   colnames(winner) = c("x", "y", "sector")
+  winner$sector = c(1:nrow(winner))
   winner$sector = as.factor(winner$sector)
 
   p = p + geom_point(data = winner, aes(x = x, y = y, color = sector), inherit.aes = FALSE)
