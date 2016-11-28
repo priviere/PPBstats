@@ -1,7 +1,9 @@
 # p + coord_fixed() # to see it is really perpendicular !!!
 
-which_won_where = function(res.pca, p){
+which_won_where = function(res.pca){
   
+  p = get_biplot(res.pca)
+
   xlim = ggplot_build(p)$layout$panel_ranges[[1]]$x.range
   ylim = ggplot_build(p)$layout$panel_ranges[[1]]$y.range
   
@@ -9,7 +11,7 @@ which_won_where = function(res.pca, p){
   chull_obj = chull_obj[chull(x = chull_obj$Dim.1, y = chull_obj$Dim.2),]
   chull_obj$x2 = c(chull_obj$Dim.1[nrow(chull_obj)], chull_obj$Dim.1[1:(nrow(chull_obj)-1)])
   chull_obj$y2 = c(chull_obj$Dim.2[nrow(chull_obj)], chull_obj$Dim.2[1:(nrow(chull_obj)-1)])
-  p = p +  geom_segment(aes(x = Dim.1, y = Dim.2, xend = x2, yend = y2), data = chull_obj)
+  p = p +  geom_segment(aes(x = Dim.1, y = Dim.2, xend = x2, yend = y2), data = chull_obj, inherit.aes = FALSE)
   
   per_line = data.frame()
   for(i in 1:nrow(chull_obj)) {
@@ -35,7 +37,7 @@ which_won_where = function(res.pca, p){
   }
   colnames(per_line) = c("x1", "y1", "x2", "y2")
   
-  p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), color = "red", data = per_line)
+  p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), color = "red", data = per_line, inherit.aes = FALSE)
   p = p + coord_cartesian(xlim, ylim) # come back to the right scale
   
   # Get ind and var for each sector that has the largest values (the winner) among all entries
@@ -108,7 +110,7 @@ which_won_where = function(res.pca, p){
   colnames(winner) = c("x", "y", "sector")
   winner$sector = as.factor(winner$sector)
 
-  p = p + geom_point(data = winner, aes(x = x, y = y, color = sector))
+  p = p + geom_point(data = winner, aes(x = x, y = y, color = sector), inherit.aes = FALSE)
   p = p + ggtitle("which won where")
     
   return(p)
