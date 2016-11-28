@@ -9,4 +9,5 @@ discrimitiveness_vs_representativeness = function(res.pca){
   d = data.frame(x1 = 0, y1 = 0, x2 = var$x, y2 = var$y)
   p = p + geom_segment(data = d, aes(x = x1, y = y1, xend = x2, yend = y2), linetype = 2, inherit.aes = FALSE)
   p = p + ggtitle("discrimitiveness vs representativeness")
+  return(p)
 }
