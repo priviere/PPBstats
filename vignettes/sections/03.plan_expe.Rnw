@@ -40,7 +40,7 @@ Family & Name & Section &
 \rotatebox{90}{interaction effects} &
 \rotatebox{90}{year effects} &
 \rotatebox{90}{migrant-resident effects} & 
-\rotatebox{90}{version effects} &
+\rotatebox{90}{version effects}
 \\
 \hline
 1 & Anova & \ref{anova} & X & & & & & & \\
