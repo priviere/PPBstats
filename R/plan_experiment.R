@@ -151,7 +151,7 @@ plan_experiment = function(
           colnames(m2) = sort(colnames(m))
           rownames(m2) = rownames(m)
           m = m2
-          
+
           # Sample the rows
           if( expe.type != "satellite-farm" ){
             m2 = m[sample(c(1:nrow(m))),]
@@ -160,9 +160,11 @@ plan_experiment = function(
             rownames(m2) = rownames(m)
             m = m2
           }
+          
+          return(m)
         }
         m = sample_col_row(m, expe.type)
-        
+
         # Check controls do not touch each other
         check_controls = function(m){
           test = c()
@@ -191,22 +193,29 @@ plan_experiment = function(
           if(length(a)==0){t=0}else{t=1}
           return(t)
         }
-        test_col = which(apply(m, 2, fun_test) == 0)
-        test_row = which(apply(m, 1, fun_test) == 0)
+        
+        if( expe.type == "regional-farm" | expe.type == "row-column" ){
+          test_col = which(apply(m, 2, fun_test) == 0)
+          test_row = which(apply(m, 1, fun_test) == 0)
+          mess_col = paste("Controls are missing in columns ", paste(test_col, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
+          mess_row = paste("Controls are missing in rows ", paste(test_row, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
+        }
           
-        mess_col = paste("Controls are missing in columns ", paste(test_col, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
-        mess_row = paste("Controls are missing in rows ", paste(test_row, collapse = ","), ". You can rise nb.controls.per.block.", sep = "")
           
         if( expe.type == "regional-farm" ){
+          test_col = which(apply(m, 2, fun_test) == 0)
+          test_row = which(apply(m, 1, fun_test) == 0)
           if( length(test_col) > 0 ){ warning(mess_col) }
           if( length(test_row) > 0 ){ warning(mess_row) }
         }
           
         if( expe.type == "row-column" ){
+          test_col = which(apply(m, 2, fun_test) == 0)
+          test_row = which(apply(m, 1, fun_test) == 0)
           if( length(test_col) > 0 ){ stop(mess_col) }
           if( length(test_row) > 0 ){ stop(mess_row) }
         }
-        
+
         dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
         
         dok = rbind.data.frame(dok, dtmp)
