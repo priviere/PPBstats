@@ -44,9 +44,11 @@ plan_experiment = function(
       entries = paste("entry-", c(1:nb.entries), sep = "")
       entries = sample(entries, length(entries), replace = FALSE)
       
+      vec_XXX = c(1:nb.entries)
+      
       if( expe.type == "row-column" | expe.type == "satellite-farm" | expe.type == "regional-farm" ) {
         test = ceiling(nb.entries / nb.blocks) * nb.blocks
-        if( test > nb.entries ) { entries = c(entries, rep("XXX", times = (test - nb.entries))) }
+        if( test > nb.entries ) { entries = c(entries, paste(rep("XXX", times = (test - nb.entries)), vec_XXX[1:(test - nb.entries)] , sep = "-") ); vec_XXX = vec_XXX[-c(1:(test - nb.entries))] }
         l = split(entries, (1:nb.blocks))
       }
       
@@ -73,7 +75,7 @@ plan_experiment = function(
         nb.rows = ceiling(length(entries) / nb.cols)
         X = rep(vec_X[1:nb.cols], each = nb.rows)
         Y = rep(vec_Y[c(1:nb.rows)], times = nb.cols); vec_Y = vec_Y[-c(1:nb.rows)]
-        if( length(X) > length(entries) ) { entries = c(entries, rep("XXX", times = length(X) - length(entries)))}
+        if( length(X) > length(entries) ) { entries = c(entries, paste(rep("XXX", times = (length(X) - length(entries))), vec_XXX[1:(length(X) - length(entries))] , sep = "-") ) }
         block = rep(i, length(X))
         d = rbind.data.frame(d, cbind.data.frame(entries, block, X, Y))
       }
@@ -291,7 +293,26 @@ plan_experiment = function(
     if( expe.type == "fully-replicated" ) {
       nb.controls.per.block = NULL # not use
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
-      d = d # arrange randomisation to do 
+      d = d 
+      
+      # arrange randomisation to do 
+      #d1 = droplevels(filter(d, block == 1))
+      #d2 = droplevels(filter(d, block == 2))
+      
+      #entries_tmp = entries
+      #E = NULL
+      
+      #for(i in 1:nrow(d2)){
+      #  e = d2[i, "entries"]
+      #  x = d2[i, "X"]
+      #  y = d2[i, "Y"]
+        
+      #  test = is.element(e, filter(d1, X == x)$entries)
+      #  while(test){ e = sample(entries_tmp, 1) ; test = is.element(e, filter(d1, X == x)$entries) }
+      #  entries_tmp = entries_tmp[-which(entries_tmp == e)]
+      #  E = c(E, e)
+      #}
+      
       p = get_ggplot_plan(d)
       
       out = list("data.frame" = d, "plan" = p)
