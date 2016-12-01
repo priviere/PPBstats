@@ -76,7 +76,7 @@
 #'  }
 #' 
 #' @author 
-#' Jonathan Locqueville, Maxime Garnault and Pierre Riviere
+#' Pierre Riviere
 #' 
 AMMI = function(
   data, 
