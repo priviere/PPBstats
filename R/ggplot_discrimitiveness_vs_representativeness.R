@@ -1,4 +1,4 @@
-discrimitiveness_vs_representativeness = function(res.pca){
+ggplot_discrimitiveness_vs_representativeness = function(res.pca){
 
   p = get_biplot(res.pca)
   
