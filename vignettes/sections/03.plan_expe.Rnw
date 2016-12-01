@@ -122,7 +122,19 @@ case & number of locations & number of years & comments regarding entries replic
 
 \subsubsection{Case 1}
 <<message=TRUE,cache=FALSE>>=
-plan_experiment()
+p_fr = plan_experiment(
+  expe.type = "fully-replicated", 
+  nb.entries = 20, 
+  nb.blocks = 3, 
+  nb.cols = 4)
+@
+
+<<message=TRUE,cache=FALSE>>=
+head(p_fr$"fully-replicated"$data.frame)
+@
+
+<<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
+p_fr$"fully-replicated"$plan
 @
 
 \subsubsection{Case 2}
