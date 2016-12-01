@@ -36,7 +36,7 @@ plan_experiment = function(
   # let's go !!! ----------
   {
     # 1. Error message ----------  
-    if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-repicated\" or \"IBD\".") }
+    if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
     
     # 2. Functions used in the code ----------  
     
@@ -44,10 +44,16 @@ plan_experiment = function(
       entries = paste("entry-", c(1:nb.entries), sep = "")
       entries = sample(entries, length(entries), replace = FALSE)
       
-      test = ceiling(nb.entries / nb.blocks) * nb.blocks
-      if( test > nb.entries ) { entries = c(entries, rep("XXX", times = (test - nb.entries))) }
+      if( expe.type == "row-column" | expe.type == "satellite-farm" | expe.type == "regional-farm" ) {
+        test = ceiling(nb.entries / nb.blocks) * nb.blocks
+        if( test > nb.entries ) { entries = c(entries, rep("XXX", times = (test - nb.entries))) }
+        l = split(entries, (1:nb.blocks))
+      }
       
-      l = split(entries, (1:nb.blocks))
+      if( expe.type == "fully-replicated" ) {
+        l = rep(list(entries), nb.blocks)
+      }
+        
       
       if( expe.type == "row-column" | expe.type == "satellite-farm") {
         l = lapply(l, function(x){c(x, rep("control", times = nb.controls.per.block))})  
@@ -281,14 +287,24 @@ plan_experiment = function(
     }
     
     
-    # 3.4. expe.type == "fully-repicated" ----------
+    # 3.4. expe.type == "fully-replicated" ----------
+    if( expe.type == "fully-replicated" ) {
+      nb.controls.per.block = NULL # not use
+      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
+      d = d # arrange randomisation to do 
+      p = get_ggplot_plan(d)
+      
+      out = list("data.frame" = d, "plan" = p)
+      out = list("fully-replicated" = out); OUT = c(OUT, out)
+      
+    }
     
     
     # 3.5. expe.type == "IBD" ----------
     if( expe.type == "IBD" ) {
       d = ibd(v = nb.entries, b = nb.blocks, k = nb.cols)$design
       if( is.null(nrow(d)) ){ stop("Design not found") }
-
+      
       d = data.frame(
         entries = as.vector(d), 
         block = rep(c(1:nrow(d)), times = ncol(d)),
