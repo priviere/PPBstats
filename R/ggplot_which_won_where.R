@@ -1,6 +1,4 @@
-# p + coord_fixed() # to see it is really perpendicular !!!
-
-which_won_where = function(res.pca){
+ggplot_which_won_where = function(res.pca){
   
   p = get_biplot(res.pca)
 

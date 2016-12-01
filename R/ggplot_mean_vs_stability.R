@@ -1,4 +1,4 @@
-mean_vs_stability = function(res.pca){
+ggplot_mean_vs_stability = function(res.pca){
   
   p = get_biplot(res.pca)
   
