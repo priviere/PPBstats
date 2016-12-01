@@ -293,31 +293,34 @@ plan_experiment = function(
     if( expe.type == "fully-replicated" ) {
       nb.controls.per.block = NULL # not use
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
-      d = d 
       
-      # arrange randomisation to do 
-      #d1 = droplevels(filter(d, block == 1))
-      #d2 = droplevels(filter(d, block == 2))
-      
-      #entries_tmp = entries
-      #E = NULL
-      
-      #for(i in 1:nrow(d2)){
-      #  e = d2[i, "entries"]
-      #  x = d2[i, "X"]
-      #  y = d2[i, "Y"]
+      # arrange randomisation
+      vec_block = sort(unique(d$block))
+
+      for(b in 2:length(vec_block)){
         
-      #  test = is.element(e, filter(d1, X == x)$entries)
-      #  while(test){ e = sample(entries_tmp, 1) ; test = is.element(e, filter(d1, X == x)$entries) }
-      #  entries_tmp = entries_tmp[-which(entries_tmp == e)]
-      #  E = c(E, e)
-      #}
+        d1 = droplevels(filter(d, block %in% vec_block[1:(b-1)]))
+        entries_tmp = unique(as.character(d1$entries))
+        
+        d2 = droplevels(filter(d, block == vec_block[b]))
+        
+        E = NULL
+        for(i in 1:nrow(d2)){
+          e = d2[i, "entries"]
+          x = d2[i, "X"]
+          y = d2[i, "Y"]
+          test = is.element(e, filter(d1, X == x)$entries); ii = 0
+          while(test & ii < 100 ){ e = sample(entries_tmp, 1) ; test = is.element(e, filter(d1, X == x)$entries); ii = ii + 1 }
+          entries_tmp = entries_tmp[-which(entries_tmp == e)]
+          E = c(E, e)
+        }
+        d[which(d$block == vec_block[b]), "entries"] = E
+      }
       
       p = get_ggplot_plan(d)
       
       out = list("data.frame" = d, "plan" = p)
       out = list("fully-replicated" = out); OUT = c(OUT, out)
-      
     }
     
     
