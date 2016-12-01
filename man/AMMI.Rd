@@ -83,6 +83,6 @@ The function returns two lists with
 See the vignette for more details on the AMMI model
 }
 \author{
-Jonathan Locqueville, Maxime Garnault and Pierre Riviere
+Pierre Riviere
 }
 
