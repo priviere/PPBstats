@@ -4,8 +4,6 @@ Title: An R package for statistical analysis of balanced and unbalanced trials i
 Version: 0.13
 Date: 2016-09-26
 Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
-    person("Jonathan", "Locqueville", role = "ctb"),
-    person("Maxime", "Garnault", role = "ctb"),
     person("Gaelle", "Van Franck", role = "ctb"),
     person("Olivier", "David", role = "ctb")
     )
