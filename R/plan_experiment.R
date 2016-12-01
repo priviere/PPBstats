@@ -59,7 +59,7 @@
 #'  }
 #'  \item "IBD"
 #' the randomization is based on the ibd function in the ibd package. See ?ibd for more information
-#' 
+#' }
 #' @author Pierre Riviere
 #' 
 plan_experiment = function(
