@@ -23,6 +23,42 @@
 #' 
 #' @details 
 #' Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns or rows.
+#' The algoritms are the following:
+#' \itemize{
+#'  \item "satellite-farm"
+#'  \enumerate{
+#'	 \item randomize the entries
+#'   \item get the data frame with one block, two columns and one control in each column
+#'	 \item randomize the columns
+#'  }
+#'  \item "regional-farm"
+#'  \enumerate{
+#'	 \item randomize the entries
+#'   \item get the data frame with blocks, columns and controls in each block
+#'   \item arrange at least one control per row
+#'   \item for each row, put control in different column
+#'   \item randomize rows and columns
+#'   \item check that controls do not touch each other
+#'   \item check number of controls in col and row and send a warning message if control are missing in rows or columns
+#'  }
+#'  \item "row-column"
+#'  \enumerate{
+#'	 \item randomize the entries
+#'   \item get the data frame with blocks, columns and controls in each block
+#'   \item arrange at least one control per row
+#'   \item for each row, put control in different column
+#'   \item randomize rows and columns
+#'   \item check that controls do not touch each other
+#'   \item check number of controls in col and row and send a stop message if control are missing in rows or columns
+#'  }
+#'  \item "fully-repicated"
+#'  \enumerate{
+#'	 \item randomize the entries
+#'   \item get the data frame with blocks, columns and entries in each block
+#'   \item arrange randomization so that no entries can be in the same column between blocks
+#'  }
+#'  \item "IBD"
+#' the randomization is based on the ibd function in the ibd package. See ?ibd for more information
 #' 
 #' @author Pierre Riviere
 #' 
