@@ -172,10 +172,11 @@ plan_experiment = function(
           return(go)
         }
         
-        i = 1
-        while(check_controls(m)& i < 1000){ m = sample_col_row(m, expe.type); i = i +1 }
-
-          
+        if( expe.type != "satellite-farm" ){
+          i = 1
+          while(check_controls(m)& i < 1000){ m = sample_col_row(m, expe.type); i = i +1 }
+        }
+        
         # Check number of controls in col and row
         fun_test = function(x){
           a = grep("control", x)
