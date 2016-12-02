@@ -133,8 +133,10 @@ library(PPBstats)
 @
 and download from internet the data used in this vignette (this is useful to earn lots of time!) :
 
-<<message=TRUE,cache=FALSE>>=
+<<message=FALSE,cache=FALSE>>=
 get.PPBstats.data()
+# |======================================================================================| 100%
+# You can now load the data, for example load("./data_PPBstats/out1.Rdata").
 @
 
 
