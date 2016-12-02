@@ -14,10 +14,28 @@
 get.PPBstats.data = function()
   # let's go !!! ---------- 
 {
+  # function from Kay Cichini
+  # https://www.r-bloggers.com/download-files-from-dropbox-programmatically-with-r/
+  dl_from_dropbox <- function(x, key) {
+    bin <- getBinaryURL(paste0("https://dl.dropboxusercontent.com/s/", key, "/", x), ssl.verifypeer = FALSE)
+    con <- file(x, open = "wb")
+    writeBin(bin, con)
+    close(con)
+  }
+  
   system(paste("mkdir ", "data_PPBstats"))
-  path_in = paste(getwd(), "/data_PPBstats/", sep = "")
-  path_out = "https://www.dropbox.com/sh/6qvl515k5484zg4/AADZKkaM2XZvmr9e6l5aWxN2a?dl=0"
-  download.file(url = path_out, destfile = path_in)
+  vec_files = c("comp.mu.RData", "out1.RData", "out.cv.RData", "out.model1.RData", "out.model2_y1.RData", "out.model2_y3.RData", "out1_bis.RData", "out2.RData", "out.model1_bis.RData", "out.model2.RData", "out.model2_y2.RData", "out.predict.the.past.RData")
+  
+  setwd("data_PPBstats")
+  
+  pb <- txtProgressBar(min = 0, max = length(vec_files), style = 3)
+  for(i in c(1:length(vec_files))){
+    dl_from_dropbox(vec_files[i], "6qvl515k5484zg4")  
+    setTxtProgressBar(pb, i)
+  }
+  close(pb)
+  setwd("../")
+
   message("The data are downloaded in ", path_in, "\nYou can now load the data, for example load(\"./data_PPBstats/out1.Rdata\").")
 }
 
