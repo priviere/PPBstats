@@ -23,7 +23,9 @@ Depends:
     parallel,
     agricolae,
     factoextra,
-    ibd
+    ibd,
+    RCurl,
+    bitops
 Suggests: 
     ggmcmc,
     GGEBiplotGUI,
