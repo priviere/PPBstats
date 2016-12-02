@@ -88,6 +88,7 @@ The key elements to choose an appropriate experimental designs are:
 \item A picture of the experimental plan
 \end{itemize} 
 
+\noindent A description of the algorithme is describe in the help of the function: \texttt{?plan\_experiment}.
 
 \noindent Table \ref{cases_expe} summarize the different experimental design regarding analysis.
 
