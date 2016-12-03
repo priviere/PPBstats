@@ -4,7 +4,10 @@ PPBstats 0.13 ---------------------------------------
   - describe_data.R
   - extra_functions.R
   - plan_experiment.R
-  - which_won_where.R
+  - ggplot_which_won_where.R
+  - ggplot_mean_vs_stability.R
+  - ggplot_discrimitiveness_vs_representativeness.R
+
 
 * vignette
   - refactor the code
