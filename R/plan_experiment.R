@@ -15,11 +15,13 @@
 #' @param nb.blocks Number of blocks
 #' 
 #' @param nb.cols Number of columns in the design. The number of rows is computed automaticaly
+#' 
+#' @param return.format "standard" (entries, block, X, Y) or "shinemas" for SHiNeMaS reproduction template file
 #'
 #' @return 
 #' The function returns a list with
 #' \itemize{
-#'  \item A data frame with entries, block, X, Y, statut
+#'  \item A data frame according to return.format
 #'  \item A picture of the experimental plan
 #'  }
 #' 
@@ -70,13 +72,15 @@ plan_experiment = function(
   controls,
   nb.controls.per.block,
   nb.blocks,
-  nb.cols
+  nb.cols,
+  return.format = "standard"
 )
   # let's go !!! ----------
   {
     # 1. Error message ----------  
     if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
-    
+    if(!is.element(format.data, c("standard", "shinemas"))) { stop("format.data must be either \"standard\" or \"shinemas\".") }
+
     nb.entries= length(entries)
 
     # 2. Functions used in the code ----------  
@@ -310,6 +314,30 @@ plan_experiment = function(
     }
     
     
+    format_data = function(d, return.format){
+      if( return.format == "standard" ) { 
+        d = dplyr::select(d,-statut)
+      }
+      
+      if( return.format == "shinemas" ) { 
+        d = data.frame(
+          project = "",
+          sown_year = "",
+          harvested_year = "",
+          id_seed_lot_sown = d$entries,
+          intra_selection_name = "",
+          etiquette = "",
+          split = "",
+          quantity_sown = "",
+          quantity_harvested = "",
+          block = d$block,
+          X	= d$X,
+          Y = d$Y
+        )
+        
+        }
+    }
+    
     # 3. Compute for different expe.type ----------
     
     OUT = NULL
@@ -348,6 +376,7 @@ plan_experiment = function(
       d = place_controls(d, expe.type)
       d = rename_d(d, entries, controls)
       p = get_ggplot_plan(d)
+      d = format_data(d, return.format)
       
       out = list("data.frame" = d, "plan" = p)
       out = list("row-column" = out); OUT = c(OUT, out)
