@@ -19,7 +19,7 @@
 #' @return 
 #' The function returns a list with
 #' \itemize{
-#'  \item A data frame with entries, block, X, Y
+#'  \item A data frame with entries, block, X, Y, statut
 #'  \item A picture of the experimental plan
 #'  }
 #' 
@@ -99,7 +99,7 @@ plan_experiment = function(
         
       
       if( expe.type == "row-column" | expe.type == "satellite-farm") {
-        l = lapply(l, function(x){c(x, rep("control", times = nb.controls.per.block))})  
+        l = lapply(l, function(x){c(x, rep("control-1", times = nb.controls.per.block))})  
       }
       
       if( expe.type == "regional-farm" ) {
@@ -126,6 +126,7 @@ plan_experiment = function(
       d$Y = as.factor(d$Y)
       return(d)
     }
+    
     
     place_controls = function(d, expe.type){
       dok = data.frame()
@@ -269,9 +270,22 @@ plan_experiment = function(
       return(dok)
     }
     
+    
+    rename_d = function(d, entries, controls){
+      XXX = paste("XXX", c(1:length(entries)), sep = "-")
+      names(XXX) = XXX
+      names(entries) = paste("entry", c(1:length(entries)), sep = "-")
+      names(controls) = paste("control", c(1:length(controls)), sep = "-")
+      ec = c(entries, XXX, controls)
+      d$statut = d$entries
+      d$entries = ec[as.character(d$entries)]
+      return(d)
+    }
+    
+    
     get_ggplot_plan = function(d){
-      color_till = rep("white", length(d$entries))
-      color_till[grep("control", d$entries)] = "black"
+      color_till = rep("white", length(d$statut))
+      color_till[grep("control", d$statut)] = "black"
       
       color_text = color_till
       b = which(color_till == "black")
@@ -332,6 +346,7 @@ plan_experiment = function(
     if( expe.type == "row-column" ) {
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
+      d = rename_d(d, entries, controls)
       p = get_ggplot_plan(d)
       
       out = list("data.frame" = d, "plan" = p)
