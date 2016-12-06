@@ -345,6 +345,7 @@ plan_experiment = function(
     # 3.1. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
       if(nb.entries > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 entries. With more than 10 entries, go for expe.type == \"regional-farm\".") }
+      if(length(controls) > 1){ stop("With expe.type == \"satellite-farm\", there can be only one control.") }
       if(nb.controls.per.block != 2){stop("nb.controls.per.block = 2 with expe.type == \"satellite-farm\".")}
       if(nb.blocks != 1){stop("nb.blocks = 1 with expe.type == \"satellite-farm\".")}
       if(nb.cols > 2){stop("nb.cols = 1 or 2 with expe.type == \"satellite-farm\".")}
