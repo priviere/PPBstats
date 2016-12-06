@@ -9,7 +9,7 @@
 #' @author Pierre Riviere
 #' 
 
-# Function use in describe_data.R
+# Function use in describe_data.R, GxE.R
 check_data_vec_variables = function(data, vec_variables){
   mess = "The following column are compulsory : c(\"year\", \"germplasm\", \"location\", \"block\", \"X\", \"Y\"."
   if(!is.element("year", colnames(data))) { stop(mess) }
