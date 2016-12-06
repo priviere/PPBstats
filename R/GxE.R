@@ -1,14 +1,16 @@
 # 0. help ----------
-#' Run AMMI model on a data set
+#' Run GxE model on a data set
 #'
 #' @description
-#' \code{AMMI} runs AMMI model on a data set and gives back results on germplasms, locations, years and GxE interactions effects
+#' \code{GxE} runs AMMI or GGE model on a data set and gives back results on germplasms, locations, years and GxE or G+GxE interactions effects
 #' 
 #' @param data data with at least the following columns: year, location, germplasm, block, X, Y
 #' 
 #' @param vec_variables vectors of variables to analyse
 #' 
-#' @details See the vignette for more details on the AMMI model
+#' @param gxe_analysis "AMMI" or "GGE"
+#' 
+#' @details See the vignette for more details on the models
 #' 
 #' @return 
 #' The function returns two lists with
@@ -49,24 +51,17 @@
 #'     \itemize{
 #'      \item "interaction_plot"
 #'      \item "ecovalence"
-#'      \item "PCA" being a list with 
-#'       \itemize{
-#'        \item "variation_dim"
-#'        \item "CP1-CP2" being a list with 
-#'         \itemize{
-#'          \item "ind"
-#'          \item "var"
-#'          }
-#'        \item "CP2-CP3" being a list with 
-#'         \itemize{
-#'          \item "ind"
-#'          \item "var"
-#'         }
-#'       }
-#'     }
-#'   }
+#'      \item PCA a list with
+#'      \itemize{
+#'       \item "variation_dim"
+#'       \item "which_won_where"
+#'       \item "mean_vs_stability"
+#'       \item "discrimitiveness_vs_representativeness"
+#'      }
+#'    }
+#'  }
 #'   
-#'  \item a post AMMI analysis with
+#'  \item a post GxE analysis with
 #'   \itemize{
 #'    \item "barplot_variation_repartition"
 #'    \item "PCA_G_effect"
