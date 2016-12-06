@@ -6,7 +6,11 @@
 #' 
 #' @param expe.type The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD".
 #' 
-#' @param entries Vector with the names of the entries
+#' @param location Name of the location
+#' 
+#' @param year Year of the exepriment
+#' 
+#' @param germplasm Vector with the names of the germplasm
 #' 
 #' @param controls Vector with names of controls
 #' 
@@ -16,7 +20,7 @@
 #' 
 #' @param nb.cols Number of columns in the design. The number of rows is computed automaticaly
 #' 
-#' @param return.format "standard" (entries, block, X, Y) or "shinemas" for SHiNeMaS reproduction template file
+#' @param return.format "standard" (germplasm, block, X, Y) or "shinemas" for SHiNeMaS reproduction template file
 #'
 #' @return 
 #' The function returns a list with
@@ -31,13 +35,13 @@
 #' \itemize{
 #'  \item "satellite-farm"
 #'  \enumerate{
-#'	 \item randomize the entries
+#'	 \item randomize the germplasm
 #'   \item get the data frame with one block, two columns and one control in each column
 #'	 \item randomize the columns
 #'  }
 #'  \item "regional-farm"
 #'  \enumerate{
-#'	 \item randomize the entries
+#'	 \item randomize the germplasm
 #'   \item get the data frame with blocks, columns and controls in each block
 #'   \item arrange at least one control per row
 #'   \item for each row, put control in different column
@@ -47,7 +51,7 @@
 #'  }
 #'  \item "row-column"
 #'  \enumerate{
-#'	 \item randomize the entries
+#'	 \item randomize the germplasm
 #'   \item get the data frame with blocks, columns and controls in each block
 #'   \item arrange at least one control per row
 #'   \item for each row, put control in different column
@@ -57,9 +61,9 @@
 #'  }
 #'  \item "fully-repicated"
 #'  \enumerate{
-#'	 \item randomize the entries
-#'   \item get the data frame with blocks, columns and entries in each block
-#'   \item arrange randomization so that no entries can be in the same column between blocks
+#'	 \item randomize the germplasm
+#'   \item get the data frame with blocks, columns and germplasm in each block
+#'   \item arrange randomization so that no germplasm can be in the same column between blocks
 #'  }
 #'  \item "IBD"
 #' the randomization is based on the ibd function in the ibd package. See ?ibd for more information
@@ -68,7 +72,9 @@
 #' 
 plan_experiment = function(
   expe.type,
-  entries,
+  location = "location",
+  year = "2016",
+  germplasm,
   controls,
   nb.controls.per.block,
   nb.blocks,
@@ -81,24 +87,24 @@ plan_experiment = function(
     if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
     if(!is.element(return.format, c("standard", "shinemas"))) { stop("format.data must be either \"standard\" or \"shinemas\".") }
 
-    nb.entries= length(entries)
+    nb.germplasm = length(germplasm)
 
     # 2. Functions used in the code ----------  
     
-    get_data.frame = function(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type) {
-      entries = paste("entry-", c(1:nb.entries), sep = "")
-      entries = sample(entries, length(entries), replace = FALSE)
+    get_data.frame = function(location, year, nb.germplasm, nb.blocks, nb.controls.per.block, nb.cols, expe.type) {
+      germplasm = paste("entry-", c(1:nb.germplasm), sep = "")
+      germplasm = sample(germplasm, length(germplasm), replace = FALSE)
       
-      vec_XXX = c(1:nb.entries)
+      vec_XXX = c(1:nb.germplasm)
       
       if( expe.type == "row-column" | expe.type == "satellite-farm" | expe.type == "regional-farm" ) {
-        test = ceiling(nb.entries / nb.blocks) * nb.blocks
-        if( test > nb.entries ) { entries = c(entries, paste(rep("XXX", times = (test - nb.entries)), vec_XXX[1:(test - nb.entries)] , sep = "-") ); vec_XXX = vec_XXX[-c(1:(test - nb.entries))] }
-        l = split(entries, (1:nb.blocks))
+        test = ceiling(nb.germplasm / nb.blocks) * nb.blocks
+        if( test > nb.germplasm ) { germplasm = c(germplasm, paste(rep("XXX", times = (test - nb.germplasm)), vec_XXX[1:(test - nb.germplasm)] , sep = "-") ); vec_XXX = vec_XXX[-c(1:(test - nb.germplasm))] }
+        l = split(germplasm, (1:nb.blocks))
       }
       
       if( expe.type == "fully-replicated" ) {
-        l = rep(list(entries), nb.blocks)
+        l = rep(list(germplasm), nb.blocks)
       }
         
       
@@ -113,33 +119,35 @@ plan_experiment = function(
       L = rep(LETTERS, times = 30)
       vec_X = c(LETTERS, paste(L, rep(c(1:(length(L)/26)), each = 26), sep = ""))
       
-      vec_Y = c(1:(nb.entries*2)) # to be ok, it is always less than nb.entries*2
+      vec_Y = c(1:(nb.germplasm*2)) # to be ok, it is always less than nb.germplasm*2
       d = data.frame()
       for(i in 1:length(l)){
-        entries = l[[i]]
-        nb.rows = ceiling(length(entries) / nb.cols)
+        germplasm = l[[i]]
+        nb.rows = ceiling(length(germplasm) / nb.cols)
         X = rep(vec_X[1:nb.cols], each = nb.rows)
         Y = rep(vec_Y[c(1:nb.rows)], times = nb.cols); vec_Y = vec_Y[-c(1:nb.rows)]
-        if( length(X) > length(entries) ) { entries = c(entries, paste(rep("XXX", times = (length(X) - length(entries))), vec_XXX[1:(length(X) - length(entries))] , sep = "-") ) }
+        if( length(X) > length(germplasm) ) { germplasm = c(germplasm, paste(rep("XXX", times = (length(X) - length(germplasm))), vec_XXX[1:(length(X) - length(germplasm))] , sep = "-") ) }
         block = rep(i, length(X))
-        d = rbind.data.frame(d, cbind.data.frame(entries, block, X, Y))
+        d = rbind.data.frame(d, cbind.data.frame(germplasm, block, X, Y))
       }
-      d$entries = as.factor(d$entries)
+      d$location = as.factor(location)
+      d$year = as.factor(year)
+      d$germplasm = as.factor(d$germplasm)
       d$block = as.factor(d$block)
       d$X = as.factor(d$X)
       d$Y = as.factor(d$Y)
+      d = d[,c("location", "year", "germplasm", "block", "X", "Y")]
       return(d)
     }
-    
     
     place_controls = function(d, expe.type){
       dok = data.frame()
       vec_block = levels(d$block)
       for(b in vec_block){
         dtmp = droplevels(filter(d, block == b))
-        c = grep("control", dtmp$entries)
-        e = c(1:length(dtmp$entries))[-c]
-        ent = c(as.character(dtmp$entries[c]), as.character(dtmp$entries[e]))
+        c = grep("control", dtmp$germplasm)
+        e = c(1:length(dtmp$germplasm))[-c]
+        ent = c(as.character(dtmp$germplasm[c]), as.character(dtmp$germplasm[e]))
 
         # Put at least one control per row
         arrange.m = function(m){
@@ -262,30 +270,28 @@ plan_experiment = function(
           if( length(test_row) > 0 ){ stop(mess_row) }
         }
 
-        dtmp = data.frame(entries = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
+        dtmp = data.frame(germplasm = as.vector(m), block = b, X = rep(colnames(m), each = nrow(m)), Y = rep(rownames(m), times = ncol(m)))
         
         dok = rbind.data.frame(dok, dtmp)
       }
       
-      dok$entries = as.factor(dok$entries)
+      dok$germplasm = as.factor(dok$germplasm)
       dok$block = as.factor(dok$block)
       dok$X = as.factor(dok$X)
       dok$Y = as.factor(dok$Y)
       return(dok)
     }
-    
-    
-    rename_d = function(d, entries, controls){
-      XXX = paste("XXX", c(1:length(entries)), sep = "-")
+  
+    rename_d = function(d, germplasm, controls){
+      XXX = paste("XXX", c(1:length(germplasm)), sep = "-")
       names(XXX) = XXX
-      names(entries) = paste("entry", c(1:length(entries)), sep = "-")
+      names(germplasm) = paste("entry", c(1:length(germplasm)), sep = "-")
       if( !is.null(controls)){names(controls) = paste("control", c(1:length(controls)), sep = "-")}
-      ec = c(entries, XXX, controls)
-      d$statut = d$entries
-      d$entries = ec[as.character(d$entries)]
+      ec = c(germplasm, XXX, controls)
+      d$statut = d$germplasm
+      d$germplasm = as.factor(ec[as.character(d$germplasm)])
       return(d)
     }
-    
     
     get_ggplot_plan = function(d){
       color_till = rep("white", length(d$statut))
@@ -306,13 +312,12 @@ plan_experiment = function(
       a = tapply(as.numeric(d$Y), d$block, max) + 0.45
       d$ymax = a[d$block]
       
-      p = ggplot(data = d, aes(x = X, y = Y, label = entries))
+      p = ggplot(data = d, aes(x = X, y = Y, label = germplasm))
       p = p + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
       p = p + geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, color = block), fill = NA, size = 1)
       
       return(p)        
     }
-    
     
     format_data = function(d, return.format){
       if( return.format == "standard" ) { 
@@ -324,7 +329,7 @@ plan_experiment = function(
           project = "",
           sown_year = "",
           harvested_year = "",
-          id_seed_lot_sown = d$entries,
+          id_seed_lot_sown = d$germplasm,
           intra_selection_name = "",
           etiquette = "",
           split = "",
@@ -344,15 +349,15 @@ plan_experiment = function(
     
     # 3.1. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
-      if(nb.entries > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 entries. With more than 10 entries, go for expe.type == \"regional-farm\".") }
+      if(nb.germplasm > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 germplasm. With more than 10 germplasm, go for expe.type == \"regional-farm\".") }
       if(length(controls) > 1){ stop("With expe.type == \"satellite-farm\", there can be only one control.") }
       if(nb.controls.per.block != 2){stop("nb.controls.per.block = 2 with expe.type == \"satellite-farm\".")}
       if(nb.blocks != 1){stop("nb.blocks = 1 with expe.type == \"satellite-farm\".")}
       if(nb.cols > 2){stop("nb.cols = 1 or 2 with expe.type == \"satellite-farm\".")}
       
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
+      d = get_data.frame(location, year, nb.germplasm, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
-      d = rename_d(d, entries, controls)
+      d = rename_d(d, germplasm, controls)
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
@@ -366,9 +371,9 @@ plan_experiment = function(
       if( nb.controls.per.block < 2) { stop("nb.controls.per.block must be more than 1 with expe.type == \"regional-farm\".") }
       if( length(controls) != nb.controls.per.block ){ stop("nb.controls.per.block must be equal to the length of controls with expe.type == \"regional-farm\".") }
       
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
+      d = get_data.frame(location, year, nb.germplasm, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
-      d = rename_d(d, entries, controls)
+      d = rename_d(d, germplasm, controls)
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
@@ -381,9 +386,9 @@ plan_experiment = function(
     if( expe.type == "row-column" ) {
       if( length(controls) != 1 ){ stop("nb.controls.per.block must be equal to 1 with expe.type == \"row-column\".") }
       
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
+      d = get_data.frame(location, year, nb.germplasm, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
-      d = rename_d(d, entries, controls)
+      d = rename_d(d, germplasm, controls)
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
@@ -395,7 +400,7 @@ plan_experiment = function(
     # 3.4. expe.type == "fully-replicated" ----------
     if( expe.type == "fully-replicated" ) {
       nb.controls.per.block = NULL # not use
-      d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
+      d = get_data.frame(location, year, nb.germplasm, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       
       # arrange randomisation
       vec_block = sort(unique(d$block))
@@ -403,24 +408,24 @@ plan_experiment = function(
       for(b in 2:length(vec_block)){
         
         d1 = droplevels(filter(d, block %in% vec_block[1:(b-1)]))
-        entries_tmp = unique(as.character(d1$entries))
+        germplasm_tmp = unique(as.character(d1$germplasm))
         
         d2 = droplevels(filter(d, block == vec_block[b]))
         
         E = NULL
         for(i in 1:nrow(d2)){
-          e = d2[i, "entries"]
+          e = d2[i, "germplasm"]
           x = d2[i, "X"]
           y = d2[i, "Y"]
-          test = is.element(e, filter(d1, X == x)$entries); ii = 0
-          while(test & ii < 100 ){ e = sample(entries_tmp, 1) ; test = is.element(e, filter(d1, X == x)$entries); ii = ii + 1 }
-          entries_tmp = entries_tmp[-which(entries_tmp == e)]
+          test = is.element(e, filter(d1, X == x)$germplasm); ii = 0
+          while(test & ii < 100 ){ e = sample(germplasm_tmp, 1) ; test = is.element(e, filter(d1, X == x)$germplasm); ii = ii + 1 }
+          germplasm_tmp = germplasm_tmp[-which(germplasm_tmp == e)]
           E = c(E, e)
         }
-        d[which(d$block == vec_block[b]), "entries"] = E
+        d[which(d$block == vec_block[b]), "germplasm"] = E
       }
       
-      d = rename_d(d, entries, controls = NULL)
+      d = rename_d(d, germplasm, controls = NULL)
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
@@ -431,21 +436,21 @@ plan_experiment = function(
     
     # 3.5. expe.type == "IBD" ----------
     if( expe.type == "IBD" ) {
-      d = ibd(v = nb.entries, b = nb.blocks, k = nb.cols)$design
+      d = ibd(v = nb.germplasm, b = nb.blocks, k = nb.cols)$design
       if( is.null(nrow(d)) ){ stop("Design not found") }
       
       d = data.frame(
-        entries = paste("entry", as.vector(d), sep = "-"),
+        germplasm = paste("entry", as.vector(d), sep = "-"),
         block = rep(c(1:nrow(d)), times = ncol(d)),
         X = rep(LETTERS[1:ncol(d)], each = nrow(d)),
         Y = rep(c(1:nrow(d)), times = ncol(d))
       )
-      d$entries = as.factor(d$entries)
+      d$germplasm = as.factor(d$germplasm)
       d$block = as.factor(d$block)
       d$X = as.factor(d$X)
       d$Y = as.factor(d$Y)
       
-      d = rename_d(d, entries, controls = NULL)
+      d = rename_d(d, germplasm, controls = NULL)
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
