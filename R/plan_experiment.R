@@ -362,6 +362,7 @@ plan_experiment = function(
     # 3.2. expe.type == "regional-farm" ----------
     if( expe.type == "regional-farm" ) {
       if( nb.controls.per.block < 2) { stop("nb.controls.per.block must be more than 1 with expe.type == \"regional-farm\".") }
+      if( length(controls) != nb.controls.per.block ){ stop("nb.controls.per.block must be equal to the length of controls with expe.type == \"regional-farm\".") }
       
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
