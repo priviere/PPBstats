@@ -171,7 +171,7 @@ gverifResidualsnormality = function(model){
 }
 
 
-build_interaction_matrix = function(model, data){
+build_interaction_matrix = function(model, data, gxe_analysis){
   
   # In agricolae::AMMI, the interaction matrc is done base on the additive model, i.e. in the interaction matrix there are inteaction terms + residuals. Here, there is only interaction terms.
   #MEDIAS <- data.frame(ENV = x, GEN = y, Y = z)
