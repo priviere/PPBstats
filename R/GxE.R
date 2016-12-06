@@ -8,7 +8,7 @@
 #' 
 #' @param vec_variables vectors of variables to analyse
 #' 
-#' @param gxe_analysis "AMMI" or "GGE"
+#' @param gxe_analysis the analysis to carry out: "AMMI" or "GGE"
 #' 
 #' @details See the vignette for more details on the models
 #' 
