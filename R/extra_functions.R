@@ -4,10 +4,7 @@
 #' @name extra_functions
 #' 
 #' @description
-#' This file group several functions used in several functions of PPBstats:
-#' \itemize{
-#' 	\item describe_data
-#' }
+#' This file group several functions used in several functions of PPBstats
 #' 
 #' @author Pierre Riviere
 #' 
