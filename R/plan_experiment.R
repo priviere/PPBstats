@@ -360,6 +360,7 @@ plan_experiment = function(
       out = list("satellite-farms" = out); OUT = c(OUT, out)
     }
     
+    
     # 3.2. expe.type == "regional-farm" ----------
     if( expe.type == "regional-farm" ) {
       if( nb.controls.per.block < 2) { stop("nb.controls.per.block must be more than 1 with expe.type == \"regional-farm\".") }
@@ -432,7 +433,7 @@ plan_experiment = function(
       if( is.null(nrow(d)) ){ stop("Design not found") }
       
       d = data.frame(
-        entries = as.vector(d), 
+        entries = paste("entry", as.vector(d), sep = "-"),
         block = rep(c(1:nrow(d)), times = ncol(d)),
         X = rep(LETTERS[1:ncol(d)], each = nrow(d)),
         Y = rep(c(1:nrow(d)), times = ncol(d))
@@ -442,7 +443,7 @@ plan_experiment = function(
       d$X = as.factor(d$X)
       d$Y = as.factor(d$Y)
       
-      d = rename_d(d, entries, controls)
+      d = rename_d(d, entries, controls = NULL)
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
