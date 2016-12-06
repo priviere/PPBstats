@@ -75,7 +75,8 @@
 #' 
 GxE = function(
   data, 
-  vec_variables
+  vec_variables,
+  gxe_analysis
 )
 
 # Lets' go ----------
@@ -84,7 +85,7 @@ GxE = function(
     # Error messages ----------
     
   # 1. write the ammi function to apply to vec_variables ----------
-  fun_ammi = function(variable, data) 
+  fun_gxe = function(variable, data, gxe_analysis) 
     # go! ----------
     {
     # 1.1. Set up data set ----------
@@ -93,7 +94,7 @@ GxE = function(
       data$variable = as.numeric(as.character(data$variable))
       data = droplevels(na.omit(data))
     
-    # 1.2. AMMI model which depends on the years available in the data set ----------
+    # 1.2. GxE model which depends on the years available in the data set ----------
     
     # 1.2.1. Run the model ----------
     data$block_in_env = factor(paste(data$block, data$location, sep = ";")) # hierarchise block within environemnt
@@ -123,7 +124,7 @@ GxE = function(
     pie = gpieplot(anova_model, variable)
     
     # 1.2.4. Get effects ----------
-    outinter = build_interaction_matrix(model, data)
+    outinter = build_interaction_matrix(model, data, gxe_analysis)
     data_interaction = outinter$data_interaction
     vec_E = outinter$vec_E
     vec_G = outinter$vec_G
@@ -187,10 +188,7 @@ GxE = function(
     
     # 1.5.2. PCA on interaction matrix ----------
     pca = PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
-    outPCA = dographPCA(pca)
-    
-    outPCA$screeplot = outPCA$screeplot + labs(title = paste("Pourcentage de la variance expliquee par chaque composante principale, ACP sur le facteur germplasme,\n variable etudiee :",variable)) # graphique représentant le pourcentage de variabilité totale pour chaque composante principale
-    
+
     # 1.5.3. Ecovalence
     ecovalence = ecovalence(data_interaction,variable)
     
@@ -198,9 +196,10 @@ GxE = function(
       "interaction_plot" = p1_GxE,
       "ecovalence" = ecovalence,
       "PCA" = list(
-        "variation_dim" = outPCA$screeplot,
-        "CP1-CP2" = list("ind" = outPCA$ind1_2, "var" = outPCA$var1_2),
-        "CP2-CP3" = list("ind" = outPCA$ind2_3, "var" = outPCA$var2_3)
+        "variation_dim" = fviz_eig(pca),
+        "which_won_where" = ggplot_which_won_where(pca),
+        "mean_vs_stability" = ggplot_mean_vs_stability(pca),
+        "discrimitiveness_vs_representativeness" = ggplot_discrimitiveness_vs_representativeness(pca)
       )
     )
     
@@ -212,13 +211,13 @@ GxE = function(
       "GxE" = out_GxE
     )
     
-    message("AMMI model done for ",variable)
+    message(gxe_analysis, " model done for ", variable)
     
     return(out)
   }
   
   # 2. write function post ammi analysis regrouping all ammi analysis from different variables ----------
-  fun_post_ammi = function(out_ammi)
+  fun_post_gxe = function(out_gxe)
     # go! ----------
     {
   # 2.1. barplot_variation_repartition
@@ -308,15 +307,16 @@ GxE = function(
   }
     
   # 3. Apply AMMI and Post AMMI to vec_variables ----------
-  message("I. Run AMMI model on each variable")
-  out_ammi = lapply(vec_variables, fun_ammi, data)
-  names(out_ammi) = vec_variables
+  message("I. Run ", gxe_analysis, " model on each variable")
+  out_gxe = lapply(vec_variables, fun_gxe, data, gxe_analysis)
+  names(out_gxe) = vec_variables
   
-  message("\nII. Post AMMI analysis on all outputs")
-  #out_post_ammi = fun_post_ammi(out_ammi)
-  out_post_ammi = NULL
+  message("\nII. Post ", gxe_analysis," analysis on all outputs")
+  #out_post_gxe = fun_post_gxe(out_gxe)
+  out_post_gxe = NULL
   
-  OUT = list("AMMI" = out_ammi, "Post_AMMI" = out_post_ammi)
+  OUT = list(out_gxe, out_post_gxe)
+  names(OUT) = c(gxe_analysis, paste("Post_", gxe_analysis, sep = ""))
   
   return(OUT)
 }
