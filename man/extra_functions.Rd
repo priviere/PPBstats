@@ -8,10 +8,7 @@
 check_data_vec_variables(data, vec_variables)
 }
 \description{
-This file group several functions used in several functions of PPBstats:
-\itemize{
-	\item describe_data
-}
+This file group several functions used in several functions of PPBstats
 }
 \author{
 Pierre Riviere
