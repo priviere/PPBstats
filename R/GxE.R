@@ -76,22 +76,24 @@
 GxE = function(
   data, 
   vec_variables,
-  gxe_analysis
+  gxe_analysis = NULL
 )
 
 # Lets' go ----------
   {
     
     # Error messages ----------
+    check_data_vec_variables(data, vec_variables)
+    if( is.null(gxe_analysis) ) { stop("You ust set gxe_analysis: AMMI or GGE") }
+    if(!is.element(gxe_analysis, c("AMMI", "GGE"))) { stop("gxe_analysis must be either \"AMMI\" or \"GGE\".") }
     
-  # 1. write the ammi function to apply to vec_variables ----------
+    # 1. write the ammi function to apply to vec_variables ----------
   fun_gxe = function(variable, data, gxe_analysis) 
     # go! ----------
     {
     # 1.1. Set up data set ----------
       colnames(data)[which(colnames(data) == variable)] = "variable"
       data = data[c("location", "germplasm", "year", "block", "variable")]
-      data$variable = as.numeric(as.character(data$variable))
       data = droplevels(na.omit(data))
     
     # 1.2. GxE model which depends on the years available in the data set ----------
