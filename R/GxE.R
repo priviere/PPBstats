@@ -73,7 +73,7 @@
 #' @author 
 #' Pierre Riviere
 #' 
-AMMI = function(
+GxE = function(
   data, 
   vec_variables
 )
