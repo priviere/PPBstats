@@ -125,14 +125,32 @@ case & number of locations & number of years & comments regarding entries replic
 <<message=TRUE,cache=FALSE>>=
 p_fr = plan_experiment(
   expe.type = "fully-replicated", 
-  nb.entries = 20, 
+  entries = paste("germ", c(1:20), sep = ":"), 
   nb.blocks = 3, 
   nb.cols = 4)
+@
+
+By default, the data frame is under a standard format:
+<<message=TRUE,cache=FALSE>>=
+head(p_fr$"fully-replicated"$data.frame)
+@
+
+You can set the format to a SHiNeMaS\footnote{} reproduction template file:
+
+<<message=TRUE,cache=FALSE>>=
+p_fr = plan_experiment(
+  expe.type = "fully-replicated", 
+  entries = paste("germ", c(1:20), sep = ":"), 
+  nb.blocks = 3, 
+  nb.cols = 4,
+  return.format = "shinemas")
 @
 
 <<message=TRUE,cache=FALSE>>=
 head(p_fr$"fully-replicated"$data.frame)
 @
+
+
 
 <<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
 p_fr$"fully-replicated"$plan
@@ -142,7 +160,8 @@ p_fr$"fully-replicated"$plan
 <<message=TRUE,cache=FALSE>>=
 p_case2 = plan_experiment(
   expe.type = "row-column", 
-  nb.entries = 20, 
+  entries = paste("germ", c(1:20), sep = ":"),
+  controls = "toto",
   nb.controls.per.block = 7, 
   nb.blocks = 1, 
   nb.cols = 7)
@@ -161,14 +180,14 @@ The function return an error.
 The controls must catch as much as possible of the trial variation.
 
 
-
 \subsubsection{Case 3}
 Here, six designs are generated: four for satellite farm and two for regional farm.
 
 <<message=TRUE,cache=FALSE>>=
 p_case3_sf1 = plan_experiment(
   expe.type = "satellite-farm", 
-  nb.entries = 6, 
+  entries = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
@@ -176,7 +195,8 @@ p_case3_sf1 = p_case3_sf1$`satellite-farms`$plan
 
 p_case3_sf2 = plan_experiment(
   expe.type = "satellite-farm", 
-  nb.entries = 6, 
+  entries = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
@@ -184,7 +204,8 @@ p_case3_sf2 = p_case3_sf2$`satellite-farms`$plan
 
 p_case3_sf3 = plan_experiment(
   expe.type = "satellite-farm", 
-  nb.entries = 6, 
+  entries = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
@@ -192,7 +213,8 @@ p_case3_sf3 = p_case3_sf3$`satellite-farms`$plan
 
 p_case3_rf1 = plan_experiment(
   expe.type = "regional-farm", 
-  nb.entries = 16, 
+  entries = paste("germ", c(1:16), sep = ":"),
+  controls = c("c1", "c2", "c3", "c4"),
   nb.controls.per.block = 4, 
   nb.blocks = 2, 
   nb.cols = 4)
@@ -200,7 +222,8 @@ p_case3_rf1 = p_case3_rf1$`regional-farms`$plan
 
 p_case3_rf2 = plan_experiment(
   expe.type = "regional-farm", 
-  nb.entries = 6, 
+  entries = paste("germ", c(1:16), sep = ":"),
+  controls = c("c1", "c2", "c3"),
   nb.controls.per.block = 3, 
   nb.blocks = 2, 
   nb.cols = 3)
@@ -213,7 +236,8 @@ Each row beeing a sower width.
 <<message=TRUE,cache=FALSE>>=
 p_case3_sf4 = plan_experiment(
   expe.type = "satellite-farm", 
-  nb.entries = 6, 
+  entries = paste("germ", c(1:6), sep = ":"),
+  controls = "C",
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 1)
@@ -269,8 +293,8 @@ If there are less than 2 blocks, an error is returned.
 <<message=TRUE,cache=FALSE>>=
 p_ibd = plan_experiment(
   expe.type = "IBD", 
-  nb.entries = 20, 
-  nb.blocks = 16, 
+  entries = paste("germ", c(1:10), sep = ":"),
+  nb.blocks = 8, 
   nb.cols = 4)
 @
 
