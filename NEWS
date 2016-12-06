@@ -8,6 +8,8 @@ PPBstats 0.13 ---------------------------------------
   - ggplot_mean_vs_stability.R
   - ggplot_discrimitiveness_vs_representativeness.R
 
+* rename function
+  - AMMI.R becomes GxE.R
 
 * vignette
   - refactor the code
