@@ -345,13 +345,15 @@ plan_experiment = function(
     # 3.1. expe.type == "satellite-farm" ----------
     if( expe.type == "satellite-farm" ) {
       if(nb.entries > 10){ message("With expe.type == \"satellite-farm\", it is recommanded to have less than 10 entries. With more than 10 entries, go for expe.type == \"regional-farm\".") }
-      if(nb.controls.per.block!=2){stop("nb.controls.per.block = 2 with expe.type == \"satellite-farm\".")}
+      if(nb.controls.per.block != 2){stop("nb.controls.per.block = 2 with expe.type == \"satellite-farm\".")}
       if(nb.blocks != 1){stop("nb.blocks = 1 with expe.type == \"satellite-farm\".")}
       if(nb.cols > 2){stop("nb.cols = 1 or 2 with expe.type == \"satellite-farm\".")}
       
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
+      d = rename_d(d, entries, controls)
       p = get_ggplot_plan(d)
+      d = format_data(d, return.format)
       
       out = list("data.frame" = d, "plan" = p)
       out = list("satellite-farms" = out); OUT = c(OUT, out)
@@ -363,7 +365,9 @@ plan_experiment = function(
       
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
+      d = rename_d(d, entries, controls)
       p = get_ggplot_plan(d)
+      d = format_data(d, return.format)
       
       out = list("data.frame" = d, "plan" = p)
       out = list("regional-farms" = out); OUT = c(OUT, out)
@@ -411,7 +415,9 @@ plan_experiment = function(
         d[which(d$block == vec_block[b]), "entries"] = E
       }
       
+      d = rename_d(d, entries, controls)
       p = get_ggplot_plan(d)
+      d = format_data(d, return.format)
       
       out = list("data.frame" = d, "plan" = p)
       out = list("fully-replicated" = out); OUT = c(OUT, out)
@@ -434,7 +440,9 @@ plan_experiment = function(
       d$X = as.factor(d$X)
       d$Y = as.factor(d$Y)
       
+      d = rename_d(d, entries, controls)
       p = get_ggplot_plan(d)
+      d = format_data(d, return.format)
       
       out = list("data.frame" = d, "plan" = p)
       out = list("IBD" = out); OUT = c(OUT, out)
