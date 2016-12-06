@@ -334,8 +334,8 @@ plan_experiment = function(
           X	= d$X,
           Y = d$Y
         )
-        
-        }
+      }
+      return(d)
     }
     
     # 3. Compute for different expe.type ----------
