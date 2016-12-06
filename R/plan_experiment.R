@@ -8,7 +8,9 @@
 #' 
 #' @param entries Vector with the names of the entries
 #' 
-#' @param controls.per.block Number of controls per blocks.
+#' @param controls Vector with names of controls
+#' 
+#' @param nb.controls.per.block Number of controls per blocks.
 #' 
 #' @param nb.blocks Number of blocks
 #' 
@@ -65,7 +67,8 @@
 plan_experiment = function(
   expe.type,
   entries,
-  controls.per.block,
+  controls,
+  nb.controls.per.block,
   nb.blocks,
   nb.cols
 )
@@ -75,8 +78,7 @@ plan_experiment = function(
     if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
     
     nb.entries= length(entries)
-    nb.controls.per.block = length(controls.per.block)
-    
+
     # 2. Functions used in the code ----------  
     
     get_data.frame = function(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type) {
