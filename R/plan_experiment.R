@@ -379,6 +379,8 @@ plan_experiment = function(
     
     # 3.3. expe.type == "row-column" ----------
     if( expe.type == "row-column" ) {
+      if( length(controls) != 1 ){ stop("nb.controls.per.block must be equal to 1 with expe.type == \"row-column\".") }
+      
       d = get_data.frame(nb.entries, nb.blocks, nb.controls.per.block, nb.cols, expe.type)
       d = place_controls(d, expe.type)
       d = rename_d(d, entries, controls)
