@@ -327,9 +327,9 @@ plan_experiment = function(
       if( return.format == "shinemas" ) { 
         d = data.frame(
           project = "",
-          sown_year = "",
+          sown_year = d$year,
           harvested_year = "",
-          id_seed_lot_sown = d$germplasm,
+          id_seed_lot_sown = paste(d$germplasm, d$location, d$year, sep = "_"),
           intra_selection_name = "",
           etiquette = "",
           split = "",
