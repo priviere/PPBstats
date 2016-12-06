@@ -4,24 +4,28 @@
 \alias{plan_experiment}
 \title{Provides experimental plan for several situations}
 \usage{
-plan_experiment(expe.type, nb.entries, nb.controls.per.block, nb.blocks,
-  nb.cols)
+plan_experiment(expe.type, entries, controls, nb.controls.per.block, nb.blocks,
+  nb.cols, return.format = "standard")
 }
 \arguments{
 \item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD".}
 
-\item{nb.entries}{Number of entries}
+\item{entries}{Vector with the names of the entries}
+
+\item{controls}{Vector with names of controls}
 
 \item{nb.controls.per.block}{Number of controls per blocks.}
 
 \item{nb.blocks}{Number of blocks}
 
 \item{nb.cols}{Number of columns in the design. The number of rows is computed automaticaly}
+
+\item{return.format}{"standard" (entries, block, X, Y) or "shinemas" for SHiNeMaS reproduction template file}
 }
 \value{
 The function returns a list with
 \itemize{
- \item A data frame with entries, block, X, Y
+ \item A data frame according to return.format
  \item A picture of the experimental plan
  }
 }
