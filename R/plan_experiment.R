@@ -79,7 +79,7 @@ plan_experiment = function(
   {
     # 1. Error message ----------  
     if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
-    if(!is.element(format.data, c("standard", "shinemas"))) { stop("format.data must be either \"standard\" or \"shinemas\".") }
+    if(!is.element(return.format, c("standard", "shinemas"))) { stop("format.data must be either \"standard\" or \"shinemas\".") }
 
     nb.entries= length(entries)
 
@@ -279,7 +279,7 @@ plan_experiment = function(
       XXX = paste("XXX", c(1:length(entries)), sep = "-")
       names(XXX) = XXX
       names(entries) = paste("entry", c(1:length(entries)), sep = "-")
-      names(controls) = paste("control", c(1:length(controls)), sep = "-")
+      if( !is.null(controls)){names(controls) = paste("control", c(1:length(controls)), sep = "-")}
       ec = c(entries, XXX, controls)
       d$statut = d$entries
       d$entries = ec[as.character(d$entries)]
@@ -415,7 +415,7 @@ plan_experiment = function(
         d[which(d$block == vec_block[b]), "entries"] = E
       }
       
-      d = rename_d(d, entries, controls)
+      d = rename_d(d, entries, controls = NULL)
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
