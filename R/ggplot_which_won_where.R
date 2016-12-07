@@ -81,7 +81,7 @@ ggplot_which_won_where = function(res.pca){
   
   # get info only where there are variables
   ind = droplevels(filter(ind, sector %in% unique(var$sector)))
-  
+
   # entry with the highest value in each sector, i.e. biggest segment from 0, i.e. biggest hypothenus
   ind$id = c(1:nrow(ind))
   ind$hypo = sqrt(abs(ind$Dim.1)^2 + abs(ind$Dim.2)^2)
@@ -102,7 +102,7 @@ ggplot_which_won_where = function(res.pca){
     winner$sector = c(1:nrow(winner))
     winner$sector = as.factor(winner$sector)
     
-    p = p + geom_point(data = winner, aes(x = x, y = y, color = sector), inherit.aes = FALSE)
+    p = p + geom_point(data = winner, aes(x = x, y = y, color = sector), size = 3, inherit.aes = FALSE)
   } else { warning("There are no sectors") }
   
   p = p + ggtitle("which won where")
