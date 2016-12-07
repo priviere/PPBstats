@@ -45,7 +45,7 @@ get_biplot = function(res.pca){
   var[, c("x", "y")] <- var[, c("x", "y")] * r * 0.7 # taken from factoextra::fviz_pca_biplot
   
   vi = rbind.data.frame(var, ind)
-  
+
   dimvar = round(res.pca$eig$`percentage of variance`[1:2], 1)
   
   p = ggplot(data = vi, aes(x = x, y = y, label = label)) + geom_text(color = as.character(vi$color)) + geom_point(color = as.character(vi$color))
