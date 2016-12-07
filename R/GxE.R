@@ -355,7 +355,7 @@ GxE = function(
   }
     
   
-  # 3. Apply AMMI and Post AMMI to vec_variables ----------
+  # 3. Apply analysis and Post analysis to vec_variables ----------
   message("I. Run ", gxe_analysis, " model on each variable")
   out_gxe = lapply(vec_variables, fun_gxe, data, gxe_analysis)
   names(out_gxe) = vec_variables
