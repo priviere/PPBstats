@@ -127,15 +127,27 @@ GxE = function(
     pie = gpieplot(anova_model, variable)
     
     # 1.2.4. Get effects ----------
-    outinter = GxE_build_interaction_matrix(data, gxe_analysis)
-    data_interaction = outinter$data_interaction
+    data_interaction = GxE_build_interaction_matrix(data, gxe_analysis)
     
-    print(data_interaction)
+    c = model$coefficients
     
-    vec_E = outinter$vec_E
-    vec_G = outinter$vec_G
-    vec_var_G_intra = outinter$vec_var_G_intra
-
+    # germplasm
+    coef_germ = c[grep("germplasm", names(c))]
+    todel = grep(":", names(coef_germ))
+    if(length(todel) > 0) { coef_germ = coef_germ[-todel] }
+    coef_germ = c(coef_germ, - sum(coef_germ))
+    names(coef_germ) = model$xlevels$germplasm
+    
+    # variance intra germplasm
+    var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
+    
+    # location
+    coef_env = c[grep("location", names(c))]
+    todel = grep(":", names(coef_env))
+    if(length(todel) > 0) { coef_env = coef_env[-todel] }
+    coef_env = c(coef_env, - sum(coef_env))
+    names(coef_env) = model$xlevels$location
+    
     out_model = list(
       "anova_model" = anova_model,
       "residuals" = list(
@@ -146,9 +158,9 @@ GxE = function(
       ),
       "variability_repartition" = pie,
       "interaction_matrix" = data_interaction,
-      "location_effects" = vec_E,
-      "germplasm_effects" = vec_G,
-      "intra_germplasm_variance" = vec_var_G_intra
+      "location_effects" = coef_env,
+      "germplasm_effects" = coef_germ,
+      "intra_germplasm_variance" = var_intra
     )
     
     
@@ -196,8 +208,19 @@ GxE = function(
     pca = PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
 
     # 1.5.3. Ecovalence
-    ecovalence = ecovalence(data_interaction,variable)
+    m_eco = data_interaction^2
     
+    d_eco = data.frame(
+      germplasm = rep(rownames(m_eco), times = ncol(m_eco)), 
+      location = rep(colnames(m_eco), each = nrow(m_eco)),
+      variable = as.vector(m_eco)
+      )
+    
+    p_eco = ggplot(data = d_eco, aes(x = location, y = germplasm, fill = variable)) + geom_raster()
+    p_eco = p_eco + scale_fill_gradient(low = "green", high = "red") 
+    p_eco = p_eco + ggtitle("Wrick ecovalence", variable)
+    
+
     # 1.5.4. Biplots
     variation_dim = fviz_eig(pca)
     which_won_where = ggplot_which_won_where(pca)
@@ -206,7 +229,7 @@ GxE = function(
     
     out_GxE = list(
       "interaction_plot" = p1_GxE,
-      "ecovalence" = ecovalence,
+      "ecovalence" = p_eco,
       "PCA" = list(
         "variation_dim" = variation_dim,
         "which_won_where" = which_won_where,
