@@ -45,10 +45,12 @@ get_biplot = function(res.pca){
   var[, c("x", "y")] <- var[, c("x", "y")] * r * 0.7 # taken from factoextra::fviz_pca_biplot
   
   vi = rbind.data.frame(var, ind)
-
+  vi$size = 4
+  vi$size[which(vi$color == "darkgreen")] = 6
+  
   dimvar = round(res.pca$eig$`percentage of variance`[1:2], 1)
   
-  p = ggplot(data = vi, aes(x = x, y = y, label = label)) + geom_text(color = as.character(vi$color)) + geom_point(color = as.character(vi$color))
+  p = ggplot(data = vi, aes(x = x, y = y, label = label)) + geom_text(color = as.character(vi$color), size = vi$size) + geom_point(color = as.character(vi$color))
   p = p + xlab(paste("Dim 1 (", dimvar[1], "%)", sep = "")) + ylab(paste("Dim 2 (", dimvar[2], "%)", sep = ""))
   p = p + ggtitle("Biplot germplasm and environments")
   return(p)
