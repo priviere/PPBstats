@@ -124,7 +124,20 @@ GxE = function(
     outRes = gverifResidualsnormality(model)
     
     # 1.2.3. repartition of variability among factors
-    pie = gpieplot(anova_model, variable)
+    total_Sum_Sq = sum(anova_model$"Sum Sq")
+    Sum_sq = anova_model$"Sum Sq"
+    pvalue = anova_model$"Pr(>F)"
+    percentage_Sum_sq = Sum_sq/total_Sum_Sq*100
+    factor = rownames(anova_model)
+      
+    d_pie = cbind.data.frame(factor, pvalue, Sum_sq, percentage_Sum_sq)
+      
+    p_pie = ggplot(data = d_pie, aes(x = "", y = percentage_Sum_sq, fill = factor)) 
+    p_pie = p_pie + ggtitle(paste("Distribution de la variance totale pour \n", variable))
+    p_pie = p_pie + geom_bar(width = 1, stat = "identity") + coord_polar("y", start = 0)
+    #pie = pie + geom_text(data=DFtemp, aes(y = value/3 + c(0, cumsum(value)[-length(value)]), label = paste("  ",round(valuep*100), "%")))
+    p_pie = p_pie + ylab("") + xlab("")
+    
     
     # 1.2.4. Get effects ----------
     data_interaction = GxE_build_interaction_matrix(data, gxe_analysis)
@@ -156,7 +169,7 @@ GxE = function(
         "QQplot" = outRes$plotRes2,
         "standardized_residuals_vs_fitted" = outRes$plotRes3
       ),
-      "variability_repartition" = pie,
+      "variability_repartition" = p_pie,
       "interaction_matrix" = data_interaction,
       "location_effects" = coef_env,
       "germplasm_effects" = coef_germ,
