@@ -46,31 +46,6 @@ gLSDplot = function(model, x, variable, adjust){
 
 
 
-gpieplot = function(anov, var){
-  #anov : anova du modèle complet, var : nom de la variable étudiée
-  total_Sum_Sq = sum(anov$"Sum Sq")
-  Sum_sq = anov$"Sum Sq"
-  pvalue = anov$"Pr(>F)"
-  percentage_Sum_sq = Sum_sq/total_Sum_Sq*100
-  factor = rownames(anov)
-  
-  DFtemp = cbind.data.frame(factor, pvalue, Sum_sq, percentage_Sum_sq)
-
-  pie = ggplot(data = DFtemp, aes(x = "", y = percentage_Sum_sq, fill = factor)) 
-  pie = pie + theme_minimal() + theme(axis.title.x = element_blank(), 
-                                      axis.title.y = element_blank(), 
-                                      panel.border = element_blank(), 
-                                      panel.grid=element_blank(), 
-                                      axis.ticks = element_blank(), 
-                                      axis.text.x =element_blank(), 
-                                      plot.title = element_text(lineheight=.8, face="bold"))
-  pie = pie + ggtitle(paste("Distribution de la variance totale pour \n",var))
-  pie = pie + geom_bar(width = 1, stat = "identity")
-  #pie = pie + geom_text(data=DFtemp, aes(y = value/3 + c(0, cumsum(value)[-length(value)]), label = paste("  ",round(valuep*100), "%")))
-  pie = pie + coord_polar("y", start = 0)
-  return(pie)
-}
-
 gqqplot=function(y, distribution = qnorm, xlab, ylab){
   
   x = distribution(ppoints(y))
