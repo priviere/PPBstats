@@ -95,13 +95,14 @@ GxE = function(
       colnames(data)[which(colnames(data) == variable)] = "variable"
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data = droplevels(na.omit(data))
-    
+      
+      data$block_in_env = factor(paste(data$block, data$location, sep = ";")) # hierarchise block within environemnt
+      data$YxE = factor(paste(data$year, data$location, sep = ":"))
+      data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
+      
     # 1.2. GxE model which depends on the years available in the data set ----------
     
     # 1.2.1. Run the model ----------
-    data$block_in_env = factor(paste(data$block, data$location, sep = ";")) # hierarchise block within environemnt
-    data$YxE = factor(paste(data$year, data$location, sep = ";"))
-    data$YxG = factor(paste(data$year, data$germplasm, sep = ";"))
     
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
@@ -126,8 +127,11 @@ GxE = function(
     pie = gpieplot(anova_model, variable)
     
     # 1.2.4. Get effects ----------
-    outinter = build_interaction_matrix(model, data, gxe_analysis)
+    outinter = GxE_build_interaction_matrix(data, gxe_analysis)
     data_interaction = outinter$data_interaction
+    
+    print(data_interaction)
+    
     vec_E = outinter$vec_E
     vec_G = outinter$vec_G
     vec_var_G_intra = outinter$vec_var_G_intra
@@ -194,14 +198,20 @@ GxE = function(
     # 1.5.3. Ecovalence
     ecovalence = ecovalence(data_interaction,variable)
     
+    # 1.5.4. Biplots
+    variation_dim = fviz_eig(pca)
+    which_won_where = ggplot_which_won_where(pca)
+    mean_vs_stability = ggplot_mean_vs_stability(pca)
+    discrimitiveness_vs_representativeness = ggplot_discrimitiveness_vs_representativeness(pca)
+    
     out_GxE = list(
       "interaction_plot" = p1_GxE,
       "ecovalence" = ecovalence,
       "PCA" = list(
-        "variation_dim" = fviz_eig(pca),
-        "which_won_where" = ggplot_which_won_where(pca),
-        "mean_vs_stability" = ggplot_mean_vs_stability(pca),
-        "discrimitiveness_vs_representativeness" = ggplot_discrimitiveness_vs_representativeness(pca)
+        "variation_dim" = variation_dim,
+        "which_won_where" = which_won_where,
+        "mean_vs_stability" = mean_vs_stability,
+        "discrimitiveness_vs_representativeness" = discrimitiveness_vs_representativeness
       )
     )
     
