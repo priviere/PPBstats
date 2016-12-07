@@ -207,7 +207,7 @@ GxE = function(
     # 1.5.2. PCA on interaction matrix ----------
     pca = PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
 
-    # 1.5.3. Ecovalence
+    # 1.5.3. Ecovalence ----------
     m_eco = data_interaction^2
     
     d_eco = data.frame(
@@ -221,7 +221,7 @@ GxE = function(
     p_eco = p_eco + ggtitle("Wrick ecovalence", variable)
     
 
-    # 1.5.4. Biplots
+    # 1.5.4. Biplots ----------
     variation_dim = fviz_eig(pca)
     which_won_where = ggplot_which_won_where(pca)
     mean_vs_stability = ggplot_mean_vs_stability(pca)
