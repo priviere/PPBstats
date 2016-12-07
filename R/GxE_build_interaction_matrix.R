@@ -11,13 +11,12 @@
 #' @details The computation is insoired from the agricolae::AMMI function. Another way to do has been explore but did not succeed regarding missing data. The code is inside the function.
 #' 
 #' @return 
-#' The function returns two lists with
-#' \itemize{
-#'  \item for each variable a list with
-#'  }
+#' The function returns the interaction matrix
 #' 
 #' @author 
 #' Pierre Riviere
+#' 
+#' @seealso \code{GxE}
 #' 
 GxE_build_interaction_matrix = function(
   data, 
