@@ -4,13 +4,18 @@
 \alias{plan_experiment}
 \title{Provides experimental plan for several situations}
 \usage{
-plan_experiment(expe.type, entries, controls, nb.controls.per.block, nb.blocks,
-  nb.cols, return.format = "standard")
+plan_experiment(expe.type, location = "location", year = "2016", germplasm,
+  controls, nb.controls.per.block, nb.blocks, nb.cols,
+  return.format = "standard")
 }
 \arguments{
 \item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD".}
 
-\item{entries}{Vector with the names of the entries}
+\item{location}{Name of the location}
+
+\item{year}{Year of the exepriment}
+
+\item{germplasm}{Vector with the names of the germplasm}
 
 \item{controls}{Vector with names of controls}
 
@@ -20,7 +25,7 @@ plan_experiment(expe.type, entries, controls, nb.controls.per.block, nb.blocks,
 
 \item{nb.cols}{Number of columns in the design. The number of rows is computed automaticaly}
 
-\item{return.format}{"standard" (entries, block, X, Y) or "shinemas" for SHiNeMaS reproduction template file}
+\item{return.format}{"standard" (germplasm, block, X, Y) or "shinemas" for SHiNeMaS reproduction template file}
 }
 \value{
 The function returns a list with
@@ -38,13 +43,13 @@ The algoritms are the following:
 \itemize{
  \item "satellite-farm"
  \enumerate{
-	 \item randomize the entries
+	 \item randomize the germplasm
   \item get the data frame with one block, two columns and one control in each column
 	 \item randomize the columns
  }
  \item "regional-farm"
  \enumerate{
-	 \item randomize the entries
+	 \item randomize the germplasm
   \item get the data frame with blocks, columns and controls in each block
   \item arrange at least one control per row
   \item for each row, put control in different column
@@ -54,7 +59,7 @@ The algoritms are the following:
  }
  \item "row-column"
  \enumerate{
-	 \item randomize the entries
+	 \item randomize the germplasm
   \item get the data frame with blocks, columns and controls in each block
   \item arrange at least one control per row
   \item for each row, put control in different column
@@ -64,9 +69,9 @@ The algoritms are the following:
  }
  \item "fully-repicated"
  \enumerate{
-	 \item randomize the entries
-  \item get the data frame with blocks, columns and entries in each block
-  \item arrange randomization so that no entries can be in the same column between blocks
+	 \item randomize the germplasm
+  \item get the data frame with blocks, columns and germplasm in each block
+  \item arrange randomization so that no germplasm can be in the same column between blocks
  }
  \item "IBD"
 the randomization is based on the ibd function in the ibd package. See ?ibd for more information
