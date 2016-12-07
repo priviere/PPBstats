@@ -45,21 +45,6 @@ gLSDplot = function(model, x, variable, adjust){
 }
 
 
-ecovalence = function(matrix, variable){
-  #matrix : matrice ou data contenant les termes d'interaction
-  
-  matrix = matrix^2
-  melted_matrix = melt(data = matrix)
-  matrix_inter_plot = ggplot(data = melted_matrix, aes(x = Var2, y = Var1, fill = value)) + geom_tile()
-  matrix_inter_plot = matrix_inter_plot + scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) 
-  matrix_inter_plot = matrix_inter_plot + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), panel.border = element_blank(), panel.grid=element_blank(), axis.ticks = element_blank())
-  matrix_inter_plot = matrix_inter_plot + labs(title = paste("Representation de la matrice des termes d'interaction du modele pour la variable :",variable,",\nla valeur entre parenthese correspond a l'ecovalence de Wricke du facteur"))
-  matrix_inter_plot = matrix_inter_plot + theme(plot.title = element_text(lineheight=.8, face="bold"))
-  
-  return(matrix_inter_plot)
-}
-
-
 
 gpieplot = function(anov, var){
   #anov : anova du modèle complet, var : nom de la variable étudiée
