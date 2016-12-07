@@ -81,26 +81,30 @@ ggplot_which_won_where = function(res.pca){
   
   # get info only where there are variables
   ind = droplevels(filter(ind, sector %in% unique(var$sector)))
-
+  
   # entry with the highest value in each sector, i.e. biggest segment from 0, i.e. biggest hypothenus
   ind$id = c(1:nrow(ind))
   ind$hypo = sqrt(abs(ind$Dim.1)^2 + abs(ind$Dim.2)^2)
   winner = data.frame()
   vec_s = sort(unique(as.character(ind$sector)))
   
-  for(s in vec_s){
-    sec = droplevels(filter(ind, sector == s))
-    id_win = sec[which(sec$hypo == max(sec$hypo)), "id"]
-    xwin = ind[id_win, "Dim.1"]
-    ywin = ind[id_win, "Dim.2"]
-    info = as.numeric(as.character(c(xwin, ywin, s)))
-    winner = rbind.data.frame(winner, info)
-  }
-  colnames(winner) = c("x", "y", "sector")
-  winner$sector = c(1:nrow(winner))
-  winner$sector = as.factor(winner$sector)
-
-  p = p + geom_point(data = winner, aes(x = x, y = y, color = sector), inherit.aes = FALSE)
+  if( length(vec_s) > 0 ){
+    for(s in vec_s){
+      sec = droplevels(filter(ind, sector == s))
+      id_win = sec[which(sec$hypo == max(sec$hypo)), "id"]
+      xwin = ind[id_win, "Dim.1"]
+      ywin = ind[id_win, "Dim.2"]
+      info = as.numeric(as.character(c(xwin, ywin, s)))
+      winner = rbind.data.frame(winner, info)
+    }
+    
+    colnames(winner) = c("x", "y", "sector")
+    winner$sector = c(1:nrow(winner))
+    winner$sector = as.factor(winner$sector)
+    
+    p = p + geom_point(data = winner, aes(x = x, y = y, color = sector), inherit.aes = FALSE)
+  } else { warning("There are no sectors") }
+  
   p = p + ggtitle("which won where")
     
   return(p)
