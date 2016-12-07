@@ -12,10 +12,7 @@ GxE_build_interaction_matrix(data, gxe_analysis)
 \item{gxe_analysis}{the analysis to carry out: "AMMI" or "GGE"}
 }
 \value{
-The function returns two lists with
-\itemize{
- \item for each variable a list with
- }
+The function returns the interaction matrix
 }
 \description{
 \code{GxE_build_interaction_matrix} computes interaction matrix for AMMI or GGE model
@@ -25,5 +22,8 @@ The computation is insoired from the agricolae::AMMI function. Another way to do
 }
 \author{
 Pierre Riviere
+}
+\seealso{
+\code{GxE}
 }
 
