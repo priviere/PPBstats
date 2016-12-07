@@ -25,7 +25,8 @@ Depends:
     factoextra,
     ibd,
     RCurl,
-    bitops
+    bitops,
+    reshape2
 Suggests: 
     ggmcmc,
     GGEBiplotGUI,
