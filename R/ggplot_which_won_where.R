@@ -77,7 +77,9 @@ ggplot_which_won_where = function(res.pca){
   }
   
   var = get_sector(res.pca$var$coord, per_line)
-  ind = get_sector(res.pca$ind$coord, per_line)
+  var$location = rownames(var)
+  
+  ind = get_sector(res.pca$ind$coord, per_line); ind$germplasm = rownames(ind)
   
   # get info only where there are variables
   ind = droplevels(filter(ind, sector %in% unique(var$sector)))
@@ -90,23 +92,29 @@ ggplot_which_won_where = function(res.pca){
   
   if( length(vec_s) > 0 ){
     for(s in vec_s){
-      sec = droplevels(filter(ind, sector == s))
-      id_win = sec[which(sec$hypo == max(sec$hypo)), "id"]
-      xwin = ind[id_win, "Dim.1"]
-      ywin = ind[id_win, "Dim.2"]
-      info = as.numeric(as.character(c(xwin, ywin, s)))
-      winner = rbind.data.frame(winner, info)
+      sec_ind = droplevels(filter(ind, sector == s))
+      sec_var = droplevels(filter(var, sector == s))
+      
+      id_win = sec_ind[which(sec_ind$hypo == max(sec_ind$hypo)), "id"]
+      xwin = as.numeric(as.character(ind[id_win, "Dim.1"]))
+      ywin = as.numeric(as.character(ind[id_win, "Dim.2"]))
+      
+      g = ind[id_win, "germplasm"]
+      l = paste(sec_var[, "location"], collapse = ", ")
+      
+      w_tmp = data.frame(xwin, ywin, factor(s), factor(g), factor(l))
+      winner = rbind.data.frame(winner, w_tmp)
     }
     
-    colnames(winner) = c("x", "y", "sector")
+    colnames(winner) = c("x", "y", "sector", "germplasm", "location")
     winner$sector = c(1:nrow(winner))
-    winner$sector = as.factor(winner$sector)
+    winner$sector = as.factor(paste(winner$sector, ": ", winner$location, " -> ", winner$germplasm, sep = ""))
     
     p = p + geom_point(data = winner, aes(x = x, y = y, color = sector), size = 3, inherit.aes = FALSE)
   } else { warning("There are no sectors") }
   
   p = p + ggtitle("which won where")
-    
+  
   return(p)
 }
 
