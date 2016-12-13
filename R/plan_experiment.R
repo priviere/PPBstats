@@ -279,9 +279,13 @@ plan_experiment = function(
       dok$block = as.factor(dok$block)
       dok$X = as.factor(dok$X)
       dok$Y = as.factor(dok$Y)
+      dok$location = as.factor(d$location)
+      dok$year = as.factor(d$year)
+      dok = dok[,c("location", "year", "germplasm", "block", "X", "Y")]
       return(dok)
     }
-  
+    
+    
     rename_d = function(d, germplasm, controls){
       XXX = paste("XXX", c(1:length(germplasm)), sep = "-")
       names(XXX) = XXX
