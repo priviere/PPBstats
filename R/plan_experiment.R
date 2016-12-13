@@ -315,8 +315,8 @@ plan_experiment = function(
       p = ggplot(data = d, aes(x = X, y = Y, label = germplasm))
       p = p + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
       p = p + geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, color = block), fill = NA, size = 1)
-      
-      return(p)        
+      p = p + ggtitle(paste(d[1,"location"], d[1,"year"], sep = ":")) + theme(plot.title = element_text(hjust = 0.5))
+      return(p)
     }
     
     format_data = function(d, return.format){
