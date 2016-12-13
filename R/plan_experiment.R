@@ -453,6 +453,8 @@ plan_experiment = function(
       d$block = as.factor(d$block)
       d$X = as.factor(d$X)
       d$Y = as.factor(d$Y)
+      d$location = location
+      d$year = year
       
       d = rename_d(d, germplasm, controls = NULL)
       p = get_ggplot_plan(d)
