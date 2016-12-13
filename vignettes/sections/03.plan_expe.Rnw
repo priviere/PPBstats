@@ -124,8 +124,10 @@ case & number of locations & number of years & comments regarding entries replic
 \subsubsection{Case 1}
 <<message=TRUE,cache=FALSE>>=
 p_fr = plan_experiment(
+  location = "Location-1",
+  year = "2016",
   expe.type = "fully-replicated", 
-  entries = paste("germ", c(1:20), sep = ":"), 
+  germplasm = paste("germ", c(1:20), sep = ":"), 
   nb.blocks = 3, 
   nb.cols = 4)
 @
@@ -139,8 +141,10 @@ You can set the format to a SHiNeMaS\footnote{} reproduction template file:
 
 <<message=TRUE,cache=FALSE>>=
 p_fr = plan_experiment(
+  location = "Location-2",
+  year = "2016",
   expe.type = "fully-replicated", 
-  entries = paste("germ", c(1:20), sep = ":"), 
+  germplasm = paste("germ", c(1:20), sep = ":"), 
   nb.blocks = 3, 
   nb.cols = 4,
   return.format = "shinemas")
@@ -159,8 +163,10 @@ p_fr$"fully-replicated"$plan
 \subsubsection{Case 2}
 <<message=TRUE,cache=FALSE>>=
 p_case2 = plan_experiment(
+  location = "Location-3",
+  year = "2016",
   expe.type = "row-column", 
-  entries = paste("germ", c(1:20), sep = ":"),
+  germplasm = paste("germ", c(1:20), sep = ":"),
   controls = "toto",
   nb.controls.per.block = 7, 
   nb.blocks = 1, 
@@ -185,8 +191,10 @@ Here, six designs are generated: four for satellite farm and two for regional fa
 
 <<message=TRUE,cache=FALSE>>=
 p_case3_sf1 = plan_experiment(
+  location = "Location-4",
+  year = "2016",
   expe.type = "satellite-farm", 
-  entries = paste("germ", c(1:6), sep = ":"),
+  germplasm = paste("germ", c(1:6), sep = ":"),
   controls = "toto",
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
@@ -194,8 +202,10 @@ p_case3_sf1 = plan_experiment(
 p_case3_sf1 = p_case3_sf1$`satellite-farms`$plan
 
 p_case3_sf2 = plan_experiment(
+  location = "Location-5",
+  year = "2016",
   expe.type = "satellite-farm", 
-  entries = paste("germ", c(1:6), sep = ":"),
+  germplasm = paste("germ", c(1:6), sep = ":"),
   controls = "toto",
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
@@ -203,8 +213,10 @@ p_case3_sf2 = plan_experiment(
 p_case3_sf2 = p_case3_sf2$`satellite-farms`$plan
 
 p_case3_sf3 = plan_experiment(
+  location = "Location-6",
+  year = "2016",
   expe.type = "satellite-farm", 
-  entries = paste("germ", c(1:6), sep = ":"),
+  germplasm = paste("germ", c(1:6), sep = ":"),
   controls = "toto",
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
@@ -212,8 +224,10 @@ p_case3_sf3 = plan_experiment(
 p_case3_sf3 = p_case3_sf3$`satellite-farms`$plan
 
 p_case3_rf1 = plan_experiment(
+  location = "Location-7",
+  year = "2016",
   expe.type = "regional-farm", 
-  entries = paste("germ", c(1:16), sep = ":"),
+  germplasm = paste("germ", c(1:16), sep = ":"),
   controls = c("c1", "c2", "c3", "c4"),
   nb.controls.per.block = 4, 
   nb.blocks = 2, 
@@ -221,8 +235,10 @@ p_case3_rf1 = plan_experiment(
 p_case3_rf1 = p_case3_rf1$`regional-farms`$plan
 
 p_case3_rf2 = plan_experiment(
+  location = "Location-8",
+  year = "2016",
   expe.type = "regional-farm", 
-  entries = paste("germ", c(1:16), sep = ":"),
+  germplasm = paste("germ", c(1:16), sep = ":"),
   controls = c("c1", "c2", "c3"),
   nb.controls.per.block = 3, 
   nb.blocks = 2, 
@@ -235,8 +251,10 @@ Each row beeing a sower width.
 
 <<message=TRUE,cache=FALSE>>=
 p_case3_sf4 = plan_experiment(
+  location = "Location-9",
+  year = "2016",
   expe.type = "satellite-farm", 
-  entries = paste("germ", c(1:6), sep = ":"),
+  germplasm = paste("germ", c(1:6), sep = ":"),
   controls = "C",
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
@@ -292,8 +310,10 @@ If there are less than 2 blocks, an error is returned.
 
 <<message=TRUE,cache=FALSE>>=
 p_ibd = plan_experiment(
+  location = "Location-9",
+  year = "2016",
   expe.type = "IBD", 
-  entries = paste("germ", c(1:10), sep = ":"),
+  germplasm = paste("germ", c(1:10), sep = ":"),
   nb.blocks = 8, 
   nb.cols = 4)
 @
