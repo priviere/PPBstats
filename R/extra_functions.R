@@ -67,8 +67,8 @@ get_perpendicular_segment = function(x1, y1, x2, y2, x3, y3, longer = FALSE){
   
   # to make the segment longer
   if(longer & x4 != 0){
-    y4 = y4/x4 * x4*2
-    x4 = x4*2
+    y4 = y4/x4 * x4*1000000
+    x4 = x4*1000000
   }
   
   return(c(x1 = x3, y1 = y3, x2 = x4, y2 = y4))
