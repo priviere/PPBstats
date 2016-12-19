@@ -1,6 +1,11 @@
 \subsection{model~\ref{model1} to perform mean comparisons on farms }
 \label{section_model1}
 
+At the \textbf{farm level}, the residual had few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
+Hence, model~\ref{model1} was implemented (section~\ref{section_model1}).
+
+For model \ref{model1}, it gave nice results with more than 20 environment \citep{riviere_hierarchical_2015}.
+
 \subsubsection{Theory of the model}
 
 The model is describe in \citet{riviere_hierarchical_2015}.
