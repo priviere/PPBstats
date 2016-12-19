@@ -215,7 +215,7 @@ get.ggplot = function(
           p_to_get = filter(data_version, environment == x$environment[1])$mu
           x = filter(x, parameter %in% p_to_get)
           x$max = max(x$median, na.rm = TRUE)
-          x = arrange(x, median)
+          x = arrange(x, parameter)
           x$split = add_split_col(x, nb_parameters_per_plot)
           x_split = plyr:::splitter_d(x, .(split))
           return(x_split)
@@ -241,8 +241,7 @@ get.ggplot = function(
                   if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
                   if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
                 }
-                if (c1 > c2) {pvalue = data_Mpvalue_env[c2, c1]}
-                if (c2 > c1) {pvalue = data_Mpvalue_env[c1, c2]}
+                pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
 
                 if(is.null(pvalue)) { stars = " "} else {
                   if(pvalue < 0.001) { stars = "***" }
@@ -255,7 +254,7 @@ get.ggplot = function(
               }
 
               colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
-              d = join(data_version_tmp, dx, "mu")
+              d = join(data_version_tmp, dx, by = "mu")
               
               # delete version where there are v1 AND v2
               group_to_keep = NULL
@@ -629,21 +628,38 @@ get.ggplot = function(
     if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
     a$germplasm = gsub("alpha", "", a$parameter)
     colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
-    colnames(a)[which(colnames(a) == "median")] = "alpha_i"
+    colnames(a)[which(colnames(a) == "median")] = "effet_genetique"
     
     b = data_2$mean.comparisons
     test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
     if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
     b$germplasm = gsub("beta", "", b$parameter)
     colnames(b)[which(colnames(b) == "parameter")] = "parameter_b"
-    colnames(b)[which(colnames(b) == "median")] = "beta_i"
+    colnames(b)[which(colnames(b) == "median")] = "sensibilite"
+    
     
     ab = join(a, b, "germplasm")
+    ab=ab[which(!is.na(ab$sensibilite) & !is.na(ab$effet_genetique)),]
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)
     
-    p = ggplot(ab, aes(x = alpha_i, y = beta_i, label = germplasm)) 
-    p = p + geom_text() + geom_hline(yintercept = 0)
+    if(is.null(nb_parameters_per_plot)){nb_parameters_per_plot = nrow(ab)}
+    if(nb_parameters_per_plot > nrow(ab)){nb_parameters_per_plot = nrow(ab)}
+    if(nb_parameters_per_plot < nrow(ab)){
+      ab$split = rep(c(1:ceiling(nrow(ab)/nb_parameters_per_plot)), floor(nrow(ab)/(ceiling(nrow(ab)/nb_parameters_per_plot))))[1:nrow(ab)]
+    }else{
+      ab$split = rep(1,nrow(ab))
+    }
+    
+    xlim = c(floor(min(ab$effet_genetique)),ceiling(max(ab$effet_genetique)))
+    ylim = c(min(ab$sensibilite),max(ab$sensibilite))
+    
+    d_ab = plyr:::splitter_d(ab, .(split))
+    
+    p = lapply(d_ab,function(y){
+      p = ggplot(y, aes(x = effet_genetique, y = sensibilite, label = germplasm)) + coord_cartesian(xlim = xlim, ylim = ylim, expand = FALSE)
+      p = p + geom_text() + geom_hline(yintercept = 0)
+    })
     OUT = list("biplot-alpha-beta" = p)
   }
   
