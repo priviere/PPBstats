@@ -1,7 +1,11 @@
 \section{Philosophy of \pack}
 
-\pack~aims to facilitate the implementation of statistical methods commoly foind in Participatory Plant Breeding programmes.
+\pack~aims to facilitate the implementation of statistical methods commoly foind in \PPB~programmes.
 The statistical procedures are based on frequentist and bayesian approaches.
+
+\subsection{What is \PPB ?}
+
+!!! TO DO !!!
 
 \subsection{Function relations in \pack}
 
@@ -135,7 +139,7 @@ and download from internet the data used in this vignette (this is useful to ear
 
 <<message=FALSE,cache=FALSE,eval=FALSE>>=
 get.PPBstats.data() # not run
-# |======================================================================================| 100%
+# |=======================================================================| 100%
 # The data are downloaded in ./data_PPBstats/ 
 # You can now load the data, for example load("./data_PPBstats/out1.Rdata").
 @
