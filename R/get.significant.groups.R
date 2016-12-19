@@ -34,7 +34,9 @@ get.significant.groups = function(
     if( p.adj == "soft.bonf") { alpha = alpha / ncol(Mpvalue) }
   }
   
-  letters = c(letters, paste(rep(LETTERS, times = 15), rep(c(1:5), each = 15), sep = ""))
+  L=rep(LETTERS, times = 30)
+  letters = c(letters, paste(L, rep(c(1:(length(L)/26)), each = 26), sep = ""))
+
   
   # 2. For each parameter, put in a list the one that are not different at alpha ----------
   M = Mpvalue
@@ -54,8 +56,7 @@ get.significant.groups = function(
   
   for (i in 1:length(GP)) {
     liste_pop = unlist(GP[[i]])
-    for (j in 1:length(liste_pop))
-    {
+    for (j in 1:length(liste_pop)) {
       letter[liste_pop[j],i] = letters[i]
     }
   }
