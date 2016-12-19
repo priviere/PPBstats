@@ -30,8 +30,8 @@
 #'  }
 #' 
 #' @details 
-#' Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns or rows.
-#' The algoritms are the following:
+#' Note that an efficient R package to design experiment is DiGGer, see \url{http://www.austatgen.org/software/} for mor details. Unfortunately, the lience of the package did not allow us to fork the code. 
+#' In this function, the code is based on the following algorithms:
 #' \itemize{
 #'  \item "satellite-farm"
 #'  \enumerate{
@@ -50,6 +50,7 @@
 #'   \item check number of controls in col and row and send a warning message if control are missing in rows or columns
 #'  }
 #'  \item "row-column"
+#'  Note that expe.type = "row-column" is particular case of expe.type = "regional-farm" where the number of controls must be at least the number of columns or rows.
 #'  \enumerate{
 #'	 \item randomize the germplasm
 #'   \item get the data frame with blocks, columns and controls in each block
