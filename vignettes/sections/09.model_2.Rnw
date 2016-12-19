@@ -1,6 +1,12 @@
 \subsection{model~\ref{model2} to analyse $G \times E$ interaction in the network of farms }
 \label{section_model2}
 
+At the \textbf{network level}, there is a large germplasm $\times$ environment combinaisons that are missing, leading to a poor estimation of germplasm, environment and interaction effects.
+Hence, model~\ref{model2} was implemented (section~\ref{section_model2}).
+
+For model \ref{model2}, it gave nice results with 75 environments and 120 germplasms present in at least two environments (95\% of missing $G \times E$ combinaisons) \citep{riviere_hierarchical_2016}.
+
+
 \subsubsection{Theory of the model}
 The model is describe in \citet{riviere_hierarchical_2016}.
 
