@@ -26,10 +26,13 @@
 
 \usepackage{colortbl, xcolor}
 \usepackage{float}
+\usepackage{lscape}
+\usepackage{multirow}
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.12}
+\newcommand{\versionnumber}{0.13}
+\newcommand{\PPB}{Participatory Plant Breeding}
 
 \begin{document}
 
@@ -46,60 +49,59 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 })
 @
 
-\input{./sections/1.head}
+\input{./sections/01.head}
 
-<<child='sections/2.philo_pack.Rnw'>>=
+<<child='sections/02.philo_pack.Rnw'>>=
 @
-
 \newpage
 
-<<child='sections/3.plan_expe.Rnw'>>=
+<<child='sections/03.plan_expe.Rnw'>>=
 @
+\newpage
+
+\section{Sow, note, harvest, measure ... }
+!!! ADD PICTURES !!!
 
 \newpage
 
-<<child='sections/4.describe_data.Rnw'>>=
-@
+%<<child='sections/04.describe_data.Rnw'>>=
+%@
+%\newpage
 
-\newpage
+%\section{Analyse balanced data at the farm level}
 
-\chapter{Analyse balanced data}
+%<<child='sections/05.classic_anova.Rnw'>>=
+%@
+%\newpage
 
-  on farm
-    ANOVA classique BLUEs BLUPs
-  on netowrk of farms
-    AMMI
-    GGE GGEbiplot
-  
 
-\chapter{Analyse ubalanced data}
+%\section{Analyse balanced data at the network of farms level}
 
-  experimantal design
-    mother baby RFplan_expeand SF
-  on farm
-    model 1
-    Spatial analysis
-  on netowrk of farms
-    model 2
-    model 3
-    ...
+%<<child='sections/06.ammi_gge.Rnw'>>=
+%@
+%\newpage
 
-\newpage
 
-<<child='sections/2.philo_pack.Rnw'>>=
-@
+%\section{Analyse ubalanced data at the farm level}
 
-\newpage
+%<<child='sections/07.spatial_analysis.Rnw'>>=
+%@
+%\newpage
 
-<<child='sections/3.model_1.Rnw'>>=
-@
+%<<child='sections/08.model_1.Rnw'>>=
+%@
+%\newpage
 
-\newpage
 
-<<child='sections/4.model_2.Rnw'>>=
-@
+%\section{Analyse ubalanced data at the network of farms level}
 
-\newpage
+%<<child='sections/09.model_2.Rnw'>>=
+%@
+
+%\newpage
+
+% model_3 \newpage
+
 
 \section*{To cite \pack} \addcontentsline{toc}{section}{To cite \pack}
 To cite this package and or this vignette:
@@ -108,7 +110,7 @@ To cite this package and or this vignette:
 citation("PPBstats")
 @
 
-\input{./sections/5.tail}
+\input{./sections/10.tail}
 
 \end{document}
 
