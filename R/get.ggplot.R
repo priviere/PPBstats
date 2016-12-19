@@ -628,18 +628,18 @@ get.ggplot = function(
     if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
     a$germplasm = gsub("alpha", "", a$parameter)
     colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
-    colnames(a)[which(colnames(a) == "median")] = "effet_genetique"
+    colnames(a)[which(colnames(a) == "median")] = "alpha_i"
     
     b = data_2$mean.comparisons
     test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
     if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
     b$germplasm = gsub("beta", "", b$parameter)
     colnames(b)[which(colnames(b) == "parameter")] = "parameter_b"
-    colnames(b)[which(colnames(b) == "median")] = "sensibilite"
+    colnames(b)[which(colnames(b) == "median")] = "beta_i"
     
     
     ab = join(a, b, "germplasm")
-    ab=ab[which(!is.na(ab$sensibilite) & !is.na(ab$effet_genetique)),]
+    ab=ab[which(!is.na(ab$sensibilite) & !is.na(ab$alpha_i)),]
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)
     
@@ -651,8 +651,8 @@ get.ggplot = function(
       ab$split = rep(1,nrow(ab))
     }
     
-    xlim = c(floor(min(ab$effet_genetique)),ceiling(max(ab$effet_genetique)))
-    ylim = c(min(ab$sensibilite),max(ab$sensibilite))
+    xlim = c(floor(min(ab$effet_genetique)),ceiling(max(ab$alpha_i)))
+    ylim = c(min(ab$sensibilite),max(ab$beta_i))
     
     d_ab = plyr:::splitter_d(ab, .(split))
     
