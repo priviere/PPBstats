@@ -36,6 +36,6 @@ get.PPBstats.data = function()
   close(pb)
   setwd("../")
 
-  message("The data are downloaded in ./data_PPBstats/ \n You can now load the data, for example load(\"./data_PPBstats/out1.Rdata\").", sep = "")
+  message("The data are downloaded in ./data_PPBstats/ \nYou can now load the data, for example load(\"./data_PPBstats/out1.Rdata\").")
 }
 
