@@ -10,6 +10,12 @@ PPBstats 0.13 ---------------------------------------
 
 * rename function
   - AMMI.R becomes GxE.R
+  
+* update function
+  - MC.R
+  - get.ggplot.R: manage nb_parameters_per_plot for ggplot.type == "biplot-alpha-beta"
+  - get.significant.group.R
+  - get.PPBstats.data.R
 
 * vignette
   - refactor the code
@@ -39,7 +45,7 @@ PPBstats 0.11.0 -------------------------------------
 * update some little bugs regarding tests
 
 * update the vignette
-  . add example for data_versio
+  . add example for data_version
   . add example for ggplot.type = "biplot-alpha-beta"
   
 
