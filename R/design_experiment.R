@@ -26,7 +26,7 @@
 #' The function returns a list with
 #' \itemize{
 #'  \item A data frame according to return.format
-#'  \item A picture of the experimental plan
+#'  \item An image of the experimental design
 #'  }
 #' 
 #' @details 
@@ -66,7 +66,7 @@
 #'   \item arrange randomization so that no germplasm can be in the same column between blocks
 #'  }
 #'  \item "IBD"
-#' the randomization is based on the ibd function in the ibd package. See ?ibd for more information
+#' the randomization is based on the ibd function in the ibd package. See \code{?ibd} for more information
 #' }
 #' @author Pierre Riviere
 #' 
