@@ -2,7 +2,7 @@
 #' Provides experimental plan for several situations
 #'
 #' @description
-#' \code{plan_experiment} provides experimental plan for several situations
+#' \code{design_experiment} provides experimental plan for several situations
 #' 
 #' @param expe.type The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD".
 #' 
@@ -70,7 +70,7 @@
 #' }
 #' @author Pierre Riviere
 #' 
-plan_experiment = function(
+design_experiment = function(
   expe.type,
   location = "location",
   year = "2016",
