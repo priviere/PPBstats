@@ -1,4 +1,4 @@
-\section{Plan the experiment}
+\section{Design the experiment}
 
 Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the space available.
 
@@ -24,7 +24,7 @@ The different effects that can be estimated are:
 \item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
 \item \textbf{Family 2} gathers analysis that estimate germplasm, location and interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
 \item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location and year are separated.
-\item Family 4 gathers analysis answering specific research questions. This is for analysis on one farm or more.
+\item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
 \end{itemize}
 Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
 
@@ -54,7 +54,7 @@ Family & Name & Section &
 3 & Bayesian model 3 & \ref{bayesian_model_3} & X & X & X & & X & X & & \\
 \hline
 4 & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
-  & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & X \\
+  & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
 \hline
 \end{tabular}
 \caption{Analysis carry out in \pack. X: effects that are estimated. (X): effects that can be estimated.}
@@ -74,7 +74,7 @@ The key elements to choose an appropriate experimental designs are:
 \item the replication of entries within and between locations
 \end{itemize}
 
-\noindent Function \texttt{plan\_experiment} settle experimental design based on :
+\noindent Function \texttt{design\_experiment} settle experimental design based on :
 \begin{itemize} 
 \item the number of entries
 \item the number of controls per blocks
@@ -84,11 +84,11 @@ The key elements to choose an appropriate experimental designs are:
 
 \noindent The function returns a list with
 \begin{itemize} 
-\item A data frame with entries, block, X, Y
-\item A picture of the experimental plan
+\item A data frame
+\item An image of the experimental design
 \end{itemize} 
 
-\noindent A description of the algorithme is describe in the help of the function: \texttt{?plan\_experiment}.
+\noindent A description of the algorithm is describe in the help of the function: \texttt{?design\_experiment}.
 
 \noindent Table \ref{cases_expe} summarize the different experimental design regarding analysis.
 
@@ -123,7 +123,7 @@ case & number of locations & number of years & comments regarding entries replic
 
 \subsubsection{Case 1}
 <<message=TRUE,cache=FALSE>>=
-p_fr = plan_experiment(
+p_fr = design_experiment(
   location = "Location-1",
   year = "2016",
   expe.type = "fully-replicated", 
@@ -137,10 +137,10 @@ By default, the data frame is under a standard format:
 head(p_fr$"fully-replicated"$data.frame)
 @
 
-You can set the format to a SHiNeMaS\footnote{} reproduction template file:
+You can set the format to a SHiNeMaS\footnote{Seeds History and Network Management System, see \url{http://moulon.inra.fr/index.php/en/tranverse-team/atelier-de-bioinformatique/projects/181} for more details} reproduction template file:
 
 <<message=TRUE,cache=FALSE>>=
-p_fr = plan_experiment(
+p_fr = design_experiment(
   location = "Location-2",
   year = "2016",
   expe.type = "fully-replicated", 
@@ -155,14 +155,15 @@ head(p_fr$"fully-replicated"$data.frame)
 @
 
 
-
 <<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
 p_fr$"fully-replicated"$plan
 @
 
+
+
 \subsubsection{Case 2}
 <<message=TRUE,cache=FALSE>>=
-p_case2 = plan_experiment(
+p_case2 = design_experiment(
   location = "Location-3",
   year = "2016",
   expe.type = "row-column", 
@@ -187,10 +188,16 @@ The controls must catch as much as possible of the trial variation.
 
 
 \subsubsection{Case 3}
+
+Regional farms had several entries (i.e. a germplasm in an environment) in two or more blocks with entries replicated in each block.
+Satellite farms had no block and one entry replicated twice.
+Farmers chose the other entries to be sown that were not replicated.
+The number of entries may vary between farms.
+
 Here, six designs are generated: four for satellite farm and two for regional farm.
 
 <<message=TRUE,cache=FALSE>>=
-p_case3_sf1 = plan_experiment(
+p_case3_sf1 = design_experiment(
   location = "Location-4",
   year = "2016",
   expe.type = "satellite-farm", 
@@ -201,7 +208,7 @@ p_case3_sf1 = plan_experiment(
   nb.cols = 2)
 p_case3_sf1 = p_case3_sf1$`satellite-farms`$plan
 
-p_case3_sf2 = plan_experiment(
+p_case3_sf2 = design_experiment(
   location = "Location-5",
   year = "2016",
   expe.type = "satellite-farm", 
@@ -212,7 +219,7 @@ p_case3_sf2 = plan_experiment(
   nb.cols = 2)
 p_case3_sf2 = p_case3_sf2$`satellite-farms`$plan
 
-p_case3_sf3 = plan_experiment(
+p_case3_sf3 = design_experiment(
   location = "Location-6",
   year = "2016",
   expe.type = "satellite-farm", 
@@ -223,7 +230,7 @@ p_case3_sf3 = plan_experiment(
   nb.cols = 2)
 p_case3_sf3 = p_case3_sf3$`satellite-farms`$plan
 
-p_case3_rf1 = plan_experiment(
+p_case3_rf1 = design_experiment(
   location = "Location-7",
   year = "2016",
   expe.type = "regional-farm", 
@@ -234,7 +241,7 @@ p_case3_rf1 = plan_experiment(
   nb.cols = 4)
 p_case3_rf1 = p_case3_rf1$`regional-farms`$plan
 
-p_case3_rf2 = plan_experiment(
+p_case3_rf2 = design_experiment(
   location = "Location-8",
   year = "2016",
   expe.type = "regional-farm", 
@@ -250,7 +257,7 @@ If you have many space and many seeds, you can adapt the satellite farm design w
 Each row beeing a sower width.
 
 <<message=TRUE,cache=FALSE>>=
-p_case3_sf4 = plan_experiment(
+p_case3_sf4 = design_experiment(
   location = "Location-9",
   year = "2016",
   expe.type = "satellite-farm", 
@@ -308,8 +315,10 @@ If there are less than 2 blocks, an error is returned.
 
 \subsubsection{Case ???}
 
+One or more block per farm.
+
 <<message=TRUE,cache=FALSE>>=
-p_ibd = plan_experiment(
+p_ibd = design_experiment(
   location = "Location-9",
   year = "2016",
   expe.type = "IBD", 
@@ -327,49 +336,4 @@ head(p_ibd$`IBD`$data.frame)
 p_ibd$`IBD`$plan
 @
 
-One or more block per farm.
-
-\newpage
-
-These methods aim to analyse highly unbalanced datasets that can be found in decentralized participatory plant breeding (PPB).
-
-It has been developped for dataset with two types of farms, regional and satellite, based on their experimental design.
-
-Regional farms had several populations (i.e. a germplasm in an environment) in two or more blocks with populations replicated in each block.
-Satellite farms had no block and one germplasm replicated twice.
-
-Farmers chose the other populations to be sown that were not replicated (Figure \ref{plan_SF_RF}).
-
-The number of populations may vary between farms.
-
-\begin{figure}[H]
-        \begin{center}
-                \begin{tabular}{|m{.25\textwidth}|m{.45\textwidth}|}
-                        \hline
-                        \includegraphics[width=.25\textwidth]{plan_FS.pdf}
-                        &
-                        \vspace{.5cm}\includegraphics[width=.45\textwidth]{plan_FR.pdf} \\
-                        satellite farm & regional farm \\
-                        \hline
-                \end{tabular}
-
-                \caption{Experimental design of satellite and regional farms. Controls replicated are in black boxes : $Rouge$-$du$-$Roc$, $Renan$, $C14$ and $C21$. pop stands for `tested population'.}
-                \label{plan_SF_RF}
-        \end{center}
-\end{figure}
-
-\begin{itemize}
-\item At the \textbf{farm level}, the residual had few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
-Hence, model~\ref{model1} was implemented (section~\ref{section_model1}).
-
-\item At the \textbf{network level}, there is a large germplasm $\times$ environment combinaisons that are missing, leading to a poor estimation of germplasm, environment and interaction effects.
-Hence, model~\ref{model2} was implemented (section~\ref{section_model2}).
-
-\end{itemize}
-
-These methods are of interest if you have a large data set with a high number of environments and germplasms.
-For model \ref{model1}, it gave nice results with more than 20 environment \citep{riviere_hierarchical_2015}.
-For model \ref{model2}, it gave nice results with 75 environments and 120 germplasms present in at least two environments (95\% of missing $G \times E$ combinaisons) \citep{riviere_hierarchical_2016}.
-
-This will be further explore in simulation studies.
 
