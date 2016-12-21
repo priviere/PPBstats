@@ -143,7 +143,7 @@ res_ammi_y1$GxE$ecovalence
 
 
 \paragraph{PCA}
-The results of the PCA is a list divided into three elements as explained in \citet{ceccarelli_technical_2015}:
+The results of the PCA is a list divided into three elements as explained in \citet{ceccarelli_manual_2012}:
 
 \begin{itemize}
 \item The percentage of variance explained by each composante of the PCA.
