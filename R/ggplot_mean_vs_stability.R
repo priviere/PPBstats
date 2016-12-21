@@ -41,7 +41,7 @@ ggplot_mean_vs_stability = function(res.pca){
   a = join(ind, per_line, by = "x1")[c("label", "score")]
   if( slope > 0 ){ a = arrange(a, -score) } else { a = a(per_line, score) }
   
-  vec_rank = as.character(paste("Ranking of germplasms: \n", paste(a$label, collapse = " > "), sep = ""))
+  vec_rank = as.character(paste("Ranking of entries: \n", paste(a$label, collapse = " > "), sep = ""))
   
   p = p + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = score), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
