@@ -28,7 +28,7 @@ ggplot_discrimitiveness_vs_representativeness = function(res.pca){
   colnames(var)[2:3] = c("x2", "y2")
   a = join(var, d, by = "x2")[c("label", "value")]
   a = arrange(a, -value)
-  vec_disc = as.character(paste("Ranking of discrimitiveness: \n", paste(a$label, collapse = " > "), sep = ""))
+  vec_disc = as.character(paste("Ranking of locations: \n", paste(a$label, collapse = " > "), sep = ""))
   
   p = p_common + geom_segment(data = d, aes(x = x1, y = y1, xend = x2, yend = y2, color = value), linetype = 2, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
@@ -53,7 +53,7 @@ ggplot_discrimitiveness_vs_representativeness = function(res.pca){
   
   colnames(var)[2:3] = c("x1", "y1")
   a = join(var, per_line, by = "x1")[c("label", "value")]
-  vec_rank = as.character(paste("Ranking of entries: \n", paste(a$label, collapse = " > "), sep = ""))
+  vec_rank = as.character(paste("Ranking of locations: \n", paste(a$label, collapse = " > "), sep = ""))
   
   p = p_common + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = value), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
