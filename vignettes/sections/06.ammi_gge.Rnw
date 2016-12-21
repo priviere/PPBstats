@@ -79,23 +79,54 @@ $\varepsilon_{ijk}$ the residuals.\\
 
 
 \subsubsection{Run the model}
+<<message=TRUE,cache=FALSE>>=
+ammi = GxE(d, vec_variables, gxe_analysis = "AMMI")
+@
+
+Lets' see for one variable
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1 = ammi$AMMI$y1
+@
 
 
 \subsubsection{Analysis of model outputs}
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$model$anova_model
+@
+
+
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$model$residuals
+@
+
+
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$model$variability_repartition
+@
 
 
 \subsubsection{Get main effects results}
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$germplasm
+@
+
 
 \paragraph{Germplasm effects}
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$location
+@
+
 
 \paragraph{Environment effects}
 
 \subsubsection{Get $G \times E$ effects results}
 
 \paragraph{interaction plot}
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$GxE$interaction_plot
+@
 
 \paragraph{ecovalence}
-
 
 Ecovalence from \citet{wricke_uber_1962} give part of interaction variance taken by germplasm and environment.
 It is an indicator of stability: a low ecovalence means low interaction, i.e. more stability.
@@ -106,8 +137,93 @@ Ecovalance of environment $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
 
 Ecovalances are represented in fonction of mean effects by germplasm and environment.
 
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$GxE$ecovalence
+@
+
 
 \paragraph{PCA}
+The results of the PCA is a list divided into three elements as explained in \citet{ceccarelli_technical_2015}:
+
+\begin{itemize}
+\item The percentage of variance explained by each composante of the PCA.
+In our case, only the two first composant are represented in a biplot.
+Note that the sum of variance caught by the two compostant must be as big as possible to be confident in the conclusion of the observations.
+
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$GxE$PCA$variation_dim
+@
+
+\item The which won where graph. 
+Perpendicular lines divide the biplot into sectors.
+The entry which have the largest value in a sector "win" in the location present in that sector.
+The information is summarized in the legend of the plot.
+
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$GxE$PCA$which_won_where
+@
+
+\item The mean vs stability graph.
+
+\begin{itemize}
+\item mean
+A red circle define the average location.
+An high score mean a greater mean performance of an entry.
+Entries with a score above zero means entries with above-average means.
+Entries with a score below zero means entries with below-average means.
+Note that the distance from the biplot origin to the average location circle (represented with an arrow), is a measure of the relative importance of the entry main effect versus the entry by location interaction.
+The longer the arrow is, the more important is entry effect and the more meaningful the selection based on mean performance. 
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$GxE$PCA$mean_vs_stability$mean
+@
+
+\item stability
+This information is related to the ecovalence graph.
+The score is equal to the length of the projection.
+A high score represents a low stability (i.e. an high entry by location interaction).
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$GxE$PCA$mean_vs_stability$stability
+@
+
+\end{itemize}
+
+
+\item The discrimitiveness vs representativeness graph. 
+A red circle define the average location, being the virtual better location to test the entries.
+
+The closer a given location is next to the circle, the more desirable it is judged on both discrimination and representativeness.
+
+\begin{itemize}
+
+\item discrimitiveness
+The higher the value, the highest the discrimitiveness for environments.
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$GxE$PCA$discrimitiveness_vs_representativeness$discrimitiveness
+@
+
+
+\item representativeness
+The highest the value, the less representative the environment.
+
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$GxE$PCA$discrimitiveness_vs_representativeness$representativeness
+@
+\end{itemize}
+
+
+Representativeness is a key factor to decide how a test location should be used in
+genotype evaluation, assuming adequate discriminating ability (Yan et al 2007). The
+representativeness should be measured over a number of years in order to assess its
+repeatability. A test location must be repeatable across years in ranking genotypes
+for it to be considered as highly representative and based on repeatability analysis; a
+highly representative test location, which is also highly repeatable by definition, is
+ideal for use as core test locations (Yan et al 2011). In a PPB program such as the
+one described in Fig. 11, these should be the attributes of the location where to
+plant the Stage 1 trials because genotypic differences observed at locations like
+these are both repeatable across years and representative of the other farmers fields
+in the area. It is crucial for a PPB breeding program to have test locations of this
+type.
+
 
 
 \subsection{GGE}
