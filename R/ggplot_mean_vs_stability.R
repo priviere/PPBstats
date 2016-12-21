@@ -27,7 +27,7 @@ ggplot_mean_vs_stability = function(res.pca){
   colnames(per_line) = c("x1", "y1", "x2", "y2")
   
   p_common = p
-
+  
   # Graph for means
   per_line$mean_score = round(sqrt(per_line$x1*per_line$x1 + per_line$y1*per_line$y1), 2)
   # the arrow point the greater value (i.e. greater score)
