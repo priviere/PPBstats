@@ -56,7 +56,7 @@ The function returns two lists with
      \itemize{
       \item "variation_dim"
       \item "which_won_where"
-      \item "mean_vs_stability"
+      \item "mean_vs_stability" a list with two elements: "mean" and "stability"
       \item "discrimitiveness_vs_representativeness"
      }
    }
