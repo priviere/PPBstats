@@ -64,7 +64,5 @@ ggplot_mean_vs_stability = function(res.pca){
   p_stability = p + ggtitle("Stability", vec_rank)
   
   p = list("mean" = p_mean, "stability" = p_stability)
-  print(p)
-  stop()
   return(p)
 }
