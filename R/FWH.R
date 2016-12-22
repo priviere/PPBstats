@@ -78,7 +78,7 @@ FWH = function(
 # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
-  check_data_vec_variables(data, vec_variables)
+  check_data_vec_variables(data, variable)
 
   if(nb_iterations < 20000) { warning("nb_iterations is below 20 000, which seems small to get convergence in the MCMC.")  }
   
