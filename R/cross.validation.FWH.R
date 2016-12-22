@@ -46,7 +46,7 @@ cross.validation.FWH = function(
   # let's go !!! ----------
 {
   # 1. Error message ----------
-  check_data_vec_variables(data, vec_variables)
+  check_data_vec_variables(data, variable)
   
   # The other error messages are done with the used of the function FWH
   
@@ -60,12 +60,16 @@ cross.validation.FWH = function(
     year = as.factor(as.character(data$year)),
     location = as.factor(as.character(data$location)),
     environment = as.factor(environment),
+    block = as.factor(as.character(data$block)),
+    X = as.factor(as.character(data$X)),
+    Y = as.factor(as.character(data$Y)),
     variable = as.numeric(as.character(data[,variable]))
   )
   
-  formule = as.formula("variable ~ germplasm + year + location + environment")
+  formule = as.formula("variable ~ germplasm + year + location + environment + block + X + Y")
   D = droplevels(aggregate(formule, FUN = mean, data = D))
-
+  
+  
   # 2.2. Get only germplasm that are on at least three environments ----------
   w = with(D, table(germplasm, environment))
   t = apply(w, 1, sum)
@@ -84,7 +88,7 @@ cross.validation.FWH = function(
     out = list("data" = d, "num_data" = i, "nb_total_data" = nrow(D), "real.value" = real.value, "germplasm" = germ, "environment" = env, "nb_iterations" = nb_iterations)
     list_data = c(list_data, list(out))
   }
-  
+
   # 4. Run the FWH model on each data set ----------
   fun = function(x) {
     
