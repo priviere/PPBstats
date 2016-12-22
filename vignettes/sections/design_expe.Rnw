@@ -44,15 +44,15 @@ Family & Name & Section &
 \rotatebox{90}{version effects}
 \\
 \hline
-1 & Anova & \ref{anova} & X & & & & & & \\
+1 & Anova & \ref{classic_anova} & X & & & & & & \\
   & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & \\
-  & Bayesian model 1 & \ref{bayesian_model_1} & X & & & & & & & \\
+  & Bayesian model 1 & \ref{model_1} & X & & & & & & & \\
 \hline
 2 & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
   & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
-  & Bayesian model 2 & \ref{bayesian_model_2} & & X & X & (X) & X & & & \\
+  & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
 \hline
-3 & Bayesian model 3 & \ref{bayesian_model_3} & X & X & X & & X & X & & \\
+3 & Bayesian model 3 & \ref{model_3} & X & X & X & & X & X & & \\
 \hline
 4 & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
   & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
