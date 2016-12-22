@@ -80,7 +80,7 @@ $\varepsilon_{ijk}$ the residuals.\\
 
 \subsubsection{Run the model}
 <<message=TRUE,cache=FALSE>>=
-ammi = GxE(d, vec_variables, gxe_analysis = "AMMI")
+ammi = GxE(PPBdata_GxE, vec_variables, gxe_analysis = "AMMI")
 @
 
 Lets' see for one variable
