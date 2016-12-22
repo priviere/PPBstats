@@ -49,59 +49,69 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 })
 @
 
-\input{./sections/01.head}
+\input{./sections/head}
 
-<<child='sections/02.philo_pack.Rnw'>>=
+<<child='sections/philo_pack.Rnw'>>=
 @
 \newpage
 
-<<child='sections/03.plan_expe.Rnw'>>=
+<<child='sections/design_expe.Rnw'>>=
 @
 \newpage
 
 \section{Sow, note, harvest, measure ... }
+\label{section_sow}
+
 !!! ADD PICTURES !!!
 
 \newpage
 
-%<<child='sections/04.describe_data.Rnw'>>=
-%@
-%\newpage
-
-%\section{Analyse balanced data at the farm level}
-
-%<<child='sections/05.classic_anova.Rnw'>>=
-%@
-%\newpage
+<<child='sections/describe_data.Rnw'>>=
+@
+\newpage
 
 
-%\section{Analyse balanced data at the network of farms level}
+\section{Family of analysis 1 : entry effects on one farm}
+\label{section_analysis1}
 
-%<<child='sections/06.ammi_gge.Rnw'>>=
-%@
-%\newpage
+<<child='sections/classic_anova.Rnw'>>=
+@
+\newpage
+
+<<child='sections/spatial_analysis.Rnw'>>=
+@
+\newpage
+
+<<child='sections/model_1.Rnw'>>=
+@
+\newpage
+
+\section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
+
+<<child='sections/ammi_gge.Rnw'>>=
+@
+\newpage
+
+<<child='sections/model_2.Rnw'>>=
+@
+\newpage
 
 
-%\section{Analyse ubalanced data at the farm level}
+\section{Family of analysis 3 : effects from family 1 and 2 in a network of farms}
 
-%<<child='sections/07.spatial_analysis.Rnw'>>=
-%@
-%\newpage
+<<child='sections/model_3.Rnw'>>=
+@
+\newpage
 
-%<<child='sections/08.model_1.Rnw'>>=
-%@
-%\newpage
+\section{Family of analysis 4 : specific research questions on one farm or more}
 
+<<child='sections/migrant_residant.Rnw'>>=
+@
+\newpage
 
-%\section{Analyse ubalanced data at the network of farms level}
-
-%<<child='sections/09.model_2.Rnw'>>=
-%@
-
-%\newpage
-
-% model_3 \newpage
-
+<<child='sections/version.Rnw'>>=
+@
+\newpage
 
 \section*{To cite \pack} \addcontentsline{toc}{section}{To cite \pack}
 To cite this package and or this vignette:
@@ -110,7 +120,7 @@ To cite this package and or this vignette:
 citation("PPBstats")
 @
 
-\input{./sections/10.tail}
+\input{./sections/tail}
 
 \end{document}
 
