@@ -1,4 +1,5 @@
 \section{Design the experiment}
+\label{doe}
 
 Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the space available.
 
