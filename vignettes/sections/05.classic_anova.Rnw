@@ -1,2 +1,4 @@
+\subsection{Classic ANOVA}
+\label{classic_anova}
 
 ANOVA classique BLUEs BLUPs

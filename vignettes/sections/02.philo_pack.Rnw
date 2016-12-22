@@ -1,4 +1,5 @@
 \section{Philosophy of \pack}
+\label{philo}
 
 \pack~aims to facilitate the implementation of statistical methods commoly foind in \PPB~programmes.
 The statistical procedures are based on frequentist and bayesian approaches.
