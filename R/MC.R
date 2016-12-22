@@ -80,15 +80,7 @@ MC = function(
 # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
-  mess = "The following column are compulsory : c(\"year\", \"germplasm\", \"location\", \"block\", \"X\", \"Y\"."
-  if(!is.element("year", colnames(data))) { stop(mess) }
-  if(!is.element("germplasm", colnames(data))) { stop(mess) }
-  if(!is.element("location", colnames(data))) { stop(mess) }
-  if(!is.element("block", colnames(data))) { stop(mess) }
-  if(!is.element("X", colnames(data))) { stop(mess) }
-  if(!is.element("Y", colnames(data))) { stop(mess) }
-  
-  if(!is.element(variable, colnames(data))) { stop(variable," is not in data") }
+  check_data_vec_variables(data, vec_variables)
   
   if(nb_iterations < 20000) { warning("nb_iterations is below 20 000, which seems small to get convergence in the MCMC.")  }
   

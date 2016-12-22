@@ -46,12 +46,7 @@ cross.validation.FWH = function(
   # let's go !!! ----------
 {
   # 1. Error message ----------
-  mess = "The following column are compulsory : c(\"year\", \"germplasm\", \"location\", \"block\", \"X\", \"Y\"."
-  if(!is.element("year", colnames(data))) { stop(mess) }
-  if(!is.element("germplasm", colnames(data))) { stop(mess) }
-  if(!is.element("location", colnames(data))) { stop(mess) }
-  
-  if(!is.element(variable, colnames(data))) { stop(variable," is not in data") }
+  check_data_vec_variables(data, vec_variables)
   
   # The other error messages are done with the used of the function FWH
   
@@ -134,13 +129,13 @@ cross.validation.FWH = function(
     
   d_out = cbind.data.frame(real.value, estimated.value)
   
-  # 5. Get the regression
+  # 5. Get the regression ----------
   p = ggplot(d_out, aes(x = real.value, y = estimated.value)) 
   p = p + stat_smooth(method = "lm") + geom_point() + xlab("observed value")
   model = lm(real.value ~ estimated.value)
   out_r = list("plot" = p, "anova" = model)
   
-  # 6. Get the confidence in the estimation
+  # 6. Get the confidence in the estimation ----------
   bias = real.value - estimated.value
   test = t.test(bias, mu = 0)
   percentage.of.confidence = round(test$p.value * 100, 1) # probability than the mean is equal to zero  
