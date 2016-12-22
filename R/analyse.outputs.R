@@ -243,7 +243,7 @@ if(analysis == "all" | analysis == "posteriors") {
       SEQ = unique(c(seq(0, nrow(d_sigma), 5), nrow(d_sigma)))
       for(s in 1:(length(SEQ) - 1)) {
         d_sigma_tmp = d_sigma[c((SEQ[s]+1):SEQ[s+1]),]
-        p.tmp = p + geom_vline(data = d_sigma_tmp, aes(xintercept = value, color = sigma), show_guide = TRUE)
+        p.tmp = p + geom_vline(data = d_sigma_tmp, aes(xintercept = value, color = sigma), show.legend = TRUE)
         out = c(out, list(p.tmp))
       }
       out_sigma_distribution = out
