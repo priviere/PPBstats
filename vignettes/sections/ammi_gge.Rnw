@@ -90,41 +90,76 @@ res_ammi_y1 = ammi$AMMI$y1
 @
 
 
-\subsubsection{Analysis of model outputs}
+\subsubsection{Descriptive graph}
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$model$anova_model
+res_ammi_y1$descriptive$germplasm
+@
+
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$descriptive$location
+@
+
+<<message=TRUE,cache=FALSE>>=
+res_ammi_y1$descriptive$interaction
 @
 
 
+\subsubsection{ANOVA}
+
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$model$residuals
+anova = res_ammi_y1$ANOVA
+@
+
+\paragraph{table of the model}
+<<message=TRUE,cache=FALSE>>=
+anova$anova_model
+@
+
+\paragraph{residuals}
+<<message=TRUE,cache=FALSE>>=
+anova$residuals
+@
+
+\paragraph{variability repartition}
+<<message=TRUE,cache=FALSE>>=
+anova$variability_repartition
+@
+
+\paragraph{location effects}
+<<message=TRUE,cache=FALSE>>=
+anova$location_effects$effects
+@
+
+<<message=TRUE,cache=FALSE>>=
+anova$location_effects$barplot_LSD_significant_group
+@
+
+\paragraph{germplasm effects}
+<<message=TRUE,cache=FALSE>>=
+anova$germplasm_effects$effects
+@
+
+<<message=TRUE,cache=FALSE>>=
+anova$germplasm_effects$intra_variance
+@
+
+<<message=TRUE,cache=FALSE>>=
+anova$germplasm_effects$barplot_LSD_significant_group
+@
+
+<<message=TRUE,cache=FALSE>>=
+anova$germplasm_effects$boxplot_variance_intra
 @
 
 
+\paragraph{Interaction matrix}
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$model$variability_repartition
+anova$interaction_matrix
 @
 
-
-\subsubsection{Get main effects results}
+\subsubsection{PCA}
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$germplasm
-@
-
-
-\paragraph{Germplasm effects}
-<<message=TRUE,cache=FALSE>>=
-res_ammi_y1$location
-@
-
-
-\paragraph{Environment effects}
-
-\subsubsection{Get $G \times E$ effects results}
-
-\paragraph{interaction plot}
-<<message=TRUE,cache=FALSE>>=
-res_ammi_y1$GxE$interaction_plot
+pca = res_ammi_y1$PCA
 @
 
 \paragraph{ecovalence}
@@ -139,11 +174,10 @@ Ecovalance of environment $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
 Ecovalances are represented in fonction of mean effects by germplasm and environment.
 
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$GxE$ecovalence
+pca$ecovalence
 @
 
-
-\paragraph{PCA}
+\paragraph{biplot}
 The results of the PCA is a list divided into three elements as explained in \citet{ceccarelli_manual_2012}:
 
 \begin{itemize}
@@ -151,8 +185,9 @@ The results of the PCA is a list divided into three elements as explained in \ci
 In our case, only the two first composant are represented in a biplot.
 Note that the sum of variance caught by the two compostant must be as big as possible to be confident in the conclusion of the observations.
 
+
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$GxE$PCA$variation_dim
+pca$biplot$variation_dim
 @
 
 \item The which won where graph. 
@@ -160,8 +195,10 @@ Perpendicular lines divide the biplot into sectors.
 The entry which have the largest value in a sector "win" in the location present in that sector.
 The information is summarized in the legend of the plot.
 
+
+
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$GxE$PCA$which_won_where
+pca$biplot$which_won_where
 @
 
 \item The mean vs stability graph.
@@ -174,16 +211,19 @@ Entries with a score above zero means entries with above-average means.
 Entries with a score below zero means entries with below-average means.
 Note that the distance from the biplot origin to the average location circle (represented with an arrow), is a measure of the relative importance of the entry main effect versus the entry by location interaction.
 The longer the arrow is, the more important is entry effect and the more meaningful the selection based on mean performance. 
+
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$GxE$PCA$mean_vs_stability$mean
+pca$biplot$mean_vs_stability$mean
 @
 
 \item stability
 This information is related to the ecovalence graph.
 The score is equal to the length of the projection.
 A high score represents a low stability (i.e. an high entry by location interaction).
+
+
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$GxE$PCA$mean_vs_stability$stability
+pca$biplot$mean_vs_stability$stability
 @
 
 \end{itemize}
@@ -198,8 +238,9 @@ The closer a given location is next to the circle, the more desirable it is judg
 
 \item discrimitiveness
 The higher the value, the highest the discrimitiveness for environments.
+
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$GxE$PCA$discrimitiveness_vs_representativeness$discrimitiveness
+pca$biplot$discrimitiveness_vs_representativeness$discrimitiveness
 @
 
 
@@ -207,10 +248,12 @@ res_ammi_y1$GxE$PCA$discrimitiveness_vs_representativeness$discrimitiveness
 The highest the value, the less representative the environment.
 
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$GxE$PCA$discrimitiveness_vs_representativeness$representativeness
+pca$biplot$discrimitiveness_vs_representativeness$representativeness
 @
 \end{itemize}
 
+
+A CONTINUER 
 
 Representativeness is a key factor to decide how a test location should be used in
 genotype evaluation, assuming adequate discriminating ability (Yan et al 2007). The
