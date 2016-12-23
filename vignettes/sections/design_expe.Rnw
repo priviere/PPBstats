@@ -29,6 +29,8 @@ The different effects that can be estimated are:
 \end{itemize}
 Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
 
+\textbf{Family 5} refers to multivariate analysis and is mentionned in section \ref{multivariate_analysis}.
+
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{ccccccccccc}
