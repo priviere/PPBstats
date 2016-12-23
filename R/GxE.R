@@ -91,7 +91,7 @@ GxE = function(
   fun_gxe = function(variable, data, gxe_analysis) 
     # go! ----------
     {
-    # 1.1. Set up data set ----------
+      # 1.1. Set up data set ----------
       colnames(data)[which(colnames(data) == variable)] = "variable"
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data = droplevels(na.omit(data))
@@ -100,14 +100,49 @@ GxE = function(
       data$YxE = factor(paste(data$year, data$location, sep = ":"))
       data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
       
-    # 1.2. GxE model which depends on the years available in the data set ----------
+      # 2.Descriptive analysis ----------
+      
+      # 2.1. germplam ----------
+      out_descriptive_germplasm = list("boxplot" = gboxplot(data, "germplasm", variable))
+      
+      # 2.2. location ----------
+      out_descriptive_location = list("boxplot" = gboxplot(data, "location", variable))
+      
+      # 2.3. interaction ----------
+      
+      p_gxe = ggplot(data = data, aes(x = location, y = variable, colour = germplasm, group = germplasm))
+      #  p_gxe = p_gxe + stat_summary(fun.y= mean, geom = "point")
+      p_gxe = p_gxe + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
+      
+      #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+      #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
+      
+      #p_gxe = p_gxe + scale_color_manual(values=rep(cbbPalette, each = 2))
+      
+      #p_gxe = p_gxe + labs(title = paste("Graphique d'interaction pour la variable :" ,variable,"en fonction du germplasme et de l'environnement"))
+      p_gxe = p_gxe + theme(axis.text.x=element_text(size=15,angle=90), plot.title = element_text(lineheight=.8, face="bold"))
+      # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
+      
+      if(nlevels(data$year) > 1) { 
+        p_gxe = p_gxe + facet_grid(year ~ .)
+      }
+      
+      out_descriptive_interaction = list("interaction-plot" = p_gxe)
+      
+      out_descriptive = list(
+        "germplasm" = out_descriptive_germplasm, 
+        "location" = out_descriptive_location, 
+        "interaction" = out_descriptive_interaction
+        )
     
-    # 1.2.1. Run the model ----------
+    # 3. GxE model: ANOVA + PCA ----------
+    
+    # 3.1. ANOVA ----------
     
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
     
-    if(nlevels(data$year) > 1) { 
+    if(nlevels(data$year) > 1)  # depends on the years available in the data set
       model = lm(variable ~ germplasm*location + block_in_env + year + YxG + YxE, data = data)
     } else {
       model = lm(variable ~ germplasm*location + block_in_env, data = data)
@@ -120,10 +155,10 @@ GxE = function(
     #ft = fligner.test(variable ~ interaction(germplasm,location), data=data)
     #print(ft)
 
-    # 1.2.2. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
+    # 3.1.1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
     outRes = gverifResidualsnormality(model)
     
-    # 1.2.3. repartition of variability among factors
+    # 3.1.2. repartition of variability among factors ----------
     total_Sum_Sq = sum(anova_model$"Sum Sq")
     Sum_sq = anova_model$"Sum Sq"
     pvalue = anova_model$"Pr(>F)"
@@ -138,11 +173,12 @@ GxE = function(
     #pie = pie + geom_text(data=DFtemp, aes(y = value/3 + c(0, cumsum(value)[-length(value)]), label = paste("  ",round(valuep*100), "%")))
     p_pie = p_pie + ylab("") + xlab("")
     
-    
-    # 1.2.4. Get effects ----------
+    # 3.1.3. Get effects ----------
     data_interaction = GxE_build_interaction_matrix(data, gxe_analysis)
     
     c = model$coefficients
+    
+    # 3.1.5. germplam effects ----------
     
     # germplasm
     coef_germ = c[grep("germplasm", names(c))]
@@ -154,6 +190,14 @@ GxE = function(
     # variance intra germplasm
     var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
     
+    out_germplasm = list(
+      "effects" = coef_germ,
+      "intra_variance" = var_intra,
+      "barplot_LSD_significant_group" = gLSDplot(model, "germplasm", variable, "bonferroni"),
+      "variance_intra" = gResidualplot(model, variable)
+    )
+    
+    # 3.1.6. location effect ----------
     # location
     coef_env = c[grep("location", names(c))]
     todel = grep(":", names(coef_env))
@@ -161,7 +205,13 @@ GxE = function(
     coef_env = c(coef_env, - sum(coef_env))
     names(coef_env) = model$xlevels$location
     
-    out_model = list(
+    out_location = list(
+      "location_effects" = coef_env,
+      "barplot_LSD_significant_group" = gLSDplot(model, "location", variable, "bonferroni")
+      )
+    
+    # 3.1.7. Return ANOVA results ----------
+    out_anova = list(
       "anova_model" = anova_model,
       "residuals" = list(
         "distribution" = outRes$plotRes0,
@@ -170,57 +220,16 @@ GxE = function(
         "standardized_residuals_vs_fitted" = outRes$plotRes3
       ),
       "variability_repartition" = p_pie,
-      "interaction_matrix" = data_interaction,
-      "location_effects" = coef_env,
-      "germplasm_effects" = coef_germ,
-      "intra_germplasm_variance" = var_intra
+      "location_effects" = out_location,
+      "germplasm_effects" = out_germplasm,
+      "interaction_matrix" = data_interaction
     )
     
     
-    # 1.3. Study germplam effects ----------
-    p1_G = gboxplot(data, "germplasm", variable) # germplasm boxplot
-    p2_G = gLSDplot(model, "germplasm", variable, "bonferroni") # germplasm significant groups
-    p3_G = gResidualplot(model, variable) # residuals fonction of the germplasm (i.e. intra germplasm variability)
-    
-    out_germplasm = list(
-      "boxplot" = p1_G,
-      "barplot_LSD_significant_group" = p2_G,
-      "variance_intra" = p3_G
-    )
-    
-    # 1.4. Study location effect ----------
-    p1_E = gboxplot(data, "location", variable) # location boxplot
-    p2_E = gLSDplot(model, "location", variable, "bonferroni") # location significant groups
-    
-    out_location = list(
-      "boxplot" = p1_E,
-      "barplot_LSD_significant_group" = p2_E
-    )
-    
-    # 1.5. Study interaction effects ----------
-    
-    # 1.5.1. Interaction plot ----------
-    p1_GxE = ggplot(data = data, aes(x = location, y = variable, colour = germplasm, group = germplasm))
-    #  p1_GxE = p1_GxE + stat_summary(fun.y= mean, geom = "point")
-    p1_GxE = p1_GxE + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
-    
-    #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-    #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
-    
-    #p1_GxE = p1_GxE + scale_color_manual(values=rep(cbbPalette, each = 2))
-    
-    #p1_GxE = p1_GxE + labs(title = paste("Graphique d'interaction pour la variable :" ,variable,"en fonction du germplasme et de l'environnement"))
-    p1_GxE = p1_GxE + theme(axis.text.x=element_text(size=15,angle=90), plot.title = element_text(lineheight=.8, face="bold"))
-    # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
-    
-    if(nlevels(data$year) > 1) { 
-      p1_GxE = p1_GxE + facet_grid(year ~ .)
-    }
-    
-    # 1.5.2. PCA on interaction matrix ----------
+    # 3.2. PCA on interaction matrix ----------
     pca = PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
 
-    # 1.5.3. Ecovalence ----------
+    # 3.2.1. Ecovalence ----------
     m_eco = data_interaction^2
     
     d_eco = data.frame(
@@ -233,15 +242,14 @@ GxE = function(
     p_eco = p_eco + scale_fill_gradient(low = "green", high = "red") 
     p_eco = p_eco + ggtitle("Wrick ecovalence", variable)
     
-
-    # 1.5.4. Biplots ----------
+    # 3.2.2. Biplots ----------
     variation_dim = fviz_eig(pca)
     which_won_where = ggplot_which_won_where(pca)
     mean_vs_stability = ggplot_mean_vs_stability(pca)
     discrimitiveness_vs_representativeness = ggplot_discrimitiveness_vs_representativeness(pca)
     
-    out_GxE = list(
-      "interaction_plot" = p1_GxE,
+    # 3.2.3. Return PCA results ----------
+    out_pca = list(
       "ecovalence" = p_eco,
       "PCA" = list(
         "variation_dim" = variation_dim,
@@ -251,12 +259,11 @@ GxE = function(
       )
     )
     
-    # 1.6. Return results ----------
+    # 1.4. Return results ----------
     out = list(
-      "model" = out_model,
-      "germplasm" = out_germplasm,
-      "location" = out_location,
-      "GxE" = out_GxE
+      "descriptive" = out_descriptive,
+      "ANOVA" = out_anova,
+      "PCA" = out_pca
     )
     
     message(gxe_analysis, " model done for ", variable)
@@ -271,7 +278,7 @@ GxE = function(
   # 2.1. barplot_variation_repartition
     dtmp = data.frame()
     for(i in 1:length(out_ammi)){
-      d = out_ammi[[i]]$model$variability_repartition$data
+      d = out_ammi[[i]]$ANOVA$anova_model$variability_repartition$data
       d = cbind.data.frame(names(out_ammi)[i], d)
       dtmp = rbind.data.frame(dtmp, d)
     }
@@ -286,9 +293,9 @@ GxE = function(
     # 2.2.1. Get data sets
     n_G = n_E = n_varG = NULL
     for(i in 1:length(out_ammi)){
-      n_G = c(n_G, names(out_ammi[[i]]$model$germplasm_effects))
-      n_E = c(n_E, names(out_ammi[[i]]$model$location_effects))
-      n_varG = c(n_varG, names(out_ammi[[i]]$model$intra_germplasm_variance))
+      n_G = c(n_G, names(out_ammi[[i]]$ANOVA$anova_model$germplasm_effects))
+      n_E = c(n_E, names(out_ammi[[i]]$ANOVA$anova_model$location_effects))
+      n_varG = c(n_varG, names(out_ammi[[i]]$ANOVA$anova_model$intra_germplasm_variance))
     }
     
 
@@ -309,11 +316,11 @@ GxE = function(
     rownames(df_varG) = n_varG
     
     for(i in 1:length(out_ammi)){
-      g = out_ammi[[i]]$model$germplasm_effects
+      g = out_ammi[[i]]$ANOVA$anova_model$germplasm_effects
       df_G[names(g),i] = g
-      e = out_ammi[[i]]$model$location_effects
+      e = out_ammi[[i]]$ANOVA$anova_model$location_effects
       df_E[names(e),i] = e
-      vg = out_ammi[[i]]$model$intra_germplasm_variance
+      vg = out_ammi[[i]]$ANOVA$anova_model$germplasm_effects$intra_variance
       df_varG[names(vg),i] = vg
     }
     
@@ -353,7 +360,6 @@ GxE = function(
     )
 
   }
-    
   
   # 3. Apply analysis and Post analysis to vec_variables ----------
   message("I. Run ", gxe_analysis, " model on each variable")
