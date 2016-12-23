@@ -234,7 +234,7 @@ GxE = function(
     var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
     
     d = data.frame(x = model$model$germplasm, y = model$residuals)
-    p = ggplot(d, aes(x = x, y = y))  + geom_boxplot()
+    p = ggplot(d, aes(x = x, y = y))  + geom_boxplot(aes(color=x))
     p = p + ggtitle("Distribution of residuals") + xlab("germplasm") + ylab(variable)
     p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90), plot.title=element_text(hjust=0.5))
     p_var_intra = p 
