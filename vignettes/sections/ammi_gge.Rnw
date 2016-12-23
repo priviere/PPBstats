@@ -255,6 +255,7 @@ pca$biplot$discrimitiveness_vs_representativeness$representativeness
 @
 \end{itemize}
 
+\end{itemize}
 
 !!!!! A CONTINUER !!!!!
 
