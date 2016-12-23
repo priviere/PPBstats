@@ -105,10 +105,18 @@ GxE = function(
       # 2.Descriptive analysis ----------
       
       # 2.1. germplam ----------
-      out_descriptive_germplasm = list("boxplot" = gboxplot(data, "germplasm", variable))
+      p = ggplot(data = data, aes(x = germplasm, y = variable, color = germplasm))
+      p = p + geom_boxplot()
+      p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90))
+      out_descriptive_germplasm = list("boxplot" = p)
+      
       
       # 2.2. location ----------
-      out_descriptive_location = list("boxplot" = gboxplot(data, "location", variable))
+      p = ggplot(data = data, aes(x = location, y = variable, color = location))
+      p = p + geom_boxplot()
+      p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90))
+      out_descriptive_location = list("boxplot" = p)
+      
       
       # 2.3. interaction ----------
       
