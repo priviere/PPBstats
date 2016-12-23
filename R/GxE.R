@@ -332,19 +332,19 @@ GxE = function(
     PCA_G = list(
       "variation_dim" = fviz_eig(PCA_G),
       "ind" = fviz_pca_ind(PCA_G),
-      "var" = fviz_pca_ind(PCA_G)
+      "var" = fviz_pca_var(PCA_G)
     )
     
     PCA_intraG = list(
       "variation_dim" = fviz_eig(PCA_intraG),
       "ind" = fviz_pca_ind(PCA_intraG),
-      "var" = fviz_pca_ind(PCA_intraG)
+      "var" = fviz_pca_var(PCA_intraG)
     )
     
     PCA_E = list(
       "variation_dim" = fviz_eig(PCA_E),
       "ind" = fviz_pca_ind(PCA_E),
-      "var" = fviz_pca_ind(PCA_E)
+      "var" = fviz_pca_var(PCA_E)
     )
     
     out = list(
