@@ -251,7 +251,7 @@ GxE = function(
     d = data.frame(x = model$model$germplasm, y = model$residuals)
     p = ggplot(d, aes(x = x, y = y))  + geom_boxplot()
     p = p + ggtitle("Distribution of residuals") + xlab("germplasm") + ylab(variable)
-    p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90)
+    p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90))
     p_var_intra = p 
     
     out_germplasm = list(
@@ -304,11 +304,11 @@ GxE = function(
     
     p_eco = ggplot(data = d_eco, aes(x = location, y = germplasm, fill = variable)) + geom_raster()
     p_eco = p_eco + scale_fill_gradient(low = "green", high = "red") 
-    p_eco = p_eco + ggtitle("Wrick ecovalence", variable)
+    p_eco = p_eco + ggtitle("Wrick ecovalence", variable) + theme(plot.title=element_text(hjust=0.5))
     
     # 3.2.2. Biplots ----------
-    variation_dim = fviz_eig(pca)
-    which_won_where = ggplot_which_won_where(pca)
+    variation_dim = fviz_eig(pca) + ggtitle("")
+    which_won_where = ggplot_which_won_where(pca) + theme(plot.title=element_text(hjust=0.5))
     mean_vs_stability = ggplot_mean_vs_stability(pca)
     discrimitiveness_vs_representativeness = ggplot_discrimitiveness_vs_representativeness(pca)
     
