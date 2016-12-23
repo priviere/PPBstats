@@ -1,22 +1,3 @@
-gboxplot = function(data, x, variable){
-  if (x == "germplasm"){
-    p = ggplot(data = data, aes(x = germplasm, y = variable, color = germplasm))
-    p = p + labs(title = paste("Boite a moustache de la variable :" , variable,", en fonction du germplasme"))
-  }
-  else if (x == "location"){
-    p = ggplot(data = data, aes(x = location, y = variable, color = location))
-    p = p + labs(title = paste("Boite a moustache de la variable :" , variable,", en fonction de l'environnement"))
-  }
-  
-  p = p + theme(legend.position = "none", axis.text.x = element_text(size = 15, angle = 90), plot.title = element_text(lineheight = .8, face = "bold"))
-  p = p + scale_y_continuous(name = variable)
-  p = p + geom_boxplot()
-  
-  return(p)
-}
-
-
-
 
 gLSDplot = function(model, x, variable, adjust){
   #model : modèle complet, x : facteur étudié, y : variable étudiée, adjust : ajustement ("bonferroni" / "holm" / "none" / "hochberg" / "BH" / "BY")
