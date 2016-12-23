@@ -208,7 +208,7 @@ GxE = function(
     names(coef_env) = model$xlevels$location
     
     out_location = list(
-      "location_effects" = coef_env,
+      "effects" = coef_env,
       "barplot_LSD_significant_group" = gLSDplot(model, "location", variable, "bonferroni")
       )
     
@@ -274,10 +274,10 @@ GxE = function(
   }
   
   # 2. write function post ammi analysis regrouping all ammi analysis from different variables ----------
-  fun_post_gxe = function(out_gxe)
+  fun_post_gxe = function(out_ammi)
     # go! ----------
     {
-  # 2.1. barplot_variation_repartition
+  # 2.1. barplot_variation_repartition ---------- 
     dtmp = data.frame()
     for(i in 1:length(out_ammi)){
       d = out_ammi[[i]]$ANOVA$variability_repartition$data
@@ -290,17 +290,15 @@ GxE = function(
     cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
     barplot_variation_repartition = p + scale_fill_manual(values = cbbPalette)
     
-    # 2.2. PCA on effects
+    # 2.2. PCA on effects -----------
     
-    # 2.2.1. Get data sets
+    # 2.2.1. Get data sets ----------
     n_G = n_E = n_varG = NULL
     for(i in 1:length(out_ammi)){
       n_G = c(n_G, names(out_ammi[[i]]$ANOVA$germplasm_effects$effects))
-      n_varG = c(n_varG, names(out_ammi[[i]]$ANOVA$germplasm_effects$intra_germplasm_variance))
+      n_varG = c(n_varG, names(out_ammi[[i]]$ANOVA$germplasm_effects$intra_variance))
       n_E = c(n_E, names(out_ammi[[i]]$ANOVA$location_effects$effects))
     }
-    
-
     n_G = unique(n_G)
     n_E = unique(n_E)
     n_varG = unique(n_varG)
@@ -318,50 +316,46 @@ GxE = function(
     rownames(df_varG) = n_varG
     
     for(i in 1:length(out_ammi)){
-      g = out_ammi[[i]]$ANOVA$anova_model$germplasm_effects
+      g = out_ammi[[i]]$ANOVA$germplasm_effects$effects
       df_G[names(g),i] = g
-      e = out_ammi[[i]]$ANOVA$anova_model$location_effects
-      df_E[names(e),i] = e
-      vg = out_ammi[[i]]$ANOVA$anova_model$germplasm_effects$intra_variance
+      vg = out_ammi[[i]]$ANOVA$germplasm_effects$intra_variance
       df_varG[names(vg),i] = vg
+      e = out_ammi[[i]]$ANOVA$location_effects$effects
+      df_E[names(e),i] = e
     }
     
-    # 2.2.2. Run PCA
+    # 2.2.2. Run PCA ----------
     PCA_G = PCA(df_G, scale.unit = TRUE, graph = FALSE)
-    out_PCA_G = dographPCA(PCA_G)
-
+    PCA_intraG = PCA(df_varG, scale.unit = TRUE, graph = FALSE)
     PCA_E = PCA(df_E, scale.unit = TRUE, graph = FALSE)
-    out_PCA_E = dographPCA(PCA_E)
 
-    PCA_varG = PCA(df_varG, scale.unit = TRUE, graph = FALSE)
-    out_PCA_varG = dographPCA(PCA_varG)
-    
-    PCA_G_effect = list(
-      "variation_dim" = out_PCA_G$screeplot,
-      "CP1-CP2" = list("ind" = out_PCA_G$ind1_2, "var" = out_PCA_G$var1_2),
-      "CP2-CP3" = list("ind" = out_PCA_G$ind2_3, "var" = out_PCA_G$var2_3)
+    PCA_G = list(
+      "variation_dim" = fviz_eig(PCA_G),
+      "ind" = fviz_pca_ind(PCA_G),
+      "var" = fviz_pca_ind(PCA_G)
     )
     
-    PCA_intraG_effect = list(
-      "variation_dim" = out_PCA_varG$screeplot,
-      "CP1-CP2" = list("ind" = out_PCA_varG$ind1_2, "var" = out_PCA_varG$var1_2),
-      "CP2-CP3" = list("ind" = out_PCA_varG$ind2_3, "var" = out_PCA_varG$var2_3)
+    PCA_intraG = list(
+      "variation_dim" = fviz_eig(PCA_intraG),
+      "ind" = fviz_pca_ind(PCA_intraG),
+      "var" = fviz_pca_ind(PCA_intraG)
     )
     
-    PCA_E_effect = list(
-      "variation_dim" = out_PCA_E$screeplot,
-      "CP1-CP2" = list("ind" = out_PCA_E$ind1_2, "var" = out_PCA_E$var1_2),
-      "CP2-CP3" = list("ind" = out_PCA_E$ind2_3, "var" = out_PCA_E$var2_3)
+    PCA_E = list(
+      "variation_dim" = fviz_eig(PCA_E),
+      "ind" = fviz_pca_ind(PCA_E),
+      "var" = fviz_pca_ind(PCA_E)
     )
     
     out = list(
       "barplot_variation_repartition" = barplot_variation_repartition,
-      "PCA_G_effect" = PCA_G_effect,
-      "PCA_intraG_effect" = PCA_intraG_effect,
-      "PCA_E_effect" = PCA_E_effect
+      "PCA_G_effect" = PCA_G,
+      "PCA_intraG_effect" = PCA_intraG,
+      "PCA_E_effect" = PCA_E
     )
   }
   
+
   # 3. Apply analysis and Post analysis to vec_variables ----------
   message("I. Run ", gxe_analysis, " model on each variable")
   out_gxe = lapply(vec_variables, fun_gxe, data, gxe_analysis)
@@ -369,7 +363,7 @@ GxE = function(
   
   message("\nII. Post ", gxe_analysis," analysis on all outputs")
   #out_post_gxe = fun_post_gxe(out_gxe)
-  out_post_gxe = NULL
+  out_post_gxe = fun_post_gxe(out_gxe)
   
   OUT = list(out_gxe, out_post_gxe)
   names(OUT) = c(gxe_analysis, paste("Post_", gxe_analysis, sep = ""))
