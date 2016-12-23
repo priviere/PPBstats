@@ -44,7 +44,9 @@ The function returns two lists with
      \item "germplasm_effects"
      \itemize{
       \item a vector with germplasm effects
+      \item a vector with intra germplasm variance estimation
       \item a barplot with groups based on LSD interval
+      \item a boxplot with intra germplasm variance estimation per germplasm
      }
      \item "interaction_matrix" the interaction matrix on which is based the PCA
     }
