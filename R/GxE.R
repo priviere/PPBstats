@@ -30,9 +30,7 @@
 #'      \item "residuals" being a list with 
 #'       \itemize{
 #'        \item "distribution"
-#'        \item "Residuals_vs_fitted"
 #'        \item "QQplot"
-#'        \item "standardized_residuals_vs_fitted"
 #'       }
 #'      \item "variability_repartition" a pie chart with variability repartition
 #'      \item "location_effects" being a list with
@@ -170,9 +168,9 @@ GxE = function(
     # 3.1.1.1. Normality ----------
     dr = data.frame(r)
     p = ggplot(dr, aes(x = r), binwidth = 2)
-    p = p + geom_histogram() + geom_density(colour = 'red', size = 1) + geom_vline(xintercept = 0)
-    p = p + labs("Test for normality", paste("Skewness:", signif(skewness(r), 3), "\nKurtosis:", signif(kurtosis(r),3)))
-    
+    p = p + geom_histogram() + geom_vline(xintercept = 0)
+    p = p + ggtitle("Test for normality", paste("Skewness:", signif(skewness(r), 3), "; Kurtosis:", signif(kurtosis(r),3)))
+    p = p + theme(plot.title=element_text(hjust=0.5))
     #   Skewness: indicator used in distribution analysis as a sign of asymmetry and deviation from a normal distribution. 
     #   
     #   Interpretation: 
@@ -192,28 +190,15 @@ GxE = function(
 
     out_res1 = p
     
-    # 3.1.1.2. Fitted values vs residuals ----------
-    y = predict(model)
-    dy = data.frame(x = yh, y = r)
-    p = ggplot(dy, aes( x = yh, y = r)) + geom_point() + xlab("Fitted values") + ylab("Residuals")
-    p = p + geom_hline(yintercept = 0) + geom_smooth()
-    out_res2 = p
-    
-    # 3.1.1.3. Standardized residuals vs theoretical quantiles ----------
+    # 3.1.1.2. Standardized residuals vs theoretical quantiles ----------
     s = sqrt(deviance(model)/df.residual(model))
     rs = r/s
-    x = qnorm(ppoints(rs))
-    d = data.frame(x = x, y = sort(rs))
-    p = ggplot(d, aes(x = x, y = y))
-    p = p + geom_point() + geom_line(aes(x = x, y = x))
+    d = data.frame(x = qnorm(ppoints(rs)), y = sort(rs))
+    p = ggplot(d, aes(x = x, y = y)) + geom_point() + geom_line() 
+    p = p + geom_abline(slope = 1, intercept = 0, color = "red")
     p = p + xlab("Theoretical Quantiles") + ylab("Standardized residuals")
-    out_res3 = p
-    
-    # Fitted values vs Residuals
-    sqrt.rs = sqrt(abs(rs))
-    p = ggplot(dy, aes( x = yh, y = sqrt.rs)) + geom_point() + geom_smooth()
-    p = p + xlab("Fitted values") + ylab("Residuals")
-    out_res4 = p
+    p = p + ggtitle("QQplot") + theme(plot.title=element_text(hjust=0.5))
+    out_res2 = p
     
     
     # 3.1.2. repartition of variability among factors ----------
@@ -251,7 +236,7 @@ GxE = function(
     d = data.frame(x = model$model$germplasm, y = model$residuals)
     p = ggplot(d, aes(x = x, y = y))  + geom_boxplot()
     p = p + ggtitle("Distribution of residuals") + xlab("germplasm") + ylab(variable)
-    p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90))
+    p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90), plot.title=element_text(hjust=0.5))
     p_var_intra = p 
     
     out_germplasm = list(
@@ -279,9 +264,7 @@ GxE = function(
       "anova_model" = anova_model,
       "residuals" = list(
         "distribution" = out_res1,
-        "Residuals_vs_fitted" = out_res2,
-        "QQplot" = out_res3,
-        "standardized_residuals_vs_fitted" = out_res4
+        "QQplot" = out_res2
       ),
       "variability_repartition" = p_pie,
       "location_effects" = out_location,
@@ -304,7 +287,7 @@ GxE = function(
     
     p_eco = ggplot(data = d_eco, aes(x = location, y = germplasm, fill = variable)) + geom_raster()
     p_eco = p_eco + scale_fill_gradient(low = "green", high = "red") 
-    p_eco = p_eco + ggtitle("Wrick ecovalence", variable) + theme(plot.title=element_text(hjust=0.5))
+    p_eco = p_eco + ggtitle(paste("Wrick ecovalence for", variable)) + theme(plot.title=element_text(hjust=0.5))
     
     # 3.2.2. Biplots ----------
     variation_dim = fviz_eig(pca) + ggtitle("")
