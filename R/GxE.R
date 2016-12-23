@@ -43,7 +43,9 @@
 #'      \item "germplasm_effects"
 #'      \itemize{
 #'       \item a vector with germplasm effects
+#'       \item a vector with intra germplasm variance estimation
 #'       \item a barplot with groups based on LSD interval
+#'       \item a boxplot with intra germplasm variance estimation per germplasm
 #'      }
 #'      \item "interaction_matrix" the interaction matrix on which is based the PCA
 #'     }
@@ -194,7 +196,7 @@ GxE = function(
       "effects" = coef_germ,
       "intra_variance" = var_intra,
       "barplot_LSD_significant_group" = gLSDplot(model, "germplasm", variable, "bonferroni"),
-      "variance_intra" = gResidualplot(model, variable)
+      "boxplot_variance_intra" = gResidualplot(model, variable)
     )
     
     # 3.1.6. location effect ----------
@@ -278,7 +280,7 @@ GxE = function(
   # 2.1. barplot_variation_repartition
     dtmp = data.frame()
     for(i in 1:length(out_ammi)){
-      d = out_ammi[[i]]$ANOVA$anova_model$variability_repartition$data
+      d = out_ammi[[i]]$ANOVA$variability_repartition$data
       d = cbind.data.frame(names(out_ammi)[i], d)
       dtmp = rbind.data.frame(dtmp, d)
     }
@@ -293,9 +295,9 @@ GxE = function(
     # 2.2.1. Get data sets
     n_G = n_E = n_varG = NULL
     for(i in 1:length(out_ammi)){
-      n_G = c(n_G, names(out_ammi[[i]]$ANOVA$anova_model$germplasm_effects))
-      n_E = c(n_E, names(out_ammi[[i]]$ANOVA$anova_model$location_effects))
-      n_varG = c(n_varG, names(out_ammi[[i]]$ANOVA$anova_model$intra_germplasm_variance))
+      n_G = c(n_G, names(out_ammi[[i]]$ANOVA$germplasm_effects$effects))
+      n_varG = c(n_varG, names(out_ammi[[i]]$ANOVA$germplasm_effects$intra_germplasm_variance))
+      n_E = c(n_E, names(out_ammi[[i]]$ANOVA$location_effects$effects))
     }
     
 
