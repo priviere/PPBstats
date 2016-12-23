@@ -1,13 +1,16 @@
 \subsection{Multivariate analysis}
 \label{multivariate_analysis}
 
-
+\subsubsection{Format the data}
 
 <<message=TRUE,cache=FALSE>>=
-check_data_vec_variables(PPBdata, "y1")
+check_data_vec_variables(PPBdata, "tkw")
 @
 
 If ok, then, you can settle \texttt{quali.sup = c(1:6)} in the \texttt{PCA} function:
+
+\subsubsection{Run the analysis}
+
 
 <<message=TRUE,cache=FALSE>>=
 res.pca = PCA(PPBdata, quali.sup = c(1:6), graph = FALSE)
