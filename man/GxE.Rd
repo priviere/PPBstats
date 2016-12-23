@@ -18,7 +18,14 @@ The function returns two lists with
 \itemize{
  \item for each variable a list with
   \itemize{
-   \item "model" being a list with
+   \item "descriptive" being a list with
+   \itemize{
+    \item germplasm containing a boxplot for each germplasm
+    \item location containing a boxplot for each location
+    \item interaction containing an interaction plot
+    }
+
+   \item "ANOVA" being a list with
     \itemize{
      \item "anova_model"
      \item "residuals" being a list with
@@ -28,31 +35,24 @@ The function returns two lists with
        \item "QQplot"
        \item "standardized_residuals_vs_fitted"
       }
-     \item "variability_repartition"
-     \item "interaction_matrix"
-     \item "location_effects"
-     \item "germplasm_effects"
-     \item "intra_germplasm_variance"
-    }
-
-   \item germplasm being a list with
+     \item "variability_repartition" a pie chart with variability repartition
+     \item "location_effects" being a list with
      \itemize{
-      \item "boxplot"
-      \item "barplot_LSD_significant_group"
-      \item "variance_intra"
+      \item a vector with location effects
+      \item a barplot with groups based on LSD interval
      }
-
-   \item location being a list with
-    \itemize{
-      \item "boxplot"
-      \item "barplot_LSD_significant_group"
+     \item "germplasm_effects"
+     \itemize{
+      \item a vector with germplasm effects
+      \item a barplot with groups based on LSD interval
+     }
+     \item "interaction_matrix" the interaction matrix on which is based the PCA
     }
 
-   \item GxE being a list with
+   \item PCA being a list with
     \itemize{
-     \item "interaction_plot"
      \item "ecovalence"
-     \item PCA a list with
+     \item "biplot" a list with
      \itemize{
       \item "variation_dim"
       \item "which_won_where"
