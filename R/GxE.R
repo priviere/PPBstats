@@ -165,7 +165,56 @@ GxE = function(
     #print(ft)
 
     # 3.1.1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
-    outRes = gverifResidualsnormality(model)
+    r = residuals(model)
+    
+    # 3.1.1.1. Normality ----------
+    dr = data.frame(r)
+    p = ggplot(dr, aes(x = r), binwidth = 2)
+    p = p + geom_histogram() + geom_density(colour = 'red', size = 1) + geom_vline(xintercept = 0)
+    p = p + labs("Test for normality", paste("Skewness:", signif(skewness(r), 3), "\nKurtosis:", signif(kurtosis(r),3)))
+    
+    #   Skewness: indicator used in distribution analysis as a sign of asymmetry and deviation from a normal distribution. 
+    #   
+    #   Interpretation: 
+    #   Skewness > 0 - Right skewed distribution - most values are concentrated on left of the mean, with extreme values to the right.
+    #   Skewness < 0 - Left skewed distribution - most values are concentrated on the right of the mean, with extreme values to the left.
+    #   Skewness = 0 - mean = median, the distribution is symmetrical around the mean.
+    #   
+    #   
+    #   Kurtosis - indicator used in distribution analysis as a sign of flattening or "peakedness" of a distribution. 
+    #   
+    #   Interpretation: 
+    #   Kurtosis > 3 - Leptokurtic distribution, sharper than a normal distribution, with values concentrated around the mean and thicker tails. This means high probability for extreme values.
+    #   Kurtosis < 3 - Platykurtic distribution, flatter than a normal distribution with a wider peak. The probability for extreme values is less than for a normal distribution, and the values are wider spread around the mean.
+    #   Kurtosis = 3 - Mesokurtic distribution - normal distribution for example.
+    
+#    p = plotRes0 + ylab(expression(bold('Density'))) + xlab(expression(bold('Residuals')))
+
+    out_res1 = p
+    
+    # 3.1.1.2. Fitted values vs residuals ----------
+    y = predict(model)
+    dy = data.frame(x = yh, y = r)
+    p = ggplot(dy, aes( x = yh, y = r)) + geom_point() + xlab("Fitted values") + ylab("Residuals")
+    p = p + geom_hline(yintercept = 0) + geom_smooth()
+    out_res2 = p
+    
+    # 3.1.1.3. Standardized residuals vs theoretical quantiles ----------
+    s = sqrt(deviance(model)/df.residual(model))
+    rs = r/s
+    x = qnorm(ppoints(rs))
+    d = data.frame(x = x, y = sort(rs))
+    p = ggplot(d, aes(x = x, y = y))
+    p = p + geom_point() + geom_line(aes(x = x, y = x))
+    p = p + xlab("Theoretical Quantiles") + ylab("Standardized residuals")
+    out_res3 = p
+    
+    # Fitted values vs Residuals
+    sqrt.rs = sqrt(abs(rs))
+    p = ggplot(dy, aes( x = yh, y = sqrt.rs)) + geom_point() + geom_smooth()
+    p = p + xlab("Fitted values") + ylab("Residuals")
+    out_res4 = p
+    
     
     # 3.1.2. repartition of variability among factors ----------
     total_Sum_Sq = sum(anova_model$"Sum Sq")
@@ -175,12 +224,11 @@ GxE = function(
     factor = rownames(anova_model)
       
     d_pie = cbind.data.frame(factor, pvalue, Sum_sq, percentage_Sum_sq)
-      
     p_pie = ggplot(data = d_pie, aes(x = "", y = percentage_Sum_sq, fill = factor)) 
-    p_pie = p_pie + ggtitle(paste("Distribution de la variance totale pour \n", variable))
+    p_pie = p_pie + ggtitle(paste("Total variance distribution for", variable))
     p_pie = p_pie + geom_bar(width = 1, stat = "identity") + coord_polar("y", start = 0)
     #pie = pie + geom_text(data=DFtemp, aes(y = value/3 + c(0, cumsum(value)[-length(value)]), label = paste("  ",round(valuep*100), "%")))
-    p_pie = p_pie + ylab("") + xlab("")
+    p_pie = p_pie + ylab("") + xlab("") + theme(plot.title=element_text(hjust=0.5))
     
     # 3.1.3. Get effects ----------
     data_interaction = GxE_build_interaction_matrix(data, gxe_analysis)
@@ -196,14 +244,21 @@ GxE = function(
     coef_germ = c(coef_germ, - sum(coef_germ))
     names(coef_germ) = model$xlevels$germplasm
     
+    
     # variance intra germplasm
     var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
+    
+    d = data.frame(x = model$model$germplasm, y = model$residuals)
+    p = ggplot(d, aes(x = x, y = y))  + geom_boxplot()
+    p = p + ggtitle("Distribution of residuals") + xlab("germplasm") + ylab(variable)
+    p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90)
+    p_var_intra = p 
     
     out_germplasm = list(
       "effects" = coef_germ,
       "intra_variance" = var_intra,
-      "barplot_LSD_significant_group" = gLSDplot(model, "germplasm", variable, "bonferroni"),
-      "boxplot_variance_intra" = gResidualplot(model, variable)
+      "barplot_LSD_significant_group" = ggplot_LSDbarplot(model, variable, "germplasm", "bonferroni"),
+      "boxplot_variance_intra" = p_var_intra
     )
     
     # 3.1.6. location effect ----------
@@ -216,17 +271,17 @@ GxE = function(
     
     out_location = list(
       "effects" = coef_env,
-      "barplot_LSD_significant_group" = gLSDplot(model, "location", variable, "bonferroni")
+      "barplot_LSD_significant_group" = ggplot_LSDbarplot(model, variable, "location", "bonferroni")
       )
     
     # 3.1.7. Return ANOVA results ----------
     out_anova = list(
       "anova_model" = anova_model,
       "residuals" = list(
-        "distribution" = outRes$plotRes0,
-        "Residuals_vs_fitted" = outRes$plotRes1,
-        "QQplot" = outRes$plotRes2,
-        "standardized_residuals_vs_fitted" = outRes$plotRes3
+        "distribution" = out_res1,
+        "Residuals_vs_fitted" = out_res2,
+        "QQplot" = out_res3,
+        "standardized_residuals_vs_fitted" = out_res4
       ),
       "variability_repartition" = p_pie,
       "location_effects" = out_location,
