@@ -4,8 +4,7 @@
 
 
 <<message=TRUE,cache=FALSE>>=
-data("PPBdata")
-check_data_vec_variables(PPBdata_GxE, "y1")
+check_data_vec_variables(PPBdata, "y1")
 @
 
 If ok, then, you can settle \texttt{quali.sup = c(1:6)} in the \texttt{PCA} function:
