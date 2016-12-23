@@ -3,3 +3,20 @@
 
 
 
+<<message=TRUE,cache=FALSE>>=
+data("PPBdata")
+check_data_vec_variables(PPBdata_GxE, "y1")
+@
+
+If ok, then, you can settle \texttt{quali.sup = c(1:6)} in the \texttt{PCA} function:
+
+<<message=TRUE,cache=FALSE>>=
+res.pca = PCA(PPBdata, quali.sup = c(1:6), graph = FALSE)
+@
+
+And look at the results thanks to the \texttt{factoextra}\footnote{https://github.com/kassambara/factoextra} package:
+
+<<message=TRUE,cache=FALSE>>=
+fviz_pca_ind(res.pca, label="none", habillage="year", addEllipses=TRUE, ellipse.level=0.95)
+@
+
