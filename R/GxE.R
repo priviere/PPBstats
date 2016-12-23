@@ -17,7 +17,14 @@
 #' \itemize{
 #'  \item for each variable a list with
 #'   \itemize{
-#'    \item "model" being a list with 
+#'    \item "descriptive" being a list with
+#'    \itemize{
+#'     \item germplasm containing a boxplot for each germplasm
+#'     \item location containing a boxplot for each location
+#'     \item interaction containing an interaction plot
+#'     }
+#'    
+#'    \item "ANOVA" being a list with 
 #'     \itemize{
 #'      \item "anova_model"
 #'      \item "residuals" being a list with 
@@ -27,31 +34,24 @@
 #'        \item "QQplot"
 #'        \item "standardized_residuals_vs_fitted"
 #'       }
-#'      \item "variability_repartition"
-#'      \item "interaction_matrix"
-#'      \item "location_effects"
-#'      \item "germplasm_effects"
-#'      \item "intra_germplasm_variance"
-#'     }
-#'    
-#'    \item germplasm being a list with 
+#'      \item "variability_repartition" a pie chart with variability repartition
+#'      \item "location_effects" being a list with
 #'      \itemize{
-#'       \item "boxplot"
-#'       \item "barplot_LSD_significant_group"
-#'       \item "variance_intra"
+#'       \item a vector with location effects
+#'       \item a barplot with groups based on LSD interval
 #'      }
-#'    
-#'    \item location being a list with 
-#'     \itemize{
-#'       \item "boxplot"
-#'       \item "barplot_LSD_significant_group"
+#'      \item "germplasm_effects"
+#'      \itemize{
+#'       \item a vector with germplasm effects
+#'       \item a barplot with groups based on LSD interval
+#'      }
+#'      \item "interaction_matrix" the interaction matrix on which is based the PCA
 #'     }
 #'     
-#'    \item GxE being a list with 
+#'    \item PCA being a list with 
 #'     \itemize{
-#'      \item "interaction_plot"
 #'      \item "ecovalence"
-#'      \item PCA a list with
+#'      \item "biplot" a list with
 #'      \itemize{
 #'       \item "variation_dim"
 #'       \item "which_won_where"
@@ -142,7 +142,7 @@ GxE = function(
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
     
-    if(nlevels(data$year) > 1)  # depends on the years available in the data set
+    if(nlevels(data$year) > 1) { # depends on the years available in the data set
       model = lm(variable ~ germplasm*location + block_in_env + year + YxG + YxE, data = data)
     } else {
       model = lm(variable ~ germplasm*location + block_in_env, data = data)
@@ -251,7 +251,7 @@ GxE = function(
     # 3.2.3. Return PCA results ----------
     out_pca = list(
       "ecovalence" = p_eco,
-      "PCA" = list(
+      "biplot" = list(
         "variation_dim" = variation_dim,
         "which_won_where" = which_won_where,
         "mean_vs_stability" = mean_vs_stability,
@@ -358,7 +358,6 @@ GxE = function(
       "PCA_intraG_effect" = PCA_intraG_effect,
       "PCA_E_effect" = PCA_E_effect
     )
-
   }
   
   # 3. Apply analysis and Post analysis to vec_variables ----------
