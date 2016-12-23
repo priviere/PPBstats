@@ -1,4 +1,3 @@
-
 gLSDplot = function(model, x, variable, adjust){
   #model : modèle complet, x : facteur étudié, y : variable étudiée, adjust : ajustement ("bonferroni" / "holm" / "none" / "hochberg" / "BH" / "BY")
   
@@ -27,17 +26,6 @@ gLSDplot = function(model, x, variable, adjust){
 
 
 
-gqqplot=function(y, distribution = qnorm, xlab, ylab){
-  
-  x = distribution(ppoints(y))
-  d = data.frame(x = x, y = sort(y))
-  p = ggplot(d, aes(x = x, y = y))
-  p = p + geom_point()
-  p = p + geom_line(aes(x = x, y = x))
-  p = p + xlab(xlab) + ylab(ylab)
-  
-  return(p)
-}
 
 gResidualplot = function(model, variable){
   #data : data contenant les données, x : facteur étudié, y : variable étudiée
@@ -50,69 +38,4 @@ gResidualplot = function(model, variable){
   
   return(p)
 }
-
-
-
-gscatterplot = function(x, y, xlab, ylab){
-  
-  d = data.frame(x=x,y=y)
-  p = ggplot(d, aes(x=x,y=y)) + geom_point() + xlab(xlab) + ylab(ylab)
-  
-  return(p)
-}
-
-
-gverifResidualsnormality = function(model){
-  # model : modèle complet
-  
-  r = residuals(model)
-  datasim = data.frame(r)
-  plotRes0 = ggplot(datasim, aes(x = r), binwidth = 2)
-  plotRes0 = plotRes0 + labs(title = paste("Skewness:",signif(skewness(r),3),", indicator of asymmetry and deviation from a normal distribution. (normal=0)\nKurtosis:",signif(kurtosis(r),3),", indicator of flattening or \"peakedness\" of a distribution. (normal=3)"))
-  
-  #   Skewness: indicator used in distribution analysis as a sign of asymmetry and deviation from a normal distribution. 
-  #   
-  #   Interpretation: 
-  #   Skewness > 0 - Right skewed distribution - most values are concentrated on left of the mean, with extreme values to the right.
-  #   Skewness < 0 - Left skewed distribution - most values are concentrated on the right of the mean, with extreme values to the left.
-  #   Skewness = 0 - mean = median, the distribution is symmetrical around the mean.
-  #   
-  #   
-  #   Kurtosis - indicator used in distribution analysis as a sign of flattening or "peakedness" of a distribution. 
-  #   
-  #   Interpretation: 
-  #   Kurtosis > 3 - Leptokurtic distribution, sharper than a normal distribution, with values concentrated around the mean and thicker tails. This means high probability for extreme values.
-  #   Kurtosis < 3 - Platykurtic distribution, flatter than a normal distribution with a wider peak. The probability for extreme values is less than for a normal distribution, and the values are wider spread around the mean.
-  #   Kurtosis = 3 - Mesokurtic distribution - normal distribution for example.
-  
-  plotRes0 = plotRes0 + geom_histogram(aes(y = ..density..), fill = '#000099', alpha = 0.5)
-  plotRes0 = plotRes0 + geom_density(colour = 'red', size=1)
-  plotRes0 = plotRes0 + ylab(expression(bold('Density'))) + xlab(expression(bold('Residuals')))
-  plotRes0 = plotRes0 + geom_vline(xintercept=0, size=1.5) + geom_hline(yintercept=0, size=1.5) 
-  
-  yh = predict(model)
-  
-  plotRes1 = gscatterplot(yh,r,xlab = "Fitted values", ylab = "Residuals")
-  plotRes1 = plotRes1 + geom_hline(yintercept = 0) + geom_smooth()
-  
-  s = sqrt(deviance(model)/df.residual(model))
-  rs = r/s
-  
-  plotRes2 = gqqplot(rs, xlab = "Theoretical Quantiles", ylab = "Standardized residuals")
-  
-  sqrt.rs = sqrt(abs(rs))
-  plotRes3 = gscatterplot(yh, sqrt.rs, xlab = "Fitted values", ylab = expression(sqrt("Standardized residuals")))
-  plotRes3 = plotRes3 + geom_smooth()
-  
-  out = list(plotRes0, plotRes1, plotRes2, plotRes3)
-  names(out) = c("plotRes0", "plotRes1", "plotRes2", "plotRes3")
-  
-  return(out)
-}
-
-
-
-
-
-
 
