@@ -106,14 +106,14 @@ GxE = function(
       
       # 2.1. germplam ----------
       p = ggplot(data = data, aes(x = germplasm, y = variable, color = germplasm))
-      p = p + geom_boxplot()
+      p = p + geom_boxplot() + ylab(variable)
       p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90))
       out_descriptive_germplasm = list("boxplot" = p)
       
       
       # 2.2. location ----------
       p = ggplot(data = data, aes(x = location, y = variable, color = location))
-      p = p + geom_boxplot()
+      p = p + geom_boxplot() + ylab(variable)
       p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90))
       out_descriptive_location = list("boxplot" = p)
       
@@ -129,16 +129,15 @@ GxE = function(
       
       #p_gxe = p_gxe + scale_color_manual(values=rep(cbbPalette, each = 2))
       
-      #p_gxe = p_gxe + labs(title = paste("Graphique d'interaction pour la variable :" ,variable,"en fonction du germplasme et de l'environnement"))
-      p_gxe = p_gxe + theme(axis.text.x=element_text(size=15,angle=90), plot.title = element_text(lineheight=.8, face="bold"))
+      p_gxe = p_gxe + theme(axis.text.x=element_text(angle=90))
+      p_gxe = p_gxe + ylab(variable)
       # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
       
-      if(nlevels(data$year) > 1) { 
-        p_gxe = p_gxe + facet_grid(year ~ .)
-      }
+      if(nlevels(data$year) > 1) { p_gxe = p_gxe + facet_grid(year ~ .) }
       
       out_descriptive_interaction = list("interaction-plot" = p_gxe)
       
+      # 2.4. Return results ----------
       out_descriptive = list(
         "germplasm" = out_descriptive_germplasm, 
         "location" = out_descriptive_location, 
