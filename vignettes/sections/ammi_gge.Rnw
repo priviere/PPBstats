@@ -117,7 +117,11 @@ anova$anova_model
 
 \paragraph{residuals}
 <<message=TRUE,cache=FALSE>>=
-anova$residuals
+anova$residuals$distribution
+@
+
+<<message=TRUE,cache=FALSE>>=
+anova$residuals$QQplot
 @
 
 \paragraph{variability repartition}
@@ -157,7 +161,6 @@ anova$germplasm_effects$boxplot_variance_intra
 anova$interaction_matrix
 @
 
-\subsubsection{PCA}
 <<message=TRUE,cache=FALSE>>=
 pca = res_ammi_y1$PCA
 @
@@ -253,7 +256,7 @@ pca$biplot$discrimitiveness_vs_representativeness$representativeness
 \end{itemize}
 
 
-A CONTINUER 
+!!!!! A CONTINUER !!!!!
 
 Representativeness is a key factor to decide how a test location should be used in
 genotype evaluation, assuming adequate discriminating ability (Yan et al 2007). The
@@ -268,6 +271,32 @@ these are both repeatable across years and representative of the other farmers f
 in the area. It is crucial for a PPB breeding program to have test locations of this
 type.
 
+
+\subsubsection{Post AMMI analysis}
+
+<<message=TRUE,cache=FALSE>>=
+ammi$Post_AMMI$barplot_variation_repartition
+@
+
+
+<<message=TRUE,cache=FALSE>>=
+ammi$Post_AMMI$PCA_G_effect$variation_dim
+ammi$Post_AMMI$PCA_G_effect$ind
+ammi$Post_AMMI$PCA_G_effect$var
+@
+
+
+<<message=TRUE,cache=FALSE>>=
+ammi$Post_AMMI$PCA_intraG_effect$variation_dim
+ammi$Post_AMMI$PCA_intraG_effect$ind
+ammi$Post_AMMI$PCA_intraG_effect$var
+@
+
+<<message=TRUE,cache=FALSE>>=
+ammi$Post_AMMI$PCA_E_effect$variation_dim
+ammi$Post_AMMI$PCA_E_effect$ind
+ammi$Post_AMMI$PCA_E_effect$var
+@
 
 
 \subsection{GGE}
