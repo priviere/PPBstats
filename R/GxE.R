@@ -96,7 +96,7 @@ GxE = function(
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data = droplevels(na.omit(data))
       
-      data$block_in_env = factor(paste(data$block, data$location, sep = ";")) # hierarchise block within environemnt
+      data$block_in_env = factor(paste(data$block, data$location, data$year, sep = ";")) # hierarchise block within location and year
       data$YxE = factor(paste(data$year, data$location, sep = ":"))
       data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
       
