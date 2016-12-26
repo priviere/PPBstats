@@ -6,23 +6,53 @@
 The Additive Main effects and Multiplicative Interaction (AMMI) model is based on two analyses \citep{gauch_statistical_2006} : 
 \begin{enumerate}
 
-\item an ANOVA with the following model :
+\item an \textbf{ANOVA} with the following model :
 
 \begin{equation}
-Y_{ijk} = \mu + \alpha_{i} + \theta_{j} +  rep_{k}(\theta_{j}) + \eta_{i}\nu_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + \eta_{i}\nu_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
 \label{ammi_anova}
 \end{equation}
 
 With,
-$Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and environment $j$,
-$\mu$ the general mean,
-$\alpha_{i}$ the effect of germplasm $i$,
-$\theta_{j}$ the effect of environment $j$,
-$rep_{k}(\theta_{j})$ effect of replication $k$ nested in environment,
-$\eta_{i}\nu_{j}$ the effect of interaction germplasm $\times$ environment,
-$\varepsilon_{ijk}$ the residuals.\\
 
-\item a PCA which analyse deeper the $G \times E$ interaction: 
+\begin{tabular}{ll}
+$Y_{ijk}$ & the phenotypic value for replication $k$, germplasm $i$ and location $j$, \\
+$\mu$ & the general mean, \\
+$\alpha_{i}$ & the germplasm $i$ effect, \\
+$\theta_{j}$ & location $j$ effect, \\
+$rep_{k}(\theta_{j})$ & the replication $k$ nested in location effect, \\
+$\eta_{i}\nu_{j}$ & the germplasm $\times$ location effect, \\
+$\varepsilon_{ijk}$ & the residuals.\\
+\end{tabular}
+
+~\\ 
+
+Or, if there are several years in the data set:
+
+\begin{equation}
+Y_{ijkl} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}\beta_{l}) + \eta_{i}\nu_{j} + 
+\beta_{l} + \beta_{l}\alpha_{i} + \beta_{l}\theta_{j} + 
+\varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{ammi_anova}
+\end{equation}
+
+With,
+
+\begin{tabular}{ll}
+$Y_{ijkl}$ & the phenotypic value for replication $k$, germplasm $i$, location $j$ and year $l$, \\
+$\mu$ & the general mean, \\
+$\alpha_{i}$ & the germplasm $i$ effect, \\
+$\theta_{j}$ & location $j$ effect, \\
+$rep_{k}(\theta_{j}\beta_{l})$ & the replication $k$ nested in location and year effect, \\
+$\eta_{i}\nu_{j}$ & the germplasm $\times$ location effect, \\
+$\beta_{l}$ & the year $l$ effect, \\
+$\beta_{l}\alpha_{i}$ & the year $\times$ germplasm interaction effect, \\
+$\beta_{l}\theta_{j}$ & the year $\times$ location interaction effect, \\
+$\varepsilon_{ijk}$ & the residuals.\\
+\end{tabular}
+
+
+\item a \textbf{PCA} which analyse deeper the germplasm $\times$ location interaction: 
 
 \begin{displaymath}
 \eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}
@@ -161,6 +191,8 @@ anova$germplasm_effects$boxplot_variance_intra
 anova$interaction_matrix
 @
 
+\subsubsection{PCA}
+
 <<message=TRUE,cache=FALSE>>=
 pca = res_ammi_y1$PCA
 @
@@ -275,27 +307,44 @@ type.
 
 \subsubsection{Post AMMI analysis}
 
+\paragraph{Repartition of the variation for each variable}
 <<message=TRUE,cache=FALSE>>=
 ammi$Post_AMMI$barplot_variation_repartition
 @
 
-
+\paragraph{Germplasm effects}
 <<message=TRUE,cache=FALSE>>=
 ammi$Post_AMMI$PCA_G_effect$variation_dim
+@
+
+<<message=TRUE,cache=FALSE>>=
 ammi$Post_AMMI$PCA_G_effect$ind
+@
+
+<<message=TRUE,cache=FALSE>>=
 ammi$Post_AMMI$PCA_G_effect$var
 @
 
 
+\paragraph{Variance intra germplasm effects}
 <<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$PCA_intraG_effect$variation_dim
-ammi$Post_AMMI$PCA_intraG_effect$ind
-ammi$Post_AMMI$PCA_intraG_effect$var
+p1 = ammi$Post_AMMI$PCA_intraG_effect$variation_dim
+p2 = ammi$Post_AMMI$PCA_intraG_effect$ind
+p3 = ammi$Post_AMMI$PCA_intraG_effect$var
+grid.arrange(p1, p2, p3, ncol=3, nrow=1)
+@
+
+
+\paragraph{Location effects}
+<<message=TRUE,cache=FALSE>>=
+ammi$Post_AMMI$PCA_E_effect$variation_dim
 @
 
 <<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$PCA_E_effect$variation_dim
 ammi$Post_AMMI$PCA_E_effect$ind
+@
+
+<<message=TRUE,cache=FALSE>>=
 ammi$Post_AMMI$PCA_E_effect$var
 @
 
