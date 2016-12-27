@@ -75,6 +75,15 @@ get_perpendicular_segment = function(x1, y1, x2, y2, x3, y3, longer = FALSE){
 }
 
 # Function use in check_model_model_1.R, check_model_model_2.R ----------
+check_analysis_argument = function(analysis){
+  if(!is.null(analysis)) { 
+    if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }  
+    if( !is.element(analysis, c("convergence")) ){ warning("\"convergence\" is not chosen! You may make mistakes in the interpretation of the results !!!") }  
+  } else { analysis = "all" }
+  return(analysis)
+}
+
+
 get.caterpillar.plot = function(x){ # cf ggmcmc:ggs_caterpillar
   p = ggplot(x, aes(x = q3, y = reorder(parameter, q3))) 
   p = p + geom_point(size = 3) # median 
