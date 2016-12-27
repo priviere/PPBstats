@@ -16,5 +16,26 @@ ggplot_check_model = function(data_check_model){
   out_sigma_distribution = out
   message("Distribution of sigma_j in the inverse Gamme distribution are done.")
   
+  # model 1, mu_ij caterpillar plot
+  out = lapply(data_ggplot_model_1_mu_ij, function(x){ get.caterpillar.plot(x) }) # + xlim(xmin, xmax)
+  out = list("mu_posteriors" = out)
+  out_para_posteriors = c(out_para_posteriors, out)
+  message("The mu_ij posterior distributions are done.")
+  
+  # model 1, beta_jk caterpillar plot ----------
+  out = lapply(data_ggplot_model_1_beta_jk, function(x){ get.caterpillar.plot(x) }) # + xlim(xmin, xmax)
+  out = list("beta_posteriors" = out)
+  out_para_posteriors = c(out_para_posteriors, out)
+  message("The beta_jk posterior distributions are done.")      
+  
+  
+  # model 1, sigma_j caterpillar plot ----------
+  out = lapply(data_ggplot_model_1_sigma_j, function(x){ get.caterpillar.plot(x) + ggtitle("") } ) # + xlim(xmin, xmax) 
+  out = list("sigma_posteriors" = out)
+  out_para_posteriors = c(out_para_posteriors, out)
+  message("The sigma_j posterior distributions are done.")
+  
+  
+  
   
 }

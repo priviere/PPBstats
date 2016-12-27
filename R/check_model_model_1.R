@@ -82,55 +82,38 @@ check_model_model_1 = function(
     data_ggplot_model_1_sigma_j = list(d_sigma_distribution = d_sigma_distribution, d_sigma = d_sigma)
   } else { data_ggplot_model_1_sigma_j = NULL }
   
+  # 4.2. mu_ij caterpillar plot ----------
+  if ( length(grep("mu", rownames(sq_MCMC))) > 0  ) {
+    sq_MCMC_mu = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
+    xmin = min(sq_MCMC_mu$q1); xmax = max(sq_MCMC_mu$q5)
+    data_ggplot_model_1_mu_ij = plyr:::splitter_d(sq_MCMC_mu, .(environment))
+  }
   
+  # 4.3. beta_jk caterpillar plot ----------
+  if ( length(grep("beta", rownames(sq_MCMC))) > 0  ) {
+    sq_MCMC_beta = droplevels(sq_MCMC[grep("beta", rownames(sq_MCMC)),])   
+    xmin = min(sq_MCMC_beta$q1); xmax = max(sq_MCMC_beta$q5)
+    data_ggplot_model_1_beta_jk = plyr:::splitter_d(sq_MCMC_beta, .(environment))
+  }
   
-  
-  
+  # 4.4. sigma_j caterpillar plot ----------
+  if ( length(grep("sigma", rownames(sq_MCMC))) > 0  ) {
+    sq_MCMC_sigma = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])    
+    xmin = min(sq_MCMC_sigma$q1); xmax = max(sq_MCMC_sigma$q5)
+    sq_MCMC_sigma$split = add_split_col(sq_MCMC_sigma, nb_parameters_per_plot)
+    data_ggplot_model_1_sigma_j = plyr:::splitter_d(sq_MCMC_sigma, .(split))
+  }
   
   
   
   out.posteriors = NULL
   if(analysis == "all" | analysis == "posteriors") {
     
-
-    
     # 4.1.4. mu_ij, beta_jk and sigma_j caterpillar plot distribution ----------
     out_para_posteriors = NULL
     
-    if ( length(grep("mu", rownames(sq_MCMC))) > 0  ) {
-      sq_MCMC_mu = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
-      xmin = min(sq_MCMC_mu$q1); xmax = max(sq_MCMC_mu$q5)
-      
-      sq_MCMC_mu_env = plyr:::splitter_d(sq_MCMC_mu, .(environment))
-      out = lapply(sq_MCMC_mu_env, function(x){ get.caterpillar.plot(x) }) # + xlim(xmin, xmax)
-      out = list("mu_posteriors" = out)
-      out_para_posteriors = c(out_para_posteriors, out)
-      message("The mu_ij posterior distributions are done.")
-    }
     
-    if ( length(grep("beta", rownames(sq_MCMC))) > 0  ) {
-      sq_MCMC_beta = droplevels(sq_MCMC[grep("beta", rownames(sq_MCMC)),])   
-      xmin = min(sq_MCMC_beta$q1); xmax = max(sq_MCMC_beta$q5)
-      
-      sq_MCMC_beta_env = plyr:::splitter_d(sq_MCMC_beta, .(environment))
-      out = lapply(sq_MCMC_beta_env, function(x){ get.caterpillar.plot(x) }) # + xlim(xmin, xmax)
-      out = list("beta_posteriors" = out)
-      out_para_posteriors = c(out_para_posteriors, out)
-      message("The beta_jk posterior distributions are done.")      
-    }
     
-    if ( length(grep("sigma", rownames(sq_MCMC))) > 0  ) {
-      sq_MCMC_sigma = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])    
-      xmin = min(sq_MCMC_sigma$q1); xmax = max(sq_MCMC_sigma$q5)
-      
-      sq_MCMC_sigma$split = add_split_col(sq_MCMC_sigma, nb_parameters_per_plot)
-      sq_MCMC_sigma_split = plyr:::splitter_d(sq_MCMC_sigma, .(split))
-      
-      out = lapply(sq_MCMC_sigma_split, function(x){ get.caterpillar.plot(x) + ggtitle("") } ) # + xlim(xmin, xmax) 
-      out = list("sigma_posteriors" = out)
-      out_para_posteriors = c(out_para_posteriors, out)
-      message("The sigma_j posterior distributions are done.")
-    }
     
     # 4.1.5. standardized epsilon_ijk distribution ----------
     out_stand_res = NULL
