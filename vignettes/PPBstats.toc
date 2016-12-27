@@ -1,27 +1,82 @@
-\contentsline {section}{\numberline {1}Philosophy of \texttt {PPBstats}}{3}{section.1}
-\contentsline {subsection}{\numberline {1.1}Function relations in \texttt {PPBstats}}{3}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}Bayesian statistics}{4}{subsection.1.2}
-\contentsline {subsection}{\numberline {1.3}Let's go!}{5}{subsection.1.3}
-\contentsline {section}{\numberline {2}At the farm level : model\nobreakspace {}\ref {model1} to perform mean comparisons on farms }{5}{section.2}
-\contentsline {subsection}{\numberline {2.1}The model}{5}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}With \texttt {PPBstats}}{6}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Run the model}{6}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2}Analysis of the model outputs}{8}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.3}Get mean comparisons}{15}{subsubsection.2.2.3}
-\contentsline {paragraph}{Computation}{16}{section*.2}
-\contentsline {paragraph}{Plots}{16}{section*.3}
-\contentsline {subparagraph}{All entries in a given environment}{16}{section*.4}
-\contentsline {subparagraph}{Pairs of entries in a given environment}{23}{section*.5}
-\contentsline {section}{\numberline {3}At the network level : model\nobreakspace {}\ref {model2} to analyse $G \times E$ interaction in the network of farms }{24}{section.3}
-\contentsline {subsection}{\numberline {3.1}The model}{24}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}With \texttt {PPBstats}}{25}{subsection.3.2}
-\contentsline {subsubsection}{\numberline {3.2.1}Run the model}{26}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}Analysis of model outputs}{27}{subsubsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.3}Perform cross validation studies}{31}{subsubsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.4}Get mean comparisons}{32}{subsubsection.3.2.4}
-\contentsline {subsubsection}{\numberline {3.2.5}Get biplot $\beta = f(\alpha )$}{33}{subsubsection.3.2.5}
-\contentsline {subsubsection}{\numberline {3.2.6}Get groups of parameters}{34}{subsubsection.3.2.6}
-\contentsline {subsubsection}{\numberline {3.2.7}Predict the past}{37}{subsubsection.3.2.7}
-\contentsline {section}{To cite \texttt {PPBstats}}{39}{section*.6}
-\contentsline {section}{Aknowledgement}{39}{section*.7}
-\contentsline {section}{References}{40}{section*.8}
+\contentsline {section}{\numberline {1}Philosophy of \texttt {PPBstats}}{5}{section.1}
+\contentsline {subsection}{\numberline {1.1}What is Participatory Plant Breeding?}{5}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Function relations in \texttt {PPBstats}}{5}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Frequentist statistics}{5}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Bayesian statistics}{5}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Let's go!}{6}{subsection.1.5}
+\contentsline {section}{\numberline {2}Design the experiment}{8}{section.2}
+\contentsline {subsection}{\numberline {2.1}Analysis carry out in \texttt {PPBstats}}{8}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Experimental design}{9}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Case 1}{10}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Case 2}{11}{subsubsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.2.3}Case 3}{12}{subsubsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.4}Case ???}{15}{subsubsection.2.2.4}
+\contentsline {section}{\numberline {3}Sow, note, harvest, measure ... }{16}{section.3}
+\contentsline {section}{\numberline {4}Describe the data}{17}{section.4}
+\contentsline {section}{\numberline {5}Family of analysis 1 : entry effects on one farm}{18}{section.5}
+\contentsline {subsection}{\numberline {5.1}Classic ANOVA}{18}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Spatial analysis}{19}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}model\nobreakspace {}\ref {model1} to perform mean comparisons on farms }{20}{subsection.5.3}
+\contentsline {subsubsection}{\numberline {5.3.1}Theory of the model}{20}{subsubsection.5.3.1}
+\contentsline {subsubsection}{\numberline {5.3.2}Steps with \texttt {PPBstats}}{20}{subsubsection.5.3.2}
+\contentsline {subsubsection}{\numberline {5.3.3}Run the model}{21}{subsubsection.5.3.3}
+\contentsline {subsubsection}{\numberline {5.3.4}Analysis of the model outputs}{22}{subsubsection.5.3.4}
+\contentsline {subsubsection}{\numberline {5.3.5}Get mean comparisons}{29}{subsubsection.5.3.5}
+\contentsline {paragraph}{Computation}{29}{section*.2}
+\contentsline {paragraph}{Plots}{30}{section*.3}
+\contentsline {subparagraph}{All entries in a given environment}{30}{section*.4}
+\contentsline {subparagraph}{Pairs of entries in a given environment}{34}{section*.5}
+\contentsline {section}{\numberline {6}Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}{36}{section.6}
+\contentsline {subsection}{\numberline {6.1}AMMI}{36}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Theory of the model}{36}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Steps with \texttt {PPBstats}}{37}{subsubsection.6.1.2}
+\contentsline {subsubsection}{\numberline {6.1.3}Run the model}{37}{subsubsection.6.1.3}
+\contentsline {subsubsection}{\numberline {6.1.4}Descriptive graph}{37}{subsubsection.6.1.4}
+\contentsline {subsubsection}{\numberline {6.1.5}ANOVA}{40}{subsubsection.6.1.5}
+\contentsline {paragraph}{table of the model}{41}{section*.6}
+\contentsline {paragraph}{residuals}{41}{section*.7}
+\contentsline {paragraph}{variability repartition}{43}{section*.8}
+\contentsline {paragraph}{location effects}{44}{section*.9}
+\contentsline {paragraph}{germplasm effects}{45}{section*.10}
+\contentsline {paragraph}{Interaction matrix}{47}{section*.11}
+\contentsline {subsubsection}{\numberline {6.1.6}PCA}{47}{subsubsection.6.1.6}
+\contentsline {paragraph}{ecovalence}{47}{section*.12}
+\contentsline {paragraph}{biplot}{48}{section*.13}
+\contentsline {subsubsection}{\numberline {6.1.7}Post AMMI analysis}{54}{subsubsection.6.1.7}
+\contentsline {paragraph}{Repartition of the variation for each variable}{55}{section*.14}
+\contentsline {paragraph}{Germplasm effects}{56}{section*.15}
+\contentsline {paragraph}{Variance intra germplasm effects}{58}{section*.16}
+\contentsline {paragraph}{Location effects}{59}{section*.17}
+\contentsline {subsection}{\numberline {6.2}GGE}{61}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Theory of the model}{61}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}Steps with \texttt {PPBstats}}{62}{subsubsection.6.2.2}
+\contentsline {subsubsection}{\numberline {6.2.3}Run the model}{62}{subsubsection.6.2.3}
+\contentsline {subsubsection}{\numberline {6.2.4}Analysis of model outputs}{62}{subsubsection.6.2.4}
+\contentsline {subsubsection}{\numberline {6.2.5}Get main effects results}{62}{subsubsection.6.2.5}
+\contentsline {paragraph}{Germplasm effects}{62}{section*.18}
+\contentsline {paragraph}{Environment effects}{62}{section*.19}
+\contentsline {subsubsection}{\numberline {6.2.6}Get $G \times E$ effects results}{62}{subsubsection.6.2.6}
+\contentsline {paragraph}{interaction plot}{62}{section*.20}
+\contentsline {paragraph}{PCA}{62}{section*.21}
+\contentsline {subsection}{\numberline {6.3}model\nobreakspace {}\ref {model2} to analyse $G \times E$ interaction in the network of farms }{63}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}Theory of the model}{63}{subsubsection.6.3.1}
+\contentsline {subsubsection}{\numberline {6.3.2}Steps with \texttt {PPBstats}}{64}{subsubsection.6.3.2}
+\contentsline {subsubsection}{\numberline {6.3.3}Run the model}{64}{subsubsection.6.3.3}
+\contentsline {subsubsection}{\numberline {6.3.4}Analysis of model outputs}{65}{subsubsection.6.3.4}
+\contentsline {subsubsection}{\numberline {6.3.5}Perform cross validation studies}{68}{subsubsection.6.3.5}
+\contentsline {subsubsection}{\numberline {6.3.6}Get mean comparisons}{69}{subsubsection.6.3.6}
+\contentsline {subsubsection}{\numberline {6.3.7}Get biplot $\beta = f(\alpha )$}{70}{subsubsection.6.3.7}
+\contentsline {subsubsection}{\numberline {6.3.8}Get groups of parameters}{70}{subsubsection.6.3.8}
+\contentsline {subsubsection}{\numberline {6.3.9}Predict the past}{73}{subsubsection.6.3.9}
+\contentsline {section}{\numberline {7}Family of analysis 3 : effects from family 1 and 2 in a network of farms}{75}{section.7}
+\contentsline {subsection}{\numberline {7.1}model 3 }{75}{subsection.7.1}
+\contentsline {section}{\numberline {8}Family of analysis 4 : specific research questions on one farm or more}{76}{section.8}
+\contentsline {subsection}{\numberline {8.1}migrant residant}{76}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Version}{77}{subsection.8.2}
+\contentsline {section}{\numberline {9}Family of analysis 5 : multivariate analysis}{78}{section.9}
+\contentsline {subsection}{\numberline {9.1}Multivariate analysis}{78}{subsection.9.1}
+\contentsline {subsubsection}{\numberline {9.1.1}Format the data}{78}{subsubsection.9.1.1}
+\contentsline {subsubsection}{\numberline {9.1.2}Run the analysis}{78}{subsubsection.9.1.2}
+\contentsline {section}{To cite \texttt {PPBstats}}{80}{section*.22}
+\contentsline {section}{Aknowledgement}{80}{section*.23}
+\contentsline {section}{References}{81}{section*.24}
