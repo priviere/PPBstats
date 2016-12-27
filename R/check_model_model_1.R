@@ -55,7 +55,8 @@ check_model_model_1 = function(
     } else {   model1.data_env_whose_param_did_not_converge = NULL }
   }
   
-  # 3.Format MCMC for further use ----------
+  # 3. posteriors data frame for ggplot ----------
+  
   sq_MCMC$entry_mu = sub("mu\\[", "", sapply(sq_MCMC$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
   
   env_beta = sub("\\]", "", sub("beta\\[", "", sapply(sq_MCMC$parameter[grep("beta\\[", sq_MCMC$parameter)], function(x){unlist(strsplit(as.character(x), ","))[1]})))
@@ -67,10 +68,7 @@ check_model_model_1 = function(
   sq_MCMC$location = sapply(sq_MCMC$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
   sq_MCMC$year = sapply(sq_MCMC$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
   
-  
-  # 4. posteriors data frame for ggplot ----------
-  
-  # 4.1. sigma_j distribution ----------   
+  # 3.1. sigma_j distribution ----------   
   if( length(grep("nu", rownames(sq_MCMC))) > 0 & length(grep("rho", rownames(sq_MCMC))) > 0 & length(grep("sigma", rownames(sq_MCMC))) > 0 ) {
     nu = sq_MCMC["nu", "q3"]
     rho = sq_MCMC["rho", "q3"]
@@ -82,44 +80,51 @@ check_model_model_1 = function(
     data_ggplot_model_1_sigma_j = list(d_sigma_distribution = d_sigma_distribution, d_sigma = d_sigma)
   } else { data_ggplot_model_1_sigma_j = NULL }
   
-  # 4.2. mu_ij caterpillar plot ----------
+  # 3.2. mu_ij caterpillar plot ----------
   if ( length(grep("mu", rownames(sq_MCMC))) > 0  ) {
     sq_MCMC_mu = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
     xmin = min(sq_MCMC_mu$q1); xmax = max(sq_MCMC_mu$q5)
     data_ggplot_model_1_mu_ij = plyr:::splitter_d(sq_MCMC_mu, .(environment))
   }
   
-  # 4.3. beta_jk caterpillar plot ----------
+  # 3.3. beta_jk caterpillar plot ----------
   if ( length(grep("beta", rownames(sq_MCMC))) > 0  ) {
     sq_MCMC_beta = droplevels(sq_MCMC[grep("beta", rownames(sq_MCMC)),])   
     xmin = min(sq_MCMC_beta$q1); xmax = max(sq_MCMC_beta$q5)
     data_ggplot_model_1_beta_jk = plyr:::splitter_d(sq_MCMC_beta, .(environment))
   }
   
-  # 4.4. sigma_j caterpillar plot ----------
+  # 3.4. sigma_j caterpillar plot ----------
   if ( length(grep("sigma", rownames(sq_MCMC))) > 0  ) {
     sq_MCMC_sigma = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])    
     xmin = min(sq_MCMC_sigma$q1); xmax = max(sq_MCMC_sigma$q5)
     sq_MCMC_sigma$split = add_split_col(sq_MCMC_sigma, nb_parameters_per_plot)
-    data_ggplot_model_1_sigma_j = plyr:::splitter_d(sq_MCMC_sigma, .(split))
+    data_ggplot_model_1_sigma_j_2 = plyr:::splitter_d(sq_MCMC_sigma, .(split))
   }
   
-  # 4.5. standardized epsilon_ijk distribution ----------
+  # 3.5. standardized epsilon_ijk distribution ----------
   if ( !is.null(out.model$epsilon)  ) {      
     epsilon_ijk = out.model$epsilon
     sigma_j = sq_MCMC[grep("sigma", sq_MCMC$parameter), "q3"]
     names(sigma_j) = sq_MCMC$parameter[grep("sigma", sq_MCMC$parameter)]
     env = sub("\\]", "", sapply(names(epsilon_ijk), function(x) { sub("epsilon\\[", "", sapply(x, function(x){unlist(strsplit(as.character(x), ","))[2]})) }))
     sigma_j = sigma_j[paste("sigma[", env, "]", sep="")]
-    d_std_res = cbind.data.frame(x = c(1:length(sigma_j)), std_res = epsilon_ijk / sigma_j)
+    data_ggplot_model_1_epsilon_ijk = cbind.data.frame(x = c(1:length(sigma_j)), std_res = epsilon_ijk / sigma_j)
   }  
   
 
-  # 5. Return outptus ----------
-  out = list("convergence" = out.convergence, 
-             "posteriors" = out.posteriors, 
-             "MCMC" = MCMC,
-             "model1.data_env_whose_param_did_not_converge" = model1.data_env_whose_param_did_not_converge)
-  return(out)
+  # 4. Return outptus ----------
+  out = list(
+    "MCMC" = MCMC,
+    "data_env_whose_param_did_not_converge" = model1.data_env_whose_param_did_not_converge,
+    "data_ggplot" = list(
+      "sigma_j" = data_ggplot_model_1_sigma_j,
+      "mu_ij" = data_ggplot_model_1_mu_ij,
+      "beta_jk" = data_ggplot_model_1_beta_jk,
+      "sigma_j_2" = data_ggplot_model_1_sigma_j_2,
+      "epsilon_ijk" = data_ggplot_model_1_epsilon_ijk
+    )
+  )
   
+  return(out)
 }
