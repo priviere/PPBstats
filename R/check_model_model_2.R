@@ -5,36 +5,10 @@ check_model_model_2 = function(
   nb_parameters_per_plot = 10
 ){
   # 1. Error message and update arguments ----------
-  if( is.null(attributes(out.model)$PPBstats.object) ) { stop("out.model should be an output from model 2 (PPBstats::model_2).") } 
-  
-  if(!is.null(analysis)) { 
-    if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }  
-    if( !is.element(analysis, c("convergence")) ){ warning("\"convergence\" is not chosen! You may make mistakes in the interpretation of the results !!!") }  
-  } else { analysis = "all" }
+  analysis = check_analysis_argument(analysis)
   
   # Default settings
   model2.presence.abscence.matrix = out.model$model2.presence.abscence.matrix
-  
-  # 1. experimental design ----------
-  out.experimental.design = NULL
-  if(analysis == "all" | analysis == "experimental_design") {
-    
-    m = out.model$data.presence.abscence.matrix
-    
-    if(attributes(out.model)$PPBstats.object == "model2"){
-      d <- data.frame(germplasm = rep(row.names(m), ncol(m)), 
-                      environment = rep(colnames(m), each=nrow(m)),
-                      score = as.factor(as.character(as.vector(m)))
-      )
-      
-    }
-    
-    nb_NA = round(length(which(d$score == 0)) / ( length(which(d$score == 0)) + length(which(d$score != 0)) ), 2) * 100
-    p = ggplot(d, aes(x = germplasm, y = environment))  
-    p = p + geom_raster(aes(fill = score)) + ggtitle(paste("GxE combinaisons (",  nb_NA, "% of 0)", sep = ""))
-    out.experimental.design = list("plot" = p, "data.presence.abscence.matrix" = m)
-    message("The experimental design plot is done.")
-  }
   
   # 2. Get MCMC data frame ----------
   MCMC = out.model$MCMC
@@ -174,13 +148,11 @@ check_model_model_2 = function(
     }
     
   }
-  
   # 5. Return outptus ----------
-  out = list("data.experimental_design" = out.experimental.design,
-             "model2.presence.abscence.matrix" = model2.presence.abscence.matrix,
+  out = list("model2.presence.abscence.matrix" = model2.presence.abscence.matrix,
              "convergence" = out.convergence, 
              "posteriors" = out.posteriors, 
-             "MCMC" = MCMC,
+             "MCMC" = MCMC)
   return(out)
   
 }
