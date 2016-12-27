@@ -1,7 +1,7 @@
 check_model_model_1 = function(
-  out.model,
-  nb_parameters_per_plot = 10
-){
+  out.model
+)
+  {
   
   # 2. Convergence, update MCMC and data frame with environments where some parameters did not converge ----------
   out.conv = check_convergence(out.model, model_name = "model1")

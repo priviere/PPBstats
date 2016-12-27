@@ -1,4 +1,7 @@
-ggplot_check_model = function(data_check_model){
+ggplot_check_model = function(
+  data_ggplot_check_model,
+  nb_parameters_per_plot = 10
+  ){
   
   get.caterpillar.plot = function(x){ # cf ggmcmc:ggs_caterpillar
     p = ggplot(x, aes(x = q3, y = reorder(parameter, q3))) 
