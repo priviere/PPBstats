@@ -83,3 +83,7 @@ get.caterpillar.plot = function(x){ # cf ggmcmc:ggs_caterpillar
   p = p + ylab("parameter") + xlab("value") + ggtitle(x[1, "environment"])
   return(p)
 }
+
+add_split_col = function(x, each){ rep(c(1:nrow(x)), each = each)[1:nrow(x)] } 
+
+
