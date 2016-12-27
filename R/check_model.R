@@ -60,7 +60,6 @@
 #' 
 check_model = function(
 out.model,
-analysis = NULL,
 nb_parameters_per_plot = 10
 )
 # let's go !!! ----------
@@ -70,11 +69,11 @@ nb_parameters_per_plot = 10
   
   # 2. Check model ----------
   if(attributes(out.model)$PPBstats.object == "model1") {
-    out = check_model_model_1(model = "model_1", out.model, analysis = analysis, nb_parameters_per_plot = nb_parameters_per_plot)
+    out = check_model_model_1(out.model, nb_parameters_per_plot = nb_parameters_per_plot)
   }
   
   if(attributes(out.model)$PPBstats.object == "model2") {
-    out = check_model_model_2(model = "model_2", out.model, analysis = analysis, nb_parameters_per_plot = nb_parameters_per_plot)
+    out = check_model_model_2(out.model, nb_parameters_per_plot = nb_parameters_per_plot)
   }
 
 return(out)
