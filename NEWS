@@ -3,6 +3,11 @@ PPBstats 0.14 ---------------------------------------
 * rename function
   - analyse.outputs.R becomes check_model.R
 
+* add new functions
+  - check_model_model_1
+  - check_model_model_2
+  - check_model_GxE
+
 
 PPBstats 0.13 ---------------------------------------
 -----------------------------------------------------
