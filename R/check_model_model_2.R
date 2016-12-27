@@ -1,7 +1,5 @@
 check_model_model_2 = function(
-  model = "model_2",
   out.model,
-  analysis = NULL,
   nb_parameters_per_plot = 10
 ){
   # 1. Error message and update arguments ----------
@@ -12,7 +10,7 @@ check_model_model_2 = function(
   
   # 2. Convergence, update MCMC when parameters did not converge ----------
   out.convergence = check_convergence(out.model, model_name = "model2")
-  MCMC = out.con$MCMC
+  MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   out.convergence = out.conv$out.convergence
   conv_not_ok = out.conv$conv_not_ok
