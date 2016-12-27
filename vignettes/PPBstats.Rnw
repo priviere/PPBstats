@@ -113,6 +113,12 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 @
 \newpage
 
+\section{Family of analysis 5 : multivariate analysis}
+<<child='sections/multivariate_analysis.Rnw'>>=
+@
+\newpage
+
+
 \section*{To cite \pack} \addcontentsline{toc}{section}{To cite \pack}
 To cite this package and or this vignette:
 
