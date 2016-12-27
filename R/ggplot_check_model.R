@@ -46,7 +46,7 @@ ggplot_check_model = function(data_check_model){
   
   
   # model 1, standardized epsilon_ijk distribution ----------
-  out_stand_res = ggplot(d_std_res, aes(x = x, y = std_res)) + geom_point() + xlab("") + ylab("standardised residuals")
+  out_stand_res = ggplot(data_ggplot_model_1_epsilon_ijk, aes(x = x, y = std_res)) + geom_point() + xlab("") + ylab("standardised residuals")
   message("The standardised residuals distributions are done.")
   
   
