@@ -3,49 +3,49 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: PPBstats.aux
 The style file: plainnat.bst
 Database file #1: biblio.bib
-Warning--I didn't find a database entry for "riviere_hierarchical_2015-1"
 Warning--I didn't find a database entry for "gelman__2006"
+Warning--empty institution in ceccarelli_manual_2012
 Warning--there's a number but no volume in gelman_inference_1992
 Warning--empty institution in husson_principal_2010
-You've used 10 entries,
+You've used 15 entries,
             2773 wiz_defined-function locations,
-            657 strings with 6802 characters,
-and the built_in function-call counts, 4646 in all, are:
-= -- 411
-> -- 287
-< -- 4
-+ -- 97
-- -- 87
-* -- 405
-:= -- 736
-add.period$ -- 31
-call.type$ -- 10
-change.case$ -- 60
-chr.to.int$ -- 10
-cite$ -- 22
-duplicate$ -- 199
-empty$ -- 362
-format.name$ -- 101
-if$ -- 945
+            685 strings with 7484 characters,
+and the built_in function-call counts, 6816 in all, are:
+= -- 612
+> -- 395
+< -- 7
++ -- 135
+- -- 120
+* -- 585
+:= -- 1076
+add.period$ -- 46
+call.type$ -- 15
+change.case$ -- 87
+chr.to.int$ -- 15
+cite$ -- 33
+duplicate$ -- 296
+empty$ -- 546
+format.name$ -- 139
+if$ -- 1389
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 10
-newline$ -- 58
-num.names$ -- 40
-pop$ -- 104
+missing$ -- 14
+newline$ -- 83
+num.names$ -- 60
+pop$ -- 148
 preamble$ -- 1
-purify$ -- 49
+purify$ -- 70
 quote$ -- 0
-skip$ -- 149
+skip$ -- 218
 stack$ -- 0
-substring$ -- 170
-swap$ -- 10
+substring$ -- 280
+swap$ -- 14
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 105
-warning$ -- 2
-while$ -- 42
+type$ -- 160
+warning$ -- 3
+while$ -- 65
 width$ -- 0
-write$ -- 137
+write$ -- 202
 (There were 4 warnings)
