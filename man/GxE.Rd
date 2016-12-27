@@ -31,9 +31,7 @@ The function returns two lists with
      \item "residuals" being a list with
       \itemize{
        \item "distribution"
-       \item "Residuals_vs_fitted"
        \item "QQplot"
-       \item "standardized_residuals_vs_fitted"
       }
      \item "variability_repartition" a pie chart with variability repartition
      \item "location_effects" being a list with
