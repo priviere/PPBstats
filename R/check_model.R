@@ -2,7 +2,7 @@
 #' Check with plots if the model went well based on the Gelman-Rubin test and plots of posteriors distributions 
 #'
 #' @description
-#' \code{analyse.outputs} displays plots to see if the model went well based on the Gelman-Rubin test and plots of posteriors distributions. It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
+#' \code{check_model} displays plots to see if the model went well based on the Gelman-Rubin test and plots of posteriors distributions. It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #'
 #' @param out.model outputs from model 1 (\code{MC}) or model 2 (\code{FWH})
 #'  
@@ -58,7 +58,7 @@
 #' @seealso \code{\link{MC}}, \code{\link{FWH}}, \code{\link{get.mean.comparisons}}
 #' 
 #' 
-analyse.outputs = function(
+check_model = function(
 out.model,
 analysis = NULL,
 nb_parameters_per_plot = 10
