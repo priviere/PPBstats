@@ -60,8 +60,11 @@ describe_data = function(
 
       p = ggplot(m, aes(x = germplasm, y = location))
       p = p + geom_raster(aes(fill = nb_measures)) + facet_grid(year ~ .)
-      p = p + ggtitle(paste(gettext("Presence / abscence reparition for"), variable))
-      
+      nb_NA = round(length(which(m$nb_measures == 0)) / ( length(which(m$nb_measures == 0)) + length(which(m$nb_measures != 0)) ), 2) * 100
+      p = p + ggtitle(
+        paste("Presence abscence repartition for ", variable, sep = ""),
+        paste("(",  nb_NA, "% of 0)", sep = "")
+      )
       out.presence.abscence = p
 
       # 2.2. Histogram and boxplot
