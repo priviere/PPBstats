@@ -1,18 +1,8 @@
-ggplot_check_model = function(
+ggplot_check_model_model_1 = function(
   out_check_model,
   nb_parameters_per_plot = 10
   ){
   
-  get.caterpillar.plot = function(x){ # cf ggmcmc:ggs_caterpillar
-    p = ggplot(x, aes(x = q3, y = reorder(parameter, q3))) 
-    p = p + geom_point(size = 3) # median 
-    p = p + geom_segment(aes(x = q2, xend = q4, yend = reorder(parameter, q3)), size = 1.5) # 25%-75%
-    p = p + geom_segment(aes(x = q1, xend = q5, yend = reorder(parameter, q3)), size = 0.5) # 2.5%-25% and 75%-97.5%
-    p = p + ylab("parameter") + xlab("value") + ggtitle(x[1, "environment"])
-    return(p)
-  }
-  
-  # 1. model 1 ----------
   if( attributes(out_check_model)$check_model == "model_1" ) {
     data_ggplot = out_check_model$data_ggplot
     data_ggplot_model_1_sigma_j = data_ggplot$sigma_j
