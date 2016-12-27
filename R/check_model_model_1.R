@@ -1,15 +1,11 @@
 check_model_model_1 = function(
-  model = "model_1",
   out.model,
-  analysis = NULL,
   nb_parameters_per_plot = 10
 ){
-  # 1. Error message and update arguments ----------
-  analysis = check_analysis_argument(analysis)
   
   # 2. Convergence, update MCMC and data frame with environments where some parameters did not converge ----------
-  out.conv = check_convergence(out.model, model_name = "model2")
-  MCMC = out.con$MCMC
+  out.conv = check_convergence(out.model, model_name = "model1")
+  MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   out.convergence = out.conv$out.convergence
   conv_not_ok = out.conv$conv_not_ok
@@ -53,7 +49,7 @@ check_model_model_1 = function(
       MCMC = MCMC[,-mcmc_to_delete] 
       attributes(MCMC)$model = "model1"
     } else {   model1.data_env_whose_param_did_not_converge = NULL }
-  }
+  } else {   model1.data_env_whose_param_did_not_converge = NULL }
   
   # 3. posteriors data frame for ggplot ----------
   
@@ -85,32 +81,32 @@ check_model_model_1 = function(
     sq_MCMC_mu = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
     xmin = min(sq_MCMC_mu$q1); xmax = max(sq_MCMC_mu$q5)
     data_ggplot_model_1_mu_ij = plyr:::splitter_d(sq_MCMC_mu, .(environment))
-  }
+  } else { data_ggplot_model_1_mu_ij = NULL }
   
   # 3.3. beta_jk caterpillar plot ----------
   if ( length(grep("beta", rownames(sq_MCMC))) > 0  ) {
     sq_MCMC_beta = droplevels(sq_MCMC[grep("beta", rownames(sq_MCMC)),])   
     xmin = min(sq_MCMC_beta$q1); xmax = max(sq_MCMC_beta$q5)
     data_ggplot_model_1_beta_jk = plyr:::splitter_d(sq_MCMC_beta, .(environment))
-  }
+  } else { data_ggplot_model_1_beta_jk = NULL }
   
   # 3.4. sigma_j caterpillar plot ----------
   if ( length(grep("sigma", rownames(sq_MCMC))) > 0  ) {
-    sq_MCMC_sigma = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])    
+    sq_MCMC_sigma = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])
     xmin = min(sq_MCMC_sigma$q1); xmax = max(sq_MCMC_sigma$q5)
     sq_MCMC_sigma$split = add_split_col(sq_MCMC_sigma, nb_parameters_per_plot)
     data_ggplot_model_1_sigma_j_2 = plyr:::splitter_d(sq_MCMC_sigma, .(split))
-  }
+  } else { data_ggplot_model_1_sigma_j_2 = NULL }
   
   # 3.5. standardized epsilon_ijk distribution ----------
-  if ( !is.null(out.model$epsilon)  ) {      
+  if ( !is.null(out.model$epsilon)  ) {
     epsilon_ijk = out.model$epsilon
     sigma_j = sq_MCMC[grep("sigma", sq_MCMC$parameter), "q3"]
     names(sigma_j) = sq_MCMC$parameter[grep("sigma", sq_MCMC$parameter)]
     env = sub("\\]", "", sapply(names(epsilon_ijk), function(x) { sub("epsilon\\[", "", sapply(x, function(x){unlist(strsplit(as.character(x), ","))[2]})) }))
     sigma_j = sigma_j[paste("sigma[", env, "]", sep="")]
     data_ggplot_model_1_epsilon_ijk = cbind.data.frame(x = c(1:length(sigma_j)), std_res = epsilon_ijk / sigma_j)
-  }  
+  } else { data_ggplot_model_1_epsilon_ijk = NULL }
   
 
   # 4. Return outptus ----------
