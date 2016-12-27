@@ -12,7 +12,8 @@ check_model_model_2 = function(
   
   # 2. Convergence ----------
   out.convergence = check_convergence(out.model, model_name = "model2")
-  
+  MCMC = out.con$MCMC
+  out.convergence = out.conv$out.convergence
   
   # 4. posteriors ----------
   
