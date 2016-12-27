@@ -9,7 +9,7 @@
 #' @author Pierre Riviere
 #' 
 
-# Function use in describe_data.R, GxE.R
+# Function use in describe_data.R, GxE.R, model_1.R, model_2.R ----------
 check_data_vec_variables = function(data, vec_variables){
   mess = "The following column are compulsory : c(\"year\", \"germplasm\", \"location\", \"block\", \"X\", \"Y\"."
   if(!is.element("year", colnames(data))) { stop(mess) }
@@ -22,7 +22,7 @@ check_data_vec_variables = function(data, vec_variables){
   for(variable in vec_variables) { if(!is.element(variable, colnames(data))) { stop(variable," is not in data") } }
 }
 
-# Function use in describe_data.R
+# Function use in describe_data.R ----------
 split_data_for_ggplot = function(data, factor, nb_param){
   ns = unique(data[,factor])
   s = rep(c(1:length(ns)), each = nb_param)[1:length(ns)]
@@ -32,7 +32,7 @@ split_data_for_ggplot = function(data, factor, nb_param){
   return(data_f)
 }
 
-# Function use in which_won_where.R, mean_vs_stability.R
+# Function use in which_won_where.R, mean_vs_stability.R ----------
 get_biplot = function(res.pca){
   
   var = as.data.frame(res.pca$var$coord)
@@ -74,3 +74,12 @@ get_perpendicular_segment = function(x1, y1, x2, y2, x3, y3, longer = FALSE){
   return(c(x1 = x3, y1 = y3, x2 = x4, y2 = y4))
 }
 
+# Function use in check_model_model_1.R, check_model_model_2.R ----------
+get.caterpillar.plot = function(x){ # cf ggmcmc:ggs_caterpillar
+  p = ggplot(x, aes(x = q3, y = reorder(parameter, q3))) 
+  p = p + geom_point(size = 3) # median 
+  p = p + geom_segment(aes(x = q2, xend = q4, yend = reorder(parameter, q3)), size = 1.5) # 25%-75%
+  p = p + geom_segment(aes(x = q1, xend = q5, yend = reorder(parameter, q3)), size = 0.5) # 2.5%-25% and 75%-97.5%
+  p = p + ylab("parameter") + xlab("value") + ggtitle(x[1, "environment"])
+  return(p)
+}
