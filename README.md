@@ -1,6 +1,6 @@
 # PPBstats
 
-`PPBstats` is an R package for statistical analysis of unbalanced trials in decentralized participatory plant breeding programmes.
+`PPBstats` is an R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes.
 
 The R code is under licence GPL-3.
 
