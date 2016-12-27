@@ -6,12 +6,14 @@ check_model_model_1 = function(
 ){
   # 1. Error message and update arguments ----------
   analysis = check_analysis_argument(analysis)
-
+  
   # Default settings
   model1.data_env_whose_param_did_not_converge = NULL
   
   # 2. Convergence ----------
-  out.convergence = check_convergence(out.model, model_name = "model2")
+  out.conv = check_convergence(out.model, model_name = "model2")
+  MCMC = out.con$MCMC
+  out.convergence = out.conv$out.convergence
   
   # 4. posteriors ----------
   out.posteriors = NULL
