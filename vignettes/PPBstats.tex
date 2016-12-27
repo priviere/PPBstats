@@ -24,6 +24,7 @@
 \newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
 \newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
 \newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
 
 \usepackage{framed}
 \makeatletter
@@ -75,10 +76,13 @@
 
 \usepackage{colortbl, xcolor}
 \usepackage{float}
+\usepackage{lscape}
+\usepackage{multirow}
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.12}
+\newcommand{\versionnumber}{0.13}
+\newcommand{\PPB}{Participatory Plant Breeding}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
@@ -86,9 +90,139 @@
 
 \input{./sections/head}
 
-\section{Philosophy of \pack}
 
-\input{./sections/philo_pack}
+\section{Philosophy of \pack}
+\label{philo}
+
+\pack~aims to facilitate the implementation of statistical methods commoly foind in \PPB~programmes.
+The statistical procedures are based on frequentist and bayesian approaches.
+
+\subsection{What is \PPB ?}
+
+!!! TO DO !!!
+
+\subsection{Function relations in \pack}
+
+\pack~is divided into two sets of functions:
+
+\begin{itemize}
+\item Hidden functions
+\item Used functions
+\end{itemize}
+
+In this vignette, we only used examples with used functions.
+Nevertheless, hidden functions could be used in other context to answer specific questions.
+Figure~\ref{function_relations} displays these functions and their relations.
+Table~\ref{function_descriptions} gives a quick description of each function.
+You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{PBBstats_function_relations}
+\end{center}
+\caption{Function relations in \pack.
+Functions related to model \ref{model1} are in red.
+Functions related to model \ref{model2} are in orange.
+Functions related to both models are in black.
+}
+\label{function_relations}
+\end{figure}
+
+\begin{table}[t]
+\begin{tabular}{cp{.6\textwidth}}
+
+\hline
+\textbf{function name} & \textbf{description} \\
+
+\hline
+\hline
+
+\texttt{MC} & Run model~\ref{model1} to get mean comparisons (MC) on each environment of the network.\\
+\hline
+
+\texttt{FWH} & Run model~\ref{model2} to get main germplasm, environment and sensitivity effects over the network. \\
+\hline
+
+\texttt{analyse.outputs} & Check with plots if the model went well based ont the Gelman-Rubin test and plots of posteriors distributions (see section \ref{section_bayes}). It is important to run this step before going ahead in the analysis otherwise you may make mistakes in the interpretation of the results \\
+\hline
+
+\texttt{get.mean.comparisons} & Get mean comparisons for a given parameter two by two or to a given threshold based on MCMC outputs \\
+\hline
+
+\texttt{get.parameter.groups} & Get groups of parameters based on multivariate analysis \\
+\hline
+
+\texttt{cross.validation.FWH} & Run complete cross vlidation with model~\ref{model2} \\
+\hline
+
+\texttt{predict.the.past} & Estimate value of a germplasm in an environment based on the FWH model. \\
+\hline
+
+\texttt{get.ggplot} & Get ggplot objects to visualize output from the analysis \\
+\hline
+
+\hline
+
+\texttt{get.env.info} & Get regional farms data and satellite farms data \\
+\hline
+
+\texttt{comp.parameters} & Get parameter comparisons two by two or to a given threshold based on MCMC outputs \\
+\hline
+
+\texttt{get.significant.groups} & Get significant groups of differences for a set of parameters based on MCMC outputs \\
+\hline
+
+\texttt{get.at.least.X.groups} & Get the value of type one error needed to have X groups. \\
+\hline
+
+
+\end{tabular}
+\caption{Function descriptions in \pack.}
+\label{function_descriptions}
+\end{table}
+
+
+
+\subsection{Frequentist statistics}
+
+
+
+\subsection{Bayesian statistics}
+\label{section_bayes}
+
+The analyses performed in \pack~are based on Bayesian statistics.
+
+Bayesian statistics are based on the Bayes theorem:
+
+\begin{displaymath}
+Pr(\theta|y) \propto Pr(\theta) Pr(y|\theta)
+\end{displaymath}
+
+with 
+$Pr(\theta|y)$ the posterior, 
+$Pr(y|\theta)$ the likelihood and 
+$Pr(\theta)$ the prior.
+
+The parameters' distribution, knowing the data (the posterior), is proportional to the distribution \textit{a  priori} (the prior) $\times$ the information brought by the data (the likelihood).
+
+The more information (i.e. the larger the data set and the better the model fits the data), the less the prior would be of importance.
+If the priors equal the posteriors, it means that there is not enough data or the model does not fit the data.
+
+
+Bayesian inference is based on the posterior distribution of model parameters.
+This distribution could not be calculated explicitely for the hierarchical model used in here (see section~\ref{section_model1} and section~\ref{section_model2}) but could be estimated using Markov Chain and Monte Carlo (MCMC) methods.
+
+These methods simulate values of model parameters according to a Markov chain that converges to the posterior distribution of model parameters \citep{robert_bayesian_2001}.
+
+MCMC methods were implemented using \texttt{JAGS} by the \texttt{R} package \texttt{rjags} that performed Gibbs sampling \citep{robert_bayesian_2001}.
+Two MCMC chains were run independently to test for convergence using the Gelman-Rubin test.
+This test was based on the variance within and between the chains \citep{gelman_inference_1992}.
+
+A burn-in and lots of iterations were needed in the MCMC procedure.
+In our case, the burn-in had 1000 iterations, then 100 000 iterations are done by default\footnote{You can change it with the argument \texttt{nb\_iterations} in functions \texttt{MC} and \texttt{FWH}} with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples were available for inference for each chain by default\footnote{There are \texttt{nb\_iterations}/10 values for each chain. This can be changed with the \texttt{thin} argument of the functions.}.
+ 
+The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
 
 \subsection{Let's go!}
 To continue, load the package:
@@ -99,18 +233,639 @@ To continue, load the package:
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \url{https://www.dropbox.com/sh/6qvl515k5484zg4/AADZKkaM2XZvmr9e6l5aWxN2a?dl=0} and put it in the folder \texttt{data\_PPBstats} and then load() it.
+and download from internet the data used in this vignette (this is useful to earn lots of time!) :
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{get.PPBstats.data}\hlstd{()} \hlcom{# not run}
+\hlcom{# |=======================================================================| 100%}
+\hlcom{# The data are downloaded in ./data_PPBstats/ }
+\hlcom{# You can now load the data, for example load("./data_PPBstats/out1.Rdata").}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
 
-\section{At the farm level : model~\ref{model1} to perform mean comparisons on farms }
-\label{section_model1}
+\newpage
 
-\subsection{The model}
-\input{./sections/model1}
 
-\subsection{With \pack}
+\section{Design the experiment}
+\label{doe}
+
+Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the space available.
+
+\subsection{Analysis carry out in \pack}
+
+Based on the research question, an analysis is carry on.
+
+Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
+The different effects that can be estimated are:
+\begin{itemize}
+\item \textbf{entry}: a combinaison of a germplasm and an environment
+\item \textbf{germplasm}
+\item \textbf{location} 
+\item \textbf{environment}: a combinaison of a location and a year
+\item \textbf{interaction}: interaction between germplasm and location or germplasm and environment
+\item \textbf{year}
+\item \textbf{migrant-resident}: migrant refers to germplasm that was not grown on previous generation on location; resident refers to germplasm that was grown  on previous generation on location.
+\item \textbf{version}: version within a germplasm, for example selected vs non-selected
+\end{itemize}
+
+\noindent The analysis are divided into four families:
+\begin{itemize}
+\item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
+\item \textbf{Family 2} gathers analysis that estimate germplasm, location and interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+\item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location and year are separated.
+\item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
+\end{itemize}
+Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
+
+\textbf{Family 5} refers to multivariate analysis and is mentionned in section \ref{multivariate_analysis}.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{ccccccccccc}
+\hline
+Family & Name & Section &
+\rotatebox{90}{entry effects} &
+\rotatebox{90}{germpasm effects} &
+\rotatebox{90}{location effects} &
+\rotatebox{90}{environments effects} &
+\rotatebox{90}{interaction effects} &
+\rotatebox{90}{year effects} &
+\rotatebox{90}{migrant-resident effects} & 
+\rotatebox{90}{version effects}
+\\
+\hline
+1 & Anova & \ref{classic_anova} & X & & & & & & \\
+  & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & \\
+  & Bayesian model 1 & \ref{model_1} & X & & & & & & & \\
+\hline
+2 & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
+  & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
+  & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
+\hline
+3 & Bayesian model 3 & \ref{model_3} & X & X & X & & X & X & & \\
+\hline
+4 & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
+  & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
+\hline
+\end{tabular}
+\caption{Analysis carry out in \pack. X: effects that are estimated. (X): effects that can be estimated.}
+\label{summary_analysis}
+\end{center}
+\end{table}
+
+
+
+\subsection{Experimental design}
+
+The experimental design is thought in relation to the analysis.
+The key elements to choose an appropriate experimental designs are:
+\begin{itemize}
+\item the number of locations
+\item the number of years
+\item the replication of entries within and between locations
+\end{itemize}
+
+\noindent Function \texttt{design\_experiment} settle experimental design based on :
+\begin{itemize} 
+\item the number of entries
+\item the number of controls per blocks
+\item the number of blocks
+\item the number of columns in the design. The number of rows is computed automaticaly
+\end{itemize} 
+
+\noindent The function returns a list with
+\begin{itemize} 
+\item A data frame
+\item An image of the experimental design
+\end{itemize} 
+
+\noindent A description of the algorithm is describe in the help of the function: \texttt{?design\_experiment}.
+
+\noindent Table \ref{cases_expe} summarize the different experimental design regarding analysis.
+
+\begin{table}[H]
+\begin{tabular}{
+c
+p{.1\textwidth}
+p{.1\textwidth}
+p{.4\textwidth}
+p{.2\textwidth}
+p{.1\textwidth}
+}
+\hline
+case & number of locations & number of years & comments regarding entries replication & design of experiment & analysis \\
+\hline
+1 & 1 & 1 & All entries are replicated at least twice & \multirow{3}{.2\textwidth}{\texttt{fully-repicated}} & Anova \\
+\cline{2-4}\cline{6-6}
+  & 2 or more & 1 or more & Same entries are in all locations. All entries are replicated at least twice in each location & & AMMI; GGE \\
+\hline
+2 & 1 & 1 & Entries not replicated. Only a control is replicated in rows and columns & \texttt{row-column} & Spatial analysis \\
+\hline
+3 & 25 or more & 1 or more & \multirow{3}{.35\textwidth}{All locations share a control. Entries are not replicated.} & \multirow{3}{.2\textwidth}{\texttt{satellite-farm} and \texttt{regional-farm}} & \multirow{2}{.1\textwidth}{B models 1 and 2} \\
+  & 12 or more & 2 or more & & & \\
+  \cline{2-3} \cline{6-6}
+  & 25 or more & 3 or more & & & B model 3 \\
+\hline
+\end{tabular}
+\caption{Experimental design specification linked to dedicated analysis. Column 'design of experiments' corresponds to the argument \texttt{expe.type} in the \texttt{plan\_experiment} function.}
+\label{cases_expe}
+\end{table}
+
+
+\subsubsection{Case 1}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_fr} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-1"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"fully-replicated"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{20}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{3}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{4}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+By default, the data frame is under a standard format:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{head}\hlstd{(p_fr}\hlopt{$}\hlstr{"fully-replicated"}\hlopt{$}\hlstd{data.frame)}
+\end{alltt}
+\begin{verbatim}
+##     location year germplasm block X Y
+## 1 Location-1 2016    germ:8     1 A 1
+## 2 Location-1 2016   germ:13     1 A 2
+## 3 Location-1 2016   germ:17     1 A 3
+## 4 Location-1 2016   germ:15     1 A 4
+## 5 Location-1 2016    germ:6     1 A 5
+## 6 Location-1 2016    germ:4     1 B 1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+You can set the format to a SHiNeMaS\footnote{Seeds History and Network Management System, see \url{http://moulon.inra.fr/index.php/en/tranverse-team/atelier-de-bioinformatique/projects/181} for more details} reproduction template file:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_fr} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-2"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"fully-replicated"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{20}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{3}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{4}\hlstd{,}
+  \hlkwc{return.format} \hlstd{=} \hlstr{"shinemas"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{head}\hlstd{(p_fr}\hlopt{$}\hlstr{"fully-replicated"}\hlopt{$}\hlstd{data.frame)}
+\end{alltt}
+\begin{verbatim}
+##   project sown_year harvested_year        id_seed_lot_sown
+## 1              2016                germ:11_Location-2_2016
+## 2              2016                 germ:9_Location-2_2016
+## 3              2016                germ:16_Location-2_2016
+## 4              2016                germ:20_Location-2_2016
+## 5              2016                 germ:3_Location-2_2016
+## 6              2016                germ:19_Location-2_2016
+##   intra_selection_name etiquette split quantity_sown
+## 1                                                   
+## 2                                                   
+## 3                                                   
+## 4                                                   
+## 5                                                   
+## 6                                                   
+##   quantity_harvested block X Y
+## 1                        1 A 1
+## 2                        1 A 2
+## 3                        1 A 3
+## 4                        1 A 4
+## 5                        1 A 5
+## 6                        1 B 1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_fr}\hlopt{$}\hlstr{"fully-replicated"}\hlopt{$}\hlstd{plan}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-20-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+
+\subsubsection{Case 2}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_case2} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-3"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"row-column"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{20}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{controls} \hlstd{=} \hlstr{"toto"}\hlstd{,}
+  \hlkwc{nb.controls.per.block} \hlstd{=} \hlnum{7}\hlstd{,}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{1}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{7}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{head}\hlstd{(p_case2}\hlopt{$}\hlstr{"row-column"}\hlopt{$}\hlstd{data.frame)}
+\end{alltt}
+\begin{verbatim}
+##     location year germplasm block X Y
+## 1 Location-3 2016      toto     1 A 1
+## 2 Location-3 2016    germ:9     1 A 2
+## 3 Location-3 2016   germ:12     1 A 3
+## 4 Location-3 2016    germ:3     1 A 4
+## 5 Location-3 2016    germ:4     1 B 1
+## 6 Location-3 2016   germ:15     1 B 2
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_case2}\hlopt{$}\hlstr{"row-column"}\hlopt{$}\hlstd{plan}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-23-1} 
+
+}
+
+
+
+\end{knitrout}
+
+Note that if controls are missing in rows or columns.
+The function return an error.
+The controls must catch as much as possible of the trial variation.
+
+
+\subsubsection{Case 3}
+
+Regional farms had several entries (i.e. a germplasm in an environment) in two or more blocks with entries replicated in each block.
+Satellite farms had no block and one entry replicated twice.
+Farmers chose the other entries to be sown that were not replicated.
+The number of entries may vary between farms.
+
+Here, six designs are generated: four for satellite farm and two for regional farm.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_case3_sf1} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-4"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"satellite-farm"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{6}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{controls} \hlstd{=} \hlstr{"toto"}\hlstd{,}
+  \hlkwc{nb.controls.per.block} \hlstd{=} \hlnum{2}\hlstd{,}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{1}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{p_case3_sf1} \hlkwb{=} \hlstd{p_case3_sf1}\hlopt{$}\hlstd{`satellite-farms`}\hlopt{$}\hlstd{plan}
+
+\hlstd{p_case3_sf2} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-5"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"satellite-farm"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{6}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{controls} \hlstd{=} \hlstr{"toto"}\hlstd{,}
+  \hlkwc{nb.controls.per.block} \hlstd{=} \hlnum{2}\hlstd{,}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{1}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{p_case3_sf2} \hlkwb{=} \hlstd{p_case3_sf2}\hlopt{$}\hlstd{`satellite-farms`}\hlopt{$}\hlstd{plan}
+
+\hlstd{p_case3_sf3} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-6"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"satellite-farm"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{6}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{controls} \hlstd{=} \hlstr{"toto"}\hlstd{,}
+  \hlkwc{nb.controls.per.block} \hlstd{=} \hlnum{2}\hlstd{,}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{1}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{p_case3_sf3} \hlkwb{=} \hlstd{p_case3_sf3}\hlopt{$}\hlstd{`satellite-farms`}\hlopt{$}\hlstd{plan}
+
+\hlstd{p_case3_rf1} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-7"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"regional-farm"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{16}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{controls} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"c1"}\hlstd{,} \hlstr{"c2"}\hlstd{,} \hlstr{"c3"}\hlstd{,} \hlstr{"c4"}\hlstd{),}
+  \hlkwc{nb.controls.per.block} \hlstd{=} \hlnum{4}\hlstd{,}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{2}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{4}\hlstd{)}
+\hlstd{p_case3_rf1} \hlkwb{=} \hlstd{p_case3_rf1}\hlopt{$}\hlstd{`regional-farms`}\hlopt{$}\hlstd{plan}
+
+\hlstd{p_case3_rf2} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-8"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"regional-farm"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{16}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{controls} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"c1"}\hlstd{,} \hlstr{"c2"}\hlstd{,} \hlstr{"c3"}\hlstd{),}
+  \hlkwc{nb.controls.per.block} \hlstd{=} \hlnum{3}\hlstd{,}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{2}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{3}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 1. You can rise nb.controls.per.block.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in rows 3. You can rise nb.controls.per.block.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 3. You can rise nb.controls.per.block.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in rows 1. You can rise nb.controls.per.block.}}\begin{alltt}
+\hlstd{p_case3_rf2} \hlkwb{=} \hlstd{p_case3_rf2}\hlopt{$}\hlstd{`regional-farms`}\hlopt{$}\hlstd{plan}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+If you have many space and many seeds, you can adapt the satellite farm design with only one column.
+Each row beeing a sower width.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_case3_sf4} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-9"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"satellite-farm"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{6}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{controls} \hlstd{=} \hlstr{"C"}\hlstd{,}
+  \hlkwc{nb.controls.per.block} \hlstd{=} \hlnum{2}\hlstd{,}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{1}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{p_case3_sf4} \hlkwb{=} \hlstd{p_case3_sf4}\hlopt{$}\hlstd{`satellite-farms`}\hlopt{$}\hlstd{plan}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{center}
+\begin{tabular}{cc}
+\texttt{p\_case3\_sf1} & \texttt{p\_case3\_sf2} \\
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-26-1} 
+
+}
+
+
+
+\end{knitrout}
+&
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-27-1} 
+
+}
+
+
+
+\end{knitrout}
+\\
+\texttt{p\_case3\_sf3} & \texttt{p\_case3\_rf1} \\
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-28-1} 
+
+}
+
+
+
+\end{knitrout}
+&
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-29-1} 
+
+}
+
+
+
+\end{knitrout}
+\\
+\texttt{p\_case3\_sf4} & \texttt{p\_case3\_rf2} \\
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-30-1} 
+
+}
+
+
+
+\end{knitrout}
+&
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-31-1} 
+
+}
+
+
+
+\end{knitrout}
+\\
+\end{tabular}
+\end{center}
+
+There some constraints regarding \texttt{expe.type = "satellite-farm"}:
+\begin{itemize}
+\item if \texttt{nb.entries > 10}, a warning message recommand to have less than 10 entries.
+\item There are two controls per block
+\item There is one block
+\item There are maximum two columns
+\end{itemize}
+
+For \texttt{expe.type = "regional-farm"}, there is a warning message if controls are missing in rows or columns.
+It is better to catch as much as possible of the trial variation.
+If there are less than 2 blocks, an error is returned.
+
+\subsubsection{Case ???}
+
+One or more block per farm.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_ibd} \hlkwb{=} \hlkwd{design_experiment}\hlstd{(}
+  \hlkwc{location} \hlstd{=} \hlstr{"Location-9"}\hlstd{,}
+  \hlkwc{year} \hlstd{=} \hlstr{"2016"}\hlstd{,}
+  \hlkwc{expe.type} \hlstd{=} \hlstr{"IBD"}\hlstd{,}
+  \hlkwc{germplasm} \hlstd{=} \hlkwd{paste}\hlstd{(}\hlstr{"germ"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{10}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{),}
+  \hlkwc{nb.blocks} \hlstd{=} \hlnum{8}\hlstd{,}
+  \hlkwc{nb.cols} \hlstd{=} \hlnum{4}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{head}\hlstd{(p_ibd}\hlopt{$}\hlstd{`IBD`}\hlopt{$}\hlstd{data.frame)}
+\end{alltt}
+\begin{verbatim}
+##   germplasm block X Y   location year
+## 1    germ:3     1 A 1 Location-9 2016
+## 2    germ:1     2 A 2 Location-9 2016
+## 3    germ:1     3 A 3 Location-9 2016
+## 4    germ:5     4 A 4 Location-9 2016
+## 5    germ:3     5 A 5 Location-9 2016
+## 6    germ:1     6 A 6 Location-9 2016
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_ibd}\hlopt{$}\hlstd{`IBD`}\hlopt{$}\hlstd{plan}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-34-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+\newpage
+
+\section{Sow, note, harvest, measure ... }
+\label{section_sow}
+
+!!! ADD PICTURES !!!
+
+\newpage
+
+
+\section{Describe the data}
+\label{describe_data}
+
+May be different from experiment planned because of NA
+
+\newpage
+
+
+\section{Family of analysis 1 : entry effects on one farm}
+\label{section_analysis1}
+
+
+\subsection{Classic ANOVA}
+\label{classic_anova}
+
+ANOVA classique BLUEs BLUPs
+\newpage
+
+
+\subsection{Spatial analysis}
+\label{spatial_analysis}
+
+
+
+\newpage
+
+
+\subsection{model~\ref{model1} to perform mean comparisons on farms }
+\label{model_1}
+
+At the \textbf{farm level}, the residual had few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
+Hence, model~\ref{model1} was implemented (section~\ref{section_model1}).
+
+For model \ref{model1}, it gave nice results with more than 20 environment \citep{riviere_hierarchical_2015}.
+
+\subsubsection{Theory of the model}
+
+The model is describe in \citet{riviere_hierarchical_2015}.
+We restricted ourselves to analysing plot means.
+The phenotypic value $Y_{ijk}$ for variable $Y$, germplasm $i$, environment $j$ and block $k$ was modelled as :
+
+\begin{equation}
+	Y_{ijk} = \mu_{ij} + \beta_{jk} + \varepsilon_{ijk} ; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2_{j}),
+	\label{model1}
+\end{equation}
+
+where
+$\mu_{ij}$ was the mean of germplasm $i$ in environment $j$ (note that this parameter, which corresponds to an entry, confounds the population effect and the population $\times$ environment effect);
+$\beta_{jk}$ was the effect of block $k$ in environment $j$ satisfying the constraint\footnote{Note that it is quite different from \citet{riviere_hierarchical_2015} where the model was done only for two blocks. Here there is no restriction on the number of blocks.} $\sum\limits_{k=1}^K \beta_{jk} = 1$ ;
+$\varepsilon_{ijk}$ was the residual error;
+$\mathcal{N} (0,\sigma^2_{j})$ denoted normal distribution centred on 0 with variance $\sigma^2_{j}$, which was specific to environment $j$.
+
+We took advantage of the similar structure of the trials on each environment of the network to assume that trial residual variances came from a common distribution :
+
+\begin{displaymath}
+	\sigma^2_{j} \sim \frac{1}{Gamma(\nu,\rho)},
+\end{displaymath}
+
+where $\nu$ and $\rho$ are unknown parameters.
+Because of the low number of residual degrees of freedom for each farm, we used a hierarchical approach in order to assess mean differences on farm.
+For that, we placed vague prior distributions on the hyperparameters $\nu$ and $\rho$ :
+
+\begin{displaymath}
+	\nu \sim Uniform(\nu_{min},\nu_{max}) ; \quad \rho \sim Gamma(10^{-6},10^{-6}).
+\end{displaymath}
+
+
+In other words, the residual variance of a trial within environment was estimated using all the informations available on the network rather than using the data from that particular trial only.
+
+The parameters $\mu_{ij}$ and $\beta_{j1}$ were assumed to follow vague prior distributions~:
+
+\begin{displaymath}
+	\mu_{ij} \sim \mathcal{N}(\mu_{.j},10^{6}); \quad \beta_{j1} \sim \mathcal{N}(0,10^{6}).
+\end{displaymath}
+
+
+The inverse gamma distribution has a support bounded by 0 (consistent with the definition of a variance) and may have various shapes including asymmetric distributions.
+From an agronomical point of view, the assumption that trial variances were heterogeneous was consistent with organic farming: there were as many environments as farmers leading to a high heterogeneity.
+Environment was here considered in a broad sense: practices (sowing date, sowing density, tilling, etc.), pedo climatic conditions, biotic and abiotic stress, \dots \citep{desclaux_changes_2008}.
+Moreover, the inverse gamma distribution had conjugate properties that facilitated MCMC convergence.
+This model was therefore a good choice based on both agronomic and statistical criteria.
+
+The residual variance estimated from the controls was assumed to be representative of the residual variance of the other entries.
+Blocks were included in the model only if the trial had blocks.
+
+\subsubsection{Steps with \pack}
 
 For model~\ref{model1}, you can follow these steps (Figure \ref{function_relations}):
 
@@ -119,8 +874,6 @@ For model~\ref{model1}, you can follow these steps (Figure \ref{function_relatio
 \item Analyse model outputs with graphs to know if you can continue the analysis with \texttt{analyse.outputs}
 \item Get mean comparisons for each factor with \texttt{get.mean.comparisons} and \texttt{get.ggplot}
 \end{enumerate}
-
-
 
 Let's get the data.
 The values for $\mu_{ij}$, $\beta_{jk}$, $\epsilon_{ijk}$ and $\sigma_j$ are the real value taken to create the dataset.
@@ -198,7 +951,7 @@ You can get informations of the environments in the dataset :
 \hlstd{out.model1}\hlopt{$}\hlstd{vec_env_with_no_data}
 \end{alltt}
 \begin{verbatim}
-## [1] "env4:2011"
+## NULL
 \end{verbatim}
 \begin{alltt}
 \hlstd{out.model1}\hlopt{$}\hlstd{vec_env_with_no_controls}
@@ -293,7 +1046,7 @@ A score of 3 is for a given germplasm replicated three times in a given environe
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-6-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-39-1} 
 
 }
 
@@ -361,14 +1114,9 @@ Below is an example where there is no convergence because the MCMC are too small
 \hlstd{toplot} \hlkwb{=} \hlstd{out1_bis}\hlopt{$}\hlstd{convergence}\hlopt{$}\hlstr{"nu"}
 \hlkwd{grid.arrange}\hlstd{(toplot}\hlopt{$}\hlstd{traceplot, toplot}\hlopt{$}\hlstd{density,} \hlkwc{ncol}\hlstd{=}\hlnum{2}\hlstd{,} \hlkwc{nrow}\hlstd{=}\hlnum{1}\hlstd{)}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-8-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: C stack usage\ \ 7970692 is too close to the limit}}\end{kframe}
 \end{knitrout}
 \end{figure}
 
@@ -387,7 +1135,7 @@ Below is an example where there is no convergence because the MCMC are too small
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-9-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-42-1} 
 
 }
 
@@ -405,7 +1153,7 @@ Below is an example where there is no convergence because the MCMC are too small
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-10-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-43-1} 
 
 }
 
@@ -428,7 +1176,7 @@ Indeed, a model can converge and estimate parameters'value that are not coherent
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-11-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-44-1} 
 
 }
 
@@ -445,7 +1193,7 @@ Indeed, a model can converge and estimate parameters'value that are not coherent
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-12-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-45-1} 
 
 }
 
@@ -462,7 +1210,7 @@ Indeed, a model can converge and estimate parameters'value that are not coherent
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-13-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-46-1} 
 
 }
 
@@ -481,7 +1229,7 @@ Indeed, a model can converge and estimate parameters'value that are not coherent
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-14-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-47-1} 
 
 }
 
@@ -543,7 +1291,7 @@ It goes pretty well!
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-17-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-50-1} 
 
 }
 
@@ -554,8 +1302,85 @@ It goes pretty well!
 
 
 \subsubsection{Get mean comparisons}
+\label{mean_comp}
+In this part, the mean of each entry is compared to the mean of each other entry.
+Let $H_{0}$ and $H_{1}$ denote the hypotheses:
 
-\input{./sections/mean_comp}
+\begin{displaymath}
+  H_{0} : \mu_{ij} \ge \mu_{i'j} , \; H_{1} : \mu_{ij} < \mu_{i'j}.
+\end{displaymath}
+
+The difference $\mu_{ij}-\mu_{i'j}$ between the means of germplasm $i$ and population $i'$ in environment $j$ was considered as significant if either $H_{0}$ or $H_{1}$ had a high posterior probability, that is if $Pr\{H_{0}|y\} > 1 - \alpha$ or $Pr\{H_{1}|y\}> 1 - \alpha$, where
+$\alpha$ was some specified threshold.
+The difference was considered as not significant otherwise.
+The posterior probability of a hypothesis was estimated by the proportion of MCMC simulations for
+which this hypothesis was satisfied (Figure~\ref{proba}).
+
+Groups are made based on the probabilites.
+Germplasms which share the same group are not different.
+Germplasms which do not share the same groupe are different.
+
+The threshold $\alpha$ that depends on agronomic objectives.
+This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given environnement).
+It corresponded to a `soft' Bonferroni correction, the Bonferroni correction being very conservative.
+
+As one objective of this PPB programme is that farmers (re)learn selection, the threshold could be adjusted to allow the detection of at least two groups instead of having farmers choose at random.
+The initial value could be set to $\alpha=0.1/I$ and if only one group is obtained, then this value could be adjusted to allow the detection of two groups.
+In this cases, the farmers should be informed of the lower degree of confidence that there are significant differences among entries.
+
+\begin{figure}[H]
+\begin{center}
+\begin{pspicture}(10,10)
+\rput[bl](0,0){\includegraphics[width=.6\textwidth]{proba}}
+\rput[b](3,7){$\mu_{ij}$}
+\rput[b](7.5,7){$\mu_{i'j}$}
+\rput[b](3,3){$\mu_{ij} - \mu_{i'j}$}
+\end{pspicture}
+\end{center}
+\caption{Mean comparison between $\mu_{ij}$ (dash line) and $\mu_{i'j}$ (plain line).}
+\label{proba}
+\end{figure}
+
+%% R code to get proba.pdf %%
+%
+%pdf("proba.pdf")
+%
+%par(mfrow=c(2,1),mar=c(3,5,1,1))
+%
+%a = rnorm(100000,10)
+%d <- density(a)
+%plot(d, type='l', xlab="", main="", xlim=c(5,18), lty=2, lwd=3)
+%
+%b = rnorm(100000,12)
+%d <- density(b)
+%lines(d,lty=1, lwd=3)
+%
+%diff = a - b
+%
+%d <- density(diff)
+%plot(d, type='l', xlab="", main="", lty=1, lwd=3)
+%
+%toget = which(d$x>=0)
+%H0x = d$x[toget]
+%H0y = d$y[toget]
+%
+%toget = which(d$x<0)
+%H1x = d$x[toget]
+%H1y = d$y[toget]
+%
+%x <- H0x
+%y <- H0y
+%polygon( c(x,rev(x)), c(rep(0,length(x)),rev(y)), border=NA, col="orange" )
+%
+%x <- H1x
+%y <- H1y
+%polygon( c(x,rev(x)), c(rep(0,length(x)),rev(y)), border=NA, col="darkgreen" )
+%
+%text(-2.5,0.02,"H1", cex=2, col="white")
+%text(0.55,0.02,"H0", cex=2, col="white")
+%
+%dev.off()
+
 
 \paragraph{Computation}
 
@@ -630,17 +1455,15 @@ For \texttt{ggplot.type = "interaction"} and \texttt{ggplot.type = "score"}, it 
 \begin{alltt}
 \hlcom{# For environment env-1-1:2010}
 \hlkwd{grid.arrange}\hlstd{(p_barplot}\hlopt{$}\hlstr{"env1-1:2010"}\hlstd{[[}\hlnum{1}\hlstd{]], p_barplot}\hlopt{$}\hlstr{"env1-1:2010"}\hlstd{[[}\hlnum{2}\hlstd{]] ,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{nrow} \hlstd{=} \hlnum{1}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: C stack usage\ \ 7970692 is too close to the limit}}\begin{alltt}
 \hlkwd{grid.arrange}\hlstd{(p_barplot}\hlopt{$}\hlstr{"env1-1:2010"}\hlstd{[[}\hlnum{2}\hlstd{]], p_barplot}\hlopt{$}\hlstr{"env1-1:2010"}\hlstd{[[}\hlnum{4}\hlstd{]],} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{nrow} \hlstd{=} \hlnum{1}\hlstd{)}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-20-1} 
-\includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-20-2} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: C stack usage\ \ 7970692 is too close to the limit}}\end{kframe}
 \end{knitrout}
 \end{figure}
 
@@ -666,7 +1489,7 @@ Germplasms which do not share the same groupe are different (section \ref{mean_c
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-22-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-55-1} 
 
 }
 
@@ -683,7 +1506,7 @@ Germplasms which do not share the same groupe are different (section \ref{mean_c
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-23-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-56-1} 
 
 }
 
@@ -700,7 +1523,7 @@ Germplasms which do not share the same groupe are different (section \ref{mean_c
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-24-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-57-1} 
 
 }
 
@@ -717,7 +1540,7 @@ Germplasms which do not share the same groupe are different (section \ref{mean_c
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-25-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-58-1} 
 
 }
 
@@ -739,14 +1562,9 @@ This plot is useful to look at year effects.
 \hlcom{# For location env-1-1}
 \hlkwd{grid.arrange}\hlstd{(p_score}\hlopt{$}\hlstr{"env1-1"}\hlstd{[[}\hlnum{1}\hlstd{]], p_score}\hlopt{$}\hlstr{"env1-1"}\hlstd{[[}\hlnum{2}\hlstd{]] ,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{nrow} \hlstd{=} \hlnum{1}\hlstd{)}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-26-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: C stack usage\ \ 7970692 is too close to the limit}}\end{kframe}
 \end{knitrout}
 \end{figure}
 
@@ -770,7 +1588,7 @@ For environments with no controls or where at least one MCMC did not converge, i
 
 
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-27-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-60-1} 
 
 }
 
@@ -791,19 +1609,15 @@ Here it is not useful as there is only one year.
 \hlkwd{names}\hlstd{(g)}
 \end{alltt}
 \begin{verbatim}
-## [1] "env1-1:2012"  "env1-2:2011"  "env2-12:2012" "env2-6:2010"
+## [1] "env2-2:2010"
 \end{verbatim}
 \begin{alltt}
 \hlstd{g}\hlopt{$}\hlstd{`env1-1:2012`}\hlopt{$}\hlstd{`1`}
 \end{alltt}
+\begin{verbatim}
+## NULL
+\end{verbatim}
 \end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-28-1} 
-
-}
-
-
-
 \end{knitrout}
 \end{figure}
 
@@ -846,7 +1660,7 @@ Lets' make the plots:
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-30-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-63-1} 
 
 }
 
@@ -881,9 +1695,9 @@ In this case, it is a \texttt{t.test} which is perform.
 \end{alltt}
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in get.ggplot(out1\_bis\$model1.data\_env\_whose\_param\_did\_not\_converge, : The following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env5:2010.}}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in get.ggplot(out1\_bis\$model1.data\_env\_whose\_param\_did\_not\_converge, : The following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012, env5:2010.}}
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): No t.test are done as there are not enough observations.}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get.ggplot(out1\_bis\$model1.data\_env\_whose\_param\_did\_not\_converge, : There are no environment to display.}}\begin{alltt}
 \hlstd{g} \hlkwb{=} \hlkwd{get.ggplot}\hlstd{(out.model1}\hlopt{$}\hlstd{data_env_with_no_controls,} \hlkwc{data_version} \hlstd{= data_version,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
 \end{alltt}
 
@@ -894,13 +1708,886 @@ In this case, it is a \texttt{t.test} which is perform.
 \end{knitrout}
 
 
-\section{At the network level : model~\ref{model2} to analyse $G \times E$ interaction in the network of farms }
-\label{section_model2}
+\newpage
 
-\subsection{The model}
-\input{./sections/model2}
+\section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
 
-\subsection{With \pack}
+
+\subsection{AMMI}
+\label{ammi}
+
+\subsubsection{Theory of the model}
+
+The Additive Main effects and Multiplicative Interaction (AMMI) model is based on two analyses \citep{gauch_statistical_2006} : 
+\begin{enumerate}
+
+\item an \textbf{ANOVA} with the following model :
+
+\begin{equation}
+Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + \eta_{i}\nu_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{ammi_anova}
+\end{equation}
+
+With,
+
+\begin{tabular}{ll}
+$Y_{ijk}$ & the phenotypic value for replication $k$, germplasm $i$ and location $j$, \\
+$\mu$ & the general mean, \\
+$\alpha_{i}$ & the germplasm $i$ effect, \\
+$\theta_{j}$ & location $j$ effect, \\
+$rep_{k}(\theta_{j})$ & the replication $k$ nested in location effect, \\
+$\eta_{i}\nu_{j}$ & the germplasm $\times$ location effect, \\
+$\varepsilon_{ijk}$ & the residuals.\\
+\end{tabular}
+
+~\\ 
+
+Or, if there are several years in the data set:
+
+\begin{equation}
+Y_{ijkl} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}\beta_{l}) + \eta_{i}\nu_{j} + 
+\beta_{l} + \beta_{l}\alpha_{i} + \beta_{l}\theta_{j} + 
+\varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{ammi_anova}
+\end{equation}
+
+With,
+
+\begin{tabular}{ll}
+$Y_{ijkl}$ & the phenotypic value for replication $k$, germplasm $i$, location $j$ and year $l$, \\
+$\mu$ & the general mean, \\
+$\alpha_{i}$ & the germplasm $i$ effect, \\
+$\theta_{j}$ & location $j$ effect, \\
+$rep_{k}(\theta_{j}\beta_{l})$ & the replication $k$ nested in location and year effect, \\
+$\eta_{i}\nu_{j}$ & the germplasm $\times$ location effect, \\
+$\beta_{l}$ & the year $l$ effect, \\
+$\beta_{l}\alpha_{i}$ & the year $\times$ germplasm interaction effect, \\
+$\beta_{l}\theta_{j}$ & the year $\times$ location interaction effect, \\
+$\varepsilon_{ijk}$ & the residuals.\\
+\end{tabular}
+
+
+\item a \textbf{PCA} which analyse deeper the germplasm $\times$ location interaction: 
+
+\begin{displaymath}
+\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}
+\end{displaymath}
+
+which can also be written:
+
+\begin{displaymath}
+\eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})
+\end{displaymath}
+
+with,
+$\eta_{i}\nu_{j}$ interaction of germplasm $i$ with environment $j$,
+$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
+$\lambda_{n}$ the eigen value for componant $n$,
+$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
+$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
+
+The data are double centered on environment and germplasm.
+The PCA study the structure of the interaction matrix.
+The environment are the variable and the germplasm are the individuals.
+
+This PCA allows to detect
+\begin{itemize}
+\item germplasm that are stable (i.e. contribute less to interaction)
+\item which germplasm interact the most with which environment
+\item which environment have the same profile regarding interaction
+\end{itemize}
+
+\end{enumerate}
+
+
+The AMMI model can be written:
+
+\begin{equation}
+Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{modele_ammi}
+\end{equation}
+
+with,
+
+$Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and environment $j$,
+$\mu$ the general mean,
+$\alpha_{i}$ the effect of germplasm $i$,
+$\theta_{j}$ the effect of environment $j$,
+$rep_{k}(\theta_{j})$ effect of replication $k$ nested in environment,
+$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
+$\lambda_{n}$ the eigen value for componant $n$,
+$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
+$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
+$\varepsilon_{ijk}$ the residuals.\\
+
+
+\subsubsection{Steps with \pack}
+
+
+\subsubsection{Run the model}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ammi} \hlkwb{=} \hlkwd{GxE}\hlstd{(PPBdata_GxE, vec_variables,} \hlkwc{gxe_analysis} \hlstd{=} \hlstr{"AMMI"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# I. Run AMMI model on each variable}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# AMMI model done for y1}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# AMMI model done for y2}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# AMMI model done for y3}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# II. Post AMMI analysis on all outputs}}\end{kframe}
+\end{knitrout}
+
+Lets' see for one variable
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{res_ammi_y1} \hlkwb{=} \hlstd{ammi}\hlopt{$}\hlstd{AMMI}\hlopt{$}\hlstd{y1}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\subsubsection{Descriptive graph}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{res_ammi_y1}\hlopt{$}\hlstd{descriptive}\hlopt{$}\hlstd{germplasm}
+\end{alltt}
+\begin{verbatim}
+## $boxplot
+\end{verbatim}
+\end{kframe}
+
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-67-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{res_ammi_y1}\hlopt{$}\hlstd{descriptive}\hlopt{$}\hlstd{location}
+\end{alltt}
+\begin{verbatim}
+## $boxplot
+\end{verbatim}
+\end{kframe}
+
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-68-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{res_ammi_y1}\hlopt{$}\hlstd{descriptive}\hlopt{$}\hlstd{interaction}
+\end{alltt}
+\begin{verbatim}
+## $`interaction-plot`
+\end{verbatim}
+\end{kframe}
+
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-69-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+\subsubsection{ANOVA}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova} \hlkwb{=} \hlstd{res_ammi_y1}\hlopt{$}\hlstd{ANOVA}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\paragraph{table of the model}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{anova_model}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: variable
+##                     Df  Sum Sq Mean Sq F value Pr(>F)    
+## germplasm           19   766.7    40.4  0.7137 0.7983    
+## location             2 11115.1  5557.5 98.2913 <2e-16 ***
+## block_in_env         6   230.2    38.4  0.6785 0.6672    
+## germplasm:location  38  1267.1    33.3  0.5897 0.9679    
+## Residuals          114  6445.7    56.5                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\paragraph{residuals}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{residuals}\hlopt{$}\hlstd{distribution}
+\end{alltt}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# `stat\_bin()` using `bins = 30`. Pick better value with\\\#\# `binwidth`.}}\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-72-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{residuals}\hlopt{$}\hlstd{QQplot}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-73-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\paragraph{variability repartition}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{variability_repartition}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-74-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\paragraph{location effects}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{location_effects}\hlopt{$}\hlstd{effects}
+\end{alltt}
+\begin{verbatim}
+##        L1        L2        L3 
+##  9.582659 -0.204728 -9.377931
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{location_effects}\hlopt{$}\hlstd{barplot_LSD_significant_group}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-76-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\paragraph{germplasm effects}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{germplasm_effects}\hlopt{$}\hlstd{effects}
+\end{alltt}
+\begin{verbatim}
+##     germ:1    germ:10    germ:11    germ:12    germ:13    germ:14 
+##  0.3361893 -3.8814662 -0.0678606 -1.8482394  2.6301182  2.3014539 
+##    germ:15    germ:16    germ:17    germ:18    germ:19     germ:2 
+##  0.9880031  2.7078136 -0.4275870 -1.4402318  0.7039273 -3.8985320 
+##    germ:20     germ:3     germ:4     germ:5     germ:6     germ:7 
+##  1.3966093  0.9390274  3.5786010 -0.8590699 -2.8974753 -1.5190735 
+##     germ:8     germ:9 
+##  0.9792215  0.2785712
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{germplasm_effects}\hlopt{$}\hlstd{intra_variance}
+\end{alltt}
+\begin{verbatim}
+##     germ:1    germ:10    germ:11    germ:12    germ:13    germ:14 
+##  45.279525  25.693883  12.211002  28.506139  47.505382  29.255810 
+##    germ:15    germ:16    germ:17    germ:18    germ:19     germ:2 
+##  82.788489  21.203845  67.219696  37.387487  32.202240  93.568536 
+##    germ:20     germ:3     germ:4     germ:5     germ:6     germ:7 
+## 114.382091  45.497218  46.255335  26.387985  16.860971   8.421157 
+##     germ:8     germ:9 
+##  12.698101  12.390880
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{germplasm_effects}\hlopt{$}\hlstd{barplot_LSD_significant_group}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-79-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{germplasm_effects}\hlopt{$}\hlstd{boxplot_variance_intra}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-80-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+\paragraph{Interaction matrix}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{anova}\hlopt{$}\hlstd{interaction_matrix}
+\end{alltt}
+\begin{verbatim}
+##                  L1          L2         L3
+## germ:1   10.7750511  -6.7785058 -3.9965453
+## germ:10   1.5579517 -14.0016941 12.4437424
+## germ:11   0.7211329   6.1232907 -6.8444236
+## germ:12   2.1894644  -6.7880713  4.5986069
+## germ:13  -7.8609265  16.2512819 -8.3903554
+## germ:14   5.0700030  -1.7386066 -3.3313964
+## germ:15 -10.0907473  11.9514455 -1.8606982
+## germ:16  -7.9083211   9.6524883 -1.7441672
+## germ:17   3.9726970  -6.3924939  2.4197968
+## germ:18   1.4942596  -0.8574521 -0.6368075
+## germ:19  -8.1553405  13.1585418 -5.0032013
+## germ:2   -5.3704719  -4.9554836 10.3259555
+## germ:20   5.8655728  -7.7797435  1.9141706
+## germ:3   -6.1658305  14.4219992 -8.2561687
+## germ:4  -10.3651018  18.9845926 -8.6194907
+## germ:5    3.8498888  -8.7183333  4.8684445
+## germ:6    6.3374537  -8.4879369  2.1504832
+## germ:7    6.9276777 -16.3410024  9.4133247
+## germ:8   10.2615931  -7.0016355 -3.2599576
+## germ:9   -3.1060061  -0.7026810  3.8086871
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsubsection{PCA}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pca} \hlkwb{=} \hlstd{res_ammi_y1}\hlopt{$}\hlstd{PCA}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\paragraph{ecovalence}
+
+Ecovalence from \citet{wricke_uber_1962} give part of interaction variance taken by germplasm and environment.
+It is an indicator of stability: a low ecovalence means low interaction, i.e. more stability.
+
+Ecovalance of germplasm $i$ is $W_{i}=\sum_{i}^{n} (\eta_{i}\nu_{j})^{2}$
+
+Ecovalance of environment $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
+
+Ecovalances are represented in fonction of mean effects by germplasm and environment.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pca}\hlopt{$}\hlstd{ecovalence}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-83-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\paragraph{biplot}
+The results of the PCA is a list divided into three elements as explained in \citet{ceccarelli_manual_2012}:
+
+\begin{itemize}
+\item The percentage of variance explained by each composante of the PCA.
+In our case, only the two first composant are represented in a biplot.
+Note that the sum of variance caught by the two compostant must be as big as possible to be confident in the conclusion of the observations.
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pca}\hlopt{$}\hlstd{biplot}\hlopt{$}\hlstd{variation_dim}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-84-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\item The which won where graph. 
+Perpendicular lines divide the biplot into sectors.
+The entry which have the largest value in a sector "win" in the location present in that sector.
+The information is summarized in the legend of the plot.
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pca}\hlopt{$}\hlstd{biplot}\hlopt{$}\hlstd{which_won_where}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-85-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\item The mean vs stability graph.
+
+\begin{itemize}
+\item mean
+A red circle define the average location.
+An high score mean a greater mean performance of an entry.
+Entries with a score above zero means entries with above-average means.
+Entries with a score below zero means entries with below-average means.
+Note that the distance from the biplot origin to the average location circle (represented with an arrow), is a measure of the relative importance of the entry main effect versus the entry by location interaction.
+The longer the arrow is, the more important is entry effect and the more meaningful the selection based on mean performance. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pca}\hlopt{$}\hlstd{biplot}\hlopt{$}\hlstd{mean_vs_stability}\hlopt{$}\hlstd{mean}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-86-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\item stability
+This information is related to the ecovalence graph.
+The score is equal to the length of the projection.
+A high score represents a low stability (i.e. an high entry by location interaction).
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pca}\hlopt{$}\hlstd{biplot}\hlopt{$}\hlstd{mean_vs_stability}\hlopt{$}\hlstd{stability}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-87-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\end{itemize}
+
+
+\item The discrimitiveness vs representativeness graph. 
+A red circle define the average location, being the virtual better location to test the entries.
+
+The closer a given location is next to the circle, the more desirable it is judged on both discrimination and representativeness.
+
+\begin{itemize}
+
+\item discrimitiveness
+The higher the value, the highest the discrimitiveness for environments.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pca}\hlopt{$}\hlstd{biplot}\hlopt{$}\hlstd{discrimitiveness_vs_representativeness}\hlopt{$}\hlstd{discrimitiveness}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-88-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+\item representativeness
+The highest the value, the less representative the environment.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pca}\hlopt{$}\hlstd{biplot}\hlopt{$}\hlstd{discrimitiveness_vs_representativeness}\hlopt{$}\hlstd{representativeness}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-89-1} 
+
+}
+
+
+
+\end{knitrout}
+\end{itemize}
+
+\end{itemize}
+
+!!!!! A CONTINUER !!!!!
+
+Representativeness is a key factor to decide how a test location should be used in
+genotype evaluation, assuming adequate discriminating ability (Yan et al 2007). The
+representativeness should be measured over a number of years in order to assess its
+repeatability. A test location must be repeatable across years in ranking genotypes
+for it to be considered as highly representative and based on repeatability analysis; a
+highly representative test location, which is also highly repeatable by definition, is
+ideal for use as core test locations (Yan et al 2011). In a PPB program such as the
+one described in Fig. 11, these should be the attributes of the location where to
+plant the Stage 1 trials because genotypic differences observed at locations like
+these are both repeatable across years and representative of the other farmers fields
+in the area. It is crucial for a PPB breeding program to have test locations of this
+type.
+
+
+\subsubsection{Post AMMI analysis}
+
+\paragraph{Repartition of the variation for each variable}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{barplot_variation_repartition}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-90-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\paragraph{Germplasm effects}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_G_effect}\hlopt{$}\hlstd{variation_dim}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-91-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_G_effect}\hlopt{$}\hlstd{ind}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-92-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_G_effect}\hlopt{$}\hlstd{var}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-93-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+\paragraph{Variance intra germplasm effects}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p1} \hlkwb{=} \hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_intraG_effect}\hlopt{$}\hlstd{variation_dim}
+\hlstd{p2} \hlkwb{=} \hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_intraG_effect}\hlopt{$}\hlstd{ind}
+\hlstd{p3} \hlkwb{=} \hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_intraG_effect}\hlopt{$}\hlstd{var}
+\hlkwd{grid.arrange}\hlstd{(p1, p2, p3,} \hlkwc{ncol}\hlstd{=}\hlnum{3}\hlstd{,} \hlkwc{nrow}\hlstd{=}\hlnum{1}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: C stack usage\ \ 7970692 is too close to the limit}}\end{kframe}
+\end{knitrout}
+
+
+\paragraph{Location effects}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_E_effect}\hlopt{$}\hlstd{variation_dim}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-95-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_E_effect}\hlopt{$}\hlstd{ind}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-96-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ammi}\hlopt{$}\hlstd{Post_AMMI}\hlopt{$}\hlstd{PCA_E_effect}\hlopt{$}\hlstd{var}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-97-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+\subsection{GGE}
+\label{gge}
+
+\subsubsection{Theory of the model}
+
+The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the environment: germplasm and interaction effects are merged.
+
+The GGE model can be written as followed:
+
+\begin{equation}
+Y_{ijk} = \mu + \theta_{j} + rep_{k}(\theta_{j}) + \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{modele_gge}
+\end{equation}
+
+with,
+
+$Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and environment $j$,
+$\mu$ the general mean,
+$\theta_{j}$ the effect of environment $j$,
+$rep_{k}(\theta_{j})$ effect of replication $k$ nested in environment,
+$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
+$\lambda_{n}$ the eigen value for componant $n$,
+$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
+$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
+$\varepsilon_{ijk}$ the residuals.\\
+
+This model allow to detect environment where germplasm (and the interaction) behave better : 'which won where' \citep{gauch_statistical_2008,yan_gge_2007}.
+
+\subsubsection{Steps with \pack}
+
+
+\subsubsection{Run the model}
+
+
+\subsubsection{Analysis of model outputs}
+
+
+\subsubsection{Get main effects results}
+
+\paragraph{Germplasm effects}
+
+\paragraph{Environment effects}
+
+\subsubsection{Get $G \times E$ effects results}
+
+\paragraph{interaction plot}
+
+\paragraph{PCA}
+
+
+
+
+
+
+\newpage
+
+
+\subsection{model~\ref{model2} to analyse $G \times E$ interaction in the network of farms }
+\label{model_2}
+
+At the \textbf{network level}, there is a large germplasm $\times$ environment combinaisons that are missing, leading to a poor estimation of germplasm, environment and interaction effects.
+Hence, model~\ref{model2} was implemented (section~\ref{section_model2}).
+
+For model \ref{model2}, it gave nice results with 75 environments and 120 germplasms present in at least two environments (95\% of missing $G \times E$ combinaisons) \citep{riviere_hierarchical_2016}.
+
+
+\subsubsection{Theory of the model}
+The model is describe in \citet{riviere_hierarchical_2016}.
+
+The phenotypic value $Y_{ij}$ for a given variable $Y$, germplasm $i$ and environment $j$, was modeled as :
+
+\begin{displaymath}
+Y_{ij} = \alpha_{i} + \theta_{j} + \eta_{i}\theta_{j} + \varepsilon_{ij} ; \quad \varepsilon_{ij} \sim \mathcal{N} (0,\sigma^2_{e}),
+\label{modele_gxe}
+\end{displaymath}
+
+for $i = 1,\ldots, I$ and $j = 1,\ldots, J$, where 
+$I$ was the number of germplasms, 
+$J$ was the number of environments,
+$\alpha_{i}$ was the main effect of germplasm $i$,
+$\theta_{j}$ was the main effect of environnment $j$,
+$\varepsilon_{ij}$ was the residual and 
+$\mathcal{N} (0,\sigma^2_{e})$ was the normal distribution with mean 0 and variance $\sigma^2_{e}$.
+The interaction between germplasm $i$ and environment $j$ was divided into a multiplicative term $\eta_{i}\theta_{j}$ and a remaining term that contributed to the residual $\varepsilon_{ij}$.
+
+This model was written as :
+
+\begin{equation}
+Y_{ij}  = \alpha_{i} + \beta_{i} \theta_{j} + \varepsilon_{ij}; \quad \varepsilon_{ij} \sim \mathcal{N} (0,\sigma_{\varepsilon}),
+	\label{model2}
+\end{equation}
+
+Where $\beta_{i} = (1 + \eta_{i})$ was the sensitivity of germplasm $i$ to environments.
+This model is known as the Finlay Wilkinson model or as joint regression \citep{finlay_analysis_1963}.
+Germplasm sensitivities quantified the stability of germplasm performances over environments.
+The average sensitivity was equal to 1 so that a gemplasm with $\beta_{i} > 1$ ($\beta_{i} < 1$) was more (less) sensitive to environments than a germplasm with the average sensitivity \citep{nabugoomu_analysis_1999}.
+
+Given the high disequilibrium of the data and the large amount of data, we decided to implement this model with a hierarchical Bayesian approach.
+In the following, this Hierarchical Finlay Wilkinson model was denoted by HFW.
+
+We used hierarchical priors for $\alpha_i$, $\beta_i$ and $\theta_j$ and a vague prior for $\sigma_{\varepsilon}$.
+
+\begin{displaymath}
+\alpha_{i} \sim \mathcal{N} (\mu,\sigma^2_{\alpha}), \quad 
+\beta_{i} \sim \mathcal{N} (1,\sigma^2_{\beta}), \quad 
+\theta_{j} \sim \mathcal{N} (0,\sigma^2_{\theta}), \quad 
+\sigma^{-2}_{\varepsilon} \sim \mathcal{G}amma (10^{-6},10^{-6}),
+\end{displaymath}
+
+where $\mu$, $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ were unknown parameters.
+The mean of $\beta_i$ was set to 1 \citep{nabugoomu_analysis_1999}.
+
+
+Then, we placed weakly-informative priors on the hyperparmeters  $\mu$, $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$:
+
+\begin{displaymath}
+\mu \sim \mathcal{N} (\nu,\nu^2), \quad 
+\sigma_{\alpha} \sim \mathcal{U}niforme (0,\nu), \quad 
+\sigma_{\beta} \sim \mathcal{U}niforme (0,1), \quad 
+\sigma_{\theta} \sim \mathcal{U}niforme (0,\nu),
+\end{displaymath}
+
+where $\nu$ was the arithmetic mean of the data : $\nu = \sum_{ij} {Y_{ij}/n}$ where $n$ was the number of observations.
+Uniform priors were used for $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ to reduce the influence of these priors on posterior results \citep{gelman__2006}.
+The support of these priors took account of the prior knowledge that $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ were expected to be respectively smaller than $\nu$, 1, $\nu$. \\
+
+Initial values for each chain were taken randomly except for $\mu$, $\sigma_{\alpha}$ and $\sigma_{\theta}$ whose initial values were equal to their posterior median from additive model (i.e. model \ref{model2} with $\forall i, \beta_{i}=1$). \\
+
+
+The main parameter of interest were 
+germplasm main effects ($\alpha_{i}, i = 1,\ldots, I$), 
+environment main effects ($\theta_{j}, j = 1,\ldots, J$) and 
+germplasm sensitivities ($\beta_{i}, i = 1,\ldots, I$).
+For $\alpha_i$, the average posterior response of each germplasm over the environments of the network was considered:
+
+\begin{displaymath}
+\gamma_i = \alpha_i + \beta_{i} \bar{\theta},
+\end{displaymath}
+where
+$\bar{\theta} = \sum_{}^{J} \theta_j/J$.
+
+To simplify, the $\alpha_i$ notation is kept instead of $\gamma_i$ (i.e. $\alpha_i = \gamma_i$).
+But keep in mind it has been corrected.
+
+\subsubsection{Steps with \pack}
 
 For model~\ref{model2}, you can follow these steps (Figure \ref{function_relations}):
 
@@ -1047,7 +2734,7 @@ Note that it displays only germplasms that are on at least two environments.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-36-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-102-1} 
 
 }
 
@@ -1081,17 +2768,15 @@ Below an example for $\alpha_i$.
 \begin{alltt}
 \hlstd{p} \hlkwb{=} \hlstd{out2}\hlopt{$}\hlstd{posteriors}\hlopt{$}\hlstd{parameter_posteriors}\hlopt{$}\hlstd{alpha_posteriors}
 \hlkwd{grid.arrange}\hlstd{(p[[}\hlnum{1}\hlstd{]], p[[}\hlnum{2}\hlstd{]],}\hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{nrow} \hlstd{=} \hlnum{1}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: C stack usage\ \ 7970692 is too close to the limit}}\begin{alltt}
 \hlkwd{grid.arrange}\hlstd{(p[[}\hlnum{3}\hlstd{]], p[[}\hlnum{4}\hlstd{]],}\hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{nrow} \hlstd{=} \hlnum{1}\hlstd{)}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-38-1} 
-\includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-38-2} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: C stack usage\ \ 7970692 is too close to the limit}}\end{kframe}
 \end{knitrout}
 \end{figure}
 
@@ -1106,7 +2791,7 @@ Below an example for $\alpha_i$.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-39-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-105-1} 
 
 }
 
@@ -1159,7 +2844,7 @@ Let’s have a look at the relation between both values.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-42-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-108-1} 
 
 }
 
@@ -1238,22 +2923,9 @@ Here it is bad as only 10 iterations have been done to save computing time ...
 \end{verbatim}
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in loop\_apply(n, do.ply): Removed 1 rows containing missing values (stat\_smooth).}}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in plot\_clone(plot): tentative d'appliquer un objet qui n'est pas une fonction}}\end{kframe}
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in loop\_apply(n, do.ply): Removed 1 rows containing missing values (geom\_point).}}\begin{verbatim}
-## 
-## $anova
-## 
-## Call:
-## lm(formula = real.value ~ estimated.value)
-## 
-## Coefficients:
-##     (Intercept)  estimated.value  
-##          6.8640           0.3275
-\end{verbatim}
-\end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-45-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-111-1} 
 
 }
 
@@ -1295,14 +2967,9 @@ Lets' have a look at the firt values of $\alpha_i$.
 \begin{alltt}
 \hlkwd{grid.arrange}\hlstd{(p_barplot}\hlopt{$}\hlstr{"alpha"}\hlstd{[[}\hlnum{1}\hlstd{]], p_barplot}\hlopt{$}\hlstr{"alpha"}\hlstd{[[}\hlnum{2}\hlstd{]] ,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{nrow} \hlstd{=} \hlnum{1}\hlstd{)}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-48-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: C stack usage\ \ 7970692 is too close to the limit}}\end{kframe}
 \end{knitrout}
 \end{figure}
 
@@ -1318,16 +2985,24 @@ A germplasm with an high genetic effect and a low sensitivity to interaction (i.
 \hlstd{comp.beta} \hlkwb{=} \hlkwd{get.mean.comparisons}\hlstd{(out2}\hlopt{$}\hlstd{MCMC,} \hlstr{"beta"}\hlstd{)}
 
 \hlstd{g} \hlkwb{=} \hlkwd{get.ggplot}\hlstd{(}\hlkwc{data} \hlstd{= comp.alpha,} \hlkwc{data_2} \hlstd{= comp.beta,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"biplot-alpha-beta"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in is.na(ab\$sensibilite): is.na() appliqué à un objet de type 'NULL' qui n'est ni une liste, ni un vecteur}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in min(ab\$effet\_genetique): aucun argument trouvé pour min ; Inf est renvoyé}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in max(ab\$alpha\_i): aucun argument pour max ; -Inf est renvoyé}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in min(ab\$sensibilite): aucun argument trouvé pour min ; Inf est renvoyé}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in max(ab\$beta\_i): aucun argument pour max ; -Inf est renvoyé}}\begin{alltt}
 \hlstd{g}\hlopt{$}\hlstd{biplot}
 \end{alltt}
+\begin{verbatim}
+## named list()
+\end{verbatim}
 \end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-49-1} 
-
-}
-
-
-
 \end{knitrout}
 
 
@@ -1356,17 +3031,47 @@ For more information type \texttt{?get.parameter.groups}.
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The experimental design plot is done.\\\#\# The Gelman-Rubin test is running for each parameter ...\\\#\# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.\\\#\# The alpha\_i posterior distributions are done.\\\#\# The beta\_i posterior distributions are done.\\\#\# The theta\_j posterior distributions are done.}}\begin{alltt}
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The experimental design plot is done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The Gelman-Rubin test is running for each parameter ...}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The alpha\_i posterior distributions are done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The beta\_i posterior distributions are done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The theta\_j posterior distributions are done.}}\begin{alltt}
 \hlstd{out2_y2} \hlkwb{=} \hlkwd{analyse.outputs}\hlstd{(out.model2_y2)}
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The experimental design plot is done.\\\#\# The Gelman-Rubin test is running for each parameter ...\\\#\# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.\\\#\# The alpha\_i posterior distributions are done.\\\#\# The beta\_i posterior distributions are done.\\\#\# The theta\_j posterior distributions are done.}}\begin{alltt}
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The experimental design plot is done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The Gelman-Rubin test is running for each parameter ...}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The alpha\_i posterior distributions are done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The beta\_i posterior distributions are done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The theta\_j posterior distributions are done.}}\begin{alltt}
 \hlstd{out2_y3} \hlkwb{=} \hlkwd{analyse.outputs}\hlstd{(out.model2_y3)}
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The experimental design plot is done.\\\#\# The Gelman-Rubin test is running for each parameter ...\\\#\# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.\\\#\# The alpha\_i posterior distributions are done.\\\#\# The beta\_i posterior distributions are done.\\\#\# The theta\_j posterior distributions are done.}}\begin{alltt}
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The experimental design plot is done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The Gelman-Rubin test is running for each parameter ...}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The alpha\_i posterior distributions are done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The beta\_i posterior distributions are done.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The theta\_j posterior distributions are done.}}\begin{alltt}
 \hlstd{analyse.outputs.list} \hlkwb{=} \hlkwd{list}\hlstd{(}\hlkwc{var1} \hlstd{= out2_y1,} \hlkwc{var2} \hlstd{= out2_y2,} \hlkwc{var3} \hlstd{= out2_y3)}
 
 \hlstd{clust} \hlkwb{=} \hlkwd{get.parameter.groups}\hlstd{(analyse.outputs.list,} \hlkwc{parameter} \hlstd{=} \hlstr{"theta"}\hlstd{)}
@@ -1392,8 +3097,8 @@ A farmer may find a germplasm that behaves well according to informations from m
 \end{kframe}
 
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-51-1} 
-\includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-51-2} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-117-1} 
+\includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-117-2} 
 
 }
 
@@ -1440,7 +3145,7 @@ If you choose \texttt{output.format = "summary"}, it is possible to look at the 
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-53-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-119-1} 
 
 }
 
@@ -1456,7 +3161,7 @@ If you choose \texttt{output.format = "summary"}, it is possible to look at the 
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-54-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-120-1} 
 
 }
 
@@ -1465,8 +3170,80 @@ If you choose \texttt{output.format = "summary"}, it is possible to look at the 
 \end{knitrout}
 
 
+\newpage
+
+
+\section{Family of analysis 3 : effects from family 1 and 2 in a network of farms}
+
+
+\subsection{model 3 }
+\label{model_3}
 
 \newpage
+
+\section{Family of analysis 4 : specific research questions on one farm or more}
+
+
+\subsection{migrant residant}
+\label{migrant_residant}
+
+
+\newpage
+
+
+\subsection{Version}
+\label{version}
+
+
+\newpage
+
+\section{Family of analysis 5 : multivariate analysis}
+
+\subsection{Multivariate analysis}
+\label{multivariate_analysis}
+
+\subsubsection{Format the data}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{check_data_vec_variables}\hlstd{(PPBdata,} \hlstr{"tkw"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+If ok, then, you can settle \texttt{quali.sup = c(1:6)} in the \texttt{PCA} function:
+
+\subsubsection{Run the analysis}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{res.pca} \hlkwb{=} \hlkwd{PCA}\hlstd{(PPBdata,} \hlkwc{quali.sup} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{6}\hlstd{),} \hlkwc{graph} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+And look at the results thanks to the \texttt{factoextra}\footnote{https://github.com/kassambara/factoextra} package:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{fviz_pca_ind}\hlstd{(res.pca,} \hlkwc{label}\hlstd{=}\hlstr{"none"}\hlstd{,} \hlkwc{habillage}\hlstd{=}\hlstr{"year"}\hlstd{,} \hlkwc{addEllipses}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{ellipse.level}\hlstd{=}\hlnum{0.95}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-123-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\newpage
+
 
 \section*{To cite \pack} \addcontentsline{toc}{section}{To cite \pack}
 To cite this package and or this vignette:
@@ -1478,26 +3255,29 @@ To cite this package and or this vignette:
 \end{alltt}
 \begin{verbatim}
 ## 
-## To cite package 'PPBstats' in publications use:
+## To cite the PPBstats package in publications use:
 ## 
-##   Pierre Riviere (2016). PPBstats: An R package for
+##   Pierre Riviere and al, 2016, PPBstats: An R package for
 ##   statistical analysis of unbalanced trials in decentralized
-##   participatory plant breeding programmes. R package version
-##   0.12. http://github.com/priviere/PPBstats
+##   participatory plant breeding programmes.  Version 0.13,
+##   URL: https://github.com/priviere/PPBstats
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
 ##   @Manual{,
-##     title = {PPBstats: An R package for statistical analysis of unbalanced trials in decentralized participatory plant breeding programmes},
-##     author = {Pierre Riviere},
+##     title = {PPBstats: An R package for statistical analysis 
+##           of balanced and unbalanced trials in decentralized 
+##           participatory plant breeding programmes. Version 0.13},
+##     author = {{Pierre Riviere and Gaelle Van Franck and Olivier David}},
+##     organisation = {{Reseau Semences Paysannes}, {INRA}},
 ##     year = {2016},
-##     note = {R package version 0.12},
-##     url = {http://github.com/priviere/PPBstats},
+##     url = {https://github.com/priviere/PPBstats},
+##     note = {R code is under licence GPL-3. 
+##           Vignette is under licence creative commons BY-NC-SA 4.0.},
 ##   }
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-
 
 \input{./sections/tail}
 
