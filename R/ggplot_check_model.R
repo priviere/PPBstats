@@ -29,12 +29,16 @@ ggplot_check_model = function(
   message("Distribution of sigma_j in the inverse Gamme distribution are done.")
   
   # model 1, mu_ij caterpillar plot
+  xmin = min(data_ggplot_model_1_mu_ij$q1); xmax = max(data_ggplot_model_1_mu_ij$q5)
+  data_ggplot_model_1_mu_ij = plyr:::splitter_d(sq_MCMC_mu, .(environment))
   out = lapply(data_ggplot_model_1_mu_ij, function(x){ get.caterpillar.plot(x) }) # + xlim(xmin, xmax)
   out = list("mu_posteriors" = out)
   out_para_posteriors = c(out_para_posteriors, out)
   message("The mu_ij posterior distributions are done.")
   
   # model 1, beta_jk caterpillar plot ----------
+  xmin = min(data_ggplot_model_1_beta_jk$q1); xmax = max(data_ggplot_model_1_beta_jk$q5)
+  data_ggplot_model_1_beta_jk = plyr:::splitter_d(sq_MCMC_beta, .(environment))
   out = lapply(data_ggplot_model_1_beta_jk, function(x){ get.caterpillar.plot(x) }) # + xlim(xmin, xmax)
   out = list("beta_posteriors" = out)
   out_para_posteriors = c(out_para_posteriors, out)
@@ -42,6 +46,11 @@ ggplot_check_model = function(
   
   
   # model 1, sigma_j caterpillar plot ----------
+  xmin = min(data_ggplot_model_1_sigma_j_2$q1); xmax = max(data_ggplot_model_1_sigma_j_2$q5)
+  
+  data_ggplot_model_1_sigma_j_2$split = add_split_col(data_ggplot_model_1_sigma_j_2, nb_parameters_per_plot)
+  data_ggplot_model_1_sigma_j_2 = plyr:::splitter_d(sq_MCMC_sigma, .(split))
+  
   out = lapply(data_ggplot_model_1_sigma_j, function(x){ get.caterpillar.plot(x) + ggtitle("") } ) # + xlim(xmin, xmax) 
   out = list("sigma_posteriors" = out)
   out_para_posteriors = c(out_para_posteriors, out)

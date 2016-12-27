@@ -78,24 +78,17 @@ check_model_model_1 = function(
   
   # 3.2. mu_ij caterpillar plot ----------
   if ( length(grep("mu", rownames(sq_MCMC))) > 0  ) {
-    sq_MCMC_mu = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
-    xmin = min(sq_MCMC_mu$q1); xmax = max(sq_MCMC_mu$q5)
-    data_ggplot_model_1_mu_ij = plyr:::splitter_d(sq_MCMC_mu, .(environment))
+    data_ggplot_model_1_mu_ij = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
   } else { data_ggplot_model_1_mu_ij = NULL }
   
   # 3.3. beta_jk caterpillar plot ----------
   if ( length(grep("beta", rownames(sq_MCMC))) > 0  ) {
-    sq_MCMC_beta = droplevels(sq_MCMC[grep("beta", rownames(sq_MCMC)),])   
-    xmin = min(sq_MCMC_beta$q1); xmax = max(sq_MCMC_beta$q5)
-    data_ggplot_model_1_beta_jk = plyr:::splitter_d(sq_MCMC_beta, .(environment))
+    data_ggplot_model_1_beta_jk = droplevels(sq_MCMC[grep("beta", rownames(sq_MCMC)),])   
   } else { data_ggplot_model_1_beta_jk = NULL }
   
   # 3.4. sigma_j caterpillar plot ----------
   if ( length(grep("sigma", rownames(sq_MCMC))) > 0  ) {
-    sq_MCMC_sigma = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])
-    xmin = min(sq_MCMC_sigma$q1); xmax = max(sq_MCMC_sigma$q5)
-    sq_MCMC_sigma$split = add_split_col(sq_MCMC_sigma, nb_parameters_per_plot)
-    data_ggplot_model_1_sigma_j_2 = plyr:::splitter_d(sq_MCMC_sigma, .(split))
+    data_ggplot_model_1_sigma_j_2 = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])
   } else { data_ggplot_model_1_sigma_j_2 = NULL }
   
   # 3.5. standardized epsilon_ijk distribution ----------
