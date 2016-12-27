@@ -23,6 +23,9 @@ Figure~\ref{function_relations} displays these functions and their relations.
 Table~\ref{function_descriptions} gives a quick description of each function.
 You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
 
+%get.PPBstats.data
+%extra_functions
+
 
 \begin{figure}[H]
 \begin{center}
