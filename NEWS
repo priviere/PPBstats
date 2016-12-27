@@ -1,3 +1,9 @@
+PPBstats 0.14 ---------------------------------------
+-----------------------------------------------------
+* rename function
+  - analyse.outputs.R becomes check_model.R
+
+
 PPBstats 0.13 ---------------------------------------
 -----------------------------------------------------
 * add new functions
@@ -11,7 +17,7 @@ PPBstats 0.13 ---------------------------------------
 * rename function
   - AMMI.R becomes GxE.R
   
-* update function
+* update functions
   - MC.R
   - get.ggplot.R: manage nb_parameters_per_plot for ggplot.type == "biplot-alpha-beta"
   - get.significant.group.R
