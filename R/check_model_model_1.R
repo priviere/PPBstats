@@ -13,16 +13,13 @@ check_model_model_1 = function(
   # 2. Convergence ----------
   out.conv = check_convergence(out.model, model_name = "model2")
   MCMC = out.con$MCMC
+  sq_MCMC = out.conv$sq_MCMC
   out.convergence = out.conv$out.convergence
   
   # 4. posteriors ----------
   out.posteriors = NULL
   if(analysis == "all" | analysis == "posteriors") {
     
-    s = summary(out.model$MCMC)
-    sq_MCMC = as.data.frame(s$quantiles)
-    sq_MCMC$parameter = as.factor(rownames(sq_MCMC))
-    colnames(sq_MCMC) = c("q1", "q2", "q3", "q4", "q5", "parameter")
     
     # 4.1.1. Update MCMC and get data frame with environments where some parameters did not converge ----------
     if(analysis == "all" | analysis == "convergence") {

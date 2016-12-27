@@ -99,6 +99,11 @@ check_convergence = function(out.model, model_name = "model1"){
   MCMC = rbind.data.frame(MCMC[[1]], MCMC[[2]])
   attributes(MCMC)$model = model_name
   
+  s = summary(out.model$MCMC)
+  sq_MCMC = as.data.frame(s$quantiles)
+  sq_MCMC$parameter = as.factor(rownames(sq_MCMC))
+  colnames(sq_MCMC) = c("q1", "q2", "q3", "q4", "q5", "parameter")
+  
   message("The Gelman-Rubin test is running for each parameter ...")
   test = gelman.diag(out.model$MCMC, multivariate = FALSE)$psrf[,1]
   conv_ok = names(which(test < 1.05))
@@ -125,7 +130,7 @@ check_convergence = function(out.model, model_name = "model1"){
     message("The two MCMC for each parameter converge thanks to the Gelman-Rubin test.")
     out.convergence = NULL 
     }
-  OUT = list("MCMC" = MCMC, "convergence" = out.convergence)
+  OUT = list("MCMC" = MCMC, "sq_MCMC" = sq_MCMC, "convergence" = out.convergence)
   return(OUT)
 }
 
