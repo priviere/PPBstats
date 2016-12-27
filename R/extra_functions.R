@@ -130,7 +130,7 @@ check_convergence = function(out.model, model_name = "model1"){
     message("The two MCMC for each parameter converge thanks to the Gelman-Rubin test.")
     out.convergence = NULL 
     }
-  OUT = list("MCMC" = MCMC, "sq_MCMC" = sq_MCMC, "convergence" = out.convergence)
+  OUT = list("MCMC" = MCMC, "sq_MCMC" = sq_MCMC, "convergence" = out.convergence, "conv_not_ok" = conv_not_ok)
   return(OUT)
 }
 

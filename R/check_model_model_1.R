@@ -15,50 +15,57 @@ check_model_model_1 = function(
   MCMC = out.con$MCMC
   sq_MCMC = out.conv$sq_MCMC
   out.convergence = out.conv$out.convergence
+  conv_not_ok = out.conv$conv_not_ok
+  
+  if( length(conv_not_ok) > 0 ) {
+
+    # mu
+    mu_not_ok = conv_not_ok[grep("mu\\[", conv_not_ok)]
+    if( length(mu_not_ok) > 0 ) {
+      env_not_ok_mu = unique(sub("\\]", "", sub("mu\\[", "", sapply(mu_not_ok, function(x){unlist(strsplit(as.character(x), ","))[2]}))))
+    } else { env_not_ok_mu = NULL }
+    
+    # beta
+    beta_not_ok = conv_not_ok[grep("beta\\[", conv_not_ok)]
+    if( length(beta_not_ok) > 0 ) {
+      env_not_ok_beta = unique(sub("\\]", "", sub("beta\\[", "", sapply(beta_not_ok, function(x){unlist(strsplit(as.character(x), ","))[1]}))))
+    } else { env_not_ok_beta = NULL }
+    
+    # sigma
+    sigma_not_ok = conv_not_ok[grep("sigma\\[", conv_not_ok)]
+    if( length(sigma_not_ok) > 0 ) {
+      env_not_ok_sigma = unique(sub("\\]", "", sub("sigma\\[", "", sigma_not_ok)))
+    } else { env_not_ok_sigma = NULL }
+    
+    # update data
+    env_not_ok = unique(c(env_not_ok_mu, env_not_ok_beta, env_not_ok_sigma))
+    if( length(env_not_ok) > 0 ) {
+      model1.data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
+      attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
+      
+    # Update MCMC, delete all environments where at least one parameter do not converge
+      message("MCMC are updated, the following environment were deleted : ", paste(env_not_ok, collapse = ", "))
+      message("model1.data_env_whose_param_did_not_converge contains the raw data for these environments.")
+      m1 = unlist(sapply(paste("sigma\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
+      m2 = unlist(sapply(paste("beta\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
+      m3 = grep("mu\\[", colnames(MCMC))
+      m3 = colnames(MCMC)[m3][unlist(sapply(paste(",", env_not_ok, "]", sep = ""), function(x){grep(x, colnames(MCMC)[m3])} ))]
+      m3 = c(1:ncol(MCMC))[is.element(colnames(MCMC), m3)]
+      
+      mcmc_to_delete = c(m1, m2, m3)
+      MCMC = MCMC[,-mcmc_to_delete] 
+      if(attributes(out.model)$PPBstats.object == "model1") { attributes(MCMC)$model = "model1" }
+    }
+  }
+  
+  
   
   # 4. posteriors ----------
   out.posteriors = NULL
   if(analysis == "all" | analysis == "posteriors") {
     
-    
     # 4.1.1. Update MCMC and get data frame with environments where some parameters did not converge ----------
     if(analysis == "all" | analysis == "convergence") {
-      if( length(conv_not_ok) > 0 ) {
-        
-        mu_not_ok = conv_not_ok[grep("mu\\[", conv_not_ok)]
-        if( length(mu_not_ok) > 0 ) {
-          env_not_ok_mu = unique(sub("\\]", "", sub("mu\\[", "", sapply(mu_not_ok, function(x){unlist(strsplit(as.character(x), ","))[2]}))))
-        } else { env_not_ok_mu = NULL }
-        
-        beta_not_ok = conv_not_ok[grep("beta\\[", conv_not_ok)]
-        if( length(beta_not_ok) > 0 ) {
-          env_not_ok_beta = unique(sub("\\]", "", sub("beta\\[", "", sapply(beta_not_ok, function(x){unlist(strsplit(as.character(x), ","))[1]}))))
-        } else { env_not_ok_beta = NULL }
-        
-        sigma_not_ok = conv_not_ok[grep("sigma\\[", conv_not_ok)]
-        if( length(sigma_not_ok) > 0 ) {
-          env_not_ok_sigma = unique(sub("\\]", "", sub("sigma\\[", "", sigma_not_ok)))
-        } else { env_not_ok_sigma = NULL }
-        
-        env_not_ok = unique(c(env_not_ok_mu, env_not_ok_beta, env_not_ok_sigma))
-        if( length(env_not_ok) > 0 ) {
-          model1.data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
-          attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
-          
-          # Update MCMC, delete all environments where at least one parameter do not converge
-          message("MCMC are updated, the following environment were deleted : ", paste(env_not_ok, collapse = ", "))
-          message("model1.data_env_whose_param_did_not_converge contains the raw data for these environments.")
-          m1 = unlist(sapply(paste("sigma\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
-          m2 = unlist(sapply(paste("beta\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
-          m3 = grep("mu\\[", colnames(MCMC))
-          m3 = colnames(MCMC)[m3][unlist(sapply(paste(",", env_not_ok, "]", sep = ""), function(x){grep(x, colnames(MCMC)[m3])} ))]
-          m3 = c(1:ncol(MCMC))[is.element(colnames(MCMC), m3)]
-          
-          mcmc_to_delete = c(m1, m2, m3)
-          MCMC = MCMC[,-mcmc_to_delete] 
-          if(attributes(out.model)$PPBstats.object == "model1") { attributes(MCMC)$model = "model1" }
-        }
-      }
     }
     
     # 4.1.2. Format MCMC for further use ----------

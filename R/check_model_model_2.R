@@ -15,6 +15,38 @@ check_model_model_2 = function(
   MCMC = out.con$MCMC
   sq_MCMC = out.conv$sq_MCMC
   out.convergence = out.conv$out.convergence
+  conv_not_ok = out.conv$conv_not_ok
+  
+  if( length(conv_not_ok) > 0 ) {
+    
+    MCMC = MCMC[,!is.element(colnames(MCMC), conv_not_ok)] 
+    if(attributes(out.model)$PPBstats.object == "model2") { attributes(MCMC)$model = "model2" }
+    
+    # alpha
+    alpha_not_ok = conv_not_ok[grep("alpha\\[", conv_not_ok)]
+    if( length(alpha_not_ok) > 0 ) {
+      germ_not_ok_alpha = sub("\\]", "", sub("alpha\\[", "", alpha_not_ok))
+    } else { germ_not_ok_alpha = NULL }
+    
+    # beta
+    beta_not_ok = conv_not_ok[grep("beta\\[", conv_not_ok)]
+    if( length(beta_not_ok) > 0 ) {
+      germ_not_ok_beta = sub("\\]", "", sub("beta\\[", "", beta_not_ok))
+    } else { germ_not_ok_beta = NULL }
+    
+    # theta
+    theta_not_ok = conv_not_ok[grep("theta\\[", conv_not_ok)]
+    if( length(theta_not_ok) > 0 ) {
+      env_not_ok = sub("\\]", "", sub("theta\\[", "", theta_not_ok))
+    } else { env_not_ok = NULL }
+    
+    germ_not_ok = unique(c(germ_not_ok_alpha, germ_not_ok_beta))
+    
+    mat = out.model$model2.presence.abscence.matrix
+    if( !is.null(germ_not_ok) ) { mat = mat[!is.element(rownames(mat), germ_not_ok),] }
+    if( !is.null(env_not_ok) ) { mat = mat[,!is.element(colnames(mat), env_not_ok)] }
+    model2.presence.abscence.matrix = mat
+  }
   
   # 4. posteriors ----------
   
@@ -25,33 +57,7 @@ check_model_model_2 = function(
       
       # 4.2.1. Update MCMC and model2.presence.abscence.matrix ----------
       if(analysis == "all" | analysis == "convergence") {
-        if( length(conv_not_ok) > 0 ) {
-          
-          MCMC = MCMC[,!is.element(colnames(MCMC), conv_not_ok)] 
-          if(attributes(out.model)$PPBstats.object == "model2") { attributes(MCMC)$model = "model2" }
-          
-          alpha_not_ok = conv_not_ok[grep("alpha\\[", conv_not_ok)]
-          if( length(alpha_not_ok) > 0 ) {
-            germ_not_ok_alpha = sub("\\]", "", sub("alpha\\[", "", alpha_not_ok))
-          } else { germ_not_ok_alpha = NULL }
-          
-          beta_not_ok = conv_not_ok[grep("beta\\[", conv_not_ok)]
-          if( length(beta_not_ok) > 0 ) {
-            germ_not_ok_beta = sub("\\]", "", sub("beta\\[", "", beta_not_ok))
-          } else { germ_not_ok_beta = NULL }
-          
-          theta_not_ok = conv_not_ok[grep("theta\\[", conv_not_ok)]
-          if( length(theta_not_ok) > 0 ) {
-            env_not_ok = sub("\\]", "", sub("theta\\[", "", theta_not_ok))
-          } else { env_not_ok = NULL }
-          
-          germ_not_ok = unique(c(germ_not_ok_alpha, germ_not_ok_beta))
-          
-          mat = out.model$model2.presence.abscence.matrix
-          if( !is.null(germ_not_ok) ) { mat = mat[!is.element(rownames(mat), germ_not_ok),] }
-          if( !is.null(env_not_ok) ) { mat = mat[,!is.element(colnames(mat), env_not_ok)] }
-          model2.presence.abscence.matrix = mat
-        }
+
       }
       
       # 4.2.2. alpha_i, beta_i, theta_j caterpillar plot distribution ----------
