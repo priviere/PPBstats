@@ -10,40 +10,8 @@ check_model_model_1 = function(
   # Default settings
   model1.data_env_whose_param_did_not_converge = NULL
   
-  # 2. Get MCMC data frame ----------
-  MCMC = out.model$MCMC
-  MCMC = rbind.data.frame(MCMC[[1]], MCMC[[2]])
-  attributes(MCMC)$model = "model1"
-  
-  # 3. convergence ----------
-  out.convergence = NULL
-  if(analysis == "all" | analysis == "convergence") {
-    message("The Gelman-Rubin test is running for each parameter ...")
-    test = gelman.diag(out.model$MCMC, multivariate = FALSE)$psrf[,1]
-    conv_ok = names(which(test < 1.05))
-    conv_not_ok = names(which(test > 1.05))
-    
-    if( length(conv_not_ok) > 0 ) {
-      message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : ", paste(conv_not_ok, collapse = ", ") ,". Therefore, they are not present in MCMC output.")
-      mcmc = MCMC[,is.element(colnames(MCMC), conv_not_ok)]
-      
-      out.convergence = NULL
-      for (para in conv_not_ok) {
-        
-        D = cbind.data.frame(Iteration = rep(c(1:(nrow(MCMC)/2)), 2), 
-                             Chain = factor(rep(c(1,2), each = (nrow(MCMC)/2))), 
-                             Parameter = para, 
-                             value = as.vector(MCMC[,para])
-        )
-        
-        traceplot = ggplot(D, aes(x = Iteration, y = value, color = Chain)) + geom_line() + ggtitle(para) # cf ggmcmc:ggs_traceplot
-        density = ggplot(D, aes(x = value, fill = Chain, color = Chain)) + geom_density() + ggtitle(para) # cf ggmcmc:ggs_density
-        plot = list(list("traceplot" = traceplot, "density" = density))
-        names(plot) = para
-        out.convergence = c(out.convergence, plot)
-      }
-    } else { message("The two MCMC for each parameter converge thanks to the Gelman-Rubin test."); out.convergence = NULL }
-  }
+  # 2. Convergence ----------
+  out.convergence = check_convergence(out.model, model_name = "model2")
   
   # 4. posteriors ----------
   out.posteriors = NULL
