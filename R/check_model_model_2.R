@@ -10,7 +10,7 @@ check_model_model_2 = function(
   # Default settings
   model2.presence.abscence.matrix = out.model$model2.presence.abscence.matrix
   
-  # 2. Convergence ----------
+  # 2. Convergence, update MCMC when parameters did not converge ----------
   out.convergence = check_convergence(out.model, model_name = "model2")
   MCMC = out.con$MCMC
   sq_MCMC = out.conv$sq_MCMC
@@ -18,9 +18,6 @@ check_model_model_2 = function(
   conv_not_ok = out.conv$conv_not_ok
   
   if( length(conv_not_ok) > 0 ) {
-    
-    MCMC = MCMC[,!is.element(colnames(MCMC), conv_not_ok)] 
-    if(attributes(out.model)$PPBstats.object == "model2") { attributes(MCMC)$model = "model2" }
     
     # alpha
     alpha_not_ok = conv_not_ok[grep("alpha\\[", conv_not_ok)]
@@ -46,6 +43,10 @@ check_model_model_2 = function(
     if( !is.null(germ_not_ok) ) { mat = mat[!is.element(rownames(mat), germ_not_ok),] }
     if( !is.null(env_not_ok) ) { mat = mat[,!is.element(colnames(mat), env_not_ok)] }
     model2.presence.abscence.matrix = mat
+    
+    # update MCMC
+    MCMC = MCMC[,!is.element(colnames(MCMC), conv_not_ok)] 
+    attributes(MCMC)$model = "model2"
   }
   
   # 4. posteriors ----------

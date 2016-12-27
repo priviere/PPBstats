@@ -7,10 +7,7 @@ check_model_model_1 = function(
   # 1. Error message and update arguments ----------
   analysis = check_analysis_argument(analysis)
   
-  # Default settings
-  model1.data_env_whose_param_did_not_converge = NULL
-  
-  # 2. Convergence ----------
+  # 2. Convergence, update MCMC and data frame with environments where some parameters did not converge ----------
   out.conv = check_convergence(out.model, model_name = "model2")
   MCMC = out.con$MCMC
   sq_MCMC = out.conv$sq_MCMC
@@ -54,8 +51,8 @@ check_model_model_1 = function(
       
       mcmc_to_delete = c(m1, m2, m3)
       MCMC = MCMC[,-mcmc_to_delete] 
-      if(attributes(out.model)$PPBstats.object == "model1") { attributes(MCMC)$model = "model1" }
-    }
+      attributes(MCMC)$model = "model1"
+    } else {   model1.data_env_whose_param_did_not_converge = NULL }
   }
   
   
@@ -64,10 +61,7 @@ check_model_model_1 = function(
   out.posteriors = NULL
   if(analysis == "all" | analysis == "posteriors") {
     
-    # 4.1.1. Update MCMC and get data frame with environments where some parameters did not converge ----------
-    if(analysis == "all" | analysis == "convergence") {
-    }
-    
+
     # 4.1.2. Format MCMC for further use ----------
     sq_MCMC$entry_mu = sub("mu\\[", "", sapply(sq_MCMC$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
     
