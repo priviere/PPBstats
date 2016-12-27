@@ -104,37 +104,17 @@ check_model_model_1 = function(
     data_ggplot_model_1_sigma_j = plyr:::splitter_d(sq_MCMC_sigma, .(split))
   }
   
+  # 4.5. standardized epsilon_ijk distribution ----------
+  if ( !is.null(out.model$epsilon)  ) {      
+    epsilon_ijk = out.model$epsilon
+    sigma_j = sq_MCMC[grep("sigma", sq_MCMC$parameter), "q3"]
+    names(sigma_j) = sq_MCMC$parameter[grep("sigma", sq_MCMC$parameter)]
+    env = sub("\\]", "", sapply(names(epsilon_ijk), function(x) { sub("epsilon\\[", "", sapply(x, function(x){unlist(strsplit(as.character(x), ","))[2]})) }))
+    sigma_j = sigma_j[paste("sigma[", env, "]", sep="")]
+    d_std_res = cbind.data.frame(x = c(1:length(sigma_j)), std_res = epsilon_ijk / sigma_j)
+  }  
   
-  
-  out.posteriors = NULL
-  if(analysis == "all" | analysis == "posteriors") {
-    
-    # 4.1.4. mu_ij, beta_jk and sigma_j caterpillar plot distribution ----------
-    out_para_posteriors = NULL
-    
-    
-    
-    
-    # 4.1.5. standardized epsilon_ijk distribution ----------
-    out_stand_res = NULL
-    
-    if ( !is.null(out.model$epsilon)  ) {      
-      epsilon_ijk = out.model$epsilon
-      
-      sigma_j = sq_MCMC[grep("sigma", sq_MCMC$parameter), "q3"]
-      names(sigma_j) = sq_MCMC$parameter[grep("sigma", sq_MCMC$parameter)]
-      
-      env = sub("\\]", "", sapply(names(epsilon_ijk), function(x) { sub("epsilon\\[", "", sapply(x, function(x){unlist(strsplit(as.character(x), ","))[2]})) }))
-      sigma_j = sigma_j[paste("sigma[", env, "]", sep="")]
-      
-      d_std_res = cbind.data.frame(x = c(1:length(sigma_j)), std_res = epsilon_ijk / sigma_j)
-      out_stand_res = ggplot(d_std_res, aes(x = x, y = std_res)) + geom_point() + xlab("") + ylab("standardised residuals")
-      message("The standardised residuals distributions are done.")
-    }
-    
-    out.posteriors = list("sigma_distribution" = out_sigma_distribution, "parameter_posteriors" = out_para_posteriors, "standardized_residuals" = out_stand_res)
-  }
-  
+
   # 5. Return outptus ----------
   out = list("convergence" = out.convergence, 
              "posteriors" = out.posteriors, 
