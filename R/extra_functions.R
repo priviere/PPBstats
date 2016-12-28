@@ -133,7 +133,7 @@ get.caterpillar.plot = function(x, xmin, xmax){ # cf ggmcmc:ggs_caterpillar
   p = p + geom_segment(aes(x = q2, xend = q4, yend = reorder(parameter, q3)), size = 1.5) # 25%-75%
   p = p + geom_segment(aes(x = q1, xend = q5, yend = reorder(parameter, q3)), size = 0.5) # 2.5%-25% and 75%-97.5%
   p = p + ylab("parameter") + xlab("value") + ggtitle(x[1, "environment"])
-  p = p + coord_cartesian(xlim = c(xmin, xmax)
+  p = p + coord_cartesian(xlim = c(xmin, xmax))
   return(p)
 }
 
