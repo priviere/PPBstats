@@ -2,7 +2,7 @@ ggplot_check_model_model_1 = function(
   out_check_model,
   nb_parameters_per_plot = 10
 ){
-  
+  # Get data ----------
   data_ggplot = out_check_model$data_ggplot
   data_ggplot_model_1_sigma_j = data_ggplot$sigma_j
   data_ggplot_model_1_mu_ij = data_ggplot$mu_ij
@@ -32,19 +32,33 @@ ggplot_check_model_model_1 = function(
   
   # mu_ij caterpillar plot ----------
   if(!is.null(data_ggplot_model_1_mu_ij)){
-    xmin = min(data_ggplot_model_1_mu_ij$q1); xmax = max(data_ggplot_model_1_mu_ij$q5)
+    xmin = min(data_ggplot_model_1_mu_ij$q1)
+    xmax = max(data_ggplot_model_1_mu_ij$q5)
+    
     data_ggplot_model_1_mu_ij = plyr:::splitter_d(data_ggplot_model_1_mu_ij, .(environment))
-    out = lapply(data_ggplot_model_1_mu_ij, function(x){ get.caterpillar.plot(x) }) # + xlim(xmin, xmax)
-    out_mu_ij = list("mu_posteriors" = out)
+    
+    fun1 = function(x, xmin, xmax){ get.caterpillar.plot(x) + coord_cartesian(xlim = c(xmin, xmax)) }
+    
+    fun2 = function(x, nb_parameters_per_plot, xmin, xmax){ 
+      x$split = add_split_col(x, nb_parameters_per_plot)
+      xx = plyr:::splitter_d(x, .(split))
+      out = lapply(xx, fun1, xmin, xmax)
+      return(out)
+    }
+    
+    out_mu_ij = lapply(data_ggplot_model_1_mu_ij, fun2, nb_parameters_per_plot, xmin, xmax)
+    
     message("The mu_ij posterior distributions are done.")
   } else { out_mu_ij = NULL }
   
   # beta_jk caterpillar plot ----------
   if(!is.null(data_ggplot_model_1_beta_jk)){
-    xmin = min(data_ggplot_model_1_beta_jk$q1); xmax = max(data_ggplot_model_1_beta_jk$q5)
+    xmin = min(data_ggplot_model_1_beta_jk$q1)
+    xmax = max(data_ggplot_model_1_beta_jk$q5)
+    
     data_ggplot_model_1_beta_jk = plyr:::splitter_d(data_ggplot_model_1_beta_jk, .(environment))
-    out = lapply(data_ggplot_model_1_beta_jk, function(x){ get.caterpillar.plot(x) }) # + xlim(xmin, xmax)
-    out_beta_jk = list("beta_posteriors" = out)
+    
+    out_beta_jk = lapply(data_ggplot_model_1_beta_jk, fun2, nb_parameters_per_plot, xmin, xmax)
     message("The beta_jk posterior distributions are done.")      
   } else { out_beta_jk = NULL }
   
@@ -55,8 +69,9 @@ ggplot_check_model_model_1 = function(
     data_ggplot_model_1_sigma_j_2$split = add_split_col(data_ggplot_model_1_sigma_j_2, nb_parameters_per_plot)
     data_ggplot_model_1_sigma_j_2 = plyr:::splitter_d(data_ggplot_model_1_sigma_j_2, .(split))
     
-    out = lapply(data_ggplot_model_1_sigma_j, function(x){ get.caterpillar.plot(x) + ggtitle("") } ) # + xlim(xmin, xmax) 
-    out_sigma_j = list("sigma_posteriors" = out)
+    fun1 = function(x, xmin, xmax){ get.caterpillar.plot(x) + ggtitle("") + coord_cartesian(xlim = c(xmin, xmax)) }
+    
+    out_sigma_j = lapply(data_ggplot_model_1_sigma_j_2, fun1, xmin, xmax) 
     message("The sigma_j posterior distributions are done.")
   } else { out_sigma_j = NULL }
   
@@ -67,11 +82,11 @@ ggplot_check_model_model_1 = function(
   } else { out_epsilon_ijk = NULL }
   
   out_model_1 = list(
-    out_sigma_j_gamma,
-    out_mu_ij,
-    out_beta_jk,
-    out_sigma_j,
-    out_epsilon_ijk
+    "sigma_j_gamma" = out_sigma_j_gamma,
+    "mu_ij" = out_mu_ij,
+    "beta_jk" = out_beta_jk,
+    "sigma_j" = out_sigma_j,
+    "epsilon_ijk" = out_epsilon_ijk
   )
   
 }
