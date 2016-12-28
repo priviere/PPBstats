@@ -69,7 +69,7 @@ check_model_model_2 = function(
     data_ggplot_model_2_epsilon = cbind.data.frame(x = c(1:length(epsilon_ijk)), std_res)
   }
   
-
+  
   
   # 3. Return results ----------
   out = list(
@@ -82,7 +82,7 @@ check_model_model_2 = function(
       "epsilon" = data_ggplot_model_2_epsilon
     )
   )
-
+  
   attributes(out)$PPBstats.object = "check_model_model_2"
   
   return(out)
