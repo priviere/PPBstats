@@ -7,6 +7,9 @@ PPBstats 0.14 ---------------------------------------
   - check_model_model_1
   - check_model_model_2
   - check_model_GxE
+  - ggplot_check_model_model_1
+  - ggplot_check_model_model_2
+  - ggplot_check_model_GxE
 
 
 PPBstats 0.13 ---------------------------------------
