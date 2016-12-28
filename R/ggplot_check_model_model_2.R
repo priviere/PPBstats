@@ -18,7 +18,7 @@ ggplot_check_model_model_2 = function(
     data_ggplot_model_2_alpha$split = add_split_col(data_ggplot_model_2_alpha, each = nb_parameters_per_plot)
     data_ggplot_model_2_alpha_split = plyr:::splitter_d(data_ggplot_model_2_alpha, .(split))      
     
-    out_alpha = lapply(data_ggplot_model_2_alpha_split, function(x){ get.caterpillar.plot(x)  + coord_cartesian(xlim = c(xmin, xmax)) } )
+    out_alpha = lapply(data_ggplot_model_2_alpha_split, function(x){ get.caterpillar.plot(x, xmin, xmax) } )
   } else { out_alpha = NULL }
   
   
@@ -30,7 +30,7 @@ ggplot_check_model_model_2 = function(
     data_ggplot_model_2_beta$split = add_split_col(data_ggplot_model_2_beta, each = nb_parameters_per_plot)
     data_ggplot_model_2_beta_split = plyr:::splitter_d(data_ggplot_model_2_beta, .(split))      
     
-    out_beta = lapply(data_ggplot_model_2_beta_split, function(x){ get.caterpillar.plot(x)  + coord_cartesian(xlim = c(xmin, xmax)) }) 
+    out_beta = lapply(data_ggplot_model_2_beta_split, function(x){ get.caterpillar.plot(x, xmin, xmax) }) 
     message("The beta_i posterior distributions are done.")      
   } else { out_beta = NULL }
   
@@ -43,7 +43,7 @@ ggplot_check_model_model_2 = function(
     data_ggplot_model_2_theta$split = add_split_col(data_ggplot_model_2_theta, each = nb_parameters_per_plot)
     data_ggplot_model_2_theta_split = plyr:::splitter_d(data_ggplot_model_2_theta, .(split))      
     
-    out_theta = lapply(data_ggplot_model_2_theta_split, function(x){ get.caterpillar.plot(x)  + coord_cartesian(xlim = c(xmin, xmax)) } )
+    out_theta = lapply(data_ggplot_model_2_theta_split, function(x){ get.caterpillar.plot(x, xmin, xmax) } )
     message("The theta_j posterior distributions are done.")
   } else { out_theta = NULL }
   

@@ -37,12 +37,10 @@ ggplot_check_model_model_1 = function(
     
     data_ggplot_model_1_mu_ij = plyr:::splitter_d(data_ggplot_model_1_mu_ij, .(environment))
     
-    fun1 = function(x, xmin, xmax){ get.caterpillar.plot(x) + coord_cartesian(xlim = c(xmin, xmax)) }
-    
     fun2 = function(x, nb_parameters_per_plot, xmin, xmax){ 
       x$split = add_split_col(x, nb_parameters_per_plot)
       xx = plyr:::splitter_d(x, .(split))
-      out = lapply(xx, fun1, xmin, xmax)
+      out = lapply(xx, function(x){ get.caterpillar.plot(x, xmin, xmax) } )
       return(out)
     }
     
@@ -69,7 +67,7 @@ ggplot_check_model_model_1 = function(
     data_ggplot_model_1_sigma_j_2$split = add_split_col(data_ggplot_model_1_sigma_j_2, nb_parameters_per_plot)
     data_ggplot_model_1_sigma_j_2 = plyr:::splitter_d(data_ggplot_model_1_sigma_j_2, .(split))
     
-    fun1 = function(x, xmin, xmax){ get.caterpillar.plot(x) + ggtitle("") + coord_cartesian(xlim = c(xmin, xmax)) }
+    fun1 = function(x, xmin, xmax){ get.caterpillar.plot(x, xmin, xmax) + ggtitle("") }
     
     out_sigma_j = lapply(data_ggplot_model_1_sigma_j_2, fun1, xmin, xmax) 
     message("The sigma_j posterior distributions are done.")
