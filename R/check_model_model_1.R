@@ -115,7 +115,7 @@ check_model_model_1 = function(
     )
   )
   
-  attributes(out)$check_model = "model_1"
+  attributes(out)$PPBstats.object = "check_model_model_1"
   
   return(out)
 }
