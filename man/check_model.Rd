@@ -4,7 +4,7 @@
 \alias{check_model}
 \title{Check with plots if the model went well based on the Gelman-Rubin test and plots of posteriors distributions}
 \usage{
-check_model(out.model, analysis = NULL, nb_parameters_per_plot = 10)
+check_model(out.model)
 }
 \arguments{
 \item{out.model}{outputs from model 1 (\code{MC}) or model 2 (\code{FWH})}
