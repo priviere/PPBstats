@@ -89,4 +89,5 @@ ggplot_check_model_model_1 = function(
     "epsilon_ijk" = out_epsilon_ijk
   )
   
+  return(out_model_1)
 }
