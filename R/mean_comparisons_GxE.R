@@ -24,6 +24,7 @@ mean_comparisons_GxE = function(data, p.adj = "none"){
   
   # 5. return results
   out = list(
+    "variable" = variable,
     "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm,
     "data_ggplot_LSDbarplot_location" = data_ggplot_LSDbarplot_location,
     "data_ggplot_LSDbarplot_year" = data_ggplot_LSDbarplot_year
