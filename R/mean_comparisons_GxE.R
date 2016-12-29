@@ -24,10 +24,12 @@ mean_comparisons_GxE = function(data, p.adj){
   
   # 5. return results
   out = list(
-    data_ggplot_LSDbarplot_germplasm = data_ggplot_LSDbarplot_germplasm,
-    data_ggplot_LSDbarplot_location = data_ggplot_LSDbarplot_location,
-    data_ggplot_LSDbarplot_year = data_ggplot_LSDbarplot_year
+    "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm,
+    "data_ggplot_LSDbarplot_location" = data_ggplot_LSDbarplot_location,
+    "data_ggplot_LSDbarplot_year" = data_ggplot_LSDbarplot_year
   )
+  
+  attributes(data)$PPBstats.object = "mean_comparisons_GxE"
   
  return(out)
 }
