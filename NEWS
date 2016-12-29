@@ -22,6 +22,9 @@ Huge refactoring of the code in several functions for each steps of the analysis
   - ggplot_check_model_GxE
   - ggplot_mean_comparisons_GxE
 
+* delete functions
+  - ggplot_LSDgroup
+
 
 PPBstats 0.13 ---------------------------------------
 -----------------------------------------------------
