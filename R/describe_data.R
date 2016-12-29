@@ -100,6 +100,25 @@ describe_data = function(
         return(list("plot" = plot, "outliers" = outliers))
       })
       
+      # interaction ----------
+      
+      p_gxe = ggplot(data = data, aes(x = location, y = variable, colour = germplasm, group = germplasm))
+      #  p_gxe = p_gxe + stat_summary(fun.y= mean, geom = "point")
+      p_gxe = p_gxe + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
+      
+      #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+      #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
+      
+      #p_gxe = p_gxe + scale_color_manual(values=rep(cbbPalette, each = 2))
+      
+      p_gxe = p_gxe + theme(axis.text.x=element_text(angle=90))
+      p_gxe = p_gxe + ylab(variable)
+      # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
+      
+      out__gxe = p_gxe + facet_grid(year ~ .)
+      
+      
+      
       OUT = list("presence.abscence" = out.presence.abscence, 
                  "histogram" = list(
                    "all" = out_all_hist, 
@@ -111,7 +130,8 @@ describe_data = function(
                    "germplasm" = out_g_box, 
                    "location" = out_l_box, 
                    "year" = out_y_box
-                   )
+                   ),
+                 "interaction" = out__gxe
                  )
     }
     
