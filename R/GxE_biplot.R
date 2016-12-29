@@ -15,6 +15,7 @@ GxE_biplot = function(data){
   )
   
   out = list(
+    "variable" = variable,
     "data_ecovalence" = data_ecovalence,
     "pca" = data$PCA
   )
