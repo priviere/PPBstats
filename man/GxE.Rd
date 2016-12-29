@@ -4,14 +4,14 @@
 \alias{GxE}
 \title{Run GxE model on a data set}
 \usage{
-GxE(data, vec_variables, gxe_analysis = NULL)
+GxE(data, variable, gxe_analysis = NULL)
 }
 \arguments{
 \item{data}{data with at least the following columns: year, location, germplasm, block, X, Y}
 
-\item{vec_variables}{vectors of variables to analyse}
-
 \item{gxe_analysis}{the analysis to carry out: "AMMI" or "GGE"}
+
+\item{vec_variables}{vectors of variables to analyse}
 }
 \value{
 The function returns two lists with
