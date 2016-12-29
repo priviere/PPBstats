@@ -65,7 +65,6 @@ mean_comparisons = function(
     )
   }
   
-
   if( attributes(out_check_model)$PPBstats.object == "check_model_model_2" ) { 
     out = mean_comparisons_model_2(
       out_check_model, 
