@@ -138,6 +138,55 @@ get.caterpillar.plot = function(x, xmin, xmax){ # cf ggmcmc:ggs_caterpillar
 }
 
 
+# Function used in mean_comparisons_model_1.R and mean_comparisons_model_2.R
+
+get_mean_comparisons_and_Mpvalue = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
+  
+  if( !is.element(type, c(1,2)) ){ stop("type must be 1 or 2") }
+
+  Mpvalue = comp.parameters(MCMC = MCMC, parameter = parameter, type = type, threshold = threshold)
+  
+  if(type == 1 & is.null(Mpvalue)) { message("mean comparisons not done for ", sub("\\\\\\[", "", element), " because there are less than two parameters to compare.") }
+  
+  
+  if(type == 1 & !is.null(Mpvalue)) {
+    Comparison = get.significant.groups(Mpvalue = Mpvalue, MCMC = MCMC, alpha = alpha, p.adj = p.adj)
+    
+    # number of groups
+    a = unlist(strsplit(paste(Comparison[, "groups"], collapse = ""), ""))
+    nb_group = length(unique(a))
+    
+    # get at least X groups
+    if(nb_group == 1 & !is.null(get.at.least.X.groups)) {
+      env = sub("\\]", "", unique(sapply(colnames(MCMC), function(x){unlist(strsplit(x, ","))[2]})))
+      message(paste("Get at least X groups for ", sub("\\\\\\[", "", env),". It may take some time ...", sep = "")) # The sub is useful for model2
+      ALPHA = get.at.least.X.groups(Mpvalue, MCMC, p.adj = p.adj, precision = precision)  
+      alp = ALPHA[paste(get.at.least.X.groups, "_groups", sep = "")]  
+      if(is.numeric(alp)){ alp = round(alp, 3) }
+      message(paste("Get at least X groups for ", sub("\\\\\\[", "", env),"is done."))
+    } else { alp = alpha }
+    
+    TAB = cbind.data.frame("parameter" = Comparison$parameter,
+                           "median" = Comparison$median, 
+                           "groups" = Comparison$groups, 
+                           "nb_group" = rep(nb_group, nrow(Comparison)), 
+                           "alpha" = rep(alp, nrow(Comparison)),
+                           "alpha.correction" = rep(p.adj, nrow(Comparison))
+    )
+    
+  }
+  
+  if(type == 2) { 
+    TAB = cbind.data.frame("proba" = Mpvalue) 
+    o = order(TAB$proba)
+    tab = as.data.frame(matrix(TAB[o,], ncol = 1)); rownames(tab) = rownames(TAB)[o]
+    TAB = tab
+  }
+  
+  out = list(TAB, Mpvalue)
+  names(out) = c("mean.comparisons", "Mpvalue")
+  return(out)
+}
 
 
 

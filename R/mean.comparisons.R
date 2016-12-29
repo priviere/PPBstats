@@ -32,9 +32,8 @@
 #' 
 #' @seealso \code{\link{analyse.outputs}}, \code{\link{comp.parameters}}, \code{\link{get.significant.groups}}, \code{\link{get.at.least.X.groups}}, \code{\link{get.ggplot}}
 #' 
-#'  
-get.mean.comparisons = function(
-  MCMC,
+mean_comparisons = function(
+  out_check_model,
   parameter,
   alpha = 0.05,
   type = 1,
@@ -48,88 +47,35 @@ get.mean.comparisons = function(
   # 1. Error message and update arguments ----------
   if( is.null(attributes(MCMC)$model) ) { stop("The MCMC object should come from model 1 (PPBstats::MC$MCMC) or model 2 (PPBstats::FWH$MCMC) follow by PPBstats::analyse.outputs.") } 
 
-  if(attributes(MCMC)$model == "model1" & !is.element(parameter, c("mu", "beta"))) { stop("With outputs from model 1, the parameters must be mu or beta.") }
-
-  if(attributes(MCMC)$model == "model2" & !is.element(parameter, c("alpha", "beta", "theta"))) { stop("With outputs from model 2, the parameters must be alpha, beta or theta.") }
-  
-  # 2. Get square matrice with pvalue or vector with pvalue ----------
-  
-  if(attributes(MCMC)$model == "model1" & parameter == "mu") { 
-    a = colnames(MCMC)[grep(parameter, colnames(MCMC))]
-    vec_env = sub("\\]", "", unique(sapply(a, function(x){unlist(strsplit(x, ","))[2]})))
-    vec_element = vec_env
-  }
-
-  if(attributes(MCMC)$model == "model1" & parameter == "beta") { 
-    a = colnames(MCMC)[grep(parameter, colnames(MCMC))]
-    vec_env = sub("beta\\[", "", unique(sapply(a, function(x){unlist(strsplit(x, ","))[1]})))
-    vec_element = vec_env
+  if( attributes(out_check_model)$PPBstats.object == "check_model_model_1" ) { 
+    out = mean_comparisons_model_1(
+      out_check_model, 
+      parameter,
+      alpha = 0.05,
+      type = 1,
+      threshold = 1,
+      p.adj = "soft.bonf",
+      get.at.least.X.groups = 2,
+      precision = 0.0005
+    )
   }
   
-  if(attributes(MCMC)$model == "model2" & parameter == "alpha") { vec_element = "alpha\\[" }
-  if(attributes(MCMC)$model == "model2" & parameter == "beta") { vec_element = "beta\\[" }
-  if(attributes(MCMC)$model == "model2" & parameter == "theta") { vec_element = "theta\\[" }
-  
-  OUT = MPVALUE = NULL
-  for (e in 1:length(vec_element)) {
-    
-    element = vec_element[e]
-    
-    a = colnames(MCMC)[grep(parameter, colnames(MCMC))]
-    toget = a[grepl(element, a)]
-    MCMC_element = MCMC[, toget]
-    if( is.null(ncol(MCMC_element)) ) { MCMC_element = as.data.frame(matrix(MCMC_element, ncol = 1)); colnames(MCMC_element) = toget }
-    
-    Mpvalue = comp.parameters(MCMC = MCMC_element, parameter = parameter, type = type, threshold = threshold)
-    
-    if(type == 1 & is.null(Mpvalue)) { message("mean comparisons not done for ", sub("\\\\\\[", "", element), " because there are less than two parameters to compare.") }
-    
-        
-    if(type == 1 & !is.null(Mpvalue)) {
-      Comparison = get.significant.groups(Mpvalue = Mpvalue, MCMC = MCMC_element, alpha = alpha, p.adj = p.adj)
-      
-      # number of groups
-      a = unlist(strsplit(paste(Comparison[, "groups"], collapse = ""), ""))
-      nb_group = length(unique(a))
-      
-      # get at least X groups
-      if(nb_group == 1 & !is.null(get.at.least.X.groups)) {
-        message(paste("Get at least X groups for ", sub("\\\\\\[", "", element),". It may take some time ...", sep = "")) # The sub is useful for model2
-        ALPHA = get.at.least.X.groups(Mpvalue, MCMC_element, p.adj = p.adj, precision = precision)  
-        alp = ALPHA[paste(get.at.least.X.groups, "_groups", sep = "")]  
-        if(is.numeric(alp)){ alp = round(alp, 3) }
-        message(paste("Get at least X groups for ", sub("\\\\\\[", "", element),"is done."))
-      } else { alp = alpha }
-            
-      TAB = cbind.data.frame("parameter" = Comparison$parameter,
-                             "median" = Comparison$median, 
-                             "groups" = Comparison$groups, 
-                             "nb_group" = rep(nb_group, nrow(Comparison)), 
-                             "alpha" = rep(alp, nrow(Comparison)),
-                             "alpha.correction" = rep(p.adj, nrow(Comparison))
-                             )
 
-    } else { TAB = NULL }
-    
-    if(type == 2) { 
-      TAB = cbind.data.frame("proba" = Mpvalue) 
-      o = order(TAB$proba)
-      tab = as.data.frame(matrix(TAB[o,], ncol = 1)); rownames(tab) = rownames(TAB)[o]
-      TAB = tab
-      }
-    
-    OUT = rbind.data.frame(OUT, TAB)
-    MPVALUE = c(MPVALUE, list(Mpvalue))
-  }
-  if( attributes(MCMC)$model == "model1") { attributes(OUT)$PPBstats.object = "mean.comparisons.model1" }
-  if( attributes(MCMC)$model == "model2") { attributes(OUT)$PPBstats.object = "mean.comparisons.model2" }
+  if( attributes(out_check_model)$PPBstats.object == "check_model_model_2" ) { 
+    out = mean_comparisons_model_2(
+      out_check_model, 
+      parameter,
+      alpha = 0.05,
+      type = 1,
+      threshold = 1,
+      p.adj = "soft.bonf",
+      get.at.least.X.groups = 2,
+      precision = 0.0005
+    )
+    }
   
-  names(MPVALUE) = vec_element
-  out = list(OUT, MPVALUE)
-  names(out) = c("mean.comparisons", "Mpvalue")
+  # return results
+  attributes(out)$PPBstats.object = "mean_comparisons"
   
-  if( attributes(MCMC)$model == "model1") { attributes(out)$PPBstats.object = "mean.comparisons.model1" }
-  if( attributes(MCMC)$model == "model2") { attributes(out)$PPBstats.object = "mean.comparisons.model2" }
-
   return(out)
 }
