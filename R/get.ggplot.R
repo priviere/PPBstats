@@ -73,6 +73,7 @@ get.ggplot = function(
 
   if( attributes(data)$PPBstats.object == "check_model_model_2" ) { ggplot_check_model_model_2(data, nb_parameters_per_plot = nb_parameters_per_plot) }
   
+  if( attributes(data)$PPBstats.object == "check_model_GxE" ) { ggplot_check_model_GxE(data, nb_parameters_per_plot = nb_parameters_per_plot) }
   
   # 1. Error message and update arguments ----------
   if (is.null(attributes(data)$PPBstats.object)) { stop("data must come from functions get.parameter.groups, get.mean.comparisons, predict.the.past or analyse.outputs. See ?get.ggplot for more details.") }
