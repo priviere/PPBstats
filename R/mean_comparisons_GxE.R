@@ -6,6 +6,7 @@ mean_comparisons_GxE = function(
   if( attributes(out_check_model)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
   
   model = out_check_model$GxE$ANOVA$model
+  variable = out_check_model$GxE$variable
   
   data_ggplot_LSDbarplot = function(model, fac, p.adj){
     fac = "germplasm"
