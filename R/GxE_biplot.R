@@ -1,4 +1,4 @@
-GxE_biplot = function(data){
+biplot_GxE = function(data){
   
   # 1. Error message
   if( attributes(data)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
