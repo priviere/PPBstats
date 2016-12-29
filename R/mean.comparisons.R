@@ -45,8 +45,9 @@ mean_comparisons = function(
   # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
-  if( is.null(attributes(MCMC)$model) ) { stop("The MCMC object should come from model 1 (PPBstats::MC$MCMC) or model 2 (PPBstats::FWH$MCMC) follow by PPBstats::analyse.outputs.") } 
-
+  if( is.null(attributes(out_check_model)$PPBstats.object) ) { stop("The MCMC object should come from check_model.") } 
+  if( !is.element(attributes(out_check_model)$PPBstats.object, c("check_model_model_1", "check_model_model_2")) ) { stop("The MCMC object should come from check_model.") } 
+  
   if( attributes(out_check_model)$PPBstats.object == "check_model_model_1" ) { 
     out = mean_comparisons_model_1(
       out_check_model, 
