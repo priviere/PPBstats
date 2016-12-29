@@ -1,16 +1,16 @@
 ggplot_mean_comparisons_GxE = function(
-  data,
+  mean_comparisons_GxE,
   nb_parameters_per_plot = 10
   ){
   
   # 1. Error message
-  if( attributes(data)$PPBstats.object != "mean_comparisons_GxE" ) { stop("data must come from mean_comparisons and GxE") }
+  if( attributes(mean_comparisons_GxE)$PPBstats.object != "mean_comparisons_GxE" ) { stop("data must come from mean_comparisons and GxE") }
   
-  variable = data$variable
+  variable = mean_comparisons_GxE$variable
   
-  data_ggplot_LSDbarplot_germplasm = data$data_ggplot_LSDbarplot_germplasm
-  data_ggplot_LSDbarplot_location = data$data_ggplot_LSDbarplot_location
-  data_ggplot_LSDbarplot_year = data$data_ggplot_LSDbarplot_year
+  data_ggplot_LSDbarplot_germplasm = mean_comparisons_GxE$data_ggplot_LSDbarplot_germplasm
+  data_ggplot_LSDbarplot_location = mean_comparisons_GxE$data_ggplot_LSDbarplot_location
+  data_ggplot_LSDbarplot_year = mean_comparisons_GxE$data_ggplot_LSDbarplot_year
   
   ggplot_LSDbarplot = function(d_LSD, fac, variable){
     p = ggplot(data = d_LSD, aes(x = trt, y = means, label = M)) + geom_bar(stat = "identity")
