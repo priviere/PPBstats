@@ -79,8 +79,5 @@ mean_comparisons = function(
     )
     }
   
-  # return results
-  attributes(out)$PPBstats.object = "mean_comparisons"
-  
   return(out)
 }
