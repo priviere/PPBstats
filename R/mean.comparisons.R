@@ -45,8 +45,9 @@ mean_comparisons = function(
   # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
-  if( is.null(attributes(out_check_model)$PPBstats.object) ) { stop("out_check_model must come from check_model.") } 
-  if( !is.element(attributes(out_check_model)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE")) ) { stop("out_check_model must come from check_model.") } 
+  mess = "out_check_model must come from check_model."
+  if( is.null(attributes(out_check_model)$PPBstats.object) ) { stop(mess) } 
+  if( !is.element(attributes(out_check_model)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE")) ) { stop(mess) } 
   
   if( attributes(out_check_model)$PPBstats.object == "check_model_GxE" ) { 
     out = mean_comparisons_GxE(out_check_model, p.adj) 

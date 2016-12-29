@@ -64,7 +64,9 @@ out.model
 # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
-  if( is.null(attributes(out.model)$PPBstats.object) ) { stop("out.model should be an output from model 1 (PPBstats::model_1), model 2 (PPBstats::model_2) or GxE (PPBstats::GxE).") } 
+  mess = "out.model should be an output from model 1 (PPBstats::model_1), model 2 (PPBstats::model_2) or GxE (PPBstats::GxE)."
+  if( is.null(attributes(out.model)$PPBstats.object) ) { stop(mess) } 
+  if( !is.element(attributes(out.model)$PPBstats.object, c("model1", "model2", "GxE")) ) { stop(mess) } 
   
   # 2. Check model ----------
   if(attributes(out.model)$PPBstats.object == "model1") { out = check_model_model_1(out.model) }
