@@ -51,12 +51,12 @@ mean_comparisons = function(
     out = mean_comparisons_model_1(
       out_check_model, 
       parameter,
-      alpha = 0.05,
-      type = 1,
-      threshold = 1,
-      p.adj = "soft.bonf",
-      get.at.least.X.groups = 2,
-      precision = 0.0005
+      alpha,
+      type,
+      threshold,
+      p.adj,
+      get.at.least.X.groups,
+      precision
     )
   }
   
@@ -65,12 +65,12 @@ mean_comparisons = function(
     out = mean_comparisons_model_2(
       out_check_model, 
       parameter,
-      alpha = 0.05,
-      type = 1,
-      threshold = 1,
-      p.adj = "soft.bonf",
-      get.at.least.X.groups = 2,
-      precision = 0.0005
+      alpha,
+      type,
+      threshold,
+      p.adj,
+      get.at.least.X.groups,
+      precision
     )
     }
   
