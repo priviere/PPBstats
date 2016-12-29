@@ -67,13 +67,11 @@ out.model
   if( is.null(attributes(out.model)$PPBstats.object) ) { stop("out.model should be an output from model 1 (PPBstats::model_1), model 2 (PPBstats::model_2) or GxE (PPBstats::GxE).") } 
   
   # 2. Check model ----------
-  if(attributes(out.model)$PPBstats.object == "model1") {
-    out = check_model_model_1(out.model)
-  }
+  if(attributes(out.model)$PPBstats.object == "model1") { out = check_model_model_1(out.model) }
   
-  if(attributes(out.model)$PPBstats.object == "model2") {
-    out = check_model_model_2(out.model)
-  }
+  if(attributes(out.model)$PPBstats.object == "model2") { out = check_model_model_2(out.model) }
+  
+  if(attributes(out.model)$PPBstats.object == "GxE") { out = check_model_GxE(out.model) }
 
 return(out)
 }
