@@ -4,6 +4,8 @@ Huge refactoring of the code in several functions for each steps of the analysis
 
 * rename function
   - analyse.outputs.R becomes check_model.R
+  - get.parameter.groups.R becomes parameter.groups.R
+  - get.mean.comparisons.R becomes mean.comparisons.R
 
 * add new functions
   - biplot_GxE
