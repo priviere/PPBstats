@@ -1,6 +1,7 @@
 check_model_GxE = function(
   out.model
 ){
+  model = out.model$ANOVA$anova_model
   
   # 1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
   r = residuals(model)
@@ -60,7 +61,7 @@ check_model_GxE = function(
       "data_ggplot_var_intra" = data_ggplot_var_intra
     )
   )
-
+  
   attributes(out)$PPBstats.object = "check_model_GxE"
   
   return(out)
