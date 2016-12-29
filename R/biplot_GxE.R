@@ -1,9 +1,9 @@
-biplot_GxE = function(data){
+biplot_GxE = function(out_check_model){
   
   # 1. Error message
-  if( attributes(data)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
+  if( attributes(out_check_model)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
   
-  data_interaction = data$GxE$ANOVA$interaction_matrix
+  data_interaction = out_check_model$GxE$ANOVA$interaction_matrix
   
   # 2. Ecovalence ----------
   m_eco = data_interaction^2
@@ -15,9 +15,9 @@ biplot_GxE = function(data){
   )
   
   out = list(
-    "variable" = data$GxE$variable,
+    "variable" = out_check_model$GxE$variable,
     "data_ecovalence" = data_ecovalence,
-    "pca" = data$GxE$PCA
+    "pca" = out_check_model$GxE$PCA
   )
   
   attributes(out)$PPBstats.object = "biplot_GxE"
