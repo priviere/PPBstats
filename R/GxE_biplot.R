@@ -15,9 +15,9 @@ GxE_biplot = function(data){
   )
   
   out = list(
-    "variable" = variable,
+    "variable" = data$GxE$variable,
     "data_ecovalence" = data_ecovalence,
-    "pca" = data$PCA
+    "pca" = data$GxE$PCA
   )
   
   attributes(out)$PPBstats.object = "biplot_GxE"
