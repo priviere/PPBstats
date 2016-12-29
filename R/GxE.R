@@ -144,6 +144,7 @@ GxE = function(
     
     # 3.4. Return ANOVA results ----------
     out_anova = list(
+      "model" = model,
       "anova_model" = anova_model,
       "germplasm_effects" = out_germplasm,
       "location_effects" = out_location,
