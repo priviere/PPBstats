@@ -121,6 +121,8 @@ GxE = function(
     coef_germ = c(coef_germ, - sum(coef_germ))
     names(coef_germ) = model$xlevels$germplasm
     
+    var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
+    
     out_germplasm = list(
       "effects" = coef_germ,
       "intra_variance" = var_intra
@@ -134,7 +136,7 @@ GxE = function(
     names(coef_env) = model$xlevels$location
     
     out_location = list(
-      "effects" = coef_env,
+      "effects" = coef_env
       )
     
     # 3.3 interaction matrix ----------
