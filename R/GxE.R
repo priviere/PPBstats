@@ -160,5 +160,7 @@ GxE = function(
     
     message(gxe_analysis, " model done for ", variable)
     
+    attributes(out)$PPBstats.object = "GxE"
+    
     return(out)
   }
