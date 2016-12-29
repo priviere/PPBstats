@@ -75,23 +75,18 @@
 #' 
 GxE = function(
   data, 
-  vec_variables,
+  variable,
   gxe_analysis = NULL
 )
 
 # Lets' go ----------
   {
-    
-    # Error messages ----------
-    check_data_vec_variables(data, vec_variables)
+    # 1. Error messages ----------
+    check_data_vec_variables(data, variable)
     if( is.null(gxe_analysis) ) { stop("You ust set gxe_analysis: AMMI or GGE") }
     if(!is.element(gxe_analysis, c("AMMI", "GGE"))) { stop("gxe_analysis must be either \"AMMI\" or \"GGE\".") }
     
-    # 1. write the ammi function to apply to vec_variables ----------
-  fun_gxe = function(variable, data, gxe_analysis) 
-    # go! ----------
-    {
-      # 1.1. Set up data set ----------
+    # 2. Set up data set ----------
       colnames(data)[which(colnames(data) == variable)] = "variable"
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data = droplevels(na.omit(data))
@@ -100,51 +95,8 @@ GxE = function(
       data$YxE = factor(paste(data$year, data$location, sep = ":"))
       data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
       
-      # 2.Descriptive analysis ----------
-      
-      # 2.1. germplam ----------
-      p = ggplot(data = data, aes(x = germplasm, y = variable, color = germplasm))
-      p = p + geom_boxplot() + ylab(variable)
-      p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90))
-      out_descriptive_germplasm = list("boxplot" = p)
-      
-      
-      # 2.2. location ----------
-      p = ggplot(data = data, aes(x = location, y = variable, color = location))
-      p = p + geom_boxplot() + ylab(variable)
-      p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90))
-      out_descriptive_location = list("boxplot" = p)
-      
-      
-      # 2.3. interaction ----------
-      
-      p_gxe = ggplot(data = data, aes(x = location, y = variable, colour = germplasm, group = germplasm))
-      #  p_gxe = p_gxe + stat_summary(fun.y= mean, geom = "point")
-      p_gxe = p_gxe + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
-      
-      #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-      #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
-      
-      #p_gxe = p_gxe + scale_color_manual(values=rep(cbbPalette, each = 2))
-      
-      p_gxe = p_gxe + theme(axis.text.x=element_text(angle=90))
-      p_gxe = p_gxe + ylab(variable)
-      # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
-      
-      if(nlevels(data$year) > 1) { p_gxe = p_gxe + facet_grid(year ~ .) }
-      
-      out_descriptive_interaction = list("interaction-plot" = p_gxe)
-      
-      # 2.4. Return results ----------
-      out_descriptive = list(
-        "germplasm" = out_descriptive_germplasm, 
-        "location" = out_descriptive_location, 
-        "interaction" = out_descriptive_interaction
-        )
     
-    # 3. GxE model: ANOVA + PCA ----------
-    
-    # 3.1. ANOVA ----------
+    # 3. ANOVA ----------
     
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
@@ -158,96 +110,23 @@ GxE = function(
 
     anova_model = anova(model)
     
-    # Test for homogeneity of variances
-    #ft = fligner.test(variable ~ interaction(germplasm,location), data=data)
-    #print(ft)
-
-    # 3.1.1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
-    r = residuals(model)
-    
-    # 3.1.1.1. Normality ----------
-    dr = data.frame(r)
-    p = ggplot(dr, aes(x = r), binwidth = 2)
-    p = p + geom_histogram() + geom_vline(xintercept = 0)
-    p = p + ggtitle("Test for normality", paste("Skewness:", signif(skewness(r), 3), "; Kurtosis:", signif(kurtosis(r),3)))
-    p = p + theme(plot.title=element_text(hjust=0.5))
-    #   Skewness: indicator used in distribution analysis as a sign of asymmetry and deviation from a normal distribution. 
-    #   
-    #   Interpretation: 
-    #   Skewness > 0 - Right skewed distribution - most values are concentrated on left of the mean, with extreme values to the right.
-    #   Skewness < 0 - Left skewed distribution - most values are concentrated on the right of the mean, with extreme values to the left.
-    #   Skewness = 0 - mean = median, the distribution is symmetrical around the mean.
-    #   
-    #   
-    #   Kurtosis - indicator used in distribution analysis as a sign of flattening or "peakedness" of a distribution. 
-    #   
-    #   Interpretation: 
-    #   Kurtosis > 3 - Leptokurtic distribution, sharper than a normal distribution, with values concentrated around the mean and thicker tails. This means high probability for extreme values.
-    #   Kurtosis < 3 - Platykurtic distribution, flatter than a normal distribution with a wider peak. The probability for extreme values is less than for a normal distribution, and the values are wider spread around the mean.
-    #   Kurtosis = 3 - Mesokurtic distribution - normal distribution for example.
-    
-#    p = plotRes0 + ylab(expression(bold('Density'))) + xlab(expression(bold('Residuals')))
-
-    out_res1 = p
-    
-    # 3.1.1.2. Standardized residuals vs theoretical quantiles ----------
-    s = sqrt(deviance(model)/df.residual(model))
-    rs = r/s
-    d = data.frame(x = qnorm(ppoints(rs)), y = sort(rs))
-    p = ggplot(d, aes(x = x, y = y)) + geom_point() + geom_line() 
-    p = p + geom_abline(slope = 1, intercept = 0, color = "red")
-    p = p + xlab("Theoretical Quantiles") + ylab("Standardized residuals")
-    p = p + ggtitle("QQplot") + theme(plot.title=element_text(hjust=0.5))
-    out_res2 = p
-    
-    
-    # 3.1.2. repartition of variability among factors ----------
-    total_Sum_Sq = sum(anova_model$"Sum Sq")
-    Sum_sq = anova_model$"Sum Sq"
-    pvalue = anova_model$"Pr(>F)"
-    percentage_Sum_sq = Sum_sq/total_Sum_Sq*100
-    factor = rownames(anova_model)
-      
-    d_pie = cbind.data.frame(factor, pvalue, Sum_sq, percentage_Sum_sq)
-    p_pie = ggplot(data = d_pie, aes(x = "", y = percentage_Sum_sq, fill = factor)) 
-    p_pie = p_pie + ggtitle(paste("Total variance distribution for", variable))
-    p_pie = p_pie + geom_bar(width = 1, stat = "identity") + coord_polar("y", start = 0)
-    #pie = pie + geom_text(data=DFtemp, aes(y = value/3 + c(0, cumsum(value)[-length(value)]), label = paste("  ",round(valuep*100), "%")))
-    p_pie = p_pie + ylab("") + xlab("") + theme(plot.title=element_text(hjust=0.5))
-    
-    # 3.1.3. Get effects ----------
-    data_interaction = GxE_build_interaction_matrix(data, gxe_analysis)
+    # 3.1. Get effects ----------
     
     c = model$coefficients
     
-    # 3.1.5. germplam effects ----------
-    
-    # germplasm
+    # 3.2. germplam effects ----------
     coef_germ = c[grep("germplasm", names(c))]
     todel = grep(":", names(coef_germ))
     if(length(todel) > 0) { coef_germ = coef_germ[-todel] }
     coef_germ = c(coef_germ, - sum(coef_germ))
     names(coef_germ) = model$xlevels$germplasm
     
-    
-    # variance intra germplasm
-    var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
-    
-    d = data.frame(x = model$model$germplasm, y = model$residuals)
-    p = ggplot(d, aes(x = x, y = y))  + geom_boxplot(aes(color=x))
-    p = p + ggtitle("Distribution of residuals") + xlab("germplasm") + ylab(variable)
-    p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90), plot.title=element_text(hjust=0.5))
-    p_var_intra = p 
-    
     out_germplasm = list(
       "effects" = coef_germ,
-      "intra_variance" = var_intra,
-      "barplot_LSD_significant_group" = ggplot_LSDbarplot(model, variable, "germplasm", "bonferroni"),
-      "boxplot_variance_intra" = p_var_intra
-    )
+      "intra_variance" = var_intra
+      )
     
-    # 3.1.6. location effect ----------
-    # location
+    # 3.3. location effect ----------
     coef_env = c[grep("location", names(c))]
     todel = grep(":", names(coef_env))
     if(length(todel) > 0) { coef_env = coef_env[-todel] }
@@ -256,59 +135,25 @@ GxE = function(
     
     out_location = list(
       "effects" = coef_env,
-      "barplot_LSD_significant_group" = ggplot_LSDbarplot(model, variable, "location", "bonferroni")
       )
     
-    # 3.1.7. Return ANOVA results ----------
+    # 3.3 interaction matrix ----------
+    data_interaction = GxE_build_interaction_matrix(data, gxe_analysis)
+    
+    # 3.4. Return ANOVA results ----------
     out_anova = list(
       "anova_model" = anova_model,
-      "residuals" = list(
-        "distribution" = out_res1,
-        "QQplot" = out_res2
-      ),
-      "variability_repartition" = p_pie,
-      "location_effects" = out_location,
       "germplasm_effects" = out_germplasm,
+      "location_effects" = out_location,
       "interaction_matrix" = data_interaction
     )
     
     
-    # 3.2. PCA on interaction matrix ----------
-    pca = PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
+    # 4. PCA on interaction matrix ----------
+    out_pca = PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
 
-    # 3.2.1. Ecovalence ----------
-    m_eco = data_interaction^2
-    
-    d_eco = data.frame(
-      germplasm = rep(rownames(m_eco), times = ncol(m_eco)), 
-      location = rep(colnames(m_eco), each = nrow(m_eco)),
-      variable = as.vector(m_eco)
-      )
-    
-    p_eco = ggplot(data = d_eco, aes(x = location, y = germplasm, fill = variable)) + geom_raster()
-    p_eco = p_eco + scale_fill_gradient(low = "green", high = "red") 
-    p_eco = p_eco + ggtitle(paste("Wrick ecovalence for", variable)) + theme(plot.title=element_text(hjust=0.5))
-    
-    # 3.2.2. Biplots ----------
-    variation_dim = fviz_eig(pca) + ggtitle("")
-    which_won_where = ggplot_which_won_where(pca) + theme(plot.title=element_text(hjust=0.5))
-    mean_vs_stability = ggplot_mean_vs_stability(pca)
-    discrimitiveness_vs_representativeness = ggplot_discrimitiveness_vs_representativeness(pca)
-    
-    # 3.2.3. Return PCA results ----------
-    out_pca = list(
-      "ecovalence" = p_eco,
-      "biplot" = list(
-        "variation_dim" = variation_dim,
-        "which_won_where" = which_won_where,
-        "mean_vs_stability" = mean_vs_stability,
-        "discrimitiveness_vs_representativeness" = discrimitiveness_vs_representativeness
-      )
-    )
-    
-    # 1.4. Return results ----------
+    # 5. Return results ----------
     out = list(
-      "descriptive" = out_descriptive,
       "ANOVA" = out_anova,
       "PCA" = out_pca
     )
@@ -317,101 +162,3 @@ GxE = function(
     
     return(out)
   }
-  
-  # 2. write function post ammi analysis regrouping all ammi analysis from different variables ----------
-  fun_post_gxe = function(out_ammi)
-    # go! ----------
-    {
-  # 2.1. barplot_variation_repartition ---------- 
-    dtmp = data.frame()
-    for(i in 1:length(out_ammi)){
-      d = out_ammi[[i]]$ANOVA$variability_repartition$data
-      d = cbind.data.frame(names(out_ammi)[i], d)
-      dtmp = rbind.data.frame(dtmp, d)
-    }
-    colnames(dtmp)[1] = "var"
-    p = ggplot(dtmp, aes(x = var, y = percentage_Sum_sq)) + geom_bar(stat = "identity", aes(fill = factor))
-    p = p + ylab("pourcentage de variation") + theme(axis.text.x = element_text(angle = 90))
-    cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-    barplot_variation_repartition = p + scale_fill_manual(values = cbbPalette)
-    
-    # 2.2. PCA on effects -----------
-    
-    # 2.2.1. Get data sets ----------
-    n_G = n_E = n_varG = NULL
-    for(i in 1:length(out_ammi)){
-      n_G = c(n_G, names(out_ammi[[i]]$ANOVA$germplasm_effects$effects))
-      n_varG = c(n_varG, names(out_ammi[[i]]$ANOVA$germplasm_effects$intra_variance))
-      n_E = c(n_E, names(out_ammi[[i]]$ANOVA$location_effects$effects))
-    }
-    n_G = unique(n_G)
-    n_E = unique(n_E)
-    n_varG = unique(n_varG)
-    
-    df_G = matrix(NA, ncol = length(out_ammi), nrow = length(n_G))
-    colnames(df_G) = names(out_ammi)
-    rownames(df_G) = n_G
-      
-    df_E = matrix(NA, ncol = length(out_ammi), nrow = length(n_E))
-    colnames(df_E) = names(out_ammi)
-    rownames(df_E) = n_E
-    
-    df_varG = matrix(NA, ncol = length(out_ammi), nrow = length(n_varG))
-    colnames(df_varG) = names(out_ammi)
-    rownames(df_varG) = n_varG
-    
-    for(i in 1:length(out_ammi)){
-      g = out_ammi[[i]]$ANOVA$germplasm_effects$effects
-      df_G[names(g),i] = g
-      vg = out_ammi[[i]]$ANOVA$germplasm_effects$intra_variance
-      df_varG[names(vg),i] = vg
-      e = out_ammi[[i]]$ANOVA$location_effects$effects
-      df_E[names(e),i] = e
-    }
-    
-    # 2.2.2. Run PCA ----------
-    PCA_G = PCA(df_G, scale.unit = TRUE, graph = FALSE)
-    PCA_intraG = PCA(df_varG, scale.unit = TRUE, graph = FALSE)
-    PCA_E = PCA(df_E, scale.unit = TRUE, graph = FALSE)
-
-    PCA_G = list(
-      "variation_dim" = fviz_eig(PCA_G),
-      "ind" = fviz_pca_ind(PCA_G),
-      "var" = fviz_pca_var(PCA_G)
-    )
-    
-    PCA_intraG = list(
-      "variation_dim" = fviz_eig(PCA_intraG),
-      "ind" = fviz_pca_ind(PCA_intraG),
-      "var" = fviz_pca_var(PCA_intraG)
-    )
-    
-    PCA_E = list(
-      "variation_dim" = fviz_eig(PCA_E),
-      "ind" = fviz_pca_ind(PCA_E),
-      "var" = fviz_pca_var(PCA_E)
-    )
-    
-    out = list(
-      "barplot_variation_repartition" = barplot_variation_repartition,
-      "PCA_G_effect" = PCA_G,
-      "PCA_intraG_effect" = PCA_intraG,
-      "PCA_E_effect" = PCA_E
-    )
-  }
-  
-
-  # 3. Apply analysis and Post analysis to vec_variables ----------
-  message("I. Run ", gxe_analysis, " model on each variable")
-  out_gxe = lapply(vec_variables, fun_gxe, data, gxe_analysis)
-  names(out_gxe) = vec_variables
-  
-  message("\nII. Post ", gxe_analysis," analysis on all outputs")
-  #out_post_gxe = fun_post_gxe(out_gxe)
-  out_post_gxe = fun_post_gxe(out_gxe)
-  
-  OUT = list(out_gxe, out_post_gxe)
-  names(OUT) = c(gxe_analysis, paste("Post_", gxe_analysis, sep = ""))
-  
-  return(OUT)
-}
