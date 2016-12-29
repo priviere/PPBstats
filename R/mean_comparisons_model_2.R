@@ -18,11 +18,11 @@ mean_comparisons_model_2 = function(
     return(out)
   }
   
-  if(parameter == "alpha") { out = MCMC_par(out_check_model_2$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
+  if(parameter == "alpha") { out = list(MCMC_par(out_check_model_2$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups)) }
   
-  if(parameter == "beta") { out = MCMC_par(out_check_model_2$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
+  if(parameter == "beta") { out = list(MCMC_par(out_check_model_2$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups)) }
 
-  if(parameter == "theta") { out = MCMC_par(out_check_model_2$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
+  if(parameter == "theta") { out = list(MCMC_par(out_check_model_2$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups)) }
   
 
   # return results
