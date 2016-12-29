@@ -157,6 +157,7 @@ GxE = function(
 
     # 5. Return results ----------
     out = list(
+      "variable" = variable,
       "ANOVA" = out_anova,
       "PCA" = out_pca
     )
