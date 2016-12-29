@@ -21,6 +21,7 @@ Huge refactoring of the code in several functions for each steps of the analysis
   - ggplot_check_model_model_2
   - ggplot_check_model_GxE
   - ggplot_mean_comparisons_GxE
+  - ggplot_parameter_groups
 
 * delete functions
   - ggplot_LSDgroup
