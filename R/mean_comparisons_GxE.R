@@ -1,8 +1,8 @@
-mean_comparisons_GxE = function(data, p.adj){
+mean_comparisons_GxE = function(data, p.adj = "none"){
   # 1. Error message
   if( attributes(data)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
   
-  model = data$ANOVA$anova_model
+  model = data$GxE$ANOVA$model
   
   data_ggplot_LSDbarplot = function(model, fac, p.adj){
     fac = "germplasm"
@@ -29,7 +29,7 @@ mean_comparisons_GxE = function(data, p.adj){
     "data_ggplot_LSDbarplot_year" = data_ggplot_LSDbarplot_year
   )
   
-  attributes(data)$PPBstats.object = "mean_comparisons_GxE"
+  attributes(out)$PPBstats.object = "mean_comparisons_GxE"
   
  return(out)
 }
