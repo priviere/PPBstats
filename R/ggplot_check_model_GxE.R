@@ -15,7 +15,7 @@ ggplot_check_model_GxE = function(
   data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
   data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
   
-  data_ggplot_pca = out_check_model$PCA
+  data_ggplot_pca = out_check_model$GxE$PCA
   
   
   # 1. Normality ----------
@@ -52,8 +52,9 @@ ggplot_check_model_GxE = function(
   
   out = list(
     "residuals" = list(
-      "histogramm" = p1,
-      "qqplot" = p2),
+      "histogramm" = p1.1,
+      "qqplot" = p1.2),
+    "variability_repartition" = p2,
     "variance_intra_germplasm" = p3,
     "pca_composante_variance" = p4
   )
