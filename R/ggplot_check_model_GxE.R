@@ -3,6 +3,9 @@ ggplot_check_model_GxE = function(
   nb_parameters_per_plot = 10
 ){
   # Get data ----------
+  
+  variable = out_check_model$variable
+  
   data_ggplot = out_check_model$data_ggplot
   
   data_ggplot_normality = data_ggplot$data_ggplot_residuals$data_ggplot_normality
