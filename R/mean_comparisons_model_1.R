@@ -19,6 +19,17 @@ mean_comparisons_model_1 = function(
     vec_env = sub("\\]", "", unique(sapply(a, function(x){unlist(strsplit(x, ","))[2]})))
     vec_MCMC_par = lapply(vec_env, function(env, MCMC){ MCMC[grep(paste(",", env, "]", sep = ""), colnames(MCMC))] }, MCMC)
     out = lapply(vec_MCMC_par, get_mean_comparisons_and_Mpvalue, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) 
+    
+    fun = function(out, para){
+      data = out$mean.comparisons
+      data$entry = sub(paste(para, "\\[", sep=""), "", sapply(data$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
+      data$environment =  sub("\\]", "", sapply(data$parameter, function(x){unlist(strsplit(as.character(x), ","))[2]}))
+      data$location = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
+      data$year = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
+      out$mean.comparisons = data
+      return(out)
+    }
+    out = lapply(out, fun, parameter)
     names(out) = vec_env
     return(out)
   }
@@ -31,7 +42,7 @@ mean_comparisons_model_1 = function(
   
   # return results
   out = list(
-    "data_mean_comparisons" = mean_comparisons,
+    "data_mean_comparisons" = data_mean_comparisons,
     "data_env_with_no_controls" = out_check_model_1$data_env_with_no_controls,
     "data_env_whose_param_did_not_converge" = out_check_model_1$data_env_whose_param_did_not_converge
   )
