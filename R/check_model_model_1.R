@@ -33,12 +33,11 @@ check_model_model_1 = function(
     # update data
     env_not_ok = unique(c(env_not_ok_mu, env_not_ok_beta, env_not_ok_sigma))
     if( length(env_not_ok) > 0 ) {
-      model1.data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
-      attributes(model1.data_env_whose_param_did_not_converge)$PPBstats.object = "model1.data_env_whose_param_did_not_converge"
-      
+      data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
+
     # Update MCMC, delete all environments where at least one parameter do not converge
       message("MCMC are updated, the following environment were deleted : ", paste(env_not_ok, collapse = ", "))
-      message("model1.data_env_whose_param_did_not_converge contains the raw data for these environments.")
+      message("data_env_whose_param_did_not_converge contains the raw data for these environments.")
       m1 = unlist(sapply(paste("sigma\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
       m2 = unlist(sapply(paste("beta\\[", env_not_ok, sep = ""), function(x){grep(x, colnames(MCMC))} ))
       m3 = grep("mu\\[", colnames(MCMC))
@@ -48,8 +47,11 @@ check_model_model_1 = function(
       mcmc_to_delete = c(m1, m2, m3)
       MCMC = MCMC[,-mcmc_to_delete] 
       attributes(MCMC)$model = "model1"
-    } else {   model1.data_env_whose_param_did_not_converge = NULL }
-  } else {   model1.data_env_whose_param_did_not_converge = NULL }
+    } else {   data_env_whose_param_did_not_converge = NULL }
+  } else {   data_env_whose_param_did_not_converge = NULL }
+  
+  data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
+  attributes(data_env_whose_param_did_not_converge)$PPBstats.object = "data_env_whose_param_did_not_converge"
   
   # 2. posteriors data frame for ggplot ----------
   
@@ -106,7 +108,7 @@ check_model_model_1 = function(
   out = list(
     "MCMC" = MCMC,
     "data_env_with_no_controls" = out.model$data_env_with_no_controls,
-    "data_env_whose_param_did_not_converge" = model1.data_env_whose_param_did_not_converge,
+    "data_env_whose_param_did_not_converge" = data_env_whose_param_did_not_converge,
     "data_ggplot" = list(
       "sigma_j" = data_ggplot_model_1_sigma_j,
       "mu_ij" = data_ggplot_model_1_mu_ij,
