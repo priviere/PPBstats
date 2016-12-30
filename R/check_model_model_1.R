@@ -34,6 +34,8 @@ check_model_model_1 = function(
     env_not_ok = unique(c(env_not_ok_mu, env_not_ok_beta, env_not_ok_sigma))
     if( length(env_not_ok) > 0 ) {
       data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
+      data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
+      data_env_whose_param_did_not_converge$parameter = paste("mu", data_env_whose_param_did_not_converge$parameter, sep = "")
 
     # Update MCMC, delete all environments where at least one parameter do not converge
       message("MCMC are updated, the following environment were deleted : ", paste(env_not_ok, collapse = ", "))
@@ -50,8 +52,6 @@ check_model_model_1 = function(
     } else {   data_env_whose_param_did_not_converge = NULL }
   } else {   data_env_whose_param_did_not_converge = NULL }
   
-  data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
-  data_env_whose_param_did_not_converge$parameter = paste("mu", data_env_whose_param_did_not_converge$parameter, sep = "")
   attributes(data_env_whose_param_did_not_converge)$PPBstats.object = "data_env_whose_param_did_not_converge"
   
   # 2. posteriors data frame for ggplot ----------
@@ -107,8 +107,10 @@ check_model_model_1 = function(
 
   # 3. Return results ----------
   data_env_with_no_controls = out.model$data_env_with_no_controls
-  data_env_with_no_controls$parameter = paste("mu", data_env_with_no_controls$parameter, sep = "")
-  data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
+  if( !is.null(data_env_with_no_controls) ){
+    data_env_with_no_controls$parameter = paste("mu", data_env_with_no_controls$parameter, sep = "")
+    data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
+  }
   attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls"
   
   out = list(
