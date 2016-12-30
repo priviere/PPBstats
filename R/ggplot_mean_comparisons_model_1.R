@@ -6,7 +6,7 @@ ggplot_mean_comparisons_model_1 = function(
   ){
   
   # 1. Error message
-  if( attributes(mean_comparisons_model_1)$PPBstats.object != "mean_comparisons_model_1" ) { stop("data must come from mean_comparisons and model_1") }
+  if( attributes(out_mean_comparisons_model_1)$PPBstats.object != "mean_comparisons_model_1" ) { stop("data must come from mean_comparisons and model_1") }
   
   all_data = list(
     "data_mean_comparisons" = out_mean_comparisons_model_1$data_mean_comparisons,
@@ -32,8 +32,6 @@ ggplot_mean_comparisons_model_1 = function(
         
         fun = function(x, data_version, nb_parameters_per_plot){
           x = x$mean.comparisons
-          test = grep("mu", x$parameter)
-          if( length(test) == 0 ) { x$parameter = paste("mu", x$parameter, sep = "") } # i.e. "data_env_with_no_controls.model1" | "model1.data_env_whose_param_did_not_converge")
           p_to_get = filter(data_version, environment == x$environment[1])$mu
           x = filter(x, parameter %in% p_to_get)
           x$max = max(x$median, na.rm = TRUE)
@@ -145,7 +143,8 @@ ggplot_mean_comparisons_model_1 = function(
         
         OUT = lapply(d_env_b, fun1, data)
         names(OUT) = names(d_env_b)
-      } else {
+      
+        } else {
         
         d_env_b = lapply(data, function(x){
           x = arrange(x, median)
@@ -186,6 +185,8 @@ ggplot_mean_comparisons_model_1 = function(
   
   
   if(ggplot.type == "score") {  
+    
+    data = data_mean_comparisons
     
     get.loc.year = function(data, nb_parameters_per_plot){
       
