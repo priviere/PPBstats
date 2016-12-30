@@ -369,26 +369,6 @@ get.ggplot = function(
   }
   
   
-    if(attributes(data)$PPBstats.object == "mean.comparisons.model2" & ggplot.type == "barplot") {  
-    data = arrange(data, median)  
-    data$max = max(data$median, na.rm = TRUE)
-    data$split = add_split_col(data, nb_parameters_per_plot)
-    data_split = plyr:::splitter_d(data, .(split))  
-    
-    para.name = unlist(strsplit(as.character(data[1, "parameter"]), "\\["))[1]
-    
-    OUT = lapply(data_split, function(dx){
-      p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
-      p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
-      p = p + ggtitle(paste(para.name, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
-      p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, data[1,"max"]) + ylab("")
-      return(p)
-    })
-    
-    OUT = list(OUT)
-    names(OUT) = para.name
-  }
-  
   
   # 2.2. interaction ----------
   if(ggplot.type == "interaction") {
