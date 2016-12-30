@@ -352,7 +352,7 @@ MC = function(
     "DIC"= DIC
   )
   
-  attributes(OUT)$PPBstats.object = "model1"
+  attributes(OUT)$PPBstats.object = "model_1"
   return(OUT)
 }
 
