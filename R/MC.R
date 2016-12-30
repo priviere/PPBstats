@@ -125,6 +125,11 @@ MC = function(
   vec_env_with_no_controls = out$vec_env_with_no_controls
   data_env_with_no_controls = droplevels(filter(DD, environment %in% vec_env_with_no_controls))
   data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
+  data_env_with_no_controls$location = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
+  data_env_with_no_controls$year = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
+  data_env_with_no_controls = data_env_with_no_controls[,-which(colnames(data_env_with_no_controls) == "ID")]
+  
+  
   attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls.model1"
   
   vec_env_with_controls = out$vec_env_with_controls
