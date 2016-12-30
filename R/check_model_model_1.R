@@ -105,9 +105,13 @@ check_model_model_1 = function(
   
 
   # 3. Return results ----------
+  data_env_with_no_controls = out.model$data_env_with_no_controls
+  data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
+  attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls"
+  
   out = list(
     "MCMC" = MCMC,
-    "data_env_with_no_controls" = out.model$data_env_with_no_controls,
+    "data_env_with_no_controls" = data_env_with_no_controls,
     "data_env_whose_param_did_not_converge" = data_env_whose_param_did_not_converge,
     "data_ggplot" = list(
       "sigma_j" = data_ggplot_model_1_sigma_j,
