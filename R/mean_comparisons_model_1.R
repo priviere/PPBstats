@@ -43,17 +43,22 @@ mean_comparisons_model_1 = function(
   # 3. Format data_env_with_no_controls and data_env_whose_param_did_not_converge
   fun_format_data = function(x){
     vec_env = unique(x$environment)
-    out = lapply(vec_env, function(env, x){ filter(x, environment == env) })
+    out = lapply(vec_env, function(env, x){ filter(x, environment == env) }, x)
+    names(out) = vec_env
     return(out)
   }
   
   if( length(out_check_model_1$data_env_with_no_controls) > 0 ) { 
-    data_env_with_no_controls = fun_format_data(out_check_model_1$data_env_with_no_controls) 
+    data_env_with_no_controls = fun_format_data(out_check_model_1$data_env_with_no_controls)
+  } else { 
+    data_env_with_no_controls = out_check_model_1$data_env_with_no_controls
     }
   
   if( length(out_check_model_1$data_env_whose_param_did_not_converge) > 0 ) { 
     data_env_whose_param_did_not_converge = fun_format_data(out_check_model_1$data_env_whose_param_did_not_converge) 
-    }
+  } else { 
+      data_env_whose_param_did_not_converge = out_check_model_1$data_env_whose_param_did_not_converge 
+      }
   
   # 4. Return results
   out = list(
