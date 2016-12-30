@@ -1,5 +1,5 @@
 ggplot_mean_comparisons_model_2 = function(
-  mean_comparisons_model_2,
+  out_mean_comparisons_model_2,
   nb_parameters_per_plot = 10
 ){
   
