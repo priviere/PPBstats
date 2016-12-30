@@ -50,12 +50,14 @@ mean_comparisons_model_1 = function(
   
   if( length(out_check_model_1$data_env_with_no_controls) > 0 ) { 
     data_env_with_no_controls = fun_format_data(out_check_model_1$data_env_with_no_controls)
+    attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls"
   } else { 
     data_env_with_no_controls = out_check_model_1$data_env_with_no_controls
     }
   
   if( length(out_check_model_1$data_env_whose_param_did_not_converge) > 0 ) { 
     data_env_whose_param_did_not_converge = fun_format_data(out_check_model_1$data_env_whose_param_did_not_converge) 
+    attributes(data_env_whose_param_did_not_converge)$PPBstats.object = "data_env_whose_param_did_not_converge"
   } else { 
       data_env_whose_param_did_not_converge = out_check_model_1$data_env_whose_param_did_not_converge 
       }
