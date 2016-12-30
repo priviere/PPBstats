@@ -105,6 +105,7 @@ check_model_model_1 = function(
   # 3. Return results ----------
   out = list(
     "MCMC" = MCMC,
+    "data_env_with_no_controls" = out.model$data_env_with_no_controls,
     "data_env_whose_param_did_not_converge" = model1.data_env_whose_param_did_not_converge,
     "data_ggplot" = list(
       "sigma_j" = data_ggplot_model_1_sigma_j,
