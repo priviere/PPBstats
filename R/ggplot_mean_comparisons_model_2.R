@@ -56,18 +56,11 @@ ggplot_mean_comparisons_model_2 = function(
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)
     
-    if(is.null(nb_parameters_per_plot)){nb_parameters_per_plot = nrow(ab)}
-    if(nb_parameters_per_plot > nrow(ab)){nb_parameters_per_plot = nrow(ab)}
-    if(nb_parameters_per_plot < nrow(ab)){
-      ab$split = rep(c(1:ceiling(nrow(ab)/nb_parameters_per_plot)), floor(nrow(ab)/(ceiling(nrow(ab)/nb_parameters_per_plot))))[1:nrow(ab)]
-    }else{
-      ab$split = rep(1,nrow(ab))
-    }
-    
-    xlim = c(floor(min(ab$alpha_i)),ceiling(max(ab$alpha_i)))
-    ylim = c(min(ab$beta_i),max(ab$beta_i))
-    
+    ab$split = add_split_col(ab, nb_parameters_per_plot)
     d_ab = plyr:::splitter_d(ab, .(split))
+    
+    xlim = range(ab$alpha_i)
+    ylim = range(ab$beta_i)
     
     out = lapply(d_ab,function(y){
       p = ggplot(y, aes(x = alpha_i, y = beta_i, label = germplasm)) + coord_cartesian(xlim = xlim, ylim = ylim, expand = FALSE)
