@@ -47,15 +47,19 @@ mean_comparisons_model_1 = function(
     return(out)
   }
   
-  if( length(data_env_with_no_controls) > 0 ) { data_env_with_no_controls = fun_format_data(data_env_with_no_controls) }
+  if( length(out_check_model_1$data_env_with_no_controls) > 0 ) { 
+    data_env_with_no_controls = fun_format_data(out_check_model_1$data_env_with_no_controls) 
+    }
   
-  if( length(data_env_whose_param_did_not_converge) > 0 ) { data_env_whose_param_did_not_converge = fun_format_data(data_env_whose_param_did_not_converge) }
+  if( length(out_check_model_1$data_env_whose_param_did_not_converge) > 0 ) { 
+    data_env_whose_param_did_not_converge = fun_format_data(out_check_model_1$data_env_whose_param_did_not_converge) 
+    }
   
   # 4. Return results
   out = list(
     "data_mean_comparisons" = data_mean_comparisons,
-    "data_env_with_no_controls" = out_check_model_1$data_env_with_no_controls,
-    "data_env_whose_param_did_not_converge" = out_check_model_1$data_env_whose_param_did_not_converge
+    "data_env_with_no_controls" = data_env_with_no_controls,
+    "data_env_whose_param_did_not_converge" = data_env_whose_param_did_not_converge
   )
 
   attributes(out)$PPBstats.object = "mean_comparisons_model_1"
