@@ -51,9 +51,6 @@ ggplot_mean_comparisons_model_1 = function(
   if( ggplot.type == "barplot") {
   
     if(!is.null(data_version)) {
-      
-      # data_version$group = factor(rep(unlist(tapply(data_version$germplasm, data_version$group, function(x){paste(as.character(x), collapse = " | ")})), each = 2))
-      
       data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
       data_version$mu = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
       vec_env = unique(data_version$environment)
@@ -81,7 +78,7 @@ ggplot_mean_comparisons_model_1 = function(
       
       OUT = lapply(d_env_b, function(x){
         out = lapply(x, function(dx){
-          if(attributes(data)$PPBstats.object == "mean.comparisons.model1") { # Add letters of significant groups
+          if(attributes(data)$PPBstats.object == "data_mean_comparisons") { # Add letters of significant groups
             
             env = dx$environment[1]
             data_Mpvalue_env = data_Mpvalue[[env]]
@@ -112,7 +109,7 @@ ggplot_mean_comparisons_model_1 = function(
             colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
             d = join(data_version_tmp, dx, by = "mu")
             
-            # delete version where there are v1 AND v2
+            # delete version where there are not v1 AND v2
             group_to_keep = NULL
             vec_group = unique(d$group)
             
@@ -133,8 +130,9 @@ ggplot_mean_comparisons_model_1 = function(
             p = p + xlab("") + theme(axis.text.x = element_text(angle = 90))
           }
           
-          if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
-             attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") {
+          
+          if(attributes(data)$PPBstats.object == "data_env_with_no_controls" |
+             attributes(data)$PPBstats.object == "data_env_whose_param_did_not_converge") {
             
             env = dx$environment[1]
             data_version_tmp = droplevels(filter(data_version, environment == env))
@@ -194,18 +192,14 @@ ggplot_mean_comparisons_model_1 = function(
         out = lapply(x, function(dx){
           p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
           
-          if(attributes(data)$PPBstats.object == "mean.comparisons.model1") { # Add letters of significant groups
+          if(attributes(data)$PPBstats.object == "data_mean_comparisons") { # Add letters of significant groups
             p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
             p = p + ggtitle(paste(dx[1, "environment"], "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"])) + ylab("")
           }
           
-          if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
-             attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") {
+          if(attributes(data)$PPBstats.object == "data_env_with_no_controls" |
+             attributes(data)$PPBstats.object == "data_env_whose_param_did_not_converge") {
             p = p + ggtitle(dx[1, "environment"]) + ylab("")
-          }
-          
-          if(attributes(data)$PPBstats.object == "predict.the.past") {
-            p = p + ggtitle(dx[1, "environment"]) + ylab("predicted value")
           }
           
           p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, dx[1,"max"])
@@ -219,11 +213,7 @@ ggplot_mean_comparisons_model_1 = function(
     
   }
   
-  
-  
-    
   }
-  
   
   
   if(ggplot.type == "score") {  
