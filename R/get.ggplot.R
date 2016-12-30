@@ -69,12 +69,17 @@ get.ggplot = function(
 )
   # let's go !!! ----------
 {
-  if( attributes(data)$PPBstats.object == "check_model_model_1" ) { ggplot_check_model_model_1(data, nb_parameters_per_plot = nb_parameters_per_plot) }
+  if( attributes(data)$PPBstats.object == "check_model_model_1" ) { ggplot_check_model_model_1(data, nb_parameters_per_plot) }
 
-  if( attributes(data)$PPBstats.object == "check_model_model_2" ) { ggplot_check_model_model_2(data, nb_parameters_per_plot = nb_parameters_per_plot) }
+  if( attributes(data)$PPBstats.object == "check_model_model_2" ) { ggplot_check_model_model_2(data, nb_parameters_per_plot) }
   
-  if( attributes(data)$PPBstats.object == "check_model_GxE" ) { ggplot_check_model_GxE(data, nb_parameters_per_plot = nb_parameters_per_plot) }
+  if( attributes(data)$PPBstats.object == "check_model_GxE" ) { ggplot_check_model_GxE(data, nb_parameters_per_plot) }
   
+  if( attributes(data)$PPBstats.object == "mean_comparisons_model_GxE" ) { ggplot_mean_comparisons_model_GxE(data, nb_parameters_per_plot) }
+  
+  if( attributes(data)$PPBstats.object == "mean_comparisons_model_model_1" ) { ggplot_mean_comparisons_model_model_1(data, data_version, ggplot.type, nb_parameters_per_plot) }
+  
+  if( attributes(data)$PPBstats.object == "mean_comparisons_model_model_2" ) { ggplot_mean_comparisons_model_model_2(data, ggplot.type, nb_parameters_per_plot) }
   
   
   
