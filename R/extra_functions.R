@@ -74,6 +74,7 @@ get_perpendicular_segment = function(x1, y1, x2, y2, x3, y3, longer = FALSE){
   return(c(x1 = x3, y1 = y3, x2 = x4, y2 = y4))
 }
 
+
 # Function use in check_model_model_1.R, check_model_model_2.R ----------
 check_analysis_argument = function(analysis){
   if(!is.null(analysis)) { 
@@ -82,8 +83,6 @@ check_analysis_argument = function(analysis){
   } else { analysis = "all" }
   return(analysis)
 }
-
-add_split_col = function(x, each){ rep(c(1:nrow(x)), each = each)[1:nrow(x)] } 
 
 check_convergence = function(out.model, model_name = "model1"){
   MCMC = out.model$MCMC
@@ -163,7 +162,7 @@ get_mean_comparisons_and_Mpvalue = function(MCMC, parameter, type, threshold, al
       ALPHA = get.at.least.X.groups(Mpvalue, MCMC, p.adj = p.adj, precision = precision)  
       alp = ALPHA[paste(get.at.least.X.groups, "_groups", sep = "")]  
       if(is.numeric(alp)){ alp = round(alp, 3) }
-      message(paste("Get at least X groups for ", sub("\\\\\\[", "", env),"is done."))
+      message(paste("Get at least X groups for", sub("\\\\\\[", "", env),"is done."))
     } else { alp = alpha }
     
     TAB = cbind.data.frame("parameter" = Comparison$parameter,
@@ -188,6 +187,8 @@ get_mean_comparisons_and_Mpvalue = function(MCMC, parameter, type, threshold, al
   return(out)
 }
 
+# Function use in check_model_model_1.R, check_model_model_2.R,  ----------
+add_split_col = function(x, each){ rep(c(1:nrow(x)), each = each)[1:nrow(x)] } 
 
 
 
