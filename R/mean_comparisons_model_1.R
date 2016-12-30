@@ -40,7 +40,18 @@ mean_comparisons_model_1 = function(
   
   attributes(data_mean_comparisons)$PPBstats.object = "data_mean_comparisons"
   
-  # return results
+  # 3. Format data_env_with_no_controls and data_env_whose_param_did_not_converge
+  fun_format_data = function(x){
+    vec_env = unique(x$environment)
+    out = lapply(vec_env, function(env, x){ filter(x, environment == env) })
+    return(out)
+  }
+  
+  if( length(data_env_with_no_controls) > 0 ) { data_env_with_no_controls = fun_format_data(data_env_with_no_controls) }
+  
+  if( length(data_env_whose_param_did_not_converge) > 0 ) { data_env_whose_param_did_not_converge = fun_format_data(data_env_whose_param_did_not_converge) }
+  
+  # 4. Return results
   out = list(
     "data_mean_comparisons" = data_mean_comparisons,
     "data_env_with_no_controls" = out_check_model_1$data_env_with_no_controls,
