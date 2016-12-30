@@ -212,14 +212,13 @@ ggplot_mean_comparisons_model_1 = function(
   }
   
   
-  if(ggplot.type == "score") {  
+  
+  get.loc.year = function(data, nb_parameters_per_plot){
     
-    data = all_data$data_mean_comparisons
-    dtmp = data.frame()
-    for(i in 1:length(data)){ dtmp = rbind.data.frame(dtmp, data[[i]]$mean.comparisons) }
-    data = dtmp
-    
-    get.loc.year = function(data, nb_parameters_per_plot){
+    if( length(data) > 0 ) {
+      dtmp = data.frame()
+      for(i in 1:length(data)){ dtmp = rbind.data.frame(dtmp, data[[i]]$mean.comparisons) }
+      data = dtmp
       
       d_loc = plyr:::splitter_d(data, .(location))
       
@@ -231,15 +230,18 @@ ggplot_mean_comparisons_model_1 = function(
         x_split = plyr:::splitter_d(x, .(split))
         return(x_split)
       } )
-      
-      return(d_loc_b)
-    }
+    } else { d_loc_b = NULL }
     
+    return(d_loc_b)
+  }
+  
+  
+  if(ggplot.type == "score") {  
     
-    d_loc_out = get.loc.year(data, nb_parameters_per_plot)
+    d_loc_out = get.loc.year(all_data$data_mean_comparisons, nb_parameters_per_plot)
     
-    
-    out = lapply(d_loc_out, function(x){
+    if( !is.null(d_loc_out) ) {
+      out = lapply(d_loc_out, function(x){
         lapply(x, function(env){
           # assign a number according to the group
           vec_letters = sort(unique(unlist(sapply(as.character(env[,"groups"]), function(x){unlist(strsplit(x, ""))}))), decreasing = TRUE)
@@ -265,170 +267,172 @@ ggplot_mean_comparisons_model_1 = function(
           return(p)
         })
       })
+      names(out) = names(d_loc_out)
+    } else { out = NULL }
     
-    names(out) = names(d_loc_out)
   }
   
   
   # 2.2. interaction ----------
   if(ggplot.type == "interaction") {
-    
-    d_loc_out = get.loc.year(data, nb_parameters_per_plot)
-    
-    OUT = lapply(d_loc_out, function(x){
-      out = lapply(x, function(x_loc) {
-        # Same scale for all the plots
-        ymin = min(x_loc$median, na.rm = TRUE)
-        ymax = max(x_loc$median, na.rm = TRUE)  
-        
-        if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ){
-          alpha.info = paste(x_loc$alpha, "|", x_loc$alpha.correction)
-          x_loc$alpha.info_year = as.factor(paste(x_loc$year, alpha.info, sep = " - "))      
-        }
-        
-        if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
-            attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
-            attributes(data)$PPBstats.object == "predict.the.past"
-        ) {
-          x_loc$alpha.info_year = x_loc$year
-        }
-        
-        p = ggplot(x_loc, aes(y = median, x = alpha.info_year, colour = entry, group = entry))
-        p = p + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line") + ggtitle(x_loc[1, "location"])
-        p = p + xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.title = element_blank())
-        
-        if( attributes(data)$PPBstats.object == "predict.the.past" ) {
-          p = p + ggtitle(x_loc[1, "environment"]) + ylab("predicted value")      
-        }
-        
-        x_loc_year = plyr:::splitter_d(x_loc, .(year))    
-        
-        # Put lines for significant groups
-        if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ){
-          SEG = NULL
-          
-          letters = c(letters, paste(rep(LETTERS, times = 15), rep(c(1:5), each = 15), sep = ""))
-          gp_letters = letters[1:max(x_loc$nb_group)]
-          xadjust = seq(0.05, 0.9, length = 25) # it is assumed max 25 letters (i.e. groups)
-          xadjust = xadjust[c(1:length(gp_letters))]
-          names(xadjust) = gp_letters
-          
-          for(i in 1:length(x_loc_year)) {
-            subx = droplevels(x_loc_year[[i]])
+
+    fun_interaction = function(data, nb_parameters_per_plot){
+      
+      d_loc_out = get.loc.year(data, nb_parameters_per_plot)
+      
+      if( !is.null(d_loc_out) ) {
+        out = lapply(d_loc_out, function(x){
+          lapply(x, function(x_loc) {
+            # Same scale for all the plots
+            ymin = min(x_loc$median, na.rm = TRUE)
+            ymax = max(x_loc$median, na.rm = TRUE)  
             
-            # get rid of non sens information
-            # This is useful if a germplasm is in group 'a' and 'b' alone. This is possible because other germplasm in groups 'a' and 'b' are in another year
-            subx = arrange(subx, median) # To get the letter in the right order
-            groups = as.character(subx$groups)
+            if( attributes(data)$PPBstats.object == "data_mean_comparisons" ){
+              alpha.info = paste(x_loc$alpha, "|", x_loc$alpha.correction)
+              x_loc$alpha.info_year = as.factor(paste(x_loc$year, alpha.info, sep = " - "))      
+            }
             
-            a = lapply(groups, function(x) { unlist(strsplit(x, "")) } )
-            row = unique(unlist(a))
-            m = matrix(0, ncol = length(groups), nrow = length(row))
-            rownames(m) = row
-            for(jj in 1:length(a)) { m[a[[jj]], jj] = 1 }
-            m = unique(m)
-            if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
+            if( attributes(data)$PPBstats.object == "data_env_with_no_controls" | 
+                attributes(data)$PPBstats.object == "data_env_whose_param_did_not_converge"
+            ) {
+              x_loc$alpha.info_year = x_loc$year
+            }
             
-            if( nrow(m) > 1) {
-              todelete = NULL
-              for(jj in 1:ncol(m)) {
-                toget = which(m[,jj] == 1)
-                if( length(toget) >  1 ) {    
-                  for(ii in toget) {
-                    if( sum(m[ii,]) == 1 ) { todelete = c(todelete, ii) }
-                  } 
-                } 
+            p = ggplot(x_loc, aes(y = median, x = alpha.info_year, colour = entry, group = entry))
+            p = p + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line") + ggtitle(x_loc[1, "location"])
+            p = p + xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.title = element_blank())
+            
+            x_loc_year = plyr:::splitter_d(x_loc, .(year))    
+            
+            # Put lines for significant groups
+            if( attributes(data)$PPBstats.object == "data_mean_comparisons" ){
+              SEG = NULL
+              
+              letters = c(letters, paste(rep(LETTERS, times = 15), rep(c(1:5), each = 15), sep = ""))
+              gp_letters = letters[1:max(x_loc$nb_group)]
+              xadjust = seq(0.05, 0.9, length = 25) # it is assumed max 25 letters (i.e. groups)
+              xadjust = xadjust[c(1:length(gp_letters))]
+              names(xadjust) = gp_letters
+              
+              for(i in 1:length(x_loc_year)) {
+                subx = droplevels(x_loc_year[[i]])
+                
+                # get rid of non sens information
+                # This is useful if a germplasm is in group 'a' and 'b' alone. This is possible because other germplasm in groups 'a' and 'b' are in another year
+                subx = arrange(subx, median) # To get the letter in the right order
+                groups = as.character(subx$groups)
+                
+                a = lapply(groups, function(x) { unlist(strsplit(x, "")) } )
+                row = unique(unlist(a))
+                m = matrix(0, ncol = length(groups), nrow = length(row))
+                rownames(m) = row
+                for(jj in 1:length(a)) { m[a[[jj]], jj] = 1 }
+                m = unique(m)
+                if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
+                
+                if( nrow(m) > 1) {
+                  todelete = NULL
+                  for(jj in 1:ncol(m)) {
+                    toget = which(m[,jj] == 1)
+                    if( length(toget) >  1 ) {    
+                      for(ii in toget) {
+                        if( sum(m[ii,]) == 1 ) { todelete = c(todelete, ii) }
+                      } 
+                    } 
+                  }
+                  
+                  if (!is.null(todelete)) { m = m[-todelete,] }
+                  if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
+                }
+                
+                
+                # Following code to discard redondant informations
+                # For example
+                # 1 1 0 0
+                # 0 1 1 1
+                # 0 1 1 0
+                # will give
+                # 1 1 0 0
+                # 0 1 1 1
+                # indeed, the last row brings no informations
+                
+                if( nrow(m) > 1) {
+                  todelete = NULL
+                  for(ii in 1:(nrow(m)-1) ) { 
+                    w1 = which( m[ii,] == 1 )
+                    w2 = which( m[ii+1,] == 1 )
+                    t = which(is.element(w1, w1[is.element(w1, w2)]))
+                    test = length(w2) == length(t)
+                    
+                    if( test ) { todelete = c(todelete, ii+1)}
+                  }
+                  if( !is.null(todelete) ) { m = m[-todelete,] }
+                  if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
+                }
+                
+                
+                # Initialize the letters
+                if( nrow(m) > 1) {
+                  for(ii in 1:nrow(m)) { m[ii, which(m[ii,] == 1)] = letters[ii]; m[ii, which(m[ii,] == 0)] = ""  }
+                } else { m[1, which(m[1,] == 1)] = letters[1]  }
+                
+                groups = apply(m, 2, function(x){paste(x, collapse="")})
+                
+                subx$groups = factor(groups)
+                
+                for(l in gp_letters) {
+                  togrep = grep(l, subx[,"groups"])
+                  
+                  if(length(togrep) > 0) {
+                    # check if it is continuous
+                    vec.togrep = NULL
+                    
+                    a = togrep
+                    if( length(a) > 1 ){ 
+                      test = a[1:(length(a)-1)] + 1 == a[2:length(a)]
+                      t = c(FALSE, test)
+                      t[which(t)] = 1; t[which(!t)] = 0
+                      b = paste("0",unlist(strsplit(paste(as.character(t[2:length(t)]),collapse=""),"0")),sep="")
+                      if(t[length(t)] == 0) { b = c(b, 0) }
+                      c = c(0, cumsum(sapply(b, function(x){nchar(x)})))
+                      for(k in 1:(length(c)-1)) { vec.togrep = c(vec.togrep, (a[(c[k]+1):c[k+1]])) }
+                    } else { vec.togrep = c(vec.togrep, togrep) }
+                    
+                    toto = subx[vec.togrep, "median"]
+                    
+                    y.seg = range(toto)
+                    x.seg = i + xadjust[l]
+                    alpha.info = paste(as.character(subx[1, "alpha"]),"|", as.character(subx[1, "alpha.correction"]))
+                    seg = cbind.data.frame(ymin = y.seg[1], ymax = y.seg[2], x = x.seg, groups = paste("group", l), alpha.info, year = names(x_loc_year)[i])
+                    SEG = rbind.data.frame(SEG, seg)
+                  }
+                }
               }
               
-              if (!is.null(todelete)) { m = m[-todelete,] }
-              if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
-            }
-            
-            
-            # Following code to discard redondant informations
-            # For example
-            # 1 1 0 0
-            # 0 1 1 1
-            # 0 1 1 0
-            # will give
-            # 1 1 0 0
-            # 0 1 1 1
-            # indeed, the last row brings no informations
-            
-            if( nrow(m) > 1) {
-              todelete = NULL
-              for(ii in 1:(nrow(m)-1) ) { 
-                w1 = which( m[ii,] == 1 )
-                w2 = which( m[ii+1,] == 1 )
-                t = which(is.element(w1, w1[is.element(w1, w2)]))
-                test = length(w2) == length(t)
-                
-                if( test ) { todelete = c(todelete, ii+1)}
+              # For germplasm alone in one group, change ymax in order to see it
+              for(i in 1:nrow(SEG)){
+                if( SEG$ymin[i] == SEG$ymax[i] ) { SEG$ymax[i] = SEG$ymax[i] + min(SEG$ymax)/30 }
               }
-              if( !is.null(todelete) ) { m = m[-todelete,] }
-              if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
-            }
-            
-            
-            # Initialize the letters
-            if( nrow(m) > 1) {
-              for(ii in 1:nrow(m)) { m[ii, which(m[ii,] == 1)] = letters[ii]; m[ii, which(m[ii,] == 0)] = ""  }
-            } else { m[1, which(m[1,] == 1)] = letters[1]  }
-            
-            groups = apply(m, 2, function(x){paste(x, collapse="")})
-            
-            subx$groups = factor(groups)
-            
-            for(l in gp_letters) {
-              togrep = grep(l, subx[,"groups"])
               
-              if(length(togrep) > 0) {
-                # check if it is continuous
-                vec.togrep = NULL
-                
-                a = togrep
-                if( length(a) > 1 ){ 
-                  test = a[1:(length(a)-1)] + 1 == a[2:length(a)]
-                  t = c(FALSE, test)
-                  t[which(t)] = 1; t[which(!t)] = 0
-                  b = paste("0",unlist(strsplit(paste(as.character(t[2:length(t)]),collapse=""),"0")),sep="")
-                  if(t[length(t)] == 0) { b = c(b, 0) }
-                  c = c(0, cumsum(sapply(b, function(x){nchar(x)})))
-                  for(k in 1:(length(c)-1)) { vec.togrep = c(vec.togrep, (a[(c[k]+1):c[k+1]])) }
-                } else { vec.togrep = c(vec.togrep, togrep) }
-                
-                toto = subx[vec.togrep, "median"]
-                
-                y.seg = range(toto)
-                x.seg = i + xadjust[l]
-                alpha.info = paste(as.character(subx[1, "alpha"]),"|", as.character(subx[1, "alpha.correction"]))
-                seg = cbind.data.frame(ymin = y.seg[1], ymax = y.seg[2], x = x.seg, groups = paste("group", l), alpha.info, year = names(x_loc_year)[i])
-                SEG = rbind.data.frame(SEG, seg)
-              }
+              
+              if(!is.null(SEG)) {
+                p = p + geom_segment(aes(x = x, y = ymin, xend = x, yend = ymax, group = NULL), colour =  as.numeric(as.factor(SEG$groups)), data = SEG)
+                p = p + ylim(ymin - ymin/10, ymax + ymax/10) # To be sure to see the line of the groups
+              }      
             }
-          }
-          
-          # For germplasm alone in one group, change ymax in order to see it
-          for(i in 1:nrow(SEG)){
-            if( SEG$ymin[i] == SEG$ymax[i] ) { SEG$ymax[i] = SEG$ymax[i] + min(SEG$ymax)/30 }
-          }
-          
-          
-          if(!is.null(SEG)) {
-            p = p + geom_segment(aes(x = x, y = ymin, xend = x, yend = ymax, group = NULL), colour =  as.numeric(as.factor(SEG$groups)), data = SEG)
-            p = p + ylim(ymin - ymin/10, ymax + ymax/10) # To be sure to see the line of the groups
-          }      
-        }
-        
-        return(p)        
-      })
+            
+            return(p)        
+          })
+        } )
+        names(out) = names(d_loc_out)
+      } else { out = NULL }
+      
       return(out)
-    } )
+    }
     
-    names(OUT) = names(d_loc_out)
+    out = lapply(all_data, fun_interaction, nb_parameters_per_plot)
     
   }
-  
   
   # return results
   return(out)
