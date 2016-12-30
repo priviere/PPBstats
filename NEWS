@@ -15,8 +15,11 @@ Huge refactoring of the code in several functions for each steps of the analysis
   - check_model_GxE
   
   - mean_comparisons_GxE
+  - mean_comparisons_model_1
+  - mean_comparisons_model_2
   
   - parameter_groups_GxE
+  - parameter_groups_model_2
   
   - ggplot_biplot_GxE
   - ggplot_check_model_model_1
