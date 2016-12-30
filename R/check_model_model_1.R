@@ -51,6 +51,7 @@ check_model_model_1 = function(
   } else {   data_env_whose_param_did_not_converge = NULL }
   
   data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
+  data_env_whose_param_did_not_converge$parameter = paste("mu", data_env_whose_param_did_not_converge$parameter, sep = "")
   attributes(data_env_whose_param_did_not_converge)$PPBstats.object = "data_env_whose_param_did_not_converge"
   
   # 2. posteriors data frame for ggplot ----------
@@ -106,6 +107,7 @@ check_model_model_1 = function(
 
   # 3. Return results ----------
   data_env_with_no_controls = out.model$data_env_with_no_controls
+  data_env_with_no_controls$parameter = paste("mu", data_env_with_no_controls$parameter, sep = "")
   data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
   attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls"
   
