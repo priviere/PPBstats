@@ -75,6 +75,9 @@ get.ggplot = function(
   
   if( attributes(data)$PPBstats.object == "check_model_GxE" ) { ggplot_check_model_GxE(data, nb_parameters_per_plot = nb_parameters_per_plot) }
   
+  
+  
+  
   # 1. Error message and update arguments ----------
   if (is.null(attributes(data)$PPBstats.object)) { stop("data must come from functions get.parameter.groups, get.mean.comparisons, predict.the.past or analyse.outputs. See ?get.ggplot for more details.") }
   
@@ -109,7 +112,7 @@ get.ggplot = function(
     if(!is.element("group", colnames(data_version))) { stop(mess) }
     if(!is.element("version", colnames(data_version))) { stop(mess) }
     
-    # delete version where there are v1 AND v2
+    # delete version where there are not v1 AND v2
     vec_group = unique(data_version$group)
     for(gp in vec_group){
       d_tmp = droplevels(filter(data_version, group == gp))
@@ -117,13 +120,15 @@ get.ggplot = function(
     }
   }
   
-  if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ) {
-    data_Mpvalue = data$Mpvalue
-    data = data$mean.comparisons
-    attributes(data)$PPBstats.object = "mean.comparisons.model1"
 
-    test.mu.m1 = length(grep("mu\\[", data$parameter)) > 0
-    test.beta.m1 = length(grep("beta\\[", data$parameter)) > 0  
+# Following to cut and paste
+  if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ) {
+#    data_Mpvalue = data$Mpvalue
+#    data = data$mean.comparisons
+#    attributes(data)$PPBstats.object = "mean.comparisons.model1"
+#
+#    test.mu.m1 = length(grep("mu\\[", data$parameter)) > 0
+#    test.beta.m1 = length(grep("beta\\[", data$parameter)) > 0  
   } else { test.mu.m1 = test.beta.m1 = FALSE }
   
   if( attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
@@ -134,19 +139,16 @@ get.ggplot = function(
   }
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model2" ){
-    data_Mpvalue = data$Mpvalue
-    data = data$mean.comparisons
-    attributes(data)$PPBstats.object = "mean.comparisons.model2"
-
-    test.alpha.m2 = length(grep("alpha\\[", data$parameter)) > 0
-    test.beta.m2 = length(grep("beta\\[", data$parameter)) > 0
-    test.theta.m2 = length(grep("theta\\[", data$parameter)) > 0  
+    # data_Mpvalue = data$Mpvalue
+    # data = data$mean.comparisons
+    # attributes(data)$PPBstats.object = "mean.comparisons.model2"
+    # 
+    # test.alpha.m2 = length(grep("alpha\\[", data$parameter)) > 0
+    # test.beta.m2 = length(grep("beta\\[", data$parameter)) > 0
+    # test.theta.m2 = length(grep("theta\\[", data$parameter)) > 0  
   } else { test.alpha.m2 = test.beta.m2 = test.theta.m2 = FALSE}
   
   
-  if( (!test.mu.m1 & !test.beta.m1) & ggplot.type == "interaction") { stop("ggplot.type == \"interaction\" is possible only with output from model1 (MC).") }
-  
-  if( (!test.mu.m1 & !test.beta.m1) & ggplot.type == "score") { stop("ggplot.type == \"score\" is possible only with output from model1 (MC).") }
   
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
       attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
@@ -169,8 +171,6 @@ get.ggplot = function(
       data = plyr::rename(data, replace = c("50%" = "median"))
     }
   }
-  
-  add_split_col = function(x, each){ rep(c(1:nrow(x)), each = each)[1:nrow(x)] } 
   
   # 2. Display ggplots ----------
   
