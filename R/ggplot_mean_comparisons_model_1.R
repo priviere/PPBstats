@@ -1,5 +1,7 @@
 ggplot_mean_comparisons_model_1 = function(
   mean_comparisons_model_1,
+  data_version = NULL,
+  ggplot.type = "interaction",
   nb_parameters_per_plot = 10
   ){
   
@@ -11,10 +13,9 @@ ggplot_mean_comparisons_model_1 = function(
   data_env_whose_param_did_not_converge = mean_comparisons_model_1$data_env_whose_param_did_not_converge
   
   env = "env1-1:2010"
-  mean_comparisons_model_1 = m1
   
-  data_Mpvalue = mean_comparisons_model_1[[env]]$Mpvalue
-  d_env = data = mean_comparisons_model_1[[env]]$mean.comparisons
+  data_Mpvalue = data_mean_comparisons[[env]]$Mpvalue
+  d_env = data = data_mean_comparisons[[env]]$mean.comparisons
   
   test.mu.m1 = length(grep("mu\\[", data$parameter)) > 0
   test.beta.m1 = length(grep("beta\\[", data$parameter)) > 0
