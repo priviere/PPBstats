@@ -24,11 +24,13 @@ ggplot_mean_comparisons_model_1 = function(
         vec_env = unique(data_version$environment)
         vec_env_to_get = vec_env[is.element(vec_env, names(data))]
         vec_env_not_to_get = vec_env[!is.element(vec_env, names(data))]
-        if( length(vec_env_not_to_get) > 0 ){ warning("The following environments in data_version are not taken: ", paste(vec_env_not_to_get, collapse = ", "),".") }
+        if( length(vec_env_not_to_get) > 0 ){ 
+          warning(attributes(data)$PPBstats.object, ": the following environments in data_version are not taken: ", paste(vec_env_not_to_get, collapse = ", "),".") 
+          }
         
         if( length(vec_env_to_get) == 0 ) { 
           OUT = NULL
-          warning("There are no environment to display for ", attributes(data)$PPBstats.object) 
+          warning(attributes(data)$PPBstats.object, ": there are no environment to display") 
         } else {
           d_env = data[vec_env_to_get]
           
@@ -119,7 +121,7 @@ ggplot_mean_comparisons_model_1 = function(
                   pvalue = t.test(v1, v2)$p.value
                 } else { 
                   pvalue = NULL
-                  warning("No t.test are done as there are not enough observations.") 
+                  warning(attributes(data)$PPBstats.object, ": no t.test are done as there are not enough observations.") 
                   }
                 
                 if(is.null(pvalue)) { stars = " "} else {
