@@ -1,5 +1,6 @@
 ggplot_mean_comparisons_model_2 = function(
   out_mean_comparisons_model_2,
+  out_mean_comparisons_model_2_bis,
   ggplot.type,
   nb_parameters_per_plot = 10
 ){
@@ -42,7 +43,7 @@ ggplot_mean_comparisons_model_2 = function(
     colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
     colnames(a)[which(colnames(a) == "median")] = "alpha_i"
     
-    b = data_2$mean.comparisons
+    b = out_mean_comparisons_model_2_bis$mean.comparisons
     test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
     if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
     b$germplasm = gsub("beta", "", b$parameter)
