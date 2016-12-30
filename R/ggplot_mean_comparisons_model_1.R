@@ -18,11 +18,6 @@ ggplot_mean_comparisons_model_1 = function(
   data = data_mean_comparisons[[env]]
   para = unlist(strsplit(as.character(data$parameter)[1], "\\["))[1]
   
-  data$entry = sub(paste(para, "\\[", sep=""), "", sapply(data$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
-  data$environment =  sub("\\]", "", sapply(data$parameter, function(x){unlist(strsplit(as.character(x), ","))[2]}))
-  data$location = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
-  data$year = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
-  
   data_Mpvalue = data$Mpvalue
   d_env = data = data$mean.comparisons
   
