@@ -121,7 +121,14 @@ get.ggplot = function(
   }
   
 
+  
+  
+  
+  
 # Following to cut and paste
+  
+  
+  
   if( attributes(data)$PPBstats.object == "mean.comparisons.model1" ) {
 #    data_Mpvalue = data$Mpvalue
 #    data = data$mean.comparisons
@@ -149,46 +156,12 @@ get.ggplot = function(
   } else { test.alpha.m2 = test.beta.m2 = test.theta.m2 = FALSE}
   
   
-  
-  if( attributes(data)$PPBstats.object == "mean.comparisons.model1" | 
-      attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" |
-      attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge" |
-      attributes(data)$PPBstats.object == "predict.the.past"
-  ) {
-    
-    para = unlist(strsplit(as.character(data$parameter)[1], "\\["))[1]
-    
-    data$entry = sub(paste(para, "\\[", sep=""), "", sapply(data$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
-    data$environment =  sub("\\]", "", sapply(data$parameter, function(x){unlist(strsplit(as.character(x), ","))[2]}))
-    data$location = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
-    data$year = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
-    
-    if(attributes(data)$PPBstats.object == "data_env_with_no_controls.model1" | 
-       attributes(data)$PPBstats.object == "model1.data_env_whose_param_did_not_converge") { # To have the same format for next steps
-      data = plyr::rename(data, replace = c("variable" = "median"))
-    }
     if(attributes(data)$PPBstats.object == "predict.the.past") { # To have the same format for next steps
       data = plyr::rename(data, replace = c("50%" = "median"))
     }
-  }
   
   # 2. Display ggplots ----------
   
-  get.loc.year = function(data, nb_parameters_per_plot){
-    
-    d_loc = plyr:::splitter_d(data, .(location))
-    
-    d_loc_b = lapply(d_loc, function(x){
-      x = arrange(x, entry)
-      x$split = as.numeric(factor(x$entry))
-      seq_nb_para = unique(c(seq(1, max(x$split), nb_parameters_per_plot), max(x$split)*2))
-      for(i in 1:(length(seq_nb_para) - 1) ) { x$split[seq_nb_para[i] <= x$split & x$split < seq_nb_para[i+1]] = i }
-      x_split = plyr:::splitter_d(x, .(split))
-      return(x_split)
-    } )
-    
-    return(d_loc_b)
-  }
   
   # 2.1. barplot ----------
   
@@ -329,7 +302,8 @@ get.ggplot = function(
       })
         names(OUT) = names(d_env_b)
         
-    } else {
+    
+        } else {
 
       d_env_b = lapply(d_env, function(x){
         x = arrange(x, median)
@@ -529,7 +503,6 @@ get.ggplot = function(
     
   }
   
-  # 2.3. score ----------
   
   # 2.4. PCA ----------
   if(ggplot.type == "PCA"){  
