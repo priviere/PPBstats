@@ -6,11 +6,25 @@ ggplot_mean_comparisons_model_1 = function(
   # 1. Error message
   if( attributes(mean_comparisons_model_1)$PPBstats.object != "mean_comparisons_model_1" ) { stop("data must come from mean_comparisons and model_1") }
   
-  data_Mpvalue = mean_comparisons_model_1$Mpvalue
-  data = mean_comparisons_model_1$mean.comparisons
+  data_mean_comparisons = mean_comparisons_model_1$data_mean_comparisons
+  data_env_with_no_controls = mean_comparisons_model_1$data_env_with_no_controls
+  data_env_whose_param_did_not_converge = mean_comparisons_model_1$data_env_whose_param_did_not_converge
+  
+  env = "env1-1:2010"
+  mean_comparisons_model_1 = m1
+  
+  data_Mpvalue = mean_comparisons_model_1[[env]]$Mpvalue
+  d_env = data = mean_comparisons_model_1[[env]]$mean.comparisons
   
   test.mu.m1 = length(grep("mu\\[", data$parameter)) > 0
-  test.beta.m1 = length(grep("beta\\[", data$parameter)) > 0  
+  test.beta.m1 = length(grep("beta\\[", data$parameter)) > 0
+  
+  
+  if( ggplot.type == "barplot") {
+    
+    
+  }
+  
   
   
   if(ggplot.type == "score") {  
