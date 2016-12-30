@@ -39,6 +39,52 @@ ggplot_mean_comparisons_model_2 = function(
   }
   
   
+  # 2.5. biplot-alpha-beta ----------
+  if(ggplot.type == "biplot-alpha-beta"){
+    
+    a = data
+    
+    test_a = unlist(strsplit(as.character(a[1,"parameter"]), "\\["))[1]
+    if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
+    a$germplasm = gsub("alpha", "", a$parameter)
+    colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
+    colnames(a)[which(colnames(a) == "median")] = "alpha_i"
+    
+    b = data_2$mean.comparisons
+    test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
+    if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
+    b$germplasm = gsub("beta", "", b$parameter)
+    colnames(b)[which(colnames(b) == "parameter")] = "parameter_b"
+    colnames(b)[which(colnames(b) == "median")] = "beta_i"
+    
+    
+    ab = join(a, b, "germplasm")
+    ab=ab[which(!is.na(ab$sensibilite) & !is.na(ab$alpha_i)),]
+    ab$germplasm = gsub("\\[", "", ab$germplasm)
+    ab$germplasm = gsub("\\]", "", ab$germplasm)
+    
+    if(is.null(nb_parameters_per_plot)){nb_parameters_per_plot = nrow(ab)}
+    if(nb_parameters_per_plot > nrow(ab)){nb_parameters_per_plot = nrow(ab)}
+    if(nb_parameters_per_plot < nrow(ab)){
+      ab$split = rep(c(1:ceiling(nrow(ab)/nb_parameters_per_plot)), floor(nrow(ab)/(ceiling(nrow(ab)/nb_parameters_per_plot))))[1:nrow(ab)]
+    }else{
+      ab$split = rep(1,nrow(ab))
+    }
+    
+    xlim = c(floor(min(ab$effet_genetique)),ceiling(max(ab$alpha_i)))
+    ylim = c(min(ab$sensibilite),max(ab$beta_i))
+    
+    d_ab = plyr:::splitter_d(ab, .(split))
+    
+    p = lapply(d_ab,function(y){
+      p = ggplot(y, aes(x = effet_genetique, y = sensibilite, label = germplasm)) + coord_cartesian(xlim = xlim, ylim = ylim, expand = FALSE)
+      p = p + geom_text() + geom_hline(yintercept = 0)
+    })
+    OUT = list("biplot-alpha-beta" = p)
+  }
+  
+  
+  
   # return results
   out = list(
     
