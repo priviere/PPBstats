@@ -13,7 +13,7 @@ mean_comparisons_model_2 = function(
   
   # 2. Get square matrice with pvalue or vector with pvalue ----------
   MCMC_par = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
-    MCMC_par = MCMC[,grep(parameter, colnames(MCMC))]
+    MCMC_par = MCMC[,grep(paste("^", parameter, "\\[", sep = ""), colnames(MCMC))]
     out = get_mean_comparisons_and_Mpvalue(MCMC_par, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) 
     return(out)
   }
