@@ -23,11 +23,17 @@ mean_comparisons_model_1 = function(
     return(out)
   }
   
-  if(parameter == "mu") { out = MCMC_par(out_check_model_1$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
+  if(parameter == "mu") { mean_comparisons = MCMC_par(out_check_model_1$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
   
-  if(parameter == "beta") { out = MCMC_par(out_check_model_1$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
+  if(parameter == "beta") { mean_comparisons = MCMC_par(out_check_model_1$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
   
   # return results
+  out = list(
+    "data_mean_comparisons" = mean_comparisons,
+    "data_env_with_no_controls" = out_check_model_1$data_env_with_no_controls,
+    "data_env_whose_param_did_not_converge" = out_check_model_1$data_env_whose_param_did_not_converge
+  )
+
   attributes(out)$PPBstats.object = "mean_comparisons_model_1"
   
   return(out)
