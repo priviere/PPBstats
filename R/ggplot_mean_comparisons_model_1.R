@@ -44,8 +44,8 @@ ggplot_mean_comparisons_model_1 = function(
         d_env_b = lapply(d_env, fun, data_version, nb_parameters_per_plot)
         
         fun_barplot_version = function(dx, data){
-          if(attributes(data)$PPBstats.object == "data_mean_comparisons") { # Add letters of significant groups
-            
+          if(attributes(data)$PPBstats.object == "data_mean_comparisons") { 
+            # Add letters of significant groups
             env = dx$environment[1]
             data_Mpvalue_env = data[[env]]$Mpvalue
             data_version_tmp = droplevels(filter(data_version, environment == env))
@@ -87,6 +87,8 @@ ggplot_mean_comparisons_model_1 = function(
             
             d = droplevels(d[d$group %in% group_to_keep,])
             STARS = STARS[is.element(names(STARS), group_to_keep)]
+            t = tapply(d$entry, d$group, function(x){paste(x, collapse = "-")})
+            d$group = t[d$group]
             
             p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
             y = tapply(d$median, d$group, mean, na.rm = TRUE)
@@ -126,9 +128,10 @@ ggplot_mean_comparisons_model_1 = function(
             
             colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
             d = join(data_version_tmp, dx, "mu")
+            t = tapply(d$entry, d$group, function(x){paste(x, collapse = "-")})
+            d$group = t[d$group]
             
             p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
-            
             y = tapply(d$median, d$group, mean, na.rm = TRUE)
             y = y + (max(y) * 0.2)
             label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
@@ -147,6 +150,7 @@ ggplot_mean_comparisons_model_1 = function(
         } else {
         
         d_env_b = lapply(data, function(x){
+          x = x$mean.comparisons
           x = arrange(x, median)
           x$max = max(x$median, na.rm = TRUE)
           x$split = add_split_col(x, nb_parameters_per_plot)
