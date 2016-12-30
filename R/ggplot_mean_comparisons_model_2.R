@@ -1,22 +1,16 @@
 ggplot_mean_comparisons_model_2 = function(
   out_mean_comparisons_model_2,
+  ggplot.type,
   nb_parameters_per_plot = 10
 ){
   
   # 1. Error message
-  if( attributes(mean_comparisons_model_1)$PPBstats.object != "mean_comparisons_model_2" ) { stop("data must come from mean_comparisons and model_2") }
+  if( attributes(out_mean_comparisons_model_2)$PPBstats.object != "mean_comparisons_model_2" ) { stop("data must come from mean_comparisons and model_2") }
   
-  if( is.element(ggplot.type, c("score", "interaction")) ) { stop("ggplot.type must be barplot with output from model_2") }
+  if( !is.element(ggplot.type, c("biplot-alpha-beta", "barplot")) ) { stop("ggplot.type must be barplot or biplot-alpha-beta with output from model_2") }
   
-  
-  data_Mpvalue = mean_comparisons_model_2$Mpvalue
-  data = mean_comparisons_model_2$mean.comparisons
-  attributes(data)$PPBstats.object = "mean.comparisons.model2"
-  
-  test.alpha.m2 = length(grep("alpha\\[", data$parameter)) > 0
-  test.beta.m2 = length(grep("beta\\[", data$parameter)) > 0
-  test.theta.m2 = length(grep("theta\\[", data$parameter)) > 0  
-  
+  data_Mpvalue = out_mean_comparisons_model_2$Mpvalue
+  data = out_mean_comparisons_model_2$mean.comparisons
   
   if(ggplot.type == "barplot") {  
     data = arrange(data, median)  
@@ -26,16 +20,15 @@ ggplot_mean_comparisons_model_2 = function(
     
     para.name = unlist(strsplit(as.character(data[1, "parameter"]), "\\["))[1]
     
-    OUT = lapply(data_split, function(dx){
+    out = lapply(data_split, function(dx){
       p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
       p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
       p = p + ggtitle(paste(para.name, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
       p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, data[1,"max"]) + ylab("")
       return(p)
     })
-    
-    OUT = list(OUT)
-    names(OUT) = para.name
+    out = list(out)
+    names(out) = para.name
   }
   
   
@@ -43,7 +36,6 @@ ggplot_mean_comparisons_model_2 = function(
   if(ggplot.type == "biplot-alpha-beta"){
     
     a = data
-    
     test_a = unlist(strsplit(as.character(a[1,"parameter"]), "\\["))[1]
     if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
     a$germplasm = gsub("alpha", "", a$parameter)
@@ -76,20 +68,13 @@ ggplot_mean_comparisons_model_2 = function(
     
     d_ab = plyr:::splitter_d(ab, .(split))
     
-    p = lapply(d_ab,function(y){
+    out = lapply(d_ab,function(y){
       p = ggplot(y, aes(x = effet_genetique, y = sensibilite, label = germplasm)) + coord_cartesian(xlim = xlim, ylim = ylim, expand = FALSE)
       p = p + geom_text() + geom_hline(yintercept = 0)
     })
-    OUT = list("biplot-alpha-beta" = p)
   }
   
-  
-  
   # return results
-  out = list(
-    
-  )
-  
   return(out)
 }
 
