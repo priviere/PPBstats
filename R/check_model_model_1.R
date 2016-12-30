@@ -4,7 +4,7 @@ check_model_model_1 = function(
   {
   
   # 1. Convergence, update MCMC and data frame with environments where some parameters did not converge ----------
-  out.conv = check_convergence(out.model, model_name = "model1")
+  out.conv = check_convergence(out.model, model_name = "model_1")
   MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   out.convergence = out.conv$out.convergence
@@ -48,7 +48,6 @@ check_model_model_1 = function(
       
       mcmc_to_delete = c(m1, m2, m3)
       MCMC = MCMC[,-mcmc_to_delete] 
-      attributes(MCMC)$model = "model1"
     } else {   data_env_whose_param_did_not_converge = NULL }
   } else {   data_env_whose_param_did_not_converge = NULL }
   
