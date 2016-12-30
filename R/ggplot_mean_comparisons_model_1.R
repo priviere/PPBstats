@@ -1,5 +1,5 @@
 ggplot_mean_comparisons_model_1 = function(
-  mean_comparisons_model_1,
+  out_mean_comparisons_model_1,
   data_version = NULL,
   ggplot.type = "interaction",
   nb_parameters_per_plot = 10
@@ -8,9 +8,9 @@ ggplot_mean_comparisons_model_1 = function(
   # 1. Error message
   if( attributes(mean_comparisons_model_1)$PPBstats.object != "mean_comparisons_model_1" ) { stop("data must come from mean_comparisons and model_1") }
   
-  data_mean_comparisons = mean_comparisons_model_1$data_mean_comparisons
-  data_env_with_no_controls = mean_comparisons_model_1$data_env_with_no_controls
-  data_env_whose_param_did_not_converge = mean_comparisons_model_1$data_env_whose_param_did_not_converge
+  data_mean_comparisons = out_mean_comparisons_model_1$data_mean_comparisons
+  data_env_with_no_controls = out_mean_comparisons_model_1$data_env_with_no_controls
+  data_env_whose_param_did_not_converge = out_mean_comparisons_model_1$data_env_whose_param_did_not_converge
   
   
   env = "env1-1:2010"
@@ -23,14 +23,8 @@ ggplot_mean_comparisons_model_1 = function(
   data$location = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
   data$year = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
   
-  
-  
   data_Mpvalue = data$Mpvalue
   d_env = data = data$mean.comparisons
-  
-  test.mu.m1 = length(grep("mu\\[", data$parameter)) > 0
-  test.beta.m1 = length(grep("beta\\[", data$parameter)) > 0
-  
   
   get.loc.year = function(data, nb_parameters_per_plot){
     
@@ -60,7 +54,7 @@ ggplot_mean_comparisons_model_1 = function(
       
       if( length(vec_env_to_get) == 0 ) { stop("There are no environment to display.") }
       
-      d_env = d_env[vec_env_to_get]
+      d_env = data_mean_comparisons[vec_env_to_get]
       
       fun = function(x, data_version){
         test = grep("mu", x$parameter)
@@ -211,8 +205,6 @@ ggplot_mean_comparisons_model_1 = function(
       
     }
     
-  }
-  
   }
   
   
