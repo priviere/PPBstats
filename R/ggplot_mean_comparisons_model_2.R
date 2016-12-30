@@ -52,7 +52,7 @@ ggplot_mean_comparisons_model_2 = function(
     
     
     ab = join(a, b, "germplasm")
-    ab=ab[which(!is.na(ab$sensibilite) & !is.na(ab$alpha_i)),]
+    ab=ab[which(!is.na(ab$beta_i) & !is.na(ab$alpha_i)),]
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)
     
@@ -64,13 +64,13 @@ ggplot_mean_comparisons_model_2 = function(
       ab$split = rep(1,nrow(ab))
     }
     
-    xlim = c(floor(min(ab$effet_genetique)),ceiling(max(ab$alpha_i)))
-    ylim = c(min(ab$sensibilite),max(ab$beta_i))
+    xlim = c(floor(min(ab$alpha_i)),ceiling(max(ab$alpha_i)))
+    ylim = c(min(ab$beta_i),max(ab$beta_i))
     
     d_ab = plyr:::splitter_d(ab, .(split))
     
     out = lapply(d_ab,function(y){
-      p = ggplot(y, aes(x = effet_genetique, y = sensibilite, label = germplasm)) + coord_cartesian(xlim = xlim, ylim = ylim, expand = FALSE)
+      p = ggplot(y, aes(x = alpha_i, y = beta_i, label = germplasm)) + coord_cartesian(xlim = xlim, ylim = ylim, expand = FALSE)
       p = p + geom_text() + geom_hline(yintercept = 0)
     })
   }
