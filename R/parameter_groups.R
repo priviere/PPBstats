@@ -97,11 +97,12 @@ parameter_groups = function(
   nb.k = which.max(v)
   if( nb.k == 1 ) { nb.k = 2 }
   res.hc = hclust(dist(out))
-  km.res <- kmeans(out, nb.k, nstart = 25)
+  km.res = kmeans(out, nb.k, nstart = 25)
   
   # 5. Return the outputs ----------
   out = list("obj.pca" = obj.pca, 
              "clust" = list(
+               "data" = out,
                "nb.k" = nb.k,
                "res.hc" = res.hc,
                "km.res" = km.res
@@ -110,5 +111,5 @@ parameter_groups = function(
   
   attributes(out)$PPBstats.object = "parameter_groups"
   
-  return(OUT)
+  return(out)
 }
