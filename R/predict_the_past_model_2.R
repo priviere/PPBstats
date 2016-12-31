@@ -24,20 +24,24 @@
 #' 
 #' 
 predict_the_past_model_2 = function(
-  out_check_model_model_2
+  out_check_model_model_2,
+  env = NULL
 )
   # let's go !!! ----------
 {
   # 1. Error message ----------  
   if( attributes(out_check_model_model_2)$PPBstats.object != "check_model_model_2") {  stop("out_check_model_model_2 must come from check_model and model_2.") }
   
-  # 2. Get the estimation of mu_ij based on MCMC outputs ----------
   w = out_check_model_model_2$model2.presence.abscence.matrix
   MCMC = out_check_model_model_2$MCMC
   
-  j = 1
-  env = colnames(w)[j]
+  if( is.null(env) ){ stop("env can not be NULL") }
+  if( !is.element(env, colnames(w)) ){ stop("env ", env," does not exist.")  }
+  
+  # 2. Get the estimation of mu_ij based on MCMC outputs ----------
+  j = which(colnames(w) == env)
   germ = rownames(w)[which(w[,j] == 0)]
+  OUT = NULL
   if(length(germ) > 0) { # if length(geno) == 0, it means no germplasms must be estimated
     pb <- txtProgressBar(min = 0, max = length(germ), style = 3)
     for (i in 1:length(germ)) {
@@ -46,11 +50,11 @@ predict_the_past_model_2 = function(
         OUT = rbind.data.frame(OUT, mu_estimated)
       } else { warning("Estimated value for germplasm ", germ, " in environment ", env, " is not possible. This is because the estimation of germplasm and or environment effects did not converge and therefore were not in the MCMC.") 
       }
-      setTxtProgressBar(pb, j)
+      setTxtProgressBar(pb, i)
     }
     names(OUT) = paste("[", germ, ",", env,"]", sep = "")
   } else { OUT = NULL }
   
-  attributes(OUT)$PPBstats.object = "predict.the.past"  
+  attributes(OUT)$PPBstats.object = "predict.the.past"
   return(OUT)
 }
