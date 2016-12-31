@@ -1,4 +1,8 @@
-parameter_groups_model_2 = function(out_check_model_model_2){
+parameter_groups_model_2 = function(
+  out_check_model_model_2,
+  parameter,
+  nb.clust = -1
+  ){
   
   # 2. Create the obj matrix ----------
   MCMC = obj.rownames = NULL
