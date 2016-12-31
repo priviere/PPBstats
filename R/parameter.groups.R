@@ -27,7 +27,7 @@
 #' @seealso \code{\link{FWH}}, \code{\link{analyse.outputs}}, \code{\link{get.ggplot}}
 #' 
 #' 
-get.parameter.groups = function(
+parameter_groups = function(
   list_out_check_model,
   parameter,
   nb.clust = -1
