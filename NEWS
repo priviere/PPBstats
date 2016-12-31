@@ -12,29 +12,29 @@ Huge refactoring of the code in several functions for each steps of the analysis
   - predict.the.past.R becomes predict_the_past_model_2.R
 
 * add new functions
-  - biplot_GxE
+  - biplot_GxE.R
   
-  - check_model_model_1
-  - check_model_model_2
-  - check_model_GxE
+  - check_model_model_1.R
+  - check_model_model_2.R
+  - check_model_GxE.R
   
-  - mean_comparisons_GxE
-  - mean_comparisons_model_1
-  - mean_comparisons_model_2
-  - mean_comparisons_predict_the_past_model_2
+  - mean_comparisons_GxE.R
+  - mean_comparisons_model_1.R
+  - mean_comparisons_model_2.R
+  - mean_comparisons_predict_the_past_model_2.R
   
-  - parameter_groups_GxE
-  - parameter_groups_model_2
+  - parameter_groups_GxE.R
+  - parameter_groups_model_2.R
   
-  - ggplot_biplot_GxE
-  - ggplot_check_model_model_1
-  - ggplot_check_model_model_2
-  - ggplot_check_model_GxE
-  - ggplot_mean_comparisons_GxE
-  - ggplot_parameter_groups
-  - ggplot_cross_validation_model_2
-  - ggplot_predict_the_past_model_2
-  - ggplot_mean_comparisons_predict_the_past_model_2
+  - ggplot_biplot_GxE.R
+  - ggplot_check_model_model_1.R
+  - ggplot_check_model_model_2.R
+  - ggplot_check_model_GxE.R
+  - ggplot_mean_comparisons_GxE.R
+  - ggplot_parameter_groups.R
+  - ggplot_cross_validation_model_2.R
+  - ggplot_predict_the_past_model_2.R
+  - ggplot_mean_comparisons_predict_the_past_model_2.R
 
 * delete functions
   - ggplot_LSDgroup
