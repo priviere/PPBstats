@@ -41,19 +41,19 @@ parameter_groups = function(
   
   for(i in 1:length(list_out_check_model)) {
     l = list_out_check_model[[i]]
-    if( !is.element(attributes(l$PPBstats.object), c("check_model_GxE", "check_model_GxE")) ) {
+    if( !is.element(attributes(l)$PPBstats.object, c("check_model_model_2", "check_model_GxE")) ) {
       stop("All the element of list_out_check_model must come from check_model with model_2 or GxE. This is not the case with the ", i, " element.")
     }
   }
   
   # 2. Get matrix
-  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_GxE" ) { parameter_groups_GxE(list_out_check_model, parameter) }
+  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_GxE" ) { out = parameter_groups_GxE(list_out_check_model, parameter) }
 
-  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_model_2" ) { parameter_groups_model_2(list_out_check_model, parameter) }
+  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_model_2" ) { out = parameter_groups_model_2(list_out_check_model, parameter) }
   
   
   # 3. Run the PCA ----------
-  obj.pca = PCA(obj, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
+  obj.pca = PCA(out, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
   
   # 4. Get the clusters ----------  
   hcpc = HCPC(obj.pca, nb.clust = nb.clust, consol = 0, min = 2, max = 5, graph = FALSE) # Be careful, if we put 2, it often returns 2! The package propose to put 3
