@@ -64,7 +64,7 @@ parameter_groups = function(
   # k = 2 to k = 15
   for(i in 2:k.max){
     km.res <- kmeans(data, centers = i, nstart = 25)
-    ss <- silhouette(km.res$cluster, dist(data))
+    ss <- cluster::silhouette(km.res$cluster, dist(data))
     sil[i] <- mean(ss[, 3])
   }
   
