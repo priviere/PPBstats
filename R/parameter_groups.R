@@ -55,46 +55,21 @@ parameter_groups = function(
   obj.pca = PCA(out, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
   
   # 4. Get the clusters ----------  
+  # see method here: http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning
   
-  k.max = 10
-  # Taken fromfactoextra::fviz_nbclust
-  # Get total within sum of square
-  # +++++++++++++++++++++++++++++
-  # d: dist object
-  # cluster: cluster number of observation
-  .get_withinSS <- function(d, cluster){
-    d <- stats::as.dist(d)
-    cn <- max(cluster)
-    clusterf <- as.factor(cluster)
-    clusterl <- levels(clusterf)
-    cnn <- length(clusterl)
-    
-    if (cn != cnn) {
-      warning("cluster renumbered because maximum != number of clusters")
-      for (i in 1:cnn) cluster[clusterf == clusterl[i]] <- i
-      cn <- cnn
-    }
-    cwn <- cn
-    # Compute total within sum of square
-    dmat <- as.matrix(d)
-    within.cluster.ss <- 0
-    for (i in 1:cn) {
-      cluster.size <- sum(cluster == i)
-      di <- as.dist(dmat[cluster == i, cluster == i])
-      within.cluster.ss <- within.cluster.ss + sum(di^2)/cluster.size
-    }
-    within.cluster.ss
+  k.max <- 15
+  data <- out
+  sil <- rep(0, k.max)
+  # Compute the average silhouette width for 
+  # k = 2 to k = 15
+  for(i in 2:k.max){
+    km.res <- kmeans(data, centers = i, nstart = 25)
+    ss <- silhouette(km.res$cluster, dist(data))
+    sil[i] <- mean(ss[, 3])
   }
   
-  v <- rep(0, k.max)
-  for (i in 1:k.max) {
-    clust <- kmeans(out, i)
-    v[i] <- .get_withinSS(stats::dist(out), clust$cluster)
+  nb.k = which.max(sil)
   
-  }
-  
-  nb.k = which.max(v)
-  if( nb.k == 1 ) { nb.k = 2 }
   res.hc = hclust(dist(out))
   km.res = kmeans(out, nb.k, nstart = 25)
   
