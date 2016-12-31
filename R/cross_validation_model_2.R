@@ -38,7 +38,7 @@
 #' 
 #'
 #'
-cross.validation.FWH = function(
+cross_validation_model_2 = function(
   data, 
   variable, 
   nb_iterations = 100000,
@@ -95,9 +95,7 @@ cross.validation.FWH = function(
     message("
             ------------------------------------------------------------\n
             ------------------------------------------------------------\n
-            ------------------------------------------------------------\n
             Model runs for data ", x$num_data, "/", x$nb_total_data, ". 
-            ------------------------------------------------------------\n
             ------------------------------------------------------------\n
             ------------------------------------------------------------\n
             ")
@@ -131,21 +129,8 @@ cross.validation.FWH = function(
   real.value = unlist(OUT)[grep("real.value", names(unlist(OUT)))]
   estimated.value = unlist(OUT)[grep("estimated.value", names(unlist(OUT)))]
     
-  d_out = cbind.data.frame(real.value, estimated.value)
+  out = cbind.data.frame(real.value, estimated.value)
   
-  # 5. Get the regression ----------
-  p = ggplot(d_out, aes(x = real.value, y = estimated.value)) 
-  p = p + stat_smooth(method = "lm") + geom_point() + xlab("observed value")
-  model = lm(real.value ~ estimated.value)
-  out_r = list("plot" = p, "anova" = model)
-  
-  # 6. Get the confidence in the estimation ----------
-  bias = real.value - estimated.value
-  test = t.test(bias, mu = 0)
-  percentage.of.confidence = round(test$p.value * 100, 1) # probability than the mean is equal to zero  
-
-  # 5. Return the results ----------
-  OUT = list("data_cv" = d_out, "regression" = out_r, "percentage.of.confidence" = percentage.of.confidence)
-  return(OUT)
+  return(out)
 }
 
