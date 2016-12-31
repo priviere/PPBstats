@@ -48,29 +48,6 @@ get.parameter.groups = function(
   }
   
   
-  # 2. Create the obj matrix ----------
-  MCMC = obj.rownames = NULL
-  
-  for(m in 1:length(analyse.outputs.list)) {
-    mcmc = analyse.outputs.list[[m]]$MCMC
-    mcmc = mcmc[,grep(paste(parameter, "\\[", sep=""), colnames(mcmc))]
-    obj.rownames = c(obj.rownames, colnames(mcmc))
-    MCMC = c(MCMC, list(mcmc))
-  }
-  
-  obj.rownames = unique(obj.rownames)
-  obj = matrix(NA, ncol = length(analyse.outputs.list), nrow = length(obj.rownames))
-  rownames(obj) = obj.rownames
-  colnames(obj) = names(analyse.outputs.list)
-  
-  # 3. fill the obj matrix  ----------
-  for(m in 1:length(analyse.outputs.list)) {
-    mcmc = analyse.outputs.list[[m]]$MCMC
-    mcmc = mcmc[,grep(paste(parameter, "\\[", sep=""), colnames(mcmc))]
-    obj[colnames(mcmc), names(analyse.outputs.list)[m]] = apply(mcmc, 2, median)
-  }
-  
-  rownames(obj) = sapply(rownames(obj), function(x){ sub("\\]", "", sub(paste(parameter, "\\[", sep=""), "", x ) ) } )
   
   # 4. Run the PCA ----------
   obj.pca = PCA(obj, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
