@@ -6,6 +6,10 @@ Huge refactoring of the code in several functions for each steps of the analysis
   - analyse.outputs.R becomes check_model.R
   - get.parameter.groups.R becomes parameter.groups.R
   - get.mean.comparisons.R becomes mean.comparisons.R
+  - MC.R becomes model_1.R
+  - FWH.R becomes model_2.R
+  - cross.validation.R becomes cross_validation_model_2.R
+  - predict.the.past.R becomes predict_the_past_model_2.R
 
 * add new functions
   - biplot_GxE
