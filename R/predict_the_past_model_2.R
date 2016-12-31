@@ -41,20 +41,19 @@ predict_the_past_model_2 = function(
   # 2. Get the estimation of mu_ij based on MCMC outputs ----------
   j = which(colnames(w) == env)
   germ = rownames(w)[which(w[,j] == 0)]
-  OUT = NULL
+  OUT = data.frame(matrix(NA, ncol = length(germ), nrow = nrow(MCMC)))
   if(length(germ) > 0) { # if length(geno) == 0, it means no germplasms must be estimated
-    pb <- txtProgressBar(min = 0, max = length(germ), style = 3)
     for (i in 1:length(germ)) {
       if (is.element(paste("alpha","[",germ[i],"]",sep=""), colnames(MCMC)) & is.element(paste("theta","[",env,"]",sep=""), colnames(MCMC)))  {
         mu_estimated = MCMC[,paste("alpha[",germ[i],"]",sep="")] + MCMC[,paste("beta[",germ[i],"]",sep="")] * MCMC[,paste("theta[",env,"]",sep="")]
-        OUT = rbind.data.frame(OUT, mu_estimated)
+        OUT[i] = mu_estimated
       } else { warning("Estimated value for germplasm ", germ, " in environment ", env, " is not possible. This is because the estimation of germplasm and or environment effects did not converge and therefore were not in the MCMC.") 
       }
-      setTxtProgressBar(pb, i)
     }
-    names(OUT) = paste("[", germ, ",", env,"]", sep = "")
+    names(OUT) = paste("mu[", germ, ",", env,"]", sep = "")
   } else { OUT = NULL }
   
-  attributes(OUT)$PPBstats.object = "predict.the.past"
-  return(OUT)
+  out = list("MCMC" = OUT)
+  attributes(out)$PPBstats.object = "predict.the.past"
+  return(out)
 }
