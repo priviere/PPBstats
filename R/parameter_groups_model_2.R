@@ -1,13 +1,11 @@
 parameter_groups_model_2 = function(
   list_out_check_model_model_2,
-  parameter,
-  nb.clust = -1
+  parameter
   ){
   
   # 1. Error message
   for(m in 1:length(list_out_check_model_model_2)) {
     mcmc = list_out_check_model_model_2[[m]]$MCMC
-    if( is.null(attributes(mcmc)$model) ) { stop("The MCMC object should come from check_model and model 2.") } 
     if( length(grep(paste("^", parameter, "\\[", sep=""), colnames(mcmc))) == 0 ) { stop(parameter," is not in MCMC in list_out_check_model_model_2") } 
   }
   
