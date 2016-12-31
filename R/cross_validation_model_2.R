@@ -124,7 +124,7 @@ cross_validation_model_2 = function(
     return(out)
   }
   
-  OUT = mclapply(list_data, function(x) {fun(x)}, mc.cores = mc.cores)
+  OUT = mclapply(list_data[c(1:5)], function(x) {fun(x)}, mc.cores = mc.cores)
   
   real.value = unlist(OUT)[grep("real.value", names(unlist(OUT)))]
   estimated.value = unlist(OUT)[grep("estimated.value", names(unlist(OUT)))]
