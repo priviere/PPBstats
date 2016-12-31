@@ -4,7 +4,7 @@
 #' @description
 #' \code{get.parameter.groups}
 #'
-#' @param analyse.outputs.list A list whose elements are output from \code{analyse.outputs}
+#' @param list_out_check_model A list whose elements are output from \code{analyse.outputs}
 #'  
 #' @param parameter The parameter on which to get the groups
 #' 
@@ -28,25 +28,32 @@
 #' 
 #' 
 get.parameter.groups = function(
-  analyse.outputs.list,
+  list_out_check_model,
   parameter,
   nb.clust = -1
 )
   # let's go !!! ----------
 {
   # 1. Error message ----------
-  if( length(analyse.outputs.list) <= 1 ) { stop("analyse.outputs.list must have at least two elements (i.e. two variables).") }
-  if( is.null(names(analyse.outputs.list)) ){ stop("Each element of analyse.outputs.list must have a name") }
-  if( is.element(TRUE, is.element(names(analyse.outputs.list), "")) ){ stop("Each element of analyse.outputs.list must have a name") }
+  if( length(list_out_check_model) <= 1 ) { stop("list_out_check_model must have at least two elements (i.e. two variables).") }
+  if( is.null(names(list_out_check_model)) ){ stop("Each element of list_out_check_model must have a name") }
+  if( is.element(TRUE, is.element(names(list_out_check_model), "")) ){ stop("Each element of list_out_check_model must have a name") }
   
-  for(m in 1:length(analyse.outputs.list)) {
-    mcmc = analyse.outputs.list[[m]]$MCMC
+  for(i in 1:length(list_out_check_model)) {
+    l = list_out_check_model[[i]]
+    if( !is.element(attributes(l$PPBstats.object), c("check_model_GxE", "check_model_GxE")) ) {
+      stop("All the element of list_out_check_model must come from check_model with model_2 or GxE. This is not the case with the ", i, " element.")
+    }
     
-    if( is.null(attributes(mcmc)$model) ) { stop("The MCMC object should come from model 1 (PPBstats::MC$MCMC) or model 2 (PPBstats::FWH$MCMC) follow by PPBstats::analyse.outputs.") } 
-    
-    if( length(grep(paste(parameter, "\\[", sep=""), colnames(mcmc))) == 0 ) { stop(parameter," is not in MCMC in analyse.outputs") } 
+    mcmc = list_out_check_model_model_2[[m]]$MCMC
+    if( is.null(attributes(mcmc)$model) ) { stop("The MCMC object should come from check_model and model 2.") } 
   }
   
+  
+  # 2. Get matrix
+  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_GxE" ) { parameter_groups_model_2(list_out_check_model_model_2, parameter) }
+
+  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_model_2" ) { parameter_groups_model_2(list_out_check_model_model_2, parameter) }
   
   
   # 4. Run the PCA ----------
