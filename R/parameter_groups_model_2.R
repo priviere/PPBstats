@@ -4,6 +4,14 @@ parameter_groups_model_2 = function(
   nb.clust = -1
   ){
   
+  # 1. Error message
+  for(m in 1:length(list_out_check_model_model_2)) {
+    mcmc = list_out_check_model_model_2[[m]]$MCMC
+    if( is.null(attributes(mcmc)$model) ) { stop("The MCMC object should come from check_model and model 2.") } 
+    if( length(grep(paste("^", parameter, "\\[", sep=""), colnames(mcmc))) == 0 ) { stop(parameter," is not in MCMC in list_out_check_model_model_2") } 
+  }
+  
+  
   fun_get_effect_for_all_variables = function(list_data, parameter){
     # 1. Create the obj matrix ----------
     MCMC = obj.rownames = NULL
@@ -20,7 +28,7 @@ parameter_groups_model_2 = function(
     rownames(obj) = obj.rownames
     colnames(obj) = names(list_data)
     
-    # 3. fill the obj matrix  ----------
+    # 2. fill the obj matrix  ----------
     for(m in 1:length(list_data)) {
       mcmc = list_data[[m]]$MCMC
       mcmc = mcmc[,grep(paste("^", parameter, "\\[", sep=""), colnames(mcmc))]
@@ -29,6 +37,7 @@ parameter_groups_model_2 = function(
     
     rownames(obj) = sapply(rownames(obj), function(x){ sub("\\]", "", sub(paste(parameter, "\\[", sep=""), "", x ) ) } )
     
+    return(obj)
   }
   
   out = fun_get_effect_for_all_variables(list_out_check_model_model_2, parameter)
