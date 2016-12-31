@@ -4,7 +4,7 @@
 \alias{parameter_groups}
 \title{Get groups of parameters based on multivariate analysis}
 \usage{
-parameter_groups(list_out_check_model, parameter, nb.clust = -1)
+parameter_groups(list_out_check_model, parameter)
 }
 \arguments{
 \item{list_out_check_model}{A list whose elements are output from \code{analyse.outputs}}
