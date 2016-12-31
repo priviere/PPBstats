@@ -3,7 +3,7 @@ ggplot_out_parameter_groups = function(out_parameter_groups){
   pca = out_parameter_groups$obj.pca
   
   clust = out_parameter_groups$clust
-  out = clust$data
+  data = clust$data
   nb.k = clust$nb.k
   res.hc = clust$res.hc
   km.res = clust$km.res
