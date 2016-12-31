@@ -131,6 +131,8 @@ cross_validation_model_2 = function(
     
   out = cbind.data.frame(real.value, estimated.value)
   
+  attributes(out)$PPBstats.object = "cross_validation_model_2"
+  
   return(out)
 }
 
