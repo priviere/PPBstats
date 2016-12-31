@@ -1,5 +1,5 @@
 parameter_groups_GxE = function(
-  list_list_out_check_model_GxE,
+  list_out_check_model_GxE,
   parameter
   ){
 
