@@ -17,7 +17,7 @@ ggplot_parameter_groups = function(out_parameter_groups){
     ),
     "clust" = list(
       "nb_k" = fviz_nbclust(data, kmeans, method = "silhouette"),
-      "dendrogramm" = fviz_dend(res.hc, cex = 0.5, k = nb.k, type = "triangle"),
+      #"dendrogramm" = fviz_dend(res.hc, cex = 0.5, k = nb.k, type = "triangle"),
       "pca" = fviz_cluster(km.res, data, frame.type = "norm")
     )
   )
