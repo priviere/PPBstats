@@ -1,49 +1,45 @@
-parameter_groups_GxE = function(out_check_model_GxE){
+parameter_groups_GxE = function(
+  list_list_out_check_model_GxE,
+  parameter
+  ){
 
   # 1. Prepare data set ----------
   n_G = n_E = n_varG = NULL
-  for(i in 1:length(out_check_model_GxE)){
-    n_G = c(n_G, names(out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$effects))
-    n_varG = c(n_varG, names(out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$intra_variance))
-    n_E = c(n_E, names(out_check_model_GxE[[i]]$GxE$ANOVA$location_effects$effects))
+  for(i in 1:length(list_out_check_model_GxE)){
+    n_G = c(n_G, names(list_out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$effects))
+    n_varG = c(n_varG, names(list_out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$intra_variance))
+    n_E = c(n_E, names(list_out_check_model_GxE[[i]]$GxE$ANOVA$location_effects$effects))
   }
   n_G = unique(n_G)
   n_E = unique(n_E)
   n_varG = unique(n_varG)
   
-  df_G = matrix(NA, ncol = length(out_check_model_GxE), nrow = length(n_G))
-  colnames(df_G) = names(out_check_model_GxE)
+  df_G = matrix(NA, ncol = length(list_out_check_model_GxE), nrow = length(n_G))
+  colnames(df_G) = names(list_out_check_model_GxE)
   rownames(df_G) = n_G
   
-  df_E = matrix(NA, ncol = length(out_check_model_GxE), nrow = length(n_E))
-  colnames(df_E) = names(out_check_model_GxE)
+  df_E = matrix(NA, ncol = length(list_out_check_model_GxE), nrow = length(n_E))
+  colnames(df_E) = names(list_out_check_model_GxE)
   rownames(df_E) = n_E
   
-  df_varG = matrix(NA, ncol = length(out_check_model_GxE), nrow = length(n_varG))
-  colnames(df_varG) = names(out_check_model_GxE)
+  df_varG = matrix(NA, ncol = length(list_out_check_model_GxE), nrow = length(n_varG))
+  colnames(df_varG) = names(list_out_check_model_GxE)
   rownames(df_varG) = n_varG
   
-  for(i in 1:length(out_check_model_GxE)){
-    g = out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$effects
+  for(i in 1:length(list_out_check_model_GxE)){
+    g = list_out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$effects
     df_G[names(g),i] = g
-    vg = out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$intra_variance
+    vg = list_out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$intra_variance
     df_varG[names(vg),i] = vg
-    e = out_check_model_GxE[[i]]$GxE$ANOVA$location_effects$effects
+    e = list_out_check_model_GxE[[i]]$GxE$ANOVA$location_effects$effects
     df_E[names(e),i] = e
   }
   
-  # 2. Run PCA ----------
-  PCA_G = PCA(df_G, scale.unit = TRUE, graph = FALSE)
-  PCA_intraG = PCA(df_varG, scale.unit = TRUE, graph = FALSE)
-  PCA_E = PCA(df_E, scale.unit = TRUE, graph = FALSE)
+  if(parameter == "germplasm") { out = df_G }
+  if(parameter == "var_intra_germplasm") { out = df_varG }
+  if(parameter == "location") { out = df_E }
   
   # 3. Return results
-  out = list(
-    "PCA_G" = PCA_G,
-    "PCA_intraG" = PCA_intraG,
-    "PCA_E" = PCA_E
-  )
-    
   return(out)
 }
 
