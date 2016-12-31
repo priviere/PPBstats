@@ -1,4 +1,4 @@
-ggplot_out_parameter_groups = function(out_parameter_groups){
+ggplot_parameter_groups = function(out_parameter_groups){
 
   pca = out_parameter_groups$obj.pca
   
