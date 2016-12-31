@@ -44,29 +44,25 @@ get.parameter.groups = function(
     if( !is.element(attributes(l$PPBstats.object), c("check_model_GxE", "check_model_GxE")) ) {
       stop("All the element of list_out_check_model must come from check_model with model_2 or GxE. This is not the case with the ", i, " element.")
     }
-    
-    mcmc = list_out_check_model_model_2[[m]]$MCMC
-    if( is.null(attributes(mcmc)$model) ) { stop("The MCMC object should come from check_model and model 2.") } 
   }
   
-  
   # 2. Get matrix
-  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_GxE" ) { parameter_groups_model_2(list_out_check_model_model_2, parameter) }
+  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_GxE" ) { parameter_groups_GxE(list_out_check_model, parameter) }
 
-  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_model_2" ) { parameter_groups_model_2(list_out_check_model_model_2, parameter) }
+  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_model_2" ) { parameter_groups_model_2(list_out_check_model, parameter) }
   
   
-  # 4. Run the PCA ----------
+  # 3. Run the PCA ----------
   obj.pca = PCA(obj, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
   
-  # 5. Get the clusters ----------  
+  # 4. Get the clusters ----------  
   hcpc = HCPC(obj.pca, nb.clust = nb.clust, consol = 0, min = 2, max = 5, graph = FALSE) # Be careful, if we put 2, it often returns 2! The package propose to put 3
   clust = hcpc$data.clust
   clust$clust = paste("cluster", clust$clust)
   
-  # 6. Return the outputs ----------
+  # 5. Return the outputs ----------
   OUT = list("obj.pca" = obj.pca, "clust" = clust)
-  attributes(OUT)$PPBstats.object = "parameter.groups.model2"
+  attributes(OUT)$PPBstats.object = "parameter_groups"
   
   return(OUT)
 }
