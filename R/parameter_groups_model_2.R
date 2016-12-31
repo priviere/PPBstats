@@ -9,7 +9,7 @@ parameter_groups_model_2 = function(
   
   for(m in 1:length(out_check_model_model_2)) {
     mcmc = out_check_model_model_2[[m]]$MCMC
-    mcmc = mcmc[,grep(paste(parameter, "\\[", sep=""), colnames(mcmc))]
+    mcmc = mcmc[,grep(paste("^", parameter, "\\[", sep=""), colnames(mcmc))]
     obj.rownames = c(obj.rownames, colnames(mcmc))
     MCMC = c(MCMC, list(mcmc))
   }
@@ -22,7 +22,7 @@ parameter_groups_model_2 = function(
   # 3. fill the obj matrix  ----------
   for(m in 1:length(out_check_model_model_2)) {
     mcmc = out_check_model_model_2[[m]]$MCMC
-    mcmc = mcmc[,grep(paste(parameter, "\\[", sep=""), colnames(mcmc))]
+    mcmc = mcmc[,grep(paste("^", parameter, "\\[", sep=""), colnames(mcmc))]
     obj[colnames(mcmc), names(out_check_model_model_2)[m]] = apply(mcmc, 2, median)
   }
   
