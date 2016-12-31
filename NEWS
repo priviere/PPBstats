@@ -21,6 +21,7 @@ Huge refactoring of the code in several functions for each steps of the analysis
   - mean_comparisons_GxE
   - mean_comparisons_model_1
   - mean_comparisons_model_2
+  - mean_comparisons_predict_the_past_model_2
   
   - parameter_groups_GxE
   - parameter_groups_model_2
@@ -33,6 +34,7 @@ Huge refactoring of the code in several functions for each steps of the analysis
   - ggplot_parameter_groups
   - ggplot_cross_validation_model_2
   - ggplot_predict_the_past_model_2
+  - ggplot_mean_comparisons_predict_the_past_model_2
 
 * delete functions
   - ggplot_LSDgroup
