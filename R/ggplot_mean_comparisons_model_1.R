@@ -14,7 +14,6 @@ ggplot_mean_comparisons_model_1 = function(
     "data_env_whose_param_did_not_converge" = out_mean_comparisons_model_1$data_env_whose_param_did_not_converge
   )
   
-  
   if( ggplot.type == "barplot") {
     
     fun_barplot = function(data, data_version, nb_parameters_per_plot){
