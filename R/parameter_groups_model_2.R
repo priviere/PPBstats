@@ -40,7 +40,7 @@ parameter_groups_model_2 = function(
   
   out = fun_get_effect_for_all_variables(list_out_check_model_model_2, parameter)
     
-  
+  attributes(out)$PPBstats.object = "parameter_groups_model_2"
   return(out)
 }
 

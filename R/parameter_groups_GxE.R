@@ -40,6 +40,7 @@ parameter_groups_GxE = function(
   if(parameter == "location") { out = df_E }
   
   # 3. Return results
+  attributes(out)$PPBstats.object = "parameter_groups_GxE"
   return(out)
 }
 
