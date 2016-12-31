@@ -63,7 +63,7 @@
 #' @seealso \code{\link{analyse.outputs}}
 #' 
 #'   
-MC = function(
+model_1 = function(
   data,
   variable,
   nb_iterations = 100000,
