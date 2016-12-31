@@ -60,7 +60,7 @@
 #' 
 #' @seealso \code{\link{analyse.outputs}}, \code{\link{cross.validation.FWH}}, \code{\link{predict.the.past}}
 #' 
-FWH = function(
+model_2 = function(
   data,
   variable,
   nb_iterations = 100000,
