@@ -82,6 +82,8 @@ get.ggplot = function(
   if( attributes(data)$PPBstats.object == "mean_comparisons_model_model_2" ) { ggplot_mean_comparisons_model_model_2(data, ggplot.type, nb_parameters_per_plot) }
   
   if( attributes(data)$PPBstats.object == "parameter_groups" ) { ggplot_parameter_groups(data) }
+
+  if( attributes(data)$PPBstats.object == "cross_validation_model_2" ) { ggplot_cross_validation_model_2(data) }
   
     
   # 1. Error message and update arguments ----------
