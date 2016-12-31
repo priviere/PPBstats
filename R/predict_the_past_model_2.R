@@ -54,6 +54,6 @@ predict_the_past_model_2 = function(
   } else { OUT = NULL }
   
   out = list("MCMC" = OUT)
-  attributes(out)$PPBstats.object = "predict.the.past"
+  attributes(out)$PPBstats.object = "predict_the_past_model_2"
   return(out)
 }
