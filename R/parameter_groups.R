@@ -29,8 +29,7 @@
 #' 
 parameter_groups = function(
   list_out_check_model,
-  parameter,
-  nb.clust = -1
+  parameter
 )
   # let's go !!! ----------
 {
