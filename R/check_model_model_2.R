@@ -1,3 +1,14 @@
+#' Check if the model_2 model went well 
+#'
+#' @description
+#' \code{check_model_model_2} compute test to assess if the model_2 model went well
+#' 
+#' @param out_model_2 outputs from model_2 function
+#' 
+#' @details See check_model for further information
+#' 
+#' @seealso \code{\link{model_2}}, \code{\link{check_model}}
+#' 
 check_model_model_2 = function(
   out_model_2
 ){

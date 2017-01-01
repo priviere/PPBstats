@@ -1,3 +1,14 @@
+#' Check if the GxE model went well 
+#'
+#' @description
+#' \code{check_model_GxE} compute test to assess if the GxE model went well
+#' 
+#' @param out_GxE outputs from GxE function
+#' 
+#' @details See check_model for further information
+#' 
+#' @seealso \code{\link{GxE}}, \code{\link{check_model}}
+#' 
 check_model_GxE = function(
   out_GxE
 ){
