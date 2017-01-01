@@ -25,9 +25,10 @@ ggplot_mean_comparisons_model_2 = function(
     
     out = lapply(data_split, function(dx){
       p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
-      p = p + geom_text(data = dx, aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
+      p = p + geom_text(aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
       p = p + ggtitle(paste(para.name, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
       p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, data[1,"max"]) + ylab("")
+      print(p)
       return(p)
     })
     out = list(out)
