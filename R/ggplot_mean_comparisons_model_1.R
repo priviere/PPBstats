@@ -5,15 +5,19 @@ ggplot_mean_comparisons_model_1 = function(
   nb_parameters_per_plot = 10
   ){
   
-  # 1. Error message
+  # 1. Error message ----------
   if( attributes(out_mean_comparisons_model_1)$PPBstats.object != "mean_comparisons_model_1" ) { stop("data must come from mean_comparisons and model_1") }
   
+  if( !is.element(ggplot.type, c("interaction", "barplot")) ) { stop("ggplot.type must be barplot or interaction with output from mean_comparisons and model_1") }
+  
+  # 2. get data ----------
   all_data = list(
     "data_mean_comparisons" = out_mean_comparisons_model_1$data_mean_comparisons,
     "data_env_with_no_controls" = out_mean_comparisons_model_1$data_env_with_no_controls,
     "data_env_whose_param_did_not_converge" = out_mean_comparisons_model_1$data_env_whose_param_did_not_converge
   )
   
+  # 3. get ggplot ----------
   if( ggplot.type == "barplot") {
     
     fun_barplot = function(data, data_version, nb_parameters_per_plot){
