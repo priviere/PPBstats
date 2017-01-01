@@ -45,9 +45,9 @@ mean_comparisons = function(
   # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
-  mess = "out_check_model must come from check_model."
+  mess = "out_check_model must come from check_model or predict_the_past_model_2."
   if( is.null(attributes(out_check_model)$PPBstats.object) ) { stop(mess) } 
-  if( !is.element(attributes(out_check_model)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE")) ) { stop(mess) } 
+  if( !is.element(attributes(out_check_model)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE", "predict_the_past_model_2")) ) { stop(mess) } 
   
   if( attributes(out_check_model)$PPBstats.object == "check_model_GxE" ) { 
     out = mean_comparisons_GxE(out_check_model, p.adj) 
@@ -80,9 +80,8 @@ mean_comparisons = function(
     }
 
   if( attributes(out_check_model)$PPBstats.object == "predict_the_past_model_2" ) { 
-    out_check_model = out_predict_the_past_model_2
-    mean_comparisons_predict_the_past_model_2(
-      out_check_model,
+    out = mean_comparisons_predict_the_past_model_2(
+      out_predict_the_past_model_2 = out_check_model,
       alpha = 0.05,
       type = 1,
       threshold = 1,
