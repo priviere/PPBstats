@@ -1,61 +1,92 @@
 # 0. help ----------
-#' Check with plots if the model went well based on the Gelman-Rubin test and plots of posteriors distributions 
+#' Check if the model went well 
 #'
 #' @description
-#' \code{check_model} displays plots to see if the model went well based on the Gelman-Rubin test and plots of posteriors distributions. It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
-#'
-#' @param out_model outputs from model 1 (\code{MC}) or model 2 (\code{FWH})
-#'  
-#' @param analysis "experimental_design", convergence" or "posteriors". If NULL, the three are done.
+#' \code{check_model} compute test to assess if model went well. 
+#' It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #' 
-#' @param nb_parameters_per_plot The number of parameters per plot to facilitate the visualisation
+#' @param out_model outputs from GxE, model_1, model_2
 #' 
 #' @details
-#' For analyse = "convergence", the test used is the Gelman-Rubin test. 
+#' The function calls one function: check_model_GxE, check_model_1, check_model_2
+#' 
+#' For model_1 and model_2, the test used for convergence is the Gelman-Rubin test.
 #' It may take some time to run.
-#' More details with ?\code{gelman.diag} from the \code{coda} package. 
+#' More details with ?\code{gelman.diag} from the \code{coda} package.
 #' Note that for \code{gelman.diag}, the argument \code{multivariate = FALSE} is used.
-#' If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out_model$MCMC)}. 
-#' But be careful with the size of your MCMC output which are often too big to be performed in R. 
 #' 
-#' More information in  the vignette. Type vignette("PPBstats").
+#'
+#' MCMC outputs are a data fame resulting from the concatenation of the two MCMC for each parameter. 
+#' This object can be used for further analysis. 
+#' There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models). 
+#' The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done). 
+#' For model 1, all environments where at least one parameter do not converge are deleted.
 #' 
-#' @return The function returns a list with 
-#' 
+#' The outputs of the function is used in 
 #' \itemize{
-#' \item "data.experimental_design" : a plot representing the presence/abscence matrix of GxE combinaisons in the data.
-#' 
-#' \item "model.presence.abscence.matrix" : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
-#' 
-#' \item "convergence" : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. If all the chains converge, it is NULL
-#' 
-#' \item "posteriors" a list with
-#' \itemize{
-#' 
-#'  \item for model 1
-#'  \itemize{
-#'    \item "sigma_distribution" : the distribution of the sigma is displayed on the Inverse Gamma distribution
-#'    \item "parameter_posteriors" : a caterpillar plot is displayed for each mu_ij, beta_jk for each environment and for sigma_j 
-#'    \item "standardized_residuals" : a plot to check the normality of the residuals
-#'  }
-#'  
-#'  \item for model 2
-#'    \itemize{
-#'    \item "parameter_posteriors" : a list with caterpillar plot for each alpha_i, beta_i and theta_j
-#'    \item "standardized_residuals" : a plot to check the normality of the residuals. If the model went well it should be between -2 and 2.
-#'    }
-#'    
-#'  }
-#'  
-#' \item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models). The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done). For model 1, all environments where at least one parameter do not converge are deleted.
-#' 
-#' \item "model1.data_env_whose_param_did_not_converge" : a list with data frame with environments where some parameters did not converge for mu and beta.
+#'  \item mean_comparisons for GxE, model_1 and model_2
+#'  \item parameter_groups for GxE and model_2
+#'  \item predict_the_past_model_2 for model_2
 #' }
 #' 
 #' 
+#' @return The function returns a list depending on check_model input 
+#' 
+#' \itemize{
+#' 
+#' \item GxE
+#' \itemize{
+#'  \item GxE the output from the model
+#'  \item data_ggplot a list containing information for ggplot:
+#'  \itemize{
+#'   \item data_ggplot_residuals a list containing :
+#'    \itemize{
+#'     \item data_ggplot_normality
+#'     \item data_ggplot_skewness_test
+#'     \item data_ggplot_kurtosis_test
+#'     \item data_ggplot_qqplot
+#'     }
+#'   \item data_ggplot_variability_repartition_pie
+#'   \item data_ggplot_var_intra
+#'  }
+#' }
+#'
+#' 
+#' \item model_1
+#' \itemize{
+#'  \item MCMC
+#'  \item data_env_with_no_controls
+#'  \item data_env_whose_param_did_not_converge : a list with data frame with environments where some parameters did not converge for mu and beta.
+#'  \item data_ggplot a list containing information for ggplot:
+#'  \itemize{
+#'   \item sigma_j
+#'   \item mu_ij
+#'   \item beta_jk
+#'   \item sigma_j_2
+#'   \item epsilon_ijk
+#'  }
+#' }
+#' 
+#' 
+#' \item model_2
+#' \itemize{
+#'  \item MCMC
+#'  \item model2.presence.abscence.matrix : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
+#'  \item data_ggplot a list containing information for ggplot:
+#'  \itemize{
+#'   \item alpha
+#'   \item beta
+#'   \item theta
+#'   \item epsilon
+#'  }
+#' }
+#' 
+#' }
+#'
+#' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{MC}}, \code{\link{FWH}}, \code{\link{get.mean.comparisons}}
+#' @seealso \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}, \code{\link{check_model_GxE}}, \code{\link{check_model_1}}, \code{\link{check_model_2}}, \code{\link{mean_comparisons}}
 #' 
 #' 
 check_model = function(
