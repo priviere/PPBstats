@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Check if the model went well 
 #'
 #' @description
@@ -92,7 +91,6 @@
 check_model = function(
 out_model
 )
-# let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
   mess = "check_model should be an output from model 1 (PPBstats::model_1), model 2 (PPBstats::model_2) or GxE (PPBstats::GxE)."
