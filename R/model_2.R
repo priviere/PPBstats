@@ -2,7 +2,7 @@
 #' Run model 2 to get main germplasm, environment and sensitivity effects over the network.
 #'
 #' @description
-#' \code{FWH} runs model 2 known as the Finlay Wilkinson Hierarchical (FWH) model to get main germplasm, environment and sensitivity effects over the network
+#' \code{model_2} runs model 2 known as the Finlay Wilkinson Hierarchical model to get main germplasm, environment and sensitivity effects over the network
 #' 
 #' @param data The data frame on which the model will be run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
@@ -34,7 +34,7 @@
 #' The different effects are taken in different distributions of respective variances sigma_alpha, sigma_theta and sigma_beta. 
 #' This model takes into acount all the information on the network in order to cope with the high disequilibrium in the dataset (i.e. high percentage of missing GxE combinaisons on the network). 
 #' 
-#' First, the additive model is done. This model gives intitial values of some parameters of the FWH model which is done next.
+#' First, the additive model is done. This model gives intitial values of some parameters of the Hierarchical Finlay Wilkinson model which is done next.
 #' 
 #' The model is run on data set where germplasms are on at least two environments
 #' 
@@ -48,9 +48,9 @@
 #' \item "data.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data
 #' \item "model.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 #' \item "germplasm.not.used": the vector of germplasms not used in the analysis because they were not on at least two environments. If NULL, all the germplasms were used in the analysis.
-#' \item "MCMC": a list with the two MCMC chains (mcmc object) from the FWH model
+#' \item "MCMC": a list with the two MCMC chains (mcmc object) from the model
 #' \item "epsilon": a vector with the median value of the epsilon_ijk
-#' \item "DIC": the DIC value of the FWH model
+#' \item "DIC": the DIC value of the model
 #' }
 #' 
 #' @author Pierre Riviere for R code and Olivier David for JAGS code
@@ -58,7 +58,7 @@
 #' @references
 #' P. Riviere, J.C. Dawson, I. Goldringer, and O. David. Hierarchical multiplicative modeling of genotype x environment interaction for flexible experiments in decentralized participatory plant breeding. In prep, 2015.
 #' 
-#' @seealso \code{\link{analyse.outputs}}, \code{\link{cross.validation.FWH}}, \code{\link{predict.the.past}}
+#' @seealso \code{\link{check_model}}, \code{\link{cross_validation_model_2}}, \code{\link{predict_the_past_model_2}}
 #' 
 model_2 = function(
   data,
