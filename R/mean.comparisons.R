@@ -78,6 +78,19 @@ mean_comparisons = function(
       precision
     )
     }
+
+  if( attributes(out_check_model)$PPBstats.object == "predict_the_past_model_2" ) { 
+    out_check_model = out_predict_the_past_model_2
+    mean_comparisons_predict_the_past_model_2(
+      out_check_model,
+      alpha = 0.05,
+      type = 1,
+      threshold = 1,
+      p.adj = "soft.bonf",
+      get.at.least.X.groups = 2,
+      precision = 0.0005
+    )
+  }
   
   return(out)
 }
