@@ -4,7 +4,7 @@
 #' @description
 #' \code{check_model} displays plots to see if the model went well based on the Gelman-Rubin test and plots of posteriors distributions. It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #'
-#' @param out.model outputs from model 1 (\code{MC}) or model 2 (\code{FWH})
+#' @param out_model outputs from model 1 (\code{MC}) or model 2 (\code{FWH})
 #'  
 #' @param analysis "experimental_design", convergence" or "posteriors". If NULL, the three are done.
 #' 
@@ -15,7 +15,7 @@
 #' It may take some time to run.
 #' More details with ?\code{gelman.diag} from the \code{coda} package. 
 #' Note that for \code{gelman.diag}, the argument \code{multivariate = FALSE} is used.
-#' If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out.model$MCMC)}. 
+#' If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out_model$MCMC)}. 
 #' But be careful with the size of your MCMC output which are often too big to be performed in R. 
 #' 
 #' More information in  the vignette. Type vignette("PPBstats").
@@ -59,21 +59,21 @@
 #' 
 #' 
 check_model = function(
-out.model
+out_model
 )
 # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
   mess = "check_model should be an output from model 1 (PPBstats::model_1), model 2 (PPBstats::model_2) or GxE (PPBstats::GxE)."
-  if( is.null(attributes(out.model)$PPBstats.object) ) { stop(mess) } 
-  if( !is.element(attributes(out.model)$PPBstats.object, c("model_1", "model_2", "GxE")) ) { stop(mess) } 
+  if( is.null(attributes(out_model)$PPBstats.object) ) { stop(mess) } 
+  if( !is.element(attributes(out_model)$PPBstats.object, c("model_1", "model_2", "GxE")) ) { stop(mess) } 
   
   # 2. Check model ----------
-  if(attributes(out.model)$PPBstats.object == "model_1") { out = check_model_model_1(out.model) }
+  if(attributes(out_model)$PPBstats.object == "model_1") { out = check_model_model_1(out_model) }
   
-  if(attributes(out.model)$PPBstats.object == "model_2") { out = check_model_model_2(out.model) }
+  if(attributes(out_model)$PPBstats.object == "model_2") { out = check_model_model_2(out_model) }
   
-  if(attributes(out.model)$PPBstats.object == "GxE") { out = check_model_GxE(out.model) }
+  if(attributes(out_model)$PPBstats.object == "GxE") { out = check_model_GxE(out_model) }
 
 return(out)
 }

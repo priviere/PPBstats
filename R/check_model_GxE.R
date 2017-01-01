@@ -1,8 +1,8 @@
 check_model_GxE = function(
-  out.model
+  out_GxE
 ){
-  model = out.model$ANOVA$model
-  anova_model = out.model$ANOVA$anova_model
+  model = out_GxE$ANOVA$model
+  anova_model = out_GxE$ANOVA$anova_model
   
   # 1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
   r = residuals(model)
@@ -50,7 +50,7 @@ check_model_GxE = function(
   data_ggplot_var_intra = data.frame(x = model$model$germplasm, y = model$residuals)
   
   out = list(
-    "GxE" = out.model,
+    "GxE" = out_GxE,
     data_ggplot = list(
       "data_ggplot_residuals" = list(
         "data_ggplot_normality" = data_ggplot_normality,
