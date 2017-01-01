@@ -1,8 +1,8 @@
-ggplot_biplot_GxE = function(biplot_GxE){
+ggplot_out_biplot_GxE = function(out_biplot_GxE){
   
-  variable = biplot_GxE$variable
-  data_ecovalence = biplot_GxE$data_ecovalence
-  data_pca = biplot_GxE$pca
+  variable = out_biplot_GxE$variable
+  data_ecovalence = out_biplot_GxE$data_ecovalence
+  data_pca = out_biplot_GxE$pca
   
   # Ecovalence ----------
   p_eco = ggplot(data_ecovalence, aes(x = location, y = germplasm, fill = variable)) + geom_raster()
