@@ -59,17 +59,17 @@ check_model_model_2 = function(
   # 2.1. alpha_i caterpillar plot distribution ----------
   if ( length(grep("alpha\\[", rownames(sq_MCMC))) > 0  ) {      
     data_ggplot_model_2_alpha = droplevels(sq_MCMC[grep("alpha\\[", rownames(sq_MCMC)),]) 
-  }
+  } else { data_ggplot_model_2_alpha = NULL }
   
   # 2.2. beta_i caterpillar plot distribution ----------
   if ( length(grep("beta\\[", rownames(sq_MCMC))) > 0  ) {
     data_ggplot_model_2_beta = droplevels(sq_MCMC[grep("beta\\[", rownames(sq_MCMC)),])    
-  }
+  } else { data_ggplot_model_2_beta = NULL }
   
   # 2.3. theta_j caterpillar plot distribution ----------
   if ( length(grep("theta\\[", rownames(sq_MCMC))) > 0  ) {
     data_ggplot_model_2_theta = droplevels(sq_MCMC[grep("theta\\[", rownames(sq_MCMC)),])    
-  }
+  } else { data_ggplot_model_2_theta = NULL }
   
   # 2.4. standardized epsilon_ijk distribution ----------
   if ( !is.null(out_model_2$epsilon)  ) {      
@@ -77,7 +77,7 @@ check_model_model_2 = function(
     sigma_epsilon = sq_MCMC[grep("sigma_epsilon", sq_MCMC$parameter), "q3"]
     std_res = epsilon_ijk / sigma_epsilon
     data_ggplot_model_2_epsilon = cbind.data.frame(x = c(1:length(epsilon_ijk)), std_res)
-  }
+  } else { data_ggplot_model_2_epsilon = NULL }
   
   
   
