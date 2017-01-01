@@ -15,7 +15,7 @@ mean_comparisons_predict_the_past_model_2 = function(
   out = mean_comparisons_model_1(out_predict_the_past_model_2, parameter = "mu", alpha = 0.05, type = 1, threshold = 1, p.adj = "soft.bonf", get.at.least.X.groups, precision)
   
   out = out[1]
-  attributes(out)$PPBstats.object == "mean_comparisons_predict_the_past_model_2"
+  attributes(out)$PPBstats.object = "mean_comparisons_predict_the_past_model_2"
 return(out)
 }
 
