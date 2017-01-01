@@ -336,6 +336,6 @@ model_2 = function(
     "DIC" = DIC_FW
   )
   
-  attributes(OUT)$PPBstats.object = "model2"
+  attributes(OUT)$PPBstats.object = "model_2"
   return(OUT)
 }

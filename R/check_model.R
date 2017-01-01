@@ -64,14 +64,14 @@ out.model
 # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
-  mess = "out.model should be an output from model 1 (PPBstats::model_1), model 2 (PPBstats::model_2) or GxE (PPBstats::GxE)."
+  mess = "check_model should be an output from model 1 (PPBstats::model_1), model 2 (PPBstats::model_2) or GxE (PPBstats::GxE)."
   if( is.null(attributes(out.model)$PPBstats.object) ) { stop(mess) } 
-  if( !is.element(attributes(out.model)$PPBstats.object, c("model1", "model2", "GxE")) ) { stop(mess) } 
+  if( !is.element(attributes(out.model)$PPBstats.object, c("model_1", "model_2", "GxE")) ) { stop(mess) } 
   
   # 2. Check model ----------
-  if(attributes(out.model)$PPBstats.object == "model1") { out = check_model_model_1(out.model) }
+  if(attributes(out.model)$PPBstats.object == "model_1") { out = check_model_model_1(out.model) }
   
-  if(attributes(out.model)$PPBstats.object == "model2") { out = check_model_model_2(out.model) }
+  if(attributes(out.model)$PPBstats.object == "model_2") { out = check_model_model_2(out.model) }
   
   if(attributes(out.model)$PPBstats.object == "GxE") { out = check_model_GxE(out.model) }
 
