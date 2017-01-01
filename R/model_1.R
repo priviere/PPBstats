@@ -1,8 +1,8 @@
 # 0. help ----------
-#' Run model 1 to get mean comparisons (MC) on each environment of the network.
+#' Run model 1 to get mean comparisons on each environment of the network.
 #'
 #' @description
-#' \code{MC} runs model 1 to get mean comparisons (MC) on each environment of the network. See details for more information.
+#' \code{model_1} runs model 1 to get mean comparisons on each environment of the network. See details for more information.
 #'
 #' @param data The data frame on which the model will be run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
