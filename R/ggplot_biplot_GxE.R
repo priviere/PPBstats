@@ -1,4 +1,4 @@
-ggplot_out_biplot_GxE = function(out_biplot_GxE){
+ggplot_biplot_GxE = function(out_biplot_GxE){
   
   variable = out_biplot_GxE$variable
   data_ecovalence = out_biplot_GxE$data_ecovalence
