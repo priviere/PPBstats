@@ -1,12 +1,13 @@
 ggplot_mean_comparisons_GxE = function(
   mean_comparisons_GxE,
+  ggplot.type,
   nb_parameters_per_plot = 10
   ){
   
   # 1. Error message
   if( attributes(mean_comparisons_GxE)$PPBstats.object != "mean_comparisons_GxE" ) { stop("data must come from mean_comparisons and GxE") }
   
-  if( is.element(ggplot.type, c("score", "interaction")) ) { stop("ggplot.type must be barplot with output from GxE.") }
+  if( is.element(ggplot.type, c("barplot")) ) { stop("ggplot.type must be barplot with output from GxE.") }
   
   
   variable = mean_comparisons_GxE$variable
