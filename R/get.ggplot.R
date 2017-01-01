@@ -70,11 +70,11 @@ get.ggplot = function(
   # let's go !!! ----------
 {
   # 1. error messages ----------
-  mess = "data must come from functions check_model, mean_comparisons, parameter_groups"
+  mess = "data must come from functions check_model, mean_comparisons, parameter_groups, biplot_GxE, cross_validation_model_2"
   
   if (is.null(attributes(data)$PPBstats.object)) { stop(mess) }
   
-  if (!is.element(attributes(data)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE", "mean_comparisons_GxE", "mean_comparisons_model_1", "mean_comparisons_model_2", "mean_comparisons_predict_the_past_model_2", "parameter_groups", "cross_validation_model_2"))) { stop(mess) }
+  if (!is.element(attributes(data)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE", "mean_comparisons_GxE", "mean_comparisons_model_1", "mean_comparisons_model_2", "mean_comparisons_predict_the_past_model_2", "biplot_GxE", "parameter_groups", "cross_validation_model_2"))) { stop(mess) }
   
   if( !is.element(ggplot.type, c("barplot", "biplot-alpha-beta", "interaction", "score"))) { stop("ggplot.type must be either \"barplot\", \"biplot-alpha-beta\", \"interaction\", \"score\".") }
   
