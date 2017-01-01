@@ -1,12 +1,11 @@
 check_model_model_2 = function(
-  out.model,
-  nb_parameters_per_plot = 10
+  out_model_2
 ){
   # Default settings
-  model2.presence.abscence.matrix = out.model$model2.presence.abscence.matrix
+  model2.presence.abscence.matrix = out_model_2$model2.presence.abscence.matrix
   
   # 1. Convergence, update MCMC when parameters did not converge ----------
-  out.conv = check_convergence(out.model, model_name = "model2")
+  out.conv = check_convergence(out_model_2, model_name = "model2")
   MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   out.convergence = out.conv$out.convergence
@@ -34,7 +33,7 @@ check_model_model_2 = function(
     
     germ_not_ok = unique(c(germ_not_ok_alpha, germ_not_ok_beta))
     
-    mat = out.model$model2.presence.abscence.matrix
+    mat = out_model_2$model2.presence.abscence.matrix
     if( !is.null(germ_not_ok) ) { mat = mat[!is.element(rownames(mat), germ_not_ok),] }
     if( !is.null(env_not_ok) ) { mat = mat[,!is.element(colnames(mat), env_not_ok)] }
     model2.presence.abscence.matrix = mat
@@ -62,8 +61,8 @@ check_model_model_2 = function(
   }
   
   # 2.4. standardized epsilon_ijk distribution ----------
-  if ( !is.null(out.model$epsilon)  ) {      
-    epsilon_ijk = out.model$epsilon     
+  if ( !is.null(out_model_2$epsilon)  ) {      
+    epsilon_ijk = out_model_2$epsilon     
     sigma_epsilon = sq_MCMC[grep("sigma_epsilon", sq_MCMC$parameter), "q3"]
     std_res = epsilon_ijk / sigma_epsilon
     data_ggplot_model_2_epsilon = cbind.data.frame(x = c(1:length(epsilon_ijk)), std_res)

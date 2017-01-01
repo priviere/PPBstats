@@ -1,10 +1,10 @@
 check_model_model_1 = function(
-  out.model
+  out_model_1
 )
   {
   
   # 1. Convergence, update MCMC and data frame with environments where some parameters did not converge ----------
-  out.conv = check_convergence(out.model, model_name = "model_1")
+  out.conv = check_convergence(out_model_1, model_name = "model_1")
   MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   out.convergence = out.conv$out.convergence
@@ -33,7 +33,7 @@ check_model_model_1 = function(
     # update data
     env_not_ok = unique(c(env_not_ok_mu, env_not_ok_beta, env_not_ok_sigma))
     if( length(env_not_ok) > 0 ) {
-      data_env_whose_param_did_not_converge = droplevels(filter(out.model$data.model1, environment %in% env_not_ok))
+      data_env_whose_param_did_not_converge = droplevels(filter(out_model_1$data.model1, environment %in% env_not_ok))
       data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
       data_env_whose_param_did_not_converge$parameter = paste("mu", data_env_whose_param_did_not_converge$parameter, sep = "")
 
@@ -94,8 +94,8 @@ check_model_model_1 = function(
   } else { data_ggplot_model_1_sigma_j_2 = NULL }
   
   # 2.5. standardized epsilon_ijk distribution ----------
-  if ( !is.null(out.model$epsilon)  ) {
-    epsilon_ijk = out.model$epsilon
+  if ( !is.null(out_model_1$epsilon)  ) {
+    epsilon_ijk = out_model_1$epsilon
     sigma_j = sq_MCMC[grep("sigma", sq_MCMC$parameter), "q3"]
     names(sigma_j) = sq_MCMC$parameter[grep("sigma", sq_MCMC$parameter)]
     env = sub("\\]", "", sapply(names(epsilon_ijk), function(x) { sub("epsilon\\[", "", sapply(x, function(x){unlist(strsplit(as.character(x), ","))[2]})) }))
@@ -105,7 +105,7 @@ check_model_model_1 = function(
   
 
   # 3. Return results ----------
-  data_env_with_no_controls = out.model$data_env_with_no_controls
+  data_env_with_no_controls = out_model_1$data_env_with_no_controls
   if( !is.null(data_env_with_no_controls) ){
     data_env_with_no_controls$parameter = paste("mu", data_env_with_no_controls$parameter, sep = "")
     data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
