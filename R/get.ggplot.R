@@ -74,7 +74,7 @@ get.ggplot = function(
   
   if (is.null(attributes(data)$PPBstats.object)) { stop(mess) }
   
-  if (!is.element(attributes(data)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE", "mean_comparisons_model_GxE", "mean_comparisons_model_1", "mean_comparisons_model_2", "mean_comparisons_predict_the_past_model_2", "parameter_groups", "cross_validation_model_2"))) { stop(mess) }
+  if (!is.element(attributes(data)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE", "mean_comparisons_GxE", "mean_comparisons_model_1", "mean_comparisons_model_2", "mean_comparisons_predict_the_past_model_2", "parameter_groups", "cross_validation_model_2"))) { stop(mess) }
   
   if( !is.element(ggplot.type, c("barplot", "biplot-alpha-beta", "interaction", "score"))) { stop("ggplot.type must be either \"barplot\", \"biplot-alpha-beta\", \"interaction\", \"score\".") }
   
@@ -101,7 +101,7 @@ get.ggplot = function(
   
   if( attributes(data)$PPBstats.object == "check_model_GxE" ) { out = ggplot_check_model_GxE(data, nb_parameters_per_plot) }
   
-  if( attributes(data)$PPBstats.object == "mean_comparisons_model_GxE" ) { out = ggplot_mean_comparisons_model_GxE(data, nb_parameters_per_plot) }
+  if( attributes(data)$PPBstats.object == "mean_comparisons_GxE" ) { out = ggplot_mean_comparisons_model_GxE(data, nb_parameters_per_plot) }
   
   if( attributes(data)$PPBstats.object == "mean_comparisons_model_1" ) { out = ggplot_mean_comparisons_model_1(data, data_version, ggplot.type, nb_parameters_per_plot) }
   
