@@ -51,7 +51,7 @@ check_model_GxE = function(
   
   out = list(
     "GxE" = out_GxE,
-    data_ggplot = list(
+    "data_ggplot" = list(
       "data_ggplot_residuals" = list(
         "data_ggplot_normality" = data_ggplot_normality,
         "data_ggplot_skewness_test" = data_ggplot_skewness_test,
