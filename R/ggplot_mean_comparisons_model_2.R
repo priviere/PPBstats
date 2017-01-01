@@ -1,12 +1,14 @@
 ggplot_mean_comparisons_model_2 = function(
   out_mean_comparisons_model_2,
-  out_mean_comparisons_model_2_bis,
+  out_mean_comparisons_model_2_bis = NULL,
   ggplot.type,
   nb_parameters_per_plot = 10
 ){
   
   # 1. Error message
   if( attributes(out_mean_comparisons_model_2)$PPBstats.object != "mean_comparisons_model_2" ) { stop("data must come from mean_comparisons and model_2") }
+  
+  if( is.null(out_mean_comparisons_model_2_bis) & ggplot.type == "biplot-alpha-beta" ) { stop("With ggplot.type = \"biplot-alpha-beta\", out_mean_comparisons_model_2_bis can not be NULL.") }
   
   if( !is.element(ggplot.type, c("biplot-alpha-beta", "barplot")) ) { stop("ggplot.type must be barplot or biplot-alpha-beta with output from model_2") }
   
