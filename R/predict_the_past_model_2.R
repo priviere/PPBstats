@@ -20,7 +20,7 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{check_model}}, \code{\link{check_model_model_2}}
+#' @seealso \code{\link{check_model}}, \code{\link{check_model_model_2}}, \code{\link{mean_comparisons}}, \code{\link{mean_comparisons_predict_the_past_model_2}}
 #' 
 predict_the_past_model_2 = function(
   out_check_model_model_2,
