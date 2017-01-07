@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Get the value of type one error needed to have X groups.
 #'
 #' @description
@@ -21,7 +20,7 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{analyse.outputs}}, \code{\link{comp.parameters}}, \code{\link{get.significant.groups}}
+#' @seealso \code{\link{check_model}}, \code{\link{comp.parameters}}, \code{\link{get.significant.groups}}
 #' 
 #' 
 get.at.least.X.groups = function(
@@ -30,7 +29,6 @@ get.at.least.X.groups = function(
   p.adj = "soft.bonf", 
   precision = 0.0005
   )
-# let's go !!! ----------
 {
 total_groups = nrow(Mpvalue)
 ALP = rep(NA, (total_groups - 1))
