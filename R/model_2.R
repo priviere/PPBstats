@@ -326,6 +326,8 @@ model_2 = function(
     MCMC_epsilon = rbind.data.frame(as.data.frame(mcmc_epsilon[[1]]), as.data.frame(mcmc_epsilon[[2]]))
     epsilon = apply(MCMC_epsilon, 2, median, na.rm = TRUE)
   } else {epsilon = NULL}
+
+  # 7. Return results ----------  
   
   OUT = list(
     "data.presence.abscence.matrix" = data.presence.abscence.matrix,

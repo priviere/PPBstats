@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Run model 1 to get mean comparisons on each environment of the network.
 #'
 #' @description
@@ -337,7 +336,7 @@ model_1 = function(
     
   } else {epsilon = NULL}
   
-  # 7. Get the outptus ----------
+  # 7. Return results ----------
   OUT = list(
     "data.model1" = data.model1,
     "data.presence.abscence.matrix" = presence.abscence.matrix,
