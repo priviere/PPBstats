@@ -1,8 +1,7 @@
-# 0. help ----------
-#' Run complete cross validation with model 2 (FWH)
+#' Run complete cross validation with model 2
 #'
 #' @description
-#' \code{cross.validation.FWH} runs complete cross validation with model 2 (FWH)
+#' \code{cross_validation_model_2} runs complete cross validation with model 2
 #' 
 #' @param data The data frame on which the model will be run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
@@ -14,36 +13,25 @@
 #' 
 #' @details
 #' 
-#' The convergence is not checked for each validation. If the parameters in the FWH converge (cf \code{analyse.outputs}), then it is assumed that the FWH in the cross validation converge as well.
+#' The convergence is not checked for each validation. If the parameters converge (cf \code{check_model}), then it is assumed that the parameters in the cross validation converge as well.
 #' 
 #' The model is run on data sets where germplasms are on at least three environments so the smallest data set where the cross validation is run has germplasms on at least two environments. 
 #' 
 #' Parallelization is done with the function \code{parallel::mclapply}.
 #' 
-#' The percentage of confidence is estimated from the bias of estimated values in relation to real values.
-#' A t.test is performed with the null hypothesis H0: the bias = 0.
-#' More informations can be found in the vignette (type vignette("PPBstats")).
-#' 
-#' 
-#' @return The function returns a list with
-#' \itemize{
-#'  \item A data frame with real values and estimated values by cross validation
-#'  \item A list with the plot of the regression and the anova model
-#'  \item The percentage of confidence
-#'  }
+#' @return 
+#' The function returns a data frame with real values and estimated values by cross validation
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{FWH}}, \code{\link{predict.the.past}}
+#' @seealso \code{\link{model_2}}, \code{\link{check_model}}, \code{\link{check_model_model_2}}
 #' 
-#'
 #'
 cross_validation_model_2 = function(
   data, 
   variable, 
   nb_iterations = 100000,
   mc.cores = 1)
-  # let's go !!! ----------
 {
   # 1. Error message ----------
   check_data_vec_variables(data, variable)
@@ -129,6 +117,8 @@ cross_validation_model_2 = function(
   real.value = unlist(OUT)[grep("real.value", names(unlist(OUT)))]
   estimated.value = unlist(OUT)[grep("estimated.value", names(unlist(OUT)))]
     
+  # 5. Return results ----------
+  
   out = cbind.data.frame(real.value, estimated.value)
   
   attributes(out)$PPBstats.object = "cross_validation_model_2"
