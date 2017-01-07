@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Get PPBstats datas to run example of the vignette
 #'
 #' @description
@@ -12,7 +11,6 @@
 #' @author Pierre Riviere
 #' 
 get.PPBstats.data = function()
-  # let's go !!! ---------- 
 {
   # function from Kay Cichini
   # https://www.r-bloggers.com/download-files-from-dropbox-programmatically-with-r/
