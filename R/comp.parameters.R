@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Get parameter comparisons two by two or to a given threshold based on MCMC outputs
 #'
 #' @description
@@ -31,7 +30,6 @@ comp.parameters = function(
   type = 1,
   threshold = 1
   )
-# let's go !!! ----------
 {
 # 1. Error message and update arguments ----------
 if( !is.data.frame(MCMC) ) { stop("MCMC must be a data frame.") }
