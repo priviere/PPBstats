@@ -26,7 +26,7 @@
 #' 
 biplot_GxE = function(out_check_model_GxE){
   
-  # 1. Error message
+  # 1. Error message ----------
   if( attributes(out_check_model_GxE)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
   
   data_interaction = out_check_model_GxE$GxE$ANOVA$interaction_matrix
@@ -40,6 +40,7 @@ biplot_GxE = function(out_check_model_GxE){
     variable = as.vector(m_eco)
   )
   
+  # 3. Return results ----------
   out = list(
     "variable" = out_check_model_GxE$GxE$variable,
     "data_ecovalence" = data_ecovalence,
