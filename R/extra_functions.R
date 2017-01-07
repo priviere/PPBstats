@@ -1,4 +1,3 @@
-# 0. help -----------------------------------------------------------------
 #' Some functions used in several functions of PPBstats
 #' 
 #' @name extra_functions
