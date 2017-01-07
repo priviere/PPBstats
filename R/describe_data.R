@@ -1,10 +1,9 @@
-# 0. help ----------
 #' Describe the data set in order to choose the appropriate analysis to carry out
 #'
 #' @description
 #' \code{describe_data} describes the data set in order to choose the appropriate analysis to carry out
 #' 
-#' @param data 
+#' @param data  The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #' 
 #' @param vec_variables Vector of variables to describe
 #'  
@@ -39,7 +38,6 @@ describe_data = function(
   vec_variables,
   nb_parameter_per_grid = 5
 )
-  # let's go !!! ----------
   {
     # 1. Error message ----------  
     check_data_vec_variables(data, vec_variables)
