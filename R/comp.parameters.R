@@ -23,7 +23,7 @@
 #'
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{get.mean.comparisons}}
+#' @seealso \code{\link{check_model}}, \code{\link{mean_comparisons}}
 #' 
 comp.parameters = function(
   MCMC,
