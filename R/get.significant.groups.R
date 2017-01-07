@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Get significant groups of differences for a set of parameters based on MCMC outputs
 #'
 #' @description
@@ -6,7 +5,7 @@
 #' 
 #' @param Mpvalue Square matrix with the probability of having a common distribution for each pair of parameter. It comes from \code{comp.parameters}
 #'
-#' @param MCMC MCMC outputs from \code{analysis.outputs}. It is a data frame.
+#' @param MCMC MCMC outputs from \code{check_model}. It is a data frame.
 #'  
 #' @param alpha The level of type one error. 0.05 (5\%) by default
 #' 
@@ -17,7 +16,7 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{analyse.outputs}}, \code{\link{get.mean.comparisons}}, \code{\link{get.ggplot}}
+#' @seealso \code{\link{check_model}}, \code{\link{mean_comparisons}}, \code{\link{get.ggplot}}
 #' 
 #' 
 get.significant.groups = function(
