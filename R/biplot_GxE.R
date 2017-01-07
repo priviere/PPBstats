@@ -17,9 +17,7 @@
 #' }
 #'  
 #' @author Pierre Riviere
-#' 
-#' @examples
-#' See the vignette for examples 
+#'
 #' 
 #' @seealso \code{\link{check_model}}, \code{\link{check_model_GxE}}, \code{\link{get.ggplot}}, \code{\link{ggplot_biplot_GxE}}
 #' 
