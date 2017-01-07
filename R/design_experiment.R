@@ -1,36 +1,36 @@
-# 0. help ----------
-#' Provides experimental plan for several situations
+#' Provides experimental design for several situations
 #'
 #' @description
-#' \code{design_experiment} provides experimental plan for several situations
+#' \code{design_experiment} provides experimental design for several situations
 #' 
 #' @param expe.type The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD".
 #' 
-#' @param location Name of the location
+#' @param location Name of the location.
 #' 
-#' @param year Year of the exepriment
+#' @param year Year of the experiment.
 #' 
-#' @param germplasm Vector with the names of the germplasm
+#' @param germplasm Vector with the names of the germplasm.
 #' 
-#' @param controls Vector with names of controls
+#' @param controls Vector with names of controls.
 #' 
 #' @param nb.controls.per.block Number of controls per blocks.
 #' 
-#' @param nb.blocks Number of blocks
+#' @param nb.blocks Number of blocks.
 #' 
-#' @param nb.cols Number of columns in the design. The number of rows is computed automaticaly
+#' @param nb.cols Number of columns in the design. The number of rows is computed automaticaly.
 #' 
-#' @param return.format "standard" (germplasm, block, X, Y) or "shinemas" for SHiNeMaS reproduction template file
+#' @param return.format "standard" ("location", "year", "germplasm", "block", "X", "Y") or "shinemas" for SHiNeMaS reproduction template file.
 #'
 #' @return 
 #' The function returns a list with
 #' \itemize{
-#'  \item A data frame according to return.format
-#'  \item An image of the experimental design
+#'  \item data.frame : A data frame according to return.format
+#'  \item design : An image of the experimental design
 #'  }
 #' 
 #' @details 
 #' Note that an efficient R package to design experiment is DiGGer, see \url{http://www.austatgen.org/software/} for mor details. Unfortunately, the lience of the package did not allow us to fork the code. 
+#' 
 #' In this function, the code is based on the following algorithms:
 #' \itemize{
 #'  \item "satellite-farm"
@@ -69,6 +69,7 @@
 #'  \item "IBD"
 #' the randomization is based on the ibd function in the ibd package. See \code{?ibd} for more information
 #' }
+#' 
 #' @author Pierre Riviere
 #' 
 design_experiment = function(
@@ -82,7 +83,6 @@ design_experiment = function(
   nb.cols,
   return.format = "standard"
 )
-  # let's go !!! ----------
   {
     # 1. Error message ----------  
     if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
@@ -366,7 +366,7 @@ design_experiment = function(
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
-      out = list("data.frame" = d, "plan" = p)
+      out = list("data.frame" = d, "design" = p)
       out = list("satellite-farms" = out); OUT = c(OUT, out)
     }
     
@@ -382,7 +382,7 @@ design_experiment = function(
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
-      out = list("data.frame" = d, "plan" = p)
+      out = list("data.frame" = d, "design" = p)
       out = list("regional-farms" = out); OUT = c(OUT, out)
     }
     
@@ -397,7 +397,7 @@ design_experiment = function(
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
-      out = list("data.frame" = d, "plan" = p)
+      out = list("data.frame" = d, "design" = p)
       out = list("row-column" = out); OUT = c(OUT, out)
     }
     
@@ -434,7 +434,7 @@ design_experiment = function(
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
-      out = list("data.frame" = d, "plan" = p)
+      out = list("data.frame" = d, "design" = p)
       out = list("fully-replicated" = out); OUT = c(OUT, out)
     }
     
@@ -461,7 +461,7 @@ design_experiment = function(
       p = get_ggplot_plan(d)
       d = format_data(d, return.format)
       
-      out = list("data.frame" = d, "plan" = p)
+      out = list("data.frame" = d, "design" = p)
       out = list("IBD" = out); OUT = c(OUT, out)
     }
      
