@@ -32,6 +32,6 @@ The comparisons is based on the probability of having a common distribution for 
 Pierre Riviere
 }
 \seealso{
-\code{\link{get.mean.comparisons}}
+\code{\link{check_model}}, \code{\link{mean_comparisons}}
 }
 
