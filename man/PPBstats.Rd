@@ -6,12 +6,12 @@
 \alias{PPBstats-package}
 \title{PPBstats}
 \description{
-The R package \code{PPBstats} analyzes unbalanced trials from decentralized participatory plant breeding programs.
+\code{PPBstats} is an R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes
 }
 \details{
 How to use \code{PPBstats} is explained in the vignette: type vignette("PPBstats").
 }
 \author{
-Pierre Riviere and Olivier David
+Pierre Riviere, Gaelle Van Franck and Olivier David
 }
 
