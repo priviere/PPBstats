@@ -1,27 +1,26 @@
-# 0. help ----------
-#' Estimate value of a germplasm in an environment based on the FWH model.
+#' Estimate value of a germplasm in an environment based on model 2.
 #'
 #' @description
-#' \code{predict.the.past} estimates value of a germplasm in an environment based on the FWH model.
+#' \code{predict_the_past_model_2} estimates value of a germplasm in an environment based on model 2.
 #' 
-#' @param out.analyse.outputs object from \code{analyse.outputs}
+#' @param out_check_model_model_2 object from \code{check_model} from model 2 
 #' 
-#' @param output.format Format of the output: "summary" or "raw". See details.
+#' @param env name of the environment where the germplasm effect are predicted
 #' 
-#' 
-#' @return The function returns a list with for each environment, the estimated value of the germplasms that were not grown in this environment.
+#' @return The function returns a MCMC for the given environment. This MCMC outptu can be used in the same way as the output from check_model of model 1.
 #' 
 #' @details
 #' The estimations of the values are based on the MCMC outputs.
 #' More informations can be found in the vignette (type vignette("PPBstats")).
 #' 
-#' Due to memory issues, it may be better to choose output.format = "summary".
+#' It is like mu_ij effect that are estimated (as for model 1), i.e. the effect of a germplasm in an environment.
+#' 
+#' Due to memory issues, it is better to run the function for only one environment instread of all by default.
 #' This allows caterpillar plots, barplots and interaction plots but no mean comparisons that are based on the whole MCMC.
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{FWH}}, \code{\link{analyse.outputs}}
-#' 
+#' @seealso \code{\link{check_model}}, \code{\link{check_model_model_2}}
 #' 
 predict_the_past_model_2 = function(
   out_check_model_model_2,
@@ -53,6 +52,7 @@ predict_the_past_model_2 = function(
     names(OUT) = paste("mu[", germ, ",", env,"]", sep = "")
   } else { OUT = NULL }
   
+  # 3. Return the results ----------
   out = list("MCMC" = OUT)
   attributes(out)$PPBstats.object = "predict_the_past_model_2"
   return(out)
