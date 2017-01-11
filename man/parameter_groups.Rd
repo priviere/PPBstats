@@ -7,17 +7,15 @@
 parameter_groups(list_out_check_model, parameter)
 }
 \arguments{
-\item{list_out_check_model}{A list whose elements are output from \code{analyse.outputs}}
+\item{list_out_check_model}{A list whose elements are output from \code{check_model}}
 
 \item{parameter}{The parameter on which to get the groups}
-
-\item{nb.clust}{Number of cluster to get. -1 to get automatic clustering. See details.}
 }
 \value{
 The function returns a data frame with for each parameter, the median for each variable and the cluster to which it belongs
 }
 \description{
-\code{get.parameter.groups}
+\code{parameter_groups} gets groups of parameters based on multivariate analysis
 }
 \details{
 The function run a PCA on a matrix containing the value of each parameter for each variable.
@@ -32,6 +30,6 @@ More details in the vignette (type vignette ("PPBstats")).
 Pierre Riviere
 }
 \seealso{
-\code{\link{FWH}}, \code{\link{analyse.outputs}}, \code{\link{get.ggplot}}
+\code{\link{check_model}}, \code{\link{check_model_model_2}}, \code{\link{check_model_GxE}}, \code{\link{parameter_groups_GxE}}, \code{\link{parameter_groups_model_2}}, \code{\link{get.ggplot}}
 }
 

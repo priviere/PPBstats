@@ -2,32 +2,34 @@
 % Please edit documentation in R/predict_the_past_model_2.R
 \name{predict_the_past_model_2}
 \alias{predict_the_past_model_2}
-\title{Estimate value of a germplasm in an environment based on the FWH model.}
+\title{Estimate value of a germplasm in an environment based on model 2.}
 \usage{
 predict_the_past_model_2(out_check_model_model_2, env = NULL)
 }
 \arguments{
-\item{out.analyse.outputs}{object from \code{analyse.outputs}}
+\item{out_check_model_model_2}{object from \code{check_model} from model 2}
 
-\item{output.format}{Format of the output: "summary" or "raw". See details.}
+\item{env}{name of the environment where the germplasm effect are predicted}
 }
 \value{
-The function returns a list with for each environment, the estimated value of the germplasms that were not grown in this environment.
+The function returns a MCMC for the given environment. This MCMC outptu can be used in the same way as the output from check_model of model 1.
 }
 \description{
-\code{predict.the.past} estimates value of a germplasm in an environment based on the FWH model.
+\code{predict_the_past_model_2} estimates value of a germplasm in an environment based on model 2.
 }
 \details{
 The estimations of the values are based on the MCMC outputs.
 More informations can be found in the vignette (type vignette("PPBstats")).
 
-Due to memory issues, it may be better to choose output.format = "summary".
+It is like mu_ij effect that are estimated (as for model 1), i.e. the effect of a germplasm in an environment.
+
+Due to memory issues, it is better to run the function for only one environment instread of all by default.
 This allows caterpillar plots, barplots and interaction plots but no mean comparisons that are based on the whole MCMC.
 }
 \author{
 Pierre Riviere
 }
 \seealso{
-\code{\link{FWH}}, \code{\link{analyse.outputs}}
+\code{\link{check_model}}, \code{\link{check_model_model_2}}, \code{\link{mean_comparisons}}, \code{\link{mean_comparisons_predict_the_past_model_2}}
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cross_validation_model_2.R
 \name{cross_validation_model_2}
 \alias{cross_validation_model_2}
-\title{Run complete cross validation with model 2 (FWH)}
+\title{Run complete cross validation with model 2}
 \usage{
 cross_validation_model_2(data, variable, nb_iterations = 1e+05,
   mc.cores = 1)
@@ -17,31 +17,22 @@ cross_validation_model_2(data, variable, nb_iterations = 1e+05,
 \item{mc.cores}{The number of cores used for parallelisation of the computing}
 }
 \value{
-The function returns a list with
-\itemize{
- \item A data frame with real values and estimated values by cross validation
- \item A list with the plot of the regression and the anova model
- \item The percentage of confidence
- }
+The function returns a data frame with real values and estimated values by cross validation
 }
 \description{
-\code{cross.validation.FWH} runs complete cross validation with model 2 (FWH)
+\code{cross_validation_model_2} runs complete cross validation with model 2
 }
 \details{
-The convergence is not checked for each validation. If the parameters in the FWH converge (cf \code{analyse.outputs}), then it is assumed that the FWH in the cross validation converge as well.
+The convergence is not checked for each validation. If the parameters converge (cf \code{check_model}), then it is assumed that the parameters in the cross validation converge as well.
 
 The model is run on data sets where germplasms are on at least three environments so the smallest data set where the cross validation is run has germplasms on at least two environments.
 
 Parallelization is done with the function \code{parallel::mclapply}.
-
-The percentage of confidence is estimated from the bias of estimated values in relation to real values.
-A t.test is performed with the null hypothesis H0: the bias = 0.
-More informations can be found in the vignette (type vignette("PPBstats")).
 }
 \author{
 Pierre Riviere
 }
 \seealso{
-\code{\link{FWH}}, \code{\link{predict.the.past}}
+\code{\link{model_2}}, \code{\link{check_model}}, \code{\link{check_model_model_2}}
 }
 
