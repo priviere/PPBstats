@@ -23,9 +23,6 @@ The function returns a list with:
 \details{
 The ecovalence is the interaction matrix squared.
 }
-\examples{
-See the vignette for examples
-}
 \author{
 Pierre Riviere
 }

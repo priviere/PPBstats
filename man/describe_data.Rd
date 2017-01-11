@@ -7,7 +7,7 @@
 describe_data(data, vec_variables, nb_parameter_per_grid = 5)
 }
 \arguments{
-\item{data}{}
+\item{data}{The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
 
 \item{vec_variables}{Vector of variables to describe}
 

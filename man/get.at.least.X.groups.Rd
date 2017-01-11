@@ -30,6 +30,6 @@ When there is no data, it returns NA. It may depend on the precision. For exempl
 Pierre Riviere
 }
 \seealso{
-\code{\link{analyse.outputs}}, \code{\link{comp.parameters}}, \code{\link{get.significant.groups}}
+\code{\link{check_model}}, \code{\link{comp.parameters}}, \code{\link{get.significant.groups}}
 }
 

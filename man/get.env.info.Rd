@@ -30,6 +30,6 @@ The function returns a list with
 Pierre Riviere
 }
 \seealso{
-\code{\link{MC}}
+\code{\link{model_1}}
 }
 
