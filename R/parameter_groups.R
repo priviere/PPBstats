@@ -1,14 +1,11 @@
-# 0. help ----------
 #' Get groups of parameters based on multivariate analysis
 #'
 #' @description
-#' \code{get.parameter.groups}
+#' \code{parameter_groups} gets groups of parameters based on multivariate analysis
 #'
-#' @param list_out_check_model A list whose elements are output from \code{analyse.outputs}
+#' @param list_out_check_model A list whose elements are output from \code{check_model}
 #'  
 #' @param parameter The parameter on which to get the groups
-#' 
-#' @param nb.clust Number of cluster to get. -1 to get automatic clustering. See details.
 #' 
 #' @details
 #' The function run a PCA on a matrix containing the value of each parameter for each variable.
@@ -24,7 +21,7 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{FWH}}, \code{\link{analyse.outputs}}, \code{\link{get.ggplot}}
+#' @seealso \code{\link{check_model}}, \code{\link{check_model_model_2}}, \code{\link{check_model_GxE}}, \code{\link{parameter_groups_GxE}}, \code{\link{parameter_groups_model_2}}, \code{\link{get.ggplot}}
 #' 
 #' 
 parameter_groups = function(
