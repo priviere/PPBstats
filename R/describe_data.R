@@ -62,7 +62,7 @@ describe_data = function(
       p = p + ggtitle(
         paste("Presence abscence repartition for ", variable, sep = ""),
         paste("(",  nb_NA, "% of 0)", sep = "")
-      )
+      ) + theme(axis.text.x=element_text(angle=90))
       out.presence.abscence = p
 
       # 2.2. Histogram and boxplot
@@ -113,7 +113,7 @@ describe_data = function(
       p_gxe = p_gxe + ylab(variable)
       # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
       
-      out__gxe = p_gxe + facet_grid(year ~ .)
+      out_gxe = p_gxe + facet_grid(year ~ .)
       
       
       
