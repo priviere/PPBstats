@@ -25,13 +25,25 @@ ggplot_mean_comparisons_GxE = function(
   }
   
   # 2. Germplasm
-  ggplot_LSDbarplot_germplasm = ggplot_LSDbarplot(data_ggplot_LSDbarplot_germplasm, "germplasm", variable)
+  if( !is.null(data_ggplot_LSDbarplot_germplasm) ){ 
+    ggplot_LSDbarplot_germplasm = ggplot_LSDbarplot(data_ggplot_LSDbarplot_germplasm, "germplasm", variable) 
+  } else {
+    ggplot_LSDbarplot_germplasm = NULL
+    }
   
   # 3. Location
-  ggplot_LSDbarplot_location = ggplot_LSDbarplot(data_ggplot_LSDbarplot_location, "location", variable)
+  if( !is.null(data_ggplot_LSDbarplot_location) ){ 
+    ggplot_LSDbarplot_location = ggplot_LSDbarplot(data_ggplot_LSDbarplot_location, "location", variable) 
+  } else {
+    ggplot_LSDbarplot_location = NULL
+  }
   
   # 4. Year
-  ggplot_LSDbarplot_year = ggplot_LSDbarplot(data_ggplot_LSDbarplot_year, "year", variable)
+  if( !is.null(data_ggplot_LSDbarplot_year) ){ 
+    ggplot_LSDbarplot_year = ggplot_LSDbarplot(data_ggplot_LSDbarplot_year, "year", variable) 
+  } else {
+    ggplot_LSDbarplot_year = NULL
+  }
   
   # 5. return results
   out = list(
