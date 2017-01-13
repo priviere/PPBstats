@@ -13,7 +13,7 @@ mean_comparisons_GxE = function(
     LSD$groups$trt = factor(LSD$groups$trt, levels = LSD$groups$trt)
     d_LSD = LSD$groups
     d_LSD$ymean = d_LSD$means / 2
-    if( nrow(d_LSD) == 0 ) { d_LSD = NULL }
+    if( is.null(nrow(d_LSD)) ) { d_LSD = NULL }
     return(d_LSD)
   }
   
