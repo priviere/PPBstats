@@ -9,7 +9,6 @@ mean_comparisons_GxE = function(
   variable = out_check_model$GxE$variable
   
   data_ggplot_LSDbarplot = function(model, fac, p.adj){
-    fac = "germplasm"
     LSD = LSD.test(model, fac, p.adj = p.adj)
     LSD$groups$trt = factor(LSD$groups$trt, levels = LSD$groups$trt)
     d_LSD = LSD$groups
