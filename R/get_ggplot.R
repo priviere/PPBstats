@@ -73,7 +73,7 @@
 #'  \item \code{predict_the_past_model_2}
 #' }
 #' 
-get.ggplot = function(
+get_ggplot = function(
   data,
   data_2 = NULL,
   data_version = NULL,
