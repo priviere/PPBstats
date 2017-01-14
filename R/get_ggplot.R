@@ -56,10 +56,10 @@
 #' @param nb_parameters_per_plot The number of parameters per plot to facilitate the visualization
 #' 
 #' @details
-#' 
+#' to do
 #' 
 #' @return 
-#'  
+#' to do
 #'  
 #' @author Pierre Riviere
 #' 
