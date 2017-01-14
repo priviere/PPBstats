@@ -10,8 +10,7 @@
 #'  \item \code{mean_comparisons} or
 #'  \item \code{parameter_groups} or
 #'  \item \code{biplot_GxE} or
-#'  \item \code{cross_validation_model_2} or
-#'  \item \code{predict_the_past_model_2}
+#'  \item \code{cross_validation_model_2}
 #' }
 #' 
 #' @param data_2 Outputs from \code{mean_comparisons} from \code{check_model} from \code{model_2}.
@@ -20,8 +19,8 @@
 #' @param data_version data set with the following columns: "year", "germplasm", "location", "group", "version". The group refers to an id that contains two different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
 #' This argument is used only for \code{mean_comparisons} from 
 #' \itemize{
-#'  \item \code{check_model} regarding \code{model_1}
-#'  \item \code{check_model} regarding \code{predict_the_past_model_2}
+#'  \item \code{check_model} from \code{model_1}
+#'  \item \code{check_model} from \code{predict_the_past_model_2}
 #' }
 #'
 #' @param ggplot.type The type of plot you wish.
@@ -59,7 +58,97 @@
 #' to do
 #' 
 #' @return 
-#' to do
+#' \itemize{
+#' 
+#' 
+#'  \item check_model
+#'   \itemize{
+#'   
+#'    \item from GxE :
+#'     \itemize{
+#'      \item residuals
+#'       \itemize{
+#'        \item histogramm
+#'        \item  qqplot
+#'       }
+#'      \item variability_repartition
+#'      \item variance_intra_germplasm
+#'      \item pca_composante_variance
+#'     }
+#'     
+#'    \item from model_1 :
+#'     \itemize{
+#'      \item sigma_j_gamma
+#'      \item mu_ij
+#'      \item beta_jk
+#'      \item sigma_j
+#'      \item epsilon_ijk
+#'     }
+#'    
+#'    \item from model_2 :
+#'     \itemize{
+#'      \item alpha_i
+#'      \item beta_i
+#'      \item theta_j
+#'      \item epsilon_ij
+#'     }
+#'    
+#'   }
+#' 
+#' 
+#'  \item mean_comparisons
+#'   \itemize{
+#'    \item from GxE
+#'     \itemize{
+#'      \item germplasm
+#'      \item location
+#'      \item year
+#'     }
+#'    
+#'    \item from model_1, a list with ggplot object
+#'    
+#'    \item from model_2, a list with ggplot object
+#'    
+#'    \item predict_the_past_model_2, a list with ggplot object
+#'     
+#'   }
+#'  
+#'  
+#'  \item parameter_groups
+#'   \itemize{
+#'    \item pca
+#'     \itemize{
+#'      \item variation_dim
+#'      \item ind
+#'      \item var
+#'     }
+#'    \item clust
+#'     \itemize{
+#'      \item nb_k
+#'      \item pca
+#'     }
+#'   }
+#'   
+#'   
+#'  \item biplot_GxE
+#'   \itemize{
+#'    \item ecovalence
+#'    \item biplot
+#'     \itemize{
+#'      \item which_won_where
+#'      \item mean_vs_stability
+#'      \item discrimitiveness_vs_representativeness
+#'     }
+#'   }
+#'   
+#'   
+#'  \item cross_validation_model_2
+#'   \itemize{
+#'    \item plot
+#'    \item anova
+#'   }
+#'   
+#' }
 #'  
 #' @author Pierre Riviere
 #' 
@@ -70,7 +159,6 @@
 #'  \item \code{parameter_groups}
 #'  \item \code{biplot_GxE}
 #'  \item \code{cross_validation_model_2}
-#'  \item \code{predict_the_past_model_2}
 #' }
 #' 
 get_ggplot = function(
