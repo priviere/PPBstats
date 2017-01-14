@@ -54,10 +54,10 @@ ggplot_check_model_model_2 = function(
   
   
   out_model_2 = list(
-    "alpha" = out_alpha,
-    "beta" = out_beta,
-    "theta" = out_theta,
-    "epsilon" = out_epsilon
+    "alpha_i" = out_alpha,
+    "beta_i" = out_beta,
+    "theta_j" = out_theta,
+    "epsilon_ij" = out_epsilon
   )
   
   return(out_model_2)
