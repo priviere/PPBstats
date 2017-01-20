@@ -9,7 +9,6 @@ ggplot_mean_comparisons_GxE = function(
   
   if( is.element(ggplot.type, c("barplot")) ) { stop("ggplot.type must be barplot with output from GxE.") }
   
-  
   variable = mean_comparisons_GxE$variable
   
   data_ggplot_LSDbarplot_germplasm = mean_comparisons_GxE$data_ggplot_LSDbarplot_germplasm
