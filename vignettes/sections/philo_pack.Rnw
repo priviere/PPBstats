@@ -37,9 +37,11 @@ The statistical procedures are based on frequentist and bayesian approaches.
 In this vignette, we only used examples with main functions.
 Nevertheless, second functions could be used in other context to answer specific questions.
 Figure~\ref{main_workflow} displays the main functions and their relations.
-Figure~\ref{workflow_2} display second functions used in the main functions.
+Table~\ref{function_descriptions_workflow} describe each of the main functions.
 
-Table~\ref{function_descriptions} gives a quick description of each function.
+Figure~\ref{workflow_2} display second functions used in the main functions.
+Table~\ref{function_descriptions_workflow_2} describe each of the second functions.
+
 You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
 
 %get.PPBstats.data
@@ -50,9 +52,44 @@ You can have more information for each function by typing \texttt{?function\_nam
 \begin{center}
 \includegraphics[width=\textwidth,page=1]{PBBstats_function_relations}
 \end{center}
-\caption{Main functions used in the \pack~workflow.}
+\caption{Main functions used in the workflow.}
 \label{main_workflow}
 \end{figure}
+
+\begin{table}[H]
+\begin{tabular}{cp{.6\textwidth}}
+
+\hline
+\textbf{function name} & \textbf{description} \\ \hline
+
+\texttt{design\_experiment} & \\ \hline
+
+\texttt{describe\_data} &  \\ \hline
+
+\texttt{model\_1} & \\ \hline
+
+\texttt{model\_2} & \\ \hline
+
+\texttt{GxE} & \\ \hline
+
+\texttt{check\_model} &  \\ \hline
+
+\texttt{mean\_comparisons} &  \\ \hline
+
+\texttt{parameter\_groups} &  \\ \hline
+
+\texttt{cross\_validation\_model\_2} &  \\ \hline
+
+\texttt{predict\_the\_past\_model\_2} &  \\ \hline
+
+\texttt{biplot\_GxE} &  \\ \hline
+
+\texttt{get\_ggplot} &  \\ \hline
+
+\end{tabular}
+\caption{Main function descriptions.}
+\label{function_descriptions_workflow}
+\end{table}
 
 
 \begin{figure}[H]
@@ -64,57 +101,70 @@ You can have more information for each function by typing \texttt{?function\_nam
 \label{workflow_2}
 \end{figure}
 
-\begin{table}[t]
-\begin{tabular}{cp{.6\textwidth}}
+\begin{table}[H]
+\begin{tabular}{cp{.4\textwidth}}
 
 \hline
-\textbf{function name} & \textbf{description} \\
+\textbf{function name} & \textbf{description} \\ \hline
 
-\hline
-\hline
+\texttt{get.env.info} & Get regional farms data and satellite farms data \\ \hline
 
-\texttt{MC} & Run model~\ref{model1} to get mean comparisons (MC) on each environment of the network.\\
-\hline
+\texttt{GxE\_build\_interaction\_matrix} & \\ \hline
 
-\texttt{FWH} & Run model~\ref{model2} to get main germplasm, environment and sensitivity effects over the network. \\
-\hline
+\texttt{check\_model\_model\_1} & \\ \hline
 
-\texttt{analyse.outputs} & Check with plots if the model went well based ont the Gelman-Rubin test and plots of posteriors distributions (see section \ref{section_bayes}). It is important to run this step before going ahead in the analysis otherwise you may make mistakes in the interpretation of the results \\
-\hline
+\texttt{check\_model\_model\_2} & \\ \hline
 
-\texttt{get.mean.comparisons} & Get mean comparisons for a given parameter two by two or to a given threshold based on MCMC outputs \\
-\hline
+\texttt{check\_model\_GxE} & \\ \hline
 
-\texttt{get.parameter.groups} & Get groups of parameters based on multivariate analysis \\
-\hline
+\texttt{parameter\_groups\_GxE} & \\ \hline
 
-\texttt{cross.validation.FWH} & Run complete cross vlidation with model~\ref{model2} \\
-\hline
+\texttt{parameter\_groups\_model\_2} & \\ \hline
 
-\texttt{predict.the.past} & Estimate value of a germplasm in an environment based on the FWH model. \\
-\hline
+\texttt{comp.parameters} & \\ \hline
 
-\texttt{get.ggplot} & Get ggplot objects to visualize output from the analysis \\
-\hline
+\texttt{get.significant.groups} & \\ \hline
 
-\hline
+\texttt{get.at.least.X.groups} & \\ \hline
 
-\texttt{get.env.info} & Get regional farms data and satellite farms data \\
-\hline
+\texttt{mean\_comparisons\_GxE} & \\ \hline
 
-\texttt{comp.parameters} & Get parameter comparisons two by two or to a given threshold based on MCMC outputs \\
-\hline
+\texttt{mean\_comparisons\_model\_2} & \\ \hline
 
-\texttt{get.significant.groups} & Get significant groups of differences for a set of parameters based on MCMC outputs \\
-\hline
+\texttt{mean\_comparisons\_model\_1} & \\ \hline
 
-\texttt{get.at.least.X.groups} & Get the value of type one error needed to have X groups. \\
-\hline
+\texttt{mean\_comparisons\_predict\_the\_past\_model\_2} & \\ \hline
+
+\texttt{ggplot\_parameter\_groups} & \\ \hline
+
+\texttt{ggplot\_check\_model\_GxE} & \\ \hline
+
+\texttt{ggplot\_check\_model\_model\_1} & \\ \hline
+
+\texttt{ggplot\_check\_model\_model\_2} & \\ \hline
+
+\texttt{ggplot\_cross\_validation\_model\_2} & \\ \hline
+
+\texttt{ggplot\_mean\_comparisons\_GxE} & \\ \hline
+
+\texttt{ggplot\_mean\_comparisons\_model\_1} & \\ \hline
+
+\texttt{ggplot\_mean\_comparisons\_model\_2} & \\ \hline
+
+\texttt{ggplot\_mean\_comparisons\_predict\_the\_past\_model\_2} & \\ \hline
+
+\texttt{ggplot\_biplot\_GxE} & \\ \hline
+
+\texttt{ggplot\_discrimitiveness\_vs\_representativeness} & \\ \hline
+
+\texttt{ggplot\_mean\_vs\_stability} & \\ \hline
+
+\texttt{ggplot\_which\_won\_where} & \\ \hline
 
 
 \end{tabular}
-\caption{Function descriptions in \pack.}
-\label{function_descriptions}
+\caption{Second function descriptions.}
+\label{function_descriptions_workflow_2}
 \end{table}
 
 
