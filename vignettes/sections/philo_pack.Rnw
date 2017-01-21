@@ -1,7 +1,7 @@
 \section{Philosophy of \pack}
 \label{philo}
 
-\pack~aims to facilitate the implementation of statistical methods commoly foind in \PPB~programmes.
+\pack~aims to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
 The statistical procedures are based on frequentist and bayesian approaches.
 
 \subsection{What is \PPB ?}
