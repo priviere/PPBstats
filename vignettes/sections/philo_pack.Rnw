@@ -1,12 +1,29 @@
 \section{Philosophy of \pack}
 \label{philo}
 
-\pack~aims to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
-The statistical procedures are based on frequentist and bayesian approaches.
-
 \subsection{What is \PPB ?}
 
-!!! TO DO !!!
+\begin{itemize}
+\item \textbf{decentralized the selection}
+
+When decentralizing the selection in target environment \citep{desclaux_changes_2008}, the phenotypic trait is the sum of genetic ($G$), environmental ($E$) and interaction between the two ($G \times E$) : $P = G + E + G \times E$.
+Braod sens heritability of a given trait is then:
+\begin{displaymath}
+h^2_{sl} = \frac{var(G)}{var(G) + var(E) + var(G\times E)}
+\end{displaymath}
+
+Heritability taking into account the network is therefore superior or equal to heritability on a given site because $var(G\times E) > 0$.
+When facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted variety to local agro-system.
+
+\item \textbf{involve all actors in the breeding decision process}: farmers, technicians, researcher, facolitators, consumers ... Such involvement empower all actors and answer the real needs of actors  \citep{sperling_framework_2001}.
+
+\end{itemize}
+
+
+\subsection{Objectives of \pack}
+
+\pack~aims to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
+The statistical procedures are based on frequentist and bayesian approaches.
 
 \subsection{Workflow and function relations in \pack}
 
