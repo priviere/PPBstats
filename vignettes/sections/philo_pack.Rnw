@@ -8,18 +8,20 @@ The statistical procedures are based on frequentist and bayesian approaches.
 
 !!! TO DO !!!
 
-\subsection{Function relations in \pack}
+\subsection{Workflow and function relations in \pack}
 
 \pack~is divided into two sets of functions:
 
 \begin{itemize}
-\item Hidden functions
-\item Used functions
+\item Main functions
+\item Second functions
 \end{itemize}
 
-In this vignette, we only used examples with used functions.
-Nevertheless, hidden functions could be used in other context to answer specific questions.
-Figure~\ref{function_relations} displays these functions and their relations.
+In this vignette, we only used examples with main functions.
+Nevertheless, second functions could be used in other context to answer specific questions.
+Figure~\ref{main_workflow} displays the main functions and their relations.
+Figure~\ref{workflow_2} display second functions used in the main functions.
+
 Table~\ref{function_descriptions} gives a quick description of each function.
 You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
 
@@ -29,14 +31,20 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=\textwidth]{PBBstats_function_relations}
+\includegraphics[width=\textwidth,page=1]{PBBstats_function_relations}
 \end{center}
-\caption{Function relations in \pack.
-Functions related to model \ref{model1} are in red.
-Functions related to model \ref{model2} are in orange.
-Functions related to both models are in black.
-}
-\label{function_relations}
+\caption{Main functions used in the \pack~workflow.}
+\label{main_workflow}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth,page=2]{PBBstats_function_relations}
+\includegraphics[width=\textwidth,page=3]{PBBstats_function_relations}
+\end{center}
+\caption{Second functions used in main functions.}
+\label{workflow_2}
 \end{figure}
 
 \begin{table}[t]
