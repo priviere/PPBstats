@@ -68,29 +68,29 @@
 #'     \itemize{
 #'      \item residuals
 #'       \itemize{
-#'        \item histogramm
-#'        \item  qqplot
+#'        \item histogramm : histogramm with the distribution of the residuals
+#'        \item qqplot
 #'       }
-#'      \item variability_repartition
-#'      \item variance_intra_germplasm
-#'      \item pca_composante_variance
+#'      \item variability_repartition : pie with repartition of SumSq for each factor
+#'      \item variance_intra_germplasm : repartition of the residuals for each germplasm (cf Details for more information)
+#'      \item pca_composante_variance : variance caught by each dimension of the PCA run on the interaction matrix
 #'     }
 #'     
 #'    \item from model_1 :
 #'     \itemize{
-#'      \item sigma_j_gamma
-#'      \item mu_ij
-#'      \item beta_jk
-#'      \item sigma_j
-#'      \item epsilon_ijk
+#'      \item sigma_j_gamma : mean of each sigma_j displayed on the Inverse Gamma distribution. The first graph represent all the sigma_j, the other graph represent \code{nb_parameters_per_plot sigma_j} per graph.
+#'      \item mu_ij : distribution of each mu_ij in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} mu_ij per graph.
+#'      \item beta_jk : distribution of each beta_jk in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} beta_jk per graph.
+#'      \item sigma_j : distribution of each sigma_j. There are as many graph as needed with \code{nb_parameters_per_plot} sigma_j per graph.
+#'      \item epsilon_ijk : standardised residuals distribution.
 #'     }
 #'    
 #'    \item from model_2 :
 #'     \itemize{
-#'      \item alpha_i
-#'      \item beta_i
-#'      \item theta_j
-#'      \item epsilon_ij
+#'      \item alpha_i : distribution of each alpha_i. There are as many graph as needed with \code{nb_parameters_per_plot} alpha_i per graph.
+#'      \item beta_i : distribution of each beta_i. There are as many graph as needed with \code{nb_parameters_per_plot} beta_i per graph.
+#'      \item theta_j : distribution of each theta_j. There are as many graph as needed with \code{nb_parameters_per_plot} theta_j per graph.
+#'      \item epsilon_ij : standardised residuals distribution.
 #'     }
 #'    
 #'   }
@@ -105,22 +105,61 @@
 #'      \item year
 #'     }
 #'    
-#'    \item from model_1, a list with ggplot object
+#'    \item from model_1, a list with ggplot object depending on ggplot.type.
+#'    For each ggplot.type, it is a list of three elements being lists with as many elements as environment. 
+#'        For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} perameters per graph.
+#'     \itemize{
+#'      \item barplot : 
+#'       \itemize{
+#'        \item data_mean_comparisons : only environments where all MCMC converge are represented.
+#'        Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+#'        The error I (alpha) and the alpha correction are displayed in the title. 
+#'        alpha = Imp means that no differences were possible to find.
+#'        \item data_env_with_no_controls : only environments where there were no controls are represented.
+#'        \item data_env_whose_param_did_not_converge : only environments where MCMC did not converge are represented.
+#'       }
+#'       Note that when using data_version, the pvalue is computed based on the MCMC.
+#'       For data that did not converge or without environments, it is a \code{t.test} which is perform.
+#'      \item interaction : 
+#'       \itemize{
+#'        \item data_mean_comparisons : only environments where all MCMC converge are represented.
+#'        The error I (alpha) and the alpha correction are displayed in the x.axis under the form "alpha | alpha correction".
+#'        alpha = Imp means that no differences were possible to find.
+#'        \item data_env_with_no_controls : only environments where there were no controls are represented.
+#'        \item data_env_whose_param_did_not_converge : only environments where MCMC did not converge are represented.
+#'       }
+#'      \item score : The score is set according to which group the entry was allocated.
+#'        An high score means that the entry was in a group with an high mean.
+#'        A low score means that the entry was in a group with an low mean.
+#'        The error I (alpha) and the alpha correction are displayed in the x.axis under the form "alpha | alpha correction".
+#'        alpha = Imp means that no differences were possible to find.
+#'     }
 #'    
-#'    \item from model_2, a list with ggplot object
 #'    
-#'    \item predict_the_past_model_2, a list with ggplot object
+#'    \item from model_2, a list with ggplot object depending on ggplot.type.
+#'    There are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
+#'     \itemize{
+#'      \item barplot : 
+#'        Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+#'        The error I (alpha) and the alpha correction are displayed in the title. 
+#'        alpha = Imp means that no differences were possible to find.
+#'      \item biplot-alpha-beta : display the biplot with alpha_i on the x axis and beta_i on the y axis.
+#'     }
+#'    
+#'    
+#'    \item predict_the_past_model_2, a list with ggplot object depending on ggplot.type. 
+#'    It is the same outputs than for model_1
 #'     
 #'   }
 #'  
 #'  
 #'  \item parameter_groups
 #'   \itemize{
-#'    \item pca
+#'    \item pca : a list with three elements on the PCA on the group of parameters :
 #'     \itemize{
-#'      \item variation_dim
-#'      \item ind
-#'      \item var
+#'      \item variation_dim : variance caught by each dimension of the PCA
+#'      \item ind : graph of individuals
+#'      \item var : graph of variables
 #'     }
 #'    \item clust
 #'     \itemize{
