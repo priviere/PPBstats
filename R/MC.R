@@ -262,6 +262,8 @@ MC = function(
   }
   
   if( nb_RF == 0 & nb_SF > 0) {
+    if(return.beta){warning("No beta will be returned since there is no environment containing more than one block.")}
+    parameters = parameters[-grep("beta",parameters)]
     d_model <- list(environment = environment, entry = entry, y = y, nb_env = nb_env, nb_entry = nb_entry, nb_RF = nb_RF, mean_prior_mu = mean_prior_mu)
     model_jags = paste("model {", likelyhood_model_jags_SF, priors_model_jags, "}")
   }
@@ -294,7 +296,7 @@ MC = function(
     
     para.name = NULL
     
-    if(return.beta) {
+    if("beta" %in% parameters) {
       beta = n[grep("beta", n)]
       beta = sub("beta\\[", "", beta)
       beta = sub("\\]", "", beta)
@@ -302,7 +304,7 @@ MC = function(
       para.name = c(para.name, beta)
     }
     
-    if(return.mu) {
+    if("mu" %in% parameters) {
       mu = n[grep("mu", n)]
       mu = sub("mu\\[", "", mu)
       mu = sub("\\]", "", mu)
@@ -310,10 +312,10 @@ MC = function(
       para.name = c(para.name, mu)
     }
     
-    if(return.nu) { para.name = c(para.name, "nu") }
-    if(return.rho) { para.name = c(para.name, "rho") }
+    if("nu" %in% parameters) { para.name = c(para.name, "nu") }
+    if("rho" %in% parameters) { para.name = c(para.name, "rho") }
     
-    if(return.sigma) {
+    if("sigma" %in% parameters) {
       sigma = n[grep("sigma", n)]
       sigma = sub("sigma\\[" ,"", sigma)
       sigma=sub("\\]", "", sigma)
