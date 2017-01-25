@@ -71,9 +71,9 @@ cross_validation_model_2 = function(
     d = D[-i,]
     env = as.character(D[i, "environment"])
     germ = as.character(D[i, "germplasm"])
-    real.value = d[i, "variable"]
+    observed.value = d[i, "variable"]
     
-    out = list("data" = d, "num_data" = i, "nb_total_data" = nrow(D), "real.value" = real.value, "germplasm" = germ, "environment" = env, "nb_iterations" = nb_iterations)
+    out = list("data" = d, "num_data" = i, "nb_total_data" = nrow(D), "observed.value" = observed.value, "germplasm" = germ, "environment" = env, "nb_iterations" = nb_iterations)
     list_data = c(list_data, list(out))
   }
 
@@ -108,18 +108,18 @@ cross_validation_model_2 = function(
     MCMC = rbind.data.frame(out$MCMC[[1]], out$MCMC[[2]])
     estimated.value = median(MCMC[, paste("alpha[", germ, "]", sep = "")] + MCMC[, paste("beta[", germ, "]", sep = "")] * MCMC[, paste("theta[", env, "]", sep = "")])
     
-    out = c("real.value" = x$real.value, "estimated.value" = estimated.value)
+    out = c("observed.value" = x$observed.value, "estimated.value" = estimated.value)
     return(out)
   }
   
   OUT = mclapply(list_data, function(x) {fun(x)}, mc.cores = mc.cores)
   
-  real.value = unlist(OUT)[grep("real.value", names(unlist(OUT)))]
+  observed.value = unlist(OUT)[grep("observed.value", names(unlist(OUT)))]
   estimated.value = unlist(OUT)[grep("estimated.value", names(unlist(OUT)))]
     
   # 5. Return results ----------
   
-  out = cbind.data.frame(real.value, estimated.value)
+  out = cbind.data.frame(observed.value, estimated.value)
   
   attributes(out)$PPBstats.object = "cross_validation_model_2"
   
