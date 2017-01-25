@@ -11,7 +11,7 @@ ggplot_parameter_groups = function(out_parameter_groups){
   
   out = list(
     "pca" = list(
-      "variation_dim" = fviz_eig(pca),
+      "composante_variance" = fviz_eig(pca),
       "ind" = fviz_pca_ind(pca),
       "var" = fviz_pca_var(pca)
     ),
