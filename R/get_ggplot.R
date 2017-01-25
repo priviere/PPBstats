@@ -72,7 +72,7 @@
 #'        \item qqplot
 #'       }
 #'      \item variability_repartition : pie with repartition of SumSq for each factor
-#'      \item variance_intra_germplasm : repartition of the residuals for each germplasm (cf Details for more information)
+#'      \item variance_intra_germplasm : repartition of the residuals for each germplasm (see Details for more information)
 #'      \item pca_composante_variance : variance caught by each dimension of the PCA run on the interaction matrix
 #'     }
 #'     
@@ -157,34 +157,45 @@
 #'   \itemize{
 #'    \item pca : a list with three elements on the PCA on the group of parameters :
 #'     \itemize{
-#'      \item variation_dim : variance caught by each dimension of the PCA
+#'      \item composante_variance : variance caught by each dimension of the PCA
 #'      \item ind : graph of individuals
 #'      \item var : graph of variables
 #'     }
 #'    \item clust
 #'     \itemize{
-#'      \item nb_k
-#'      \item pca
+#'      \item nb_k : output from factextra::fviz_nbclust(data, kmeans, method = "silhouette")
+#'      See ?factoextra::fviz_nbclust for more details
+#'      \item pca : output from factextra::fviz_cluster(km.res, data, frame.type = "norm")
+#'      See ?factoextra::fviz_cluster for more details
 #'     }
 #'   }
 #'   
 #'   
 #'  \item biplot_GxE
 #'   \itemize{
-#'    \item ecovalence
-#'    \item biplot
+#'    \item ecovalence : 
+#'    \item biplot, a list of three elements :
 #'     \itemize{
-#'      \item which_won_where
-#'      \item mean_vs_stability
-#'      \item discrimitiveness_vs_representativeness
+#'      \item which_won_where : plot to assess which germplasm win in which location (see Details for more information).
+#'      \item mean_vs_stability : a list of two elements :
+#'       \itemize{
+#'        \item mean :assess mean of each germplasm (see Details for more information).
+#'        \item stability : assess stability of each germplasm (see Details for more information).
+#'       }
+#'      \item discrimitiveness_vs_representativeness : a list of two elements :
+#'       \itemize{
+#'        \item discrimitiveness : assess discrimitiveness of each location (see Details for more information).
+#'        \item representativeness : assess representativeness of each location (see Details for more information).
+#'       } 
 #'     }
 #'   }
 #'   
 #'   
 #'  \item cross_validation_model_2
 #'   \itemize{
-#'    \item plot
-#'    \item anova
+#'    \item plot : plot estimated.value = f(observed.value). 
+#'    The probability mean = 0 is display (see Details for more information).
+#'    \item regression : output of the model observed.value = a x estimated.value + b
 #'   }
 #'   
 #' }
