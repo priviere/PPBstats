@@ -55,7 +55,43 @@
 #' @param nb_parameters_per_plot The number of parameters per plot to facilitate the visualization
 #' 
 #' @details
-#' to do
+#' Below are some details on the construction of the plots :
+#' 
+#' \itemize{
+#'  \item check_model from GxE :
+#'   \itemize{
+#'    \item variance_intra_germplasm represents the repartition of the residuals for each germplasm.
+#'    This has to been seen with caution:
+#'    \itemize{
+#'     \item If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+#'     \item If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+#'     With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+#'    }
+#'  }
+#'  
+#'  \item biplot_GxE
+#'   \itemize{
+#'    \item which_won_where : plot to assess which germplasm win in which location (see Details for more information).
+#'    \item mean_vs_stability : a list of two elements :
+#'     \itemize{
+#'      \item mean :assess mean of each germplasm (see Details for more information).
+#'      \item stability : assess stability of each germplasm (see Details for more information).
+#'     }
+#'    \item discrimitiveness_vs_representativeness : a list of two elements :
+#'     \itemize{
+#'      \item discrimitiveness : assess discrimitiveness of each location (see Details for more information).
+#'      \item representativeness : assess representativeness of each location (see Details for more information).
+#'     } 
+#'    }
+#'   
+#'  \item cross_validation_model_2
+#'   \itemize{
+#'    \item plot : plot estimated.value = f(observed.value). 
+#'    The probability mean = 0 is coming from a t.test performed with the null hypothesis H0: the bias of estimated values in relation to real values = 0.
+#'   }
+#'   
+#' }
+#'  
 #' 
 #' @return 
 #' \itemize{
