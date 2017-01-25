@@ -88,7 +88,7 @@ cross_validation_model_2 = function(
             ------------------------------------------------------------\n
             ")
     
-    out = FWH(  data = x$data,
+    out = model_2(  data = x$data,
                 variable = "variable",
                 nb_iterations = x$nb_iterations,
                 return.alpha = TRUE,
