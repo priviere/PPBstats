@@ -1,5 +1,6 @@
 mean_comparisons_GxE = function(
   out_check_model, 
+  alpha = 0.05,
   p.adj = "none"
   ){
   # 1. Error message
@@ -9,12 +10,17 @@ mean_comparisons_GxE = function(
   variable = out_check_model$GxE$variable
   
   data_ggplot_LSDbarplot = function(model, fac, p.adj){
-    LSD = LSD.test(model, fac, p.adj = p.adj)
-    LSD$groups$trt = factor(LSD$groups$trt, levels = LSD$groups$trt)
-    d_LSD = LSD$groups
-    d_LSD$ymean = d_LSD$means / 2
-    if( is.null(nrow(d_LSD)) ) { d_LSD = NULL }
-    return(d_LSD)
+    lsd = LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
+    
+    parameter = factor(lsd$groups$trt, levels = lsd$groups$trt)
+    means = lsd$groups$means
+    groups = lsd$groups$M
+    alpha = rep(alpha, length(parameter))
+    alpha.correction = rep(p.adj, length(parameter))
+    
+    out_LSD = data.frame(parameter, means, groups, alpha, alpha.correction)
+    if( nrow(out_LSD) == 0 ) { out_LSD = NULL }
+    return(out_LSD)
   }
   
   # 2. Germplasm
