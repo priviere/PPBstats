@@ -4,7 +4,7 @@ ggplot_mean_comparisons_GxE = function(
   nb_parameters_per_plot = 10
   ){
   
-  # 1. Error message
+  # 1. Error message ----------
   if( attributes(mean_comparisons_GxE)$PPBstats.object != "mean_comparisons_GxE" ) { stop("data must come from mean_comparisons and GxE") }
   
   if( !is.element(ggplot.type, c("barplot")) ) { stop("ggplot.type must be barplot with output from GxE.") }
@@ -14,6 +14,8 @@ ggplot_mean_comparisons_GxE = function(
   data_ggplot_LSDbarplot_germplasm = mean_comparisons_GxE$data_ggplot_LSDbarplot_germplasm
   data_ggplot_LSDbarplot_location = mean_comparisons_GxE$data_ggplot_LSDbarplot_location
   data_ggplot_LSDbarplot_year = mean_comparisons_GxE$data_ggplot_LSDbarplot_year
+  
+  # 2. Functions used in the function ----------
   
   ggplot_LSDbarplot = function(d_LSD, fac, variable, nb_parameters_per_plot){
   
@@ -35,28 +37,28 @@ ggplot_mean_comparisons_GxE = function(
     return(out)
   }
   
-  # 2. Germplasm
+  # 3. Germplasm ----------
   if( !is.null(data_ggplot_LSDbarplot_germplasm) ){ 
     ggplot_LSDbarplot_germplasm = ggplot_LSDbarplot(data_ggplot_LSDbarplot_germplasm, "germplasm", variable, nb_parameters_per_plot) 
   } else {
     ggplot_LSDbarplot_germplasm = NULL
     }
   
-  # 3. Location
+  # 4. Location ----------
   if( !is.null(data_ggplot_LSDbarplot_location) ){ 
     ggplot_LSDbarplot_location = ggplot_LSDbarplot(data_ggplot_LSDbarplot_location, "location", variable, nb_parameters_per_plot) 
   } else {
     ggplot_LSDbarplot_location = NULL
   }
   
-  # 4. Year
+  # 5. Year ----------
   if( !is.null(data_ggplot_LSDbarplot_year) ){ 
     ggplot_LSDbarplot_year = ggplot_LSDbarplot(data_ggplot_LSDbarplot_year, "year", variable, nb_parameters_per_plot) 
   } else {
     ggplot_LSDbarplot_year = NULL
   }
   
-  # 5. return results
+  # 6. return results ----------
   out = c(ggplot_LSDbarplot_germplasm, ggplot_LSDbarplot_location, ggplot_LSDbarplot_year)
   return(out)
 }
