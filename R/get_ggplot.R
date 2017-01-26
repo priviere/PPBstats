@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Get ggplot objects to visualize output from several functions
 #'
 #' @description
