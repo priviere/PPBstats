@@ -68,6 +68,12 @@
 #'    }
 #'  }
 #'  
+#'  \item check_model fro model_1 and model_2
+#'  \itemize{
+#'   \item mcmc_not_converge_traceplot_density : If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out_model$MCMC)}. 
+#'   But be careful with the size of your MCMC output which are often too big to be performed in R.
+#'  }
+#'  
 #'  \item biplot_GxE
 #'   \itemize{
 #'    \item which_won_where : plot to assess which germplasm win in which location (see Details for more information).
@@ -118,6 +124,8 @@
 #'      \item beta_jk : distribution of each beta_jk in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} beta_jk per graph.
 #'      \item sigma_j : distribution of each sigma_j. There are as many graph as needed with \code{nb_parameters_per_plot} sigma_j per graph.
 #'      \item epsilon_ijk : standardised residuals distribution.
+#'      \item mcmc_not_converge_traceplot_density : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
+#'      If all the chains converge, it is NULL
 #'     }
 #'    
 #'    \item from model_2 :
@@ -126,6 +134,8 @@
 #'      \item beta_i : distribution of each beta_i. There are as many graph as needed with \code{nb_parameters_per_plot} beta_i per graph.
 #'      \item theta_j : distribution of each theta_j. There are as many graph as needed with \code{nb_parameters_per_plot} theta_j per graph.
 #'      \item epsilon_ij : standardised residuals distribution.
+#'      \item mcmc_not_converge_traceplot_density : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
+#'      If all the chains converge, it is NULL
 #'     }
 #'    
 #'   }
