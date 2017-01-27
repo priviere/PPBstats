@@ -124,6 +124,7 @@ check_model_model_1 = function(
   
   out = list(
     "MCMC" = MCMC,
+    "MCMC_conv_not_ok" = mcmc_to_delete,
     "data_env_with_no_controls" = data_env_with_no_controls,
     "data_env_whose_param_did_not_converge" = data_env_whose_param_did_not_converge,
     "data_ggplot" = list(
