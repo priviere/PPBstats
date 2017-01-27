@@ -136,7 +136,7 @@ get.caterpillar.plot = function(x, xmin, xmax){ # cf ggmcmc:ggs_caterpillar
 }
 
 
-# Function used in mean_comparisons_model_1.R and mean_comparisons_model_2.R
+# Function used in mean_comparisons_model_1.R and mean_comparisons_model_2.R ----------
 
 get_mean_comparisons_and_Mpvalue = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
   
