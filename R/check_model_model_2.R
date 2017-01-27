@@ -19,7 +19,6 @@ check_model_model_2 = function(
   out.conv = check_convergence(out_model_2, model_name = "model2")
   MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
-  out.convergence = out.conv$out.convergence
   conv_not_ok = out.conv$conv_not_ok
   
   if( length(conv_not_ok) > 0 ) {
