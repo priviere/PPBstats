@@ -120,7 +120,8 @@ get.caterpillar.plot = function(x, xmin, xmax){ # cf ggmcmc:ggs_caterpillar
 }
 
 
-get_mcmc_traceplot_density = function(conv_not_ok, MCMC){
+get_mcmc_traceplot_density = function(MCMC){
+  conv_not_ok = colnames(MCMC)
   vec.plot = NULL
   for (para in conv_not_ok) {
     D = cbind.data.frame(Iteration = rep(c(1:(nrow(MCMC)/2)), 2), 
