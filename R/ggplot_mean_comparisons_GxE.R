@@ -28,7 +28,7 @@ ggplot_mean_comparisons_GxE = function(
       p = ggplot(d_LSD, aes(x = reorder(parameter, means), y = means)) + geom_bar(stat = "identity")
       p = p + geom_text(aes(x = reorder(parameter, means), y = means/2, label = groups), angle = 90, color = "white")
       p = p + ggtitle(paste(fac, "\n alpha = ", d_LSD[1, "alpha"], "; alpha correction :", d_LSD[1, "alpha.correction"]))
-      p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, d_LSD[1,"max"]) + ylab(variable)
+      p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + coord_cartesian(ylim = c(0, d_LSD[1,"max"])) + ylab(variable)
       return(p)
     })
     

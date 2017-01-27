@@ -162,7 +162,7 @@ ggplot_mean_comparisons_model_1 = function(
               y = y + (max(y) * 0.2)
               label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
               p = p + geom_text(data = label_stars, aes(label = STARS))
-              p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, dx[1,"max"])
+              p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + coord_cartesian(ylim = c(0, dx[1,"max"]))
             }
             
             return(p)
