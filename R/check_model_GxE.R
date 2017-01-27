@@ -5,7 +5,9 @@
 #' 
 #' @param out_GxE outputs from GxE function
 #' 
-#' @details See check_model for further information
+#' @details See check_model
+#' 
+#' @return See check_model
 #' 
 #' @seealso \code{\link{GxE}}, \code{\link{check_model}}
 #' 

@@ -1,3 +1,16 @@
+#' Get ggplot objects from cross_validation_model_2
+#'
+#' @description
+#' \code{ggplot_cross_validation_model_2} returns ggplot objects from cross_validation_model_2
+#' 
+#' @param out_cross_validation_model_2 outputs from cross_validation_model_2 function
+#' 
+#' @details See get_ggplot
+#' 
+#' @return See get_ggplot
+#' 
+#' @seealso \code{\link{get_ggplot}}, \code{\link{cross_validation_model_2}}
+#' 
 ggplot_cross_validation_model_2 = function(
   out_cross_validation_model_2
 ){

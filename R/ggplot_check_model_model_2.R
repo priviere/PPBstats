@@ -1,15 +1,28 @@
+#' Get ggplot objects from check_model_model_2
+#'
+#' @description
+#' \code{ggplot_check_model_model_2} returns ggplot objects from check_model_model_2
+#' 
+#' @param out_check_model_model_2 outputs from check_model_model_2 function
+#' 
+#' @details See get_ggplot
+#' 
+#' @return See get_ggplot
+#' 
+#' @seealso \code{\link{get_ggplot}}, \code{\link{check_model_model_2}}
+#'
 ggplot_check_model_model_2 = function(
-  out_check_model,
+  out_check_model_model_2,
   nb_parameters_per_plot = 10
 ){
   # Get data ----------
   
-  data_ggplot = out_check_model$data_ggplot
+  data_ggplot = out_check_model_model_2$data_ggplot
   data_ggplot_model_2_alpha = data_ggplot$alpha
   data_ggplot_model_2_beta = data_ggplot$beta
   data_ggplot_model_2_theta = data_ggplot$theta
   data_ggplot_model_2_epsilon = data_ggplot$epsilon
-  MCMC_conv_not_ok = out_check_model$MCMC_conv_not_ok
+  MCMC_conv_not_ok = out_check_model_model_2$MCMC_conv_not_ok
   
   # 2.1. alpha_i caterpillar plot distribution ----------
   if ( !is.null(data_ggplot_model_2_alpha) ) {
