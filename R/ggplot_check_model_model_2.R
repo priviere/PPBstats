@@ -9,6 +9,7 @@ ggplot_check_model_model_2 = function(
   data_ggplot_model_2_beta = data_ggplot$beta
   data_ggplot_model_2_theta = data_ggplot$theta
   data_ggplot_model_2_epsilon = data_ggplot$epsilon
+  MCMC_conv_not_ok = out_check_model$MCMC_conv_not_ok
   
   # 2.1. alpha_i caterpillar plot distribution ----------
   if ( !is.null(data_ggplot_model_2_alpha) ) {
@@ -52,12 +53,20 @@ ggplot_check_model_model_2 = function(
     message("The standardised residuals distributions are done.")
   } else { out_epsilon = NULL }
   
+  # 2.4. MCMC traceplot and density that did not converge ----------
+  if( !is.null(out_mcmc_not_converge) ){
+    out_mcmc_not_converge = get_mcmc_traceplot_density(MCMC_conv_not_ok)
+  } else { 
+    out_mcmc_not_converge = NULL
+    }
   
+  # 3. Return results ---------- 
   out_model_2 = list(
     "alpha_i" = out_alpha,
     "beta_i" = out_beta,
     "theta_j" = out_theta,
-    "epsilon_ij" = out_epsilon
+    "epsilon_ij" = out_epsilon,
+    "mcmc_not_converge_traceplot_density" = out_mcmc_not_converge
   )
   
   return(out_model_2)
