@@ -100,7 +100,6 @@ check_convergence = function(out.model, model_name = "model1"){
   
   if( length(conv_not_ok) > 0 ) {
     message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : ", paste(conv_not_ok, collapse = ", ") ,". Therefore, they are not present in MCMC output.")
-    MCMC = MCMC[,is.element(colnames(MCMC), conv_not_ok)]
     } else { 
     message("The two MCMC for each parameter converge thanks to the Gelman-Rubin test.")
     }
