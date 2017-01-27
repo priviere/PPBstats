@@ -54,8 +54,9 @@ ggplot_check_model_model_2 = function(
   } else { out_epsilon = NULL }
   
   # 2.4. MCMC traceplot and density that did not converge ----------
-  if( !is.null(out_mcmc_not_converge) ){
+  if( !is.null(MCMC_conv_not_ok) ){
     out_mcmc_not_converge = get_mcmc_traceplot_density(MCMC_conv_not_ok)
+    message("Trace and density plot for MCMC that did not converged are done.")
   } else { 
     out_mcmc_not_converge = NULL
     }
