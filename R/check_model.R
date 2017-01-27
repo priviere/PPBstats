@@ -54,6 +54,7 @@
 #' \item model_1
 #' \itemize{
 #'  \item MCMC
+#'  \item MCMC_conv_not_ok
 #'  \item data_env_with_no_controls
 #'  \item data_env_whose_param_did_not_converge : a list with data frame with environments where some parameters did not converge for mu and beta.
 #'  \item data_ggplot a list containing information for ggplot:
@@ -70,6 +71,7 @@
 #' \item model_2
 #' \itemize{
 #'  \item MCMC
+#'  \item MCMC_conv_not_ok
 #'  \item model2.presence.abscence.matrix : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 #'  \item data_ggplot a list containing information for ggplot:
 #'  \itemize{
