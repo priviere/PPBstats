@@ -49,7 +49,8 @@ check_model_model_2 = function(
     model2.presence.abscence.matrix = mat
     
     # update MCMC
-    MCMC = MCMC[,!is.element(colnames(MCMC), conv_not_ok)] 
+    mcmc_to_delete = MCMC[,!is.element(colnames(MCMC), conv_not_ok)]
+    MCMC = MCMC[,!is.element(colnames(MCMC), conv_not_ok)]
     attributes(MCMC)$model = "model2"
   }
   
@@ -83,6 +84,7 @@ check_model_model_2 = function(
   # 3. Return results ----------
   out = list(
     "MCMC" = MCMC,
+    "MCMC_conv_not_ok" = mcmc_to_delete,
     "model2.presence.abscence.matrix" = model2.presence.abscence.matrix,
     "data_ggplot" = list(
       "alpha" = data_ggplot_model_2_alpha,
