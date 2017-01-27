@@ -88,8 +88,6 @@ ggplot_check_model_model_1 = function(
   }
   
   # Return results ---------- 
-  
-  
   out_model_1 = list(
     "sigma_j_gamma" = out_sigma_j_gamma,
     "mu_ij" = out_mu_ij,
