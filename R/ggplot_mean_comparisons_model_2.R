@@ -27,7 +27,7 @@ ggplot_mean_comparisons_model_2 = function(
       p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
       p = p + geom_text(aes(x = reorder(parameter, median), y = median/2, label = groups), angle = 90, color = "white")
       p = p + ggtitle(paste(para.name, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
-      p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylim(0, data[1,"max"]) + ylab("")
+      p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + ylab("") + coord_cartesian(ylim = c(0, dx[1,"max"]))
       return(p)
     })
     out = list(out)
