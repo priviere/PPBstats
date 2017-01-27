@@ -9,6 +9,7 @@ ggplot_check_model_model_1 = function(
   data_ggplot_model_1_beta_jk = data_ggplot$beta_jk
   data_ggplot_model_1_sigma_j_2 = data_ggplot$sigma_j_2
   data_ggplot_model_1_epsilon_ijk = data_ggplot$epsilon_ijk
+  MCMC_conv_not_ok = out_check_model$MCMC_conv_not_ok
   
   # sigma_j ----------
   if( !is.null(data_ggplot_model_1_sigma_j)){
@@ -79,12 +80,23 @@ ggplot_check_model_model_1 = function(
     message("The standardised residuals distributions are done.")
   } else { out_epsilon_ijk = NULL }
   
+  # MCMC traceplot and density that did not converge ----------
+  if( !is.null(out_mcmc_not_converge) ){
+    out_mcmc_not_converge = get_mcmc_traceplot_density(MCMC_conv_not_ok)
+  } else { 
+    out_mcmc_not_converge = NULL
+  }
+  
+  # Return results ---------- 
+  
+  
   out_model_1 = list(
     "sigma_j_gamma" = out_sigma_j_gamma,
     "mu_ij" = out_mu_ij,
     "beta_jk" = out_beta_jk,
     "sigma_j" = out_sigma_j,
-    "epsilon_ijk" = out_epsilon_ijk
+    "epsilon_ijk" = out_epsilon_ijk,
+    "mcmc_not_converge_traceplot_density" = out_mcmc_not_converge
   )
   
   return(out_model_1)
