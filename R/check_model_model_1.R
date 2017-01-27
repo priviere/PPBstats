@@ -59,7 +59,10 @@ check_model_model_1 = function(
       mcmc_to_delete = c(m1, m2, m3)
       MCMC = MCMC[,-mcmc_to_delete] 
     } else {   data_env_whose_param_did_not_converge = NULL }
-  } else {   data_env_whose_param_did_not_converge = NULL }
+  } else {   
+    mcmc_to_delete = NULL
+    data_env_whose_param_did_not_converge = NULL 
+    }
   
   attributes(data_env_whose_param_did_not_converge)$PPBstats.object = "data_env_whose_param_did_not_converge"
   

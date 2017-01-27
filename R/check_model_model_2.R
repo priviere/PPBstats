@@ -52,7 +52,9 @@ check_model_model_2 = function(
     mcmc_to_delete = MCMC[,!is.element(colnames(MCMC), conv_not_ok)]
     MCMC = MCMC[,!is.element(colnames(MCMC), conv_not_ok)]
     attributes(MCMC)$model = "model2"
-  }
+  } else { 
+    mcmc_to_delete = NULL
+    }
   
   # 2. posteriors data frame for ggplot ----------
   
