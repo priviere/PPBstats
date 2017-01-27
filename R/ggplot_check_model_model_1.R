@@ -1,15 +1,28 @@
+#' Get ggplot objects from check_model_model_1
+#'
+#' @description
+#' \code{ggplot_check_model_model_1} returns ggplot objects from check_model_model_1
+#' 
+#' @param out_check_model_model_1 outputs from check_model_model_1 function
+#' 
+#' @details See get_ggplot
+#' 
+#' @return See get_ggplot
+#' 
+#' @seealso \code{\link{get_ggplot}}, \code{\link{check_model_model_1}}
+#'
 ggplot_check_model_model_1 = function(
-  out_check_model,
+  out_check_model_1,
   nb_parameters_per_plot = 10
 ){
   # Get data ----------
-  data_ggplot = out_check_model$data_ggplot
+  data_ggplot = out_check_model_1$data_ggplot
   data_ggplot_model_1_sigma_j = data_ggplot$sigma_j
   data_ggplot_model_1_mu_ij = data_ggplot$mu_ij
   data_ggplot_model_1_beta_jk = data_ggplot$beta_jk
   data_ggplot_model_1_sigma_j_2 = data_ggplot$sigma_j_2
   data_ggplot_model_1_epsilon_ijk = data_ggplot$epsilon_ijk
-  MCMC_conv_not_ok = out_check_model$MCMC_conv_not_ok
+  MCMC_conv_not_ok = out_check_model_1$MCMC_conv_not_ok
   
   # sigma_j ----------
   if( !is.null(data_ggplot_model_1_sigma_j)){

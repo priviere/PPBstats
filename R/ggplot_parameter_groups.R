@@ -1,3 +1,16 @@
+#' Get ggplot objects from parameter_groups
+#'
+#' @description
+#' \code{ggplot_parameter_groups} returns ggplot objects from parameter_groups
+#' 
+#' @param out_parameter_groups outputs from parameter_groups function
+#' 
+#' @details See get_ggplot
+#' 
+#' @return See get_ggplot
+#' 
+#' @seealso \code{\link{get_ggplot}}, \code{\link{parameter_groups}}
+#' 
 ggplot_parameter_groups = function(out_parameter_groups){
 
   pca = out_parameter_groups$obj.pca

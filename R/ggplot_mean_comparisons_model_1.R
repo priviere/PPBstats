@@ -1,3 +1,16 @@
+#' Get ggplot objects from mean_comparisons_model_1
+#'
+#' @description
+#' \code{ggplot_mean_comparisons_model_1} returns ggplot objects from mean_comparisons_model_1
+#' 
+#' @param out_mean_comparisons_model_1 outputs from mean_comparisons_model_1 function
+#' 
+#' @details See get_ggplot
+#' 
+#' @return See get_ggplot
+#' 
+#' @seealso \code{\link{get_ggplot}}, \code{\link{mean_comparisons_model_1}}
+#'
 ggplot_mean_comparisons_model_1 = function(
   out_mean_comparisons_model_1,
   data_version = NULL,

@@ -5,7 +5,9 @@
 #' 
 #' @param out_model_1 outputs from model_1 function
 #' 
-#' @details See check_model for further information
+#' @details See check_model
+#' 
+#' @return See check_model
 #' 
 #' @seealso \code{\link{model_1}}, \code{\link{check_model}}
 #' 
