@@ -100,26 +100,11 @@ check_convergence = function(out.model, model_name = "model1"){
   
   if( length(conv_not_ok) > 0 ) {
     message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : ", paste(conv_not_ok, collapse = ", ") ,". Therefore, they are not present in MCMC output.")
-    mcmc = MCMC[,is.element(colnames(MCMC), conv_not_ok)]
-    
-    out.convergence = NULL
-    for (para in conv_not_ok) {
-      D = cbind.data.frame(Iteration = rep(c(1:(nrow(MCMC)/2)), 2), 
-                           Chain = factor(rep(c(1,2), each = (nrow(MCMC)/2))), 
-                           Parameter = para, 
-                           value = as.vector(MCMC[,para])
-      )
-      traceplot = ggplot(D, aes(x = Iteration, y = value, color = Chain)) + geom_line() + ggtitle(para) # cf ggmcmc:ggs_traceplot
-      density = ggplot(D, aes(x = value, fill = Chain, color = Chain)) + geom_density() + ggtitle(para) # cf ggmcmc:ggs_density
-      plot = list(list("traceplot" = traceplot, "density" = density))
-      names(plot) = para
-      out.convergence = c(out.convergence, plot)
-    }
-  } else { 
+    MCMC = MCMC[,is.element(colnames(MCMC), conv_not_ok)]
+    } else { 
     message("The two MCMC for each parameter converge thanks to the Gelman-Rubin test.")
-    out.convergence = NULL 
     }
-  OUT = list("MCMC" = MCMC, "sq_MCMC" = sq_MCMC, "convergence" = out.convergence, "conv_not_ok" = conv_not_ok)
+  OUT = list("MCMC" = MCMC, "sq_MCMC" = sq_MCMC, "conv_not_ok" = conv_not_ok)
   return(OUT)
 }
 
@@ -135,6 +120,25 @@ get.caterpillar.plot = function(x, xmin, xmax){ # cf ggmcmc:ggs_caterpillar
   return(p)
 }
 
+
+get_mcmc_traceplot_density = function(conv_not_ok, MCMC){
+  vec.plot = NULL
+  for (para in conv_not_ok) {
+    D = cbind.data.frame(Iteration = rep(c(1:(nrow(MCMC)/2)), 2), 
+                         Chain = factor(rep(c(1,2), each = (nrow(MCMC)/2))), 
+                         Parameter = para, 
+                         value = as.vector(MCMC[,para])
+    )
+    traceplot = ggplot(D, aes(x = Iteration, y = value, color = Chain)) + geom_line() + ggtitle(para) # cf ggmcmc:ggs_traceplot
+    density = ggplot(D, aes(x = value, fill = Chain, color = Chain)) + geom_density() + ggtitle(para) # cf ggmcmc:ggs_density
+    plot = list(list("traceplot" = traceplot, "density" = density))
+    names(plot) = para
+    vec.plot = c(vec.plot, plot)
+  }
+  return(vec.plot)
+}
+
+  
 
 # Function used in mean_comparisons_model_1.R and mean_comparisons_model_2.R ----------
 
