@@ -1,10 +1,10 @@
-\subsection{model~\ref{model1} to perform mean comparisons on farms }
+\subsection{model\_1 to perform mean comparisons on farms }
 \label{model_1}
 
 At the \textbf{farm level}, the residual had few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
-Hence, model~\ref{model1} was implemented (section~\ref{section_model1}).
+Hence, model\_1 was implemented (section~\ref{section_model1}).
 
-For model \ref{model1}, it gave nice results with more than 20 environment \citep{riviere_hierarchical_2015}.
+For model\_1, it gave nice results with more than 20 environment \citep{riviere_hierarchical_2015}.
 
 \subsubsection{Theory of the model}
 
@@ -58,12 +58,12 @@ Blocks were included in the model only if the trial had blocks.
 
 \subsubsection{Steps with \pack}
 
-For model~\ref{model1}, you can follow these steps (Figure \ref{function_relations}):
+For model\_1, you can follow these steps (Figure \ref{main_workflow}):
 
 \begin{enumerate}
-\item Run the model with \texttt{MC}
-\item Analyse model outputs with graphs to know if you can continue the analysis with \texttt{analyse.outputs}
-\item Get mean comparisons for each factor with \texttt{get.mean.comparisons} and \texttt{get.ggplot}
+\item Run the model with \texttt{model\_1}
+\item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and \texttt{get\_ggplot}
 \end{enumerate}
 
 Let's get the data.
@@ -81,7 +81,7 @@ To run model~\ref{model1} on the dataset, used the function \texttt{MC}.
 You can run it on one variable.
 Here it is thousand kernel weight (tkw).
 
-By default, \texttt{MC} returns posteriors for 
+By default, \texttt{model\_1} returns posteriors for 
 $\mu_{ij}$ (\texttt{return.mu = TRUE}), 
 $\beta_{jk}$ (\texttt{return.beta = TRUE}), 
 $\sigma_j$ (\texttt{return.sigma = TRUE}), 
@@ -94,181 +94,181 @@ DIC criterion is a generalization of the AIC criterion that can be used for hier
 The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
 
 <<message=TRUE,cache=FALSE>>=
-# out.model1 = MC(data = PPBdata, variable = "tkw", return.epsilon = TRUE)
-#Compiling model graph
-#   Resolving undeclared variables
-#   Allocating nodes
-#   Graph Size: 7662
-#
-#Initializing model
-#
-#  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
+# out_model_1 = model_1(data = PPBdata, variable = "tkw", return.epsilon = TRUE)
 
-load("./data_PPBstats/out.model1.RData") # To save time
+# Compiling model graph
+# Resolving undeclared variables
+# Allocating nodes
+# Graph information:
+#   Observed stochastic nodes: 976
+# Unobserved stochastic nodes: 927
+# Total graph size: 8609
+# 
+# Initializing model
+# 
+# |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
+# |**************************************************| 100%
+# |**************************************************| 100%
+# |**************************************************| 100%
+
+load(paste(path, "out_model_1.RData", sep = "")) # To save time
 @
 
 You can get informations of the environments in the dataset :
 
 <<message=TRUE,cache=FALSE>>=
-out.model1$vec_env_with_no_data
+out_model_1$vec_env_with_no_data
  
-out.model1$vec_env_with_no_controls
+out_model_1$vec_env_with_no_controls
  
-out.model1$vec_env_with_controls
+out_model_1$vec_env_with_controls
  
-out.model1$vec_env_RF
+out_model_1$vec_env_RF
  
-out.model1$vec_env_SF
+out_model_1$vec_env_SF
 @
 
-\subsubsection{Analysis of the model outputs}
+Below is an example with low \texttt{nb\_iterations}:
+<<message=TRUE,cache=FALSE>>=
+# out_model_1_bis = model_1(data = PPBdata, variable = "tkw", nb_iteration = 5000)
+
+# Compiling model graph
+# Resolving undeclared variables
+# Allocating nodes
+# Graph information:
+#   Observed stochastic nodes: 976
+# Unobserved stochastic nodes: 927
+# Total graph size: 8609
+# 
+# Initializing model
+# 
+# |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
+# |**************************************************| 100%
+# |**************************************************| 100%
+# Warning message:
+#   In model_1(data = PPBdata, variable = "tkw", nb_iteration = 5000) :
+#   nb_iterations is below 20 000, which seems small to get convergence in the MCMC.
+
+load(paste(path, "out_model_1_bis.RData", sep = ""))
+@
+
+\subsubsection{Check and visualize model outputs}
+
+\paragraph{Check the model}
+
 Once the model is run, it is necessary to check if the outputs can be taken with confidence.
-This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from \texttt{analyse.outputs}!).
+This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from \texttt{check\_model}).
 
 <<message=TRUE,cache=FALSE>>=
-# The experimental design plot is done.
+# out_check_model_1 = check_model(out_model_1)
+
 # The Gelman-Rubin test is running for each parameter ...
 # The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
-# The values of sigma in the inverse Gamme distribution are done.
-# The mu_ij posterior distributions are done.
-# The beta_jk posterior distributions are done.
-# The sigma_j posterior distributions are done.
-# The standardised residuals distributions are done.
 
-load("./data_PPBstats/out1.RData")
+load(paste(path, "out_check_model_1.RData", sep = ""))
 @
 
-\texttt{out1} is a list containing:
+\texttt{out\_check\_model\_1} is a list containing:
 
 \begin{itemize}
-
-\item "experimental\_design" : a plot representing the presence/abscence matrix of G $\times$ E combinaisons. 
-Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
-A score of 1 is for a given germplasm in a given environment.
-A score of 2 is for a given germplasm replicated twice in a given environement.
-A score of 3 is for a given germplasm replicated three times in a given environement.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$data.experimental_design$plot
+\item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations//thin (the thin value is 10 by default in the models).
+<<message=TRUE,cache=FALSE>>=
+dim(out1$MCMC)
 @
-\end{figure}
 
-\item "convergence" : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test \citep{gelman_inference_1992}. If all the chains converge, it is NULL
+\item "MCMC_conv_not_ok": a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
 
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$convergence
-@
-\end{figure}
+\item "data_env_with_no_controls" : dataframe with environnement with no controls
 
-Here all the parameters converge.
-Below is an example where there is no convergence because the MCMC are too small.
+\item "data_env_whose_param_did_not_converge" : a list with data frame with environments where some parameters did not converge for mu and beta
 
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-
-# out.model1_bis = MC(data = PPBdata, variable = "tkw", nb_iteration = 5000)
-#Compiling model graph
-#   Resolving undeclared variables
-#   Allocating nodes
-#   Graph Size: 7662
-#
-#Initializing model
-#
-#  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
-#Warning message:
-#In MC(data = PPBdata, variable = "tkw", nb_iteration = 5000) :
-#  nb_iterations is below 20 000, which seems small to get convergence in the MCMC.
-
-load("./data_PPBstats/out.model1_bis.RData") # To save time
-
-# out1_bis = analyse.outputs(out.model1_bis)
-# The experimental design plot is done.
-# The Gelman-Rubin test is running for each parameter ...
-# The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : 
-# nu, rho, sigma[env1-1:2012], sigma[env1-2:2011], sigma[env2-12:2012], sigma[env2-6:2010]. 
-# Therefore, they are not present in MCMC output.
-# MCMC are updated, the following environment were deleted : 
-# env1-1:2012, env1-2:2011, env2-12:2012, env2-6:2010
-# model1.data_env_whose_param_did_not_converge contains the raw data for these environments.
-# The values of sigma in the inverse Gamme distribution are done.
-# The mu_ij posterior distributions are done.
-# The beta_jk posterior distributions are done.
-# The sigma_j posterior distributions are done.
-
-load("./data_PPBstats/out1_bis.RData") # To save time
-
-# Get one example
-toplot = out1_bis$convergence$"nu"
-grid.arrange(toplot$traceplot, toplot$density, ncol=2, nrow=1)
-
-@
-\end{figure}
-
-
-\item "parameter\_posteriors" : a list with
-
+\item "data_ggplot" : a list containing information for ggplot:
 \begin{itemize}
-
-\item "sigma\_distribution" : the distribution of the sigma is displayed on the Inverse Gamma distribution
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$sigma_distribution[[1]] # All the values
-@
-\end{figure}
-
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$sigma_distribution[[12]] # A subset of values
-@
-\end{figure}
-
-
-\item "parameter\_posteriors" : a caterpillar plot is display for each $\mu_{ij}$, $\beta_{jk}$ for a each environment and for $\sigma_j$.
-Below is an example for environment env1-1:2010.
-It is important to see it the values are coherent with your a priori knowledge.
-Indeed, a model can converge and estimate parameters'value that are not coherent!
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$parameter_posteriors$mu_posteriors$"env1-1:2010"
-@
-\end{figure}
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$parameter_posteriors$beta_posteriors$"env1-1:2010"
-@
-\end{figure}
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$parameter_posteriors$sigma_posteriors[[1]]
-@
-\end{figure}
-
-\item "standardized\_residuals" : a plot to check the normality of the residuals. If the model went well it should be between -2 and 2.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$standardized_residuals
-@
-\end{figure}
+\item sigma_j
+\item mu_ij
+\item beta_jk
+\item sigma_j_2
+\item epsilon_ijk
+\end{itemize}
 
 \end{itemize}
 
-\item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations//thin (the thin value is 10 by default in the models).
+When considering \texttt{out\_model\_1\_bis}:
+<<message=TRUE,cache=FALSE>>=
+out_check_model_1_bis = check_model(out_model_1_bis)
+
+# The Gelman-Rubin test is running for each parameter ...
+# The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : nu, rho, sigma[env2-2:2010]. Therefore, they are not present in MCMC output.
+# MCMC are updated, the following environment were deleted : env2-2:2010
+# data_env_whose_param_did_not_converge contains the raw data for these environments.
+
+load(paste(path, "out_check_model_1_bis.RData", sep = ""))
+@
+
+
+\paragraph{Visualize outputs}
+Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
+<<message=TRUE,cache=FALSE>>=
+p_out_check_model_1 = get_ggplot(out_check_model_1)
+@
+
+\texttt{p\_out\_check\_model\_1} is a list with:
+
+\begin{itemize}
+
+\item \texttt{sigma\_j\_gamma} : mean of each sigma_j displayed on the Inverse Gamma distribution. The first graph represent all the sigma_j, the other graph represent \textttt{nb\_parameters\_per\_plot} \texttt{sigma\_j} per graph.
+<<message=TRUE,cache=FALSE>>=
+p_out_check_model_1$sigma_j_gamma[[1]]
+p_out_check_model_1$sigma_j_gamma[[2]]
+@
+
+\item \texttt{mu\_ij} : distribution of each mu_ij in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} mu_ij per graph.
+<<message=TRUE,cache=FALSE>>=
+names(p_out_check_model_1$mu_ij)
+
+names(p_out_check_model_1$mu_ij$`env1-1:2010`)
+
+p_out_check_model_1$mu_ij$`env1-1:2010`$`1`
+@
+
+\item \texttt{beta\_jk} : distribution of each beta_jk in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} beta_jk per graph.
+<<message=TRUE,cache=FALSE>>=
+names(p_out_check_model_1$beta_jk)
+
+names(p_out_check_model_1$beta_jk$`env1-1:2010`)
+
+p_out_check_model_1$beta_jk$`env1-1:2010`$`1`
+@
+
+
+\item \texttt{sigma\_j} : distribution of each sigma_j. There are as many graph as needed with \code{nb_parameters_per_plot} sigma_j per graph.
+<<message=TRUE,cache=FALSE>>=
+names(p_out_check_model_1$sigma_j)
+
+p_out_check_model_1$sigma_j[[1]]
+@
+
+
+\item \texttt{epsilon\_ijk} : standardised residuals distribution.
+If the model went well it should be between -2 and 2.
+<<message=TRUE,cache=FALSE>>=
+p_out_check_model_1$epsilon_ijk
+@
+
+\item \texttt{mcmc\_not\_converge\_traceplot\_density} : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
+If all the chains converge, it is NULL
+<<message=TRUE,cache=FALSE>>=
+p_out_check_model_1$mcmc_not_converge_traceplot_density
+@
+Here all the parameters converge.
+
+
+When considering \texttt{p\_out\_check\_model\_1\_bis}, there is no convergence because the MCMC are too small.
 
 <<message=TRUE,cache=FALSE>>=
-dim(out1$MCMC)
+p_out_check_model_1_bis = get_ggplot(out_check_model_1_bis)
+
+p_out_check_model_1_bis$mcmc_not_converge_traceplot_density$`sigma\\[env2-2:2010`
 @
 
 \end{itemize}
@@ -276,7 +276,7 @@ dim(out1$MCMC)
 Just for fun, you can compare the posterior medians and the arithmetic means for the $\mu_{ij}$.
 
 <<message=TRUE,cache=FALSE>>=
-MCMC = out1$MCMC
+MCMC = out_check_model_1$MCMC
 effects = apply(MCMC, 2, median)
 mu_ij_estimated = effects[grep("mu",names(effects))]
 names(mu_ij_estimated) = sapply(names(mu_ij_estimated), 
@@ -304,107 +304,56 @@ p + stat_smooth(method = "lm") + geom_point()
 \end{figure}
 
 
+
 \subsubsection{Get mean comparisons}
-\label{mean_comp}
-In this part, the mean of each entry is compared to the mean of each other entry.
-Let $H_{0}$ and $H_{1}$ denote the hypotheses:
 
-\begin{displaymath}
-  H_{0} : \mu_{ij} \ge \mu_{i'j} , \; H_{1} : \mu_{ij} < \mu_{i'j}.
-\end{displaymath}
-
-The difference $\mu_{ij}-\mu_{i'j}$ between the means of germplasm $i$ and population $i'$ in environment $j$ was considered as significant if either $H_{0}$ or $H_{1}$ had a high posterior probability, that is if $Pr\{H_{0}|y\} > 1 - \alpha$ or $Pr\{H_{1}|y\}> 1 - \alpha$, where
-$\alpha$ was some specified threshold.
-The difference was considered as not significant otherwise.
-The posterior probability of a hypothesis was estimated by the proportion of MCMC simulations for
-which this hypothesis was satisfied (Figure~\ref{proba}).
-
-Groups are made based on the probabilites.
-Germplasms which share the same group are not different.
-Germplasms which do not share the same groupe are different.
-
-The threshold $\alpha$ that depends on agronomic objectives.
-This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given environnement).
-It corresponded to a `soft' Bonferroni correction, the Bonferroni correction being very conservative.
-
-As one objective of this PPB programme is that farmers (re)learn selection, the threshold could be adjusted to allow the detection of at least two groups instead of having farmers choose at random.
-The initial value could be set to $\alpha=0.1/I$ and if only one group is obtained, then this value could be adjusted to allow the detection of two groups.
-In this cases, the farmers should be informed of the lower degree of confidence that there are significant differences among entries.
-
-\begin{figure}[H]
-\begin{center}
-\begin{pspicture}(10,10)
-\rput[bl](0,0){\includegraphics[width=.6\textwidth]{proba}}
-\rput[b](3,7){$\mu_{ij}$}
-\rput[b](7.5,7){$\mu_{i'j}$}
-\rput[b](3,3){$\mu_{ij} - \mu_{i'j}$}
-\end{pspicture}
-\end{center}
-\caption{Mean comparison between $\mu_{ij}$ (dash line) and $\mu_{i'j}$ (plain line).}
-\label{proba}
-\end{figure}
-
-%% R code to get proba.pdf %%
-%
-%pdf("proba.pdf")
-%
-%par(mfrow=c(2,1),mar=c(3,5,1,1))
-%
-%a = rnorm(100000,10)
-%d <- density(a)
-%plot(d, type='l', xlab="", main="", xlim=c(5,18), lty=2, lwd=3)
-%
-%b = rnorm(100000,12)
-%d <- density(b)
-%lines(d,lty=1, lwd=3)
-%
-%diff = a - b
-%
-%d <- density(diff)
-%plot(d, type='l', xlab="", main="", lty=1, lwd=3)
-%
-%toget = which(d$x>=0)
-%H0x = d$x[toget]
-%H0y = d$y[toget]
-%
-%toget = which(d$x<0)
-%H1x = d$x[toget]
-%H1y = d$y[toget]
-%
-%x <- H0x
-%y <- H0y
-%polygon( c(x,rev(x)), c(rep(0,length(x)),rev(y)), border=NA, col="orange" )
-%
-%x <- H1x
-%y <- H1y
-%polygon( c(x,rev(x)), c(rep(0,length(x)),rev(y)), border=NA, col="darkgreen" )
-%
-%text(-2.5,0.02,"H1", cex=2, col="white")
-%text(0.55,0.02,"H0", cex=2, col="white")
-%
-%dev.off()
-
-
-\paragraph{Computation}
-
-In \pack, mean comparisons are done with \texttt{get.mean.comparisons}.
-You can choose on which parameters to run the comparison (\texttt{parameter} argument) and the $\alpha$ type one error (\texttt{alpha} argument).
-The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
-More informations on this function by typing \texttt{?get.mean.comparisons}.
+Get mean comparisons with \texttt{mean\_comparisons}.
+The theory behind mean comparisons are explained in section \ref{mean_comp}.
 
 <<message=TRUE,cache=FALSE>>=
-# comp.mu = get.mean.comparisons(out1$MCMC, "mu")
-# Get at least X groups for env2-1:2011. It may take some time ...
-# Get at least X groups for  env2-1:2011 is done.
-# Get at least X groups for env2-13:2011. It may take some time ...
-# Get at least X groups for  env2-13:2011 is done.
-# Get at least X groups for env2-3:2012. It may take some time ...
-# Get at least X groups for  env2-3:2012 is done.
-# Get at least X groups for env2-9:2010. It may take some time ...
-# Get at least X groups for  env2-9:2010 is done.
+# out_mean_comparisons_model_1_mu = mean_comparisons(out_check_model_1, parameter = "mu")
 
-load("./data_PPBstats/comp.mu.RData") # To save time
+# Get at least X groups for env2-1:2011. It may take some time ...
+# Get at least X groups for env2-1:2011 is done.
+# Get at least X groups for env2-13:2011. It may take some time ...
+# Get at least X groups for env2-13:2011 is done.
+# Get at least X groups for env2-3:2012. It may take some time ...
+# Get at least X groups for env2-3:2012 is done.
+# Get at least X groups for env2-9:2010. It may take some time ...
+# Get at least X groups for env2-9:2010 is done.
+
+load(paste(path, "out_mean_comparisons_model_1_mu.RData", sep = ""))
 @
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+A CONTINUER FAIRE Rd mean comp
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+\texttt{out_mean_comparisons_model_1_mu} is a list of three elements:
+\begin{itemize}
+\item
+\item
+\item
+\end{itemize}
+
+<<message=TRUE,cache=FALSE>>=
+head(out_mean_comparisons_model_1_mu$data_mean_comparisons$`env1-1:2010`$mean.comparisons)
+
+head(out_mean_comparisons_model_1_mu$data_env_with_no_controls)
+
+head(out_mean_comparisons_model_1_mu$data_env_whose_param_did_not_converge)
+@
+
+<<message=TRUE,cache=FALSE>>=
+p = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "barplot")
+p = get_ggplot(out_mean_comparisons_model_1_mu, data_version = data_version, ggplot.type = "barplot")
+p = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "score")
+p = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "interaction")
+@
+
+
 
 \paragraph{Plots}
 
