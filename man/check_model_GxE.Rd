@@ -9,11 +9,14 @@ check_model_GxE(out_GxE)
 \arguments{
 \item{out_GxE}{outputs from GxE function}
 }
+\value{
+See check_model
+}
 \description{
 \code{check_model_GxE} compute test to assess if the GxE model went well
 }
 \details{
-See check_model for further information
+See check_model
 }
 \seealso{
 \code{\link{GxE}}, \code{\link{check_model}}
