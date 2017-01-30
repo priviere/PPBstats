@@ -9,11 +9,14 @@ check_model_model_1(out_model_1)
 \arguments{
 \item{out_model_1}{outputs from model_1 function}
 }
+\value{
+See check_model
+}
 \description{
 \code{check_model_model_1} compute test to assess if the model_1 model went well
 }
 \details{
-See check_model for further information
+See check_model
 }
 \seealso{
 \code{\link{model_1}}, \code{\link{check_model}}

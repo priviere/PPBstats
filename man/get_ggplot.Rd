@@ -226,7 +226,7 @@ Below are some details on the construction of the plots :
    }
  }
 
- \item check_model fro model_1 and model_2
+ \item check_model from model_1 and model_2
  \itemize{
   \item mcmc_not_converge_traceplot_density : If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out_model$MCMC)}.
   But be careful with the size of your MCMC output which are often too big to be performed in R.
