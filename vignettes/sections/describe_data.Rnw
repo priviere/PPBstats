@@ -3,3 +3,16 @@
 
 May be different from experiment planned because of NA
 
+%\begin{itemize}
+
+%\item "experimental\_design" : a plot representing the presence/abscence matrix of G $\times$ E combinaisons. 
+%Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
+%A score of 1 is for a given germplasm in a given environment.
+%A score of 2 is for a given germplasm replicated twice in a given environement.
+%A score of 3 is for a given germplasm replicated three times in a given environement.
+
+%\begin{figure}[H]
+%<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+%out1$data.experimental_design$plot
+%@
+%\end{figure}
