@@ -119,11 +119,12 @@
 #'     
 #'    \item from model_1 :
 #'     \itemize{
-#'      \item sigma_j_gamma : mean of each sigma_j displayed on the Inverse Gamma distribution. The first graph represent all the sigma_j, the other graph represent \code{nb_parameters_per_plot sigma_j} per graph.
+#'      \item sigma_j_gamma : mean of each sigma_j displayed on the Inverse Gamma distribution. The first graph represent all the sigma_j, the other graph represent \code{nb_parameters_per_plot} sigma_j per graph.
 #'      \item mu_ij : distribution of each mu_ij in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} mu_ij per graph.
 #'      \item beta_jk : distribution of each beta_jk in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} beta_jk per graph.
 #'      \item sigma_j : distribution of each sigma_j. There are as many graph as needed with \code{nb_parameters_per_plot} sigma_j per graph.
 #'      \item epsilon_ijk : standardised residuals distribution.
+#'      If the model went well it should be between -2 and 2.
 #'      \item mcmc_not_converge_traceplot_density : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
 #'      If all the chains converge, it is NULL
 #'     }
@@ -134,6 +135,7 @@
 #'      \item beta_i : distribution of each beta_i. There are as many graph as needed with \code{nb_parameters_per_plot} beta_i per graph.
 #'      \item theta_j : distribution of each theta_j. There are as many graph as needed with \code{nb_parameters_per_plot} theta_j per graph.
 #'      \item epsilon_ij : standardised residuals distribution.
+#'      If the model went well it should be between -2 and 2.
 #'      \item mcmc_not_converge_traceplot_density : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
 #'      If all the chains converge, it is NULL
 #'     }
