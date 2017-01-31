@@ -7,7 +7,9 @@
 #' 
 #' @param gxe_analysis the analysis to carry out: "AMMI" or "GGE"
 #' 
-#' @details The computation is insoired from the agricolae::AMMI function. Another way to do has been explore but did not succeed regarding missing data. The code is inside the function.
+#' @details The computation is inspired from the agricolae::AMMI function. 
+#' Another way to do has been explore but did not succeed regarding missing data. 
+#' The code is inside the function.
 #' 
 #' @return 
 #' The function returns the interaction matrix

@@ -1,7 +1,7 @@
-#' Run GxE model on a data set
+#' Run AMMI or GGE model on a data set
 #'
 #' @description
-#' \code{GxE} runs AMMI or GGE model on a data set and gives back results on germplasms, locations, years and GxE or G+GxE interactions effects
+#' \code{GxE} runs AMMI or GGE model
 #' 
 #' @param data data with at least the following columns: year, location, germplasm, block, X, Y
 #' 
@@ -9,65 +9,25 @@
 #' 
 #' @param gxe_analysis the analysis to carry out: "AMMI" or "GGE"
 #' 
-#' @details See the vignette for more details on the models
-#' 
 #' @return 
-#' The function returns two lists with
+#' The function returns a list with three elements:
 #' \itemize{
-#'  \item for each variable a list with
+#'  \item variable
+#'  \item ANOVA a list with five elements:
 #'   \itemize{
-#'    \item "descriptive" being a list with
-#'    \itemize{
-#'     \item germplasm containing a boxplot for each germplasm
-#'     \item location containing a boxplot for each location
-#'     \item interaction containing an interaction plot
-#'     }
-#'    
-#'    \item "ANOVA" being a list with 
+#'    \item model
+#'    \item anova_model
+#'    \item germplasm_effects a list of two elements:
 #'     \itemize{
-#'      \item "anova_model"
-#'      \item "residuals" being a list with 
-#'       \itemize{
-#'        \item "distribution"
-#'        \item "QQplot"
-#'       }
-#'      \item "variability_repartition" a pie chart with variability repartition
-#'      \item "location_effects" being a list with
-#'      \itemize{
-#'       \item a vector with location effects
-#'       \item a barplot with groups based on LSD interval
-#'      }
-#'      \item "germplasm_effects"
-#'      \itemize{
-#'       \item a vector with germplasm effects
-#'       \item a vector with intra germplasm variance estimation
-#'       \item a barplot with groups based on LSD interval
-#'       \item a boxplot with intra germplasm variance estimation per germplasm
-#'      }
-#'      \item "interaction_matrix" the interaction matrix on which is based the PCA
+#'      \item effects
+#'      \item intra_variance
 #'     }
-#'     
-#'    \item PCA being a list with 
-#'     \itemize{
-#'      \item "ecovalence"
-#'      \item "biplot" a list with
-#'      \itemize{
-#'       \item "variation_dim"
-#'       \item "which_won_where"
-#'       \item "mean_vs_stability" a list with two elements: "mean" and "stability"
-#'       \item "discrimitiveness_vs_representativeness"
-#'      }
-#'    }
-#'  }
-#'   
-#'  \item a post GxE analysis with
-#'   \itemize{
-#'    \item "barplot_variation_repartition"
-#'    \item "PCA_G_effect"
-#'    \item "PCA_intraG_effect"
-#'    \item "PCA_E_effect"
+#'    \item location_effects
+#'    \item interaction_matrix
 #'   }
-#'  }
+#'  
+#'  \item PCA : PCA object from FactoMineR
+#' }
 #' 
 #' @author 
 #' Pierre Riviere
