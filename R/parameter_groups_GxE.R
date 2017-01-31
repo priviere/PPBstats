@@ -63,16 +63,3 @@ parameter_groups_GxE = function(
   attributes(out)$PPBstats.object = "parameter_groups_GxE"
   return(out)
 }
-
-#   # 2.1. barplot_variation_repartition ---------- 
-#   dtmp = data.frame()
-#   for(i in 1:length(out_ammi)){
-#     d = out_ammi[[i]]$ANOVA$variability_repartition$data
-#     d = cbind.data.frame(names(out_ammi)[i], d)
-#     dtmp = rbind.data.frame(dtmp, d)
-#   }
-#   colnames(dtmp)[1] = "var"
-#   p = ggplot(dtmp, aes(x = var, y = percentage_Sum_sq)) + geom_bar(stat = "identity", aes(fill = factor))
-#   p = p + ylab("pourcentage de variation") + theme(axis.text.x = element_text(angle = 90))
-#   cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-#   barplot_variation_repartition = p + scale_fill_manual(values = cbbPalette)
