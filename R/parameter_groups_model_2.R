@@ -1,3 +1,23 @@
+#' Get matrix with variables in column and effect in row from \code{check_model_model_2}
+#'
+#' @description
+#' \code{parameter_groups_model_2} gets matrix with variables in column and effect in row
+#'
+#' @param list_out_check_model_model_2 A list whose elements are output from \code{check_model_model_2}
+#'  
+#' @param parameter parameter on which to get the matrix
+#' 
+#' @return 
+#' The function returns a data frame with variables in column and effect of paramters in row
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso 
+#' \itemize{
+#'  \item \code{\link{parameter_groups}},
+#'  \item \code{\link{parameter_groups_GxE}},
+#' }
+#'
 parameter_groups_model_2 = function(
   list_out_check_model_model_2,
   parameter
