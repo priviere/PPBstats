@@ -1,3 +1,35 @@
+#' Get mean comparisons from object coming from check_model model_2
+#'
+#' @description
+#' \code{mean_comparisons_model_2} performs mean comparisons from object coming from check_model model_2
+#' See \code{mean_comparisons} for more information.
+#' 
+#' @param out_check_model_2
+#' 
+#' @param parameter
+#' 
+#' @param alpha
+#' 
+#' @param type
+#' 
+#' @param get.at.least.X.groups
+#' 
+#' @param precision
+#' 
+#' @param threshold
+#' 
+#' @param p.adj
+#' 
+#' @details See mean_comparisons
+#' 
+#' @return See mean_comparisons
+#' 
+#' @seealso 
+#' \itemize{
+#'  \item \code{\link{mean_comparisons}}
+#'  \item \code{\link{get_ggplot}}
+#' }
+#'
 mean_comparisons_model_2 = function(
   out_check_model_2, 
   parameter,

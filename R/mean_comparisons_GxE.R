@@ -1,13 +1,35 @@
+#' Get mean comparisons from object coming from check_model GxE
+#'
+#' @description
+#' \code{mean_comparisons_GxE} performs mean comparisons from object coming from check_model GxE
+#' See \code{mean_comparisons} for more information.
+#' 
+#' @param out_check_model_GxE 
+#' 
+#' @param alpha
+#' 
+#' @param p.adj
+#' 
+#' @details See mean_comparisons
+#' 
+#' @return See mean_comparisons
+#' 
+#' @seealso 
+#' \itemize{
+#'  \item \code{\link{mean_comparisons}}
+#'  \item \code{\link{get_ggplot}}
+#' }
+#'
 mean_comparisons_GxE = function(
-  out_check_model, 
+  out_check_model_GxE, 
   alpha = 0.05,
   p.adj = "none"
   ){
   # 1. Error message
-  if( attributes(out_check_model)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
+  if( attributes(out_check_model_GxE)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
   
-  model = out_check_model$GxE$ANOVA$model
-  variable = out_check_model$GxE$variable
+  model = out_check_model_GxE$GxE$ANOVA$model
+  variable = out_check_model_GxE$GxE$variable
   
   data_ggplot_LSDbarplot = function(model, fac, p.adj){
     lsd = LSD.test(model, fac, alpha = alpha, p.adj = p.adj)

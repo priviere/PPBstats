@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Compute interaction matrix
 #'
 #' @description
@@ -22,9 +21,7 @@ GxE_build_interaction_matrix = function(
   data, 
   gxe_analysis
   )
-  
-  # Lets' go ----------
-{
+  {
   
   if(nlevels(data$year) > 1) { 
     # model = lm(variable ~ germplasm*location + block_in_env + year + YxG + YxE, data = data)

@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Run GxE model on a data set
 #'
 #' @description
@@ -78,8 +77,6 @@ GxE = function(
   variable,
   gxe_analysis = NULL
 )
-
-# Lets' go ----------
   {
     # 1. Error messages ----------
     check_data_vec_variables(data, variable)
