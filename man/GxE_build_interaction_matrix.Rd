@@ -18,7 +18,9 @@ The function returns the interaction matrix
 \code{GxE_build_interaction_matrix} computes interaction matrix for AMMI or GGE model
 }
 \details{
-The computation is insoired from the agricolae::AMMI function. Another way to do has been explore but did not succeed regarding missing data. The code is inside the function.
+The computation is inspired from the agricolae::AMMI function.
+Another way to do has been explore but did not succeed regarding missing data.
+The code is inside the function.
 }
 \author{
 Pierre Riviere
