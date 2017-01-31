@@ -10,25 +10,41 @@
 #' @details
 #' The function run a PCA on a matrix containing the value of each parameter for each variable.
 #' 
-#' Clusters are done with the \code{FactoMineR::HCPC} function.
-#' You can tone the number of clusters with the argument \code{nb.clust}, which is the same as in \code{HCPC}
-#' Type ?\code{HCPC} for more informations.
+#' Clusters are done based on Average silhouette method for k-means clustering as explained here \url{http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning#r-codes-1}
 #' 
-#' More details in the vignette (type vignette ("PPBstats")).
+#' The hcluster are computed with the function hclust(dist())
+#' 
+#' The kmeans are computed with the function kmeans()
 #' 
 #' @return 
-#' The function returns a data frame with for each parameter, the median for each variable and the cluster to which it belongs
+#' The function returns a list of two elements:
+#' \itemize{
+#'  \item obj.pca : the PCA object from FactoMineR::PCA
+#'  \item clust, a list of four elements:
+#'   \itemize{
+#'    \item data : the matrix with variables in column and effect in row, from wich have been computed the PCA
+#'    \item nb.k : number of cluster
+#'    \item hc : hcluster
+#'    \item km : kmeans
+#'   }
+#' }
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{check_model}}, \code{\link{check_model_model_2}}, \code{\link{check_model_GxE}}, \code{\link{parameter_groups_GxE}}, \code{\link{parameter_groups_model_2}}, \code{\link{get.ggplot}}
-#' 
-#' 
+#' @seealso 
+#' \itemize{
+#'  \item \code{\link{check_model}},
+#'  \item \code{\link{check_model_model_2}},
+#'  \item \code{\link{check_model_GxE}},
+#'  \item \code{\link{parameter_groups_GxE}},
+#'  \item \code{\link{parameter_groups_model_2}},
+#'  \item \code{\link{get_ggplot}}
+#' }
+#'
 parameter_groups = function(
   list_out_check_model,
   parameter
 )
-  # let's go !!! ----------
 {
   # 1. Error message ----------
   if( length(list_out_check_model) <= 1 ) { stop("list_out_check_model must have at least two elements (i.e. two variables).") }
@@ -43,9 +59,13 @@ parameter_groups = function(
   }
   
   # 2. Get matrix
-  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_GxE" ) { out = parameter_groups_GxE(list_out_check_model, parameter) }
+  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_GxE" ) { 
+    out = parameter_groups_GxE(list_out_check_model, parameter) 
+    }
 
-  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_model_2" ) { out = parameter_groups_model_2(list_out_check_model, parameter) }
+  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_model_2" ) { 
+    out = parameter_groups_model_2(list_out_check_model, parameter) 
+    }
   
   
   # 3. Run the PCA ----------
@@ -75,8 +95,8 @@ parameter_groups = function(
              "clust" = list(
                "data" = out,
                "nb.k" = nb.k,
-               "res.hc" = res.hc,
-               "km.res" = km.res
+               "hc" = res.hc,
+               "km" = km.res
                )
              )
   
