@@ -12,7 +12,17 @@ parameter_groups(list_out_check_model, parameter)
 \item{parameter}{The parameter on which to get the groups}
 }
 \value{
-The function returns a data frame with for each parameter, the median for each variable and the cluster to which it belongs
+The function returns a list of two elements:
+\itemize{
+ \item obj.pca : the PCA object from FactoMineR::PCA
+ \item clust, a list of four elements:
+  \itemize{
+   \item data : the matrix with variables in column and effect in row, from wich have been computed the PCA
+   \item nb.k : number of cluster
+   \item hc : hcluster
+   \item km : kmeans
+  }
+}
 }
 \description{
 \code{parameter_groups} gets groups of parameters based on multivariate analysis
@@ -20,16 +30,23 @@ The function returns a data frame with for each parameter, the median for each v
 \details{
 The function run a PCA on a matrix containing the value of each parameter for each variable.
 
-Clusters are done with the \code{FactoMineR::HCPC} function.
-You can tone the number of clusters with the argument \code{nb.clust}, which is the same as in \code{HCPC}
-Type ?\code{HCPC} for more informations.
+Clusters are done based on Average silhouette method for k-means clustering as explained here \url{http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning#r-codes-1}
 
-More details in the vignette (type vignette ("PPBstats")).
+The hcluster are computed with the function hclust(dist())
+
+The kmeans are computed with the function kmeans()
 }
 \author{
 Pierre Riviere
 }
 \seealso{
-\code{\link{check_model}}, \code{\link{check_model_model_2}}, \code{\link{check_model_GxE}}, \code{\link{parameter_groups_GxE}}, \code{\link{parameter_groups_model_2}}, \code{\link{get.ggplot}}
+\itemize{
+ \item \code{\link{check_model}},
+ \item \code{\link{check_model_model_2}},
+ \item \code{\link{check_model_GxE}},
+ \item \code{\link{parameter_groups_GxE}},
+ \item \code{\link{parameter_groups_model_2}},
+ \item \code{\link{get_ggplot}}
+}
 }
 
