@@ -3,10 +3,10 @@ mean_comparisons_model_1 = function(
   parameter,
   alpha = 0.05,
   type = 1,
-  threshold = 1,
-  p.adj = "soft.bonf",
   get.at.least.X.groups = 2,
-  precision = 0.0005
+  precision = 0.0005,
+  threshold = 1,
+  p.adj = "soft.bonf"
 ){
   # 1. Error message
   if( attributes(out_check_model_1)$PPBstats.object != "check_model_model_1" ) { stop("data must come from check_model and model_1") }

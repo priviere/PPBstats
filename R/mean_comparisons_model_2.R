@@ -3,10 +3,10 @@ mean_comparisons_model_2 = function(
   parameter,
   alpha = 0.05,
   type = 1,
-  threshold = 1,
-  p.adj = "soft.bonf",
   get.at.least.X.groups = 2,
-  precision = 0.0005
+  precision = 0.0005,
+  threshold = 1,
+  p.adj = "soft.bonf"
   ){
   # 1. Error message
   if(!is.element(parameter, c("alpha", "beta", "theta"))) { stop("With outputs from model 2, the parameters must be alpha, beta or theta.") }
