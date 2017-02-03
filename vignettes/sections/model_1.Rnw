@@ -111,7 +111,7 @@ The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
 # |**************************************************| 100%
 # |**************************************************| 100%
 
-load(paste(path, "out_model_1.RData", sep = "")) # To save time
+load("./data_PPBstats/out_model_1.RData") # To save time
 @
 
 You can get informations of the environments in the dataset :
@@ -149,7 +149,7 @@ Below is an example with low \texttt{nb\_iterations}:
 #   In model_1(data = PPBdata, variable = "tkw", nb_iteration = 5000) :
 #   nb_iterations is below 20 000, which seems small to get convergence in the MCMC.
 
-load(paste(path, "out_model_1_bis.RData", sep = ""))
+load("./data_PPBstats/out_model_1_bis.RData") # To save time
 @
 
 \subsubsection{Check and visualize model outputs}
@@ -165,30 +165,30 @@ This step is needed before going ahead in the analysis (in fact, the MCMC object
 # The Gelman-Rubin test is running for each parameter ...
 # The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
 
-load(paste(path, "out_check_model_1.RData", sep = ""))
+load("./data_PPBstats/out_check_model_1.RData") # To save time
 @
 
 \texttt{out\_check\_model\_1} is a list containing:
 
 \begin{itemize}
-\item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations//thin (the thin value is 10 by default in the models).
+\item \texttt{MCMC} : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations//thin (the thin value is 10 by default in the models).
 <<message=TRUE,cache=FALSE>>=
-dim(out1$MCMC)
+dim(out_check_model_1$MCMC)
 @
 
-\item "MCMC_conv_not_ok": a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
+\item \texttt{MCMC\_conv\_not\_ok}: a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
 
-\item "data_env_with_no_controls" : dataframe with environnement with no controls
+\item \texttt{data\_env\_with\_no\_controls} : dataframe with environnement with no controls
 
-\item "data_env_whose_param_did_not_converge" : a list with data frame with environments where some parameters did not converge for mu and beta
+\item \texttt{data\_env\_whose\_param\_did\_not\_converge} : a list with data frame with environments where some parameters did not converge for mu and beta
 
-\item "data_ggplot" : a list containing information for ggplot:
+\item \texttt{data\_ggplot} : a list containing information for ggplot:
 \begin{itemize}
-\item sigma_j
-\item mu_ij
-\item beta_jk
-\item sigma_j_2
-\item epsilon_ijk
+\item \texttt{sigma\_j}
+\item \texttt{mu\_ij}
+\item \texttt{beta\_jk}
+\item \texttt{sigma\_j\_2}
+\item \texttt{epsilon\_ijk}
 \end{itemize}
 
 \end{itemize}
@@ -202,7 +202,7 @@ out_check_model_1_bis = check_model(out_model_1_bis)
 # MCMC are updated, the following environment were deleted : env2-2:2010
 # data_env_whose_param_did_not_converge contains the raw data for these environments.
 
-load(paste(path, "out_check_model_1_bis.RData", sep = ""))
+load("./data_PPBstats/out_check_model_1_bis.RData") # To save time
 @
 
 
@@ -216,13 +216,13 @@ p_out_check_model_1 = get_ggplot(out_check_model_1)
 
 \begin{itemize}
 
-\item \texttt{sigma\_j\_gamma} : mean of each sigma_j displayed on the Inverse Gamma distribution. The first graph represent all the sigma_j, the other graph represent \textttt{nb\_parameters\_per\_plot} \texttt{sigma\_j} per graph.
+\item \texttt{sigma\_j\_gamma} : mean of each \texttt{sigma\_j} displayed on the Inverse Gamma distribution. The first graph represent all the \texttt{sigma\_j}, the other graph represent \texttt{nb\_parameters\_per\_plot} \texttt{sigma\_j} per graph.
 <<message=TRUE,cache=FALSE>>=
 p_out_check_model_1$sigma_j_gamma[[1]]
 p_out_check_model_1$sigma_j_gamma[[2]]
 @
 
-\item \texttt{mu\_ij} : distribution of each mu_ij in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} mu_ij per graph.
+\item \texttt{mu\_ij} : distribution of each \texttt{mu\_ij} in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{mu\_ij} per graph.
 <<message=TRUE,cache=FALSE>>=
 names(p_out_check_model_1$mu_ij)
 
@@ -231,7 +231,7 @@ names(p_out_check_model_1$mu_ij$`env1-1:2010`)
 p_out_check_model_1$mu_ij$`env1-1:2010`$`1`
 @
 
-\item \texttt{beta\_jk} : distribution of each beta_jk in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} beta_jk per graph.
+\item \texttt{beta\_jk} : distribution of each \texttt{beta\_jk} in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{beta\_jk} per graph.
 <<message=TRUE,cache=FALSE>>=
 names(p_out_check_model_1$beta_jk)
 
@@ -241,7 +241,7 @@ p_out_check_model_1$beta_jk$`env1-1:2010`$`1`
 @
 
 
-\item \texttt{sigma\_j} : distribution of each sigma_j. There are as many graph as needed with \code{nb_parameters_per_plot} sigma_j per graph.
+\item \texttt{sigma\_j} : distribution of each \texttt{sigma\_j}. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{sigma\_j} per graph.
 <<message=TRUE,cache=FALSE>>=
 names(p_out_check_model_1$sigma_j)
 
@@ -273,7 +273,7 @@ p_out_check_model_1_bis$mcmc_not_converge_traceplot_density$`sigma\\[env2-2:2010
 
 \end{itemize}
 
-Just for fun, you can compare the posterior medians and the arithmetic means for the $\mu_{ij}$.
+Just for fun, you can compare the posterior medians and the arithmetic means for the \texttt{mu\_ij}.
 
 <<message=TRUE,cache=FALSE>>=
 MCMC = out_check_model_1$MCMC
@@ -305,10 +305,14 @@ p + stat_smooth(method = "lm") + geom_point()
 
 
 
-\subsubsection{Get mean comparisons}
+\subsubsection{Get and visualize mean comparisons}
+
+\paragraph{Get mean comparisons}
 
 Get mean comparisons with \texttt{mean\_comparisons}.
 The theory behind mean comparisons are explained in section \ref{mean_comp}.
+
+Below is an example for $\mu$, the same can be done for $\beta$.
 
 <<message=TRUE,cache=FALSE>>=
 # out_mean_comparisons_model_1_mu = mean_comparisons(out_check_model_1, parameter = "mu")
@@ -322,141 +326,114 @@ The theory behind mean comparisons are explained in section \ref{mean_comp}.
 # Get at least X groups for env2-9:2010. It may take some time ...
 # Get at least X groups for env2-9:2010 is done.
 
-load(paste(path, "out_mean_comparisons_model_1_mu.RData", sep = ""))
+load("./data_PPBstats/out_mean_comparisons_model_1_mu.RData") # To save time
 @
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-A CONTINUER FAIRE Rd mean comp
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-\texttt{out_mean_comparisons_model_1_mu} is a list of three elements:
+\texttt{out\_mean\_comparisons\_model\_1\_mu} is a list of three elements:
 \begin{itemize}
-\item
-\item
-\item
-\end{itemize}
+\item \texttt{data\_mean\_comparisons} a list with as many elements as environment.
 
+<<message=TRUE,cache=FALSE>>=
+head(names(out_mean_comparisons_model_1_mu$data_mean_comparisons))
+@
+
+Each element of the list is composed of two elements:
+
+\begin{itemize}
+\item \texttt{mean.comparisons}
 <<message=TRUE,cache=FALSE>>=
 head(out_mean_comparisons_model_1_mu$data_mean_comparisons$`env1-1:2010`$mean.comparisons)
-
-head(out_mean_comparisons_model_1_mu$data_env_with_no_controls)
-
-head(out_mean_comparisons_model_1_mu$data_env_whose_param_did_not_converge)
 @
 
+\item \texttt{Mpvalue} : a square matrix with pvalue computed for each pair of parameter.
 <<message=TRUE,cache=FALSE>>=
-p = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "barplot")
-p = get_ggplot(out_mean_comparisons_model_1_mu, data_version = data_version, ggplot.type = "barplot")
-p = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "score")
-p = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "interaction")
+out_mean_comparisons_model_1_mu$data_mean_comparisons$`env1-1:2010`$Mpvalue[1:3, 1:3]
 @
 
+\end{itemize}
+
+\item \texttt{data\_env\_with\_no\_controls} a list with as many elements as environment.
+<<message=TRUE,cache=FALSE>>=
+names(out_mean_comparisons_model_1_mu$data_env_with_no_controls)
+@
+
+In each list it is mean.comparisons
+<<message=TRUE,cache=FALSE>>=
+head(out_mean_comparisons_model_1_mu$data_env_with_no_controls$`env5:2010`$mean.comparisons)
+@
+
+\item \texttt{data\_env\_whose\_param\_did\_not\_converge} a list with as many elements as environment.
+<<message=TRUE,cache=FALSE>>=
+names(out_mean_comparisons_model_1_mu$data_env_whose_param_did_not_converge)
+@
+Here it is NULL as all parameters converge. 
+Otherwise in each list it is mean.comparisons.
+<<message=TRUE,cache=FALSE>>=
+head(out_mean_comparisons_model_1_mu$data_env_with_no_controls$`env5:2010`$mean.comparisons)
+@
+
+\end{itemize}
 
 
-\paragraph{Plots}
+\paragraph{Visualize mean comparisons}
 
-\subparagraph{All entries in a given environment}
-
-To see the output, use \texttt{get.ggplot}.
+To see the output, use \texttt{get\_ggplot}.
 On each plot, the \texttt{alpha} (type one error) value and the alpha correction are displayed.
 \texttt{alpha = Imp} means that no differences were possible to find.
 For \texttt{ggplot.type = "interaction"} and \texttt{ggplot.type = "score"}, it is display under the form: \texttt{alpha | alpha correction}.
 
-<<message=TRUE,cache=FALSE>>=
-p_barplot = get.ggplot(comp.mu, ggplot.type = "barplot")
-length(p_barplot)
-names(p_barplot)
-@
+The ggplot are done for each element of the list coming rom \texttt{mean\_comparisons}.
 
-\begin{figure}[H]
+For each ggplot.type, it is a list of three elements being lists with as many elements as environment. 
 
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-# For environment env-1-1:2010
-grid.arrange(p_barplot$"env1-1:2010"[[1]], p_barplot$"env1-1:2010"[[2]] , ncol = 2, nrow = 1)
-grid.arrange(p_barplot$"env1-1:2010"[[2]], p_barplot$"env1-1:2010"[[4]], ncol = 2, nrow = 1)
-@
-\end{figure}
+For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
 
-With \texttt{ggplot.type = "interaction"}, you can display the year effect as well as detect groups.
-One group is represented by one dashed line.
-Germplasms which share the same group are not different.
-Germplasms which do not share the same groupe are different (section \ref{mean_comp}).
+\subparagraph{barplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_interaction = get.ggplot(comp.mu, ggplot.type = "interaction")
+p_barplot_mu = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "barplot")
+names(p_barplot_mu)
 @
 
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-# For location env-1-1.
-p_interaction$"env1-1"[[1]]
+From \texttt{data\_mean\_comparisons}, only environments where all MCMC converge are represented.
+
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+
+The error I (alpha) and the alpha correction are displayed in the title. 
+alpha = Imp means that no differences were possible to find.
+
+<<message=TRUE,cache=FALSE>>=
+p = p_barplot_mu$data_mean_comparisons
+
+head(names(p))
+
+p_env = p$`env1-1:2010`
+names(p_env)
+
+p_env$`1`
+p_env$`2`
+p_env$`3`
+p_env$`4`
 @
-\end{figure}
 
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[[2]]
+For \texttt{data\_env\_with\_no\_controls}, only environments where there were no controls are represented.
+
+<<message=TRUE,cache=FALSE>>=
+p_barplot_mu$data_env_with_no_controls
 @
-\end{figure}
 
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[[3]]
+
+For \texttt{data\_env\_whose\_param\_did\_not\_converge}, only environments where MCMC did not converge are represented.
+
+<<message=TRUE,cache=FALSE>>=
+p_barplot_mu$data_env_whose_param_did_not_converge
 @
-\end{figure}
-             
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[[4]]
-@
-\end{figure}
-
-For the score, more entries are displayed.
-An high score means that the entry was in a group with an high mean.
-A low socre means that the entry was in a group with an low mean.
-This plot is useful to look at year effects.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_score = get.ggplot(comp.mu, ggplot.type = "score", nb_parameters_per_plot = 15)
-# For location env-1-1
-grid.arrange(p_score$"env1-1"[[1]], p_score$"env1-1"[[2]] , ncol = 2, nrow = 1)
-@
-\end{figure}
-
-The same method is used for each $\beta_{jk}$.
-
-\vspace{.5cm}
-
-For environments with no controls or where at least one MCMC did not converge, it may be useful to get the plot as well.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-get.ggplot(out.model1$data_env_with_no_controls, ggplot.type = "barplot")
-@
-\end{figure}
-
-You can also do a plot with interaction. 
-Here it is not useful as there is only one year.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-g = get.ggplot(out1_bis$model1.data_env_whose_param_did_not_converge, ggplot.type = "barplot")
-
-names(g)
-
-g$`env1-1:2012`$`1`
-@
-\end{figure}
 
 
-\subparagraph{Pairs of entries in a given environment}
-It is possible to get comparison of paris of entries in a given location.
+Regarding pairs of entries in a given environment, 
+it is possible to get comparison of paris of entries in a given location.
 This is useful if you want to compare two versions within a group.
 For exemple:
-
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
 data(data_version)
 head(data_version)
@@ -465,9 +442,9 @@ head(data_version)
 Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two version belonging to the same groupe.
 
 Lets' make the plots:
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-g = get.ggplot(data = comp.mu, data_version = data_version, ggplot.type = "barplot")
-g$`env1-1:2010`$`1`
+<<message=TRUE,cache=FALSE>>=
+p_barplot_mu_version = get_ggplot(out_mean_comparisons_model_1_mu, data_version = data_version, ggplot.type = "barplot")
+p_barplot_mu_version$data_mean_comparisons$`env1-1:2010`
 @
 
 The stars corresponds to the pvalue:
@@ -487,13 +464,66 @@ $> 0.01$ & . \\
 
 The pvalue is computed as describe in section \ref{mean_comp} if the parameters have been estimated with the model.
 
-It is also possible to make this kind of plots for data that did not converge or without environments.
-In this case, it is a \texttt{t.test} which is perform.
+For environments where MCMC did not converge or without environments, it is a \texttt{t.test} which is perform.
 
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-g = get.ggplot(out1_bis$model1.data_env_whose_param_did_not_converge, data_version = data_version, ggplot.type = "barplot")
+p_barplot_mu_version$data_env_with_no_controls
+@
 
-g = get.ggplot(out.model1$data_env_with_no_controls, data_version = data_version, ggplot.type = "barplot")
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+p_barplot_mu_version$data_env_whose_param_did_not_converge
+@
+
+\subparagraph{interaction}
+
+With \texttt{ggplot.type = "interaction"}, you can display the year effect as well as detect groups.
+One group is represented by one dashed line.
+Germplasms which share the same group are not different.
+Germplasms which do not share the same groupe are different (section \ref{mean_comp}).
+
+The ggplot are done for each element of the list coming rom \texttt{mean\_comparisons}.
+
+For each ggplot.type, it is a list of three elements being lists with as many elements as environment. 
+
+For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
+
+
+<<message=TRUE,cache=FALSE>>=
+p_interaction = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "interaction")
+
+head(names(p_interaction$data_mean_comparisons))
+
+p_env = p_interaction$data_mean_comparisons$`env1-1`
+names(p_env)
+
+p_env$`1`
+p_env$`2`
+p_env$`3`
+p_env$`4`
+
+@
+
+
+\subparagraph{score}
+
+For the score, more entries are displayed.
+An high score means that the entry was in a group with an high mean.
+A low socre means that the entry was in a group with an low mean.
+This plot is useful to look at year effects.
+
+<<message=TRUE,cache=FALSE>>=
+p_score = get_ggplot(out_mean_comparisons_model_1_mu, ggplot.type = "score")
+
+head(names(p_score))
+
+p_env = p_score$`env1-1`
+names(p_env)
+
+p_env$`1`
+p_env$`2`
+p_env$`3`
+p_env$`4`
+
 @
 
 
