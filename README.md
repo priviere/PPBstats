@@ -20,13 +20,13 @@ The version number is under the form A.B with
 
 See NEWS [here](https://github.com/priviere/PPBstats/blob/master/NEWS) to know the evolution of the codes.
 
-## Participate to development
+## Contribute to development
 
-You can participate in three ways:
+You can contribute in three ways:
 
 1. test this development version and report bugs
 2. translate the package
-3. add new functions that may be useful in the analysis of unbalanced trials that can be found in PPB programmes
+3. add new functions that may be useful in the analysis of trials that can be found in PPB programmes
 
 If you update the code, you can refer to 
 [the issues](https://github.com/priviere/shinemas2R/issues)
