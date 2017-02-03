@@ -157,7 +157,7 @@
 #'    
 #'    \item from model_1, a list with ggplot object depending on ggplot.type.
 #'    For each ggplot.type, it is a list of three elements being lists with as many elements as environment. 
-#'        For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} perameters per graph.
+#'        For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
 #'     \itemize{
 #'      \item barplot : 
 #'       \itemize{
