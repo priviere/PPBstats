@@ -24,7 +24,7 @@ The package is in english.
 Every contributions to other languages are welcome!
 More informations on R package translation [here](http://developer.r-project.org/Translations30.html).
 
-\subsection{Add new function}
+\subsection{Add new functions}
 
 If you wish to add a new model, you should follow different steps:
 
@@ -52,8 +52,10 @@ check_model_my_model = function(my_model){
   
 and in \texttt{check\_model} add:
 
-<<message=FALSE,cache=FALSE>>=
-if( attributes(out)$PPBstats.object = "my_model" ){ check_model_my_model(out_model) }
+<<message=FALSE,cache=FALSE,eval=FALSE>>=
+if( attributes(out_model)$PPBstats.object == "my_model" ){ 
+  check_model_my_model(out_model) 
+  }
 @
 
 \item create the mean comparison function that is called in \texttt{mean\_comparison}
@@ -68,8 +70,10 @@ mean_comparisons_my_model = function(out_check_model){
 @
 and in \texttt{mean\_comparison} add:
 
-<<message=FALSE,cache=FALSE>>=
-if( attributes(out)$PPBstats.object = "check_model_my_model" ){ mean_comparisons_my_model(out_check_model, ...) }
+<<message=FALSE,cache=FALSE,eval=FALSE>>=
+if( attributes(out_check_model)$PPBstats.object == "check_model_my_model" ){ 
+  mean_comparisons_my_model(out_check_model, ...) 
+  }
 @  
 
 \item create the ggplot function that is called in \texttt{get\_ggplot}
@@ -80,8 +84,10 @@ ggplot_mean_comparisons_my_model = function(data, ...){}
 
 and in \texttt{get\_ggplot} add:
 
-<<message=FALSE,cache=FALSE>>=
-if( attributes(out)$PPBstats.object = "mean_comparisons_my_model" ){ ggplot_mean_comparisons_my_model(data, ...) }
+<<message=FALSE,cache=FALSE,eval=FALSE>>=
+if( attributes(data)$PPBstats.object == "mean_comparisons_my_model" ){ 
+  ggplot_mean_comparisons_my_model(data, ...) 
+  }
 @  
 
 \end{enumerate}
