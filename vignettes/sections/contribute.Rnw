@@ -1,0 +1,88 @@
+\section{Contribute}
+\label{contribute}
+
+You can contribute to \pack~ in three ways:
+
+\begin{enumerate}
+\item test \pack, the vignette and report bugs
+\item translate \pack
+\item add new functions that may be useful in the analysis of trials that can be found in PPB programmes
+\end{enumerate}
+
+\subsection{Test and report bugs}
+
+Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
+\begin{itemize}
+\item some points are not clear in the vignette or you find bugs
+\item you find bugs with your data (If so, you can send it to me so that I can see where could be the problems)
+\end{itemize}
+
+
+\subsection{Translate}
+
+The package is in english. 
+Every contributions to other languages are welcome!
+More informations on R package translation [here](http://developer.r-project.org/Translations30.html).
+
+\subsection{Add new function}
+
+If you wish to add a new model, you should follow different steps:
+
+\begin{enumerate}
+\item create the model function
+
+<<message=FALSE,cache=FALSE>>=
+my_model = function(...){
+  ...
+  ...
+  ...
+  attributes(OUT)$PPBstats.object = "my_model"
+}
+@
+
+\item create the check function that is called in \texttt{check\_model}
+<<message=FALSE,cache=FALSE>>=
+check_model_my_model = function(my_model){
+  ...
+  ...
+  ...
+  attributes(out)$PPBstats.object = "check_model_my_model"
+}
+@
+  
+and in \texttt{check\_model} add:
+
+<<message=FALSE,cache=FALSE>>=
+if( attributes(out)$PPBstats.object = "my_model" ){ check_model_my_model(out_model) }
+@
+
+\item create the mean comparison function that is called in \texttt{mean\_comparison}
+
+<<message=FALSE,cache=FALSE>>=
+mean_comparisons_my_model = function(out_check_model){
+  ...
+  ...
+  ...
+  attributes(out)$PPBstats.object = "mean_comparisons_my_model"
+}
+@
+and in \texttt{mean\_comparison} add:
+
+<<message=FALSE,cache=FALSE>>=
+if( attributes(out)$PPBstats.object = "check_model_my_model" ){ mean_comparisons_my_model(out_check_model, ...) }
+@  
+
+\item create the ggplot function that is called in \texttt{get\_ggplot}
+
+<<message=FALSE,cache=FALSE>>=
+ggplot_mean_comparisons_my_model = function(data, ...){}
+@  
+
+and in \texttt{get\_ggplot} add:
+
+<<message=FALSE,cache=FALSE>>=
+if( attributes(out)$PPBstats.object = "mean_comparisons_my_model" ){ ggplot_mean_comparisons_my_model(data, ...) }
+@  
+
+\end{enumerate}
+
