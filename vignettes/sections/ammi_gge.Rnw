@@ -108,10 +108,15 @@ $\varepsilon_{ijk}$ the residuals.\\
 
 \subsubsection{Steps with \pack}
 
+<<message=TRUE,cache=FALSE>>=
+data(data_GxE)
+head(data_GxE)
+@
+
 
 \subsubsection{Run the model}
 <<message=TRUE,cache=FALSE>>=
-ammi = GxE(PPBdata_GxE, vec_variables, gxe_analysis = "AMMI")
+ammi = GxE(data_GxE, vec_variables, gxe_analysis = "AMMI")
 @
 
 Lets' see for one variable
