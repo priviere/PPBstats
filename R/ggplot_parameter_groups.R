@@ -18,8 +18,8 @@ ggplot_parameter_groups = function(out_parameter_groups){
   clust = out_parameter_groups$clust
   data = clust$data
   nb.k = clust$nb.k
-  res.hc = clust$res.hc
-  km.res = clust$km.res
+  res.hc = clust$hc
+  km.res = clust$km
   
   
   out = list(
