@@ -63,7 +63,7 @@ For model\_1, you can follow these steps (Figure \ref{main_workflow}):
 \begin{enumerate}
 \item Run the model with \texttt{model\_1}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
-\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and \texttt{get\_ggplot}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{get\_ggplot}
 \end{enumerate}
 
 Let's get the data.
@@ -171,14 +171,14 @@ load("./data_PPBstats/out_check_model_1.RData") # To save time
 \texttt{out\_check\_model\_1} is a list containing:
 
 \begin{itemize}
-\item \texttt{MCMC} : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations//thin (the thin value is 10 by default in the models).
+\item \texttt{MCMC} : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/thin (the thin value is 10 by default in the models).
 <<message=TRUE,cache=FALSE>>=
 dim(out_check_model_1$MCMC)
 @
 
 \item \texttt{MCMC\_conv\_not\_ok}: a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
 
-\item \texttt{data\_env\_with\_no\_controls} : dataframe with environnement with no controls
+\item \texttt{data\_env\_with\_no\_controls} : data frame with environnement with no controls
 
 \item \texttt{data\_env\_whose\_param\_did\_not\_converge} : a list with data frame with environments where some parameters did not converge for mu and beta
 
@@ -207,6 +207,7 @@ load("./data_PPBstats/out_check_model_1_bis.RData") # To save time
 
 
 \paragraph{Visualize outputs}
+
 Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
 <<message=TRUE,cache=FALSE>>=
 p_out_check_model_1 = get_ggplot(out_check_model_1)
