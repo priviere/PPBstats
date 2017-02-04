@@ -103,8 +103,8 @@ The values for $\alpha_i$, $\beta_i$, $\theta_j$ are the real value taken to cre
 This dataset is representative of data you can get in a PPB programme.
 
 <<message=TRUE,cache=FALSE>>=
-data(PPBdata2)
-head(PPBdata2)
+data(data_model_2)
+head(data_model_2)
 @
 
 \subsubsection{Run the model}
@@ -128,7 +128,7 @@ DIC criterion is a generalization of the AIC criterion that can be used for hier
 The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
 
 <<message=TRUE,cache=FALSE>>=
-# out_model_2 = model_2(data = PPBdata2, variable = "y1", return.epsilon = TRUE)
+# out_model_2 = model_2(data = data_model_2, variable = "y1", return.epsilon = TRUE)
 
 # Run additive model ...
 # Compiling model graph

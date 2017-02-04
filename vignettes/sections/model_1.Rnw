@@ -71,8 +71,8 @@ The values for $\mu_{ij}$, $\beta_{jk}$, $\epsilon_{ijk}$ and $\sigma_j$ are the
 This dataset is representative of data you can get in a PPB programme.
 
 <<message=TRUE,cache=FALSE>>=
-data(PPBdata)
-head(PPBdata)
+data(data_model_1)
+head(data_model_1)
 @
 
 \subsubsection{Run the model}
@@ -94,7 +94,7 @@ DIC criterion is a generalization of the AIC criterion that can be used for hier
 The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
 
 <<message=TRUE,cache=FALSE>>=
-# out_model_1 = model_1(data = PPBdata, variable = "tkw", return.epsilon = TRUE)
+# out_model_1 = model_1(data = data_model_1, variable = "tkw", return.epsilon = TRUE)
 
 # Compiling model graph
 # Resolving undeclared variables
