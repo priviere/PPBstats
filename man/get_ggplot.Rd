@@ -96,6 +96,7 @@ See details for more information.}
      \item theta_j : distribution of each theta_j. There are as many graph as needed with \code{nb_parameters_per_plot} theta_j per graph.
      \item epsilon_ij : standardised residuals distribution.
      If the model went well it should be between -2 and 2.
+     If the model went well it should be between -2 and 2.
      \item mcmc_not_converge_traceplot_density : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test.
      If all the chains converge, it is NULL
     }
