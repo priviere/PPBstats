@@ -53,9 +53,9 @@
 #' 
 #' \item model_1
 #' \itemize{
-#'  \item MCMC
-#'  \item MCMC_conv_not_ok
-#'  \item data_env_with_no_controls
+#'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/thin (the thin value is 10 by default in the models).
+#'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
+#'  \item data_env_with_no_controls : data frame with environnement with no controls
 #'  \item data_env_whose_param_did_not_converge : a list with data frame with environments where some parameters did not converge for mu and beta.
 #'  \item data_ggplot a list containing information for ggplot:
 #'  \itemize{
@@ -70,8 +70,8 @@
 #' 
 #' \item model_2
 #' \itemize{
-#'  \item MCMC
-#'  \item MCMC_conv_not_ok
+#'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/thin (the thin value is 10 by default in the models).
+#'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
 #'  \item model2.presence.abscence.matrix : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 #'  \item data_ggplot a list containing information for ggplot:
 #'  \itemize{
