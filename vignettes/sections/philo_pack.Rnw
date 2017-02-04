@@ -312,6 +312,8 @@ get.PPBstats.data() # not run
 # You can now load the data, for example load("./data_PPBstats/out1.Rdata").
 @
 
+The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables.
+
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
