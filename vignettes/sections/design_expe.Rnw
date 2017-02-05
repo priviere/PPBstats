@@ -159,7 +159,7 @@ head(p_fr$"fully-replicated"$data.frame)
 
 
 <<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
-p_fr$"fully-replicated"$plan
+p_fr$"fully-replicated"$design
 @
 
 
@@ -182,7 +182,7 @@ head(p_case2$"row-column"$data.frame)
 @
 
 <<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
-p_case2$"row-column"$plan
+p_case2$"row-column"$design
 @
 
 Note that if controls are missing in rows or columns.
@@ -209,7 +209,7 @@ p_case3_sf1 = design_experiment(
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
-p_case3_sf1 = p_case3_sf1$`satellite-farms`$plan
+p_case3_sf1 = p_case3_sf1$`satellite-farms`$design
 
 p_case3_sf2 = design_experiment(
   location = "Location-5",
@@ -220,7 +220,7 @@ p_case3_sf2 = design_experiment(
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
-p_case3_sf2 = p_case3_sf2$`satellite-farms`$plan
+p_case3_sf2 = p_case3_sf2$`satellite-farms`$design
 
 p_case3_sf3 = design_experiment(
   location = "Location-6",
@@ -231,7 +231,7 @@ p_case3_sf3 = design_experiment(
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 2)
-p_case3_sf3 = p_case3_sf3$`satellite-farms`$plan
+p_case3_sf3 = p_case3_sf3$`satellite-farms`$design
 
 p_case3_rf1 = design_experiment(
   location = "Location-7",
@@ -242,7 +242,7 @@ p_case3_rf1 = design_experiment(
   nb.controls.per.block = 4, 
   nb.blocks = 2, 
   nb.cols = 4)
-p_case3_rf1 = p_case3_rf1$`regional-farms`$plan
+p_case3_rf1 = p_case3_rf1$`regional-farms`$design
 
 p_case3_rf2 = design_experiment(
   location = "Location-8",
@@ -253,7 +253,7 @@ p_case3_rf2 = design_experiment(
   nb.controls.per.block = 3, 
   nb.blocks = 2, 
   nb.cols = 3)
-p_case3_rf2 = p_case3_rf2$`regional-farms`$plan
+p_case3_rf2 = p_case3_rf2$`regional-farms`$design
 @
 
 If you have many space and many seeds, you can adapt the satellite farm design with only one column.
@@ -269,7 +269,7 @@ p_case3_sf4 = design_experiment(
   nb.controls.per.block = 2, 
   nb.blocks = 1, 
   nb.cols = 1)
-p_case3_sf4 = p_case3_sf4$`satellite-farms`$plan
+p_case3_sf4 = p_case3_sf4$`satellite-farms`$design
 @
 
 \begin{center}
@@ -336,7 +336,7 @@ head(p_ibd$`IBD`$data.frame)
 
 
 <<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
-p_ibd$`IBD`$plan
+p_ibd$`IBD`$design
 @
 
 
