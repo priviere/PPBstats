@@ -4,17 +4,18 @@
 \alias{describe_data}
 \title{Describe the data set in order to choose the appropriate analysis to carry out}
 \usage{
-describe_data(data, vec_variables, nb_parameter_per_grid = 5)
+describe_data(data, vec_variables, nb_parameters_per_plot = 5)
 }
 \arguments{
 \item{data}{The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
 
 \item{vec_variables}{Vector of variables to describe}
 
-\item{nb_parameter_per_grid}{Nomber of parameter on each histogram on the gird}
+\item{nb_parameters_per_plot}{Number of parameter on each histogram on the gird}
 }
 \value{
 The function returns a list with,
+
 \itemize{
  \item A summary of the whole data set
  \item for each variable, a list with :
@@ -26,12 +27,16 @@ The function returns a list with,
     \item location
     \item year
     }
+   For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
   \item A list with boxplot, containg a list with plot and outliers, for
    \itemize{
     \item germplasm
     \item location
     \item year
     }
+   For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
+   \item interaction
+   For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
   }
 }
 }
