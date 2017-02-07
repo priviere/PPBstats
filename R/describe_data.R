@@ -28,6 +28,7 @@
 #'     \item location
 #'     \item year
 #'     }
+#'    \item interaction
 #'   }
 #' }
 #' 
@@ -49,9 +50,11 @@ describe_data = function(
     fun = function(variable, data){
 
     colnames(data)[which(colnames(data) == variable)] = "variable"
+
+    dtmp = droplevels(na.omit(data[,c("germplasm", "location", "year", "variable")]))
+    ylim = c(0, max(dtmp$variable, na.rm = TRUE))
     
       # 2.1. Presence/abscence for each germplasm, location and year
-      dtmp = droplevels(na.omit(data[,c("germplasm", "location", "year", "variable")]))
       m = as.data.frame(with(dtmp, table(germplasm, location, year)))
       m$Freq = as.factor(m$Freq)
       colnames(m)[4] = "nb_measures"
@@ -70,51 +73,74 @@ describe_data = function(
 
       # per germplasm
       dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameter_per_grid)
-      out_g_hist = lapply(dtmp_g, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .)+ ggtitle(variable) })
-      out_g_box = lapply(dtmp_g, function(x){
-        plot = ggplot(x, aes(x = germplasm, y = variable)) + geom_boxplot() + ggtitle(variable) 
+      
+      fun_g = function(x, ylim){
+        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .) + ggtitle(variable) + coord_cartesian(ylim = ylim)
+        }
+      out_g_hist = lapply(dtmp_g, fun_g, ylim)
+      
+      fun_g = function(x, ylim){
+        plot = ggplot(x, aes(x = germplasm, y = variable)) + geom_boxplot() + ggtitle(variable)  + coord_cartesian(ylim = ylim)
         outliers = boxplot(x$variable, x$germplasm, plot = FALSE)$out
         names(outliers) = x$germplasm[which(x$variable %in% outliers)]
         return(list("plot" = plot, "outliers" = outliers))
-        })
-
+        }
+      out_g_box = lapply(dtmp_g, fun_g, ylim)
+      
       # per location
       dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameter_per_grid)
-      out_l_hist = lapply(dtmp_l, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable) })
-      out_l_box = lapply(dtmp_l, function(x){
-        plot = ggplot(x, aes(x = location, y = variable)) + geom_boxplot() + ggtitle(variable) 
+      
+      fun_l = function(x, ylim){
+        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable)  + coord_cartesian(ylim = ylim)
+        }
+      out_l_hist = lapply(dtmp_l, fun_l, ylim)
+      
+      fun_l = function(x, ylim){
+        plot = ggplot(x, aes(x = location, y = variable)) + geom_boxplot() + ggtitle(variable)  + coord_cartesian(ylim = ylim)
         outliers = boxplot(x$variable, x$location, plot = FALSE)$out
         names(outliers) = x$location[which(x$variable %in% outliers)]
         return(list("plot" = plot, "outliers" = outliers))
-      })
+      }
+      
+      out_l_box = lapply(dtmp_l, fun_l, ylim)
       
       # per year
       dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameter_per_grid)
-      out_y_hist = lapply(dtmp_y, function(x){ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable) })
-      out_y_box = lapply(dtmp_y, function(x){
-        plot = ggplot(x, aes(x = year, y = variable)) + geom_boxplot() + ggtitle(variable) 
+      
+      fun_y = function(x, ylim){
+        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable)  + coord_cartesian(ylim = ylim)
+        }
+      out_y_hist = lapply(dtmp_y, fun_y, ylim)
+      
+      fun_y = function(x, ylim){
+        plot = ggplot(x, aes(x = year, y = variable)) + geom_boxplot() + ggtitle(variable) + coord_cartesian(ylim = ylim)
         outliers = boxplot(x$variable, x$year, plot = FALSE)$out
         names(outliers) = x$year[which(x$variable %in% outliers)]
         return(list("plot" = plot, "outliers" = outliers))
-      })
+      }
+      out_y_box = lapply(dtmp_y, fun_y, ylim)
       
       # interaction ----------
+      dtmp_int = split_data_for_ggplot(dtmp, "germplasm", nb_parameter_per_grid)
       
-      p_gxe = ggplot(data = data, aes(x = location, y = variable, colour = germplasm, group = germplasm))
-      #  p_gxe = p_gxe + stat_summary(fun.y= mean, geom = "point")
-      p_gxe = p_gxe + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
-      
-      #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-      #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
-      
-      #p_gxe = p_gxe + scale_color_manual(values=rep(cbbPalette, each = 2))
-      
-      p_gxe = p_gxe + theme(axis.text.x=element_text(angle=90))
-      p_gxe = p_gxe + ylab(variable)
-      # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
-      
-      out_gxe = p_gxe + facet_grid(year ~ .)
-      
+      fun_int = function(x, ylim){
+        p_gxe = ggplot(data = x, aes(x = location, y = variable, colour = germplasm, group = germplasm))
+        #  p_gxe = p_gxe + stat_summary(fun.y= mean, geom = "point")
+        p_gxe = p_gxe + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
+        
+        #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+        #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
+        
+        #p_gxe = p_gxe + scale_color_manual(values=rep(cbbPalette, each = 2))
+        
+        p_gxe = p_gxe + theme(axis.text.x=element_text(angle=90))
+        p_gxe = p_gxe + ylab(variable)
+        # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
+        
+        out_gxe = p_gxe + facet_grid(year ~ .) + coord_cartesian(ylim = ylim)
+        return(out_gxe)
+      }
+      out_y_int = lapply(dtmp_int, fun_int, ylim)
       
       
       OUT = list("presence.abscence" = out.presence.abscence, 
@@ -129,7 +155,7 @@ describe_data = function(
                    "location" = out_l_box, 
                    "year" = out_y_box
                    ),
-                 "interaction" = out__gxe
+                 "interaction" = out_y_int
                  )
     }
     
