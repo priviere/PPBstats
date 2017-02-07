@@ -7,10 +7,11 @@
 #' 
 #' @param vec_variables Vector of variables to describe
 #'  
-#' @param nb_parameter_per_grid Number of parameter on each histogram on the gird
+#' @param nb_parameters_per_plot Number of parameter on each histogram on the gird
 #' 
 #' @return 
 #' The function returns a list with, 
+#' 
 #' \itemize{
 #'  \item A summary of the whole data set
 #'  \item for each variable, a list with :
@@ -22,13 +23,16 @@
 #'     \item location
 #'     \item year
 #'     }
+#'    For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
 #'   \item A list with boxplot, containg a list with plot and outliers, for
 #'    \itemize{
 #'     \item germplasm
 #'     \item location
 #'     \item year
 #'     }
-#'    \item interaction : a list with as many elements as needed with number of parameter paramters
+#'    For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
+#'    \item interaction
+#'    For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
 #'   }
 #' }
 #' 
@@ -37,7 +41,7 @@
 describe_data = function(
   data,
   vec_variables,
-  nb_parameter_per_grid = 5
+  nb_parameters_per_plot = 5
 )
   {
     # 1. Error message ----------  
@@ -72,7 +76,7 @@ describe_data = function(
       out_all_hist = ggplot(dtmp, aes(variable)) + geom_histogram() + ggtitle(variable)
 
       # per germplasm
-      dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameter_per_grid)
+      dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameters_per_plot)
       
       fun_g = function(x, ylim){
         ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .) + ggtitle(variable) + coord_cartesian(ylim = ylim)
@@ -88,7 +92,7 @@ describe_data = function(
       out_g_box = lapply(dtmp_g, fun_g, ylim)
       
       # per location
-      dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameter_per_grid)
+      dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameters_per_plot)
       
       fun_l = function(x, ylim){
         ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable)  + coord_cartesian(ylim = ylim)
@@ -105,7 +109,7 @@ describe_data = function(
       out_l_box = lapply(dtmp_l, fun_l, ylim)
       
       # per year
-      dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameter_per_grid)
+      dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameters_per_plot)
       
       fun_y = function(x, ylim){
         ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable)  + coord_cartesian(ylim = ylim)
@@ -121,7 +125,7 @@ describe_data = function(
       out_y_box = lapply(dtmp_y, fun_y, ylim)
       
       # interaction ----------
-      dtmp_int = split_data_for_ggplot(dtmp, "germplasm", nb_parameter_per_grid)
+      dtmp_int = split_data_for_ggplot(dtmp, "germplasm", nb_parameters_per_plot)
       
       fun_int = function(x, ylim){
         p_gxe = ggplot(data = x, aes(x = location, y = variable, colour = germplasm, group = germplasm))
