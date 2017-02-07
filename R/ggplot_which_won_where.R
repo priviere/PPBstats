@@ -62,27 +62,6 @@ ggplot_which_won_where = function(res.pca){
         x3 = per_line$x3[i]
         y3 = per_line$y3[i]
         
-        is.inside.sector = function(x, y, x1, y1, x2, y2, x3, y3){
-          # resolve it with barycentric coordinates
-          # thanks to andreasdr, cf http://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
-          
-          p0y = y1
-          p0x = x1
-          p1y = y2
-          p1x = x2
-          p2y = y3
-          p2x = x3
-          py = y
-          px = x
-          
-          Area = 0.5 *(-p1y*p2x + p0y*(-p1x + p2x) + p0x*(p1y - p2y) + p1x*p2y);
-          s = 1/(2*Area)*(p0y*p2x - p0x*p2y + (p2y - p0y)*px + (p0x - p2x)*py)
-          t = 1/(2*Area)*(p0x*p1y - p0y*p1x + (p0y - p1y)*px + (p1x - p0x)*py);
-          
-          test = s > 0 & t > 0 & (1-s-t) > 0
-          return(test)
-        }
-        
         if( is.inside.sector(x, y, x1, y1, x2, y2, x3, y3) ) { ind[j, "sector"] = i }
       }
     }
