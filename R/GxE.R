@@ -9,6 +9,9 @@
 #' 
 #' @param gxe_analysis the analysis to carry out: "AMMI" or "GGE"
 #' 
+#' @details 
+#' scaling for interaction.matrix is not useful as the column mean is equal to 0 because of model constraints and all the values are regarding one variable, so it is possible to compare it into the PCA.
+#' 
 #' @return 
 #' The function returns a list with three elements:
 #' \itemize{
