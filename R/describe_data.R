@@ -7,7 +7,7 @@
 #' 
 #' @param vec_variables Vector of variables to describe
 #'  
-#' @param nb_parameter_per_grid Nomber of parameter on each histogram on the gird
+#' @param nb_parameter_per_grid Number of parameter on each histogram on the gird
 #' 
 #' @return 
 #' The function returns a list with, 
@@ -28,7 +28,7 @@
 #'     \item location
 #'     \item year
 #'     }
-#'    \item interaction
+#'    \item interaction : a list with as many elements as needed with number of parameter paramters
 #'   }
 #' }
 #' 
