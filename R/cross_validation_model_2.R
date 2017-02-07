@@ -36,7 +36,7 @@ cross_validation_model_2 = function(
   # 1. Error message ----------
   check_data_vec_variables(data, variable)
   
-  # The other error messages are done with the used of the function FWH
+  # The other error messages are done with the used of the function model_2
   
   # 2. Data formating ----------
   

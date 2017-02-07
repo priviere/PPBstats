@@ -19,8 +19,6 @@ ggplot_mean_comparisons_model_1 = function(
   ){
   
   # 1. Error message ----------
-  if( attributes(out_mean_comparisons_model_1)$PPBstats.object != "mean_comparisons_model_1" ) { stop("data must come from mean_comparisons and model_1") }
-  
   if( !is.element(ggplot.type, c("interaction", "barplot", "score")) ) { stop("ggplot.type must be score, barplot or interaction with output from mean_comparisons and model_1") }
   
   # 2. get data ----------

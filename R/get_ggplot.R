@@ -272,7 +272,7 @@ get_ggplot = function(
   # let's go !!! ----------
 {
   # 1. error messages ----------
-  mess = "data must come from functions check_model, mean_comparisons, parameter_groups, biplot_GxE, cross_validation_model_2"
+  mess = "data must come from functions PPBstats::check_model, PPBstats::mean_comparisons, PPBstats::parameter_groups, PPBstats::biplot_GxE or PPBstats::cross_validation_model_2"
   
   if (is.null(attributes(data)$PPBstats.object)) { stop(mess) }
   
@@ -287,6 +287,13 @@ get_ggplot = function(
     if(!is.element("location", colnames(data_version))) { stop(mess) }
     if(!is.element("group", colnames(data_version))) { stop(mess) }
     if(!is.element("version", colnames(data_version))) { stop(mess) }
+    
+    mess = "The following column must e set as factor : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
+    if(!is.factor(data$location)) { stop(mess) }
+    if(!is.factor(data$year)) { stop(mess) }
+    if(!is.factor(data$germplasm)) { stop(mess) }
+    if(!is.factor(data$group)) { stop(mess) }
+    if(!is.factor(data$version)) { stop(mess) }
     
     # delete version where there are not v1 AND v2
     vec_group = unique(data_version$group)
@@ -307,7 +314,14 @@ get_ggplot = function(
   
   if( attributes(data)$PPBstats.object == "mean_comparisons_model_1" ) { out = ggplot_mean_comparisons_model_1(data, data_version, ggplot.type, nb_parameters_per_plot) }
   
-  if( attributes(data)$PPBstats.object == "mean_comparisons_model_2" ) { out = ggplot_mean_comparisons_model_2(data, data_2, ggplot.type, nb_parameters_per_plot) }
+  if( attributes(data)$PPBstats.object == "mean_comparisons_model_2" ) { 
+    if( !is.null(data_2) ) {
+      if( attributes(data_2)$PPBstats.object != "mean_comparisons_model_2" ) { 
+        stop("data_2 must come from PPBstats::check_model from model_2.")
+      }
+    }
+    out = ggplot_mean_comparisons_model_2(data, data_2, ggplot.type, nb_parameters_per_plot) 
+    }
   
   if( attributes(data)$PPBstats.object == "mean_comparisons_predict_the_past_model_2" ) { out = ggplot_mean_comparisons_predict_the_past_model_2(data, data_version, ggplot.type, nb_parameters_per_plot) }
   
