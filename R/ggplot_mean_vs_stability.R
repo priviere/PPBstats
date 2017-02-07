@@ -41,40 +41,53 @@ ggplot_mean_vs_stability = function(res.pca){
   
   p_common = p
   
-  # Graph for means
+  # Graph for means performance
   per_line$mean_score = round(sqrt(per_line$x1*per_line$x1 + per_line$y1*per_line$y1), 2)
-  # the arrow point the greater value (i.e. greater score)
-  slope = xymean$y2 / xymean$x2
-  if( slope > 0 ){ 
-    per_line$mean_score[which(per_line$x1 < 0)] = per_line$mean_score[which(per_line$x1 < 0)] * -1
-    per_line = arrange(per_line, -mean_score) 
-  } else { 
-    per_line$mean_score[which(per_line$x1 > 0)] = per_line$mean_score[which(per_line$x1 < 0)] * -1
-    per_line = arrange(per_line, mean_score) 
+  
+  # the arrow point the greatest value (i.e. greater score)
+  slope = -1 / (xymean$y2 / xymean$x2)
+  
+  for(i in 1:nrow(per_line)) {
+    x = per_line[i, "x1"]
+    y = per_line[i, "y1"]
+    y1 = 1000
+    x1 = y1 / slope
+    y2 = -1000
+    x2 = y2 / slope
+    x3 = 0
+    y3 = 1000
+
+    test = is.inside.sector(x, y, x1, y1, x2, y2, x3, y3)
+    if(!test){
+      per_line[i, "mean_score"] = per_line[i, "mean_score"] * -1
+    }
   }
+  per_line = arrange(per_line, mean_score) 
   
   colnames(ind)[2:3] = c("x1", "y1")
   a = join(ind, per_line, by = "x1")[c("label", "mean_score")]
-  if( slope > 0 ){ a = arrange(a, -mean_score) } else { a = a(per_line, mean_score) }
+  if( slope > 0 ){ a = arrange(a, -mean_score) } else { a = arrange(per_line, mean_score) }
+  
+  print(a)
   
   vec_rank = as.character(paste("Ranking of entries: \n", paste(a$label, collapse = " > "), sep = ""))
   
   p = p_common + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = mean_score), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
-  p_mean = p + ggtitle("Mean", vec_rank)
+  p_mean = p + ggtitle("Mean performance", vec_rank)
   
-  # Graph for stability
+  # Graph for stability performance
   per_line$stability_score = round((per_line$x1 - per_line$x2)^2 + (per_line$y1 - per_line$y2)^2, 2)
 
   colnames(ind)[2:3] = c("x1", "y1")
   a = join(ind, per_line, by = "x1")[c("label", "stability_score")]
-  if( slope > 0 ){ a = arrange(a, -stability_score) } else { a = a(per_line, stability_score) }
+  if( slope > 0 ){ a = arrange(a, -stability_score) } else { a = arrange(per_line, stability_score) }
   
   vec_rank = as.character(paste("Ranking of entries: \n", paste(a$label, collapse = " > "), sep = ""))
   
   p = p_common + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = stability_score), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
-  p_stability = p + ggtitle("Stability", vec_rank)
+  p_stability = p + ggtitle("Stability performance", vec_rank)
   
   p = list("mean" = p_mean, "stability" = p_stability)
   return(p)
