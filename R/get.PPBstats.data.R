@@ -15,7 +15,7 @@ get.PPBstats.data = function()
   # function from Kay Cichini
   # https://www.r-bloggers.com/download-files-from-dropbox-programmatically-with-r/
   dl_from_dropbox <- function(x, key) {
-    bin <- getBinaryURL(paste0("https://dl.dropboxusercontent.com/s/", key, "/", x), ssl.verifypeer = FALSE)
+    bin <- RCurl::getBinaryURL(paste0("https://dl.dropboxusercontent.com/s/", key, "/", x), ssl.verifypeer = FALSE)
     con <- file(x, open = "wb")
     writeBin(bin, con)
     close(con)
