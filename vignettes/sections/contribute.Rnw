@@ -79,7 +79,11 @@ if( attributes(out_check_model)$PPBstats.object == "check_model_my_model" ){
 \item create the ggplot function that is called in \texttt{get\_ggplot}
 
 <<message=FALSE,cache=FALSE>>=
-ggplot_mean_comparisons_my_model = function(data, ...){}
+ggplot_mean_comparisons_my_model = function(data, ...){
+  ...
+  ...
+  ...
+}
 @  
 
 and in \texttt{get\_ggplot} add:
