@@ -23,7 +23,7 @@ ggplot_discrimitiveness_vs_representativeness = function(res.pca){
   
   p_common = p
   
-  # discrimitiveness
+  # discrimitiveness ----------
   d = data.frame(x1 = 0, y1 = 0, x2 = var$x, y2 = var$y)
   
   # distance of each location from the plot origin
@@ -39,15 +39,14 @@ ggplot_discrimitiveness_vs_representativeness = function(res.pca){
   }
   
   colnames(var)[2:3] = c("x2", "y2")
-  a = join(var, d, by = "x2")[c("label", "score")]
-  a = arrange(a, -score)
-  vec_disc = as.character(paste("Ranking of locations: \n", paste(a$label, collapse = " > "), sep = ""))
+  a_disc = join(var, d, by = "x2")[c("label", "x1", "y1", "x2", "y2", "score")]
+  vec_disc = as.character(paste("Ranking of locations: \n", paste(a_disc$label, collapse = " > "), sep = ""))
   
   p = p_common + geom_segment(data = d, aes(x = x1, y = y1, xend = x2, yend = y2, color = score), linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
   p_discri = p + ggtitle("Discrimitiveness", vec_disc)
   
-  # representativeness
+  # representativeness ----------
   per_line = data.frame()
   for(i in 1:nrow(var)) {
     x1 = 0
@@ -65,14 +64,31 @@ ggplot_discrimitiveness_vs_representativeness = function(res.pca){
   per_line$score = round((per_line$x1 - per_line$x2)^2 + (per_line$y1 - per_line$y2)^2, 2)
   
   colnames(var)[2:3] = c("x1", "y1")
-  a = join(var, per_line, by = "x1")[c("label", "score")]
-  vec_rank = as.character(paste("Ranking of locations: \n", paste(a$label, collapse = " > "), sep = ""))
+  a_repr = join(var, per_line, by = "x1")[c("label", "x1", "y1", "x2", "y2", "score")]
+  vec_rank = as.character(paste("Ranking of locations: \n", paste(a_repr$label, collapse = " > "), sep = ""))
   
   p = p_common + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = score), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
   p_repre = p + ggtitle("Representativeness", vec_rank)
 
-  p = list("discrimitiveness" = p_discri, "representativeness" = p_repre)
+  
+  # discrimitiveness vs representativeness
+  a_disc = a_disc[,c("label", "score")]
+  colnames(a_disc)[2] = "score_discrimitiveness"
+  a_repr = a_repr[,c("label", "score")]
+  colnames(a_repr)[2] = "score_representativeness"
+  d = join(a_disc, a_repr, by = "label")
+  d$score = d$score_discrimitiveness * d$score_representativeness
+  p_disc_vs_repr = ggplot(d, aes(x = score_discrimitiveness, y = score_representativeness, label = label, color = score)) + geom_text() 
+  p_disc_vs_repr = p_disc_vs_repr + scale_colour_gradient(low = "green", high = "red")
+  
+  # return results ----------
+  p = list(
+    "discrimitiveness" = p_discri, 
+    "representativeness" = p_repre,
+    "discrimitiveness_vs_representativeness" = p_disc_vs_repr
+    )
 
   return(p)
 }
+
