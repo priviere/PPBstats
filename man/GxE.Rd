@@ -36,6 +36,9 @@ The function returns a list with three elements:
 \description{
 \code{GxE} runs AMMI or GGE model
 }
+\details{
+scaling for interaction.matrix is not useful as the column mean is equal to 0 because of model constraints and all the values are regarding one variable, so it is possible to compare it into the PCA.
+}
 \author{
 Pierre Riviere
 }
