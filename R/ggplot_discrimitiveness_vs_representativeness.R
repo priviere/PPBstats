@@ -27,7 +27,7 @@ ggplot_discrimitiveness_vs_representativeness = function(res.pca){
   d = data.frame(x1 = 0, y1 = 0, x2 = var$x, y2 = var$y)
   
   # distance of each location from the plot origin
-  d$value = NA
+  d$score = NA
   for(i in 1:nrow(d)){
     x1 = d[i,"x1"]
     y1 = d[i,"y1"]
@@ -35,15 +35,15 @@ ggplot_discrimitiveness_vs_representativeness = function(res.pca){
     y2 = d[i,"y2"]
     px = x2-x1
     py = y2-y1
-    d[i,"value"] = round(px*px + py*py, 2)
+    d[i,"score"] = round(px*px + py*py, 2)
   }
   
   colnames(var)[2:3] = c("x2", "y2")
-  a = join(var, d, by = "x2")[c("label", "value")]
-  a = arrange(a, -value)
+  a = join(var, d, by = "x2")[c("label", "score")]
+  a = arrange(a, -score)
   vec_disc = as.character(paste("Ranking of locations: \n", paste(a$label, collapse = " > "), sep = ""))
   
-  p = p_common + geom_segment(data = d, aes(x = x1, y = y1, xend = x2, yend = y2, color = value), linetype = 2, inherit.aes = FALSE)
+  p = p_common + geom_segment(data = d, aes(x = x1, y = y1, xend = x2, yend = y2, color = score), linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
   p_discri = p + ggtitle("Discrimitiveness", vec_disc)
   
@@ -62,13 +62,13 @@ ggplot_discrimitiveness_vs_representativeness = function(res.pca){
     per_line = rbind.data.frame(per_line, obj)
   }
   colnames(per_line) = c("x1", "y1", "x2", "y2")
-  per_line$value = round((per_line$x1 - per_line$x2)^2 + (per_line$y1 - per_line$y2)^2, 2)
+  per_line$score = round((per_line$x1 - per_line$x2)^2 + (per_line$y1 - per_line$y2)^2, 2)
   
   colnames(var)[2:3] = c("x1", "y1")
-  a = join(var, per_line, by = "x1")[c("label", "value")]
+  a = join(var, per_line, by = "x1")[c("label", "score")]
   vec_rank = as.character(paste("Ranking of locations: \n", paste(a$label, collapse = " > "), sep = ""))
   
-  p = p_common + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = value), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
+  p = p_common + geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, color = score), data = per_line, linetype = 2, size = 1, inherit.aes = FALSE)
   p = p + scale_colour_gradient(low = "green", high = "red")
   p_repre = p + ggtitle("Representativeness", vec_rank)
 
