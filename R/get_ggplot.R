@@ -124,6 +124,11 @@
 #'      
 #'      \item representativeness : assess representativeness of each location.
 #'      The score represents the representativeness : the higher the score, the less representative the location.
+#'      
+#'      \item discrimitiveness_vs_representativeness :  represent discrimitiveness versus representativeness.
+#'      The location combining better score (i. e.discrimination and representativeness) are the ones that could be used to test germplasms as they are more representative of all the locations.
+#'      This has to be done severals year to get robust results.
+#'      The highest the score, the more representative the location.
 #'     } 
 #'    }
 #'   
