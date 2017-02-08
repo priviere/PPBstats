@@ -78,7 +78,7 @@ ggplot_mean_vs_stability = function(res.pca){
 
   colnames(ind)[2:3] = c("x1", "y1")
   a = join(ind, per_line, by = "x1")[c("label", "stability_score")]
-  if( slope > 0 ){ a = arrange(a, -stability_score) } else { a = arrange(per_line, stability_score) }
+  a = arrange(a, -stability_score)
   
   vec_rank = as.character(paste("Ranking of entries: \n", paste(a$label, collapse = " > "), sep = ""))
   
