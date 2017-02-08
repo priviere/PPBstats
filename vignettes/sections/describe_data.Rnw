@@ -1,18 +1,68 @@
 \section{Describe the data}
 \label{describe_data}
 
-May be different from experiment planned because of NA
+When the data are collected, a first step is to describe it with \texttt{describe\_data}.
 
-%\begin{itemize}
+<<message=TRUE,cache=FALSE>>=
+describe_data_GxE = describe_data(data_GxE, vec_variables = c("y1"))
+describe_data_model_2 = describe_data(data_model_2, vec_variables = c("y1"))
+@
 
-%\item "experimental\_design" : a plot representing the presence/abscence matrix of G $\times$ E combinaisons. 
-%Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
-%A score of 1 is for a given germplasm in a given environment.
-%A score of 2 is for a given germplasm replicated twice in a given environement.
-%A score of 3 is for a given germplasm replicated three times in a given environement.
+The function returns a list with, 
+\begin{itemize}
+  \item A summary of the whole data set
 
-%\begin{figure}[H]
-%<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-%out1$data.experimental_design$plot
-%@
-%\end{figure}
+  \item for each variable, a list with :
+
+  \begin{itemize}
+    \item A presence.abscence plot. Note that it may be different from experimental design planned because of NA.
+    The plot represents the presence/abscence matrix of G $\times$ E combinaisons. 
+    <<message=TRUE,cache=FALSE>>=
+    describe_data_GxE$each_variable$y1$presence.abscence
+    @
+    A score of 3 is for a given germplasm replicated three times in a given environement.
+    
+    <<message=TRUE,cache=FALSE>>=
+    describe_data_model_2$each_variable$y1$presence.abscence
+    @
+    Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
+    A score of 1 is for a given germplasm in a given environment.
+    A score of 2 is for a given germplasm replicated twice in a given environement.
+    
+    \item A list with histogram. Note that for each element of the following list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph
+    \begin{itemize}
+      \item germplasm
+      <<message=TRUE,cache=FALSE>>=
+      pg_hist = describe_data_GxE$each_variable$y1$histogram$germplasm
+      names(pg_hist)
+      pg_hist$`1`
+      @
+      \item location
+      \item year
+    \end{itemize}
+    
+    \item A list with boxplot, containg a list with plot and outliers. Note that for each element of the following list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph
+    \begin{itemize}
+      \item germplasm
+      <<message=TRUE,cache=FALSE>>=
+      pg_box = describe_data_GxE$each_variable$y1$boxplot$germplasm
+      names(pg_box)
+      pg_box$`1`
+      @
+      In this example there no outliers.
+      
+      \item location
+      \item year
+    \end{itemize}
+    
+    \item interaction. Note that for each element of the following list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph
+    <<message=TRUE,cache=FALSE>>=
+    p_int = describe_data_GxE$each_variable$y1$interaction
+    names(p_int)
+    p_int$`1`
+    @
+  \end{itemize}
+
+
+\end{itemize}
+
