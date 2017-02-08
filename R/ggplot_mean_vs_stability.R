@@ -86,6 +86,6 @@ ggplot_mean_vs_stability = function(res.pca){
   p = p + scale_colour_gradient(low = "green", high = "red")
   p_stability = p + ggtitle("Stability performance", vec_rank)
   
-  p = list("mean" = p_mean, "stability" = p_stability)
+  p = list("mean_performance" = p_mean, "stability_performance" = p_stability)
   return(p)
 }
