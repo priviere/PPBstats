@@ -198,6 +198,12 @@ anova$interaction_matrix
 
 \subsubsection{PCA}
 
+The biplot represents information about the percentages of total variation explained by the two axes.
+It has to be linked to the total variation caught by the interaction.
+If the total variation is small, then the biplot is useless.
+If the total variation is high enought, then the biplot is useful if the two first dimension represented catch enought variation (the more the better).
+
+
 <<message=TRUE,cache=FALSE>>=
 pca = res_ammi_y1$PCA
 @
@@ -230,11 +236,10 @@ Note that the sum of variance caught by the two compostant must be as big as pos
 pca$biplot$variation_dim
 @
 
-\item The which won where graph. 
-Perpendicular lines divide the biplot into sectors.
-The entry which have the largest value in a sector "win" in the location present in that sector.
+\item The which won where graph
+The germplasms which have the largest value in a sector "win" in the location present in that sector.
 The information is summarized in the legend of the plot.
-
+See \texttt{?get\_ggplot} for more details on this plot.
 
 
 <<message=TRUE,cache=FALSE>>=
@@ -249,11 +254,11 @@ A red circle define the average location.
 An high score mean a greater mean performance of an entry.
 Entries with a score above zero means entries with above-average means.
 Entries with a score below zero means entries with below-average means.
-Note that the distance from the biplot origin to the average location circle (represented with an arrow), is a measure of the relative importance of the entry main effect versus the entry by location interaction.
-The longer the arrow is, the more important is entry effect and the more meaningful the selection based on mean performance. 
+Note that the distance from the biplot origin to the average location circle (represented with an arrow), is a measure of the relative importance of the germplasm main effect versus the entry by location interaction.
+The longer the arrow is, the more important is germplasm effect and the more meaningful is the selection based on mean performance. 
 
 <<message=TRUE,cache=FALSE>>=
-pca$biplot$mean_vs_stability$mean
+pca$biplot$mean_vs_stability$mean_performance
 @
 
 \item stability
@@ -263,16 +268,16 @@ A high score represents a low stability (i.e. an high entry by location interact
 
 
 <<message=TRUE,cache=FALSE>>=
-pca$biplot$mean_vs_stability$stability
+pca$biplot$mean_vs_stability$stability_performance
 @
 
 \end{itemize}
 
 
 \item The discrimitiveness vs representativeness graph. 
-A red circle define the average location, being the virtual better location to test the entries.
+It is interessting to assess the ability of the environments to discriminate the germplasms and their ability to represent the target environments. 
 
-The closer a given location is next to the circle, the more desirable it is judged on both discrimination and representativeness.
+The closer a given location is next to the averge location (represented by a red circle), the more desirable it is judged on both discrimination and representativeness.
 
 \begin{itemize}
 
@@ -290,24 +295,20 @@ The highest the value, the less representative the environment.
 <<message=TRUE,cache=FALSE>>=
 pca$biplot$discrimitiveness_vs_representativeness$representativeness
 @
-\end{itemize}
+
+\item discrimitiveness vs representativeness
+The location combining better score (i. e.discrimination and representativeness) are the ones that could be used to test germplasms as they are more representative of all the locations.
+This has to be done severals year to get robust results.
+The highest the score, the more representative the location.
+
+<<message=TRUE,cache=FALSE>>=
+pca$biplot$discrimitiveness_vs_representativeness$discrimitiveness_vs_representativeness
+@
 
 \end{itemize}
 
-!!!!! A CONTINUER !!!!!
+\end{itemize}
 
-Representativeness is a key factor to decide how a test location should be used in
-genotype evaluation, assuming adequate discriminating ability (Yan et al 2007). The
-representativeness should be measured over a number of years in order to assess its
-repeatability. A test location must be repeatable across years in ranking genotypes
-for it to be considered as highly representative and based on repeatability analysis; a
-highly representative test location, which is also highly repeatable by definition, is
-ideal for use as core test locations (Yan et al 2011). In a PPB program such as the
-one described in Fig. 11, these should be the attributes of the location where to
-plant the Stage 1 trials because genotypic differences observed at locations like
-these are both repeatable across years and representative of the other farmers fields
-in the area. It is crucial for a PPB breeding program to have test locations of this
-type.
 
 
 \subsubsection{Post AMMI analysis}
