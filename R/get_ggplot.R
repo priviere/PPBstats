@@ -76,16 +76,54 @@
 #'  
 #'  \item biplot_GxE
 #'   \itemize{
-#'    \item which_won_where : plot to assess which germplasm win in which location (see Details for more information).
-#'    \item mean_vs_stability : a list of two elements :
+#'    \item which_won_where : plot to assess which germplasm win in which location.
+#'    A polygon is drawn connecting germplasm which are located furthest away from the biplot origin such that all other entries are contained within the polygon;
+#'    Perpendicular lines are drawn to each side of the polygon and start from biplot origin.
+#'    A sector is the triangle area formed by two perpendicular lines.
+#'    The germplasms which have the largest value in a sector "win" in the location present in that sector.
+#'    The information is summarized in the legend of the plot.
+#'    
+#'    \item mean_vs_stability.
+#'     It is a list of two elements.
+#'     The plots are drawn under the same construction.
+#'     A red circle indicates the position of the average location, which is defined by the average Dim1 and Dim2 scores across all locations.
+#'     An arrow points this average 'virtual' location.
+#'     A red line passes through the biplot origin and the average location (known as the Average-Tester Axis (ATA)).
+#'     A red line is set perpendicular the ATA.
+#'     Dashed perpendicular lines to the ATA are drawn and passed through each germplasm.
+#'    
 #'     \itemize{
-#'      \item mean :assess mean of each germplasm (see Details for more information).
-#'      \item stability : assess stability of each germplasm (see Details for more information).
+#'      \item mean_performance : assess mean performance score of each germplasm. 
+#'      The mean score is the rank of germplasm along the ATA.
+#'      The arrow points the greatest value according to their mean performance across all locations.
+#'      An high score, represents an high mean performance.
+#'      A low score reresents an low mean performance.
+#'      Score are displayed into the legend.
+#'      
+#'      \item stability_performance : assess stability performance score of each germplasm.
+#'      The stability score of the germplasms are represented by the projection from the germplasm to the ATA.
+#'      An high score, represents an high interaction and therfore lower stability.
+#'      A low score reresents an low interaction and therefore an high stability.
+#'      Score are displayed into the legend.
 #'     }
-#'    \item discrimitiveness_vs_representativeness : a list of two elements :
+#'    
+#'    \item discrimitiveness_vs_representativeness.
+#'    It is a list of two elements.
+#'    The plots are drawn under the same construction.
+#'    A red circle indicates the position of the average location, which is defined by the average Dim1 and Dim2 scores across all locations.
+#'    An arrow points this average 'virtual' location.
+#'    A red line passes through the biplot origin and the average location (known as the Average-Tester Axis (ATA)).
+#'    
+#'    
+#'    Dashed perpendicular lines to the ATA are drawn and passed through each germplasm.
+#'    
+#'    
 #'     \itemize{
-#'      \item discrimitiveness : assess discrimitiveness of each location (see Details for more information).
-#'      \item representativeness : assess representativeness of each location (see Details for more information).
+#'      \item discrimitiveness : assess discrimitiveness of each location.
+#'      The score represents the discriminating : the higher the vector, the more discriminating the location.
+#'      
+#'      \item representativeness : assess representativeness of each location.
+#'      The score represents the representativeness : the higher the score, the less representative the location.
 #'     } 
 #'    }
 #'   
@@ -230,7 +268,7 @@
 #'      \item which_won_where : plot to assess which germplasm win in which location (see Details for more information).
 #'      \item mean_vs_stability : a list of two elements :
 #'       \itemize{
-#'        \item mean :assess mean of each germplasm (see Details for more information).
+#'        \item mean : assess mean of each germplasm (see Details for more information).
 #'        \item stability : assess stability of each germplasm (see Details for more information).
 #'       }
 #'      \item discrimitiveness_vs_representativeness : a list of two elements :
