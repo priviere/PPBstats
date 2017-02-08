@@ -42,7 +42,7 @@ ggplot_mean_vs_stability = function(res.pca){
   p_common = p
   
   # Graph for means performance
-  per_line$mean_score = round(sqrt(per_line$x1*per_line$x1 + per_line$y1*per_line$y1), 2)
+  per_line$mean_score = round(sqrt(per_line$x2*per_line$x2 + per_line$y2*per_line$y2))
   
   # the arrow point the greatest value (i.e. greater score)
   slope = -1 / (xymean$y2 / xymean$x2)
@@ -67,8 +67,6 @@ ggplot_mean_vs_stability = function(res.pca){
   colnames(ind)[2:3] = c("x1", "y1")
   a = join(ind, per_line, by = "x1")[c("label", "mean_score")]
   if( slope > 0 ){ a = arrange(a, -mean_score) } else { a = arrange(per_line, mean_score) }
-  
-  print(a)
   
   vec_rank = as.character(paste("Ranking of entries: \n", paste(a$label, collapse = " > "), sep = ""))
   
