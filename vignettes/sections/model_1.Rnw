@@ -157,7 +157,7 @@ load("./data_PPBstats/out_model_1_bis.RData") # To save time
 \paragraph{Check the model}
 
 Once the model is run, it is necessary to check if the outputs can be taken with confidence.
-This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from \texttt{check\_model}).
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from \texttt{check\_model}).
 
 <<message=TRUE,cache=FALSE>>=
 # out_check_model_1 = check_model(out_model_1)
