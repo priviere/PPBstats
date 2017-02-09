@@ -377,7 +377,7 @@ Then run the function for germplasm. It can also be done on location or year if 
 
 <<message=TRUE,cache=FALSE>>=
 out_parameter_groups = parameter_groups(
-  list("y1" = out_check_ammi, "y2" = out_check_ammi_2), 
+  list("y1" = out_check_ammi, "y2" = out_check_ammi_2, "y3" = out_check_ammi_3), 
   "germplasm"
   )
 @
