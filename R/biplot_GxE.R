@@ -11,7 +11,7 @@
 #' @return 
 #' The function returns a list with:
 #' \itemize{
-#' \item variable : the variable studied
+#' \item info : a list with variable and gxe_analysis
 #' \item data_ecovalence : the ecovalence matrix
 #' \item pca : the pca object
 #' }
@@ -40,7 +40,7 @@ biplot_GxE = function(out_check_model_GxE){
   
   # 3. Return results ----------
   out = list(
-    "variable" = out_check_model_GxE$GxE$variable,
+    "info" = out_check_model_GxE$GxE$info,
     "data_ecovalence" = data_ecovalence,
     "pca" = out_check_model_GxE$GxE$PCA
   )

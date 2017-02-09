@@ -42,7 +42,7 @@
 #' \itemize{
 #'  \item From check_model and GxE, list of four elements : 
 #'   \itemize{
-#'    \item variable
+#'    \item info : a list with variable and gxe_analysis
 #'    \item data_ggplot_LSDbarplot_germplasm
 #'    \item data_ggplot_LSDbarplot_location
 #'    \item data_ggplot_LSDbarplot_year

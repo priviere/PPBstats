@@ -29,7 +29,7 @@ mean_comparisons_GxE = function(
   if( attributes(out_check_model_GxE)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
   
   model = out_check_model_GxE$GxE$ANOVA$model
-  variable = out_check_model_GxE$GxE$variable
+  variable = out_check_model_GxE$GxE$info$variable
   
   data_ggplot_LSDbarplot = function(model, fac, p.adj){
     lsd = LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
@@ -56,7 +56,7 @@ mean_comparisons_GxE = function(
   
   # 5. return results
   out = list(
-    "variable" = variable,
+    "info" = out_check_model_GxE$info,
     "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm,
     "data_ggplot_LSDbarplot_location" = data_ggplot_LSDbarplot_location,
     "data_ggplot_LSDbarplot_year" = data_ggplot_LSDbarplot_year
