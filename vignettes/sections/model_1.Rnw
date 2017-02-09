@@ -130,7 +130,7 @@ out_model_1$vec_env_SF
 
 Below is an example with low \texttt{nb\_iterations}:
 <<message=TRUE,cache=FALSE>>=
-# out_model_1_bis = model_1(data = PPBdata, variable = "tkw", nb_iteration = 5000)
+# out_model_1_bis = model_1(data = data_model_1, variable = "tkw", nb_iteration = 5000)
 
 # Compiling model graph
 # Resolving undeclared variables
@@ -146,7 +146,7 @@ Below is an example with low \texttt{nb\_iterations}:
 # |**************************************************| 100%
 # |**************************************************| 100%
 # Warning message:
-#   In model_1(data = PPBdata, variable = "tkw", nb_iteration = 5000) :
+#   In model_1(data = data_model_1, variable = "tkw", nb_iteration = 5000) :
 #   nb_iterations is below 20 000, which seems small to get convergence in the MCMC.
 
 load("./data_PPBstats/out_model_1_bis.RData") # To save time
@@ -284,14 +284,14 @@ names(mu_ij_estimated) = sapply(names(mu_ij_estimated),
                                 function(x){  sub("\\]", "", sub("mu\\[", "", x)) } 
                                 )
 
-d = filter(PPBdata, location != "env4")
+d = filter(data_model_1, location != "env4")
 d = filter(d, location != "env5")
 d = droplevels(d)
 environment = paste(as.character(d$location), as.character(d$year), sep = ":")
 d$entry = as.factor(paste(as.character(d$germplasm), environment, sep = ","))
 mu_ij = tapply(d$mu_ij, d$entry, mean, na.rm = TRUE)
 
-check = cbind.data.frame(mu_ij, mu_ij_estimated[names(mu_ij)])
+check_data = cbind.data.frame(mu_ij, mu_ij_estimated[names(mu_ij)])
 @
 
 Let's have a look on the relation between the posterior medians and the arithmetic means.
@@ -299,7 +299,7 @@ It goes pretty well!
 
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p = ggplot(check, aes(x = mu_ij, y = mu_ij_estimated))
+p = ggplot(check_data, aes(x = mu_ij, y = mu_ij_estimated))
 p + stat_smooth(method = "lm") + geom_point()
 @
 \end{figure}
