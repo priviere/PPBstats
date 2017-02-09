@@ -68,9 +68,6 @@ ggplot_mean_comparisons_GxE = function(
   }
   
   # 6. return results ----------
-  
-  print(ggplot_LSDbarplot_year)
-  
   out = list(
     "germplasm" = ggplot_LSDbarplot_germplasm, 
     "location" = ggplot_LSDbarplot_location, 
