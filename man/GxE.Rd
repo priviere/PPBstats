@@ -16,7 +16,7 @@ GxE(data, variable, gxe_analysis = NULL)
 \value{
 The function returns a list with three elements:
 \itemize{
- \item variable
+ \item info : a list with variable and gxe_analysis
  \item ANOVA a list with five elements:
   \itemize{
    \item model

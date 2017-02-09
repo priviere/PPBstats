@@ -107,7 +107,7 @@ See details for more information.}
  \item mean_comparisons
   \itemize{
    \item from GxE, a list with barplot.
-   For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} perameters per graph.
+   For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
    Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction.
    The error I (alpha) and the alpha correction are displayed in the title.
     \itemize{
@@ -185,19 +185,21 @@ See details for more information.}
  \item biplot_GxE
   \itemize{
    \item ecovalence :
-   \item biplot, a list of three elements :
+   \item biplot, a list of four elements :
     \itemize{
-     \item which_won_where : plot to assess which germplasm win in which location (see Details for more information).
-     \item mean_vs_stability : a list of two elements :
+     \item simple_biplot : the biplot of location and germplasm
+     \item which_won_where : plot to assess which germplasm win in which location (see Details for more information). Done only if gxe_analysis is GGE.
+     \item mean_vs_stability : a list of two elements. Done only if gxe_analysis is GGE.
       \itemize{
        \item mean : assess mean of each germplasm (see Details for more information).
        \item stability : assess stability of each germplasm (see Details for more information).
       }
-     \item discrimitiveness_vs_representativeness : a list of two elements :
+     \item discrimitiveness_vs_representativeness : a list of two elements. Done only if gxe_analysis is GGE.
       \itemize{
        \item discrimitiveness : assess discrimitiveness of each location (see Details for more information).
        \item representativeness : assess representativeness of each location (see Details for more information).
       }
+     \item discrimitiveness_vs_representativeness :represents discrimitiveness versus representativeness (see Details for more information).
     }
   }
 
@@ -276,15 +278,17 @@ Below are some details on the construction of the plots :
    A red line passes through the biplot origin and the average location (known as the Average-Tester Axis (ATA)).
 
 
-   Dashed perpendicular lines to the ATA are drawn and passed through each germplasm.
-
-
     \itemize{
      \item discrimitiveness : assess discrimitiveness of each location.
      The score represents the discriminating : the higher the vector, the more discriminating the location.
 
      \item representativeness : assess representativeness of each location.
      The score represents the representativeness : the higher the score, the less representative the location.
+
+     \item discrimitiveness_vs_representativeness :  represent discrimitiveness versus representativeness.
+     The location combining better score (i. e.discrimination and representativeness) are the ones that could be used to test germplasms as they are more representative of all the locations.
+     This has to be done severals year to get robust results.
+     The highest the score, the more representative the location.
     }
    }
 
