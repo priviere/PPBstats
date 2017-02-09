@@ -25,9 +25,15 @@ ggplot_biplot_GxE = function(out_biplot_GxE){
   
   # Biplots ----------
   simple_biplot = get_biplot(data_pca)
-  which_won_where = ggplot_which_won_where(data_pca) + theme(plot.title=element_text(hjust=0.5))
-  mean_vs_stability = ggplot_mean_vs_stability(data_pca)
-  discrimitiveness_vs_representativeness = ggplot_discrimitiveness_vs_representativeness(data_pca)
+  if( gxe_analysis == "GGE" ){
+    which_won_where = ggplot_which_won_where(data_pca) + theme(plot.title=element_text(hjust=0.5))
+    mean_vs_stability = ggplot_mean_vs_stability(data_pca)
+    discrimitiveness_vs_representativeness = ggplot_discrimitiveness_vs_representativeness(data_pca)
+  } else {
+    which_won_where = NULL
+    mean_vs_stability = NULL
+    discrimitiveness_vs_representativeness = NULL
+  }
   
   # return results
   out = list(
