@@ -77,7 +77,7 @@ head(data_model_1)
 
 \subsubsection{Run the model}
 
-To run model~\ref{model1} on the dataset, used the function \texttt{MC}.
+To run model~\ref{model1} on the dataset, used the function \texttt{model\_1}.
 You can run it on one variable.
 Here it is thousand kernel weight (tkw).
 
