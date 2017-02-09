@@ -18,7 +18,7 @@ check_data_vec_variables = function(data, vec_variables){
   if(!is.element("X", colnames(data))) { stop(mess) }
   if(!is.element("Y", colnames(data))) { stop(mess) }
   
-  mess = "The following column must e set as factor : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
+  mess = "The following column must be set as factor : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
   if(!is.factor(data$location)) { stop(mess) }
   if(!is.factor(data$year)) { stop(mess) }
   if(!is.factor(data$germplasm)) { stop(mess) }
