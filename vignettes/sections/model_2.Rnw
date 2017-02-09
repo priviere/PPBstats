@@ -412,6 +412,8 @@ p_t$theta$`9`
 
 \subsubsection{Get and vizualise groups of parameters}
 
+\paragraph{Get groups of parameters}
+
 In order to cluster environments or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
 
 This is done with \texttt{parameter\_groups} which do a PCA on this matrix.
@@ -456,7 +458,8 @@ load("./data_PPBstats/c_m2_y2.RData")
 load("./data_PPBstats/c_m2_y3.RData")
 @
 
-Then run the function
+Then run the function on alpha. 
+It can also be done on beta or theta.
 
 <<message=TRUE,cache=FALSE>>=
 out_parameter_groups = parameter_groups(list("y1" = c_m2_y1, "y2" = c_m2_y2, "y3" = c_m2_y3), "alpha")
@@ -475,7 +478,9 @@ out_parameter_groups = parameter_groups(list("y1" = c_m2_y1, "y2" = c_m2_y2, "y3
   \end{itemize}
 \end{itemize}
 
-and visualize outputs with \texttt{get\_ggplot}
+\paragraph{Visualize groups of parameters}
+
+Visualize outputs with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
 ppg = get_ggplot(out_parameter_groups)
