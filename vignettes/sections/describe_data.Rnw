@@ -55,7 +55,7 @@ The function returns a list with,
       \item year
     \end{itemize}
     
-    \item interaction. Note that for each element of the following list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph
+    \item interaction. Note that for each element of the following list, there are as many graph as needed with \code{nb\_parameters\_per\_plot} parameters per graph
     <<message=TRUE,cache=FALSE>>=
     p_int = describe_data_GxE$each_variable$y1$interaction
     names(p_int)
