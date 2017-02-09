@@ -323,19 +323,19 @@ get_ggplot = function(
   if( !is.element(ggplot.type, c("barplot", "biplot-alpha-beta", "interaction", "score"))) { stop("ggplot.type must be either \"barplot\", \"biplot-alpha-beta\", \"interaction\", \"score\".") }
   
   if( !is.null(data_version) ){
-    mess = "The following column are compulsory in data_version : c(\"year\", \"germplasm\", \"location\", \"group\", \"version\"."
+    mess = "In data_version, the following column are compulsory in data_version : c(\"year\", \"germplasm\", \"location\", \"group\", \"version\"."
     if(!is.element("year", colnames(data_version))) { stop(mess) }
     if(!is.element("germplasm", colnames(data_version))) { stop(mess) }
     if(!is.element("location", colnames(data_version))) { stop(mess) }
     if(!is.element("group", colnames(data_version))) { stop(mess) }
     if(!is.element("version", colnames(data_version))) { stop(mess) }
     
-    mess = "The following column must e set as factor : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
-    if(!is.factor(data$location)) { stop(mess) }
-    if(!is.factor(data$year)) { stop(mess) }
-    if(!is.factor(data$germplasm)) { stop(mess) }
-    if(!is.factor(data$group)) { stop(mess) }
-    if(!is.factor(data$version)) { stop(mess) }
+    mess = "In data_version, the following column must be set as factor : c(\"location\", \"year\", \"germplasm\", \"group\", \"version\"."
+    if(!is.factor(data_version$location)) { stop(mess) }
+    if(!is.factor(data_version$year)) { stop(mess) }
+    if(!is.factor(data_version$germplasm)) { stop(mess) }
+    if(!is.factor(data_version$group)) { stop(mess) }
+    if(!is.factor(data_version$version)) { stop(mess) }
     
     # delete version where there are not v1 AND v2
     vec_group = unique(data_version$group)
