@@ -23,6 +23,7 @@ ggplot_biplot_GxE = function(out_biplot_GxE){
   p_eco = p_eco + ggtitle(paste("Wrick ecovalence for", variable)) + theme(plot.title=element_text(hjust=0.5))
   
   # Biplots ----------
+  simple_biplot = get_biplot(data_pca)
   which_won_where = ggplot_which_won_where(data_pca) + theme(plot.title=element_text(hjust=0.5))
   mean_vs_stability = ggplot_mean_vs_stability(data_pca)
   discrimitiveness_vs_representativeness = ggplot_discrimitiveness_vs_representativeness(data_pca)
@@ -31,6 +32,7 @@ ggplot_biplot_GxE = function(out_biplot_GxE){
   out = list(
     "ecovalence" = p_eco,
     "biplot" = list(
+      "simple_biplot" = simple_biplot,
       "which_won_where" = which_won_where,
       "mean_vs_stability" = mean_vs_stability,
       "discrimitiveness_vs_representativeness" = discrimitiveness_vs_representativeness
