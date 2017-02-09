@@ -59,7 +59,7 @@ get_biplot = function(res.pca){
   
   p = ggplot(data = vi, aes(x = x, y = y, label = label)) + geom_text(color = as.character(vi$color), size = vi$size) + geom_point(color = as.character(vi$color))
   p = p + xlab(paste("Dim 1 (", dimvar[1], "%)", sep = "")) + ylab(paste("Dim 2 (", dimvar[2], "%)", sep = ""))
-  p = p + ggtitle("Biplot germplasm and environments")
+  p = p + ggtitle("Biplot germplasm and locations")
   return(p)
 }
 
