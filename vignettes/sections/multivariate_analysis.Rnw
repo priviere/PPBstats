@@ -4,7 +4,7 @@
 \subsubsection{Format the data}
 
 <<message=TRUE,cache=FALSE>>=
-check_data_vec_variables(PPBdata, "tkw")
+check_data_vec_variables(data_model_1, "tkw")
 @
 
 If ok, then, you can settle \texttt{quali.sup = c(1:6)} in the \texttt{PCA} function:
@@ -13,7 +13,7 @@ If ok, then, you can settle \texttt{quali.sup = c(1:6)} in the \texttt{PCA} func
 
 
 <<message=TRUE,cache=FALSE>>=
-res.pca = PCA(PPBdata, quali.sup = c(1:6), graph = FALSE)
+res.pca = PCA(data_model_1, quali.sup = c(1:6), graph = FALSE)
 @
 
 And look at the results thanks to the \texttt{factoextra}\footnote{https://github.com/kassambara/factoextra} package:
