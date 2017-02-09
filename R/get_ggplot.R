@@ -115,9 +115,6 @@
 #'    A red line passes through the biplot origin and the average location (known as the Average-Tester Axis (ATA)).
 #'    
 #'    
-#'    Dashed perpendicular lines to the ATA are drawn and passed through each germplasm.
-#'    
-#'    
 #'     \itemize{
 #'      \item discrimitiveness : assess discrimitiveness of each location.
 #'      The score represents the discriminating : the higher the vector, the more discriminating the location.
