@@ -17,7 +17,7 @@ ggplot_check_model_GxE = function(
 ){
   # Get data ----------
   
-  variable = out_check_model$info$variable
+  variable = out_check_model$GxE$info$variable
   
   data_ggplot = out_check_model$data_ggplot
   
