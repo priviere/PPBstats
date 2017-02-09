@@ -92,7 +92,7 @@ This PCA allows to detect
 
 \subsubsection{Steps with \pack}
 
-For GxE, you can follow these steps (Figure \ref{main_workflow}):
+For AMMI analysis, you can follow these steps (Figure \ref{main_workflow}):
 
 \begin{enumerate}
 \item Run the model with \texttt{GxE} and \texttt{gxe\_analysis = "AMMI"}
@@ -304,16 +304,16 @@ If the total variation is high enought, then the biplot is useful if the two fir
 \paragraph{Get biplot}
 
 <<message=TRUE,cache=FALSE>>=
-out_biplot_GxE = biplot_GxE(out_check_ammi)
+out_biplot_ammi = biplot_GxE(out_check_ammi)
 @
 
 \paragraph{Visualize biplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_biplot_GxE = get_ggplot(out_biplot_GxE)
+p_out_biplot_ammi = get_ggplot(out_biplot_ammi)
 @
 
-\texttt{p\_out\_biplot\_GxE} is a list of two elements :
+\texttt{p\_out\_biplot\_ammi} is a list of two elements :
 \begin{itemize}
 \item \texttt{ecovalence}
 
@@ -327,20 +327,20 @@ Ecovalance of location $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
 Ecovalances are represented in fonction of mean effects by germplasm and location.
 
 <<message=TRUE,cache=FALSE>>=
-p_out_biplot_GxE$ecovalence
+p_out_biplot_ammi$ecovalence
 @
 
 \item \texttt{biplot} being a list of four elements :
 <<message=TRUE,cache=FALSE>>=
-p_out_biplot_GxE$biplot$simple_biplot
+p_out_biplot_ammi$biplot$simple_biplot
 @
 
 Regarding the other elements of the list, it returns \texttt{NULL} as these visualisation is only done for \texttt{gxe__analysis = GGE}.
 
 <<message=TRUE,cache=FALSE>>=
-p_out_biplot_GxE$biplot$which_won_where
-p_out_biplot_GxE$biplot$mean_vs_stability
-p_out_biplot_GxE$biplot$discrimitiveness_vs_representativeness
+p_out_biplot_ammi$biplot$which_won_where
+p_out_biplot_ammi$biplot$mean_vs_stability
+p_out_biplot_ammi$biplot$discrimitiveness_vs_representativeness
 @
 \end{itemize}
 
