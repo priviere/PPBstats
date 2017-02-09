@@ -187,7 +187,7 @@
 #'  \item mean_comparisons
 #'   \itemize{
 #'    \item from GxE, a list with barplot.
-#'    For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} perameters per graph.
+#'    For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
 #'    Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
 #'    The error I (alpha) and the alpha correction are displayed in the title. 
 #'     \itemize{
