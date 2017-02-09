@@ -265,7 +265,7 @@ alpha_i_estimated = effects[grep("alpha\\[",names(effects))]
 names(alpha_i_estimated) = sapply(names(alpha_i_estimated), function(x){  
 sub("\\]", "", sub("alpha\\[", "", x)) } )
  
-alpha_i = tapply(PPBdata2$alpha_i, PPBdata2$germplasm, mean, na.rm = TRUE)
+alpha_i = tapply(data_model_2$alpha_i, data_model_2$germplasm, mean, na.rm = TRUE)
  
 check = cbind.data.frame(alpha_i = alpha_i, alpha_i_estimated = alpha_i_estimated[names(alpha_i)])
 @
@@ -301,7 +301,7 @@ The number of iterations is set to 100 000 but you can change it with the \textt
 Here it is bad as only 10 iterations for the 5 first $Y_{ij}$ have been done to save computing time ...
 
 <<message=TRUE,cache=FALSE>>=
-# out_cv = cross_validation_model_2(PPBdata2, "y1", nb_iterations = 10)
+# out_cv = cross_validation_model_2(data_model_2, "y1", nb_iterations = 10)
 
 load("./data_PPBstats/out.cv.RData") # to save lots of time
 
@@ -429,9 +429,9 @@ Lets' have an example with three variables.
 First run the models
 
 <<message=TRUE,cache=FALSE>>=
-# out_model_2_y1 = model_2(PPBdata2, variable = "y1")
-# out_model_2_y2 = model_2(PPBdata2, variable = "y2")
-# out_model_2_y3 = model_2(PPBdata2, variable = "y3")
+# out_model_2_y1 = model_2(data_model_2, variable = "y1")
+# out_model_2_y2 = model_2(data_model_2, variable = "y2")
+# out_model_2_y3 = model_2(data_model_2, variable = "y3")
 
 load("./data_PPBstats/out_model_2_y1.RData")
 load("./data_PPBstats/out_model_2_y2.RData")
