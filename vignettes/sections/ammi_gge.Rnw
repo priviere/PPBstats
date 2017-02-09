@@ -64,49 +64,44 @@ which can also be written:
 \eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})
 \end{displaymath}
 
-with,
-$\eta_{i}\nu_{j}$ interaction of germplasm $i$ with environment $j$,
-$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
-$\lambda_{n}$ the eigen value for componant $n$,
-$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
-$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
 
-The data are double centered on environment and germplasm.
+With,
+
+\begin{tabular}{ll}
+$\eta_{i}\nu_{j}$ & interaction of germplasm $i$ with location $j$, \\
+$N$ & the number of dimension (PCA componant) which has as maximum value the number of location, \\
+$\lambda_{n}$ & the eigen value for componant $n$, \\
+$\gamma_{in}$ & eigen vector for germplasm $i$ for componant $n$, \\
+$\omega_{jn}$ & eigen vector for  location $j$  for componant $n$. \\
+\end{tabular}
+
+
+The data are double centered on location and germplasm.
 The PCA study the structure of the interaction matrix.
-The environment are the variable and the germplasm are the individuals.
+The location are the variable and the germplasm are the individuals.
 
 This PCA allows to detect
 \begin{itemize}
 \item germplasm that are stable (i.e. contribute less to interaction)
-\item which germplasm interact the most with which environment
-\item which environment have the same profile regarding interaction
+\item which germplasm interact the most with which location
+\item which location have the same profile regarding interaction
 \end{itemize}
 
 \end{enumerate}
 
 
-The AMMI model can be written:
-
-\begin{equation}
-Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
-\label{modele_ammi}
-\end{equation}
-
-with,
-
-$Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and environment $j$,
-$\mu$ the general mean,
-$\alpha_{i}$ the effect of germplasm $i$,
-$\theta_{j}$ the effect of environment $j$,
-$rep_{k}(\theta_{j})$ effect of replication $k$ nested in environment,
-$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
-$\lambda_{n}$ the eigen value for componant $n$,
-$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
-$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
-$\varepsilon_{ijk}$ the residuals.\\
-
-
 \subsubsection{Steps with \pack}
+
+For GxE, you can follow these steps (Figure \ref{main_workflow}):
+
+\begin{enumerate}
+\item Run the model with \texttt{GxE} and \texttt{gxe\_analysis = "AMMI"}
+\item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{get\_ggplot}
+\item Get groups of each parameters with \texttt{parameters\_groups} and visualise it with \texttt{get\_ggplot}
+\end{enumerate}
+
+Let's get the data.
 
 <<message=TRUE,cache=FALSE>>=
 data(data_GxE)
@@ -115,297 +110,326 @@ head(data_GxE)
 
 
 \subsubsection{Run the model}
-<<message=TRUE,cache=FALSE>>=
-ammi = GxE(data_GxE, vec_variables, gxe_analysis = "AMMI")
-@
-
-Lets' see for one variable
-<<message=TRUE,cache=FALSE>>=
-res_ammi_y1 = ammi$AMMI$y1
-@
-
-
-\subsubsection{Descriptive graph}
-<<message=TRUE,cache=FALSE>>=
-res_ammi_y1$descriptive$germplasm
-@
+To run model GxE on the dataset, used the function \texttt{GxE}.
+You can run it on one variable.
 
 <<message=TRUE,cache=FALSE>>=
-res_ammi_y1$descriptive$location
-@
-
-<<message=TRUE,cache=FALSE>>=
-res_ammi_y1$descriptive$interaction
+out_ammi = GxE(data_GxE, variable = "y1", gxe_analysis = "AMMI")
 @
 
 
-\subsubsection{ANOVA}
+\texttt{out\_ammi} is a list containing three elements :
+
+\begin{itemize}
+\item \texttt{info} : a list with variable and gxe\_analysis
+<<message=TRUE,cache=FALSE>>=
+out_ammi$info
+@
+\item \texttt{ANOVA} a list with five elements :
+  \begin{itemize}
+  \item \texttt{model}
+  <<message=TRUE,cache=FALSE>>=
+  out_ammi$ANOVA$model
+  @
+  \item \texttt{anova\_model}
+  <<message=TRUE,cache=FALSE>>=
+  out_ammi$ANOVA$anova_model
+  @
+  \item \texttt{germplasm\_effects} a list of two elements :
+    \begin{itemize}
+    \item \texttt{effects}
+    <<message=TRUE,cache=FALSE>>=
+    out_ammi$ANOVA$germplasm_effects$effects
+    @
+    \item \texttt{intra\_variance}
+    <<message=TRUE,cache=FALSE>>=
+    out_ammi$ANOVA$germplasm_effects$intra_variance
+    @
+    \end{itemize}
+  \item \texttt{location\_effects}
+  <<message=TRUE,cache=FALSE>>=
+  out_ammi$ANOVA$location_effects$effects
+  @
+  \item \texttt{interaction\_matrix}
+  <<message=TRUE,cache=FALSE>>=
+  out_ammi$ANOVA$interaction_matrix
+  @
+  \end{itemize}
+\item \texttt{PCA} : PCA object from FactoMineR
+<<message=TRUE,cache=FALSE>>=
+out_ammi$PCA
+@
+\end{itemize}
+
+\subsubsection{Check and visualize model outputs}
+
+\paragraph{Check the model}
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from \texttt{check\_model}).
 
 <<message=TRUE,cache=FALSE>>=
-anova = res_ammi_y1$ANOVA
+out_check_ammi = check_model(out_ammi)
 @
 
-\paragraph{table of the model}
-<<message=TRUE,cache=FALSE>>=
-anova$anova_model
-@
+\texttt{out\_check\_ammi} is a list containing four elements :
 
-\paragraph{residuals}
-<<message=TRUE,cache=FALSE>>=
-anova$residuals$distribution
-@
+\begin{itemize}
+\item \texttt{GxE} the output from the model
+\item \texttt{data\_ggplot} a list containing information for ggplot:
+  \begin{itemize}
+  \item \texttt{data\_ggplot\_residuals} a list containing :
+    \begin{itemize}
+    \item \texttt{data\_ggplot\_normality}
+    \item \texttt{data\_ggplot\_skewness\_test}
+    \item \texttt{data\_ggplot\_kurtosis\_test}
+    \item \texttt{data\_ggplot\_qqplot}
+    \end{itemize}
+  \item \texttt{data\_ggplot\_variability\_repartition\_pie}
+  \item \texttt{data\_ggplot\_var\_intra}
+  \end{itemize}
+\end{itemize}
 
-<<message=TRUE,cache=FALSE>>=
-anova$residuals$QQplot
-@
+\paragraph{Visualize outputs}
 
-\paragraph{variability repartition}
-<<message=TRUE,cache=FALSE>>=
-anova$variability_repartition
-@
-
-\paragraph{location effects}
-<<message=TRUE,cache=FALSE>>=
-anova$location_effects$effects
-@
+Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
-anova$location_effects$barplot_LSD_significant_group
+p_out_check_ammi = get_ggplot(out_check_ammi)
 @
 
-\paragraph{germplasm effects}
+\texttt{p\_out\_check\_ammi} is a list with:
+
+\begin{itemize}
+\item \texttt{residuals}
+  \begin{itemize}
+  \item \texttt{histogramm} : histogramm with the distribution of the residuals
+  <<message=TRUE,cache=FALSE>>=
+  p_out_check_ammi$residuals$histogramm
+  @
+  \item \texttt{qqplot}
+  <<message=TRUE,cache=FALSE>>=
+  p_out_check_ammi$residuals$qqplot
+  @
+  \end{itemize}
+  
+\item \texttt{variability\_repartition} : pie with repartition of SumSq for each factor
 <<message=TRUE,cache=FALSE>>=
-anova$germplasm_effects$effects
+p_out_check_ammi$variability_repartition
 @
+
+\item \texttt{variance\_intra\_germplasm} : repartition of the residuals for each germplasm (see Details for more information)
+
+This has to been seen with caution:
+  \begin{itemize}
+  \item If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+  \item If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+  With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+  \end{itemize}
 
 <<message=TRUE,cache=FALSE>>=
-anova$germplasm_effects$intra_variance
+p_out_check_ammi$variance_intra_germplasm
 @
+
+\item \texttt{pca\_composante\_variance} : variance caught by each dimension of the PCA run on the interaction matrix
+<<message=TRUE,cache=FALSE>>=
+p_out_check_ammi$pca_composante_variance
+@
+\end{itemize}
+
+
+\subsubsection{Get and visualize mean comparisons}
+
+\paragraph{Get mean comparisons}
+
+Get mean comparisons with \texttt{mean\_comparisons}.
 
 <<message=TRUE,cache=FALSE>>=
-anova$germplasm_effects$barplot_LSD_significant_group
+out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni")
 @
+
+\texttt{out\_mean\_comparisons\_ammi} is a list of three elements:
+
+\begin{itemize}
+\item \texttt{info} : a list with variable and gxe\_analysis
+\item \texttt{data\_ggplot\_LSDbarplot\_germplasm}
+\item \texttt{data\_ggplot\_LSDbarplot\_location}
+\item \texttt{data\_ggplot\_LSDbarplot\_year}
+\end{itemize}
+
+\paragraph{Visualize mean comparisons}
 
 <<message=TRUE,cache=FALSE>>=
-anova$germplasm_effects$boxplot_variance_intra
+p_out_mean_comparisons_ammi = get_ggplot(out_mean_comparisons_ammi, ggplot.type = "barplot")
 @
 
+\texttt{out\_mean\_comparisons\_ammi} is a list of three elements with barplots :
 
-\paragraph{Interaction matrix}
+For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+The error I (alpha) and the alpha correction are displayed in the title. 
+
+\begin{itemize}
+\item \texttt{germplasm} : mean comparison for germplasm
 <<message=TRUE,cache=FALSE>>=
-anova$interaction_matrix
+pg = p_out_mean_comparisons_ammi$germplasm
+names(pg)
+pg$`1`
 @
 
-\subsubsection{PCA}
+\item \texttt{location} : mean comparison for location
+<<message=TRUE,cache=FALSE>>=
+pl = p_out_mean_comparisons_ammi$location
+names(pl)
+pl$`1`
+@
+
+
+\item \texttt{year} : mean comparison for year
+Here there are no more than 2 years in the data set so it is \texttt{NULL}
+<<message=TRUE,cache=FALSE>>=
+p_out_mean_comparisons_ammi$year
+@
+
+\end{itemize}
+
+
+\subsubsection{Get and visualize biplot}
 
 The biplot represents information about the percentages of total variation explained by the two axes.
 It has to be linked to the total variation caught by the interaction.
 If the total variation is small, then the biplot is useless.
 If the total variation is high enought, then the biplot is useful if the two first dimension represented catch enought variation (the more the better).
 
+\paragraph{Get biplot}
 
 <<message=TRUE,cache=FALSE>>=
-pca = res_ammi_y1$PCA
+out_biplot_GxE = biplot_GxE(out_check_ammi)
 @
 
-\paragraph{ecovalence}
+\paragraph{Visualize biplot}
 
-Ecovalence from \citet{wricke_uber_1962} give part of interaction variance taken by germplasm and environment.
+<<message=TRUE,cache=FALSE>>=
+p_out_biplot_GxE = get_ggplot(out_biplot_GxE)
+@
+
+\texttt{p\_out\_biplot\_GxE} is a list of two elements :
+\begin{itemize}
+\item \texttt{ecovalence}
+
+Ecovalence from \citet{wricke_uber_1962} give part of interaction variance taken by germplasm and location.
 It is an indicator of stability: a low ecovalence means low interaction, i.e. more stability.
 
 Ecovalance of germplasm $i$ is $W_{i}=\sum_{i}^{n} (\eta_{i}\nu_{j})^{2}$
 
-Ecovalance of environment $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
+Ecovalance of location $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
 
-Ecovalances are represented in fonction of mean effects by germplasm and environment.
-
-<<message=TRUE,cache=FALSE>>=
-pca$ecovalence
-@
-
-\paragraph{biplot}
-The results of the PCA is a list divided into three elements as explained in \citet{ceccarelli_manual_2012}:
-
-\begin{itemize}
-\item The percentage of variance explained by each composante of the PCA.
-In our case, only the two first composant are represented in a biplot.
-Note that the sum of variance caught by the two compostant must be as big as possible to be confident in the conclusion of the observations.
-
+Ecovalances are represented in fonction of mean effects by germplasm and location.
 
 <<message=TRUE,cache=FALSE>>=
-pca$biplot$variation_dim
+p_out_biplot_GxE$ecovalence
 @
 
-\item The which won where graph
-The germplasms which have the largest value in a sector "win" in the location present in that sector.
-The information is summarized in the legend of the plot.
-See \texttt{?get\_ggplot} for more details on this plot.
+\item \texttt{biplot} being a list of four elements :
+<<message=TRUE,cache=FALSE>>=
+p_out_biplot_GxE$biplot$simple_biplot
+@
 
+Regarding the other elements of the list, it returns \texttt{NULL} as these visualisation is only done for \texttt{gxe__analysis = GGE}.
 
 <<message=TRUE,cache=FALSE>>=
-pca$biplot$which_won_where
+p_out_biplot_GxE$biplot$which_won_where
+p_out_biplot_GxE$biplot$mean_vs_stability
+p_out_biplot_GxE$biplot$discrimitiveness_vs_representativeness
 @
-
-\item The mean vs stability graph.
-
-\begin{itemize}
-\item mean
-A red circle define the average location.
-An high score mean a greater mean performance of an entry.
-Entries with a score above zero means entries with above-average means.
-Entries with a score below zero means entries with below-average means.
-Note that the distance from the biplot origin to the average location circle (represented with an arrow), is a measure of the relative importance of the germplasm main effect versus the entry by location interaction.
-The longer the arrow is, the more important is germplasm effect and the more meaningful is the selection based on mean performance. 
-
-<<message=TRUE,cache=FALSE>>=
-pca$biplot$mean_vs_stability$mean_performance
-@
-
-\item stability
-This information is related to the ecovalence graph.
-The score is equal to the length of the projection.
-A high score represents a low stability (i.e. an high entry by location interaction).
-
-
-<<message=TRUE,cache=FALSE>>=
-pca$biplot$mean_vs_stability$stability_performance
-@
-
 \end{itemize}
 
 
-\item The discrimitiveness vs representativeness graph. 
-It is interessting to assess the ability of the environments to discriminate the germplasms and their ability to represent the target environments. 
+\subsubsection{Get and vizualise groups of parameters}
 
-The closer a given location is next to the averge location (represented by a red circle), the more desirable it is judged on both discrimination and representativeness.
+\paragraph{Get groups of parameters}
+
+In order to cluster locations or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
+
+This is done with \texttt{parameter\_groups} which do a PCA on this matrix.
+
+Clusters are done based on Average silhouette method for k-means clustering as explained here \url{http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning#r-codes-1}
+
+The hcluster are computed with the function \texttt{hclust(dist())}
+
+The kmeans are computed with the function \texttt{kmeans()}
+
+Lets' have an example with three variables.
+
+First run the models
+<<message=TRUE,cache=FALSE>>=
+ammi_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "AMMI")
+ammi_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "AMMI")
+@
+
+Then check the models
+<<message=TRUE,cache=FALSE>>=
+out_check_ammi_2 = check_model(ammi_2)
+out_check_ammi_3 = check_model(ammi_3)
+@
+
+Then run the function for germplasm. It can also be done on location or year if there are year in the data set.
+
+<<message=TRUE,cache=FALSE>>=
+out_parameter_groups = parameter_groups(
+  list("y1" = out_check_ammi, "y2" = out_check_ammi_2), 
+  "germplasm"
+  )
+@
+
+\paragraph{Visualize groups of parameters}
+
+Visualize outputs with \texttt{get\_ggplot}
+
+<<message=TRUE,cache=FALSE>>=
+p_germplasm_group = get_ggplot(out_parameter_groups)
+@
+
+\texttt{p\_germplasm\_group} is list of two elements :
 
 \begin{itemize}
+\item \texttt{pca} : a list with three elements on the PCA on the group of parameters :
 
-\item discrimitiveness
-The higher the value, the highest the discrimitiveness for environments.
+  \begin{itemize}
+  \item \texttt{composante\_variance} : variance caught by each dimension of the PCA
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$pca$composante_variance
+  @
 
-<<message=TRUE,cache=FALSE>>=
-pca$biplot$discrimitiveness_vs_representativeness$discrimitiveness
-@
+  \item \texttt{ind} : graph of individuals
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$pca$ind
+  @
+
+  \item \texttt{var} : graph of variables
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$pca$var
+  @
+  
+  \end{itemize}
 
 
-\item representativeness
-The highest the value, the less representative the environment.
+\item \texttt{clust}
+  \begin{itemize}
+  \item \texttt{nb\_k} : output from \texttt{factextra::fviz\_nbclust(data, kmeans, method = "silhouette")}
+  See \texttt{?factoextra::fviz\_nbclust} for more details
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$clust$nb_k
+  @
 
-<<message=TRUE,cache=FALSE>>=
-pca$biplot$discrimitiveness_vs_representativeness$representativeness
-@
+  \item \texttt{pca} : output from \texttt{factextra::fviz\_cluster(km.res, data, frame.type = "norm")}
+  See \texttt{?factoextra::fviz\_cluster} for more details
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$clust$pca
+  @
 
-\item discrimitiveness vs representativeness
-The location combining better score (i. e.discrimination and representativeness) are the ones that could be used to test germplasms as they are more representative of all the locations.
-This has to be done severals year to get robust results.
-The highest the score, the more representative the location.
-
-<<message=TRUE,cache=FALSE>>=
-pca$biplot$discrimitiveness_vs_representativeness$discrimitiveness_vs_representativeness
-@
-
+  \end{itemize}
+ 
 \end{itemize}
-
-\end{itemize}
-
-
-
-\subsubsection{Post AMMI analysis}
-
-\paragraph{Repartition of the variation for each variable}
-<<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$barplot_variation_repartition
-@
-
-\paragraph{Germplasm effects}
-<<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$PCA_G_effect$variation_dim
-@
-
-<<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$PCA_G_effect$ind
-@
-
-<<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$PCA_G_effect$var
-@
-
-
-\paragraph{Variance intra germplasm effects}
-<<message=TRUE,cache=FALSE>>=
-p1 = ammi$Post_AMMI$PCA_intraG_effect$variation_dim
-p2 = ammi$Post_AMMI$PCA_intraG_effect$ind
-p3 = ammi$Post_AMMI$PCA_intraG_effect$var
-grid.arrange(p1, p2, p3, ncol=3, nrow=1)
-@
-
-
-\paragraph{Location effects}
-<<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$PCA_E_effect$variation_dim
-@
-
-<<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$PCA_E_effect$ind
-@
-
-<<message=TRUE,cache=FALSE>>=
-ammi$Post_AMMI$PCA_E_effect$var
-@
-
-
-\subsection{GGE}
-\label{gge}
-
-\subsubsection{Theory of the model}
-
-The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the environment: germplasm and interaction effects are merged.
-
-The GGE model can be written as followed:
-
-\begin{equation}
-Y_{ijk} = \mu + \theta_{j} + rep_{k}(\theta_{j}) + \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
-\label{modele_gge}
-\end{equation}
-
-with,
-
-$Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and environment $j$,
-$\mu$ the general mean,
-$\theta_{j}$ the effect of environment $j$,
-$rep_{k}(\theta_{j})$ effect of replication $k$ nested in environment,
-$N$ the number of dimension (PCA componant) which has as maximum value the number of environment,
-$\lambda_{n}$ the eigen value for componant $n$,
-$\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
-$\omega_{jn}$ eigen vector for  environment $j$  for componant $n$.
-$\varepsilon_{ijk}$ the residuals.\\
-
-This model allow to detect environment where germplasm (and the interaction) behave better : 'which won where' \citep{gauch_statistical_2008,yan_gge_2007}.
-
-\subsubsection{Steps with \pack}
-
-
-\subsubsection{Run the model}
-
-
-\subsubsection{Analysis of model outputs}
-
-
-\subsubsection{Get main effects results}
-
-\paragraph{Germplasm effects}
-
-\paragraph{Environment effects}
-
-\subsubsection{Get $G \times E$ effects results}
-
-\paragraph{interaction plot}
-
-\paragraph{PCA}
-
-
-
-
 
 
