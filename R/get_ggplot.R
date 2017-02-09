@@ -267,6 +267,7 @@
 #'    \item ecovalence : 
 #'    \item biplot, a list of three elements :
 #'     \itemize{
+#'      \item simple_biplot : the biplot of location and germplasm
 #'      \item which_won_where : plot to assess which germplasm win in which location (see Details for more information).
 #'      \item mean_vs_stability : a list of two elements :
 #'       \itemize{
