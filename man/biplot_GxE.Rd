@@ -12,7 +12,7 @@ biplot_GxE(out_check_model_GxE)
 \value{
 The function returns a list with:
 \itemize{
-\item variable : the variable studied
+\item info : a list with variable and gxe_analysis
 \item data_ecovalence : the ecovalence matrix
 \item pca : the pca object
 }
