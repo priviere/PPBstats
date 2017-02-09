@@ -20,7 +20,7 @@ ggplot_mean_comparisons_GxE = function(
   # 1. Error message ----------
   if( !is.element(ggplot.type, c("barplot")) ) { stop("ggplot.type must be barplot with output from GxE.") }
   
-  variable = mean_comparisons_GxE$variable
+  variable = mean_comparisons_GxE$info$variable
   
   data_ggplot_LSDbarplot_germplasm = mean_comparisons_GxE$data_ggplot_LSDbarplot_germplasm
   data_ggplot_LSDbarplot_location = mean_comparisons_GxE$data_ggplot_LSDbarplot_location

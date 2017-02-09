@@ -13,7 +13,8 @@
 #' 
 ggplot_biplot_GxE = function(out_biplot_GxE){
   
-  variable = out_biplot_GxE$variable
+  variable = out_biplot_GxE$info$variable
+  gxe_analysis =out_biplot_GxE$info$gxe_analysis
   data_ecovalence = out_biplot_GxE$data_ecovalence
   data_pca = out_biplot_GxE$pca
   

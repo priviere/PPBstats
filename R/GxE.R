@@ -15,7 +15,7 @@
 #' @return 
 #' The function returns a list with three elements:
 #' \itemize{
-#'  \item variable
+#'  \item info : a list with variable and gxe_analysis
 #'  \item ANOVA a list with five elements:
 #'   \itemize{
 #'    \item model
@@ -117,7 +117,7 @@ GxE = function(
 
     # 5. Return results ----------
     out = list(
-      "variable" = variable,
+      "info" = list("variable" = variable, "gxe_analysis" = gxe_analysis),
       "ANOVA" = out_anova,
       "PCA" = out_pca
     )
