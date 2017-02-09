@@ -265,20 +265,21 @@
 #'  \item biplot_GxE
 #'   \itemize{
 #'    \item ecovalence : 
-#'    \item biplot, a list of three elements :
+#'    \item biplot, a list of four elements :
 #'     \itemize{
 #'      \item simple_biplot : the biplot of location and germplasm
-#'      \item which_won_where : plot to assess which germplasm win in which location (see Details for more information).
-#'      \item mean_vs_stability : a list of two elements :
+#'      \item which_won_where : plot to assess which germplasm win in which location (see Details for more information). Done only if gxe_analysis is GGE.
+#'      \item mean_vs_stability : a list of two elements. Done only if gxe_analysis is GGE.
 #'       \itemize{
 #'        \item mean : assess mean of each germplasm (see Details for more information).
 #'        \item stability : assess stability of each germplasm (see Details for more information).
 #'       }
-#'      \item discrimitiveness_vs_representativeness : a list of two elements :
+#'      \item discrimitiveness_vs_representativeness : a list of two elements. Done only if gxe_analysis is GGE.
 #'       \itemize{
 #'        \item discrimitiveness : assess discrimitiveness of each location (see Details for more information).
 #'        \item representativeness : assess representativeness of each location (see Details for more information).
-#'       } 
+#'       }
+#'      \item discrimitiveness_vs_representativeness :represents discrimitiveness versus representativeness (see Details for more information). 
 #'     }
 #'   }
 #'   
