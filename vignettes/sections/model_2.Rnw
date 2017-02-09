@@ -192,7 +192,7 @@ load("./data_PPBstats/out_check_model_2.RData")
 \begin{itemize}
 \item \texttt{MCMC} : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/thin (the thin value is 10 by default in the models).
 <<message=TRUE,cache=FALSE>>=
-dim(out2$MCMC)
+dim(out_check_model_2$MCMC)
 @
 
 \item \texttt{MCMC\_conv\_not\_ok} : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
@@ -219,21 +219,21 @@ p_out_check_model_2 = get_ggplot(out_check_model_2)
 \texttt{p\_out\_check\_model\_2} is a list with 4 elements:
 
 \begin{itemize}
-\item \texttt{alpha\_i} : distribution of each alpha_i. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{alpha\_i} per graph.
+\item \texttt{alpha\_i} : distribution of each alpha\_i. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{alpha\_i} per graph.
 <<message=TRUE,cache=FALSE>>=
 p_a = p_out_check_model_2$alpha_i
 names(p_a)
 p_a$`1`
 @
 
-\item \texttt{beta\_i} : distribution of each beta_i. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{beta\_i} per graph.
+\item \texttt{beta\_i} : distribution of each beta\_i. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{beta\_i} per graph.
 <<message=TRUE,cache=FALSE>>=
 p_a = p_out_check_model_2$beta_i
 names(p_a)
 p_a$`1`
 @
 
-\item \texttt{theta\_j} : distribution of each theta_j. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{theta\_j} per graph.
+\item \texttt{theta\_j} : distribution of each theta\_j. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{theta\_j} per graph.
 <<message=TRUE,cache=FALSE>>=
 p_a = p_out_check_model_2$theta_j
 names(p_a)
@@ -267,14 +267,14 @@ sub("\\]", "", sub("alpha\\[", "", x)) } )
  
 alpha_i = tapply(data_model_2$alpha_i, data_model_2$germplasm, mean, na.rm = TRUE)
  
-check = cbind.data.frame(alpha_i = alpha_i, alpha_i_estimated = alpha_i_estimated[names(alpha_i)])
+check_data = cbind.data.frame(alpha_i = alpha_i, alpha_i_estimated = alpha_i_estimated[names(alpha_i)])
 @
 
 Let’s have a look at the relation between both values.
 
 \begin{figure}[H]
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p = ggplot(check, aes(x = alpha_i, y = alpha_i_estimated))
+p = ggplot(check_data, aes(x = alpha_i, y = alpha_i_estimated))
 p + stat_smooth(method = "lm") + geom_point()
 @
 \end{figure}
@@ -301,17 +301,17 @@ The number of iterations is set to 100 000 but you can change it with the \textt
 Here it is bad as only 10 iterations for the 5 first $Y_{ij}$ have been done to save computing time ...
 
 <<message=TRUE,cache=FALSE>>=
-# out_cv = cross_validation_model_2(data_model_2, "y1", nb_iterations = 10)
+# out_cross_validation_model_2 = cross_validation_model_2(data_model_2, "y1", nb_iterations = 10)
 
-load("./data_PPBstats/out.cv.RData") # to save lots of time
+load("./data_PPBstats/out_cross_validation_model_2.RData") # to save lots of time
 
-head(out_cv)
+head(out_cross_validation_model_2)
 @
 
 The outputs are visualized with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_cv = get_ggplot(out_cv)
+p_out_cv = get_ggplot(out_cross_validation_model_2)
 @
 
 \texttt{p\_out\_cv} is a list of two elements:
@@ -462,17 +462,20 @@ Then run the function on alpha.
 It can also be done on beta or theta.
 
 <<message=TRUE,cache=FALSE>>=
-out_parameter_groups = parameter_groups(list("y1" = c_m2_y1, "y2" = c_m2_y2, "y3" = c_m2_y3), "alpha")
+out_parameter_groups = parameter_groups(
+  list("y1" = c_m2_y1, "y2" = c_m2_y2, "y3" = c_m2_y3), 
+  "alpha"
+  )
 @
 
 \texttt{out\_parameter\_groups} is list of two elements:
 
 \begin{itemize}
-\item\texttt{ obj.pca} : the PCA object from FactoMineR::PCA
+\item\texttt{obj.pca} : the PCA object from \texttt{FactoMineR::PCA}
 \item \texttt{clust}, a list of four elements:
 \begin{itemize}
   \item \texttt{data} : the matrix with variables in column and effect in row, from wich have been computed the PCA
-  \item \texttt{nb.k} : number of cluster
+  \item \texttt{nb\_k} : number of cluster
   \item \texttt{hc} : hcluster
   \item \texttt{km} : kmeans
   \end{itemize}
@@ -493,7 +496,7 @@ ppg = get_ggplot(out_parameter_groups)
 \item \texttt{pca} : a list with three elements on the PCA on the group of parameters :
   \begin{itemize}
   
-  \item \texttt{composante_variance} : variance caught by each dimension of the PCA
+  \item \texttt{composante\_variance} : variance caught by each dimension of the PCA
   <<message=TRUE,cache=FALSE>>=
   ppg$pca$composante_variance
   @
@@ -513,14 +516,14 @@ ppg = get_ggplot(out_parameter_groups)
 \item \texttt{clust}
   \begin{itemize}
   
-  \item \texttt{nb_k} : output from \texttt{factextra::fviz_nbclust(data, kmeans, method = "silhouette")}
-  See \texttt{?factoextra::fviz_nbclust} for more details
+  \item \texttt{nb\_k} : output from \texttt{factextra::fviz\_nbclust(data, kmeans, method = "silhouette")}
+  See \texttt{?factoextra::fviz\_nbclust} for more details
   <<message=TRUE,cache=FALSE>>=
   ppg$clust$nb_k
   @
 
-  \item pca : output from \texttt{factextra::fviz_cluster(km.res, data, frame.type = "norm")}
-  See \texttt{?factoextra::fviz_cluster} for more details
+  \item pca : output from \texttt{factextra::fviz\_cluster(km.res, data, frame.type = "norm")}
+  See \texttt{?factoextra::fviz\_cluster} for more details
   <<message=TRUE,cache=FALSE>>=
   ppg$clust$pca
   @
@@ -547,13 +550,13 @@ ptp = predict_the_past_model_2(out_check_model_2, env = "loc-6:year-5")
 <<message=TRUE,cache=FALSE>>=
 m_ptp = mean_comparisons(ptp)
 
-p = get.ggplot(m_ptp, ggplot.type = "barplot")
+p = get_ggplot(m_ptp, ggplot.type = "barplot")
 
 data("data_version")
-p = get.ggplot(m_ptp, data_version = data_version, ggplot.type = "barplot")
+p = get_ggplot(m_ptp, data_version = data_version, ggplot.type = "barplot")
 
-p = get.ggplot(m_ptp, ggplot.type = "score")
+p = get_ggplot(m_ptp, ggplot.type = "score")
 
-p = get.ggplot(m_ptp, ggplot.type = "interaction")
+p = get_ggplot(m_ptp, ggplot.type = "interaction")
 @
 
