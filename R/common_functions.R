@@ -1,6 +1,6 @@
 #' Some functions used in several functions of PPBstats
 #' 
-#' @name extra_functions
+#' @name common_functions
 #' 
 #' @description
 #' This file group several functions used in several functions of PPBstats
