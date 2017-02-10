@@ -42,12 +42,6 @@ A.~Gelman and D.B. Rubin.
   {Sequences} (with discussion).
 \newblock \emph{Statistical Science}, \penalty0 (7):\penalty0 457--511, 1992.
 
-\bibitem[Husson et~al.(2010)Husson, Josse, and Pagès]{husson_principal_2010}
-F.~Husson, J.~Josse, and J.~Pagès.
-\newblock Principal component methods - hierarchical clustering - partitional
-  clustering: why would we need to choose for visualizing data?
-\newblock Technical report, Agrocampus Ouest, 2010.
-
 \bibitem[Nabugoomu et~al.(1999)Nabugoomu, Kempton, and
   Talbot]{nabugoomu_analysis_1999}
 F.~Nabugoomu, R.A. Kempton, and M.~Talbot.
@@ -80,6 +74,13 @@ P.~Rivière, J.C. Dawson, I.~Goldringer, and O.~David.
 C.P. Robert.
 \newblock \emph{The {Bayesian} {Choice}}.
 \newblock Springer {Texts} in {Statistics}. Springer, second edition, 2001.
+
+\bibitem[Sperling et~al.(2001)Sperling, Ashby, Smith, Weltzien, and
+  {McGuire}]{sperling_framework_2001}
+L.~Sperling, {J.A.} Ashby, {M.E.} Smith, E.~Weltzien, and S.~{McGuire}.
+\newblock A framework for analyzing participatory plant breeding approaches and
+  results.
+\newblock \emph{Euphytica}, 122\penalty0 (3):\penalty0 439--450, 2001.
 
 \bibitem[Spiegelhalter et~al.(2002)Spiegelhalter, Best, Carlin, and Van
   Der~Linde]{spiegelhalter_bayesian_2002}

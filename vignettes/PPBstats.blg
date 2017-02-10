@@ -6,46 +6,45 @@ Database file #1: biblio.bib
 Warning--I didn't find a database entry for "gelman__2006"
 Warning--empty institution in ceccarelli_manual_2012
 Warning--there's a number but no volume in gelman_inference_1992
-Warning--empty institution in husson_principal_2010
 You've used 15 entries,
             2773 wiz_defined-function locations,
-            685 strings with 7484 characters,
-and the built_in function-call counts, 6816 in all, are:
-= -- 612
-> -- 395
+            685 strings with 7469 characters,
+and the built_in function-call counts, 7026 in all, are:
+= -- 629
+> -- 413
 < -- 7
-+ -- 135
-- -- 120
-* -- 585
-:= -- 1076
++ -- 141
+- -- 126
+* -- 609
+:= -- 1103
 add.period$ -- 46
 call.type$ -- 15
-change.case$ -- 87
+change.case$ -- 88
 chr.to.int$ -- 15
-cite$ -- 33
-duplicate$ -- 296
-empty$ -- 546
-format.name$ -- 139
-if$ -- 1389
+cite$ -- 32
+duplicate$ -- 301
+empty$ -- 563
+format.name$ -- 145
+if$ -- 1434
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 14
+missing$ -- 15
 newline$ -- 83
 num.names$ -- 60
-pop$ -- 148
+pop$ -- 153
 preamble$ -- 1
-purify$ -- 70
+purify$ -- 72
 quote$ -- 0
-skip$ -- 218
+skip$ -- 222
 stack$ -- 0
-substring$ -- 280
-swap$ -- 14
+substring$ -- 305
+swap$ -- 15
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 160
-warning$ -- 3
-while$ -- 65
+warning$ -- 2
+while$ -- 67
 width$ -- 0
 write$ -- 202
-(There were 4 warnings)
+(There were 3 warnings)
