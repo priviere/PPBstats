@@ -2,12 +2,12 @@
 % Please edit documentation in R/parameter_groups_model_2.R
 \name{parameter_groups_model_2}
 \alias{parameter_groups_model_2}
-\title{Get matrix with variables in column and effect in row from \code{check_model_model_2}}
+\title{Get matrix with variables in column and effect in row from check_model_model_2}
 \usage{
 parameter_groups_model_2(list_out_check_model_model_2, parameter)
 }
 \arguments{
-\item{list_out_check_model_model_2}{A list whose elements are output from \code{check_model_model_2}}
+\item{list_out_check_model_model_2}{A list whose elements are output from \code{\link{check_model_model_2}}}
 
 \item{parameter}{parameter on which to get the matrix}
 }
@@ -21,9 +21,6 @@ The function returns a data frame with variables in column and effect of paramte
 Pierre Riviere
 }
 \seealso{
-\itemize{
- \item \code{\link{parameter_groups}},
- \item \code{\link{parameter_groups_GxE}},
-}
+\code{\link{parameter_groups}}
 }
 

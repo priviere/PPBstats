@@ -32,6 +32,9 @@ The comparisons is based on the probability of having a common distribution for 
 Pierre Riviere
 }
 \seealso{
-\code{\link{check_model}}, \code{\link{mean_comparisons}}
+\itemize{
+\item \code{\link{mean_comparisons_model_1}}
+\item \code{\link{mean_comparisons_model_2}}
+}
 }
 

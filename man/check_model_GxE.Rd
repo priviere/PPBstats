@@ -7,18 +7,21 @@
 check_model_GxE(out_GxE)
 }
 \arguments{
-\item{out_GxE}{outputs from GxE function}
+\item{out_GxE}{outputs from \code{\link{GxE}}}
 }
 \value{
-See check_model
+See \code{\link{check_model}}
 }
 \description{
 \code{check_model_GxE} compute test to assess if the GxE model went well
 }
 \details{
-See check_model
+See \code{\link{check_model}}
 }
 \seealso{
-\code{\link{GxE}}, \code{\link{check_model}}
+\itemize{
+\item \code{\link{GxE}},
+\item \code{\link{check_model}}
+}
 }
 

@@ -7,9 +7,9 @@
 get.at.least.X.groups(Mpvalue, MCMC, p.adj = "soft.bonf", precision = 5e-04)
 }
 \arguments{
-\item{Mpvalue}{A vector or a matrix with the probabilities for two parameters to be equal. It comes from the function \code{comp.parameters}}
+\item{Mpvalue}{A vector or a matrix with the probabilities for two parameters to be equal. It comes from the function \code{\link{comp.parameters}}}
 
-\item{MCMC}{MCMC outputs from \code{analysis.outputs}. It is a data frame.}
+\item{MCMC}{MCMC. It is a data frame.}
 
 \item{p.adj}{NULL for no adjustement of the type one error. "soft.bonf" for a soft bonferonni correction to take into account multiple comparisons (alpha / number of parameters).}
 
@@ -30,6 +30,9 @@ When there is no data, it returns NA. It may depend on the precision. For exempl
 Pierre Riviere
 }
 \seealso{
-\code{\link{check_model}}, \code{\link{comp.parameters}}, \code{\link{get.significant.groups}}
+\itemize{
+\item \code{\link{mean_comparisons_model_1}}
+\item \code{\link{mean_comparisons_model_2}}
+}
 }
 

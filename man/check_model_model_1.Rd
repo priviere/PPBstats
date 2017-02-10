@@ -7,18 +7,21 @@
 check_model_model_1(out_model_1)
 }
 \arguments{
-\item{out_model_1}{outputs from model_1 function}
+\item{out_model_1}{outputs from \code{\link{model_1}}}
 }
 \value{
-See check_model
+See \code{\link{check_model}}
 }
 \description{
 \code{check_model_model_1} compute test to assess if the model_1 model went well
 }
 \details{
-See check_model
+See \code{\link{check_model}}
 }
 \seealso{
-\code{\link{model_1}}, \code{\link{check_model}}
+\itemize{
+\item \code{\link{model_1}},
+\item \code{\link{check_model}}
+}
 }
 

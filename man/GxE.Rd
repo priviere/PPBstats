@@ -7,11 +7,11 @@
 GxE(data, variable, gxe_analysis = NULL)
 }
 \arguments{
-\item{data}{data with at least the following columns: year, location, germplasm, block, X, Y}
+\item{data}{The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+
+\item{variable}{variable to analyse}
 
 \item{gxe_analysis}{the analysis to carry out: "AMMI" or "GGE"}
-
-\item{vec_variables}{vectors of variables to analyse}
 }
 \value{
 The function returns a list with three elements:
@@ -41,5 +41,12 @@ scaling for interaction.matrix is not useful as the column mean is equal to 0 be
 }
 \author{
 Pierre Riviere
+}
+\seealso{
+\itemize{
+\item \code{\link{GxE_build_interaction_matrix}},
+\item \code{\link{check_model}},
+\item \code{\link{check_model_model_1}}
+}
 }
 

@@ -8,18 +8,21 @@ ggplot_mean_comparisons_GxE(mean_comparisons_GxE, ggplot.type = "barplot",
   nb_parameters_per_plot = 10)
 }
 \arguments{
-\item{out_mean_comparisons_GxE}{outputs from mean_comparisons_GxE function}
+\item{out_mean_comparisons_GxE}{outputs from \code{\link{mean_comparisons_GxE}}}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_mean_comparisons_GxE} returns ggplot objects from mean_comparisons_GxE
+\code{ggplot_mean_comparisons_GxE} returns ggplot objects from \code{\link{mean_comparisons_GxE}}
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{mean_comparisons_GxE}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item \code{\link{mean_comparisons_GxE}}
+}
 }
 

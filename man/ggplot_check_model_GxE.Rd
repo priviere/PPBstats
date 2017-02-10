@@ -7,18 +7,21 @@
 ggplot_check_model_GxE(out_check_model, nb_parameters_per_plot = 10)
 }
 \arguments{
-\item{out_check_model_GxE}{outputs from check_model_GxE function}
+\item{out_check_model_GxE}{outputs from \code{\link{check_model_GxE}} function}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_check_model_GxE} returns ggplot objects from check_model_GxE
+\code{ggplot_check_model_GxE} returns ggplot objects from \code{\link{check_model_GxE}}
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{check_model_GxE}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item \code{\link{check_model_GxE}}
+}
 }
 

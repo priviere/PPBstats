@@ -7,7 +7,7 @@
 parameter_groups_GxE(list_out_check_model_GxE, parameter)
 }
 \arguments{
-\item{list_out_check_model_GxE}{A list whose elements are output from \code{check_model_GxE}}
+\item{list_out_check_model_GxE}{A list whose elements are output from \code{\link{check_model_GxE}}}
 
 \item{parameter}{parameter on which to get the matrix}
 }
@@ -21,9 +21,6 @@ The function returns a data frame with variables in column and effect of paramte
 Pierre Riviere
 }
 \seealso{
-\itemize{
- \item \code{\link{parameter_groups}},
- \item \code{\link{parameter_groups_model_2}},
-}
+\code{\link{parameter_groups}}
 }
 

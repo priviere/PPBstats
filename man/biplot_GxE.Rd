@@ -2,12 +2,12 @@
 % Please edit documentation in R/biplot_GxE.R
 \name{biplot_GxE}
 \alias{biplot_GxE}
-\title{Compute ecovalence and format PCA results from GxE}
+\title{Compute ecovalence and format PCA results from \code{\link{check_model}} with \code{\link{GxE}}}
 \usage{
 biplot_GxE(out_check_model_GxE)
 }
 \arguments{
-\item{out_check_model_GxE}{Output from \code{GxE}}
+\item{out_check_model_GxE}{Output from \code{\link{check_model}} with \code{\link{GxE}}}
 }
 \value{
 The function returns a list with:
@@ -18,7 +18,7 @@ The function returns a list with:
 }
 }
 \description{
-\code{biplot_GxE} computes ecovalence and format PCA results from \code{GxE}
+\code{biplot_GxE} computes ecovalence and format PCA results from \code{\link{check_model}} with \code{\link{GxE}}
 }
 \details{
 The ecovalence is the interaction matrix squared.
@@ -27,6 +27,11 @@ The ecovalence is the interaction matrix squared.
 Pierre Riviere
 }
 \seealso{
-\code{\link{check_model}}, \code{\link{check_model_GxE}}, \code{\link{get.ggplot}}, \code{\link{ggplot_biplot_GxE}}
+\itemize{
+\item \code{\link{check_model}},
+\item \code{\link{check_model_GxE}},
+\item \code{\link{get_ggplot}},
+\item \code{\link{ggplot_biplot_GxE}}
+}
 }
 

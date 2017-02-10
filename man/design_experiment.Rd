@@ -9,7 +9,7 @@ design_experiment(expe.type, location = "location", year = "2016",
   return.format = "standard")
 }
 \arguments{
-\item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD".}
+\item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD". See details for more information.}
 
 \item{location}{Name of the location.}
 
@@ -25,7 +25,7 @@ design_experiment(expe.type, location = "location", year = "2016",
 
 \item{nb.cols}{Number of columns in the design. The number of rows is computed automaticaly.}
 
-\item{return.format}{"standard" ("location", "year", "germplasm", "block", "X", "Y") or "shinemas" for SHiNeMaS reproduction template file.}
+\item{return.format}{"standard" or "shinemas". See details for more information.}
 }
 \value{
 The function returns a list with
@@ -38,6 +38,12 @@ The function returns a list with
 \code{design_experiment} provides experimental design for several situations
 }
 \details{
+regarding return.format :
+\itemize{
+\item  "standard" return a data frame with the following columns : "location", "year", "germplasm", "block", "X" and "Y".
+\item "shinemas" for SHiNeMaS reproduction template file. It returns a data frame with the following columns :"project", "sown_year", "harvested_year", "id_seed_lot_sown", "intra_selection_name", "etiquette", "split", "quantity_sown", "quantity_harvested", "block", "X" and "Y".
+}
+
 Note that an efficient R package to design experiment is DiGGer, see \url{http://www.austatgen.org/software/} for mor details. Unfortunately, the lience of the package did not allow us to fork the code.
 
 In this function, the code is based on the following algorithms:

@@ -7,18 +7,21 @@
 ggplot_biplot_GxE(out_biplot_GxE)
 }
 \arguments{
-\item{out_biplot_GxE}{outputs from biplot_GxE function}
+\item{out_biplot_GxE}{outputs from \code{\link{biplot_GxE}} function}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_biplot_GxE} returns ggplot objects from biplot_GxE
+\code{ggplot_biplot_GxE} returns ggplot objects from \code{\link{biplot_GxE}}
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{biplot_GxE}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item \code{\link{biplot_GxE}}
+}
 }
 

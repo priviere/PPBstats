@@ -23,7 +23,7 @@ The function returns a data frame with real values and estimated values by cross
 \code{cross_validation_model_2} runs complete cross validation with model 2
 }
 \details{
-The convergence is not checked for each validation. If the parameters converge (cf \code{check_model}), then it is assumed that the parameters in the cross validation converge as well.
+The convergence is not checked for each validation. If the parameters converge (cf \code{\link{check_model}}), then it is assumed that the parameters in the cross validation converge as well.
 
 The model is run on data sets where germplasms are on at least three environments so the smallest data set where the cross validation is run has germplasms on at least two environments.
 
@@ -33,6 +33,10 @@ Parallelization is done with the function \code{parallel::mclapply}.
 Pierre Riviere
 }
 \seealso{
-\code{\link{model_2}}, \code{\link{check_model}}, \code{\link{check_model_model_2}}
+\itemize{
+\item \code{\link{model_2}},
+\item \code{\link{check_model}},
+\item \code{\link{check_model_model_2}}
+}
 }
 

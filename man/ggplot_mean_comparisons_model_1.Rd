@@ -9,18 +9,21 @@ ggplot_mean_comparisons_model_1(out_mean_comparisons_model_1,
   nb_parameters_per_plot = 10)
 }
 \arguments{
-\item{out_mean_comparisons_model_1}{outputs from mean_comparisons_model_1 function}
+\item{out_mean_comparisons_model_1}{outputs from \code{\link{mean_comparisons_model_1}}}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_mean_comparisons_model_1} returns ggplot objects from mean_comparisons_model_1
+\code{ggplot_mean_comparisons_model_1} returns ggplot objects from \code{\link{mean_comparisons_model_1}}
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{mean_comparisons_model_1}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item \code{\link{mean_comparisons_model_1}}
+}
 }
 

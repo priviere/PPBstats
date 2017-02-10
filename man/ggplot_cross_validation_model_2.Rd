@@ -7,18 +7,21 @@
 ggplot_cross_validation_model_2(out_cross_validation_model_2)
 }
 \arguments{
-\item{out_cross_validation_model_2}{outputs from cross_validation_model_2 function}
+\item{out_cross_validation_model_2}{outputs from \code{\link{cross_validation_model_2}}}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_cross_validation_model_2} returns ggplot objects from cross_validation_model_2
+\code{ggplot_cross_validation_model_2} returns ggplot objects from \code{\link{cross_validation_model_2}}
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{cross_validation_model_2}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item \code{\link{cross_validation_model_2}}
+}
 }
 

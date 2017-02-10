@@ -11,7 +11,7 @@ model_2(data, variable, nb_iterations = 1e+05, thin = 10,
   return.sigma_epsilon = TRUE, return.DIC = FALSE)
 }
 \arguments{
-\item{data}{The data frame on which the model will be run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+\item{data}{The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
 
 \item{variable}{The variable on which runs the model}
 
@@ -63,7 +63,7 @@ First, the additive model is done. This model gives intitial values of some para
 
 The model is run on data set where germplasms are on at least two environments
 
-More informations can be found in the vignette (type vignette("PPBstats")).
+More informations can be found in the vignette.
 
 For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 }
@@ -74,6 +74,11 @@ Pierre Riviere for R code and Olivier David for JAGS code
 P. Riviere, J.C. Dawson, I. Goldringer, and O. David. Hierarchical multiplicative modeling of genotype x environment interaction for flexible experiments in decentralized participatory plant breeding. In prep, 2015.
 }
 \seealso{
-\code{\link{check_model}}, \code{\link{cross_validation_model_2}}, \code{\link{predict_the_past_model_2}}
+\itemize{
+\item \code{\link{check_model}}
+\item \code{\link{check_model_model_2}}
+\item \code{\link{cross_validation_model_2}},
+\item \code{\link{predict_the_past_model_2}}
+}
 }
 
