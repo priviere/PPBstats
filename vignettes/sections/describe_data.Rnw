@@ -4,8 +4,8 @@
 When the data are collected, a first step is to describe it with \texttt{describe\_data}.
 
 <<message=TRUE,cache=FALSE>>=
-describe_data_GxE = describe_data(data_GxE, vec_variables = c("y1"))
-describe_data_model_2 = describe_data(data_model_2, vec_variables = c("y1"))
+describe_data_GxE = describe_data(data_GxE, vec_variables = c("y1"), nb_parameters_per_plot = 5)
+describe_data_model_2 = describe_data(data_model_2, vec_variables = c("y1"), nb_parameters_per_plot = 5)
 @
 
 The function returns a list with, 
@@ -29,7 +29,7 @@ The function returns a list with,
     A score of 1 is for a given germplasm in a given environment.
     A score of 2 is for a given germplasm replicated twice in a given environement.
     
-    \item A list with histogram. Note that for each element of the following list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph
+    \item A list with histogram. Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph
     \begin{itemize}
       \item germplasm
       <<message=TRUE,cache=FALSE>>=
@@ -41,7 +41,7 @@ The function returns a list with,
       \item year
     \end{itemize}
     
-    \item A list with boxplot, containg a list with plot and outliers. Note that for each element of the following list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph
+    \item A list with boxplot, containg a list with plot and outliers. Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph
     \begin{itemize}
       \item germplasm
       <<message=TRUE,cache=FALSE>>=
@@ -55,7 +55,7 @@ The function returns a list with,
       \item year
     \end{itemize}
     
-    \item interaction. Note that for each element of the following list, there are as many graph as needed with \code{nb\_parameters\_per\_plot} parameters per graph
+    \item interaction. Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph
     <<message=TRUE,cache=FALSE>>=
     p_int = describe_data_GxE$each_variable$y1$interaction
     names(p_int)
