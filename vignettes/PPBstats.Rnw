@@ -31,16 +31,29 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.13}
+\newcommand{\versionnumber}{0.14}
 \newcommand{\PPB}{Participatory Plant Breeding}
 
+
+% warning
+\newcommand{\warning}[1]{
+\setlength{\fboxrule}{1.5mm}\noindent
+\begin{minipage}[t]{.1\textwidth}
+\parbox[c]{\textwidth}{\includegraphics[width=\textwidth]{warning}}
+\end{minipage}
+\fcolorbox{red}{white}{
+\begin{minipage}[t]{.85\textwidth}
+\textcolor{\colwarning}{\textbf{{#1}}}
+\end{minipage}
+}~\\
+}
 \begin{document}
 
 <<setup, include=FALSE, cache=FALSE>>=
 library(xtable)
 library(knitr)
 ## set global chunk options
-opts_chunk$set(fig.path='figures/PPBstats_', cache.path='cache/PPBstats-', fig.align='center', fig.show='hold', par=TRUE)
+opts_chunk$set(fig.path='figures/PPBstats_', cache.path='cache/PPBstats-', fig.align='center', fig.show='hold', fig.pos='H', par=TRUE)
 ## I use = but I can replace it with <-; set code/output width to be 68
 options(replace.assign=TRUE, width=68)
 ## tune details of base graphics (http://yihui.name/knitr/hooks)
@@ -62,7 +75,7 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 \section{Sow, note, harvest, measure ... }
 \label{section_sow}
 
-!!! ADD PICTURES !!!
+!!! TO DO !!!
 
 \newpage
 
@@ -88,8 +101,12 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 
 \section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
 
-<<child='sections/ammi_gge.Rnw'>>=
+<<child='sections/ammi.Rnw'>>=
 @
+
+<<child='sections/gge.Rnw'>>=
+@
+
 \newpage
 
 <<child='sections/model_2.Rnw'>>=
@@ -118,6 +135,9 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 @
 \newpage
 
+<<child='sections/contribute.Rnw'>>=
+@
+\newpage
 
 \section*{To cite \pack} \addcontentsline{toc}{section}{To cite \pack}
 To cite this package and or this vignette:

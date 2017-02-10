@@ -40,6 +40,9 @@ Huge refactoring of the code in several functions for each steps of the analysis
 * delete functions
   - ggplot_LSDgroup
 
+* vignette
+  - update regarding changes in R code
+
 
 PPBstats 0.13 ---------------------------------------
 -----------------------------------------------------
