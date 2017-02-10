@@ -7,7 +7,7 @@
 parameter_groups(list_out_check_model, parameter)
 }
 \arguments{
-\item{list_out_check_model}{A list whose elements are output from \code{check_model}}
+\item{list_out_check_model}{A list whose elements are output from \code{\link{check_model}}}
 
 \item{parameter}{The parameter on which to get the groups}
 }

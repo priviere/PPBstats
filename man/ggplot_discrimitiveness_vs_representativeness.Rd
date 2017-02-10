@@ -10,15 +10,18 @@ ggplot_discrimitiveness_vs_representativeness(res.pca)
 \item{res.pca}{PCA object on interaction matrix}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
 \code{ggplot_discrimitiveness_vs_representativeness} returns ggplot objects from PCA on interaction matrix
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{biplot_GxE}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item \code{\link{biplot_GxE}}
+}
 }
 

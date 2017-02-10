@@ -10,18 +10,21 @@
   nb_parameters_per_plot = 10)
 }
 \arguments{
-\item{out_mean_comparisons_predict_the_past_model_2}{outputs from mean_comparisons_predict_the_past_model_2 function}
+\item{out_mean_comparisons_predict_the_past_model_2}{outputs from \code{\link{mean_comparisons_predict_the_past_model_2}}}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_mean_comparisons_predict_the_past_model_2} returns ggplot objects from mean_comparisons_predict_the_past_model_2
+\code{ggplot_mean_comparisons_predict_the_past_model_2} returns ggplot objects from \code{\link{mean_comparisons_predict_the_past_model_2}}
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{mean_comparisons_predict_the_past_model_2}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item\code{\link{mean_comparisons_predict_the_past_model_2}}
+}
 }
 

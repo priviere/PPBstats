@@ -26,14 +26,14 @@ mean_comparisons_model_2(out_check_model_2, parameter, alpha = 0.05,
 \item{p.adj}{}
 }
 \value{
-See mean_comparisons
+See \code{\link{mean_comparisons}}
 }
 \description{
-\code{mean_comparisons_model_2} performs mean comparisons from object coming from check_model model_2
-See \code{mean_comparisons} for more information.
+\code{mean_comparisons_model_2} performs mean comparisons from object coming from \code{\link{check_model model_2}}
+See \code{\link{mean_comparisons}} for more information.
 }
 \details{
-See mean_comparisons
+See \code{\link{mean_comparisons}}
 }
 \seealso{
 \itemize{

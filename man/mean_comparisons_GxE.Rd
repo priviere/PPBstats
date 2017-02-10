@@ -14,14 +14,14 @@ mean_comparisons_GxE(out_check_model_GxE, alpha = 0.05, p.adj = "none")
 \item{p.adj}{}
 }
 \value{
-See mean_comparisons
+See \code{\link{mean_comparisons}}
 }
 \description{
-\code{mean_comparisons_GxE} performs mean comparisons from object coming from check_model GxE
-See \code{mean_comparisons} for more information.
+\code{mean_comparisons_GxE} performs mean comparisons from object coming from \code{\link{check_model_GxE}}
+See \code{\link{mean_comparisons}} for more information.
 }
 \details{
-See mean_comparisons
+See \code{\link{mean_comparisons}}
 }
 \seealso{
 \itemize{

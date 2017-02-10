@@ -7,18 +7,21 @@
 ggplot_check_model_model_1(out_check_model_1, nb_parameters_per_plot = 10)
 }
 \arguments{
-\item{out_check_model_model_1}{outputs from check_model_model_1 function}
+\item{out_check_model_model_1}{outputs from \code{\link{check_model_model_1}} function}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_check_model_model_1} returns ggplot objects from check_model_model_1
+\code{ggplot_check_model_model_1} returns ggplot objects from \code{\link{check_model_model_1}}
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{check_model_model_1}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item \code{\link{check_model_model_1}}
+}
 }
 

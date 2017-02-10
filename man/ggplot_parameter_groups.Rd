@@ -7,18 +7,21 @@
 ggplot_parameter_groups(out_parameter_groups)
 }
 \arguments{
-\item{out_parameter_groups}{outputs from parameter_groups function}
+\item{out_parameter_groups}{outputs from \code{\link{parameter_groups}} function}
 }
 \value{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_parameter_groups} returns ggplot objects from parameter_groups
+\code{ggplot_parameter_groups} returns ggplot objects from \code{\link{parameter_groups}}
 }
 \details{
-See get_ggplot
+See \code{\link{get_ggplot}}
 }
 \seealso{
-\code{\link{get_ggplot}}, \code{\link{parameter_groups}}
+\itemize{
+\item \code{\link{get_ggplot}},
+\item \code{\link{parameter_groups}}
+}
 }
 

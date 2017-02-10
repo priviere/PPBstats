@@ -9,19 +9,19 @@ mean_comparisons(out_check_model, parameter, alpha = 0.05, type = 1,
   p.adj = "soft.bonf")
 }
 \arguments{
-\item{out_check_model}{outputs from \code{check_model} or \code{predict_the_past_model_2}}
+\item{out_check_model}{outputs from \code{\link{check_model}} or \code{\link{predict_the_past_model_2}}}
 
-\item{parameter}{parameter on which the mean comparison is done. Used only for \code{check_model} of model_1 and model_2.
+\item{parameter}{parameter on which the mean comparison is done. Used only for \code{\link{check_model}} from \code{\link{model_1}} and \code{\link{model_2}}.
 The possible values are:
 \itemize{
- \item for \code{check_model} of model_1 : "mu", "beta"
- \item for \code{check_model} of model_2 : 'alpha", "beta", "theta"
+ \item for \code{\link{check_model}} from \code{\link{model_1}} : "mu", "beta"
+ \item for \code{\link{check_model}} from \code{\link{model_2}} : 'alpha", "beta", "theta"
 }}
 
 \item{alpha}{level of type one error. 0.05 (5\%) by default}
 
 \item{type}{type of comparisons. 1 for comparison two by two. 2 for comparison to a specific threshold.
-Only for \code{check_model} of model_1 and model_2 and \code{predict_the_past_model_2}}
+Only for \code{\link{check_model}} from \code{\link{model_1}}, from \code{\link{model_2}} and from \code{\link{predict_the_past_model_2}}}
 
 \item{get.at.least.X.groups}{For type = 1. If there are only one group with alpha, the minimum number of groups wanted with a higher type one error (i.e. lower confidence). If NULL, nothing is done.}
 
@@ -35,7 +35,7 @@ For \code{check_model} of GxE, p.adj can be NULL, "holm", "hochberg", "bonferron
 }
 \value{
 \itemize{
- \item From check_model and GxE, list of four elements :
+ \item From \code{\link{check_model}} from \code{\link{GxE}}, list of four elements :
   \itemize{
    \item info : a list with variable and gxe_analysis
    \item data_ggplot_LSDbarplot_germplasm
@@ -43,7 +43,7 @@ For \code{check_model} of GxE, p.adj can be NULL, "holm", "hochberg", "bonferron
    \item data_ggplot_LSDbarplot_year
   }
 
- \item From check_model and model_1, list of three elements :
+ \item From \code{\link{check_model}} from \code{\link{model_1}}, list of three elements :
   \itemize{
    \item data_mean_comparisons a list with as many elements as environment.
    Each element of the list is composed of two elements:
@@ -59,13 +59,13 @@ For \code{check_model} of GxE, p.adj can be NULL, "holm", "hochberg", "bonferron
     In each list it is mean.comparisons : a dataframe with the following columns : entry, germplasm, environment, block, X, Y, ID, median, parameter.
   }
 
- \item From check_model and model_2 : A list of two elements:
+ \item From \code{\link{check_model}} from \code{\link{model_2}} : A list of two elements:
    \itemize{
     \item mean.comparisons: a dataframe with the following columns : parameter, median, groups, number of groups, alpha (type one error), alpha.correction (correction used), entry, environment, location and year.
     \item Mpvalue : a square matrix with pvalue computed for each pair of parameter.
    }
 
- \item From predict_the_past_model_2 a list of one element : data_mean_comparisons, composed of a list of one element for the given environment choose, being a list of two elements:
+ \item From \code{\link{predict_the_past_model_2}} a list of one element : data_mean_comparisons, composed of a list of one element for the given environment choose, being a list of two elements:
    \itemize{
     \item mean.comparisons: a dataframe with the following columns : parameter, median, groups, number of groups, alpha (type one error), alpha.correction (correction used), entry, environment, location and year.
     \item Mpvalue : a square matrix with pvalue computed for each pair of parameter.
@@ -73,13 +73,13 @@ For \code{check_model} of GxE, p.adj can be NULL, "holm", "hochberg", "bonferron
 }
 }
 \description{
-\code{mean_comparisons} performs mean comparisons from object coming from check_model or predict_the_past_model_2
+\code{mean_comparisons} performs mean comparisons from object coming from \code{\link{check_model}} or \code{\link{predict_the_past_model_2}}
 }
 \details{
-parameter is set to "mu" by default for code{check_model} of predict_the_past_model_2
+parameter is set to "mu" by default for \code{\link{check_model}} from \code{\link{predict_the_past_model_2}}
 
 p.adj = "soft.bonf" for a soft bonferonni correction to take into account multiple comparisons (alpha / nb of parameters)..
-It is the default for model_1, model_2 and predict_the_past_model_2
+It is the default for \code{\link{check_model}} from \code{\link{model_1}}, from \code{\link{model_2}} and from \code{\link{predict_the_past_model_2}}
 
 The comparisons is based on the probability of having a common distribution for each pair of parameter.
 
