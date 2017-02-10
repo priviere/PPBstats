@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_mean_comparisons_model_1.R
 \name{ggplot_mean_comparisons_model_1}
 \alias{ggplot_mean_comparisons_model_1}
-\title{Get ggplot objects from mean_comparisons_model_1}
+\title{Get ggplot from mean_comparisons_model_1}
 \usage{
 ggplot_mean_comparisons_model_1(out_mean_comparisons_model_1,
   data_version = NULL, ggplot.type = "interaction",
@@ -15,7 +15,7 @@ ggplot_mean_comparisons_model_1(out_mean_comparisons_model_1,
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_mean_comparisons_model_1} returns ggplot objects from \code{\link{mean_comparisons_model_1}}
+\code{ggplot_mean_comparisons_model_1} returns ggplot from \code{\link{mean_comparisons_model_1}}
 }
 \details{
 See \code{\link{get_ggplot}}

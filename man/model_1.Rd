@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_1.R
 \name{model_1}
 \alias{model_1}
-\title{Run model 1 to get mean comparisons on each environment of the network.}
+\title{Run model 1}
 \usage{
 model_1(data, variable, nb_iterations = 1e+05, thin = 10,
   return.mu = TRUE, return.beta = TRUE, return.sigma = TRUE,

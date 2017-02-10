@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict_the_past_model_2.R
 \name{predict_the_past_model_2}
 \alias{predict_the_past_model_2}
-\title{Estimate value of a germplasm in an environment based on model 2.}
+\title{Estimate value of a germplasm in an environment based on model 2}
 \usage{
 predict_the_past_model_2(out_check_model_model_2, env = NULL)
 }

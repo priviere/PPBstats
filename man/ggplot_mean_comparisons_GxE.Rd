@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_mean_comparisons_GxE.R
 \name{ggplot_mean_comparisons_GxE}
 \alias{ggplot_mean_comparisons_GxE}
-\title{Get ggplot objects from mean_comparisons_GxE}
+\title{Get ggplot from mean_comparisons_GxE}
 \usage{
 ggplot_mean_comparisons_GxE(mean_comparisons_GxE, ggplot.type = "barplot",
   nb_parameters_per_plot = 10)
@@ -14,7 +14,7 @@ ggplot_mean_comparisons_GxE(mean_comparisons_GxE, ggplot.type = "barplot",
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_mean_comparisons_GxE} returns ggplot objects from \code{\link{mean_comparisons_GxE}}
+\code{ggplot_mean_comparisons_GxE} returns ggplot from \code{\link{mean_comparisons_GxE}}
 }
 \details{
 See \code{\link{get_ggplot}}

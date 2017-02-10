@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_mean_vs_stability.R
 \name{ggplot_mean_vs_stability}
 \alias{ggplot_mean_vs_stability}
-\title{Get "mean vs stability" ggplot objects from PCA on interaction matrix}
+\title{Get "mean vs stability" ggplot from PCA on interaction matrix}
 \usage{
 ggplot_mean_vs_stability(res.pca)
 }
@@ -13,7 +13,7 @@ ggplot_mean_vs_stability(res.pca)
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_mean_vs_stability} returns ggplot objects from PCA on interaction matrix
+\code{ggplot_mean_vs_stability} returns ggplot from PCA on interaction matrix
 }
 \details{
 See \code{\link{get_ggplot}}

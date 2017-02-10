@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_2.R
 \name{model_2}
 \alias{model_2}
-\title{Run model 2 to get main germplasm, environment and sensitivity effects over the network.}
+\title{Run model 2}
 \usage{
 model_2(data, variable, nb_iterations = 1e+05, thin = 10,
   return.alpha = TRUE, return.sigma_alpha = TRUE, return.beta = TRUE,

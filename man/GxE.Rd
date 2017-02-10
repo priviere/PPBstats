@@ -2,7 +2,7 @@
 % Please edit documentation in R/GxE.R
 \name{GxE}
 \alias{GxE}
-\title{Run AMMI or GGE model on a data set}
+\title{Run AMMI or GGE model}
 \usage{
 GxE(data, variable, gxe_analysis = NULL)
 }

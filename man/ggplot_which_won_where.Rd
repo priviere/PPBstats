@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_which_won_where.R
 \name{ggplot_which_won_where}
 \alias{ggplot_which_won_where}
-\title{Get "which won where" ggplot objects from PCA on interaction matrix}
+\title{Get "which won where" ggplot from PCA on interaction matrix}
 \usage{
 ggplot_which_won_where(res.pca)
 }
@@ -13,7 +13,7 @@ ggplot_which_won_where(res.pca)
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_which_won_where} returns ggplot objects from PCA on interaction matrix
+\code{ggplot_which_won_where} returns ggplot from PCA on interaction matrix
 }
 \details{
 See \code{\link{get_ggplot}}

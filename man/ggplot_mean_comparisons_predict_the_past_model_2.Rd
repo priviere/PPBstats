@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_mean_comparisons_predict_the_past_model_2.R
 \name{ggplot_mean_comparisons_predict_the_past_model_2}
 \alias{ggplot_mean_comparisons_predict_the_past_model_2}
-\title{Get ggplot objects from mean_comparisons_predict_the_past_model_2}
+\title{Get ggplot from mean_comparisons_predict_the_past_model_2}
 \usage{
 
   ggplot_mean_comparisons_predict_the_past_model_2(out_mean_comparisons_predict_the_past_model_2,
@@ -16,7 +16,7 @@
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_mean_comparisons_predict_the_past_model_2} returns ggplot objects from \code{\link{mean_comparisons_predict_the_past_model_2}}
+\code{ggplot_mean_comparisons_predict_the_past_model_2} returns ggplot from \code{\link{mean_comparisons_predict_the_past_model_2}}
 }
 \details{
 See \code{\link{get_ggplot}}

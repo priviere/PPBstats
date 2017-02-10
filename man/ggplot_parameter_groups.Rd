@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_parameter_groups.R
 \name{ggplot_parameter_groups}
 \alias{ggplot_parameter_groups}
-\title{Get ggplot objects from parameter_groups}
+\title{Get ggplot from parameter_groups}
 \usage{
 ggplot_parameter_groups(out_parameter_groups)
 }
@@ -13,7 +13,7 @@ ggplot_parameter_groups(out_parameter_groups)
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_parameter_groups} returns ggplot objects from \code{\link{parameter_groups}}
+\code{ggplot_parameter_groups} returns ggplot from \code{\link{parameter_groups}}
 }
 \details{
 See \code{\link{get_ggplot}}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mean_comparisons_predict_the_past_model_2.R
 \name{mean_comparisons_predict_the_past_model_2}
 \alias{mean_comparisons_predict_the_past_model_2}
-\title{Get mean comparisons from object coming from predict_the_past_model_2}
+\title{Get mean comparisons from predict_the_past_model_2}
 \usage{
 mean_comparisons_predict_the_past_model_2(out_predict_the_past_model_2,
   alpha = 0.05, type = 1, get.at.least.X.groups = 2, precision = 5e-04,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mean_comparisons_GxE.R
 \name{mean_comparisons_GxE}
 \alias{mean_comparisons_GxE}
-\title{Get mean comparisons from object coming from check_model GxE}
+\title{Get mean comparisons from check_model_GxE}
 \usage{
 mean_comparisons_GxE(out_check_model_GxE, alpha = 0.05, p.adj = "none")
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_cross_validation_model_2.R
 \name{ggplot_cross_validation_model_2}
 \alias{ggplot_cross_validation_model_2}
-\title{Get ggplot objects from cross_validation_model_2}
+\title{Get ggplot from cross_validation_model_2}
 \usage{
 ggplot_cross_validation_model_2(out_cross_validation_model_2)
 }
@@ -13,7 +13,7 @@ ggplot_cross_validation_model_2(out_cross_validation_model_2)
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_cross_validation_model_2} returns ggplot objects from \code{\link{cross_validation_model_2}}
+\code{ggplot_cross_validation_model_2} returns ggplot from \code{\link{cross_validation_model_2}}
 }
 \details{
 See \code{\link{get_ggplot}}

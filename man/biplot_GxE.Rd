@@ -2,7 +2,7 @@
 % Please edit documentation in R/biplot_GxE.R
 \name{biplot_GxE}
 \alias{biplot_GxE}
-\title{Compute ecovalence and format PCA results from \code{\link{check_model}} with \code{\link{GxE}}}
+\title{Compute ecovalence and format PCA results}
 \usage{
 biplot_GxE(out_check_model_GxE)
 }
