@@ -1,7 +1,7 @@
-#' Get "which won where" ggplot objects from PCA on interaction matrix
+#' Get "which won where" ggplot from PCA on interaction matrix
 #'
 #' @description
-#' \code{ggplot_which_won_where} returns ggplot objects from PCA on interaction matrix
+#' \code{ggplot_which_won_where} returns ggplot from PCA on interaction matrix
 #' 
 #' @param res.pca PCA object on interaction matrix
 #' 

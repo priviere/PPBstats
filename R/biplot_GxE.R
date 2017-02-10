@@ -1,4 +1,4 @@
-#' Compute ecovalence and format PCA results from \code{\link{check_model}} with \code{\link{GxE}}
+#' Compute ecovalence and format PCA results
 #'
 #' @description
 #' \code{biplot_GxE} computes ecovalence and format PCA results from \code{\link{check_model}} with \code{\link{GxE}}

@@ -1,4 +1,4 @@
-#' Get mean comparisons from object coming from check_model or predict_the_past_model_2
+#' Get mean comparisons
 #'
 #' @description
 #' \code{mean_comparisons} performs mean comparisons from object coming from \code{\link{check_model}} or \code{\link{predict_the_past_model_2}}

@@ -1,7 +1,7 @@
-#' Get ggplot objects from cross_validation_model_2
+#' Get ggplot from cross_validation_model_2
 #'
 #' @description
-#' \code{ggplot_cross_validation_model_2} returns ggplot objects from \code{\link{cross_validation_model_2}}
+#' \code{ggplot_cross_validation_model_2} returns ggplot from \code{\link{cross_validation_model_2}}
 #' 
 #' @param out_cross_validation_model_2 outputs from \code{\link{cross_validation_model_2}}
 #' 

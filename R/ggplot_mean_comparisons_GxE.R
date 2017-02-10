@@ -1,7 +1,7 @@
-#' Get ggplot objects from mean_comparisons_GxE
+#' Get ggplot from mean_comparisons_GxE
 #'
 #' @description
-#' \code{ggplot_mean_comparisons_GxE} returns ggplot objects from \code{\link{mean_comparisons_GxE}}
+#' \code{ggplot_mean_comparisons_GxE} returns ggplot from \code{\link{mean_comparisons_GxE}}
 #' 
 #' @param out_mean_comparisons_GxE outputs from \code{\link{mean_comparisons_GxE}}
 #' 

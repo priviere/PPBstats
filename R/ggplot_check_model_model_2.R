@@ -1,7 +1,7 @@
-#' Get ggplot objects from check_model_model_2
+#' Get ggplot from check_model_model_2
 #'
 #' @description
-#' \code{ggplot_check_model_model_2} returns ggplot objects from \code{\link{check_model_model_2}}
+#' \code{ggplot_check_model_model_2} returns ggplot from \code{\link{check_model_model_2}}
 #' 
 #' @param out_check_model_model_2 outputs from \code{\link{check_model_model_2 function}}
 #' 

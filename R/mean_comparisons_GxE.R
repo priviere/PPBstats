@@ -1,4 +1,4 @@
-#' Get mean comparisons from object coming from check_model GxE
+#' Get mean comparisons from check_model_GxE
 #'
 #' @description
 #' \code{mean_comparisons_GxE} performs mean comparisons from object coming from \code{\link{check_model_GxE}}

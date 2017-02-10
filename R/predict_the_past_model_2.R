@@ -1,4 +1,4 @@
-#' Estimate value of a germplasm in an environment based on model 2.
+#' Estimate value of a germplasm in an environment based on model 2
 #'
 #' @description
 #' \code{predict_the_past_model_2} estimates value of a germplasm in an environment based on model 2.
