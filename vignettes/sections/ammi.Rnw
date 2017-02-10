@@ -335,7 +335,7 @@ p_out_biplot_ammi$ecovalence
 p_out_biplot_ammi$biplot$simple_biplot
 @
 
-Regarding the other elements of the list, it returns \texttt{NULL} as these visualisation is only done for \texttt{gxe__analysis = GGE}.
+Regarding the other elements of the list, it returns \texttt{NULL} as these visualisation is only done for \texttt{gxe\_analysis = "GGE"}.
 
 <<message=TRUE,cache=FALSE>>=
 p_out_biplot_ammi$biplot$which_won_where
