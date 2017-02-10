@@ -1,15 +1,19 @@
 #' Get ggplot objects from cross_validation_model_2
 #'
 #' @description
-#' \code{ggplot_cross_validation_model_2} returns ggplot objects from cross_validation_model_2
+#' \code{ggplot_cross_validation_model_2} returns ggplot objects from \code{\link{cross_validation_model_2}}
 #' 
-#' @param out_cross_validation_model_2 outputs from cross_validation_model_2 function
+#' @param out_cross_validation_model_2 outputs from \code{\link{cross_validation_model_2}}
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{cross_validation_model_2}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}}, 
+#' \item \code{\link{cross_validation_model_2}}
+#' }
 #' 
 ggplot_cross_validation_model_2 = function(
   out_cross_validation_model_2

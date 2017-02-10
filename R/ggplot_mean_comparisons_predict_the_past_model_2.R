@@ -1,15 +1,19 @@
 #' Get ggplot objects from mean_comparisons_predict_the_past_model_2
 #'
 #' @description
-#' \code{ggplot_mean_comparisons_predict_the_past_model_2} returns ggplot objects from mean_comparisons_predict_the_past_model_2
+#' \code{ggplot_mean_comparisons_predict_the_past_model_2} returns ggplot objects from \code{\link{mean_comparisons_predict_the_past_model_2}}
 #' 
-#' @param out_mean_comparisons_predict_the_past_model_2 outputs from mean_comparisons_predict_the_past_model_2 function
+#' @param out_mean_comparisons_predict_the_past_model_2 outputs from \code{\link{mean_comparisons_predict_the_past_model_2}}
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{mean_comparisons_predict_the_past_model_2}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}},
+#' \item\code{\link{mean_comparisons_predict_the_past_model_2}}
+#' }
 #'
 ggplot_mean_comparisons_predict_the_past_model_2 = function(
   out_mean_comparisons_predict_the_past_model_2,

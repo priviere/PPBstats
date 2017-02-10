@@ -4,7 +4,7 @@
 #' @description
 #' \code{model_2} runs model 2 known as the Finlay Wilkinson Hierarchical model to get main germplasm, environment and sensitivity effects over the network
 #' 
-#' @param data The data frame on which the model will be run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
+#' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
 #' @param variable The variable on which runs the model
 #' 
@@ -38,7 +38,7 @@
 #' 
 #' The model is run on data set where germplasms are on at least two environments
 #' 
-#' More informations can be found in the vignette (type vignette("PPBstats")).
+#' More informations can be found in the vignette.
 #' 
 #' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 #' 
@@ -58,7 +58,13 @@
 #' @references
 #' P. Riviere, J.C. Dawson, I. Goldringer, and O. David. Hierarchical multiplicative modeling of genotype x environment interaction for flexible experiments in decentralized participatory plant breeding. In prep, 2015.
 #' 
-#' @seealso \code{\link{check_model}}, \code{\link{cross_validation_model_2}}, \code{\link{predict_the_past_model_2}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{check_model}}
+#' \item \code{\link{check_model_model_2}}
+#' \item \code{\link{cross_validation_model_2}}, 
+#' \item \code{\link{predict_the_past_model_2}}
+#' }
 #' 
 model_2 = function(
   data,

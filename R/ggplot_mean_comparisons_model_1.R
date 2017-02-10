@@ -1,15 +1,20 @@
 #' Get ggplot objects from mean_comparisons_model_1
 #'
 #' @description
-#' \code{ggplot_mean_comparisons_model_1} returns ggplot objects from mean_comparisons_model_1
+#' \code{ggplot_mean_comparisons_model_1} returns ggplot objects from \code{\link{mean_comparisons_model_1}}
 #' 
-#' @param out_mean_comparisons_model_1 outputs from mean_comparisons_model_1 function
+#' @param out_mean_comparisons_model_1 outputs from \code{\link{mean_comparisons_model_1}}
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{mean_comparisons_model_1}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}}, 
+#' \item \code{\link{mean_comparisons_model_1}}
+#' }
+#' 
 #'
 ggplot_mean_comparisons_model_1 = function(
   out_mean_comparisons_model_1,

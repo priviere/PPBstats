@@ -1,16 +1,20 @@
 #' Get ggplot objects from check_model_model_1
 #'
 #' @description
-#' \code{ggplot_check_model_model_1} returns ggplot objects from check_model_model_1
+#' \code{ggplot_check_model_model_1} returns ggplot objects from \code{\link{check_model_model_1}}
 #' 
-#' @param out_check_model_model_1 outputs from check_model_model_1 function
+#' @param out_check_model_model_1 outputs from \code{\link{check_model_model_1}} function
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{check_model_model_1}}
-#'
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}}, 
+#' \item \code{\link{check_model_model_1}}
+#' }
+#' 
 ggplot_check_model_model_1 = function(
   out_check_model_1,
   nb_parameters_per_plot = 10

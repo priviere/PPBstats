@@ -3,13 +3,17 @@
 #' @description
 #' \code{check_model_model_2} compute test to assess if the model_2 model went well
 #' 
-#' @param out_model_2 outputs from model_2 function
+#' @param out_model_2 outputs from \code{\link{model_2}}
 #' 
-#' @details See check_model
+#' @details See \code{\link{check_model}}
 #' 
-#' @return See check_model
+#' @return See \code{\link{check_model}}
 #' 
-#' @seealso \code{\link{model_2}}, \code{\link{check_model}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{model_2}}, 
+#' \item \code{\link{check_model}}
+#' }
 #' 
 check_model_model_2 = function(
   out_model_2

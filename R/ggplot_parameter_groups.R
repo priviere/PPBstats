@@ -1,15 +1,19 @@
 #' Get ggplot objects from parameter_groups
 #'
 #' @description
-#' \code{ggplot_parameter_groups} returns ggplot objects from parameter_groups
+#' \code{ggplot_parameter_groups} returns ggplot objects from \code{\link{parameter_groups}}
 #' 
-#' @param out_parameter_groups outputs from parameter_groups function
+#' @param out_parameter_groups outputs from \code{\link{parameter_groups}} function
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{parameter_groups}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}}, 
+#' \item \code{\link{parameter_groups}}
+#' }
 #' 
 ggplot_parameter_groups = function(out_parameter_groups){
 

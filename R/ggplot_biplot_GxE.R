@@ -1,15 +1,20 @@
 #' Get ggplot objects from biplot_GxE
 #'
 #' @description
-#' \code{ggplot_biplot_GxE} returns ggplot objects from biplot_GxE
+#' \code{ggplot_biplot_GxE} returns ggplot objects from \code{\link{biplot_GxE}}
 #' 
-#' @param out_biplot_GxE outputs from biplot_GxE function
+#' @param out_biplot_GxE outputs from \code{\link{biplot_GxE}} function
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{biplot_GxE}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}}, 
+#' \item \code{\link{biplot_GxE}}
+#' }
+#' 
 #' 
 ggplot_biplot_GxE = function(out_biplot_GxE){
   
