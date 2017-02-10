@@ -3,13 +3,17 @@
 #' @description
 #' \code{check_model_GxE} compute test to assess if the GxE model went well
 #' 
-#' @param out_GxE outputs from GxE function
+#' @param out_GxE outputs from \code{\link{GxE}}
 #' 
-#' @details See check_model
+#' @details See \code{\link{check_model}}
 #' 
-#' @return See check_model
+#' @return See \code{\link{check_model}}
 #' 
-#' @seealso \code{\link{GxE}}, \code{\link{check_model}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{GxE}}, 
+#' \item \code{\link{check_model}}
+#' }
 #' 
 check_model_GxE = function(
   out_GxE

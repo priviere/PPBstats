@@ -4,12 +4,11 @@
 #' \code{check_model} compute test to assess if model went well. 
 #' It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #' 
-#' @param out_model outputs from GxE, model_1, model_2
+#' @param out_model outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}
 #' 
 #' @details
-#' The function calls one function: check_model_GxE, check_model_1, check_model_2
 #' 
-#' For model_1 and model_2, the test used for convergence is the Gelman-Rubin test.
+#' For \code{\link{model_1}} and \code{\link{model_2}}, the test used for convergence is the Gelman-Rubin test.
 #' It may take some time to run.
 #' More details with ?\code{gelman.diag} from the \code{coda} package.
 #' Note that for \code{gelman.diag}, the argument \code{multivariate = FALSE} is used.
@@ -19,13 +18,13 @@
 #' This object can be used for further analysis. 
 #' There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models). 
 #' The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done). 
-#' For model 1, all environments where at least one parameter do not converge are deleted.
+#' For \code{\link{model_1}}, all environments where at least one parameter do not converge are not taken into account in the MCMC outputs.
 #' 
 #' The outputs of the function is used in 
 #' \itemize{
-#'  \item mean_comparisons for GxE, model_1 and model_2
-#'  \item parameter_groups for GxE and model_2
-#'  \item predict_the_past_model_2 for model_2
+#'  \item \code{\link{mean_comparisons}} for \code{\link{GxE}}, \code{\link{model_1}} and \code{\link{model_2}}
+#'  \item \code{\link{parameter_groups}} for \code{\link{GxE}} and \code{\link{model_2}}
+#'  \item \code{\link{predict_the_past_model_2}} for \code{\link{model_2}}
 #' }
 #' 
 #' 
@@ -53,7 +52,7 @@
 #' 
 #' \item model_1
 #' \itemize{
-#'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/thin (the thin value is 10 by default in the models).
+#'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter (See details for more information).
 #'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
 #'  \item data_env_with_no_controls : data frame with environnement with no controls
 #'  \item data_env_whose_param_did_not_converge : a list with data frame with environments where some parameters did not converge for mu and beta.
@@ -70,7 +69,7 @@
 #' 
 #' \item model_2
 #' \itemize{
-#'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/thin (the thin value is 10 by default in the models).
+#'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. (See details for more information).
 #'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
 #'  \item model2.presence.abscence.matrix : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 #'  \item data_ggplot a list containing information for ggplot:
@@ -87,8 +86,16 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}, \code{\link{check_model_GxE}}, \code{\link{check_model_1}}, \code{\link{check_model_2}}, \code{\link{mean_comparisons}}
-#' 
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{GxE}}, 
+#' \item \code{\link{model_1}}, 
+#' \item \code{\link{model_2}}, 
+#' \item \code{\link{check_model_GxE}}, 
+#' \item \code{\link{check_model_1}}, 
+#' \item \code{\link{check_model_2}}, 
+#' \item \code{\link{mean_comparisons}}
+#' }
 #' 
 check_model = function(
 out_model

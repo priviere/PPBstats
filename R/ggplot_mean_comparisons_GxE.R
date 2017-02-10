@@ -1,15 +1,19 @@
 #' Get ggplot objects from mean_comparisons_GxE
 #'
 #' @description
-#' \code{ggplot_mean_comparisons_GxE} returns ggplot objects from mean_comparisons_GxE
+#' \code{ggplot_mean_comparisons_GxE} returns ggplot objects from \code{\link{mean_comparisons_GxE}}
 #' 
-#' @param out_mean_comparisons_GxE outputs from mean_comparisons_GxE function
+#' @param out_mean_comparisons_GxE outputs from \code{\link{mean_comparisons_GxE}}
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{mean_comparisons_GxE}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}}, 
+#' \item \code{\link{mean_comparisons_GxE}}
+#' }
 #'
 ggplot_mean_comparisons_GxE = function(
   mean_comparisons_GxE,

@@ -5,11 +5,15 @@
 #' 
 #' @param res.pca PCA object on interaction matrix
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{biplot_GxE}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}}, 
+#' \item \code{\link{biplot_GxE}}
+#' }
 #'
 ggplot_discrimitiveness_vs_representativeness = function(res.pca){
 

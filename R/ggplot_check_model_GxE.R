@@ -1,15 +1,19 @@
 #' Get ggplot objects from check_model_GxE
 #'
 #' @description
-#' \code{ggplot_check_model_GxE} returns ggplot objects from check_model_GxE
+#' \code{ggplot_check_model_GxE} returns ggplot objects from \code{\link{check_model_GxE}}
 #' 
-#' @param out_check_model_GxE outputs from check_model_GxE function
+#' @param out_check_model_GxE outputs from \code{\link{check_model_GxE}} function
 #' 
-#' @details See get_ggplot
+#' @details See \code{\link{get_ggplot}}
 #' 
-#' @return See get_ggplot
+#' @return See \code{\link{get_ggplot}}
 #' 
-#' @seealso \code{\link{get_ggplot}}, \code{\link{check_model_GxE}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{get_ggplot}}, 
+#' \item \code{\link{check_model_GxE}}
+#' }
 #' 
 ggplot_check_model_GxE = function(
   out_check_model,

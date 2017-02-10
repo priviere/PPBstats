@@ -3,9 +3,9 @@
 #' @description
 #' \code{GxE} runs AMMI or GGE model
 #' 
-#' @param data data with at least the following columns: year, location, germplasm, block, X, Y
+#' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #' 
-#' @param vec_variables vectors of variables to analyse
+#' @param variable variable to analyse
 #' 
 #' @param gxe_analysis the analysis to carry out: "AMMI" or "GGE"
 #' 
@@ -34,6 +34,13 @@
 #' 
 #' @author 
 #' Pierre Riviere
+#' 
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{GxE_build_interaction_matrix}},
+#' \item \code{\link{check_model}},
+#' \item \code{\link{check_model_model_1}}
+#' }
 #' 
 GxE = function(
   data, 

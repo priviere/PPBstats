@@ -3,30 +3,37 @@
 #' @description
 #' \code{predict_the_past_model_2} estimates value of a germplasm in an environment based on model 2.
 #' 
-#' @param out_check_model_model_2 object from \code{check_model} from model 2 
+#' @param out_check_model_model_2 object from \code{\link{check_model}} from \code{\link{model_2}}
 #' 
 #' @param env name of the environment where the germplasm effect are predicted
 #' 
-#' @return The function returns a MCMC for the given environment. This MCMC outptu can be used in the same way as the output from check_model of model 1.
+#' @return The function returns a MCMC for the given environment. 
+#' This MCMC output can be used in the same way as the output from \code{\link{check_model}} from \code{\link{model_1}}.
 #' 
 #' @details
 #' The estimations of the values are based on the MCMC outputs.
-#' More informations can be found in the vignette (type vignette("PPBstats")).
+#' More informations can be found in the vignette.
 #' 
 #' It is like mu_ij effect that are estimated (as for model 1), i.e. the effect of a germplasm in an environment.
 #' 
 #' Due to memory issues, it is better to run the function for only one environment instread of all by default.
-#' This allows caterpillar plots, barplots and interaction plots but no mean comparisons that are based on the whole MCMC.
+#' This allows the same ggplot as for model 1.
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{check_model}}, \code{\link{check_model_model_2}}, \code{\link{mean_comparisons}}, \code{\link{mean_comparisons_predict_the_past_model_2}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{check_model}}, 
+#' \item \code{\link{check_model_model_2}}, 
+#' \item \code{\link{mean_comparisons}}, 
+#' \item \code{\link{mean_comparisons_predict_the_past_model_2}}
+#' }
+#' 
 #' 
 predict_the_past_model_2 = function(
   out_check_model_model_2,
   env = NULL
 )
-  # let's go !!! ----------
 {
   # 1. Error message ----------  
   if( attributes(out_check_model_model_2)$PPBstats.object != "check_model_model_2") {  stop("out_check_model_model_2 must come from check_model and model_2.") }

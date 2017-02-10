@@ -22,7 +22,11 @@
 #'
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{check_model}}, \code{\link{mean_comparisons}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{mean_comparisons_model_1}}
+#' \item \code{\link{mean_comparisons_model_2}}
+#' }
 #' 
 comp.parameters = function(
   MCMC,

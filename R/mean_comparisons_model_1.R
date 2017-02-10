@@ -1,8 +1,8 @@
 #' Get mean comparisons from object coming from check_model model_1
 #'
 #' @description
-#' \code{mean_comparisons_model_1} performs mean comparisons from object coming from check_model model_1
-#' See \code{mean_comparisons} for more information.
+#' \code{mean_comparisons_model_1} performs mean comparisons from object coming from \code{\link{check_model model_1}}
+#' See \code{\link{mean_comparisons}} for more information.
 #' 
 #' @param out_check_model_1
 #' 
@@ -20,9 +20,9 @@
 #' 
 #' @param p.adj
 #' 
-#' @details See mean_comparisons
+#' @details See \code{\link{mean_comparisons}}
 #' 
-#' @return See mean_comparisons
+#' @return See \code{\link{mean_comparisons}}
 #' 
 #' @seealso 
 #' \itemize{

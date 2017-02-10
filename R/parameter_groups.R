@@ -3,7 +3,7 @@
 #' @description
 #' \code{parameter_groups} gets groups of parameters based on multivariate analysis
 #'
-#' @param list_out_check_model A list whose elements are output from \code{check_model}
+#' @param list_out_check_model A list whose elements are output from \code{\link{check_model}}
 #'  
 #' @param parameter The parameter on which to get the groups
 #' 

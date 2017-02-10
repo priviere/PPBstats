@@ -3,13 +3,13 @@
 #' @description
 #' \code{GxE_build_interaction_matrix} computes interaction matrix for AMMI or GGE model
 #' 
-#' @param data data with at least the following columns: year, location, germplasm, block, X, Y
+#' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #' 
 #' @param gxe_analysis the analysis to carry out: "AMMI" or "GGE"
 #' 
-#' @details The computation is inspired from the agricolae::AMMI function. 
+#' @details The computation is inspired from \code{agricolae::AMMI}. 
 #' Another way to do has been explore but did not succeed regarding missing data. 
-#' The code is inside the function.
+#' The code is inside the function within a if(FALSE){}.
 #' 
 #' @return 
 #' The function returns the interaction matrix
@@ -17,7 +17,7 @@
 #' @author 
 #' Pierre Riviere
 #' 
-#' @seealso \code{GxE}
+#' @seealso \code{\link{GxE}}
 #' 
 GxE_build_interaction_matrix = function(
   data, 
