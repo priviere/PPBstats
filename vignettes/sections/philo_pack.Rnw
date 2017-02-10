@@ -62,29 +62,29 @@ You can have more information for each function by typing \texttt{?function\_nam
 \hline
 \textbf{function name} & \textbf{description} \\ \hline
 
-\texttt{design\_experiment} & \\ \hline
+\texttt{design\_experiment} & Provides experimental design for several situations \\ \hline
 
-\texttt{describe\_data} &  \\ \hline
+\texttt{describe\_data} & Describe the data set in order to choose the appropriate analysis to carry out \\ \hline
 
-\texttt{model\_1} & \\ \hline
+\texttt{model\_1} & Run model 1 \\ \hline
 
-\texttt{model\_2} & \\ \hline
+\texttt{model\_2} & Run model 2 \\ \hline
 
-\texttt{GxE} & \\ \hline
+\texttt{GxE} & Run AMMI or GGE model \\ \hline
 
-\texttt{check\_model} &  \\ \hline
+\texttt{check\_model} &  Check if the model went well \\ \hline
 
-\texttt{mean\_comparisons} &  \\ \hline
+\texttt{mean\_comparisons} &  Get mean comparisons \\ \hline
 
-\texttt{parameter\_groups} &  \\ \hline
+\texttt{parameter\_groups} & Get groups of parameters based on multivariate analysis \\ \hline
 
-\texttt{cross\_validation\_model\_2} &  \\ \hline
+\texttt{cross\_validation\_model\_2} & Run complete cross validation with model 2 \\ \hline
 
-\texttt{predict\_the\_past\_model\_2} &  \\ \hline
+\texttt{predict\_the\_past\_model\_2} & Estimate value of a germplasm in an environment based on model 2 \\ \hline
 
-\texttt{biplot\_GxE} &  \\ \hline
+\texttt{biplot\_GxE} & Compute ecovalence and format PCA results \\ \hline
 
-\texttt{get\_ggplot} &  \\ \hline
+\texttt{get\_ggplot} & Get ggplot objects to visualize output \\ \hline
 
 \end{tabular}
 \caption{Main function descriptions.}
@@ -109,63 +109,73 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 \texttt{get.env.info} & Get regional farms data and satellite farms data \\ \hline
 
-\texttt{GxE\_build\_interaction\_matrix} & \\ \hline
+\texttt{GxE\_build\_interaction\_matrix} & Compute interaction matrix \\ \hline
 
-\texttt{check\_model\_model\_1} & \\ \hline
+\texttt{check\_model\_model\_1} & Check if the \texttt{model\_1} model went well  \\ \hline
 
-\texttt{check\_model\_model\_2} & \\ \hline
+\texttt{check\_model\_model\_2} & Check if the \texttt{model\_2} model went well \\ \hline
 
-\texttt{check\_model\_GxE} & \\ \hline
+\texttt{check\_model\_GxE} & Check if the GxE model went well \\ \hline
 
-\texttt{parameter\_groups\_GxE} & \\ \hline
+\texttt{parameter\_groups\_GxE} & Get matrix with variables in column and effect in row from \texttt{check\_model\_GxE} \\ \hline
 
-\texttt{parameter\_groups\_model\_2} & \\ \hline
+\texttt{parameter\_groups\_model\_2} & Get matrix with variables in column and effect in row from \texttt{check\_model\_model\_2} \\ \hline
 
-\texttt{comp.parameters} & \\ \hline
+\texttt{comp.parameters} & Get parameter comparisons two by two or to a given threshold based on MCMC outputs \\ \hline
 
-\texttt{get.significant.groups} & \\ \hline
+\texttt{get.significant.groups} & Get significant groups of differences for a set of parameters based on MCMC outputs \\ \hline
 
-\texttt{get.at.least.X.groups} & \\ \hline
+\texttt{get.at.least.X.groups} & Get the value of type one error needed to have X groups \\ \hline
 
-\texttt{mean\_comparisons\_GxE} & \\ \hline
+\texttt{mean\_comparisons\_GxE} & Get mean comparisons from \texttt{check\_model\_GxE} \\ \hline
 
-\texttt{mean\_comparisons\_model\_2} & \\ \hline
+\texttt{mean\_comparisons\_model\_1} & Get mean comparisons from \texttt{check\_model\_model\_1} \\ \hline
 
-\texttt{mean\_comparisons\_model\_1} & \\ \hline
+\texttt{mean\_comparisons\_model\_2} &Get mean comparisons from \texttt{check\_model\_model\_2}  \\ \hline
 
-\texttt{mean\_comparisons\_predict\_the\_past\_model\_2} & \\ \hline
+\texttt{mean\_comparisons\_predict\_the\_past\_model\_2} & Get mean comparisons from \texttt{predict\_the\_past\_model\_2} \\ \hline
 
-\texttt{ggplot\_parameter\_groups} & \\ \hline
+\texttt{ggplot\_parameter\_groups} & Get ggplot from \texttt{parameter\_groups} \\ \hline
 
-\texttt{ggplot\_check\_model\_GxE} & \\ \hline
+\texttt{ggplot\_check\_model\_GxE} & Get ggplot from \texttt{check\_model\_GxE} \\ \hline
 
-\texttt{ggplot\_check\_model\_model\_1} & \\ \hline
+\texttt{ggplot\_check\_model\_model\_1} & Get ggplot from \texttt{check\_model\_model\_1} \\ \hline
 
-\texttt{ggplot\_check\_model\_model\_2} & \\ \hline
+\texttt{ggplot\_check\_model\_model\_2} & Get ggplot from \texttt{check\_model\_model\_2} \\ \hline
 
-\texttt{ggplot\_cross\_validation\_model\_2} & \\ \hline
+\texttt{ggplot\_cross\_validation\_model\_2} & Get ggplot from \texttt{cross\_validation\_model\_2} \\ \hline
 
-\texttt{ggplot\_mean\_comparisons\_GxE} & \\ \hline
+\texttt{ggplot\_mean\_comparisons\_GxE} & Get ggplot from \texttt{mean\_comparisons\_GxE} \\ \hline
 
-\texttt{ggplot\_mean\_comparisons\_model\_1} & \\ \hline
+\texttt{ggplot\_mean\_comparisons\_model\_1} & Get ggplot from \texttt{mean\_comparisons\_model\_1} \\ \hline
 
-\texttt{ggplot\_mean\_comparisons\_model\_2} & \\ \hline
+\texttt{ggplot\_mean\_comparisons\_model\_2} & Get ggplot from \texttt{mean\_comparisons\_model\_2} \\ \hline
 
-\texttt{ggplot\_mean\_comparisons\_predict\_the\_past\_model\_2} & \\ \hline
+\texttt{ggplot\_mean\_comparisons\_predict\_the\_past\_model\_2} & Get ggplot from \texttt{mean\_comparisons\_predict\_the\_past\_model\_2} \\ \hline
 
-\texttt{ggplot\_biplot\_GxE} & \\ \hline
+\texttt{ggplot\_biplot\_GxE} & Get ggplot from \texttt{biplot\_GxE} \\ \hline
 
-\texttt{ggplot\_discrimitiveness\_vs\_representativeness} & \\ \hline
+\texttt{ggplot\_discrimitiveness\_vs\_representativeness} & Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix \\ \hline
 
-\texttt{ggplot\_mean\_vs\_stability} & \\ \hline
+\texttt{ggplot\_mean\_vs\_stability} & Get "mean vs stability" ggplot from PCA on interaction matrix \\ \hline
 
-\texttt{ggplot\_which\_won\_where} & \\ \hline
-
+\texttt{ggplot\_which\_won\_where} & Get "which won where" ggplot from PCA on interaction matrix \\ \hline
 
 \end{tabular}
 \caption{Second function descriptions.}
 \label{function_descriptions_workflow_2}
 \end{table}
+
+Two other funtions are also in the package:
+
+
+\begin{table}[H]\begin{center}
+\begin{tabular}{cl}
+\hline
+\texttt{common\_functions} & Some functions used in several functions of PPBstats \\ \hline
+\texttt{gget.PPBstats.data} & Get PPBstats datas to run example of the vignette \\ \hline
+\end{tabular}
+\end{center}\end{table}
 
 
 
@@ -299,10 +309,18 @@ More informations on this function by typing \texttt{?mean\_comparisons}.
 
 
 \subsection{Let's go!}
-To continue, load the package:
-<<message=TRUE,cache=FALSE>>=
+To continue, load the development version of the package:
+
+<<message=TRUE,cache=FALSE,eval=FALSE>>=
+devtools::install_github("priviere/PPBstats")
+@
+
+, load it 
+
+<<message=TRUE,cache=FALSE,eval=FALSE>>=
 library(PPBstats)
 @
+
 and download from internet the data used in this vignette (this is useful to earn lots of time!) :
 
 <<message=FALSE,cache=FALSE,eval=FALSE>>=
