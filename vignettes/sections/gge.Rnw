@@ -55,8 +55,6 @@ $\varepsilon_{ijk}$ & the residuals.\\
 
 \subsubsection{Steps with \pack}
 
-Everything is exactly the same than for AMMI analysis except you should settle \texttt{gxe\_analysis = "GGE"} in \texttt{GxE}.
-
 
 For GGE analysis, everything is exactly the same than for AMMI analysis except you should settle \texttt{gxe\_analysis = "GGE"} in \texttt{GxE}.
 You can follow these steps (Figure \ref{main_workflow}):
@@ -119,6 +117,8 @@ Compared to AMMI analysis, in the output of \texttt{p\_out\_biplot\_gge},
 \texttt{mean\_vs\_stability} and 
 \texttt{discrimitiveness\_vs\_representativeness}
 are displayed.
+
+The description of these following graphs are greatly inspired from \citet{ceccarelli_manual_2012}.
 
 <<message=TRUE,cache=FALSE>>=
 biplot = p_out_biplot_gge$biplot
