@@ -1,7 +1,7 @@
-#' Get ggplot objects from mean_comparisons_model_1
+#' Get ggplot from mean_comparisons_model_1
 #'
 #' @description
-#' \code{ggplot_mean_comparisons_model_1} returns ggplot objects from \code{\link{mean_comparisons_model_1}}
+#' \code{ggplot_mean_comparisons_model_1} returns ggplot from \code{\link{mean_comparisons_model_1}}
 #' 
 #' @param out_mean_comparisons_model_1 outputs from \code{\link{mean_comparisons_model_1}}
 #' 

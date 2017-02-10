@@ -1,7 +1,7 @@
-#' Get ggplot objects from parameter_groups
+#' Get ggplot from parameter_groups
 #'
 #' @description
-#' \code{ggplot_parameter_groups} returns ggplot objects from \code{\link{parameter_groups}}
+#' \code{ggplot_parameter_groups} returns ggplot from \code{\link{parameter_groups}}
 #' 
 #' @param out_parameter_groups outputs from \code{\link{parameter_groups}} function
 #' 

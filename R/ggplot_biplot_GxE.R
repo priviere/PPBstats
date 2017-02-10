@@ -1,7 +1,7 @@
-#' Get ggplot objects from biplot_GxE
+#' Get ggplot from biplot_GxE
 #'
 #' @description
-#' \code{ggplot_biplot_GxE} returns ggplot objects from \code{\link{biplot_GxE}}
+#' \code{ggplot_biplot_GxE} returns ggplot from \code{\link{biplot_GxE}}
 #' 
 #' @param out_biplot_GxE outputs from \code{\link{biplot_GxE}} function
 #' 

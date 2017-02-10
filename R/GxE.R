@@ -1,4 +1,4 @@
-#' Run AMMI or GGE model on a data set
+#' Run AMMI or GGE model
 #'
 #' @description
 #' \code{GxE} runs AMMI or GGE model

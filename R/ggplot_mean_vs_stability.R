@@ -1,7 +1,7 @@
-#' Get "mean vs stability" ggplot objects from PCA on interaction matrix
+#' Get "mean vs stability" ggplot from PCA on interaction matrix
 #'
 #' @description
-#' \code{ggplot_mean_vs_stability} returns ggplot objects from PCA on interaction matrix
+#' \code{ggplot_mean_vs_stability} returns ggplot from PCA on interaction matrix
 #' 
 #' @param res.pca PCA object on interaction matrix
 #' 

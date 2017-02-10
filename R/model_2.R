@@ -1,5 +1,4 @@
-# 0. help ----------
-#' Run model 2 to get main germplasm, environment and sensitivity effects over the network.
+#' Run model 2 
 #'
 #' @description
 #' \code{model_2} runs model 2 known as the Finlay Wilkinson Hierarchical model to get main germplasm, environment and sensitivity effects over the network
@@ -81,7 +80,6 @@ model_2 = function(
   return.sigma_epsilon = TRUE,
   return.DIC = FALSE
 )
-# let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
   check_data_vec_variables(data, variable)

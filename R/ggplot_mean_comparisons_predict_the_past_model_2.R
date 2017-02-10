@@ -1,7 +1,7 @@
-#' Get ggplot objects from mean_comparisons_predict_the_past_model_2
+#' Get ggplot from mean_comparisons_predict_the_past_model_2
 #'
 #' @description
-#' \code{ggplot_mean_comparisons_predict_the_past_model_2} returns ggplot objects from \code{\link{mean_comparisons_predict_the_past_model_2}}
+#' \code{ggplot_mean_comparisons_predict_the_past_model_2} returns ggplot from \code{\link{mean_comparisons_predict_the_past_model_2}}
 #' 
 #' @param out_mean_comparisons_predict_the_past_model_2 outputs from \code{\link{mean_comparisons_predict_the_past_model_2}}
 #' 

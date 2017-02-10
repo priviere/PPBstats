@@ -1,4 +1,4 @@
-#' Run model 1 to get mean comparisons on each environment of the network.
+#' Run model 1
 #'
 #' @description
 #' \code{model_1} runs model 1 to get mean comparisons on each environment of the network. See details for more information.

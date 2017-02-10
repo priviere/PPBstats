@@ -1,7 +1,7 @@
-#' Get "discrimitiveness vs representativeness" ggplot objects from PCA on interaction matrix
+#' Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix
 #'
 #' @description
-#' \code{ggplot_discrimitiveness_vs_representativeness} returns ggplot objects from PCA on interaction matrix
+#' \code{ggplot_discrimitiveness_vs_representativeness} returns ggplot from PCA on interaction matrix
 #' 
 #' @param res.pca PCA object on interaction matrix
 #' 

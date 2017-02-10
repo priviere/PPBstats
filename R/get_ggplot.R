@@ -1,7 +1,7 @@
-#' Get ggplot objects to visualize output from several functions
+#' Get ggplot to visualize output
 #'
 #' @description
-#' \code{get_ggplot} returns ggplot objects to visualize outputs from several functions
+#' \code{get_ggplot} returns ggplot to visualize outputs from several functions
 #'
 #' @param data Outputs from 
 #' \itemize{

@@ -1,4 +1,4 @@
-#' Get matrix with variables in column and effect in row from \code{check_model_GxE}
+#' Get matrix with variables in column and effect in row from check_model_GxE
 #'
 #' @description
 #' \code{parameter_groups_GxE} gets matrix with variables in column and effect in row
