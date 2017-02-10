@@ -181,7 +181,11 @@ Two other funtions are also in the package:
 
 \subsection{Frequentist statistics}
 
+!!! TO DO !!!
 
+\subsubsection{Theory}
+
+\subsubsection{Mean comparisons}
 
 \subsection{Bayesian statistics}
 \label{section_bayes}
