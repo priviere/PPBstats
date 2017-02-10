@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_discrimitiveness_vs_representativeness.R
 \name{ggplot_discrimitiveness_vs_representativeness}
 \alias{ggplot_discrimitiveness_vs_representativeness}
-\title{Get "discrimitiveness vs representativeness" ggplot objects from PCA on interaction matrix}
+\title{Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix}
 \usage{
 ggplot_discrimitiveness_vs_representativeness(res.pca)
 }
@@ -13,7 +13,7 @@ ggplot_discrimitiveness_vs_representativeness(res.pca)
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_discrimitiveness_vs_representativeness} returns ggplot objects from PCA on interaction matrix
+\code{ggplot_discrimitiveness_vs_representativeness} returns ggplot from PCA on interaction matrix
 }
 \details{
 See \code{\link{get_ggplot}}

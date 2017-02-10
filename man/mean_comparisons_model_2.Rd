@@ -2,7 +2,7 @@
 % Please edit documentation in R/mean_comparisons_model_2.R
 \name{mean_comparisons_model_2}
 \alias{mean_comparisons_model_2}
-\title{Get mean comparisons from object coming from check_model model_2}
+\title{Get mean comparisons from check_model_model_2}
 \usage{
 mean_comparisons_model_2(out_check_model_2, parameter, alpha = 0.05,
   type = 1, get.at.least.X.groups = 2, precision = 5e-04, threshold = 1,

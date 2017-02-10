@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_biplot_GxE.R
 \name{ggplot_biplot_GxE}
 \alias{ggplot_biplot_GxE}
-\title{Get ggplot objects from biplot_GxE}
+\title{Get ggplot from biplot_GxE}
 \usage{
 ggplot_biplot_GxE(out_biplot_GxE)
 }
@@ -13,7 +13,7 @@ ggplot_biplot_GxE(out_biplot_GxE)
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_biplot_GxE} returns ggplot objects from \code{\link{biplot_GxE}}
+\code{ggplot_biplot_GxE} returns ggplot from \code{\link{biplot_GxE}}
 }
 \details{
 See \code{\link{get_ggplot}}

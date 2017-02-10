@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_check_model_GxE.R
 \name{ggplot_check_model_GxE}
 \alias{ggplot_check_model_GxE}
-\title{Get ggplot objects from check_model_GxE}
+\title{Get ggplot from check_model_GxE}
 \usage{
 ggplot_check_model_GxE(out_check_model, nb_parameters_per_plot = 10)
 }
@@ -13,7 +13,7 @@ ggplot_check_model_GxE(out_check_model, nb_parameters_per_plot = 10)
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_check_model_GxE} returns ggplot objects from \code{\link{check_model_GxE}}
+\code{ggplot_check_model_GxE} returns ggplot from \code{\link{check_model_GxE}}
 }
 \details{
 See \code{\link{get_ggplot}}

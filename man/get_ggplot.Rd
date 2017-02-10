@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_ggplot.R
 \name{get_ggplot}
 \alias{get_ggplot}
-\title{Get ggplot objects to visualize output from several functions}
+\title{Get ggplot to visualize output}
 \usage{
 get_ggplot(data, data_2 = NULL, data_version = NULL,
   ggplot.type = "interaction", nb_parameters_per_plot = 8)
@@ -222,7 +222,7 @@ See details for more information.}
 }
 }
 \description{
-\code{get_ggplot} returns ggplot objects to visualize outputs from several functions
+\code{get_ggplot} returns ggplot to visualize outputs from several functions
 }
 \details{
 Below are some details on the construction of the plots :

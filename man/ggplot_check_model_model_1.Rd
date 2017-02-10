@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_check_model_model_1.R
 \name{ggplot_check_model_model_1}
 \alias{ggplot_check_model_model_1}
-\title{Get ggplot objects from check_model_model_1}
+\title{Get ggplot from check_model_model_1}
 \usage{
 ggplot_check_model_model_1(out_check_model_1, nb_parameters_per_plot = 10)
 }
@@ -13,7 +13,7 @@ ggplot_check_model_model_1(out_check_model_1, nb_parameters_per_plot = 10)
 See \code{\link{get_ggplot}}
 }
 \description{
-\code{ggplot_check_model_model_1} returns ggplot objects from \code{\link{check_model_model_1}}
+\code{ggplot_check_model_model_1} returns ggplot from \code{\link{check_model_model_1}}
 }
 \details{
 See \code{\link{get_ggplot}}
