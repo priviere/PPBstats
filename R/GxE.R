@@ -61,10 +61,8 @@ GxE = function(
       data$block_in_env = factor(paste(data$block, data$location, data$year, sep = ";")) # hierarchise block within location and year
       data$YxE = factor(paste(data$year, data$location, sep = ":"))
       data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
-      
     
     # 3. ANOVA ----------
-    
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
     
@@ -87,7 +85,7 @@ GxE = function(
     if(length(todel) > 0) { coef_germ = coef_germ[-todel] }
     coef_germ = c(coef_germ, - sum(coef_germ))
     names(coef_germ) = model$xlevels$germplasm
-    
+
     var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
     
     out_germplasm = list(
