@@ -44,8 +44,7 @@ First, load the development version:
 
 The easiest way to start is to look at the vignette to know how the package works.
 
-You can see the vignette [here](https://www.dropbox.com/s/7vh2i48pn7jxmf6/PPBstats.pdf?dl=0). 
-
+You can see the vignette [here](https://www.dropbox.com/s/q5gr1b5uc3hoa6l/PPBstats.pdf?dl=0). 
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
 - some points are not clear in the vignette or you find bugs
