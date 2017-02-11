@@ -29,7 +29,7 @@ You can contribute in three ways:
 3. add new functions that may be useful in the analysis of trials that can be found in PPB programmes
 
 If you update the code, you can refer to 
-[the issues](https://github.com/priviere/shinemas2R/issues)
+[the issues](https://github.com/priviere/PPBstats/issues)
 and do it in on another branch.
 Anyhow, send me an email if you wish to participate in order to coordinate our efforts!
 
