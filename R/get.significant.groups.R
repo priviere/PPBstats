@@ -28,7 +28,6 @@ get.significant.groups = function(
   alpha = 0.05,
   p.adj = NULL
 )
-  # let's go !!! ----------
 {
   # 1. Error message and update arguments ----------
   if( !is.null(p.adj) ) { 
