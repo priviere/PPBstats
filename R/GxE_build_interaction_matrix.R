@@ -27,10 +27,10 @@ GxE_build_interaction_matrix = function(
   
   if(nlevels(data$year) > 1) { 
     if( gxe_analysis == "AMMI"){
-      model = lm(variable ~ germplasm + location + block %in% YxE + year + YxG + YxE, data = data)
+      model = lm(variable ~ germplasm*location + block %in% year:location + year + year:germplasm + year:location , data = data)
     }
     if( gxe_analysis == "GGE"){
-      model = lm(variable ~ location + block %in% location + year + YxG + YxE, data = data)
+      model = lm(variable ~ location + block %in% location + year + year:germplasm + year:location, data = data)
     }
   } else {
     if( gxe_analysis == "AMMI"){
