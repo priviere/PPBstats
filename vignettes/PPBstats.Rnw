@@ -26,10 +26,27 @@
 
 \usepackage{colortbl, xcolor}
 \usepackage{float}
+\usepackage{lscape}
+\usepackage{multirow}
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.11}
+\newcommand{\versionnumber}{0.14}
+\newcommand{\PPB}{Participatory Plant Breeding}
+
+
+% warning
+\newcommand{\warning}[1]{
+\setlength{\fboxrule}{1.5mm}\noindent
+\begin{minipage}[t]{.1\textwidth}
+\parbox[c]{\textwidth}{\includegraphics[width=\textwidth]{warning}}
+\end{minipage}
+\fcolorbox{red}{white}{
+\begin{minipage}[t]{.85\textwidth}
+\textcolor{\colwarning}{\textbf{{#1}}}
+\end{minipage}
+}~\\
+}
 
 \begin{document}
 
@@ -37,7 +54,7 @@
 library(xtable)
 library(knitr)
 ## set global chunk options
-opts_chunk$set(fig.path='figures/PPBstats_', cache.path='cache/PPBstats-', fig.align='center', fig.show='hold', par=TRUE)
+opts_chunk$set(fig.path='figures/PPBstats_', cache.path='cache/PPBstats-', fig.align='center', fig.show='hold', fig.pos='H', par=TRUE)
 ## I use = but I can replace it with <-; set code/output width to be 68
 options(replace.assign=TRUE, width=68)
 ## tune details of base graphics (http://yihui.name/knitr/hooks)
@@ -48,785 +65,79 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 
 \input{./sections/head}
 
-\section{Philosophy of \pack}
-
-\input{./sections/philo_pack}
-
-\subsection{Let's go!}
-To continue, load the package:
-<<message=TRUE,cache=FALSE>>=
-library(PPBstats)
+<<child='sections/philo_pack.Rnw'>>=
 @
-and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \url{https://www.dropbox.com/sh/6qvl515k5484zg4/AADZKkaM2XZvmr9e6l5aWxN2a?dl=0} and put it in the folder \texttt{data\_PPBstats} and then load() it.
+\newpage
 
-%The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
-%This gives an idea about memory and processor needed to run the analysis.
-
-\section{At the farm level : model~\ref{model1} to perform mean comparisons on farms }
-\label{section_model1}
-
-\subsection{The model}
-\input{./sections/model1}
-
-\subsection{With \pack}
-
-For model~\ref{model1}, you can follow these steps (Figure \ref{function_relations}):
-
-\begin{enumerate}
-\item Run the model with \texttt{MC}
-\item Analyse model outputs with graphs to know if you can continue the analysis with \texttt{analyse.outputs}
-\item Get mean comparisons for each factor with \texttt{get.mean.comparisons} and \texttt{get.ggplot}
-\end{enumerate}
-
-
-
-Let's get the data.
-The values for $\mu_{ij}$, $\beta_{jk}$, $\epsilon_{ijk}$ and $\sigma_j$ are the real value taken to create the dataset.
-This dataset is representative of data you can get in a PPB programme.
-
-<<message=TRUE,cache=FALSE>>=
-data(PPBdata)
-head(PPBdata)
+<<child='sections/design_expe.Rnw'>>=
 @
+\newpage
 
-\subsubsection{Run the model}
+\section{Sow, note, harvest, measure ... }
+\label{section_sow}
 
-To run model~\ref{model1} on the dataset, used the function \texttt{MC}.
-You can run it on one variable.
-Here it is thousand kernel weight (tkw).
+!!! TO DO !!!
 
-By default, \texttt{MC} returns posteriors for 
-$\mu_{ij}$ (\texttt{return.mu = TRUE}), 
-$\beta_{jk}$ (\texttt{return.beta = TRUE}), 
-$\sigma_j$ (\texttt{return.sigma = TRUE}), 
-$\nu$ (\texttt{return.nu = TRUE}) and 
-$\rho$ (\texttt{return.rho = TRUE}).
-You can also get $\epsilon_{ijk}$ value with \texttt{return.espilon = TRUE}.
+\newpage
 
-By default, DIC is not displayed, you may want this value to compare to other model (\texttt{DIC = TRUE}).
-DIC criterion is a generalization of the AIC criterion that can be used for hierarchical models \citep{spiegelhalter_bayesian_2002}.
-The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
+<<child='sections/describe_data.Rnw'>>=
+@
+\newpage
 
-<<message=TRUE,cache=FALSE>>=
-# out.model1 = MC(data = PPBdata, variable = "tkw", return.epsilon = TRUE)
-#Compiling model graph
-#   Resolving undeclared variables
-#   Allocating nodes
-#   Graph Size: 7662
-#
-#Initializing model
-#
-#  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
 
-load("./data_PPBstats/out.model1.RData") # To save time
+\section{Family of analysis 1 : entry effects on one farm}
+\label{section_analysis1}
+
+<<child='sections/classic_anova.Rnw'>>=
+@
+\newpage
+
+<<child='sections/spatial_analysis.Rnw'>>=
+@
+\newpage
+
+<<child='sections/model_1.Rnw'>>=
+@
+\newpage
+
+\section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
+
+<<child='sections/ammi.Rnw'>>=
 @
 
-You can get informations of the environments in the dataset :
-
-<<message=TRUE,cache=FALSE>>=
-out.model1$vec_env_with_no_data
- 
-out.model1$vec_env_with_no_controls
- 
-out.model1$vec_env_with_controls
- 
-out.model1$vec_env_RF
- 
-out.model1$vec_env_SF
+<<child='sections/gge.Rnw'>>=
 @
 
-\subsubsection{Analysis of the model outputs}
-Once the model is run, it is necessary to check if the outputs can be taken with confidence.
-This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from \texttt{analyse.outputs}!).
+\newpage
 
-<<message=TRUE,cache=FALSE>>=
-# The experimental design plot is done.
-# The Gelman-Rubin test is running for each parameter ...
-# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
-# The values of sigma in the inverse Gamme distribution are done.
-# The mu_ij posterior distributions are done.
-# The beta_jk posterior distributions are done.
-# The sigma_j posterior distributions are done.
-# The standardised residuals distributions are done.
-
-load("./data_PPBstats/out1.RData")
+<<child='sections/model_2.Rnw'>>=
 @
+\newpage
 
-\texttt{out1} is a list containing:
 
-\begin{itemize}
+\section{Family of analysis 3 : effects from family 1 and 2 in a network of farms}
 
-\item "experimental\_design" : a plot representing the presence/abscence matrix of G $\times$ E combinaisons. 
-Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
-A score of 1 is for a given germplasm in a given environment.
-A score of 2 is for a given germplasm replicated twice in a given environement.
-A score of 3 is for a given germplasm replicated three times in a given environement.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$data.experimental_design$plot
+<<child='sections/model_3.Rnw'>>=
 @
-\end{figure}
+\newpage
 
-\item "convergence" : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test \citep{gelman_inference_1992}. If all the chains converge, it is NULL
+\section{Family of analysis 4 : specific research questions on one farm or more}
 
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$convergence
+<<child='sections/migrant_residant.Rnw'>>=
 @
-\end{figure}
+\newpage
 
-Here all the parameters converge.
-Below is an example where there is no convergence because the MCMC are too small.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-
-# out.model1_bis = MC(data = PPBdata, variable = "tkw", nb_iteration = 5000)
-#Compiling model graph
-#   Resolving undeclared variables
-#   Allocating nodes
-#   Graph Size: 7662
-#
-#Initializing model
-#
-#  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
-#Warning message:
-#In MC(data = PPBdata, variable = "tkw", nb_iteration = 5000) :
-#  nb_iterations is below 20 000, which seems small to get convergence in the MCMC.
-
-load("./data_PPBstats/out.model1_bis.RData") # To save time
-
-# out1_bis = analyse.outputs(out.model1_bis)
-# The experimental design plot is done.
-# The Gelman-Rubin test is running for each parameter ...
-# The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : 
-# nu, rho, sigma[env1-1:2012], sigma[env1-2:2011], sigma[env2-12:2012], sigma[env2-6:2010]. 
-# Therefore, they are not present in MCMC output.
-# MCMC are updated, the following environment were deleted : 
-# env1-1:2012, env1-2:2011, env2-12:2012, env2-6:2010
-# model1.data_env_whose_param_did_not_converge contains the raw data for these environments.
-# The values of sigma in the inverse Gamme distribution are done.
-# The mu_ij posterior distributions are done.
-# The beta_jk posterior distributions are done.
-# The sigma_j posterior distributions are done.
-
-load("./data_PPBstats/out1_bis.RData") # To save time
-
-# Get one example
-toplot = out1_bis$convergence$"nu"
-grid.arrange(toplot$traceplot, toplot$density, ncol=2, nrow=1)
-
+<<child='sections/version.Rnw'>>=
 @
-\end{figure}
+\newpage
 
-
-\item "parameter\_posteriors" : a list with
-
-\begin{itemize}
-
-\item "sigma\_distribution" : the distribution of the sigma is displayed on the Inverse Gamma distribution
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$sigma_distribution[[1]] # All the values
+\section{Family of analysis 5 : multivariate analysis}
+<<child='sections/multivariate_analysis.Rnw'>>=
 @
-\end{figure}
+\newpage
 
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$sigma_distribution[[12]] # A subset of values
+<<child='sections/contribute.Rnw'>>=
 @
-\end{figure}
-
-
-\item "parameter\_posteriors" : a caterpillar plot is display for each $\mu_{ij}$, $\beta_{jk}$ for a each environment and for $\sigma_j$.
-Below is an example for environment env1-1:2010.
-It is important to see it the values are coherent with your a priori knowledge.
-Indeed, a model can converge and estimate parameters'value that are not coherent!
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$parameter_posteriors$mu_posteriors$"env1-1:2010"
-@
-\end{figure}
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$parameter_posteriors$beta_posteriors$"env1-1:2010"
-@
-\end{figure}
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$parameter_posteriors$sigma_posteriors[[1]]
-@
-\end{figure}
-
-\item "standardized\_residuals" : a plot to check the normality of the residuals. If the model went well it should be between -2 and 2.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out1$posteriors$standardized_residuals
-@
-\end{figure}
-
-\end{itemize}
-
-\item "MCMC" : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations//thin (the thin value is 10 by default in the models).
-
-<<message=TRUE,cache=FALSE>>=
-dim(out1$MCMC)
-@
-
-\end{itemize}
-
-Just for fun, you can compare the posterior medians and the arithmetic means for the $\mu_{ij}$.
-
-<<message=TRUE,cache=FALSE>>=
-MCMC = out1$MCMC
-effects = apply(MCMC, 2, median)
-mu_ij_estimated = effects[grep("mu",names(effects))]
-names(mu_ij_estimated) = sapply(names(mu_ij_estimated), 
-                                function(x){  sub("\\]", "", sub("mu\\[", "", x)) } 
-                                )
-
-d = filter(PPBdata, location != "env4")
-d = filter(d, location != "env5")
-d = droplevels(d)
-environment = paste(as.character(d$location), as.character(d$year), sep = ":")
-d$entry = as.factor(paste(as.character(d$germplasm), environment, sep = ","))
-mu_ij = tapply(d$mu_ij, d$entry, mean, na.rm = TRUE)
-
-check = cbind.data.frame(mu_ij, mu_ij_estimated[names(mu_ij)])
-@
-
-Let's have a look on the relation between the posterior medians and the arithmetic means.
-It goes pretty well!
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p = ggplot(check, aes(x = mu_ij, y = mu_ij_estimated))
-p + stat_smooth(method = "lm") + geom_point()
-@
-\end{figure}
-
-
-\subsubsection{Get mean comparisons}
-
-\input{./sections/mean_comp}
-
-\paragraph{Computation}
-
-In \pack, mean comparisons are done with \texttt{get.mean.comparisons}.
-You can choose on which parameters to run the comparison (\texttt{parameter} argument) and the $\alpha$ type one error (\texttt{alpha} argument).
-The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
-More informations on this function by typing \texttt{?get.mean.comparisons}.
-
-<<message=TRUE,cache=FALSE>>=
-# comp.mu = get.mean.comparisons(out1$MCMC, "mu")
-# Get at least X groups for env2-1:2011. It may take some time ...
-# Get at least X groups for  env2-1:2011 is done.
-# Get at least X groups for env2-13:2011. It may take some time ...
-# Get at least X groups for  env2-13:2011 is done.
-# Get at least X groups for env2-3:2012. It may take some time ...
-# Get at least X groups for  env2-3:2012 is done.
-# Get at least X groups for env2-9:2010. It may take some time ...
-# Get at least X groups for  env2-9:2010 is done.
-
-load("./data_PPBstats/comp.mu.RData") # To save time
-@
-
-\paragraph{Plots}
-
-\subparagraph{All entries in a given environment}
-
-To see the output, use \texttt{get.ggplot}.
-On each plot, the \texttt{alpha} (type one error) value and the alpha correction are displayed.
-\texttt{alpha = Imp} means that no differences were possible to find.
-For \texttt{ggplot.type = "interaction"} and \texttt{ggplot.type = "score"}, it is display under the form: \texttt{alpha | alpha correction}.
-
-<<message=TRUE,cache=FALSE>>=
-p_barplot = get.ggplot(comp.mu, ggplot.type = "barplot")
-length(p_barplot)
-names(p_barplot)
-@
-
-\begin{figure}[H]
-
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-# For environment env-1-1:2010
-grid.arrange(p_barplot$"env1-1:2010"[[1]], p_barplot$"env1-1:2010"[[2]] , ncol = 2, nrow = 1)
-grid.arrange(p_barplot$"env1-1:2010"[[2]], p_barplot$"env1-1:2010"[[4]], ncol = 2, nrow = 1)
-@
-\end{figure}
-
-With \texttt{ggplot.type = "interaction"}, you can display the year effect as well as detect groups.
-One group is represented by one dashed line.
-Germplasms which share the same group are not different.
-Germplasms which do not share the same groupe are different (section \ref{mean_comp}).
-
-<<message=TRUE,cache=FALSE>>=
-p_interaction = get.ggplot(comp.mu, ggplot.type = "interaction")
-@
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-# For location env-1-1.
-p_interaction$"env1-1"[[1]]
-@
-\end{figure}
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[[2]]
-@
-\end{figure}
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[[3]]
-@
-\end{figure}
-             
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction$"env1-1"[[4]]
-@
-\end{figure}
-
-For the score, more entries are displayed.
-An high score means that the entry was in a group with an high mean.
-A low socre means that the entry was in a group with an low mean.
-This plot is useful to look at year effects.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_score = get.ggplot(comp.mu, ggplot.type = "score", nb_parameters_per_plot = 15)
-# For location env-1-1
-grid.arrange(p_score$"env1-1"[[1]], p_score$"env1-1"[[2]] , ncol = 2, nrow = 1)
-@
-\end{figure}
-
-The same method is used for each $\beta_{jk}$.
-
-\vspace{.5cm}
-
-For environments with no controls or where at least one MCMC did not converge, it may be useful to get the plot as well.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-get.ggplot(out.model1$data_env_with_no_controls, ggplot.type = "barplot")
-@
-\end{figure}
-
-You can also do a plot with interaction. 
-Here it is not useful as there is only one year.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-g = get.ggplot(out1_bis$model1.data_env_whose_param_did_not_converge, ggplot.type = "barplot")
-
-names(g)
-
-g$`env1-1:2012`$`1`
-@
-\end{figure}
-
-
-\subparagraph{Pairs of entries in a given environment}
-It is possible to get comparison of paris of entries in a given location.
-This is useful if you want to compare two versions within a group.
-For exemple:
-
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-data(data_version)
-head(data_version)
-@
-
-Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two version belonging to the same groupe.
-
-Lets' make the plots:
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-g = get.ggplot(data = comp.mu, data_version = data_version, ggplot.type = "barplot")
-g$`env1-1:2010`$`1`
-@
-
-The stars corresponds to the pvalue:
-
-\begin{center}
-\begin{tabular}{cc}
-\hline
-pvalue & stars \\
-\hline
-$< 0.001$ & *** \\
-$[0.001 , 0.05]$ & ** \\
-$[0.05 , 0.01]$ & * \\
-$> 0.01$ & . \\
-\hline
-\end{tabular}
-\end{center}
-
-The pvalue is computed as describe in section \ref{mean_comp} if the parameters have been estimated with the model.
-
-It is also possible to make this kind of plots for data that did not converge or without environments.
-In this case, it is a \texttt{t.test} which is perform.
-
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-g = get.ggplot(out1_bis$model1.data_env_whose_param_did_not_converge, data_version = data_version, ggplot.type = "barplot")
-
-g = get.ggplot(out.model1$data_env_with_no_controls, data_version = data_version, ggplot.type = "barplot")
-@
-
-
-\section{At the network level : model~\ref{model2} to analyse $G \times E$ interaction in the network of farms }
-\label{section_model2}
-
-\subsection{The model}
-\input{./sections/model2}
-
-\subsection{With \pack}
-
-For model~\ref{model2}, you can follow these steps (Figure \ref{function_relations}):
-
-\begin{enumerate}
-\item Run the model with \texttt{FWH}
-\item Analyse model outputs with graphs to kow if you can continue the analysis with \texttt{analyse.outputs}
-\item Perform cross validation studies with \texttt{cross.validation.FWH} in order to assess the quality of the model
-\item Get mean comparisons for each factor with \texttt{get.mean.comparisons} and \texttt{get.ggplot}
-\item Get groups of parameters for $\alpha$, $\beta$ and $\theta$ with \texttt{get.parameters.groups} and \texttt{get.ggplot}
-\item Predict the past with \texttt{predict.the.past} and \texttt{get.ggplot}
-\end{enumerate}
-
-Let's get the data.
-The values for $\alpha_i$, $\beta_i$, $\theta_j$ are the real value taken to create the dataset for y1.
-This dataset is representative of data you can get in a PPB programme.
-
-<<message=TRUE,cache=FALSE>>=
-data(PPBdata2)
-head(PPBdata2)
-@
-
-
-\subsubsection{Run the model}
-
-To run model \ref{model2} on the dataset, used the function \texttt{FWH} (which stands for Finlay Wilkinson Hierarchical).
-You can run it on one variable.
-Here it is on thousand kernel weight (tkw)
-
-By default, \texttt{FWH} returns posteriors for 
-$\alpha_i$ (\texttt{return.alpha = TRUE}),
-$\sigma_{\alpha}$ (\texttt{return.sigma\_alpha = TRUE}),
-$\beta_i$ (\texttt{return.beta = TRUE}),
-$\sigma_{\beta}$ (\texttt{return.sigma\_beta = TRUE}),
-$\theta_j$ (\texttt{return.theta = TRUE}),
-$\sigma_{\theta}$ (\texttt{return.sigma\_theta = TRUE}) and
-$\sigma_{\epsilon}$ (\texttt{return.sigma\_epsilon = TRUE}).
-You can also get $\epsilon_{ij}$ with \texttt{return.epsilon = TRUE}.
-
-By default, DIC is not display, you may want this value to compare to other model (\texttt{DIC = TRUE}).
-DIC criterion is a generalization of the AIC criterion that can be used for hierarchical models \citep{spiegelhalter_bayesian_2002}.
-The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
-
-<<message=TRUE,cache=FALSE>>=
-# out.model2 = FWH(data = PPBdata2, variable = "y1", return.epsilon = TRUE)
-#Run additive model ...
-#Compiling model graph
-#   Resolving undeclared variables
-#   Allocating nodes
-#   Graph Size: 9759
-#
-#Initializing model
-#
-#  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
-#Run FWH model ...
-#Compiling model graph
-#   Resolving undeclared variables
-#   Allocating nodes
-#   Graph Size: 14677
-#
-#Initializing model
-#
-#  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
-#  |**************************************************| 100%
-
-load("./data_PPBstats/out.model2.RData") # To save time
-@
-
-It may be useful to see which germplasm were not use in the analysis because they were in only one environment.
-
-<<message=TRUE,cache=FALSE>>=
-out.model2$germplasm.not.used
-@
-
-\subsubsection{Analysis of model outputs}
-
-Once the model is run, it is necessary to check if the outputs can be taken with confidence. 
-This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from \texttt{analyse.outputs}!).
-
-
-<<message=TRUE,cache=FALSE>>=
-# out2 = analyse.outputs(out.model2)
-# The experimental design plot is done.
-# The Gelman-Rubin test is running for each parameter ...
-# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
-# The alpha_i posterior distributions are done.
-# The beta_i posterior distributions are done.
-# The theta_j posterior distributions are done.
-# The standardised residuals distributions are done.
-
-load("./data_PPBstats/out2.RData") # To save time
-@
-
-\texttt{out2} is a list containing :
-
-\begin{itemize}
-
-\item "experimental\_design" : a plot representing the presence/abscence matrix of G $\times$ E combinaisons. 
-Note that it displays only germplasms that are on at least two environments.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out2$data.experimental_design$plot
-@
-\end{figure}
-
-\item "convergence" : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test \citep{gelman_inference_1992}. If all the chains converge, it is NULL
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out2$convergence
-@
-\end{figure}
-
-\item "parameter\_posteriors": a list with caterpillar plot for each $\alpha_i$, $\beta_i$ and $\theta_j$.
-
-Below an example for $\alpha_i$.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p = out2$posteriors$parameter_posteriors$alpha_posteriors
-grid.arrange(p[[1]], p[[2]],ncol = 2, nrow = 1)
-grid.arrange(p[[3]], p[[4]],ncol = 2, nrow = 1)
-@
-\end{figure}
-
-
-\item "standardized\_residuals" : a plot to check the normality of the residuals. If the model went well it should be between -2 and 2.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out2$posteriors$standardized_residuals
-@
-\end{figure}
-
-\item "MCMC": a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/thin (the thin value is 10 by default in the models).
-
-<<message=TRUE,cache=FALSE>>=
-dim(out2$MCMC)
-@
-
-\end{itemize}
-
-Just for fun, you compare the posterior medians and the arithmetic means for the $\alpha_i$'s.
-
-<<message=TRUE,cache=FALSE>>=
-MCMC = out2$MCMC
-effects = apply(MCMC, 2, median)
-alpha_i_estimated = effects[grep("alpha\\[",names(effects))]
-names(alpha_i_estimated) = sapply(names(alpha_i_estimated), function(x){  
-sub("\\]", "", sub("alpha\\[", "", x)) } )
- 
-alpha_i = tapply(PPBdata2$alpha_i, PPBdata2$germplasm, mean, na.rm = TRUE)
- 
-check = cbind.data.frame(alpha_i = alpha_i, alpha_i_estimated = alpha_i_estimated[names(alpha_i)])
-@
-
-Let’s have a look at the relation between both values.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p = ggplot(check, aes(x = alpha_i, y = alpha_i_estimated))
-p + stat_smooth(method = "lm") + geom_point()
-@
-\end{figure}
-
-
-\subsubsection{Perform cross validation studies}
-
-This step is useful to assess the quality of the model.
-This step is higly computing consuming as the FWH model is run as many time as there is value of $Y_{ij}$ (i.e. number of rows of the data set).
-
-The complete cross validation is done with \texttt{cross.validation.FWH}: 
-each Value of $Y_{ij}$ is estimated by the entire data set without this value.
-
-The convergence is not check for each validation. 
-If the parameters in the FWH converge, then it is assumed that the FWH in the cross validation converge as well.
-
-The model is run on dataset where germplasms are in three environments at least so the smallest data set where the cross valisation is run has germplasms present in two environments at least. 
-
-You may parallelise to gain time with the \texttt{mc.cores} argument of the function.
-
-The number of iterations is set to 100 000 but you can change it with the \texttt{nb\_iterations} argument.
-
-The percentage of confidence is calculated with a t-test:
-
-\begin{displaymath}
-t = \frac{m - 0}{s/\sqrt{N}}
-\end{displaymath}
-with,
-
-$N$ the number of observations in the data set,
-
-$m = \frac{1}{N} \sum\limits_{n=1}^N Y_{n} - \hat{Y_{n}}$, the average bias
-
-$s = \sqrt{\frac{1}{N-1} \sum\limits_{n=1}^N (Y_{n} - \hat{Y_{n}})^2}$, the standard deviation of the bias
-
-$t$ follows a Student distribution with $N-1$ degree of freedom.
-
-The percentage of confidence (i.e. the probability $H0$: the bias is equal to zero) comes from this distribution.
-
-A regression is also done between estimated and observed value.
-
-Here it is bad as only 10 iterations have been done to save computing time ...
-
-<<message=TRUE,cache=FALSE>>=
-# out.cv = cross.validation.FWH(data = PPBdata2, variable = "y1", nb_iterations = 10)
-load("./data_PPBstats/out.cv.RData") # to save lots of time
-@
-
-<<message=TRUE,cache=FALSE>>=
-out.cv$percentage.of.confidence
-@
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-out.cv$regression
-@
-\end{figure}
-
-
-
-\subsubsection{Get mean comparisons}
-For mean comparisons of parameters, it is the same method that presented in section \ref{mean_comp}.
-
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-comp.alpha = get.mean.comparisons(out2$MCMC, "alpha")
-comp.theta = get.mean.comparisons(out2$MCMC, "theta")
-comp.beta = get.mean.comparisons(out2$MCMC, "beta", type = 2, threshold = 1)
-@
-
-To see the output, use \texttt{get.ggplot}.
-
-<<message=TRUE,cache=FALSE>>=
-p_barplot = get.ggplot(comp.alpha, ggplot.type = "barplot")
-@
-
-Lets' have a look at the firt values of $\alpha_i$.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-grid.arrange(p_barplot$"alpha"[[1]], p_barplot$"alpha"[[2]] , ncol = 2, nrow = 1)
-@
-\end{figure}
-
-\subsubsection{Get biplot $\beta = f(\alpha)$}
-
-It is interessting to compare genetic effect versus sensibility to interaction.
-A germplasm with an high genetic effect and a low sensitivity to interaction (i.e. close to 0) may be a good candidate to sown.
-
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-comp.alpha = get.mean.comparisons(out2$MCMC, "alpha")
-comp.beta = get.mean.comparisons(out2$MCMC, "beta")
-
-g = get.ggplot(data = comp.alpha, data_2 = comp.beta, ggplot.type = "biplot-alpha-beta")
-g$biplot
-@
-
-
-\subsubsection{Get groups of parameters}
-
-In order to cluster environments or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
-
-This is done with \texttt{get.parameter.groups} which do a PCA on this matrix and then find cluster with the \texttt{HCPC} procedure from package \texttt{FactoMineR}: it is a K-means clustering that creates clusters of similar parameters \citep{husson_principal_2010}.
-The Kmeans clustering was done on the first two axes of the PCA that represented the main information while the last axes represented mainly noise \citep{husson_principal_2010}.
-The number of clusters is choosen to maximise the variance between clusters and within clusters.
-For more information type \texttt{?get.parameter.groups}.
-
-<<message=TRUE,cache=FALSE>>=
-# out.model2_y1 = FWH(PPBdata2, variable = "y1")
-load("./data_PPBstats/out.model2_y1.RData") # to save time
-
-# out.model2_y2 = FWH(PPBdata2, variable = "y2")
-load("./data_PPBstats/out.model2_y2.RData") # to save time
-
-# out.model2_y3 = FWH(PPBdata2, variable = "y3")
-load("./data_PPBstats/out.model2_y3.RData") # to save time
- 
-out2_y1 = analyse.outputs(out.model2_y1)
-out2_y2 = analyse.outputs(out.model2_y2)
-out2_y3 = analyse.outputs(out.model2_y3)
- 
-analyse.outputs.list = list(var1 = out2_y1, var2 = out2_y2, var3 = out2_y3)
-
-clust = get.parameter.groups(analyse.outputs.list, parameter = "theta")
-@
-
-To see the output, use \texttt{get.ggplot}.
-A farmer may find a germplasm that behaves well according to informations from model \ref{model1} (section \ref{section_model1}) in a farm that shares its cluster.
-
-\begin{figure}[H]
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_PCA = get.ggplot(clust, ggplot.type = "PCA")
-p_PCA
-@
-\end{figure}
-
-
-
-\subsubsection{Predict the past}
-
-In order to choose a new germplasm to test on his farm, a farmer may choose a germplasm according to the value it would have obtained on his farm.
-
-You may either get the estimated MCMC, but you will need lots of memory, or the summary statistics of the MCMC.
-
-Due to memory issues, it may be better to choose output.format = "summary".
-This allows caterpillar plots but no mean comparisons that are base on the whole MCMC.
-
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-# out.predict.the.past = predict.the.past(out2, output.format = "summary")
-# |==========================================================| 100%
-load("./data_PPBstats/out.predict.the.past.RData") # to save time
-dim(out.predict.the.past)
-@
-
-
-If you choose \texttt{output.format = "summary"}, it is possible to look at the results with \texttt{get.ggplot}.
-
-
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_barplot_predict = get.ggplot(out.predict.the.past, ggplot.type = "barplot", 
-                               nb_parameters_per_plot = 30)
-p_barplot_predict$`loc-11:year-1`$`1`
-@
-
-<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
-p_interaction_predict = get.ggplot(out.predict.the.past, ggplot.type = "interaction")
-p_interaction_predict$`loc-46`$`1`
-@
-
-
-
 \newpage
 
 \section*{To cite \pack} \addcontentsline{toc}{section}{To cite \pack}
@@ -835,7 +146,6 @@ To cite this package and or this vignette:
 <<message=TRUE,cache=FALSE>>=
 citation("PPBstats")
 @
-
 
 \input{./sections/tail}
 

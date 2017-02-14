@@ -1,10 +1,9 @@
-# 0. help ----------
 #' Get regional farms data and satellite farms data
 #'
 #' @description
-#' \code{get.env.info} look at a data set and separate regional farms and satellite farms in two datasets. This function is used in \code{MC}.
+#' \code{get.env.info} look at a data set and separate regional farms and satellite farms in two datasets. This function is used in \code{\link{model_1}}.
 #'
-#' @param D The data frame with its specific column names used in \code{MC}
+#' @param D The data frame with its specific column names used in \code{\link{model_1}}
 #'  
 #' @param nb_ind The minimal number of individuals per variable
 #' 
@@ -21,14 +20,13 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{MC}}
+#' @seealso \code{\link{model_1}}
 #' 
 #' 
 get.env.info = function(
   D,
   nb_ind
   )
-  # let's go !!! ---------- 
 {
 
   # 1. Get informations on environments ----------
@@ -98,7 +96,7 @@ get.env.info = function(
   }
   
    
-  # 4. Return outputs ----------
+  # 4. Return results ----------
   
   out = list(
     vec_env_with_no_data = vec_env_with_no_data,

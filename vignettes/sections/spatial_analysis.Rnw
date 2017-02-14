@@ -1,0 +1,6 @@
+\subsection{Spatial analysis}
+\label{spatial_analysis}
+
+
+!!! TO DO !!!
+
