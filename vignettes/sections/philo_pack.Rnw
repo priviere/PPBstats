@@ -7,7 +7,7 @@
 \item \textbf{decentralized the selection}
 
 When decentralizing the selection in target environment \citep{desclaux_changes_2008}, the phenotypic trait is the sum of genetic ($G$), environmental ($E$) and interaction between the two ($G \times E$) : $P = G + E + G \times E$.
-Braod sens heritability of a given trait is then:
+Broad sens heritability of a given trait is then:
 \begin{displaymath}
 h^2_{sl} = \frac{var(G)}{var(G) + var(E) + var(G\times E)}
 \end{displaymath}
@@ -15,7 +15,7 @@ h^2_{sl} = \frac{var(G)}{var(G) + var(E) + var(G\times E)}
 Heritability taking into account the network is therefore superior or equal to heritability on a given site because $var(G\times E) > 0$.
 When facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted variety to local agro-system.
 
-\item \textbf{involve all actors in the breeding decision process}: farmers, technicians, researcher, facolitators, consumers ... Such involvement empower all actors and answer the real needs of actors  \citep{sperling_framework_2001}.
+\item \textbf{involve all actors in the breeding decision process}: farmers, technicians, researchers, facolitators, consumers ... Such involvement empower all actors and answer the real needs of actors  \citep{sperling_framework_2001}.
 
 \end{itemize}
 
@@ -35,12 +35,12 @@ The statistical procedures are based on frequentist and bayesian approaches.
 \end{itemize}
 
 In this vignette, we only used examples with main functions.
-Nevertheless, second functions could be used in other context to answer specific questions.
+Nevertheless, second functions could be used in other contexts to answer specific questions.
 Figure~\ref{main_workflow} displays the main functions and their relations.
-Table~\ref{function_descriptions_workflow} describe each of the main functions.
+Table~\ref{function_descriptions_workflow} describes each of the main functions.
 
-Figure~\ref{workflow_2} display second functions used in the main functions.
-Table~\ref{function_descriptions_workflow_2} describe each of the second functions.
+Figure~\ref{workflow_2} displays second functions used in the main functions.
+Table~\ref{function_descriptions_workflow_2} describes each of the second functions.
 
 You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
 
@@ -200,9 +200,9 @@ Bayesian statistics are based on the Bayes theorem:
 Pr(\theta|y) \propto Pr(\theta) Pr(y|\theta)
 \end{displaymath}
 
-with 
-$Pr(\theta|y)$ the posterior, 
-$Pr(y|\theta)$ the likelihood and 
+with
+$Pr(\theta|y)$ the posterior,
+$Pr(y|\theta)$ the likelihood and
 $Pr(\theta)$ the prior.
 
 The parameters' distribution, knowing the data (the posterior), is proportional to the distribution \textit{a  priori} (the prior) $\times$ the information brought by the data (the likelihood).
@@ -222,7 +222,7 @@ This test was based on the variance within and between the chains \citep{gelman_
 
 A burn-in and lots of iterations were needed in the MCMC procedure.
 In our case, the burn-in had 1000 iterations, then 100 000 iterations are done by default\footnote{You can change it with the argument \texttt{nb\_iterations} in functions \texttt{MC} and \texttt{FWH}} with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples were available for inference for each chain by default\footnote{There are \texttt{nb\_iterations}/10 values for each chain. This can be changed with the \texttt{thin} argument of the functions.}.
- 
+
 The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
 
 
@@ -243,7 +243,7 @@ which this hypothesis was satisfied (Figure~\ref{proba}).
 
 Groups are made based on the probabilites.
 Germplasms which share the same group are not different.
-Germplasms which do not share the same groupe are different.
+Germplasms which do not share the same group are different.
 
 The threshold $\alpha$ that depends on agronomic objectives.
 This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given environnement).
@@ -319,7 +319,7 @@ To continue, load the development version of the package:
 devtools::install_github("priviere/PPBstats")
 @
 
-, load it 
+, load it
 
 <<message=TRUE,cache=FALSE,eval=FALSE>>=
 library(PPBstats)
@@ -330,7 +330,7 @@ and download from internet the data used in this vignette (this is useful to ear
 <<message=FALSE,cache=FALSE,eval=FALSE>>=
 get.PPBstats.data() # not run
 # |=======================================================================| 100%
-# The data are downloaded in ./data_PPBstats/ 
+# The data are downloaded in ./data_PPBstats/
 # You can now load the data, for example load("./data_PPBstats/out1.Rdata").
 @
 
@@ -339,4 +339,3 @@ The data have always the following columns : location, year, germplasm, block, X
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
-
