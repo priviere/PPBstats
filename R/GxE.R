@@ -58,7 +58,6 @@ GxE = function(
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data = droplevels(na.omit(data))
       
-      data$block_in_env = factor(paste(data$block, data$location, data$year, sep = ";")) # hierarchise block within location and year
       data$YxE = factor(paste(data$year, data$location, sep = ":"))
       data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
     
@@ -67,9 +66,9 @@ GxE = function(
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
     
     if(nlevels(data$year) > 1) { # depends on the years available in the data set
-      model = lm(variable ~ germplasm*location + block_in_env + year + YxG + YxE, data = data)
+      model = lm(variable ~ germplasm*location + block %in% YxE + year + YxG + YxE, data = data)
     } else {
-      model = lm(variable ~ germplasm*location + block_in_env, data = data)
+      model = lm(variable ~ germplasm*location + block %in% location, data = data)
     }
     options(contrasts = c("contr.treatment", "contr.poly")) # Come back to default options
 
