@@ -1,0 +1,435 @@
+\subsection{AMMI}
+\label{ammi}
+
+\subsubsection{Theory of the model}
+
+The Additive Main effects and Multiplicative Interaction (AMMI) model is based on two analyses \citep{gauch_statistical_2006} : 
+\begin{enumerate}
+
+\item an \textbf{ANOVA} with the following model :
+
+\begin{equation}
+Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + \eta_{i}\nu_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{ammi_anova}
+\end{equation}
+
+With,
+
+\begin{tabular}{ll}
+$Y_{ijk}$ & the phenotypic value for replication $k$, germplasm $i$ and location $j$, \\
+$\mu$ & the general mean, \\
+$\alpha_{i}$ & the germplasm $i$ effect, \\
+$\theta_{j}$ & location $j$ effect, \\
+$rep_{k}(\theta_{j})$ & the replication $k$ nested in location effect, \\
+$\eta_{i}\nu_{j}$ & the germplasm $\times$ location effect, \\
+$\varepsilon_{ijk}$ & the residuals.\\
+\end{tabular}
+
+~\\ 
+
+Or, if there are several years in the data set:
+
+\begin{equation}
+Y_{ijkl} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}\beta_{l}) + \eta_{i}\nu_{j} + 
+\beta_{l} + \beta_{l}\alpha_{i} + \beta_{l}\theta_{j} + 
+\varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{ammi_anova}
+\end{equation}
+
+With,
+
+\begin{tabular}{ll}
+$Y_{ijkl}$ & the phenotypic value for replication $k$, germplasm $i$, location $j$ and year $l$, \\
+$\mu$ & the general mean, \\
+$\alpha_{i}$ & the germplasm $i$ effect, \\
+$\theta_{j}$ & location $j$ effect, \\
+$rep_{k}(\theta_{j}\beta_{l})$ & the replication $k$ nested in location and year effect, \\
+$\eta_{i}\nu_{j}$ & the germplasm $\times$ location effect, \\
+$\beta_{l}$ & the year $l$ effect, \\
+$\beta_{l}\alpha_{i}$ & the year $\times$ germplasm interaction effect, \\
+$\beta_{l}\theta_{j}$ & the year $\times$ location interaction effect, \\
+$\varepsilon_{ijk}$ & the residuals.\\
+\end{tabular}
+
+
+\item a \textbf{PCA} which analyse deeper the germplasm $\times$ location interaction: 
+
+\begin{displaymath}
+\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}
+\end{displaymath}
+
+which can also be written:
+
+\begin{displaymath}
+\eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})
+\end{displaymath}
+
+
+With,
+
+\begin{tabular}{ll}
+$\eta_{i}\nu_{j}$ & interaction of germplasm $i$ with location $j$, \\
+$N$ & the number of dimension (PCA componant) which has as maximum value the number of location, \\
+$\lambda_{n}$ & the eigen value for componant $n$, \\
+$\gamma_{in}$ & eigen vector for germplasm $i$ for componant $n$, \\
+$\omega_{jn}$ & eigen vector for  location $j$  for componant $n$. \\
+\end{tabular}
+
+
+The data are double centered on location and germplasm.
+The PCA study the structure of the interaction matrix.
+The location are the variable and the germplasm are the individuals.
+
+This PCA allows to detect
+\begin{itemize}
+\item germplasm that are stable (i.e. contribute less to interaction)
+\item which germplasm interact the most with which location
+\item which location have the same profile regarding interaction
+\end{itemize}
+
+\end{enumerate}
+
+
+\subsubsection{Steps with \pack}
+
+For AMMI analysis, you can follow these steps (Figure \ref{main_workflow}):
+
+\begin{enumerate}
+\item Run the model with \texttt{GxE} and \texttt{gxe\_analysis = "AMMI"}
+\item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{get\_ggplot}
+\item Get groups of each parameters with \texttt{parameters\_groups} and visualise it with \texttt{get\_ggplot}
+\end{enumerate}
+
+Let's get the data.
+
+<<message=TRUE,cache=FALSE>>=
+data(data_GxE)
+head(data_GxE)
+@
+
+
+\subsubsection{Run the model}
+To run model GxE on the dataset, used the function \texttt{GxE}.
+You can run it on one variable.
+
+<<message=TRUE,cache=FALSE>>=
+out_ammi = GxE(data_GxE, variable = "y1", gxe_analysis = "AMMI")
+@
+
+
+\texttt{out\_ammi} is a list containing three elements :
+
+\begin{itemize}
+\item \texttt{info} : a list with variable and gxe\_analysis
+<<message=TRUE,cache=FALSE>>=
+out_ammi$info
+@
+\item \texttt{ANOVA} a list with five elements :
+  \begin{itemize}
+  \item \texttt{model}
+  <<message=TRUE,cache=FALSE>>=
+  out_ammi$ANOVA$model
+  @
+  \item \texttt{anova\_model}
+  <<message=TRUE,cache=FALSE>>=
+  out_ammi$ANOVA$anova_model
+  @
+  \item \texttt{germplasm\_effects} a list of two elements :
+    \begin{itemize}
+    \item \texttt{effects}
+    <<message=TRUE,cache=FALSE>>=
+    out_ammi$ANOVA$germplasm_effects$effects
+    @
+    \item \texttt{intra\_variance}
+    <<message=TRUE,cache=FALSE>>=
+    out_ammi$ANOVA$germplasm_effects$intra_variance
+    @
+    \end{itemize}
+  \item \texttt{location\_effects}
+  <<message=TRUE,cache=FALSE>>=
+  out_ammi$ANOVA$location_effects$effects
+  @
+  \item \texttt{interaction\_matrix}
+  <<message=TRUE,cache=FALSE>>=
+  out_ammi$ANOVA$interaction_matrix
+  @
+  \end{itemize}
+\item \texttt{PCA} : PCA object from FactoMineR
+<<message=TRUE,cache=FALSE>>=
+out_ammi$PCA
+@
+\end{itemize}
+
+\subsubsection{Check and visualize model outputs}
+
+\paragraph{Check the model}
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from \texttt{check\_model}).
+
+<<message=TRUE,cache=FALSE>>=
+out_check_ammi = check_model(out_ammi)
+@
+
+\texttt{out\_check\_ammi} is a list containing four elements :
+
+\begin{itemize}
+\item \texttt{GxE} the output from the model
+\item \texttt{data\_ggplot} a list containing information for ggplot:
+  \begin{itemize}
+  \item \texttt{data\_ggplot\_residuals} a list containing :
+    \begin{itemize}
+    \item \texttt{data\_ggplot\_normality}
+    \item \texttt{data\_ggplot\_skewness\_test}
+    \item \texttt{data\_ggplot\_kurtosis\_test}
+    \item \texttt{data\_ggplot\_qqplot}
+    \end{itemize}
+  \item \texttt{data\_ggplot\_variability\_repartition\_pie}
+  \item \texttt{data\_ggplot\_var\_intra}
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Visualize outputs}
+
+Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
+
+<<message=TRUE,cache=FALSE>>=
+p_out_check_ammi = get_ggplot(out_check_ammi)
+@
+
+\texttt{p\_out\_check\_ammi} is a list with:
+
+\begin{itemize}
+\item \texttt{residuals}
+  \begin{itemize}
+  \item \texttt{histogramm} : histogramm with the distribution of the residuals
+  <<message=TRUE,cache=FALSE>>=
+  p_out_check_ammi$residuals$histogramm
+  @
+  \item \texttt{qqplot}
+  <<message=TRUE,cache=FALSE>>=
+  p_out_check_ammi$residuals$qqplot
+  @
+  \end{itemize}
+  
+\item \texttt{variability\_repartition} : pie with repartition of SumSq for each factor
+<<message=TRUE,cache=FALSE>>=
+p_out_check_ammi$variability_repartition
+@
+
+\item \texttt{variance\_intra\_germplasm} : repartition of the residuals for each germplasm (see Details for more information)
+
+This has to been seen with caution:
+  \begin{itemize}
+  \item If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+  \item If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+  With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+  \end{itemize}
+
+<<message=TRUE,cache=FALSE>>=
+p_out_check_ammi$variance_intra_germplasm
+@
+
+\item \texttt{pca\_composante\_variance} : variance caught by each dimension of the PCA run on the interaction matrix
+<<message=TRUE,cache=FALSE>>=
+p_out_check_ammi$pca_composante_variance
+@
+\end{itemize}
+
+
+\subsubsection{Get and visualize mean comparisons}
+
+\paragraph{Get mean comparisons}
+
+Get mean comparisons with \texttt{mean\_comparisons}.
+
+<<message=TRUE,cache=FALSE>>=
+out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni")
+@
+
+\texttt{out\_mean\_comparisons\_ammi} is a list of three elements:
+
+\begin{itemize}
+\item \texttt{info} : a list with variable and gxe\_analysis
+\item \texttt{data\_ggplot\_LSDbarplot\_germplasm}
+\item \texttt{data\_ggplot\_LSDbarplot\_location}
+\item \texttt{data\_ggplot\_LSDbarplot\_year}
+\end{itemize}
+
+\paragraph{Visualize mean comparisons}
+
+<<message=TRUE,cache=FALSE>>=
+p_out_mean_comparisons_ammi = get_ggplot(out_mean_comparisons_ammi, ggplot.type = "barplot")
+@
+
+\texttt{out\_mean\_comparisons\_ammi} is a list of three elements with barplots :
+
+For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+The error I (alpha) and the alpha correction are displayed in the title. 
+
+\begin{itemize}
+\item \texttt{germplasm} : mean comparison for germplasm
+<<message=TRUE,cache=FALSE>>=
+pg = p_out_mean_comparisons_ammi$germplasm
+names(pg)
+pg$`1`
+@
+
+\item \texttt{location} : mean comparison for location
+<<message=TRUE,cache=FALSE>>=
+pl = p_out_mean_comparisons_ammi$location
+names(pl)
+pl$`1`
+@
+
+
+\item \texttt{year} : mean comparison for year
+Here there are no more than 2 years in the data set so it is \texttt{NULL}
+<<message=TRUE,cache=FALSE>>=
+p_out_mean_comparisons_ammi$year
+@
+
+\end{itemize}
+
+
+\subsubsection{Get and visualize biplot}
+
+The biplot represents information about the percentages of total variation explained by the two axes.
+It has to be linked to the total variation caught by the interaction.
+If the total variation is small, then the biplot is useless.
+If the total variation is high enought, then the biplot is useful if the two first dimension represented catch enought variation (the more the better).
+
+\paragraph{Get biplot}
+
+<<message=TRUE,cache=FALSE>>=
+out_biplot_ammi = biplot_GxE(out_check_ammi)
+@
+
+\paragraph{Visualize biplot}
+
+<<message=TRUE,cache=FALSE>>=
+p_out_biplot_ammi = get_ggplot(out_biplot_ammi)
+@
+
+\texttt{p\_out\_biplot\_ammi} is a list of two elements :
+\begin{itemize}
+\item \texttt{ecovalence}
+
+Ecovalence from \citet{wricke_uber_1962} give part of interaction variance taken by germplasm and location.
+It is an indicator of stability: a low ecovalence means low interaction, i.e. more stability.
+
+Ecovalance of germplasm $i$ is $W_{i}=\sum_{i}^{n} (\eta_{i}\nu_{j})^{2}$
+
+Ecovalance of location $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
+
+Ecovalances are represented in fonction of mean effects by germplasm and location.
+
+<<message=TRUE,cache=FALSE>>=
+p_out_biplot_ammi$ecovalence
+@
+
+\item \texttt{biplot} being a list of four elements :
+<<message=TRUE,cache=FALSE>>=
+p_out_biplot_ammi$biplot$simple_biplot
+@
+
+Regarding the other elements of the list, it returns \texttt{NULL} as these visualisation is only done for \texttt{gxe\_analysis = "GGE"}.
+
+<<message=TRUE,cache=FALSE>>=
+p_out_biplot_ammi$biplot$which_won_where
+p_out_biplot_ammi$biplot$mean_vs_stability
+p_out_biplot_ammi$biplot$discrimitiveness_vs_representativeness
+@
+\end{itemize}
+
+
+\subsubsection{Get and vizualise groups of parameters}
+
+\paragraph{Get groups of parameters}
+
+In order to cluster locations or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
+
+This is done with \texttt{parameter\_groups} which do a PCA on this matrix.
+
+Clusters are done based on Average silhouette method for k-means clustering as explained here \url{http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning#r-codes-1}
+
+The hcluster are computed with the function \texttt{hclust(dist())}
+
+The kmeans are computed with the function \texttt{kmeans()}
+
+Lets' have an example with three variables.
+
+First run the models
+<<message=TRUE,cache=FALSE>>=
+ammi_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "AMMI")
+ammi_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "AMMI")
+@
+
+Then check the models
+<<message=TRUE,cache=FALSE>>=
+out_check_ammi_2 = check_model(ammi_2)
+out_check_ammi_3 = check_model(ammi_3)
+@
+
+Then run the function for germplasm. It can also be done on location or year if there are year in the data set.
+
+<<message=TRUE,cache=FALSE>>=
+out_parameter_groups = parameter_groups(
+  list("y1" = out_check_ammi, "y2" = out_check_ammi_2, "y3" = out_check_ammi_3), 
+  "germplasm"
+  )
+@
+
+\paragraph{Visualize groups of parameters}
+
+Visualize outputs with \texttt{get\_ggplot}
+
+<<message=TRUE,cache=FALSE>>=
+p_germplasm_group = get_ggplot(out_parameter_groups)
+@
+
+\texttt{p\_germplasm\_group} is list of two elements :
+
+\begin{itemize}
+\item \texttt{pca} : a list with three elements on the PCA on the group of parameters :
+
+  \begin{itemize}
+  \item \texttt{composante\_variance} : variance caught by each dimension of the PCA
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$pca$composante_variance
+  @
+
+  \item \texttt{ind} : graph of individuals
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$pca$ind
+  @
+
+  \item \texttt{var} : graph of variables
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$pca$var
+  @
+  
+  \end{itemize}
+
+
+\item \texttt{clust}
+  \begin{itemize}
+  \item \texttt{nb\_k} : output from \texttt{factextra::fviz\_nbclust(data, kmeans, method = "silhouette")}
+  See \texttt{?factoextra::fviz\_nbclust} for more details
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$clust$nb_k
+  @
+
+  \item \texttt{pca} : output from \texttt{factextra::fviz\_cluster(km.res, data, frame.type = "norm")}
+  See \texttt{?factoextra::fviz\_cluster} for more details
+  <<message=TRUE,cache=FALSE>>=
+  p_germplasm_group$clust$pca
+  @
+
+  \end{itemize}
+ 
+\end{itemize}
+
+

@@ -1,12 +1,11 @@
-# 0. help ----------
 #' Get the value of type one error needed to have X groups.
 #'
 #' @description
 #' \code{get.at.least.X.groups} gets the value of type one error needed to have X groups. X goes from 2 to the maximum number of groups possible.
 #' 
-#' @param Mpvalue A vector or a matrix with the probabilities for two parameters to be equal. It comes from the function \code{comp.parameters}
+#' @param Mpvalue A vector or a matrix with the probabilities for two parameters to be equal. It comes from the function \code{\link{comp.parameters}}
 #'  
-#' @param MCMC MCMC outputs from \code{analysis.outputs}. It is a data frame. 
+#' @param MCMC MCMC. It is a data frame. 
 #' 
 #' @param p.adj NULL for no adjustement of the type one error. "soft.bonf" for a soft bonferonni correction to take into account multiple comparisons (alpha / number of parameters).
 #' 
@@ -21,8 +20,11 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{analyse.outputs}}, \code{\link{comp.parameters}}, \code{\link{get.significant.groups}}
-#' 
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{mean_comparisons_model_1}}
+#' \item \code{\link{mean_comparisons_model_2}}
+#' } 
 #' 
 get.at.least.X.groups = function(
   Mpvalue, 
@@ -30,7 +32,6 @@ get.at.least.X.groups = function(
   p.adj = "soft.bonf", 
   precision = 0.0005
   )
-# let's go !!! ----------
 {
 total_groups = nrow(Mpvalue)
 ALP = rep(NA, (total_groups - 1))

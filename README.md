@@ -1,6 +1,6 @@
 # PPBstats
 
-`PPBstats` is an R package for statistical analysis of unbalanced trials in decentralized participatory plant breeding programmes.
+`PPBstats` is an R package to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes 
 
 The R code is under licence GPL-3.
 
@@ -10,28 +10,26 @@ More informations about this licence [here](http://creativecommons.org/licenses/
 The copyright of the R code and the vignette are owned by Réseau Semences Paysannes and Institut National de la Recherche Agronomique
 
 ## Version
-`PPBstats` is now at version 0.11.1
+`PPBstats` is now at version 0.14
 
-The version number is under the form A.B.C with
+The version number is under the form A.B with
 
 * A: the number of the version on CRAN (0 = no version on CRAN yet)
 
 * B: +1 when the code and/or the vignette change
 
-* C: +1 when the code change but not the vignette
-
 See NEWS [here](https://github.com/priviere/PPBstats/blob/master/NEWS) to know the evolution of the codes.
 
-## Participate to development
+## Contribute to development
 
-You can participate in three ways:
+You can contribute in three ways:
 
 1. test this development version and report bugs
 2. translate the package
-3. add new functions that may be useful in the analysis of unbalanced trials that can be found in PPB programmes
+3. add new functions that may be useful in the analysis of trials that can be found in PPB programmes
 
 If you update the code, you can refer to 
-[the issues](https://github.com/priviere/shinemas2R/issues)
+[the issues](https://github.com/priviere/PPBstats/issues)
 and do it in on another branch.
 Anyhow, send me an email if you wish to participate in order to coordinate our efforts!
 
@@ -46,8 +44,7 @@ First, load the development version:
 
 The easiest way to start is to look at the vignette to know how the package works.
 
-You can see the vignette [here](https://github.com/priviere/PPBstats/blob/master/vignettes/PPBstats.pdf). 
-
+You can see the vignette [here](https://www.dropbox.com/s/q5gr1b5uc3hoa6l/PPBstats.pdf?dl=0). 
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
 - some points are not clear in the vignette or you find bugs

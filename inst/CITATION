@@ -3,19 +3,19 @@ citHeader("To cite the PPBstats package in publications use:")
 citEntry(
   entry = 'manual',
   title = 'PPBstats: An R package for statistical analysis 
-          of unbalanced trials in decentralized participatory plant 
-          breeding programmes. Version 0.11.1',
-  author = '{Pierre Riviere and Olivier David}',
+          of balanced and unbalanced trials in decentralized 
+          participatory plant breeding programmes. Version 0.13',
+  author = '{Pierre Riviere, Gaelle Van Franck and Olivier David}',
   organisation = '{Reseau Semences Paysannes}, {INRA}',
   year = '2016',
   url = 'https://github.com/priviere/PPBstats',
   note = 'R code is under licence GPL-3. 
           Vignette is under licence creative commons BY-NC-SA 4.0.',
-  textVersion =   'Pierre Riviere and Olivier David, 2016, 
+  textVersion =   'Pierre Riviere and al, 2016, 
                   PPBstats: An R package for statistical analysis of 
-                  unbalanced trials in decentralized participatory 
-                  plant breeding programmes.
-                  Version 0.11.1,
+                  balanced and unbalanced trials in decentralized 
+                  participatory plant breeding programmes.
+                  Version 0.13,
                   URL: https://github.com/priviere/PPBstats'
 )
 

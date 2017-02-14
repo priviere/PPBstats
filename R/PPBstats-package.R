@@ -4,9 +4,9 @@
 #' @name PPBstats
 #' @docType package
 #' @description
-#' The R package \code{PPBstats} analyzes unbalanced trials from decentralized participatory plant breeding programs.
+#' \code{PPBstats} is an R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes
 #' 
-#' @author Pierre Riviere and Olivier David
+#' @author Pierre Riviere, Gaelle Van Franck and Olivier David
 #' 
 #' @details
 #' How to use \code{PPBstats} is explained in the vignette: type vignette("PPBstats").
@@ -14,15 +14,15 @@
 NULL
 
 
-# PPBdata ----------
-#' Simulated values of thousand kernel weight (tkw) of bread wheat in a PPB programme
+# data_model_1 ----------
+#' Simulated data set for housand kernel weight (tkw) of bread wheat to test model_1 model
 #'
 #' @description
-#' A dataset containing one variable (tkw) and values for the following factors: germplasm, location, year, and coordinates in the trial (block, X and Y). 
+#' A dataset containing one variable (tkw) and values for the following factors: location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create the dataset are also in columns: mu_ij, beta_jk, epsilon_ijk and sigma_j
 #'
 #' @usage
-#' data(PPBdata)
+#' data(data_model_1)
 #'
 #' @format
 #' A data frame with 1574 rows and 11 columns
@@ -31,25 +31,25 @@ NULL
 #' tkw is in grams
 #' 
 #' @author Pierre Rivière
-"PPBdata"
+"data_model_1"
 NULL
 
 
-# PPBdata2 ----------
-#' Simulated values for three variables
+# data_model_2 ----------
+#' Simulated data set for three variables to test model_2 model
 #'
 #' @description
-#' A dataset containing three variables (y1, y2 and y3) and values for the following factors: germplasm, location, year and coordinates in the trial (block, X and Y). 
+#' A dataset containing three variables (y1, y2 and y3) and values for the following factors: location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create y1 are also in columns: alpha_i-1, beta_i-1, and theta_j-1.
 #' 
 #' @usage
-#' data(PPBdata2)
+#' data(data_model_2)
 #'
 #' @format
 #' A data frame with 2430 rows and 12 columns
 #' 
 #' @author Pierre Rivière
-"PPBdata2"
+"data_model_2"
 NULL
 
 
@@ -69,3 +69,21 @@ NULL
 #' @author Pierre Rivière
 "data_version"
 NULL
+
+
+# data_GxE ----------
+#' Simulated data set for three variables to test GxE model
+#'
+#' @description
+#' A dataset containing three variables (y1, y2 and y3) and values for the following factors: location, year, germplasm, block, X and Y. 
+#'
+#' @usage
+#' data(data_GxE)
+#'
+#' @format
+#' A data frame with 180 rows and 9 columns
+#' 
+#' @author Pierre Rivière
+"data_GxE"
+NULL
+

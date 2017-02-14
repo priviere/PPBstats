@@ -1,0 +1,343 @@
+\section{Design the experiment}
+\label{doe}
+
+Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the space available.
+
+\subsection{Analysis carry out in \pack}
+
+Based on the research question, an analysis is carried on.
+
+Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
+The different effects that can be estimated are:
+\begin{itemize}
+\item \textbf{entry}: a combinaison of a germplasm and an location or an environment
+\item \textbf{germplasm}
+\item \textbf{location} 
+\item \textbf{environment}: a combinaison of a location and a year
+\item \textbf{interaction}: interaction between germplasm and location or germplasm and environment
+\item \textbf{year}
+\item \textbf{migrant-resident}: migrant refers to germplasm that was not grown on previous generation on location; resident refers to germplasm that was grown  on previous generation on location.
+\item \textbf{version}: version within a germplasm, for example selected vs non-selected
+\end{itemize}
+
+\noindent The analysis are divided into four families:
+\begin{itemize}
+\item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
+\item \textbf{Family 2} gathers analysis that estimate germplasm, location and interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+\item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location and year are separated.
+\item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
+\end{itemize}
+Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
+
+\textbf{Family 5} refers to multivariate analysis and is mentionned in section \ref{multivariate_analysis}.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{ccccccccccc}
+\hline
+Family & Name & Section &
+\rotatebox{90}{entry effects} &
+\rotatebox{90}{germpasm effects} &
+\rotatebox{90}{location effects} &
+\rotatebox{90}{environments effects} &
+\rotatebox{90}{interaction effects} &
+\rotatebox{90}{year effects} &
+\rotatebox{90}{migrant-resident effects} & 
+\rotatebox{90}{version effects}
+\\
+\hline
+1 & Anova & \ref{classic_anova} & X & & & & & & \\
+  & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & \\
+  & Bayesian model 1 & \ref{model_1} & X & & & & & & & \\
+\hline
+2 & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
+  & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
+  & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
+\hline
+3 & Bayesian model 3 & \ref{model_3} & X & X & X & & X & X & & \\
+\hline
+4 & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
+  & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
+\hline
+\end{tabular}
+\caption{Analysis carry out in \pack. X: effects that are estimated. (X): effects that can be estimated.}
+\label{summary_analysis}
+\end{center}
+\end{table}
+
+
+
+\subsection{Experimental design}
+
+The experimental design is thought in relation to the analysis.
+The key elements to choose an appropriate experimental designs are:
+\begin{itemize}
+\item the number of locations
+\item the number of years
+\item the replication of entries within and between locations
+\end{itemize}
+
+\noindent Function \texttt{design\_experiment} settle experimental design based on :
+\begin{itemize} 
+\item the number of entries
+\item the number of controls per blocks
+\item the number of blocks
+\item the number of columns in the design. The number of rows is computed automaticaly.
+\end{itemize} 
+
+\noindent The function returns a list with
+\begin{itemize} 
+\item A data frame
+\item An image of the experimental design
+\end{itemize} 
+
+\noindent A description of the algorithm is describe in the help of the function: \texttt{?design\_experiment}.
+
+\noindent Table \ref{cases_expe} summarize the different experimental design regarding analysis.
+
+\begin{table}[H]
+\begin{tabular}{
+c
+p{.1\textwidth}
+p{.1\textwidth}
+p{.4\textwidth}
+p{.2\textwidth}
+p{.1\textwidth}
+}
+\hline
+case & number of locations & number of years & comments regarding entries replication & design of experiment & analysis \\
+\hline
+1 & 1 & 1 & All entries are replicated at least twice & \multirow{3}{.2\textwidth}{\texttt{fully-repicated}} & Anova \\
+\cline{2-4}\cline{6-6}
+  & 2 or more & 1 or more & Same entries are in all locations. All entries are replicated at least twice in each location & & AMMI; GGE \\
+\hline
+2 & 1 & 1 & Entries not replicated. Only a control is replicated in rows and columns & \texttt{row-column} & Spatial analysis \\
+\hline
+3 & 25 or more & 1 or more & \multirow{3}{.35\textwidth}{All locations share a control. Entries are not replicated.} & \multirow{3}{.2\textwidth}{\texttt{satellite-farm} and \texttt{regional-farm}} & \multirow{2}{.1\textwidth}{B models 1 and 2} \\
+  & 12 or more & 2 or more & & & \\
+  \cline{2-3} \cline{6-6}
+  & 25 or more & 3 or more & & & B model 3 \\
+\hline
+\end{tabular}
+\caption{Experimental design specification linked to dedicated analysis. Column 'design of experiments' corresponds to the argument \texttt{expe.type} in the \texttt{design\_experiment} function.}
+\label{cases_expe}
+\end{table}
+
+
+\subsubsection{Case 1}
+<<message=TRUE,cache=FALSE>>=
+p_fr = design_experiment(
+  location = "Location-1",
+  year = "2016",
+  expe.type = "fully-replicated", 
+  germplasm = paste("germ", c(1:20), sep = ":"), 
+  nb.blocks = 3, 
+  nb.cols = 4)
+@
+
+By default, the data frame is under a standard format:
+<<message=TRUE,cache=FALSE>>=
+head(p_fr$"fully-replicated"$data.frame)
+@
+
+You can set the format to a SHiNeMaS\footnote{Seeds History and Network Management System, see \url{http://moulon.inra.fr/index.php/en/tranverse-team/atelier-de-bioinformatique/projects/181} for more details} reproduction template file:
+
+<<message=TRUE,cache=FALSE>>=
+p_fr = design_experiment(
+  location = "Location-2",
+  year = "2016",
+  expe.type = "fully-replicated", 
+  germplasm = paste("germ", c(1:20), sep = ":"), 
+  nb.blocks = 3, 
+  nb.cols = 4,
+  return.format = "shinemas")
+@
+
+<<message=TRUE,cache=FALSE>>=
+head(p_fr$"fully-replicated"$data.frame)
+@
+
+
+<<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
+p_fr$"fully-replicated"$design
+@
+
+
+
+\subsubsection{Case 2}
+<<message=TRUE,cache=FALSE>>=
+p_case2 = design_experiment(
+  location = "Location-3",
+  year = "2016",
+  expe.type = "row-column", 
+  germplasm = paste("germ", c(1:20), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 7, 
+  nb.blocks = 1, 
+  nb.cols = 7)
+@
+
+<<message=TRUE,cache=FALSE>>=
+head(p_case2$"row-column"$data.frame)
+@
+
+<<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
+p_case2$"row-column"$design
+@
+
+Note that if controls are missing in rows or columns.
+The function return an error.
+The controls must catch as much as possible of the trial variation.
+
+
+\subsubsection{Case 3}
+
+Regional farms had several entries (i.e. a germplasm in an environment) in two or more blocks with entries replicated in each block.
+Satellite farms had no block and one entry replicated twice.
+Farmers chose the other entries to be sown that were not replicated.
+The number of entries may vary between farms.
+
+Here, six designs are generated: four for satellite farm and two for regional farm.
+
+<<message=TRUE,cache=FALSE>>=
+p_case3_sf1 = design_experiment(
+  location = "Location-4",
+  year = "2016",
+  expe.type = "satellite-farm", 
+  germplasm = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 2, 
+  nb.blocks = 1, 
+  nb.cols = 2)
+p_case3_sf1 = p_case3_sf1$`satellite-farms`$design
+
+p_case3_sf2 = design_experiment(
+  location = "Location-5",
+  year = "2016",
+  expe.type = "satellite-farm", 
+  germplasm = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 2, 
+  nb.blocks = 1, 
+  nb.cols = 2)
+p_case3_sf2 = p_case3_sf2$`satellite-farms`$design
+
+p_case3_sf3 = design_experiment(
+  location = "Location-6",
+  year = "2016",
+  expe.type = "satellite-farm", 
+  germplasm = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 2, 
+  nb.blocks = 1, 
+  nb.cols = 2)
+p_case3_sf3 = p_case3_sf3$`satellite-farms`$design
+
+p_case3_rf1 = design_experiment(
+  location = "Location-7",
+  year = "2016",
+  expe.type = "regional-farm", 
+  germplasm = paste("germ", c(1:16), sep = ":"),
+  controls = c("c1", "c2", "c3", "c4"),
+  nb.controls.per.block = 4, 
+  nb.blocks = 2, 
+  nb.cols = 4)
+p_case3_rf1 = p_case3_rf1$`regional-farms`$design
+
+p_case3_rf2 = design_experiment(
+  location = "Location-8",
+  year = "2016",
+  expe.type = "regional-farm", 
+  germplasm = paste("germ", c(1:16), sep = ":"),
+  controls = c("c1", "c2", "c3"),
+  nb.controls.per.block = 3, 
+  nb.blocks = 2, 
+  nb.cols = 3)
+p_case3_rf2 = p_case3_rf2$`regional-farms`$design
+@
+
+If you have many space and many seeds, you can adapt the satellite farm design with only one column.
+Each row beeing a sower width.
+
+<<message=TRUE,cache=FALSE>>=
+p_case3_sf4 = design_experiment(
+  location = "Location-9",
+  year = "2016",
+  expe.type = "satellite-farm", 
+  germplasm = paste("germ", c(1:6), sep = ":"),
+  controls = "C",
+  nb.controls.per.block = 2, 
+  nb.blocks = 1, 
+  nb.cols = 1)
+p_case3_sf4 = p_case3_sf4$`satellite-farms`$design
+@
+
+\begin{center}
+\begin{tabular}{cc}
+\texttt{p\_case3\_sf1} & \texttt{p\_case3\_sf2} \\
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_sf1
+@
+&
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_sf2
+@
+\\
+\texttt{p\_case3\_sf3} & \texttt{p\_case3\_rf1} \\
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_sf3
+@
+&
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_rf1
+@
+\\
+\texttt{p\_case3\_sf4} & \texttt{p\_case3\_rf2} \\
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_sf4
+@
+&
+<<message=TRUE,cache=FALSE,echo=FALSE,out.width=".4\\textwidth">>=
+p_case3_rf2
+@
+\\
+\end{tabular}
+\end{center}
+
+There some constraints regarding \texttt{expe.type = "satellite-farm"}:
+\begin{itemize}
+\item if \texttt{nb.entries > 10}, a warning message recommand to have less than 10 entries.
+\item There are two controls per block
+\item There is one block
+\item There are maximum two columns
+\end{itemize}
+
+For \texttt{expe.type = "regional-farm"}, there is a warning message if controls are missing in rows or columns.
+It is better to catch as much as possible of the trial variation.
+If there are less than 2 blocks, an error is returned.
+
+\subsubsection{Case ???}
+
+Incomplete block design.
+One or more block per farm.
+
+<<message=TRUE,cache=FALSE>>=
+p_ibd = design_experiment(
+  location = "Location-9",
+  year = "2016",
+  expe.type = "IBD", 
+  germplasm = paste("germ", c(1:10), sep = ":"),
+  nb.blocks = 8, 
+  nb.cols = 4)
+@
+
+<<message=TRUE,cache=FALSE>>=
+head(p_ibd$`IBD`$data.frame)
+@
+
+
+<<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
+p_ibd$`IBD`$design
+@
+
+

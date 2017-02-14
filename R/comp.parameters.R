@@ -1,4 +1,3 @@
-# 0. help ----------
 #' Get parameter comparisons two by two or to a given threshold based on MCMC outputs
 #'
 #' @description
@@ -23,7 +22,11 @@
 #'
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{get.mean.comparisons}}
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{mean_comparisons_model_1}}
+#' \item \code{\link{mean_comparisons_model_2}}
+#' }
 #' 
 comp.parameters = function(
   MCMC,
@@ -31,7 +34,6 @@ comp.parameters = function(
   type = 1,
   threshold = 1
   )
-# let's go !!! ----------
 {
 # 1. Error message and update arguments ----------
 if( !is.data.frame(MCMC) ) { stop("MCMC must be a data frame.") }
