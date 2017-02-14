@@ -12,7 +12,7 @@ The different effects that can be estimated are:
 \begin{itemize}
 \item \textbf{entry}: a combinaison of a germplasm and an location or an environment
 \item \textbf{germplasm}
-\item \textbf{location} 
+\item \textbf{location}
 \item \textbf{environment}: a combinaison of a location and a year
 \item \textbf{interaction}: interaction between germplasm and location or germplasm and environment
 \item \textbf{year}
@@ -24,7 +24,7 @@ The different effects that can be estimated are:
 \begin{itemize}
 \item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
 \item \textbf{Family 2} gathers analysis that estimate germplasm, location and interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
-\item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location and year are separated.
+\item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
 \item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
 \end{itemize}
 Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
@@ -42,7 +42,7 @@ Family & Name & Section &
 \rotatebox{90}{environments effects} &
 \rotatebox{90}{interaction effects} &
 \rotatebox{90}{year effects} &
-\rotatebox{90}{migrant-resident effects} & 
+\rotatebox{90}{migrant-resident effects} &
 \rotatebox{90}{version effects}
 \\
 \hline
@@ -78,18 +78,18 @@ The key elements to choose an appropriate experimental designs are:
 \end{itemize}
 
 \noindent Function \texttt{design\_experiment} settle experimental design based on :
-\begin{itemize} 
+\begin{itemize}
 \item the number of entries
 \item the number of controls per blocks
 \item the number of blocks
 \item the number of columns in the design. The number of rows is computed automaticaly.
-\end{itemize} 
+\end{itemize}
 
 \noindent The function returns a list with
-\begin{itemize} 
+\begin{itemize}
 \item A data frame
 \item An image of the experimental design
-\end{itemize} 
+\end{itemize}
 
 \noindent A description of the algorithm is describe in the help of the function: \texttt{?design\_experiment}.
 
@@ -129,9 +129,9 @@ case & number of locations & number of years & comments regarding entries replic
 p_fr = design_experiment(
   location = "Location-1",
   year = "2016",
-  expe.type = "fully-replicated", 
-  germplasm = paste("germ", c(1:20), sep = ":"), 
-  nb.blocks = 3, 
+  expe.type = "fully-replicated",
+  germplasm = paste("germ", c(1:20), sep = ":"),
+  nb.blocks = 3,
   nb.cols = 4)
 @
 
@@ -146,9 +146,9 @@ You can set the format to a SHiNeMaS\footnote{Seeds History and Network Manageme
 p_fr = design_experiment(
   location = "Location-2",
   year = "2016",
-  expe.type = "fully-replicated", 
-  germplasm = paste("germ", c(1:20), sep = ":"), 
-  nb.blocks = 3, 
+  expe.type = "fully-replicated",
+  germplasm = paste("germ", c(1:20), sep = ":"),
+  nb.blocks = 3,
   nb.cols = 4,
   return.format = "shinemas")
 @
@@ -169,11 +169,11 @@ p_fr$"fully-replicated"$design
 p_case2 = design_experiment(
   location = "Location-3",
   year = "2016",
-  expe.type = "row-column", 
+  expe.type = "row-column",
   germplasm = paste("germ", c(1:20), sep = ":"),
   controls = "toto",
-  nb.controls.per.block = 7, 
-  nb.blocks = 1, 
+  nb.controls.per.block = 7,
+  nb.blocks = 1,
   nb.cols = 7)
 @
 
@@ -203,55 +203,55 @@ Here, six designs are generated: four for satellite farm and two for regional fa
 p_case3_sf1 = design_experiment(
   location = "Location-4",
   year = "2016",
-  expe.type = "satellite-farm", 
+  expe.type = "satellite-farm",
   germplasm = paste("germ", c(1:6), sep = ":"),
   controls = "toto",
-  nb.controls.per.block = 2, 
-  nb.blocks = 1, 
+  nb.controls.per.block = 2,
+  nb.blocks = 1,
   nb.cols = 2)
 p_case3_sf1 = p_case3_sf1$`satellite-farms`$design
 
 p_case3_sf2 = design_experiment(
   location = "Location-5",
   year = "2016",
-  expe.type = "satellite-farm", 
+  expe.type = "satellite-farm",
   germplasm = paste("germ", c(1:6), sep = ":"),
   controls = "toto",
-  nb.controls.per.block = 2, 
-  nb.blocks = 1, 
+  nb.controls.per.block = 2,
+  nb.blocks = 1,
   nb.cols = 2)
 p_case3_sf2 = p_case3_sf2$`satellite-farms`$design
 
 p_case3_sf3 = design_experiment(
   location = "Location-6",
   year = "2016",
-  expe.type = "satellite-farm", 
+  expe.type = "satellite-farm",
   germplasm = paste("germ", c(1:6), sep = ":"),
   controls = "toto",
-  nb.controls.per.block = 2, 
-  nb.blocks = 1, 
+  nb.controls.per.block = 2,
+  nb.blocks = 1,
   nb.cols = 2)
 p_case3_sf3 = p_case3_sf3$`satellite-farms`$design
 
 p_case3_rf1 = design_experiment(
   location = "Location-7",
   year = "2016",
-  expe.type = "regional-farm", 
+  expe.type = "regional-farm",
   germplasm = paste("germ", c(1:16), sep = ":"),
   controls = c("c1", "c2", "c3", "c4"),
-  nb.controls.per.block = 4, 
-  nb.blocks = 2, 
+  nb.controls.per.block = 4,
+  nb.blocks = 2,
   nb.cols = 4)
 p_case3_rf1 = p_case3_rf1$`regional-farms`$design
 
 p_case3_rf2 = design_experiment(
   location = "Location-8",
   year = "2016",
-  expe.type = "regional-farm", 
+  expe.type = "regional-farm",
   germplasm = paste("germ", c(1:16), sep = ":"),
   controls = c("c1", "c2", "c3"),
-  nb.controls.per.block = 3, 
-  nb.blocks = 2, 
+  nb.controls.per.block = 3,
+  nb.blocks = 2,
   nb.cols = 3)
 p_case3_rf2 = p_case3_rf2$`regional-farms`$design
 @
@@ -263,11 +263,11 @@ Each row beeing a sower width.
 p_case3_sf4 = design_experiment(
   location = "Location-9",
   year = "2016",
-  expe.type = "satellite-farm", 
+  expe.type = "satellite-farm",
   germplasm = paste("germ", c(1:6), sep = ":"),
   controls = "C",
-  nb.controls.per.block = 2, 
-  nb.blocks = 1, 
+  nb.controls.per.block = 2,
+  nb.blocks = 1,
   nb.cols = 1)
 p_case3_sf4 = p_case3_sf4$`satellite-farms`$design
 @
@@ -325,9 +325,9 @@ One or more block per farm.
 p_ibd = design_experiment(
   location = "Location-9",
   year = "2016",
-  expe.type = "IBD", 
+  expe.type = "IBD",
   germplasm = paste("germ", c(1:10), sep = ":"),
-  nb.blocks = 8, 
+  nb.blocks = 8,
   nb.cols = 4)
 @
 
@@ -339,5 +339,3 @@ head(p_ibd$`IBD`$data.frame)
 <<message=TRUE,cache=FALSE,out.width=".4\\textwidth">>=
 p_ibd$`IBD`$design
 @
-
-
