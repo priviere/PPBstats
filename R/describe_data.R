@@ -56,7 +56,9 @@ describe_data = function(
     colnames(data)[which(colnames(data) == variable)] = "variable"
 
     dtmp = droplevels(na.omit(data[,c("germplasm", "location", "year", "variable")]))
-    ylim = c(0, max(dtmp$variable, na.rm = TRUE))
+    dtmp$variable = as.numeric(dtmp$variable)
+    xlim = c(min(dtmp$variable, na.rm = TRUE), max(dtmp$variable, na.rm = TRUE))
+    ylim = c(0,max(dtmp$variable, na.rm = TRUE))
     
       # 2.1. Presence/abscence for each germplasm, location and year
       m = as.data.frame(with(dtmp, table(germplasm, location, year)))
@@ -78,13 +80,13 @@ describe_data = function(
       # per germplasm
       dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameters_per_plot)
       
-      fun_g = function(x, ylim){
-        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .) + ggtitle(variable) + coord_cartesian(ylim = ylim)
+      fun_g = function(x, xlim, variable_name){
+        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .) + ggtitle(variable_name)  + coord_cartesian(xlim = xlim)
         }
-      out_g_hist = lapply(dtmp_g, fun_g, ylim)
+      out_g_hist = lapply(dtmp_g, function(x){fun_g(x, xlim, variable)})
       
       fun_g = function(x, ylim){
-        plot = ggplot(x, aes(x = germplasm, y = variable)) + geom_boxplot() + ggtitle(variable)  + coord_cartesian(ylim = ylim)
+        plot = ggplot(x, aes(x = germplasm, y = variable)) + geom_boxplot() + ggtitle(variable)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))  + coord_cartesian(ylim = ylim)
         outliers = boxplot(x$variable, x$germplasm, plot = FALSE)$out
         names(outliers) = x$germplasm[which(x$variable %in% outliers)]
         return(list("plot" = plot, "outliers" = outliers))
@@ -94,10 +96,10 @@ describe_data = function(
       # per location
       dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameters_per_plot)
       
-      fun_l = function(x, ylim){
-        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable)  + coord_cartesian(ylim = ylim)
+      fun_l = function(x, xlim){
+        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable)  + coord_cartesian(xlim = xlim)
         }
-      out_l_hist = lapply(dtmp_l, fun_l, ylim)
+      out_l_hist = lapply(dtmp_l, fun_l, xlim)
       
       fun_l = function(x, ylim){
         plot = ggplot(x, aes(x = location, y = variable)) + geom_boxplot() + ggtitle(variable)  + coord_cartesian(ylim = ylim)
@@ -111,10 +113,10 @@ describe_data = function(
       # per year
       dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameters_per_plot)
       
-      fun_y = function(x, ylim){
-        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable)  + coord_cartesian(ylim = ylim)
+      fun_y = function(x, xlim){
+        ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable)  + coord_cartesian(xlim = xlim)
         }
-      out_y_hist = lapply(dtmp_y, fun_y, ylim)
+      out_y_hist = lapply(dtmp_y, fun_y, xlim)
       
       fun_y = function(x, ylim){
         plot = ggplot(x, aes(x = year, y = variable)) + geom_boxplot() + ggtitle(variable) + coord_cartesian(ylim = ylim)
@@ -125,12 +127,15 @@ describe_data = function(
       out_y_box = lapply(dtmp_y, fun_y, ylim)
       
       # interaction ----------
+      dtmp$int = paste(dtmp$germplasm,dtmp$location,dtmp$year,sep=":")
+      A = unlist(lapply(unique(dtmp$int), function(x){mean(na.omit(dtmp[dtmp$int %in% x,"variable"]))}))
+      ylim = c(min(A),max(A))
       dtmp_int = split_data_for_ggplot(dtmp, "germplasm", nb_parameters_per_plot)
       
-      fun_int = function(x, ylim){
+      fun_int = function(x, xlim){
         p_gxe = ggplot(data = x, aes(x = location, y = variable, colour = germplasm, group = germplasm))
         #  p_gxe = p_gxe + stat_summary(fun.y= mean, geom = "point")
-        p_gxe = p_gxe + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 1) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
+        p_gxe = p_gxe + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 0.65) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
         
         #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
         #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
@@ -141,7 +146,7 @@ describe_data = function(
         p_gxe = p_gxe + ylab(variable)
         # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
         
-        out_gxe = p_gxe + facet_grid(year ~ .) + coord_cartesian(ylim = ylim)
+        out_gxe = p_gxe + facet_grid(year ~ .) + coord_cartesian(ylim = xlim)
         return(out_gxe)
       }
       out_y_int = lapply(dtmp_int, fun_int, ylim)
