@@ -1,7 +1,7 @@
 #' Check if the model went well 
 #'
 #' @description
-#' \code{check_model} compute test to assess if model went well. 
+#' \code{check_model} computes tests to assess if the model went well. 
 #' It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #' 
 #' @param out_model outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}
@@ -16,7 +16,7 @@
 #'
 #' MCMC outputs are a data fame resulting from the concatenation of the two MCMC for each parameter. 
 #' This object can be used for further analysis. 
-#' There are as many columns than parameters and as many rows than iterations/10 (10 being the thin value by default in the models). 
+#' There are as many columns as parameters and as many rows as iterations/10 (10 being the thin value by default in the models). 
 #' The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done). 
 #' For \code{\link{model_1}}, all environments where at least one parameter do not converge are not taken into account in the MCMC outputs.
 #' 

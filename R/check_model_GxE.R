@@ -1,7 +1,7 @@
 #' Check if the GxE model went well 
 #'
 #' @description
-#' \code{check_model_GxE} compute test to assess if the GxE model went well
+#' \code{check_model_GxE} computes tests to assess if the GxE model went well
 #' 
 #' @param out_GxE outputs from \code{\link{GxE}}
 #' 
