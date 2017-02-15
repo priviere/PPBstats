@@ -13,7 +13,7 @@ check_model_model_2(out_model_2)
 See \code{\link{check_model}}
 }
 \description{
-\code{check_model_model_2} compute test to assess if the model_2 model went well
+\code{check_model_model_2} computes tests to assess if the model_2 model went well
 }
 \details{
 See \code{\link{check_model}}

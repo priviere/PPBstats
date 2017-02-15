@@ -14,7 +14,7 @@ GxE(data, variable, gxe_analysis = NULL)
 \item{gxe_analysis}{the analysis to carry out: "AMMI" or "GGE"}
 }
 \value{
-The function returns a list with three elements:
+The function returns a list with three elements :
 \itemize{
  \item info : a list with variable and gxe_analysis
  \item ANOVA a list with five elements:
