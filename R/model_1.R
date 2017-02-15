@@ -32,11 +32,11 @@
 #' An environment is a combinaison of a location and a year.
 #' 
 #' The variance are taken in an inverse Gamma distribution of parameters nu and rho. 
-#' This model takes into acount all the information on the network in order to cope wit
-#' h the high disequilibrium within each environment (i.e. low degree of freedom at the residual in each environment). 
-#' More informations can be found in the vignette.
+#' This model takes into acount all the information on the network in order to cope with 
+#' the high disequilibrium within each environment (i.e. low degree of freedom at the residual in each environment). 
+#' More information can be found in the vignette.
 #' 
-#' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more informations.
+#' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 #' 
 #' @return The function returns a list with 
 #' 
