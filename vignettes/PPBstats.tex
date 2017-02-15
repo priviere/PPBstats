@@ -81,7 +81,7 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.14}
+\newcommand{\versionnumber}{0.15}
 \newcommand{\PPB}{Participatory Plant Breeding}
 
 
@@ -114,15 +114,15 @@
 \item \textbf{decentralized the selection}
 
 When decentralizing the selection in target environment \citep{desclaux_changes_2008}, the phenotypic trait is the sum of genetic ($G$), environmental ($E$) and interaction between the two ($G \times E$) : $P = G + E + G \times E$.
-Braod sens heritability of a given trait is then:
+Broad sens heritability of a given trait is then:
 \begin{displaymath}
 h^2_{sl} = \frac{var(G)}{var(G) + var(E) + var(G\times E)}
 \end{displaymath}
 
 Heritability taking into account the network is therefore superior or equal to heritability on a given site because $var(G\times E) > 0$.
-When facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted variety to local agro-system.
+When facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted varieties to local agro-systems.
 
-\item \textbf{involve all actors in the breeding decision process}: farmers, technicians, researcher, facolitators, consumers ... Such involvement empower all actors and answer the real needs of actors  \citep{sperling_framework_2001}.
+\item \textbf{involve all actors in the breeding decision process}: farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors  \citep{sperling_framework_2001}.
 
 \end{itemize}
 
@@ -142,12 +142,12 @@ The statistical procedures are based on frequentist and bayesian approaches.
 \end{itemize}
 
 In this vignette, we only used examples with main functions.
-Nevertheless, second functions could be used in other context to answer specific questions.
+Nevertheless, second functions could be used in other contexts to answer specific questions.
 Figure~\ref{main_workflow} displays the main functions and their relations.
-Table~\ref{function_descriptions_workflow} describe each of the main functions.
+Table~\ref{function_descriptions_workflow} describes each of the main functions.
 
-Figure~\ref{workflow_2} display second functions used in the main functions.
-Table~\ref{function_descriptions_workflow_2} describe each of the second functions.
+Figure~\ref{workflow_2} displays second functions used in the main functions.
+Table~\ref{function_descriptions_workflow_2} describes each of the second functions.
 
 You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
 
@@ -307,9 +307,9 @@ Bayesian statistics are based on the Bayes theorem:
 Pr(\theta|y) \propto Pr(\theta) Pr(y|\theta)
 \end{displaymath}
 
-with 
-$Pr(\theta|y)$ the posterior, 
-$Pr(y|\theta)$ the likelihood and 
+with
+$Pr(\theta|y)$ the posterior,
+$Pr(y|\theta)$ the likelihood and
 $Pr(\theta)$ the prior.
 
 The parameters' distribution, knowing the data (the posterior), is proportional to the distribution \textit{a  priori} (the prior) $\times$ the information brought by the data (the likelihood).
@@ -329,7 +329,7 @@ This test was based on the variance within and between the chains \citep{gelman_
 
 A burn-in and lots of iterations were needed in the MCMC procedure.
 In our case, the burn-in had 1000 iterations, then 100 000 iterations are done by default\footnote{You can change it with the argument \texttt{nb\_iterations} in functions \texttt{MC} and \texttt{FWH}} with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples were available for inference for each chain by default\footnote{There are \texttt{nb\_iterations}/10 values for each chain. This can be changed with the \texttt{thin} argument of the functions.}.
- 
+
 The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
 
 
@@ -350,7 +350,7 @@ which this hypothesis was satisfied (Figure~\ref{proba}).
 
 Groups are made based on the probabilites.
 Germplasms which share the same group are not different.
-Germplasms which do not share the same groupe are different.
+Germplasms which do not share the same group are different.
 
 The threshold $\alpha$ that depends on agronomic objectives.
 This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given environnement).
@@ -430,7 +430,7 @@ To continue, load the development version of the package:
 \end{kframe}
 \end{knitrout}
 
-, load it 
+, load it
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -447,7 +447,7 @@ and download from internet the data used in this vignette (this is useful to ear
 \begin{alltt}
 \hlkwd{get.PPBstats.data}\hlstd{()} \hlcom{# not run}
 \hlcom{# |=======================================================================| 100%}
-\hlcom{# The data are downloaded in ./data_PPBstats/ }
+\hlcom{# The data are downloaded in ./data_PPBstats/}
 \hlcom{# You can now load the data, for example load("./data_PPBstats/out1.Rdata").}
 \end{alltt}
 \end{kframe}
@@ -458,7 +458,6 @@ The data have always the following columns : location, year, germplasm, block, X
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
-
 \newpage
 
 
@@ -476,7 +475,7 @@ The different effects that can be estimated are:
 \begin{itemize}
 \item \textbf{entry}: a combinaison of a germplasm and an location or an environment
 \item \textbf{germplasm}
-\item \textbf{location} 
+\item \textbf{location}
 \item \textbf{environment}: a combinaison of a location and a year
 \item \textbf{interaction}: interaction between germplasm and location or germplasm and environment
 \item \textbf{year}
@@ -488,7 +487,7 @@ The different effects that can be estimated are:
 \begin{itemize}
 \item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
 \item \textbf{Family 2} gathers analysis that estimate germplasm, location and interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
-\item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location and year are separated.
+\item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
 \item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
 \end{itemize}
 Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
@@ -506,7 +505,7 @@ Family & Name & Section &
 \rotatebox{90}{environments effects} &
 \rotatebox{90}{interaction effects} &
 \rotatebox{90}{year effects} &
-\rotatebox{90}{migrant-resident effects} & 
+\rotatebox{90}{migrant-resident effects} &
 \rotatebox{90}{version effects}
 \\
 \hline
@@ -542,18 +541,18 @@ The key elements to choose an appropriate experimental designs are:
 \end{itemize}
 
 \noindent Function \texttt{design\_experiment} settle experimental design based on :
-\begin{itemize} 
+\begin{itemize}
 \item the number of entries
 \item the number of controls per blocks
 \item the number of blocks
 \item the number of columns in the design. The number of rows is computed automaticaly.
-\end{itemize} 
+\end{itemize}
 
 \noindent The function returns a list with
-\begin{itemize} 
+\begin{itemize}
 \item A data frame
 \item An image of the experimental design
-\end{itemize} 
+\end{itemize}
 
 \noindent A description of the algorithm is describe in the help of the function: \texttt{?design\_experiment}.
 
@@ -611,12 +610,12 @@ By default, the data frame is under a standard format:
 \end{alltt}
 \begin{verbatim}
 ##     location year germplasm block X Y
-## 1 Location-1 2016   germ:11     1 A 1
-## 2 Location-1 2016    germ:3     1 A 2
-## 3 Location-1 2016    germ:6     1 A 3
-## 4 Location-1 2016    germ:9     1 A 4
-## 5 Location-1 2016    germ:2     1 A 5
-## 6 Location-1 2016    germ:5     1 B 1
+## 1 Location-1 2016   germ:12     1 A 1
+## 2 Location-1 2016    germ:4     1 A 2
+## 3 Location-1 2016    germ:3     1 A 3
+## 4 Location-1 2016   germ:13     1 A 4
+## 5 Location-1 2016   germ:15     1 A 5
+## 6 Location-1 2016    germ:6     1 B 1
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -645,12 +644,12 @@ You can set the format to a SHiNeMaS\footnote{Seeds History and Network Manageme
 \end{alltt}
 \begin{verbatim}
 ##   project sown_year harvested_year        id_seed_lot_sown
-## 1              2016                 germ:1_Location-2_2016
-## 2              2016                 germ:5_Location-2_2016
-## 3              2016                 germ:2_Location-2_2016
-## 4              2016                 germ:7_Location-2_2016
-## 5              2016                germ:12_Location-2_2016
-## 6              2016                germ:19_Location-2_2016
+## 1              2016                 germ:8_Location-2_2016
+## 2              2016                germ:19_Location-2_2016
+## 3              2016                 germ:7_Location-2_2016
+## 4              2016                 germ:4_Location-2_2016
+## 5              2016                germ:10_Location-2_2016
+## 6              2016                 germ:3_Location-2_2016
 ##   intra_selection_name etiquette split quantity_sown
 ## 1                                                   
 ## 2                                                   
@@ -711,12 +710,12 @@ You can set the format to a SHiNeMaS\footnote{Seeds History and Network Manageme
 \end{alltt}
 \begin{verbatim}
 ##     location year germplasm block X Y
-## 1 Location-3 2016   germ:15     1 A 1
-## 2 Location-3 2016   germ:11     1 A 2
-## 3 Location-3 2016   germ:18     1 A 3
-## 4 Location-3 2016      toto     1 A 4
-## 5 Location-3 2016      toto     1 B 1
-## 6 Location-3 2016    germ:9     1 B 2
+## 1 Location-3 2016    germ:9     1 A 1
+## 2 Location-3 2016      toto     1 A 2
+## 3 Location-3 2016    germ:6     1 A 3
+## 4 Location-3 2016   germ:14     1 A 4
+## 5 Location-3 2016    germ:5     1 B 1
+## 6 Location-3 2016   germ:15     1 B 2
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -809,11 +808,11 @@ Here, six designs are generated: four for satellite farm and two for regional fa
 \end{alltt}
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 1. You can rise nb.controls.per.block.}}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 2. You can rise nb.controls.per.block.}}
 
 {\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in rows 2. You can rise nb.controls.per.block.}}
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 1. You can rise nb.controls.per.block.}}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 3. You can rise nb.controls.per.block.}}
 
 {\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in rows 3. You can rise nb.controls.per.block.}}\begin{alltt}
 \hlstd{p_case3_rf2} \hlkwb{=} \hlstd{p_case3_rf2}\hlopt{$}\hlstd{`regional-farms`}\hlopt{$}\hlstd{design}
@@ -954,10 +953,10 @@ One or more block per farm.
 \begin{verbatim}
 ##   germplasm block X Y   location year
 ## 1    germ:1     1 A 1 Location-9 2016
-## 2    germ:4     2 A 2 Location-9 2016
-## 3    germ:1     3 A 3 Location-9 2016
-## 4    germ:3     4 A 4 Location-9 2016
-## 5    germ:3     5 A 5 Location-9 2016
+## 2    germ:3     2 A 2 Location-9 2016
+## 3    germ:4     3 A 3 Location-9 2016
+## 4    germ:1     4 A 4 Location-9 2016
+## 5    germ:2     5 A 5 Location-9 2016
 ## 6    germ:2     6 A 6 Location-9 2016
 \end{verbatim}
 \end{kframe}
@@ -978,8 +977,6 @@ One or more block per farm.
 
 
 \end{knitrout}
-
-
 \newpage
 
 \section{Sow, note, harvest, measure ... }
@@ -2390,7 +2387,7 @@ You can run it on one variable.
 \begin{verbatim}
 ## 
 ## Call:
-## lm(formula = variable ~ germplasm * location + block_in_env, 
+## lm(formula = variable ~ germplasm * location + block %in% location, 
 ##     data = data)
 ## 
 ## Coefficients:
@@ -2415,15 +2412,7 @@ You can run it on one variable.
 ##           germplasm18            germplasm19  
 ##              -0.34611                0.37692  
 ##             location1              location2  
-##               0.72717                4.76131  
-##         block_in_env1          block_in_env2  
-##              -2.10792               -0.30555  
-##         block_in_env3          block_in_env4  
-##              -0.18481               -1.39800  
-##         block_in_env5          block_in_env6  
-##               0.66418                2.25382  
-##         block_in_env7          block_in_env8  
-##                    NA                     NA  
+##              -0.44147                4.88085  
 ##  germplasm1:location1   germplasm2:location1  
 ##               1.09629               -3.67906  
 ##  germplasm3:location1   germplasm4:location1  
@@ -2461,7 +2450,13 @@ You can run it on one variable.
 ## germplasm16:location2  germplasm17:location2  
 ##               4.47337               -1.71149  
 ## germplasm18:location2  germplasm19:location2  
-##              -1.52013               -0.40986
+##              -1.52013               -0.40986  
+##     locationL1:block1      locationL2:block1  
+##              -0.93928               -0.42509  
+##     locationL3:block1      locationL1:block2  
+##              -1.23391               -0.22936  
+##     locationL2:block2      locationL3:block2  
+##               0.54463                1.20472
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2478,8 +2473,8 @@ You can run it on one variable.
 ##                     Df  Sum Sq Mean Sq F value   Pr(>F)    
 ## germplasm           19  190.66   10.03  0.3712   0.9921    
 ## location             2 2623.54 1311.77 48.5185 5.69e-16 ***
-## block_in_env         6  115.34   19.22  0.7110   0.6414    
 ## germplasm:location  38  825.18   21.72  0.8032   0.7778    
+## location:block       6  115.34   19.22  0.7110   0.6414    
 ## Residuals          114 3082.16   27.04                     
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -2533,7 +2528,7 @@ You can run it on one variable.
 \end{alltt}
 \begin{verbatim}
 ##         L1         L2         L3 
-##  0.7271695  4.7613066 -5.4884761
+## -0.4414718  4.8808480 -4.4393762
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2873,7 +2868,7 @@ If the total variation is high enought, then the biplot is useful if the two fir
 \end{kframe}
 \end{knitrout}
 
-\texttt{p\_out\_biplot\_ammi} is a list of two elements :
+\texttt{p\_out\_biplot\_ammi} is a list of three elements :
 \begin{itemize}
 \item \texttt{ecovalence}
 
@@ -2901,6 +2896,24 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 
 \end{knitrout}
 
+\item \texttt{interaction} which display the interaction matrix
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_out_biplot_ammi}\hlopt{$}\hlstd{interaction}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-104-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
 \item \texttt{biplot} being a list of four elements :
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2909,7 +2922,7 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-104-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-105-1} 
 
 }
 
@@ -3025,7 +3038,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-110-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-111-1} 
 
 }
 
@@ -3041,7 +3054,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-111-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-112-1} 
 
 }
 
@@ -3057,7 +3070,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-112-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-113-1} 
 
 }
 
@@ -3079,7 +3092,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-113-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-114-1} 
 
 }
 
@@ -3096,7 +3109,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-114-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-115-1} 
 
 }
 
@@ -3288,7 +3301,7 @@ See \texttt{?get\_ggplot} for more details on this plot.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-123-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-124-1} 
 
 }
 
@@ -3314,7 +3327,7 @@ The longer the arrow is, the more important is germplasm effect and the more mea
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-124-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-125-1} 
 
 }
 
@@ -3335,7 +3348,7 @@ A high score represents a low stability (i.e. an high entry by location interact
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-125-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-126-1} 
 
 }
 
@@ -3363,7 +3376,7 @@ The higher the value, the highest the discrimitiveness for locations.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-126-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-127-1} 
 
 }
 
@@ -3382,7 +3395,7 @@ The highest the value, the less representative the location.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-127-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-128-1} 
 
 }
 
@@ -3402,7 +3415,7 @@ The highest the score, the more representative the location.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-128-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-129-1} 
 
 }
 
@@ -3747,7 +3760,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-137-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-138-1} 
 
 }
 
@@ -3771,7 +3784,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-138-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-139-1} 
 
 }
 
@@ -3794,7 +3807,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-139-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-140-1} 
 
 }
 
@@ -3811,7 +3824,7 @@ If the model went well it should be between -2 and 2.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-140-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-141-1} 
 
 }
 
@@ -3865,7 +3878,7 @@ Let’s have a look at the relation between both values.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-143-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-144-1} 
 
 }
 
@@ -3955,7 +3968,7 @@ The percentage of confidence (i.e. the probability $H0$: the bias is equal to ze
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-146-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-147-1} 
 
 }
 
@@ -4035,7 +4048,7 @@ For \texttt{ggplot.type = "biplot-alpha-beta"}, the biplot with $\alpha_i$ on th
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-149-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-150-1} 
 
 }
 
@@ -4058,7 +4071,7 @@ For \texttt{ggplot.type = "biplot-alpha-beta"}, the biplot with $\alpha_i$ on th
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-150-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-151-1} 
 
 }
 
@@ -4077,7 +4090,7 @@ A germplasm with an high genetic effect and a low sensitivity to interaction (i.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-151-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-152-1} 
 
 }
 
@@ -4100,7 +4113,7 @@ A germplasm with an high genetic effect and a low sensitivity to interaction (i.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-152-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-153-1} 
 
 }
 
@@ -4220,7 +4233,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-157-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-158-1} 
 
 }
 
@@ -4236,7 +4249,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-158-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-159-1} 
 
 }
 
@@ -4252,7 +4265,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-159-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-160-1} 
 
 }
 
@@ -4274,7 +4287,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-160-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-161-1} 
 
 }
 
@@ -4291,7 +4304,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-161-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-162-1} 
 
 }
 
@@ -4420,7 +4433,7 @@ And look at the results thanks to the \texttt{factoextra}\footnote{https://githu
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-166-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-167-1} 
 
 }
 
@@ -4569,25 +4582,21 @@ To cite this package and or this vignette:
 \end{alltt}
 \begin{verbatim}
 ## 
-## To cite the PPBstats package in publications use:
+## To cite package 'PPBstats' in publications use:
 ## 
-##   Pierre Riviere and al, 2016, PPBstats: An R package for
+##   Pierre Riviere (2017). PPBstats: An R package for
 ##   statistical analysis of balanced and unbalanced trials in
-##   decentralized participatory plant breeding programmes.
-##   Version 0.13, URL: https://github.com/priviere/PPBstats
+##   decentralized participatory plant breeding programmes. R
+##   package version 0.15. http://github.com/priviere/PPBstats
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
 ##   @Manual{,
-##     title = {PPBstats: An R package for statistical analysis 
-##           of balanced and unbalanced trials in decentralized 
-##           participatory plant breeding programmes. Version 0.13},
-##     author = {{Pierre Riviere and Gaelle Van Franck and Olivier David}},
-##     organisation = {{Reseau Semences Paysannes}, {INRA}},
-##     year = {2016},
-##     url = {https://github.com/priviere/PPBstats},
-##     note = {R code is under licence GPL-3. 
-##           Vignette is under licence creative commons BY-NC-SA 4.0.},
+##     title = {PPBstats: An R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes},
+##     author = {Pierre Riviere},
+##     year = {2017},
+##     note = {R package version 0.15},
+##     url = {http://github.com/priviere/PPBstats},
 ##   }
 \end{verbatim}
 \end{kframe}
