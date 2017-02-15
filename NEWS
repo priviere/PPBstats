@@ -1,3 +1,15 @@
+PPBstats 0.15 ---------------------------------------
+-----------------------------------------------------
+* update functions
+  - biplot_GxE.R and ggplot_biplot_GxE.R : add interaction matrix
+  - GxE.R and GxE_build_interaction_matrix.R : model writing
+
+* update vignette
+  - regarding changes in R code
+  - spelling 
+  - contributions and aknowledgement
+
+
 PPBstats 0.14 ---------------------------------------
 -----------------------------------------------------
 Huge refactoring of the code in several functions for each steps of the analysis
