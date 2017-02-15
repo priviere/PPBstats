@@ -37,7 +37,10 @@ biplot_GxE = function(out_check_model_GxE){
   data_interaction = out_check_model_GxE$GxE$ANOVA$interaction_matrix
   
   # 2. Ecovalence ----------
-  m_eco = data_interaction^2
+#  m_eco = data_interaction^2
+  m_eco = as.matrix(data_interaction)
+  for (i in 1:nrow(m_eco)){rownames(m_eco)[i] = paste(rownames(m_eco)[i]," (",format(sum(m_eco[i,]^2),scientific=T, digits=3),")",sep="")}
+  for (j in 1:ncol(m_eco)){colnames(m_eco)[j] = paste(colnames(m_eco)[j]," (",format(sum(m_eco[,j]^2),scientific=T, digits=3),")",sep="")}
   
   data_ecovalence = data.frame(
     germplasm = rep(rownames(m_eco), times = ncol(m_eco)), 
