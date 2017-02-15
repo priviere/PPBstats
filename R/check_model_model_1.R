@@ -1,7 +1,7 @@
 #' Check if the model_1 model went well 
 #'
 #' @description
-#' \code{check_model_model_1} compute test to assess if the model_1 model went well
+#' \code{check_model_model_1} computes tests to assess if the model_1 model went well
 #' 
 #' @param out_model_1 outputs from \code{\link{model_1}}
 #' 
