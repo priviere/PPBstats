@@ -21,13 +21,19 @@ ggplot_biplot_GxE = function(out_biplot_GxE){
   variable = out_biplot_GxE$info$variable
   gxe_analysis =out_biplot_GxE$info$gxe_analysis
   data_ecovalence = out_biplot_GxE$data_ecovalence
+  data_interaction = out_biplot_GxE$data_interaction
   data_pca = out_biplot_GxE$pca
-  
   
   # Ecovalence ----------
   p_eco = ggplot(data_ecovalence, aes(x = location, y = germplasm, fill = variable)) + geom_raster()
   p_eco = p_eco + scale_fill_gradient2(low = "red", high = "blue", mid = "white") 
   p_eco = p_eco + ggtitle(paste("Wrick ecovalence for", variable)) + theme(plot.title=element_text(hjust=0.5), axis.text.x = element_text(angle = 90, hjust = 1))
+  
+  # Interaction ----------
+  p_inter = ggplot(data_interaction, aes(x = location, y = germplasm, fill = variable)) + geom_raster()
+  p_inter = p_inter + scale_fill_gradient2(low = "red", high = "blue", mid = "white") 
+  p_inter = p_inter + ggtitle(paste("Interaction matrix for", variable)) + theme(plot.title=element_text(hjust=0.5), axis.text.x = element_text(angle = 90, hjust = 1))
+  
   
   # Biplots ----------
   simple_biplot = get_biplot(data_pca)
@@ -44,6 +50,7 @@ ggplot_biplot_GxE = function(out_biplot_GxE){
   # return results
   out = list(
     "ecovalence" = p_eco,
+    "interaction" = p_inter,
     "biplot" = list(
       "simple_biplot" = simple_biplot,
       "which_won_where" = which_won_where,
