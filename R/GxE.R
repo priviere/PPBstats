@@ -13,7 +13,7 @@
 #' scaling for interaction.matrix is not useful as the column mean is equal to 0 because of model constraints and all the values are regarding one variable, so it is possible to compare it into the PCA.
 #' 
 #' @return 
-#' The function returns a list with three elements:
+#' The function returns a list with three elements :
 #' \itemize{
 #'  \item info : a list with variable and gxe_analysis
 #'  \item ANOVA a list with five elements:
@@ -57,16 +57,17 @@ GxE = function(
       colnames(data)[which(colnames(data) == variable)] = "variable"
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data = droplevels(na.omit(data))
+      data$variable = as.numeric(data$variable)
       
-      data$YxE = factor(paste(data$year, data$location, sep = ":"))
-      data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
+#      data$YxE = factor(paste(data$year, data$location, sep = ":"))
+ #     data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
     
     # 3. ANOVA ----------
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
     
     if(nlevels(data$year) > 1) { # depends on the years available in the data set
-      model = lm(variable ~ germplasm*location + block %in% YxE + year + YxG + YxE, data = data)
+      model = lm(variable ~ germplasm*location + block %in% year:location + year + year:germplasm + year:location , data = data)
     } else {
       model = lm(variable ~ germplasm*location + block %in% location, data = data)
     }
