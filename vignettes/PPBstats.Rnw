@@ -31,7 +31,7 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.14}
+\newcommand{\versionnumber}{0.15}
 \newcommand{\PPB}{Participatory Plant Breeding}
 
 
