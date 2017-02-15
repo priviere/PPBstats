@@ -32,11 +32,11 @@
 #' An environment is a combinaison of a location and a year.
 #' 
 #' The variance are taken in an inverse Gamma distribution of parameters nu and rho. 
-#' This model takes into acount all the information on the network in order to cope wit
-#' h the high disequilibrium within each environment (i.e. low degree of freedom at the residual in each environment). 
-#' More informations can be found in the vignette.
+#' This model takes into acount all the information on the network in order to cope with 
+#' the high disequilibrium within each environment (i.e. low degree of freedom at the residual in each environment). 
+#' More information can be found in the vignette.
 #' 
-#' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more informations.
+#' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 #' 
 #' @return The function returns a list with 
 #' 
@@ -261,6 +261,8 @@ model_1 = function(
   }
   
   if( nb_RF == 0 & nb_SF > 0) {
+    if(return.beta){warning("No beta will be returned since there is no environment containing more than one block.")}
+    parameters = parameters[-grep("beta",parameters)]
     d_model <- list(environment = environment, entry = entry, y = y, nb_env = nb_env, nb_entry = nb_entry, nb_RF = nb_RF, mean_prior_mu = mean_prior_mu)
     model_jags = paste("model {", likelyhood_model_jags_SF, priors_model_jags, "}")
   }
@@ -293,7 +295,7 @@ model_1 = function(
     
     para.name = NULL
     
-    if(return.beta) {
+    if("beta" %in% parameters) {
       beta = n[grep("beta", n)]
       beta = sub("beta\\[", "", beta)
       beta = sub("\\]", "", beta)
@@ -301,7 +303,7 @@ model_1 = function(
       para.name = c(para.name, beta)
     }
     
-    if(return.mu) {
+    if("mu" %in% parameters) {
       mu = n[grep("mu", n)]
       mu = sub("mu\\[", "", mu)
       mu = sub("\\]", "", mu)
@@ -309,10 +311,10 @@ model_1 = function(
       para.name = c(para.name, mu)
     }
     
-    if(return.nu) { para.name = c(para.name, "nu") }
-    if(return.rho) { para.name = c(para.name, "rho") }
+    if("nu" %in% parameters) { para.name = c(para.name, "nu") }
+    if("rho" %in% parameters) { para.name = c(para.name, "rho") }
     
-    if(return.sigma) {
+    if("sigma" %in% parameters) {
       sigma = n[grep("sigma", n)]
       sigma = sub("sigma\\[" ,"", sigma)
       sigma=sub("\\]", "", sigma)

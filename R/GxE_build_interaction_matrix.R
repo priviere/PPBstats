@@ -8,7 +8,7 @@
 #' @param gxe_analysis the analysis to carry out: "AMMI" or "GGE"
 #' 
 #' @details The computation is inspired from \code{agricolae::AMMI}. 
-#' Another way to do has been explore but did not succeed regarding missing data. 
+#' Another way to do was explored but did not succeed regarding missing data. 
 #' The code is inside the function within a if(FALSE){}.
 #' 
 #' @return 
@@ -27,10 +27,10 @@ GxE_build_interaction_matrix = function(
   
   if(nlevels(data$year) > 1) { 
     if( gxe_analysis == "AMMI"){
-      model = lm(variable ~ germplasm + location + block %in% YxE + year + YxG + YxE, data = data)
+      model = lm(variable ~ germplasm + location + block %in% year:location + year + year:germplasm + year:location , data = data)
     }
     if( gxe_analysis == "GGE"){
-      model = lm(variable ~ location + block %in% location + year + YxG + YxE, data = data)
+      model = lm(variable ~ location + block %in% location + year + year:germplasm + year:location, data = data)
     }
   } else {
     if( gxe_analysis == "AMMI"){
