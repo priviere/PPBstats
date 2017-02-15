@@ -19,7 +19,7 @@ The function returns the interaction matrix
 }
 \details{
 The computation is inspired from \code{agricolae::AMMI}.
-Another way to do has been explore but did not succeed regarding missing data.
+Another way to do was explored but did not succeed regarding missing data.
 The code is inside the function within a if(FALSE){}.
 }
 \author{

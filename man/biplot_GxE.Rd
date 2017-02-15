@@ -14,6 +14,7 @@ The function returns a list with:
 \itemize{
 \item info : a list with variable and gxe_analysis
 \item data_ecovalence : the ecovalence matrix
+\item data_interaction : the interaction matrix
 \item pca : the pca object
 }
 }

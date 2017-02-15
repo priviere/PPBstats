@@ -193,6 +193,7 @@ See details for more information.}
  \item \code{\link{biplot_GxE}}
   \itemize{
    \item ecovalence
+   \item interaction which display the interaction matrix
    \item biplot, a list of four elements :
     \itemize{
      \item simple_biplot : the biplot of location and germplasm

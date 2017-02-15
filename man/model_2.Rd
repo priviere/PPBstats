@@ -45,7 +45,7 @@ The function returns a list with
 \item "model.presence.abscence.matrix": a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 \item "germplasm.not.used": the vector of germplasms not used in the analysis because they were not on at least two environments. If NULL, all the germplasms were used in the analysis.
 \item "MCMC": a list with the two MCMC chains (mcmc object) from the model
-\item "epsilon": a vector with the median value of the epsilon_ijk
+\item "epsilon": a vector with the median value of the epsilon_ij
 \item "DIC": the DIC value of the model
 }
 }
@@ -61,9 +61,9 @@ This model takes into acount all the information on the network in order to cope
 
 First, the additive model is done. This model gives intitial values of some parameters of the Hierarchical Finlay Wilkinson model which is done next.
 
-The model is run on data set where germplasms are on at least two environments
+The model is run on data set where germplasms are on at least two environments.
 
-More informations can be found in the vignette.
+More information can be found in the vignette.
 
 For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 }
