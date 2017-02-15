@@ -91,7 +91,7 @@ describe_data = function(
         names(outliers) = x$germplasm[which(x$variable %in% outliers)]
         return(list("plot" = plot, "outliers" = outliers))
         }
-      out_g_box = lapply(dtmp_g, fun_g, ylim)
+      out_g_box = lapply(dtmp_g, fun_g, xlim)
       
       # per location
       dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameters_per_plot)
@@ -108,7 +108,7 @@ describe_data = function(
         return(list("plot" = plot, "outliers" = outliers))
       }
       
-      out_l_box = lapply(dtmp_l, fun_l, ylim)
+      out_l_box = lapply(dtmp_l, fun_l, xlim)
       
       # per year
       dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameters_per_plot)
@@ -124,7 +124,7 @@ describe_data = function(
         names(outliers) = x$year[which(x$variable %in% outliers)]
         return(list("plot" = plot, "outliers" = outliers))
       }
-      out_y_box = lapply(dtmp_y, fun_y, ylim)
+      out_y_box = lapply(dtmp_y, fun_y, xlim)
       
       # interaction ----------
       dtmp$int = paste(dtmp$germplasm,dtmp$location,dtmp$year,sep=":")
