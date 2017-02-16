@@ -57,11 +57,7 @@ GxE = function(
       colnames(data)[which(colnames(data) == variable)] = "variable"
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data = droplevels(na.omit(data))
-      data$variable = as.numeric(data$variable)
-      
-#      data$YxE = factor(paste(data$year, data$location, sep = ":"))
- #     data$YxG = factor(paste(data$year, data$germplasm, sep = ":"))
-    
+
     # 3. ANOVA ----------
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0

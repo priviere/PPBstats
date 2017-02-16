@@ -13,7 +13,7 @@ check_model_GxE(out_GxE)
 See \code{\link{check_model}}
 }
 \description{
-\code{check_model_GxE} compute test to assess if the GxE model went well
+\code{check_model_GxE} computes tests to assess if the GxE model went well
 }
 \details{
 See \code{\link{check_model}}

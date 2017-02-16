@@ -313,7 +313,7 @@ out_biplot_ammi = biplot_GxE(out_check_ammi)
 p_out_biplot_ammi = get_ggplot(out_biplot_ammi)
 @
 
-\texttt{p\_out\_biplot\_ammi} is a list of two elements :
+\texttt{p\_out\_biplot\_ammi} is a list of three elements :
 \begin{itemize}
 \item \texttt{ecovalence}
 
@@ -329,6 +329,13 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 <<message=TRUE,cache=FALSE>>=
 p_out_biplot_ammi$ecovalence
 @
+
+\item \texttt{interaction} which display the interaction matrix
+
+<<message=TRUE,cache=FALSE>>=
+p_out_biplot_ammi$interaction
+@
+
 
 \item \texttt{biplot} being a list of four elements :
 <<message=TRUE,cache=FALSE>>=
