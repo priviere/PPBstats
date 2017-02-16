@@ -27,6 +27,8 @@ check_data_vec_variables = function(data, vec_variables){
   if(!is.factor(data$Y)) { stop(mess) }
   
   for(variable in vec_variables) { if(!is.element(variable, colnames(data))) { stop(variable," is not in data") } }
+  for(variable in vec_variables) { 
+    if(!is.numeric(data[,variable])) { stop(variable," is not numeric") } }
 }
 
 # Function use in describe_data.R ----------
