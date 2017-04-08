@@ -342,3 +342,9 @@ The data have always the following columns : location, year, germplasm, block, X
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
+
+The following examples have been performed with the following R version :
+<<message=FALSE,cache=FALSE>>=
+unlist(sessionInfo()$R.version)
+@
+
