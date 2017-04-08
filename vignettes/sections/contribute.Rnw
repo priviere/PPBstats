@@ -1,4 +1,4 @@
-\section{Contribute}
+\chapter{contribute}
 \label{contribute}
 
 You can contribute to \pack~ in three ways:
@@ -9,7 +9,7 @@ You can contribute to \pack~ in three ways:
 \item add new functions that may be useful in the analysis of trials that can be found in PPB programmes
 \end{enumerate}
 
-\subsection{Test and report bugs}
+\section{Test and report bugs}
 
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 \begin{itemize}
@@ -18,13 +18,13 @@ Do not hesitate to let a message [in the issues](https://github.com/priviere/PPB
 \end{itemize}
 
 
-\subsection{Translate}
+\section{Translate}
 
 The package is in english. 
 Every contributions to other languages are welcome!
 More informations on R package translation [here](http://developer.r-project.org/Translations30.html).
 
-\subsection{Add new functions}
+\section{Add new functions}
 
 If you wish to add a new model, you should follow different steps:
 

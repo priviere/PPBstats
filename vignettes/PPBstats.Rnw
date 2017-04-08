@@ -1,7 +1,7 @@
 %\VignetteIndexEntry{PPBstats}
 %\VignetteEngine{knitr::knitr}
 
-\documentclass{article}
+\documentclass{book}
 
 % to draw on figure or create figures
 \usepackage{tikz}
@@ -68,6 +68,10 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 <<child='sections/philo_pack.Rnw'>>=
 @
 \newpage
+
+\chapter{Network analysis}
+
+\chapter{Agronomic analysis}
 
 <<child='sections/design_expe.Rnw'>>=
 @
@@ -136,11 +140,16 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 @
 \newpage
 
+\chapter{Organoleptic analysis}
+
+\chapter{Molecular analysis}
+
+
 <<child='sections/contribute.Rnw'>>=
 @
 \newpage
 
-\section*{To cite \pack} \addcontentsline{toc}{section}{To cite \pack}
+\chapter*{To cite \pack} \addcontentsline{toc}{chapter}{To cite \pack}
 To cite this package and or this vignette:
 
 <<message=TRUE,cache=FALSE>>=
