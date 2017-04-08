@@ -1,4 +1,5 @@
-\section{Workflow and function relations in \pack}
+\section{Introduction}
+\subsection{Workflow and function relations in \pack~regarding agronomic analysis}
 
 \pack~is divided into two sets of functions:
 
@@ -152,18 +153,18 @@ Two other funtions are also in the package:
 
 
 
-\section{Frequentist statistics}
+\subsection{Frequentist statistics}
 
 !!! TO DO !!!
 
-\subsection{Theory}
+\subsubsection{Theory}
 
-\subsection{Mean comparisons}
+\subsubsection{Mean comparisons}
 
-\section{Bayesian statistics}
+\subsection{Bayesian statistics}
 \label{section_bayes}
 
-\subsection{Theory}
+\subsubsection{Theory}
 
 The analyses performed in \pack~are based on Bayesian statistics.
 
@@ -199,7 +200,7 @@ In our case, the burn-in had 1000 iterations, then 100 000 iterations are done b
 The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
 
 
-\subsection{Mean comparisons}
+\subsubsection{Mean comparisons}
 \label{mean_comp}
 In this part, the mean of each entry is compared to the mean of each other entry.
 Let $H_{0}$ and $H_{1}$ denote the hypotheses:
@@ -283,4 +284,8 @@ In \pack, mean comparisons are done with \texttt{mean\_comparisons}.
 You can choose on which parameters to run the comparison (\texttt{parameter} argument) and the $\alpha$ type one error (\texttt{alpha} argument).
 The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
 More informations on this function by typing \texttt{?mean\_comparisons}.
+
+\subsection{data formating}
+
+The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables.
 
