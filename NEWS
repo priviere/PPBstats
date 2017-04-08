@@ -3,6 +3,7 @@ PPBstats 0.16 ---------------------------------------
 
 * update vignette
   - remind to install JAGS
+  - add R version
   
 
 PPBstats 0.15 ---------------------------------------
