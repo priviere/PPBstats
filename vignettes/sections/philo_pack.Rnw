@@ -313,13 +313,16 @@ More informations on this function by typing \texttt{?mean\_comparisons}.
 
 
 \subsection{Let's go!}
-To continue, load the development version of the package:
+To continue, load the development version of the package :
 
 <<message=TRUE,cache=FALSE,eval=FALSE>>=
 devtools::install_github("priviere/PPBstats")
 @
 
-, load it
+Note that JAGS must be installed on your computer.
+See \url{http://mcmc-jags.sourceforge.net/} for more details.
+
+Then you can load the package :
 
 <<message=TRUE,cache=FALSE,eval=FALSE>>=
 library(PPBstats)
