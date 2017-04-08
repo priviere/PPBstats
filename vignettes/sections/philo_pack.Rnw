@@ -1,7 +1,7 @@
-\section{Philosophy of \pack}
+\chapter{Philosophy of \pack}
 \label{philo}
 
-\subsection{What is \PPB ?}
+\section{What is \PPB ?}
 
 \begin{itemize}
 \item \textbf{decentralized the selection}
@@ -20,12 +20,12 @@ When facing a wide diversity of agroecological environment and practices, decent
 \end{itemize}
 
 
-\subsection{Objectives of \pack}
+\section{Objectives of \pack}
 
 \pack~aims to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
 The statistical procedures are based on frequentist and bayesian approaches.
 
-\subsection{Workflow and function relations in \pack}
+\section{Workflow and function relations in \pack}
 
 \pack~is divided into two sets of functions:
 
@@ -179,18 +179,18 @@ Two other funtions are also in the package:
 
 
 
-\subsection{Frequentist statistics}
+\section{Frequentist statistics}
 
 !!! TO DO !!!
 
-\subsubsection{Theory}
+\subsection{Theory}
 
-\subsubsection{Mean comparisons}
+\subsection{Mean comparisons}
 
-\subsection{Bayesian statistics}
+\section{Bayesian statistics}
 \label{section_bayes}
 
-\subsubsection{Theory}
+\subsection{Theory}
 
 The analyses performed in \pack~are based on Bayesian statistics.
 
@@ -226,7 +226,7 @@ In our case, the burn-in had 1000 iterations, then 100 000 iterations are done b
 The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
 
 
-\subsubsection{Mean comparisons}
+\subsection{Mean comparisons}
 \label{mean_comp}
 In this part, the mean of each entry is compared to the mean of each other entry.
 Let $H_{0}$ and $H_{1}$ denote the hypotheses:
@@ -312,7 +312,7 @@ The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
 More informations on this function by typing \texttt{?mean\_comparisons}.
 
 
-\subsection{Let's go!}
+\section{Let's go!}
 To continue, load the development version of the package :
 
 <<message=TRUE,cache=FALSE,eval=FALSE>>=
