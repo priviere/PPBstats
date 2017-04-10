@@ -4,6 +4,8 @@ PPBstats 0.16 ---------------------------------------
 * update vignette
   - remind to install JAGS
   - add R version
+  - new sections : network, agronomic, organoleptic and molecular
+  - add IBD analysis section
   
 
 PPBstats 0.15 ---------------------------------------
