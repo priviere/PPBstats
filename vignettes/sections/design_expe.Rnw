@@ -23,7 +23,7 @@ The different effects that can be estimated are:
 \noindent The analysis are divided into four families:
 \begin{itemize}
 \item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
-\item \textbf{Family 2} gathers analysis that estimate germplasm, location and interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+\item \textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
 \item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
 \item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
 \end{itemize}
@@ -50,7 +50,8 @@ Family & Name & Section &
   & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & \\
   & Bayesian model 1 & \ref{model_1} & X & & & & & & & \\
 \hline
-2 & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
+2 & IBD & \ref{ibd} & & X & & & & & & \\
+  & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
   & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
   & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
 \hline
@@ -117,6 +118,8 @@ case & number of locations & number of years & comments regarding entries replic
   & 12 or more & 2 or more & & & \\
   \cline{2-3} \cline{6-6}
   & 25 or more & 3 or more & & & B model 3 \\
+\hline
+4 & 2 or more & 1 & Entries not replicated. Some entries are shared by some locations & \texttt{IBD} & IBD \\
 \hline
 \end{tabular}
 \caption{Experimental design specification linked to dedicated analysis. Column 'design of experiments' corresponds to the argument \texttt{expe.type} in the \texttt{design\_experiment} function.}
@@ -196,6 +199,8 @@ Regional farms had several entries (i.e. a germplasm in an environment) in two o
 Satellite farms had no block and one entry replicated twice.
 Farmers chose the other entries to be sown that were not replicated.
 The number of entries may vary between farms.
+Note that at least 25 locations or environments (location $\times$ year) are need in order to get confident analysis.
+
 
 Here, six designs are generated: four for satellite farm and two for regional farm.
 
@@ -316,10 +321,11 @@ For \texttt{expe.type = "regional-farm"}, there is a warning message if controls
 It is better to catch as much as possible of the trial variation.
 If there are less than 2 blocks, an error is returned.
 
-\subsubsection{Case ???}
+\subsubsection{Case 4}
 
 Incomplete block design.
-One or more block per farm.
+Entries are not replicated. Some entries are shared by some locations.
+There is one block per location.
 
 <<message=TRUE,cache=FALSE>>=
 p_ibd = design_experiment(
