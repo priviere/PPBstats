@@ -110,9 +110,6 @@ ggplot_mean_comparisons_model_1 = function(
               
               d = droplevels(d[d$group %in% group_to_keep,])
               STARS = STARS[is.element(names(STARS), group_to_keep)]
-              t = tapply(d$entry, d$group, function(x){paste(x, collapse = "-")})
-              d$group = t[d$group]
-              names(STARS) = t[names(STARS)]
 
               p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
               y = tapply(d$median, d$group, mean, na.rm = TRUE)
