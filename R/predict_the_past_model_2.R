@@ -1,7 +1,7 @@
-#' Estimate value of a germplasm in an environment based on model 2
+#' Predict value of a germplasm in an environment based on model 2
 #'
 #' @description
-#' \code{predict_the_past_model_2} estimates value of a germplasm in an environment based on model 2.
+#' \code{predict_the_past_model_2} predict value of a germplasm in an environment based on model 2.
 #' 
 #' @param out_check_model_model_2 object from \code{\link{check_model}} from \code{\link{model_2}}
 #' 
@@ -16,7 +16,7 @@
 #' 
 #' It is like mu_ij effect that are estimated (as for model 1), i.e. the effect of a germplasm in an environment.
 #' 
-#' Due to memory issues, it is better to run the function for only one environment instread of all by default.
+#' Due to memory issues, it is better to run the function for only one environment instead of all by default.
 #' This allows the same ggplot as for model 1.
 #' 
 #' @author Pierre Riviere
