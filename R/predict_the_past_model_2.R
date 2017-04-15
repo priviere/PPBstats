@@ -45,22 +45,49 @@ predict_the_past_model_2 = function(
   if( !is.element(env, colnames(w)) ){ stop("env ", env," does not exist.")  }
   
   # 2. Get the estimation of mu_ij based on MCMC outputs ----------
-  j = which(colnames(w) == env)
-  germ = rownames(w)[which(w[,j] == 0)]
-  OUT = data.frame(matrix(NA, ncol = length(germ), nrow = nrow(MCMC)))
-  if(length(germ) > 0) { # if length(geno) == 0, it means no germplasms must be estimated
-    for (i in 1:length(germ)) {
-      if (is.element(paste("alpha","[",germ[i],"]",sep=""), colnames(MCMC)) & is.element(paste("theta","[",env,"]",sep=""), colnames(MCMC)))  {
-        mu_estimated = MCMC[,paste("alpha[",germ[i],"]",sep="")] + MCMC[,paste("beta[",germ[i],"]",sep="")] * MCMC[,paste("theta[",env,"]",sep="")]
-        OUT[i] = mu_estimated
-      } else { warning("Estimated value for germplasm ", germ, " in environment ", env, " is not possible. This is because the estimation of germplasm and or environment effects did not converge and therefore were not in the MCMC.") 
-      }
+  
+  # 2.1. function to get mu ----------
+  get_mu = function(germ, MCMC){
+    if (is.element(paste("alpha","[",germ,"]",sep=""), colnames(MCMC)) & is.element(paste("theta","[",env,"]",sep=""), colnames(MCMC)))  {
+      mu = MCMC[,paste("alpha[",germ,"]",sep="")] + MCMC[,paste("beta[",germ,"]",sep="")] * MCMC[,paste("theta[",env,"]",sep="")]
+    } else { 
+      mu = NULL
+      warning("Estimated or predicted value for germplasm ", germ, " in environment ", env, " is not possible. This is because the estimation of germplasm or environment effects did not converge and therefore were not in the MCMC.") 
     }
-    names(OUT) = paste("mu[", germ, ",", env,"]", sep = "")
-  } else { OUT = NULL }
+    return(mu)
+  }
+  
+  
+  # 2.2. mu estimated ----------
+  germ_estimated = rownames(w)[which(w[,which(colnames(w) == env)] != 0)]
+  OUT_MCMC_estimated = data.frame(matrix(NA, ncol = length(germ_estimated), nrow = nrow(MCMC)))
+  for (i in 1:length(germ_estimated)) {
+    mu_estimated = get_mu(germ_estimated[i], MCMC)  
+    OUT_MCMC_estimated[i] = mu_estimated
+  }
+  names(OUT_MCMC_estimated) = paste("mu[", germ_estimated, ",", env,"]", sep = "")
+  
+  # 2.3. mu predicted ----------
+  germ_to_predict = rownames(w)[which(w[,which(colnames(w) == env)] == 0)]
+  OUT_MCMC_predicted = data.frame(matrix(NA, ncol = length(germ_to_predict), nrow = nrow(MCMC)))
+  for (i in 1:length(germ_to_predict)) {
+    mu_predicted = get_mu(germ_to_predict[i], MCMC)  
+    OUT_MCMC_predicted[i] = mu_predicted
+  }
+  names(OUT_MCMC_predicted) = paste("mu[", germ_to_predict, ",", env,"]", sep = "")
+  
+  OUT_MCMC = cbind.data.frame(OUT_MCMC_estimated, OUT_MCMC_predicted)
+  parameter_statuts = colnames(OUT_MCMC)
+  names(parameter_statuts) = c(
+    rep("estimated", ncol(OUT_MCMC_estimated)), 
+    rep("predicted", ncol(OUT_MCMC_predicted))
+  )
   
   # 3. Return the results ----------
-  out = list("MCMC" = OUT)
+  out = list(
+    "MCMC" = OUT_MCMC,
+    "parameter_statuts" = parameter_statuts
+    )
   attributes(out)$PPBstats.object = "predict_the_past_model_2"
   return(out)
 }
