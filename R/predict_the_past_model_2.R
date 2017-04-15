@@ -77,11 +77,11 @@ predict_the_past_model_2 = function(
   names(OUT_MCMC_predicted) = paste("mu[", germ_to_predict, ",", env,"]", sep = "")
   
   OUT_MCMC = cbind.data.frame(OUT_MCMC_estimated, OUT_MCMC_predicted)
-  parameter_statuts = colnames(OUT_MCMC)
-  names(parameter_statuts) = c(
+  parameter_statuts = c(
     rep("estimated", ncol(OUT_MCMC_estimated)), 
     rep("predicted", ncol(OUT_MCMC_predicted))
   )
+  names(parameter_statuts) = colnames(OUT_MCMC)
   
   # 3. Return the results ----------
   out = list(
