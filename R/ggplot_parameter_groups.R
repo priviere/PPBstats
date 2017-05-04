@@ -18,13 +18,7 @@
 ggplot_parameter_groups = function(out_parameter_groups){
 
   pca = out_parameter_groups$obj.pca
-  
-  clust = out_parameter_groups$clust
-  data = clust$data
-  nb.k = clust$nb.k
-  res.hc = clust$hc
-  km.res = clust$km
-  
+  res.hcpc = out_parameter_groups$clust$res.hcpc
   
   out = list(
     "pca" = list(
@@ -33,9 +27,9 @@ ggplot_parameter_groups = function(out_parameter_groups){
       "var" = fviz_pca_var(pca)
     ),
     "clust" = list(
-      "nb_k" = fviz_nbclust(data, kmeans, method = "silhouette"),
-      #"dendrogramm" = fviz_dend(res.hc, cex = 0.5, k = nb.k, type = "triangle"),
-      "pca" = fviz_cluster(km.res, data, frame.type = "norm")
+     # "nb_k" = fviz_nbclust(res.hcpc),
+      "dendrogramm" = fviz_dend(res.hcpc, cex = 0.5, k = 2, type = "rectangle"),
+      "pca" = fviz_cluster(res.hcpc)
     )
   )
   

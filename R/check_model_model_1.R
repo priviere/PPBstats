@@ -52,6 +52,9 @@ check_model_model_1 = function(
       data_env_whose_param_did_not_converge = droplevels(filter(out_model_1$data.model1, environment %in% env_not_ok))
       data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
       data_env_whose_param_did_not_converge$parameter = paste("mu", data_env_whose_param_did_not_converge$parameter, sep = "")
+      data_env_whose_param_did_not_converge$location = unlist(lapply(as.character(data_env_whose_param_did_not_converge$environment),function(x){strsplit(x,":")[[1]][1]}))
+      data_env_whose_param_did_not_converge$year = unlist(lapply(as.character(data_env_whose_param_did_not_converge$environment),function(x){strsplit(x,":")[[1]][2]}))
+      
 
     # Update MCMC, delete all environments where at least one parameter do not converge
       message("MCMC are updated, the following environment were deleted : ", paste(env_not_ok, collapse = ", "))

@@ -73,34 +73,14 @@ parameter_groups = function(
   
   # 4. Get the clusters ----------  
   # see method here: http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning
+  res.hcpc = HCPC(obj.pca, nb.clust = -1, consol = 0, min = 2, max = 5, graph = FALSE) # Be careful, if we put 2, it often returns 2! The package propose to put 3
+  clust =  res.hcpc$data.clust
+  clust$clust = paste("cluster", clust$clust)
   
-  k.max <- 15
-  data <- out
-  sil <- rep(0, k.max)
-  # Compute the average silhouette width for 
-  # k = 2 to k = 15
-  for(i in 2:k.max){
-    km.res <- kmeans(data, centers = i, nstart = 25)
-    ss <- cluster::silhouette(km.res$cluster, dist(data))
-    sil[i] <- mean(ss[, 3])
-  }
-  
-  nb.k = which.max(sil)
-  
-  res.hc = hclust(dist(out))
-  km.res = kmeans(out, nb.k, nstart = 25)
-  
-  # 5. Return the outputs ----------
-  out = list("obj.pca" = obj.pca, 
-             "clust" = list(
-               "data" = out,
-               "nb.k" = nb.k,
-               "hc" = res.hc,
-               "km" = km.res
-               )
-             )
-  
+  # 6. Return the outputs ----------
+  out = list("obj.pca" = obj.pca, "clust" = list("res.hcpc"= res.hcpc, "clust"=clust))
   attributes(out)$PPBstats.object = "parameter_groups"
   
   return(out)
+
 }
