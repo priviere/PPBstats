@@ -1,4 +1,4 @@
-\chapter{contribute}
+\chapter{Contribute}
 \label{contribute}
 
 You can contribute to \pack~ in three ways:
@@ -11,7 +11,7 @@ You can contribute to \pack~ in three ways:
 
 \section{Test and report bugs}
 
-Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
+Do not hesitate to let a message \href{https://github.com/priviere/PPBstats/issues}{in the issues} or to send me an email if
 \begin{itemize}
 \item some points are not clear in the vignette or you find bugs
 \item you find bugs with your data (If so, you can send it to me so that I can see where could be the problems)
@@ -22,7 +22,7 @@ Do not hesitate to let a message [in the issues](https://github.com/priviere/PPB
 
 The package is in english. 
 Every contributions to other languages are welcome!
-More informations on R package translation [here](http://developer.r-project.org/Translations30.html).
+More informations on R package translation \href{http://developer.r-project.org/Translations30.html}{here}.
 
 \section{Add new functions}
 
