@@ -418,11 +418,7 @@ In order to cluster environments or germplasms, you may use mulivariate analysis
 
 This is done with \texttt{parameter\_groups} which do a PCA on this matrix.
 
-Clusters are done based on Average silhouette method for k-means clustering as explained here \url{http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning#r-codes-1}
-
-The hcluster are computed with the function \texttt{hclust(dist())}
-
-The kmeans are computed with the function \texttt{kmeans()}
+Clusters are done based on HCPC method as explained here \url{http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning}
 
 Lets' have an example with three variables.
 
@@ -472,12 +468,10 @@ out_parameter_groups = parameter_groups(
 
 \begin{itemize}
 \item\texttt{obj.pca} : the PCA object from \texttt{FactoMineR::PCA}
-\item \texttt{clust}, a list of four elements:
+\item \texttt{clust}, a list of two elements:
 \begin{itemize}
-  \item \texttt{data} : the matrix with variables in column and effect in row, from wich have been computed the PCA
-  \item \texttt{nb\_k} : number of cluster
-  \item \texttt{hc} : hcluster
-  \item \texttt{km} : kmeans
+  \item \texttt{res.hcpc} : the HCPC object from \texttt{FactoMineR::HCPC}
+  \item \texttt{clust} : the dataframe with cluster assigned to each individual
   \end{itemize}
 \end{itemize}
 
@@ -513,22 +507,10 @@ ppg = get_ggplot(out_parameter_groups)
 
   \end{itemize}
 
-\item \texttt{clust}
-  \begin{itemize}
-  
-  \item \texttt{nb\_k} : output from \texttt{factextra::fviz\_nbclust(data, kmeans, method = "silhouette")}
-  See \texttt{?factoextra::fviz\_nbclust} for more details
+\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}
   <<message=TRUE,cache=FALSE>>=
   ppg$clust$nb_k
   @
-
-  \item pca : output from \texttt{factextra::fviz\_cluster(km.res, data, frame.type = "norm")}
-  See \texttt{?factoextra::fviz\_cluster} for more details
-  <<message=TRUE,cache=FALSE>>=
-  ppg$clust$pca
-  @
-
-  \end{itemize}
 
 \end{itemize}
 

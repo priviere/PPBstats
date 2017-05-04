@@ -360,24 +360,20 @@ In order to cluster locations or germplasms, you may use mulivariate analysis on
 
 This is done with \texttt{parameter\_groups} which do a PCA on this matrix.
 
-Clusters are done based on Average silhouette method for k-means clustering as explained here \url{http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning#r-codes-1}
-
-The hcluster are computed with the function \texttt{hclust(dist())}
-
-The kmeans are computed with the function \texttt{kmeans()}
+Clusters are done based on HCPC method as explained here \url{http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning}
 
 Lets' have an example with three variables.
 
 First run the models
 <<message=TRUE,cache=FALSE>>=
-ammi_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "AMMI")
-ammi_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "AMMI")
+out_ammi_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "AMMI")
+out_ammi_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "AMMI")
 @
 
 Then check the models
 <<message=TRUE,cache=FALSE>>=
-out_check_ammi_2 = check_model(ammi_2)
-out_check_ammi_3 = check_model(ammi_3)
+out_check_ammi_2 = check_model(out_ammi_2)
+out_check_ammi_3 = check_model(out_ammi_3)
 @
 
 Then run the function for germplasm. It can also be done on location or year if there are year in the data set.
@@ -388,6 +384,17 @@ out_parameter_groups = parameter_groups(
   "germplasm"
   )
 @
+
+\texttt{out\_parameter\_groups} is list of two elements:
+
+\begin{itemize}
+\item\texttt{obj.pca} : the PCA object from \texttt{FactoMineR::PCA}
+\item \texttt{clust}, a list of two elements:
+\begin{itemize}
+  \item \texttt{res.hcpc} : the HCPC object from \texttt{FactoMineR::HCPC}
+  \item \texttt{clust} : the dataframe with cluster assigned to each individual
+  \end{itemize}
+\end{itemize}
 
 \paragraph{Visualize groups of parameters}
 
@@ -420,23 +427,11 @@ p_germplasm_group = get_ggplot(out_parameter_groups)
   
   \end{itemize}
 
-
-\item \texttt{clust}
-  \begin{itemize}
-  \item \texttt{nb\_k} : output from \texttt{factextra::fviz\_nbclust(data, kmeans, method = "silhouette")}
-  See \texttt{?factoextra::fviz\_nbclust} for more details
+\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}
   <<message=TRUE,cache=FALSE>>=
-  p_germplasm_group$clust$nb_k
+  p_germplasm_group$clust
   @
 
-  \item \texttt{pca} : output from \texttt{factextra::fviz\_cluster(km.res, data, frame.type = "norm")}
-  See \texttt{?factoextra::fviz\_cluster} for more details
-  <<message=TRUE,cache=FALSE>>=
-  p_germplasm_group$clust$pca
-  @
-
-  \end{itemize}
- 
 \end{itemize}
 
 
