@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict_the_past_model_2.R
 \name{predict_the_past_model_2}
 \alias{predict_the_past_model_2}
-\title{Estimate value of a germplasm in an environment based on model 2}
+\title{Predict value of a germplasm in an environment based on model 2}
 \usage{
 predict_the_past_model_2(out_check_model_model_2, env = NULL)
 }
@@ -16,7 +16,7 @@ The function returns a MCMC for the given environment.
 This MCMC output can be used in the same way as the output from \code{\link{check_model}} from \code{\link{model_1}}.
 }
 \description{
-\code{predict_the_past_model_2} estimates value of a germplasm in an environment based on model 2.
+\code{predict_the_past_model_2} predict value of a germplasm in an environment based on model 2.
 }
 \details{
 The estimations of the values are based on the MCMC outputs.
@@ -24,7 +24,7 @@ More informations can be found in the vignette.
 
 It is like mu_ij effect that are estimated (as for model 1), i.e. the effect of a germplasm in an environment.
 
-Due to memory issues, it is better to run the function for only one environment instread of all by default.
+Due to memory issues, it is better to run the function for only one environment instead of all by default.
 This allows the same ggplot as for model 1.
 }
 \author{
