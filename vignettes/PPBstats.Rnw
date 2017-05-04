@@ -70,8 +70,15 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 \newpage
 
 \chapter{Network analysis}
+\label{network}
+Please, feel free to contribute to this part of analysis, see section \ref{contribute} for more information.
 
 \chapter{Agronomic analysis}
+\label{agronomic}
+
+<<child='sections/agro_intro.Rnw'>>=
+@
+\newpage
 
 <<child='sections/design_expe.Rnw'>>=
 @
@@ -105,6 +112,9 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 \newpage
 
 \section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
+
+<<child='sections/ibd.Rnw'>>=
+@
 
 <<child='sections/ammi.Rnw'>>=
 @
@@ -141,9 +151,12 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 \newpage
 
 \chapter{Organoleptic analysis}
+\label{organoleptic}
+Please, feel free to contribute to this part of analysis, see section \ref{contribute} for more information.
 
 \chapter{Molecular analysis}
-
+\label{molecular}
+Please, feel free to contribute to this part of analysis, see section \ref{contribute} for more information.
 
 <<child='sections/contribute.Rnw'>>=
 @

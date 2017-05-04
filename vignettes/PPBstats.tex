@@ -1,7 +1,7 @@
 %\VignetteIndexEntry{PPBstats}
 %\VignetteEngine{knitr::knitr}
 
-\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+\documentclass{book}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -105,10 +105,10 @@
 \input{./sections/head}
 
 
-\section{Philosophy of \pack}
+\chapter{Philosophy of \pack}
 \label{philo}
 
-\subsection{What is \PPB ?}
+\section{What is \PPB ?}
 
 \begin{itemize}
 \item \textbf{decentralized the selection}
@@ -127,12 +127,105 @@ When facing a wide diversity of agroecological environment and practices, decent
 \end{itemize}
 
 
-\subsection{Objectives of \pack}
+\section{Objectives of \pack}
 
-\pack~aims to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
+\pack~aims to handle analysis performed within PPB programmes at four levels:
+
+\begin{itemize}
+
+\item network (section \ref{network})
+
+\item agronomic (section \ref{agronomic}) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
 The statistical procedures are based on frequentist and bayesian approaches.
 
-\subsection{Workflow and function relations in \pack}
+\item organoleptic (section \ref{organoleptic})
+
+\item molecular (section \ref{molecular})
+
+\end{itemize}
+
+Up to now, only agronomic analysis is under development. 
+Please, feel free to contribute to other aspects of analysis, see section \ref{contribute} for more information.
+
+
+
+\section{Let's go!}
+To continue, load the development version of the package :
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{devtools}\hlopt{::}\hlkwd{install_github}\hlstd{(}\hlstr{"priviere/PPBstats"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Note that JAGS must be installed on your computer.
+See \url{http://mcmc-jags.sourceforge.net/} for more details.
+
+Then you can load the package :
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(PPBstats)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+and download from internet the data used in this vignette (this is useful to earn lots of time!) :
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{get.PPBstats.data}\hlstd{()} \hlcom{# not run}
+\hlcom{# |=======================================================================| 100%}
+\hlcom{# The data are downloaded in ./data_PPBstats/}
+\hlcom{# You can now load the data, for example load("./data_PPBstats/out1.Rdata").}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+%The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
+%This gives an idea about memory and processor needed to run the analysis.
+
+The following examples have been performed with the following R version :
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{unlist}\hlstd{(}\hlkwd{sessionInfo}\hlstd{()}\hlopt{$}\hlstd{R.version)}
+\end{alltt}
+\begin{verbatim}
+##                       platform                           arch 
+##          "x86_64-pc-linux-gnu"                       "x86_64" 
+##                             os                         system 
+##                    "linux-gnu"            "x86_64, linux-gnu" 
+##                         status                          major 
+##                             ""                            "3" 
+##                          minor                           year 
+##                          "2.5"                         "2016" 
+##                          month                            day 
+##                           "04"                           "14" 
+##                        svn rev                       language 
+##                        "70478"                            "R" 
+##                 version.string                       nickname 
+## "R version 3.2.5 (2016-04-14)"     "Very, Very Secure Dishes"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\newpage
+
+\chapter{Network analysis}
+\label{network}
+Please, feel free to contribute to this part of analysis, see section \ref{contribute} for more information.
+
+\chapter{Agronomic analysis}
+\label{agronomic}
+
+
+\section{Introduction}
+\subsection{Workflow and function relations in \pack~regarding agronomic analysis}
 
 \pack~is divided into two sets of functions:
 
@@ -418,46 +511,10 @@ You can choose on which parameters to run the comparison (\texttt{parameter} arg
 The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
 More informations on this function by typing \texttt{?mean\_comparisons}.
 
-
-\subsection{Let's go!}
-To continue, load the development version of the package:
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{devtools}\hlopt{::}\hlkwd{install_github}\hlstd{(}\hlstr{"priviere/PPBstats"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-, load it
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{library}\hlstd{(PPBstats)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-and download from internet the data used in this vignette (this is useful to earn lots of time!) :
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{get.PPBstats.data}\hlstd{()} \hlcom{# not run}
-\hlcom{# |=======================================================================| 100%}
-\hlcom{# The data are downloaded in ./data_PPBstats/}
-\hlcom{# You can now load the data, for example load("./data_PPBstats/out1.Rdata").}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+\subsection{data formating}
 
 The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables.
 
-
-%The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
-%This gives an idea about memory and processor needed to run the analysis.
 \newpage
 
 
@@ -486,7 +543,7 @@ The different effects that can be estimated are:
 \noindent The analysis are divided into four families:
 \begin{itemize}
 \item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
-\item \textbf{Family 2} gathers analysis that estimate germplasm, location and interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+\item \textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
 \item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
 \item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
 \end{itemize}
@@ -513,7 +570,8 @@ Family & Name & Section &
   & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & \\
   & Bayesian model 1 & \ref{model_1} & X & & & & & & & \\
 \hline
-2 & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
+2 & IBD & \ref{ibd} & & X & & & & & & \\
+  & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
   & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
   & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
 \hline
@@ -580,6 +638,8 @@ case & number of locations & number of years & comments regarding entries replic
   & 12 or more & 2 or more & & & \\
   \cline{2-3} \cline{6-6}
   & 25 or more & 3 or more & & & B model 3 \\
+\hline
+4 & 2 or more & 1 & Entries not replicated. Some entries are shared by some locations & \texttt{IBD} & IBD \\
 \hline
 \end{tabular}
 \caption{Experimental design specification linked to dedicated analysis. Column 'design of experiments' corresponds to the argument \texttt{expe.type} in the \texttt{design\_experiment} function.}
@@ -676,7 +736,7 @@ You can set the format to a SHiNeMaS\footnote{Seeds History and Network Manageme
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-23-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-26-1} 
 
 }
 
@@ -727,7 +787,7 @@ You can set the format to a SHiNeMaS\footnote{Seeds History and Network Manageme
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-26-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-29-1} 
 
 }
 
@@ -746,6 +806,8 @@ Regional farms had several entries (i.e. a germplasm in an environment) in two o
 Satellite farms had no block and one entry replicated twice.
 Farmers chose the other entries to be sown that were not replicated.
 The number of entries may vary between farms.
+Note that at least 25 locations or environments (location $\times$ year) are need in order to get confident analysis.
+
 
 Here, six designs are generated: four for satellite farm and two for regional farm.
 
@@ -846,7 +908,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-29-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-32-1} 
 
 }
 
@@ -857,7 +919,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-30-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-33-1} 
 
 }
 
@@ -869,7 +931,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-31-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-34-1} 
 
 }
 
@@ -880,7 +942,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-32-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-35-1} 
 
 }
 
@@ -892,7 +954,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-33-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-36-1} 
 
 }
 
@@ -903,7 +965,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-34-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-37-1} 
 
 }
 
@@ -926,10 +988,11 @@ For \texttt{expe.type = "regional-farm"}, there is a warning message if controls
 It is better to catch as much as possible of the trial variation.
 If there are less than 2 blocks, an error is returned.
 
-\subsubsection{Case ???}
+\subsubsection{Case 4}
 
 Incomplete block design.
-One or more block per farm.
+Entries are not replicated. Some entries are shared by some locations.
+There is one block per location.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -970,7 +1033,7 @@ One or more block per farm.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-37-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-40-1} 
 
 }
 
@@ -1017,7 +1080,7 @@ The function returns a list with,
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-39-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-42-1} 
 
 }
 
@@ -1033,7 +1096,7 @@ The function returns a list with,
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-40-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-43-1} 
 
 }
 
@@ -1063,7 +1126,7 @@ The function returns a list with,
 
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# `stat\_bin()` using `bins = 30`. Pick better value with\\\#\# `binwidth`.}}\end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-41-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-44-1} 
 
 }
 
@@ -1097,7 +1160,7 @@ The function returns a list with,
 \end{verbatim}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-42-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-45-1} 
 
 }
 
@@ -1125,7 +1188,7 @@ The function returns a list with,
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-43-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-46-1} 
 
 }
 
@@ -1298,7 +1361,11 @@ The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_model_1.RData"}\hlstd{)} \hlcom{# To save time}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_model\_1.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 You can get informations of the environments in the dataset :
@@ -1308,61 +1375,29 @@ You can get informations of the environments in the dataset :
 \begin{alltt}
 \hlstd{out_model_1}\hlopt{$}\hlstd{vec_env_with_no_data}
 \end{alltt}
-\begin{verbatim}
-## NULL
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_model\_1' introuvable}}\begin{alltt}
 \hlstd{out_model_1}\hlopt{$}\hlstd{vec_env_with_no_controls}
 \end{alltt}
-\begin{verbatim}
-## [1] "env5:2010"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_model\_1' introuvable}}\begin{alltt}
 \hlstd{out_model_1}\hlopt{$}\hlstd{vec_env_with_controls}
 \end{alltt}
-\begin{verbatim}
-##  [1] "env1-1:2010"  "env1-1:2011"  "env1-1:2012"  "env1-2:2010" 
-##  [5] "env1-2:2011"  "env1-2:2012"  "env1-3:2010"  "env1-3:2011" 
-##  [9] "env1-3:2012"  "env1-4:2010"  "env1-4:2011"  "env1-4:2012" 
-## [13] "env1-5:2011"  "env2-10:2010" "env2-10:2011" "env2-10:2012"
-## [17] "env2-11:2011" "env2-11:2012" "env2-1:2010"  "env2-1:2011" 
-## [21] "env2-1:2012"  "env2-12:2011" "env2-12:2012" "env2-13:2011"
-## [25] "env2-13:2012" "env2-14:2011" "env2-14:2012" "env2-15:2011"
-## [29] "env2-15:2012" "env2-2:2010"  "env2-2:2011"  "env2-2:2012" 
-## [33] "env2-3:2010"  "env2-3:2011"  "env2-3:2012"  "env2-4:2010" 
-## [37] "env2-4:2011"  "env2-4:2012"  "env2-5:2010"  "env2-5:2011" 
-## [41] "env2-5:2012"  "env2-6:2010"  "env2-6:2011"  "env2-6:2012" 
-## [45] "env2-7:2010"  "env2-7:2011"  "env2-7:2012"  "env2-8:2010" 
-## [49] "env2-8:2011"  "env2-8:2012"  "env2-9:2010"  "env2-9:2011" 
-## [53] "env2-9:2012"  "env3-1:2011"  "env3-1:2012"  "env3-2:2011" 
-## [57] "env3-2:2012"  "env3-3:2011"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_model\_1' introuvable}}\begin{alltt}
 \hlstd{out_model_1}\hlopt{$}\hlstd{vec_env_RF}
 \end{alltt}
-\begin{verbatim}
-##  [1] "env1-1:2010" "env1-1:2011" "env1-1:2012" "env1-2:2010"
-##  [5] "env1-2:2011" "env1-2:2012" "env1-3:2010" "env1-3:2011"
-##  [9] "env1-3:2012" "env1-4:2010" "env1-4:2011" "env1-4:2012"
-## [13] "env1-5:2011" "env3-1:2011" "env3-1:2012" "env3-2:2011"
-## [17] "env3-2:2012" "env3-3:2011"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_model\_1' introuvable}}\begin{alltt}
 \hlstd{out_model_1}\hlopt{$}\hlstd{vec_env_SF}
 \end{alltt}
-\begin{verbatim}
-##  [1] "env2-10:2010" "env2-10:2011" "env2-10:2012" "env2-11:2011"
-##  [5] "env2-11:2012" "env2-1:2010"  "env2-1:2011"  "env2-1:2012" 
-##  [9] "env2-12:2011" "env2-12:2012" "env2-13:2011" "env2-13:2012"
-## [13] "env2-14:2011" "env2-14:2012" "env2-15:2011" "env2-15:2012"
-## [17] "env2-2:2010"  "env2-2:2011"  "env2-2:2012"  "env2-3:2010" 
-## [21] "env2-3:2011"  "env2-3:2012"  "env2-4:2010"  "env2-4:2011" 
-## [25] "env2-4:2012"  "env2-5:2010"  "env2-5:2011"  "env2-5:2012" 
-## [29] "env2-6:2010"  "env2-6:2011"  "env2-6:2012"  "env2-7:2010" 
-## [33] "env2-7:2011"  "env2-7:2012"  "env2-8:2010"  "env2-8:2011" 
-## [37] "env2-8:2012"  "env2-9:2010"  "env2-9:2011"  "env2-9:2012"
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 
 Below is an example with low \texttt{nb\_iterations}:
@@ -1390,7 +1425,11 @@ Below is an example with low \texttt{nb\_iterations}:
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_model_1_bis.RData"}\hlstd{)} \hlcom{# To save time}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_model\_1\_bis.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 \subsubsection{Check and visualize model outputs}
@@ -1410,7 +1449,11 @@ This step is needed before going ahead in the analysis (in fact, object used in 
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_check_model_1.RData"}\hlstd{)} \hlcom{# To save time}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_check\_model\_1.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 \texttt{out\_check\_model\_1} is a list containing:
@@ -1422,10 +1465,9 @@ This step is needed before going ahead in the analysis (in fact, object used in 
 \begin{alltt}
 \hlkwd{dim}\hlstd{(out_check_model_1}\hlopt{$}\hlstd{MCMC)}
 \end{alltt}
-\begin{verbatim}
-## [1] 20000   945
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_check\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{MCMC\_conv\_not\_ok}: a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
@@ -1453,13 +1495,7 @@ When considering \texttt{out\_model\_1\_bis}:
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The Gelman-Rubin test is running for each parameter ...}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : nu, rho, sigma[env2-2:2010]. Therefore, they are not present in MCMC output.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# MCMC are updated, the following environment were deleted : env2-2:2010}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# data\_env\_whose\_param\_did\_not\_converge contains the raw data for these environments.}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in check\_model(out\_model\_1\_bis): objet 'out\_model\_1\_bis' introuvable}}\begin{alltt}
 \hlcom{# The Gelman-Rubin test is running for each parameter ...}
 \hlcom{# The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : nu, rho, sigma[env2-2:2010]. Therefore, they are not present in MCMC output.}
 \hlcom{# MCMC are updated, the following environment were deleted : env2-2:2010}
@@ -1467,7 +1503,11 @@ When considering \texttt{out\_model\_1\_bis}:
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_check_model_1_bis.RData"}\hlstd{)} \hlcom{# To save time}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_check\_model\_1\_bis.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 
@@ -1481,15 +1521,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Distribution of sigma\_j in the inverse Gamme distribution are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The mu\_ij posterior distributions are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The beta\_jk posterior distributions are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The sigma\_j posterior distributions are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The standardised residuals distributions are done.}}\end{kframe}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(out\_check\_model\_1): objet 'out\_check\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 
 \texttt{p\_out\_check\_model\_1} is a list with:
@@ -1501,17 +1533,15 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_out_check_model_1}\hlopt{$}\hlstd{sigma_j_gamma[[}\hlnum{1}\hlstd{]]}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\begin{alltt}
 \hlstd{p_out_check_model_1}\hlopt{$}\hlstd{sigma_j_gamma[[}\hlnum{2}\hlstd{]]}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-52-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-52-2} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{mu\_ij} : distribution of each \texttt{mu\_ij} in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{mu\_ij} per graph.
@@ -1520,40 +1550,19 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \begin{alltt}
 \hlkwd{names}\hlstd{(p_out_check_model_1}\hlopt{$}\hlstd{mu_ij)}
 \end{alltt}
-\begin{verbatim}
-##  [1] "env1-1:2010"  "env1-1:2011"  "env1-1:2012"  "env1-2:2010" 
-##  [5] "env1-2:2011"  "env1-2:2012"  "env1-3:2010"  "env1-3:2011" 
-##  [9] "env1-3:2012"  "env1-4:2010"  "env1-4:2011"  "env1-4:2012" 
-## [13] "env1-5:2011"  "env2-10:2010" "env2-10:2011" "env2-10:2012"
-## [17] "env2-11:2011" "env2-11:2012" "env2-1:2010"  "env2-1:2011" 
-## [21] "env2-1:2012"  "env2-12:2011" "env2-12:2012" "env2-13:2011"
-## [25] "env2-13:2012" "env2-14:2011" "env2-14:2012" "env2-15:2011"
-## [29] "env2-15:2012" "env2-2:2010"  "env2-2:2011"  "env2-2:2012" 
-## [33] "env2-3:2010"  "env2-3:2011"  "env2-3:2012"  "env2-4:2010" 
-## [37] "env2-4:2011"  "env2-4:2012"  "env2-5:2010"  "env2-5:2011" 
-## [41] "env2-5:2012"  "env2-6:2010"  "env2-6:2011"  "env2-6:2012" 
-## [45] "env2-7:2010"  "env2-7:2011"  "env2-7:2012"  "env2-8:2010" 
-## [49] "env2-8:2011"  "env2-8:2012"  "env2-9:2010"  "env2-9:2011" 
-## [53] "env2-9:2012"  "env3-1:2011"  "env3-1:2012"  "env3-2:2011" 
-## [57] "env3-2:2012"  "env3-3:2011"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_out_check_model_1}\hlopt{$}\hlstd{mu_ij}\hlopt{$}\hlstd{`env1-1:2010`)}
 \end{alltt}
-\begin{verbatim}
-## [1] "1" "2" "3" "4"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\begin{alltt}
 \hlstd{p_out_check_model_1}\hlopt{$}\hlstd{mu_ij}\hlopt{$}\hlstd{`env1-1:2010`}\hlopt{$}\hlstd{`1`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-53-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{beta\_jk} : distribution of each \texttt{beta\_jk} in a list with as many elements as environment. For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{beta\_jk} per graph.
@@ -1562,30 +1571,19 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \begin{alltt}
 \hlkwd{names}\hlstd{(p_out_check_model_1}\hlopt{$}\hlstd{beta_jk)}
 \end{alltt}
-\begin{verbatim}
-##  [1] "env1-1:2010" "env1-1:2011" "env1-1:2012" "env1-2:2010"
-##  [5] "env1-2:2011" "env1-2:2012" "env1-3:2010" "env1-3:2011"
-##  [9] "env1-3:2012" "env1-4:2010" "env1-4:2011" "env1-4:2012"
-## [13] "env1-5:2011" "env3-1:2011" "env3-1:2012" "env3-2:2011"
-## [17] "env3-2:2012" "env3-3:2011"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_out_check_model_1}\hlopt{$}\hlstd{beta_jk}\hlopt{$}\hlstd{`env1-1:2010`)}
 \end{alltt}
-\begin{verbatim}
-## [1] "1"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\begin{alltt}
 \hlstd{p_out_check_model_1}\hlopt{$}\hlstd{beta_jk}\hlopt{$}\hlstd{`env1-1:2010`}\hlopt{$}\hlstd{`1`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-54-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -1595,20 +1593,14 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \begin{alltt}
 \hlkwd{names}\hlstd{(p_out_check_model_1}\hlopt{$}\hlstd{sigma_j)}
 \end{alltt}
-\begin{verbatim}
-## [1] "1" "2" "3" "4" "5" "6" "7" "8"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\begin{alltt}
 \hlstd{p_out_check_model_1}\hlopt{$}\hlstd{sigma_j[[}\hlnum{1}\hlstd{]]}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-55-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -1619,14 +1611,9 @@ If the model went well it should be between -2 and 2.
 \begin{alltt}
 \hlstd{p_out_check_model_1}\hlopt{$}\hlstd{epsilon_ijk}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-56-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{mcmc\_not\_converge\_traceplot\_density} : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
@@ -1636,10 +1623,9 @@ If all the chains converge, it is NULL
 \begin{alltt}
 \hlstd{p_out_check_model_1}\hlopt{$}\hlstd{mcmc_not_converge_traceplot_density}
 \end{alltt}
-\begin{verbatim}
-## NULL
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1' introuvable}}\end{kframe}
 \end{knitrout}
 Here all the parameters converge.
 
@@ -1653,32 +1639,12 @@ When considering \texttt{p\_out\_check\_model\_1\_bis}, there is no convergence 
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Distribution of sigma\_j in the inverse Gamme distribution are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The mu\_ij posterior distributions are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The beta\_jk posterior distributions are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The sigma\_j posterior distributions are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Trace and density plot for MCMC that did not converged are done.}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(out\_check\_model\_1\_bis): objet 'out\_check\_model\_1\_bis' introuvable}}\begin{alltt}
 \hlstd{p_out_check_model_1_bis}\hlopt{$}\hlstd{mcmc_not_converge_traceplot_density}\hlopt{$}\hlstd{`sigma\textbackslash{}\textbackslash{}[env2-2:2010`}
 \end{alltt}
-\begin{verbatim}
-## $traceplot
-## 
-## $density
-\end{verbatim}
-\end{kframe}
 
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-58-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-58-2} 
-
-}
-
-
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_1\_bis' introuvable}}\end{kframe}
 \end{knitrout}
 
 \end{itemize}
@@ -1689,12 +1655,27 @@ Just for fun, you can compare the posterior medians and the arithmetic means for
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{MCMC} \hlkwb{=} \hlstd{out_check_model_1}\hlopt{$}\hlstd{MCMC}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_check\_model\_1' introuvable}}\begin{alltt}
 \hlstd{effects} \hlkwb{=} \hlkwd{apply}\hlstd{(MCMC,} \hlnum{2}\hlstd{, median)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in apply(MCMC, 2, median): objet 'MCMC' introuvable}}\begin{alltt}
 \hlstd{mu_ij_estimated} \hlkwb{=} \hlstd{effects[}\hlkwd{grep}\hlstd{(}\hlstr{"mu"}\hlstd{,}\hlkwd{names}\hlstd{(effects))]}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in effects[grep("{}mu"{}, names(effects))]: objet de type 'closure' non indiçable}}\begin{alltt}
 \hlkwd{names}\hlstd{(mu_ij_estimated)} \hlkwb{=} \hlkwd{sapply}\hlstd{(}\hlkwd{names}\hlstd{(mu_ij_estimated),}
                                 \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)\{}  \hlkwd{sub}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}]"}\hlstd{,} \hlstr{""}\hlstd{,} \hlkwd{sub}\hlstd{(}\hlstr{"mu\textbackslash{}\textbackslash{}["}\hlstd{,} \hlstr{""}\hlstd{, x)) \}}
                                 \hlstd{)}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in lapply(X = X, FUN = FUN, ...): objet 'mu\_ij\_estimated' introuvable}}\begin{alltt}
 \hlstd{d} \hlkwb{=} \hlkwd{filter}\hlstd{(data_model_1, location} \hlopt{!=} \hlstr{"env4"}\hlstd{)}
 \hlstd{d} \hlkwb{=} \hlkwd{filter}\hlstd{(d, location} \hlopt{!=} \hlstr{"env5"}\hlstd{)}
 \hlstd{d} \hlkwb{=} \hlkwd{droplevels}\hlstd{(d)}
@@ -1704,7 +1685,9 @@ Just for fun, you can compare the posterior medians and the arithmetic means for
 
 \hlstd{check_data} \hlkwb{=} \hlkwd{cbind.data.frame}\hlstd{(mu_ij, mu_ij_estimated[}\hlkwd{names}\hlstd{(mu_ij)])}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in data.frame(..., check.names = FALSE): objet 'mu\_ij\_estimated' introuvable}}\end{kframe}
 \end{knitrout}
 
 Let's have a look on the relation between the posterior medians and the arithmetic means.
@@ -1715,16 +1698,15 @@ It goes pretty well!
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p} \hlkwb{=} \hlkwd{ggplot}\hlstd{(check_data,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= mu_ij,} \hlkwc{y} \hlstd{= mu_ij_estimated))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ggplot(check\_data, aes(x = mu\_ij, y = mu\_ij\_estimated)): objet 'check\_data' introuvable}}\begin{alltt}
 \hlstd{p} \hlopt{+} \hlkwd{stat_smooth}\hlstd{(}\hlkwc{method} \hlstd{=} \hlstr{"lm"}\hlstd{)} \hlopt{+} \hlkwd{geom_point}\hlstd{()}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-60-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p' introuvable}}\end{kframe}
 \end{knitrout}
 \end{figure}
 
@@ -1755,7 +1737,11 @@ Below is an example for $\mu$, the same can be done for $\beta$.
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_mean_comparisons_model_1_mu.RData"}\hlstd{)} \hlcom{# To save time}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_mean\_comparisons\_model\_1\_mu.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 \texttt{out\_mean\_comparisons\_model\_1\_mu} is a list of three elements:
@@ -1767,11 +1753,9 @@ Below is an example for $\mu$, the same can be done for $\beta$.
 \begin{alltt}
 \hlkwd{head}\hlstd{(}\hlkwd{names}\hlstd{(out_mean_comparisons_model_1_mu}\hlopt{$}\hlstd{data_mean_comparisons))}
 \end{alltt}
-\begin{verbatim}
-## [1] "env1-1:2010" "env1-1:2011" "env1-1:2012" "env1-2:2010"
-## [5] "env1-2:2011" "env1-2:2012"
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head(names(out\_mean\_comparisons\_model\_1\_mu\$data\_mean\_comparisons)): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 Each element of the list is composed of two elements:
@@ -1783,23 +1767,9 @@ Each element of the list is composed of two elements:
 \begin{alltt}
 \hlkwd{head}\hlstd{(out_mean_comparisons_model_1_mu}\hlopt{$}\hlstd{data_mean_comparisons}\hlopt{$}\hlstd{`env1-1:2010`}\hlopt{$}\hlstd{mean.comparisons)}
 \end{alltt}
-\begin{verbatim}
-##                parameter   median groups nb_group alpha
-## 1 mu[pop-11,env1-1:2010] 38.43108      a       10  0.05
-## 2  mu[pop-1,env1-1:2010] 41.69727     ab       10  0.05
-## 3 mu[pop-18,env1-1:2010] 45.84213    abc       10  0.05
-## 4  mu[pop-3,env1-1:2010] 47.71686   abcd       10  0.05
-## 5 mu[pop-10,env1-1:2010] 48.10493  abcde       10  0.05
-## 6  mu[pop-4,env1-1:2010] 49.18758 abcdef       10  0.05
-##   alpha.correction  entry environment location year
-## 1        soft.bonf pop-11 env1-1:2010   env1-1 2010
-## 2        soft.bonf  pop-1 env1-1:2010   env1-1 2010
-## 3        soft.bonf pop-18 env1-1:2010   env1-1 2010
-## 4        soft.bonf  pop-3 env1-1:2010   env1-1 2010
-## 5        soft.bonf pop-10 env1-1:2010   env1-1 2010
-## 6        soft.bonf  pop-4 env1-1:2010   env1-1 2010
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head(out\_mean\_comparisons\_model\_1\_mu\$data\_mean\_comparisons\$`env1-1:2010`\$mean.comparisons): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{Mpvalue} : a square matrix with pvalue computed for each pair of parameter.
@@ -1808,17 +1778,9 @@ Each element of the list is composed of two elements:
 \begin{alltt}
 \hlstd{out_mean_comparisons_model_1_mu}\hlopt{$}\hlstd{data_mean_comparisons}\hlopt{$}\hlstd{`env1-1:2010`}\hlopt{$}\hlstd{Mpvalue[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{,} \hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]}
 \end{alltt}
-\begin{verbatim}
-##                        mu[pop-11,env1-1:2010] mu[pop-1,env1-1:2010]
-## mu[pop-11,env1-1:2010]                      0               0.17555
-## mu[pop-1,env1-1:2010]                       0               0.00000
-## mu[pop-18,env1-1:2010]                      0               0.00000
-##                        mu[pop-18,env1-1:2010]
-## mu[pop-11,env1-1:2010]                 0.0402
-## mu[pop-1,env1-1:2010]                  0.1524
-## mu[pop-18,env1-1:2010]                 0.0000
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 \end{itemize}
@@ -1829,10 +1791,9 @@ Each element of the list is composed of two elements:
 \begin{alltt}
 \hlkwd{names}\hlstd{(out_mean_comparisons_model_1_mu}\hlopt{$}\hlstd{data_env_with_no_controls)}
 \end{alltt}
-\begin{verbatim}
-## [1] "env5:2010"
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 In each list it is mean.comparisons
@@ -1841,23 +1802,9 @@ In each list it is mean.comparisons
 \begin{alltt}
 \hlkwd{head}\hlstd{(out_mean_comparisons_model_1_mu}\hlopt{$}\hlstd{data_env_with_no_controls}\hlopt{$}\hlstd{`env5:2010`}\hlopt{$}\hlstd{mean.comparisons)}
 \end{alltt}
-\begin{verbatim}
-##             entry germplasm environment block X Y   median
-## 1 pop-1,env5:2010     pop-1   env5:2010     1 3 c 42.32750
-## 2 pop-2,env5:2010     pop-2   env5:2010     1 4 d 38.02544
-## 3 pop-3,env5:2010     pop-3   env5:2010     1 5 e 44.49495
-## 4 pop-4,env5:2010     pop-4   env5:2010     1 6 f 44.46948
-## 5 pop-5,env5:2010     pop-5   env5:2010     1 7 g 35.77590
-## 6 pop-6,env5:2010     pop-6   env5:2010     1 8 h 36.59313
-##             parameter location year
-## 1 mu[pop-1,env5:2010]     env5 2010
-## 2 mu[pop-2,env5:2010]     env5 2010
-## 3 mu[pop-3,env5:2010]     env5 2010
-## 4 mu[pop-4,env5:2010]     env5 2010
-## 5 mu[pop-5,env5:2010]     env5 2010
-## 6 mu[pop-6,env5:2010]     env5 2010
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head(out\_mean\_comparisons\_model\_1\_mu\$data\_env\_with\_no\_controls\$`env5:2010`\$mean.comparisons): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{data\_env\_whose\_param\_did\_not\_converge} a list with as many elements as environment.
@@ -1866,10 +1813,9 @@ In each list it is mean.comparisons
 \begin{alltt}
 \hlkwd{names}\hlstd{(out_mean_comparisons_model_1_mu}\hlopt{$}\hlstd{data_env_whose_param_did_not_converge)}
 \end{alltt}
-\begin{verbatim}
-## NULL
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 Here it is NULL as all parameters converge. 
 Otherwise in each list it is mean.comparisons.
@@ -1878,23 +1824,9 @@ Otherwise in each list it is mean.comparisons.
 \begin{alltt}
 \hlkwd{head}\hlstd{(out_mean_comparisons_model_1_mu}\hlopt{$}\hlstd{data_env_with_no_controls}\hlopt{$}\hlstd{`env5:2010`}\hlopt{$}\hlstd{mean.comparisons)}
 \end{alltt}
-\begin{verbatim}
-##             entry germplasm environment block X Y   median
-## 1 pop-1,env5:2010     pop-1   env5:2010     1 3 c 42.32750
-## 2 pop-2,env5:2010     pop-2   env5:2010     1 4 d 38.02544
-## 3 pop-3,env5:2010     pop-3   env5:2010     1 5 e 44.49495
-## 4 pop-4,env5:2010     pop-4   env5:2010     1 6 f 44.46948
-## 5 pop-5,env5:2010     pop-5   env5:2010     1 7 g 35.77590
-## 6 pop-6,env5:2010     pop-6   env5:2010     1 8 h 36.59313
-##             parameter location year
-## 1 mu[pop-1,env5:2010]     env5 2010
-## 2 mu[pop-2,env5:2010]     env5 2010
-## 3 mu[pop-3,env5:2010]     env5 2010
-## 4 mu[pop-4,env5:2010]     env5 2010
-## 5 mu[pop-5,env5:2010]     env5 2010
-## 6 mu[pop-6,env5:2010]     env5 2010
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head(out\_mean\_comparisons\_model\_1\_mu\$data\_env\_with\_no\_controls\$`env5:2010`\$mean.comparisons): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 \end{itemize}
@@ -1919,14 +1851,15 @@ For each element of the list, there are as many graph as needed with \texttt{nb\
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_barplot_mu} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(out_mean_comparisons_model_1_mu,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(out\_mean\_comparisons\_model\_1\_mu, ggplot.type = "{}barplot"{}): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_barplot_mu)}
 \end{alltt}
-\begin{verbatim}
-## [1] "data_mean_comparisons"                
-## [2] "data_env_with_no_controls"            
-## [3] "data_env_whose_param_did_not_converge"
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_barplot\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 From \texttt{data\_mean\_comparisons}, only environments where all MCMC converge are represented.
@@ -1940,37 +1873,45 @@ alpha = Imp means that no differences were possible to find.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p} \hlkwb{=} \hlstd{p_barplot_mu}\hlopt{$}\hlstd{data_mean_comparisons}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_barplot\_mu' introuvable}}\begin{alltt}
 \hlkwd{head}\hlstd{(}\hlkwd{names}\hlstd{(p))}
 \end{alltt}
-\begin{verbatim}
-## [1] "env1-1:2010" "env1-1:2011" "env1-1:2012" "env1-2:2010"
-## [5] "env1-2:2011" "env1-2:2012"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head(names(p)): objet 'p' introuvable}}\begin{alltt}
 \hlstd{p_env} \hlkwb{=} \hlstd{p}\hlopt{$}\hlstd{`env1-1:2010`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_env)}
 \end{alltt}
-\begin{verbatim}
-## [1] "1" "2" "3" "4"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`1`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`2`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`3`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`4`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-70-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-70-2} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-70-3} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-70-4} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\end{kframe}
 \end{knitrout}
 
 For \texttt{data\_env\_with\_no\_controls}, only environments where there were no controls are represented.
@@ -1980,20 +1921,9 @@ For \texttt{data\_env\_with\_no\_controls}, only environments where there were n
 \begin{alltt}
 \hlstd{p_barplot_mu}\hlopt{$}\hlstd{data_env_with_no_controls}
 \end{alltt}
-\begin{verbatim}
-## $`env5:2010`
-## $`env5:2010`$`1`
-\end{verbatim}
-\end{kframe}
 
 
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-71-1} 
-
-}
-
-
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_barplot\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -2004,10 +1934,9 @@ For \texttt{data\_env\_whose\_param\_did\_not\_converge}, only environments wher
 \begin{alltt}
 \hlstd{p_barplot_mu}\hlopt{$}\hlstd{data_env_whose_param_did_not_converge}
 \end{alltt}
-\begin{verbatim}
-## list()
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_barplot\_mu' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -2043,29 +1972,12 @@ Lets' make the plots:
 \end{alltt}
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_mean\_comparisons: the following environments in data\_version are not taken: env5:2010.}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_env\_with\_no\_controls: the following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012.}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_env\_with\_no\_controls: no t.test are done as there are not enough observations.}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_env\_whose\_param\_did\_not\_converge: the following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012, env5:2010.}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_env\_whose\_param\_did\_not\_converge: there are no environment to display}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(out\_mean\_comparisons\_model\_1\_mu, data\_version = data\_version, : objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\begin{alltt}
 \hlstd{p_barplot_mu_version}\hlopt{$}\hlstd{data_mean_comparisons}\hlopt{$}\hlstd{`env1-1:2010`}
 \end{alltt}
-\begin{verbatim}
-## $`1`
-\end{verbatim}
-\end{kframe}
 
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-74-1} 
-
-}
-
-
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_barplot\_mu\_version' introuvable}}\end{kframe}
 \end{knitrout}
 
 The stars corresponds to the pvalue:
@@ -2092,20 +2004,9 @@ For environments where MCMC did not converge or without environments, it is a \t
 \begin{alltt}
 \hlstd{p_barplot_mu_version}\hlopt{$}\hlstd{data_env_with_no_controls}
 \end{alltt}
-\begin{verbatim}
-## $`env5:2010`
-## $`env5:2010`$`1`
-\end{verbatim}
-\end{kframe}
 
 
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-75-1} 
-
-}
-
-
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_barplot\_mu\_version' introuvable}}\end{kframe}
 \end{knitrout}
 
 \begin{knitrout}
@@ -2113,10 +2014,9 @@ For environments where MCMC did not converge or without environments, it is a \t
 \begin{alltt}
 \hlstd{p_barplot_mu_version}\hlopt{$}\hlstd{data_env_whose_param_did_not_converge}
 \end{alltt}
-\begin{verbatim}
-## NULL
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_barplot\_mu\_version' introuvable}}\end{kframe}
 \end{knitrout}
 
 \subparagraph{interaction}
@@ -2137,36 +2037,45 @@ For each element of the list, there are as many graph as needed with \texttt{nb\
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_interaction} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(out_mean_comparisons_model_1_mu,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"interaction"}\hlstd{)}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(out\_mean\_comparisons\_model\_1\_mu, ggplot.type = "{}interaction"{}): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\begin{alltt}
 \hlkwd{head}\hlstd{(}\hlkwd{names}\hlstd{(p_interaction}\hlopt{$}\hlstd{data_mean_comparisons))}
 \end{alltt}
-\begin{verbatim}
-## [1] "env1-1" "env1-2" "env1-3" "env1-4" "env1-5" "env2-1"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head(names(p\_interaction\$data\_mean\_comparisons)): objet 'p\_interaction' introuvable}}\begin{alltt}
 \hlstd{p_env} \hlkwb{=} \hlstd{p_interaction}\hlopt{$}\hlstd{data_mean_comparisons}\hlopt{$}\hlstd{`env1-1`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_interaction' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_env)}
 \end{alltt}
-\begin{verbatim}
-## [1] "1" "2" "3" "4"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`1`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`2`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`3`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`4`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-77-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-77-2} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-77-3} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-77-4} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -2181,42 +2090,69 @@ This plot is useful to look at year effects.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_score} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(out_mean_comparisons_model_1_mu,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"score"}\hlstd{)}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(out\_mean\_comparisons\_model\_1\_mu, ggplot.type = "{}score"{}): objet 'out\_mean\_comparisons\_model\_1\_mu' introuvable}}\begin{alltt}
 \hlkwd{head}\hlstd{(}\hlkwd{names}\hlstd{(p_score))}
 \end{alltt}
-\begin{verbatim}
-## [1] "env1-1" "env1-2" "env1-3" "env1-4" "env1-5" "env2-1"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head(names(p\_score)): objet 'p\_score' introuvable}}\begin{alltt}
 \hlstd{p_env} \hlkwb{=} \hlstd{p_score}\hlopt{$}\hlstd{`env1-1`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_score' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_env)}
 \end{alltt}
-\begin{verbatim}
-## [1] "1" "2" "3" "4"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`1`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`2`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`3`}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\begin{alltt}
 \hlstd{p_env}\hlopt{$}\hlstd{`4`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-78-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-78-2} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-78-3} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-78-4} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_env' introuvable}}\end{kframe}
 \end{knitrout}
 
 
 \newpage
 
 \section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
+
+
+\subsection{Incomplete Block Design}
+\label{ibd}
+
+!!! TO DO !!!
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#library(ibd)}
+\hlcom{#data(ibddata)}
+\hlcom{#aov.ibd(y~factor(trt)+factor(blk),data=ibddata)}
+\hlcom{#contrast=matrix(c(1,-1,0,0,0,0,0,0,0,0,0,1,-1,0,0,0,0,0),nrow=2,byrow=TRUE)}
+\hlcom{#aov.ibd(y~factor(trt)+factor(blk),specs="trt",data=ibddata,contrast=contrast)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
 
 \subsection{AMMI}
@@ -2656,7 +2592,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# `stat\_bin()` using `bins = 30`. Pick better value with\\\#\# `binwidth`.}}\end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-91-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-95-1} 
 
 }
 
@@ -2671,7 +2607,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-92-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-96-1} 
 
 }
 
@@ -2688,7 +2624,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-93-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-97-1} 
 
 }
 
@@ -2712,7 +2648,7 @@ This has to been seen with caution:
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-94-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-98-1} 
 
 }
 
@@ -2728,7 +2664,7 @@ This has to been seen with caution:
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-95-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-99-1} 
 
 }
 
@@ -2793,7 +2729,7 @@ The error I (alpha) and the alpha correction are displayed in the title.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-98-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-102-1} 
 
 }
 
@@ -2816,7 +2752,7 @@ The error I (alpha) and the alpha correction are displayed in the title.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-99-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-103-1} 
 
 }
 
@@ -2888,7 +2824,7 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-103-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-107-1} 
 
 }
 
@@ -2905,7 +2841,7 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-104-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-108-1} 
 
 }
 
@@ -2922,7 +2858,7 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-105-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-109-1} 
 
 }
 
@@ -3009,6 +2945,9 @@ Then run the function for germplasm. It can also be done on location or year if 
   \hlstr{"germplasm"}
   \hlstd{)}
 \end{alltt}
+\begin{verbatim}
+## [1] "test"
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -3038,7 +2977,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-111-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-115-1} 
 
 }
 
@@ -3054,7 +2993,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-112-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-116-1} 
 
 }
 
@@ -3070,7 +3009,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-113-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-117-1} 
 
 }
 
@@ -3092,7 +3031,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-114-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-118-1} 
 
 }
 
@@ -3109,7 +3048,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-115-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-119-1} 
 
 }
 
@@ -3301,7 +3240,7 @@ See \texttt{?get\_ggplot} for more details on this plot.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-124-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-128-1} 
 
 }
 
@@ -3327,7 +3266,7 @@ The longer the arrow is, the more important is germplasm effect and the more mea
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-125-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-129-1} 
 
 }
 
@@ -3348,7 +3287,7 @@ A high score represents a low stability (i.e. an high entry by location interact
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-126-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-130-1} 
 
 }
 
@@ -3376,7 +3315,7 @@ The higher the value, the highest the discrimitiveness for locations.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-127-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-131-1} 
 
 }
 
@@ -3395,7 +3334,7 @@ The highest the value, the less representative the location.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-128-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-132-1} 
 
 }
 
@@ -3415,7 +3354,7 @@ The highest the score, the more representative the location.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-129-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-133-1} 
 
 }
 
@@ -3455,6 +3394,9 @@ The highest the score, the more representative the location.
   \hlstr{"germplasm"}
   \hlstd{)}
 \end{alltt}
+\begin{verbatim}
+## [1] "test"
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -3658,7 +3600,11 @@ The smaller the DIC value, the better the model \citep{plummer_penalized_2008}.
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_model_2.RData"}\hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_model\_2.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 It may be useful to see which germplasm were not use in the analysis because they were in only one environment.
@@ -3668,10 +3614,9 @@ It may be useful to see which germplasm were not use in the analysis because the
 \begin{alltt}
 \hlstd{out_model_2}\hlopt{$}\hlstd{germplasm.not.used}
 \end{alltt}
-\begin{verbatim}
-## NULL
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_model\_2' introuvable}}\end{kframe}
 \end{knitrout}
 
 \subsubsection{Check and visualize model outputs}
@@ -3692,7 +3637,11 @@ This step is needed before going ahead in the analysis (in fact, the MCMC object
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_check_model_2.RData"}\hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_check\_model\_2.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 \texttt{out\_check\_model\_2} is a list containing three elements:
@@ -3704,10 +3653,9 @@ This step is needed before going ahead in the analysis (in fact, the MCMC object
 \begin{alltt}
 \hlkwd{dim}\hlstd{(out_check_model_2}\hlopt{$}\hlstd{MCMC)}
 \end{alltt}
-\begin{verbatim}
-## [1] 20000   385
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_check\_model\_2' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{MCMC\_conv\_not\_ok} : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
@@ -3734,11 +3682,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The beta\_i posterior distributions are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The theta\_j posterior distributions are done.}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The standardised residuals distributions are done.}}\end{kframe}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(out\_check\_model\_2): objet 'out\_check\_model\_2' introuvable}}\end{kframe}
 \end{knitrout}
 
 \texttt{p\_out\_check\_model\_2} is a list with 4 elements:
@@ -3749,23 +3693,20 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_a} \hlkwb{=} \hlstd{p_out_check_model_2}\hlopt{$}\hlstd{alpha_i}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_2' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_a)}
 \end{alltt}
-\begin{verbatim}
-##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12"
-## [13] "13" "14" "15" "16" "17" "18" "19" "20"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_a' introuvable}}\begin{alltt}
 \hlstd{p_a}\hlopt{$}\hlstd{`1`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-138-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_a' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{beta\_i} : distribution of each beta\_i. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{beta\_i} per graph.
@@ -3773,23 +3714,20 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_a} \hlkwb{=} \hlstd{p_out_check_model_2}\hlopt{$}\hlstd{beta_i}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_2' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_a)}
 \end{alltt}
-\begin{verbatim}
-##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12"
-## [13] "13" "14" "15" "16" "17" "18" "19" "20"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_a' introuvable}}\begin{alltt}
 \hlstd{p_a}\hlopt{$}\hlstd{`1`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-139-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_a' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{theta\_j} : distribution of each theta\_j. There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} \texttt{theta\_j} per graph.
@@ -3797,22 +3735,20 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_a} \hlkwb{=} \hlstd{p_out_check_model_2}\hlopt{$}\hlstd{theta_j}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_2' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_a)}
 \end{alltt}
-\begin{verbatim}
-## [1] "1" "2" "3" "4" "5" "6" "7" "8" "9"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_a' introuvable}}\begin{alltt}
 \hlstd{p_a}\hlopt{$}\hlstd{`1`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-140-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_a' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{epsilon\_ij} : standardised residuals distribution.
@@ -3822,14 +3758,9 @@ If the model went well it should be between -2 and 2.
 \begin{alltt}
 \hlstd{p_out_check_model_2}\hlopt{$}\hlstd{epsilon_ij}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-141-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_2' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -3840,10 +3771,9 @@ If all the chains converge, it is NULL
 \begin{alltt}
 \hlstd{p_out_check_model_2}\hlopt{$}\hlstd{mcmc_not_converge_traceplot_density}
 \end{alltt}
-\begin{verbatim}
-## NULL
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_check\_model\_2' introuvable}}\end{kframe}
 \end{knitrout}
 
 \end{itemize}
@@ -3855,16 +3785,33 @@ Just for fun, you compare the posterior medians and the arithmetic means for the
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{MCMC} \hlkwb{=} \hlstd{out_check_model_2}\hlopt{$}\hlstd{MCMC}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'out\_check\_model\_2' introuvable}}\begin{alltt}
 \hlstd{effects} \hlkwb{=} \hlkwd{apply}\hlstd{(MCMC,} \hlnum{2}\hlstd{, median)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in apply(MCMC, 2, median): objet 'MCMC' introuvable}}\begin{alltt}
 \hlstd{alpha_i_estimated} \hlkwb{=} \hlstd{effects[}\hlkwd{grep}\hlstd{(}\hlstr{"alpha\textbackslash{}\textbackslash{}["}\hlstd{,}\hlkwd{names}\hlstd{(effects))]}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in effects[grep("{}alpha\textbackslash{}\textbackslash{}["{}, names(effects))]: objet de type 'closure' non indiçable}}\begin{alltt}
 \hlkwd{names}\hlstd{(alpha_i_estimated)} \hlkwb{=} \hlkwd{sapply}\hlstd{(}\hlkwd{names}\hlstd{(alpha_i_estimated),} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)\{}
 \hlkwd{sub}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}]"}\hlstd{,} \hlstr{""}\hlstd{,} \hlkwd{sub}\hlstd{(}\hlstr{"alpha\textbackslash{}\textbackslash{}["}\hlstd{,} \hlstr{""}\hlstd{, x)) \} )}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in lapply(X = X, FUN = FUN, ...): objet 'alpha\_i\_estimated' introuvable}}\begin{alltt}
 \hlstd{alpha_i} \hlkwb{=} \hlkwd{tapply}\hlstd{(data_model_2}\hlopt{$}\hlstd{alpha_i, data_model_2}\hlopt{$}\hlstd{germplasm, mean,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 
 \hlstd{check_data} \hlkwb{=} \hlkwd{cbind.data.frame}\hlstd{(}\hlkwc{alpha_i} \hlstd{= alpha_i,} \hlkwc{alpha_i_estimated} \hlstd{= alpha_i_estimated[}\hlkwd{names}\hlstd{(alpha_i)])}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in data.frame(..., check.names = FALSE): objet 'alpha\_i\_estimated' introuvable}}\end{kframe}
 \end{knitrout}
 
 Let’s have a look at the relation between both values.
@@ -3874,16 +3821,15 @@ Let’s have a look at the relation between both values.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p} \hlkwb{=} \hlkwd{ggplot}\hlstd{(check_data,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= alpha_i,} \hlkwc{y} \hlstd{= alpha_i_estimated))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ggplot(check\_data, aes(x = alpha\_i, y = alpha\_i\_estimated)): objet 'check\_data' introuvable}}\begin{alltt}
 \hlstd{p} \hlopt{+} \hlkwd{stat_smooth}\hlstd{(}\hlkwc{method} \hlstd{=} \hlstr{"lm"}\hlstd{)} \hlopt{+} \hlkwd{geom_point}\hlstd{()}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-144-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p' introuvable}}\end{kframe}
 \end{knitrout}
 \end{figure}
 
@@ -3914,18 +3860,17 @@ Here it is bad as only 10 iterations for the 5 first $Y_{ij}$ have been done to 
 \hlcom{# out_cross_validation_model_2 = cross_validation_model_2(data_model_2, "y1", nb_iterations = 10)}
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_cross_validation_model_2.RData"}\hlstd{)} \hlcom{# to save lots of time}
+\end{alltt}
 
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_cross\_validation\_model\_2.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\begin{alltt}
 \hlkwd{head}\hlstd{(out_cross_validation_model_2)}
 \end{alltt}
-\begin{verbatim}
-##   observed.value estimated.value
-## 1       9.255871        8.853974
-## 2      11.730423        7.298630
-## 3       8.366394       10.867411
-## 4       9.897532        9.862749
-## 5      10.185193        9.703990
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head(out\_cross\_validation\_model\_2): objet 'out\_cross\_validation\_model\_2' introuvable}}\end{kframe}
 \end{knitrout}
 
 The outputs are visualized with \texttt{get\_ggplot}
@@ -3935,7 +3880,9 @@ The outputs are visualized with \texttt{get\_ggplot}
 \begin{alltt}
 \hlstd{p_out_cv} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(out_cross_validation_model_2)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(out\_cross\_validation\_model\_2): objet 'out\_cross\_validation\_model\_2' introuvable}}\end{kframe}
 \end{knitrout}
 
 \texttt{p\_out\_cv} is a list of two elements:
@@ -3966,14 +3913,9 @@ The percentage of confidence (i.e. the probability $H0$: the bias is equal to ze
 \begin{alltt}
 \hlstd{p_out_cv}\hlopt{$}\hlstd{plot}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-147-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_cv' introuvable}}\end{kframe}
 \end{knitrout}
 
 \item \texttt{regression} : output of the model observed.value = a x estimated.value + b
@@ -3982,16 +3924,9 @@ The percentage of confidence (i.e. the probability $H0$: the bias is equal to ze
 \begin{alltt}
 \hlstd{p_out_cv}\hlopt{$}\hlstd{regression}
 \end{alltt}
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = observed.value ~ estimated.value, data = out_cross_validation_model_2)
-## 
-## Coefficients:
-##     (Intercept)  estimated.value  
-##         17.2799          -0.7934
-\end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_out\_cv' introuvable}}\end{kframe}
 \end{knitrout}
 
 \end{itemize}
@@ -4012,10 +3947,26 @@ It can be done for $\alpha_i$, $\beta_i$ and $\theta_j$.
 \hlcom{# model_2_theta = mean_comparisons(out_check_model_2, parameter = "theta", precision = 0.05)}
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/model_2_alpha.RData"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/model\_2\_alpha.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\begin{alltt}
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/model_2_beta.RData"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/model\_2\_beta.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\begin{alltt}
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/model_2_theta.RData"}\hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/model\_2\_theta.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 
@@ -4037,46 +3988,40 @@ For \texttt{ggplot.type = "biplot-alpha-beta"}, the biplot with $\alpha_i$ on th
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_a} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(model_2_alpha,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(model\_2\_alpha, ggplot.type = "{}barplot"{}): objet 'model\_2\_alpha' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_a}\hlopt{$}\hlstd{alpha)}
 \end{alltt}
-\begin{verbatim}
-##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12"
-## [13] "13" "14" "15" "16" "17" "18" "19" "20"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_a' introuvable}}\begin{alltt}
 \hlstd{p_a}\hlopt{$}\hlstd{alpha}\hlopt{$}\hlstd{`1`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-150-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_a' introuvable}}\end{kframe}
 \end{knitrout}
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_b} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(model_2_beta,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(model\_2\_beta, ggplot.type = "{}barplot"{}): objet 'model\_2\_beta' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_b}\hlopt{$}\hlstd{beta)}
 \end{alltt}
-\begin{verbatim}
-##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12"
-## [13] "13" "14" "15" "16" "17" "18" "19" "20"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_b' introuvable}}\begin{alltt}
 \hlstd{p_b}\hlopt{$}\hlstd{beta}\hlopt{$}\hlstd{`1`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-151-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_b' introuvable}}\end{kframe}
 \end{knitrout}
 
 It is interessting to compare genetic effect versus sensibility to interaction.
@@ -4086,16 +4031,15 @@ A germplasm with an high genetic effect and a low sensitivity to interaction (i.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_ab} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(model_2_alpha, model_2_beta,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"biplot-alpha-beta"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(model\_2\_alpha, model\_2\_beta, ggplot.type = "{}biplot-alpha-beta"{}): objet 'model\_2\_alpha' introuvable}}\begin{alltt}
 \hlstd{p_ab}\hlopt{$}\hlstd{`1`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-152-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_ab' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -4103,22 +4047,20 @@ A germplasm with an high genetic effect and a low sensitivity to interaction (i.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{p_t} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(model_2_theta,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(model\_2\_theta, ggplot.type = "{}barplot"{}): objet 'model\_2\_theta' introuvable}}\begin{alltt}
 \hlkwd{names}\hlstd{(p_t}\hlopt{$}\hlstd{theta)}
 \end{alltt}
-\begin{verbatim}
-## [1] "1" "2" "3" "4" "5" "6" "7" "8" "9"
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_t' introuvable}}\begin{alltt}
 \hlstd{p_t}\hlopt{$}\hlstd{theta}\hlopt{$}\hlstd{`9`}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-153-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objet 'p\_t' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -4149,10 +4091,26 @@ First run the models
 \hlcom{# out_model_2_y3 = model_2(data_model_2, variable = "y3")}
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_model_2_y1.RData"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_model\_2\_y1.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\begin{alltt}
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_model_2_y2.RData"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_model\_2\_y2.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\begin{alltt}
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/out_model_2_y3.RData"}\hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/out\_model\_2\_y3.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 Then check the models
@@ -4173,10 +4131,26 @@ Then check the models
 \hlcom{# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.}
 
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/c_m2_y1.RData"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/c\_m2\_y1.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\begin{alltt}
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/c_m2_y2.RData"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/c\_m2\_y2.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\begin{alltt}
 \hlkwd{load}\hlstd{(}\hlstr{"./data_PPBstats/c_m2_y3.RData"}\hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir le fichier compressé './data\_PPBstats/c\_m2\_y3.RData', cause probable : 'Aucun fichier ou dossier de ce type'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): impossible d'ouvrir la connexion}}\end{kframe}
 \end{knitrout}
 
 Then run the function on alpha. 
@@ -4190,7 +4164,9 @@ It can also be done on beta or theta.
   \hlstr{"alpha"}
   \hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in parameter\_groups(list(y1 = c\_m2\_y1, y2 = c\_m2\_y2, y3 = c\_m2\_y3), : objet 'c\_m2\_y1' introuvable}}\end{kframe}
 \end{knitrout}
 
 \texttt{out\_parameter\_groups} is list of two elements:
@@ -4233,7 +4209,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-158-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-162-1} 
 
 }
 
@@ -4249,7 +4225,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-159-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-163-1} 
 
 }
 
@@ -4265,7 +4241,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-160-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-164-1} 
 
 }
 
@@ -4287,7 +4263,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-161-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-165-1} 
 
 }
 
@@ -4304,7 +4280,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-162-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-166-1} 
 
 }
 
@@ -4330,7 +4306,9 @@ For example for \texttt{"loc-6:year-5"}
 \begin{alltt}
 \hlstd{ptp} \hlkwb{=} \hlkwd{predict_the_past_model_2}\hlstd{(out_check_model_2,} \hlkwc{env} \hlstd{=} \hlstr{"loc-6:year-5"}\hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in predict\_the\_past\_model\_2(out\_check\_model\_2, env = "{}loc-6:year-5"{}): objet 'out\_check\_model\_2' introuvable}}\end{kframe}
 \end{knitrout}
 
 \texttt{ptp} can be handle exacly as \texttt{out\_model\_1}.
@@ -4339,30 +4317,31 @@ For example for \texttt{"loc-6:year-5"}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{m_ptp} \hlkwb{=} \hlkwd{mean_comparisons}\hlstd{(ptp)}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in mean\_comparisons(ptp): objet 'ptp' introuvable}}\begin{alltt}
 \hlstd{p} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(m_ptp,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(m\_ptp, ggplot.type = "{}barplot"{}): objet 'm\_ptp' introuvable}}\begin{alltt}
 \hlkwd{data}\hlstd{(}\hlstr{"data_version"}\hlstd{)}
 \hlstd{p} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(m_ptp,} \hlkwc{data_version} \hlstd{= data_version,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
 \end{alltt}
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_mean\_comparisons: the following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012, env5:2010.}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_mean\_comparisons: there are no environment to display}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): : the following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012, env5:2010.}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): : there are no environment to display}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): : the following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012, env5:2010.}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): : there are no environment to display}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(m\_ptp, data\_version = data\_version, ggplot.type = "{}barplot"{}): objet 'm\_ptp' introuvable}}\begin{alltt}
 \hlstd{p} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(m_ptp,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"score"}\hlstd{)}
+\end{alltt}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(m\_ptp, ggplot.type = "{}score"{}): objet 'm\_ptp' introuvable}}\begin{alltt}
 \hlstd{p} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(m_ptp,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"interaction"}\hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in get\_ggplot(m\_ptp, ggplot.type = "{}interaction"{}): objet 'm\_ptp' introuvable}}\end{kframe}
 \end{knitrout}
 
 \newpage
@@ -4433,7 +4412,7 @@ And look at the results thanks to the \texttt{factoextra}\footnote{https://githu
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-167-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-171-1} 
 
 }
 
@@ -4443,8 +4422,16 @@ And look at the results thanks to the \texttt{factoextra}\footnote{https://githu
 
 \newpage
 
+\chapter{Organoleptic analysis}
+\label{organoleptic}
+Please, feel free to contribute to this part of analysis, see section \ref{contribute} for more information.
 
-\section{Contribute}
+\chapter{Molecular analysis}
+\label{molecular}
+Please, feel free to contribute to this part of analysis, see section \ref{contribute} for more information.
+
+
+\chapter{contribute}
 \label{contribute}
 
 You can contribute to \pack~ in three ways:
@@ -4455,7 +4442,7 @@ You can contribute to \pack~ in three ways:
 \item add new functions that may be useful in the analysis of trials that can be found in PPB programmes
 \end{enumerate}
 
-\subsection{Test and report bugs}
+\section{Test and report bugs}
 
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 \begin{itemize}
@@ -4464,13 +4451,13 @@ Do not hesitate to let a message [in the issues](https://github.com/priviere/PPB
 \end{itemize}
 
 
-\subsection{Translate}
+\section{Translate}
 
 The package is in english. 
 Every contributions to other languages are welcome!
 More informations on R package translation [here](http://developer.r-project.org/Translations30.html).
 
-\subsection{Add new functions}
+\section{Add new functions}
 
 If you wish to add a new model, you should follow different steps:
 
@@ -4572,7 +4559,7 @@ and in \texttt{get\_ggplot} add:
 
 \newpage
 
-\section*{To cite \pack} \addcontentsline{toc}{section}{To cite \pack}
+\chapter*{To cite \pack} \addcontentsline{toc}{chapter}{To cite \pack}
 To cite this package and or this vignette:
 
 \begin{knitrout}
