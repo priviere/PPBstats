@@ -26,11 +26,7 @@ ggplot_parameter_groups = function(out_parameter_groups){
       "ind" = fviz_pca_ind(pca),
       "var" = fviz_pca_var(pca)
     ),
-    "clust" = list(
-     # "nb_k" = fviz_nbclust(res.hcpc),
-      "dendrogramm" = fviz_dend(res.hcpc, cex = 0.5, k = 2, type = "rectangle"),
-      "pca" = fviz_cluster(res.hcpc)
-    )
+    "clust" = fviz_cluster(res.hcpc)
   )
   
   return(out)
