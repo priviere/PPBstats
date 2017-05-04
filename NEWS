@@ -1,3 +1,20 @@
+PPBstats 0.17 ---------------------------------------
+-----------------------------------------------------
+* add new functions
+  - model_variance_intra.R
+  - check_model_model_variance_intra.R
+  - ggplot_check_model_model_variance_intra.R
+  - mean_comparisons_model_variance_intra.R 
+
+* update function
+  - check_model_model_1.R : add location and year for data_env_whose_param_did_not_converge
+  - ggplot_parameter_groups.R & parameter_groups.R : change kmeans methods for HCPC
+  - ggplot_mean_comparisons_model_1.R : little debug
+
+* update vignette
+  - changes in text and exemple regarding functions udaptes
+
+
 PPBstats 0.16 ---------------------------------------
 -----------------------------------------------------
 * update functions
@@ -172,4 +189,4 @@ PPBstats 0.9.1 --------------------------------------
 
 PPBstats 0.9 ----------------------------------------
 -----------------------------------------------------
-* first version put on Github
+* first version on Github
