@@ -194,7 +194,7 @@ dim(out_check_model_1$MCMC)
 
 When considering \texttt{out\_model\_1\_bis}:
 <<message=TRUE,cache=FALSE>>=
-out_check_model_1_bis = check_model(out_model_1_bis)
+# out_check_model_1_bis = check_model(out_model_1_bis)
 
 # The Gelman-Rubin test is running for each parameter ...
 # The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : nu, rho, sigma[env2-2:2010]. Therefore, they are not present in MCMC output.
