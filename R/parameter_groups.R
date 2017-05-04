@@ -10,23 +10,17 @@
 #' @details
 #' The function run a PCA on a matrix containing the value of each parameter for each variable.
 #' 
-#' Clusters are done based on Average silhouette method for k-means clustering as explained here \url{http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning#r-codes-1}
-#' 
-#' The hcluster are computed with the function hclust(dist())
-#' 
-#' The kmeans are computed with the function kmeans()
+#' Clusters are done based on HCPC method with FactoMineR package as explained here \url{http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning}
 #' 
 #' @return 
 #' The function returns a list of two elements:
 #' \itemize{
-#'  \item obj.pca : the PCA object from FactoMineR::PCA
-#'  \item clust, a list of four elements:
-#'   \itemize{
-#'    \item data : the matrix with variables in column and effect in row, from wich have been computed the PCA
-#'    \item nb.k : number of cluster
-#'    \item hc : hcluster
-#'    \item km : kmeans
-#'   }
+#' \item\texttt{obj.pca} : the PCA object from \texttt{FactoMineR::PCA}
+#' \item \texttt{clust}, a list of two elements:
+#'  \itemize{
+#'  \item \texttt{res.hcpc} : the HCPC object from \texttt{FactoMineR::HCPC}
+#'  \item \texttt{clust} : the dataframe with cluster assigned to each individual
+#'  }
 #' }
 #' 
 #' @author Pierre Riviere
@@ -72,7 +66,7 @@ parameter_groups = function(
   obj.pca = PCA(out, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
   
   # 4. Get the clusters ----------  
-  # see method here: http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning
+  # see method here: http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning
   res.hcpc = HCPC(obj.pca, nb.clust = -1, consol = 0, min = 2, max = 5, graph = FALSE) # Be careful, if we put 2, it often returns 2! The package propose to put 3
   clust =  res.hcpc$data.clust
   clust$clust = paste("cluster", clust$clust)
