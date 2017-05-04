@@ -9,13 +9,13 @@ Warning--there's a number but no volume in gelman_inference_1992
 You've used 15 entries,
             2773 wiz_defined-function locations,
             685 strings with 7469 characters,
-and the built_in function-call counts, 7026 in all, are:
+and the built_in function-call counts, 7024 in all, are:
 = -- 629
 > -- 413
 < -- 7
 + -- 141
 - -- 126
-* -- 609
+* -- 607
 := -- 1103
 add.period$ -- 46
 call.type$ -- 15
@@ -35,10 +35,10 @@ pop$ -- 153
 preamble$ -- 1
 purify$ -- 72
 quote$ -- 0
-skip$ -- 222
+skip$ -- 223
 stack$ -- 0
 substring$ -- 305
-swap$ -- 15
+swap$ -- 14
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
