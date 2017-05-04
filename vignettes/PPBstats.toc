@@ -1,100 +1,107 @@
-\contentsline {section}{\numberline {1}Philosophy of \texttt {PPBstats}}{5}{section.1}
-\contentsline {subsection}{\numberline {1.1}What is Participatory Plant Breeding?}{5}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}Objectives of \texttt {PPBstats}}{5}{subsection.1.2}
-\contentsline {subsection}{\numberline {1.3}Workflow and function relations in \texttt {PPBstats}}{5}{subsection.1.3}
-\contentsline {subsection}{\numberline {1.4}Frequentist statistics}{9}{subsection.1.4}
-\contentsline {subsubsection}{\numberline {1.4.1}Theory}{9}{subsubsection.1.4.1}
-\contentsline {subsubsection}{\numberline {1.4.2}Mean comparisons}{9}{subsubsection.1.4.2}
-\contentsline {subsection}{\numberline {1.5}Bayesian statistics}{9}{subsection.1.5}
-\contentsline {subsubsection}{\numberline {1.5.1}Theory}{9}{subsubsection.1.5.1}
-\contentsline {subsubsection}{\numberline {1.5.2}Mean comparisons}{9}{subsubsection.1.5.2}
-\contentsline {subsection}{\numberline {1.6}Let's go!}{10}{subsection.1.6}
-\contentsline {section}{\numberline {2}Design the experiment}{11}{section.2}
-\contentsline {subsection}{\numberline {2.1}Analysis carry out in \texttt {PPBstats}}{11}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Experimental design}{12}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Case 1}{13}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2}Case 2}{14}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.3}Case 3}{15}{subsubsection.2.2.3}
-\contentsline {subsubsection}{\numberline {2.2.4}Case ???}{18}{subsubsection.2.2.4}
-\contentsline {section}{\numberline {3}Sow, note, harvest, measure ... }{19}{section.3}
-\contentsline {section}{\numberline {4}Describe the data}{20}{section.4}
-\contentsline {section}{\numberline {5}Family of analysis 1 : entry effects on one farm}{25}{section.5}
-\contentsline {subsection}{\numberline {5.1}Classic ANOVA}{25}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Spatial analysis}{26}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}model\_1 to perform mean comparisons on farms }{27}{subsection.5.3}
-\contentsline {subsubsection}{\numberline {5.3.1}Theory of the model}{27}{subsubsection.5.3.1}
-\contentsline {subsubsection}{\numberline {5.3.2}Steps with \texttt {PPBstats}}{27}{subsubsection.5.3.2}
-\contentsline {subsubsection}{\numberline {5.3.3}Run the model}{28}{subsubsection.5.3.3}
-\contentsline {subsubsection}{\numberline {5.3.4}Check and visualize model outputs}{30}{subsubsection.5.3.4}
-\contentsline {paragraph}{Check the model}{30}{section*.2}
-\contentsline {paragraph}{Visualize outputs}{31}{section*.3}
-\contentsline {subsubsection}{\numberline {5.3.5}Get and visualize mean comparisons}{40}{subsubsection.5.3.5}
-\contentsline {paragraph}{Get mean comparisons}{40}{section*.4}
-\contentsline {paragraph}{Visualize mean comparisons}{42}{section*.5}
-\contentsline {subparagraph}{barplot}{42}{section*.6}
-\contentsline {subparagraph}{interaction}{50}{section*.7}
-\contentsline {subparagraph}{score}{54}{section*.8}
-\contentsline {section}{\numberline {6}Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}{59}{section.6}
-\contentsline {subsection}{\numberline {6.1}AMMI}{59}{subsection.6.1}
-\contentsline {subsubsection}{\numberline {6.1.1}Theory of the model}{59}{subsubsection.6.1.1}
-\contentsline {subsubsection}{\numberline {6.1.2}Steps with \texttt {PPBstats}}{60}{subsubsection.6.1.2}
-\contentsline {subsubsection}{\numberline {6.1.3}Run the model}{60}{subsubsection.6.1.3}
-\contentsline {subsubsection}{\numberline {6.1.4}Check and visualize model outputs}{64}{subsubsection.6.1.4}
-\contentsline {paragraph}{Check the model}{64}{section*.9}
-\contentsline {paragraph}{Visualize outputs}{64}{section*.10}
-\contentsline {subsubsection}{\numberline {6.1.5}Get and visualize mean comparisons}{69}{subsubsection.6.1.5}
-\contentsline {paragraph}{Get mean comparisons}{69}{section*.11}
-\contentsline {paragraph}{Visualize mean comparisons}{70}{section*.12}
-\contentsline {subsubsection}{\numberline {6.1.6}Get and visualize biplot}{71}{subsubsection.6.1.6}
-\contentsline {paragraph}{Get biplot}{72}{section*.13}
-\contentsline {paragraph}{Visualize biplot}{72}{section*.14}
-\contentsline {subsubsection}{\numberline {6.1.7}Get and vizualise groups of parameters}{76}{subsubsection.6.1.7}
-\contentsline {paragraph}{Get groups of parameters}{76}{section*.15}
-\contentsline {paragraph}{Visualize groups of parameters}{76}{section*.16}
-\contentsline {subsection}{\numberline {6.2}GGE}{81}{subsection.6.2}
-\contentsline {subsubsection}{\numberline {6.2.1}Theory of the model}{81}{subsubsection.6.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2}Steps with \texttt {PPBstats}}{82}{subsubsection.6.2.2}
-\contentsline {subsubsection}{\numberline {6.2.3}Run the model}{82}{subsubsection.6.2.3}
-\contentsline {subsubsection}{\numberline {6.2.4}Check and visualize model outputs}{82}{subsubsection.6.2.4}
-\contentsline {paragraph}{Check the model}{82}{section*.17}
-\contentsline {paragraph}{Visualize outputs}{82}{section*.18}
-\contentsline {subsubsection}{\numberline {6.2.5}Get and visualize mean comparisons}{82}{subsubsection.6.2.5}
-\contentsline {paragraph}{Get mean comparisons}{83}{section*.19}
-\contentsline {paragraph}{Visualize mean comparisons}{83}{section*.20}
-\contentsline {subsubsection}{\numberline {6.2.6}Get and visualize biplot}{83}{subsubsection.6.2.6}
-\contentsline {paragraph}{Get biplot}{83}{section*.21}
-\contentsline {paragraph}{Visualize biplot}{83}{section*.22}
-\contentsline {subsubsection}{\numberline {6.2.7}Get and vizualise groups of parameters}{89}{subsubsection.6.2.7}
-\contentsline {paragraph}{Get groups of parameters}{90}{section*.23}
-\contentsline {paragraph}{Visualize groups of parameters}{90}{section*.24}
-\contentsline {subsection}{\numberline {6.3}model\_2 to analyse $G \times E$ interaction in the network of farms }{91}{subsection.6.3}
-\contentsline {subsubsection}{\numberline {6.3.1}Theory of the model}{91}{subsubsection.6.3.1}
-\contentsline {subsubsection}{\numberline {6.3.2}Steps with \texttt {PPBstats}}{92}{subsubsection.6.3.2}
-\contentsline {subsubsection}{\numberline {6.3.3}Run the model}{92}{subsubsection.6.3.3}
-\contentsline {subsubsection}{\numberline {6.3.4}Check and visualize model outputs}{93}{subsubsection.6.3.4}
-\contentsline {paragraph}{Check the model}{93}{section*.25}
-\contentsline {paragraph}{Visualize outputs}{94}{section*.26}
-\contentsline {subsubsection}{\numberline {6.3.5}Perform cross validation studies}{99}{subsubsection.6.3.5}
-\contentsline {subsubsection}{\numberline {6.3.6}Get and visualize mean comparisons}{101}{subsubsection.6.3.6}
-\contentsline {paragraph}{Get mean comparisons}{101}{section*.27}
-\contentsline {paragraph}{Vizualise mean comparisons}{102}{section*.28}
-\contentsline {subsubsection}{\numberline {6.3.7}Get and vizualise groups of parameters}{106}{subsubsection.6.3.7}
-\contentsline {paragraph}{Get groups of parameters}{106}{section*.29}
-\contentsline {paragraph}{Visualize groups of parameters}{107}{section*.30}
-\contentsline {subsubsection}{\numberline {6.3.8}Predict the past}{112}{subsubsection.6.3.8}
-\contentsline {section}{\numberline {7}Family of analysis 3 : effects from family 1 and 2 in a network of farms}{114}{section.7}
-\contentsline {subsection}{\numberline {7.1}model 3 }{114}{subsection.7.1}
-\contentsline {section}{\numberline {8}Family of analysis 4 : specific research questions on one farm or more}{115}{section.8}
-\contentsline {subsection}{\numberline {8.1}migrant residant}{115}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Version}{116}{subsection.8.2}
-\contentsline {section}{\numberline {9}Family of analysis 5 : multivariate analysis}{117}{section.9}
-\contentsline {subsection}{\numberline {9.1}Multivariate analysis}{117}{subsection.9.1}
-\contentsline {subsubsection}{\numberline {9.1.1}Format the data}{117}{subsubsection.9.1.1}
-\contentsline {subsubsection}{\numberline {9.1.2}Run the analysis}{117}{subsubsection.9.1.2}
-\contentsline {section}{\numberline {10}Contribute}{119}{section.10}
-\contentsline {subsection}{\numberline {10.1}Test and report bugs}{119}{subsection.10.1}
-\contentsline {subsection}{\numberline {10.2}Translate}{119}{subsection.10.2}
-\contentsline {subsection}{\numberline {10.3}Add new functions}{119}{subsection.10.3}
-\contentsline {section}{To cite \texttt {PPBstats}}{121}{section*.31}
-\contentsline {section}{Aknowledgement}{121}{section*.32}
-\contentsline {section}{References}{122}{section*.33}
+\contentsline {chapter}{\numberline {1}Philosophy of \texttt {PPBstats}}{7}{chapter.1}
+\contentsline {section}{\numberline {1.1}What is Participatory Plant Breeding?}{7}{section.1.1}
+\contentsline {section}{\numberline {1.2}Objectives of \texttt {PPBstats}}{7}{section.1.2}
+\contentsline {section}{\numberline {1.3}Let's go!}{7}{section.1.3}
+\contentsline {chapter}{\numberline {2}Network analysis}{9}{chapter.2}
+\contentsline {chapter}{\numberline {3}Agronomic analysis}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}Introduction}{11}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Workflow and function relations in \texttt {PPBstats}\nobreakspace {}regarding agronomic analysis}{11}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Frequentist statistics}{15}{subsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.2.1}Theory}{15}{subsubsection.3.1.2.1}
+\contentsline {subsubsection}{\numberline {3.1.2.2}Mean comparisons}{15}{subsubsection.3.1.2.2}
+\contentsline {subsection}{\numberline {3.1.3}Bayesian statistics}{15}{subsection.3.1.3}
+\contentsline {subsubsection}{\numberline {3.1.3.1}Theory}{15}{subsubsection.3.1.3.1}
+\contentsline {subsubsection}{\numberline {3.1.3.2}Mean comparisons}{15}{subsubsection.3.1.3.2}
+\contentsline {subsection}{\numberline {3.1.4}data formating}{16}{subsection.3.1.4}
+\contentsline {section}{\numberline {3.2}Design the experiment}{17}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Analysis carry out in \texttt {PPBstats}}{17}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Experimental design}{18}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}Case 1}{19}{subsubsection.3.2.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2.2}Case 2}{20}{subsubsection.3.2.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.3}Case 3}{21}{subsubsection.3.2.2.3}
+\contentsline {subsubsection}{\numberline {3.2.2.4}Case 4}{24}{subsubsection.3.2.2.4}
+\contentsline {section}{\numberline {3.3}Sow, note, harvest, measure ... }{25}{section.3.3}
+\contentsline {section}{\numberline {3.4}Describe the data}{26}{section.3.4}
+\contentsline {section}{\numberline {3.5}Family of analysis 1 : entry effects on one farm}{31}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Classic ANOVA}{31}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Spatial analysis}{32}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}model\_1 to perform mean comparisons on farms }{33}{subsection.3.5.3}
+\contentsline {subsubsection}{\numberline {3.5.3.1}Theory of the model}{33}{subsubsection.3.5.3.1}
+\contentsline {subsubsection}{\numberline {3.5.3.2}Steps with \texttt {PPBstats}}{33}{subsubsection.3.5.3.2}
+\contentsline {subsubsection}{\numberline {3.5.3.3}Run the model}{34}{subsubsection.3.5.3.3}
+\contentsline {subsubsection}{\numberline {3.5.3.4}Check and visualize model outputs}{35}{subsubsection.3.5.3.4}
+\contentsline {paragraph}{Check the model}{35}{section*.2}
+\contentsline {paragraph}{Visualize outputs}{36}{section*.3}
+\contentsline {subsubsection}{\numberline {3.5.3.5}Get and visualize mean comparisons}{39}{subsubsection.3.5.3.5}
+\contentsline {paragraph}{Get mean comparisons}{39}{section*.4}
+\contentsline {paragraph}{Visualize mean comparisons}{40}{section*.5}
+\contentsline {subparagraph}{barplot}{40}{section*.6}
+\contentsline {subparagraph}{interaction}{42}{section*.7}
+\contentsline {subparagraph}{score}{43}{section*.8}
+\contentsline {section}{\numberline {3.6}Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}{44}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Incomplete Block Design}{44}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}AMMI}{44}{subsection.3.6.2}
+\contentsline {subsubsection}{\numberline {3.6.2.1}Theory of the model}{44}{subsubsection.3.6.2.1}
+\contentsline {subsubsection}{\numberline {3.6.2.2}Steps with \texttt {PPBstats}}{45}{subsubsection.3.6.2.2}
+\contentsline {subsubsection}{\numberline {3.6.2.3}Run the model}{45}{subsubsection.3.6.2.3}
+\contentsline {subsubsection}{\numberline {3.6.2.4}Check and visualize model outputs}{49}{subsubsection.3.6.2.4}
+\contentsline {paragraph}{Check the model}{49}{section*.9}
+\contentsline {paragraph}{Visualize outputs}{49}{section*.10}
+\contentsline {subsubsection}{\numberline {3.6.2.5}Get and visualize mean comparisons}{54}{subsubsection.3.6.2.5}
+\contentsline {paragraph}{Get mean comparisons}{54}{section*.11}
+\contentsline {paragraph}{Visualize mean comparisons}{55}{section*.12}
+\contentsline {subsubsection}{\numberline {3.6.2.6}Get and visualize biplot}{56}{subsubsection.3.6.2.6}
+\contentsline {paragraph}{Get biplot}{57}{section*.13}
+\contentsline {paragraph}{Visualize biplot}{57}{section*.14}
+\contentsline {subsubsection}{\numberline {3.6.2.7}Get and vizualise groups of parameters}{61}{subsubsection.3.6.2.7}
+\contentsline {paragraph}{Get groups of parameters}{61}{section*.15}
+\contentsline {paragraph}{Visualize groups of parameters}{61}{section*.16}
+\contentsline {subsection}{\numberline {3.6.3}GGE}{66}{subsection.3.6.3}
+\contentsline {subsubsection}{\numberline {3.6.3.1}Theory of the model}{66}{subsubsection.3.6.3.1}
+\contentsline {subsubsection}{\numberline {3.6.3.2}Steps with \texttt {PPBstats}}{67}{subsubsection.3.6.3.2}
+\contentsline {subsubsection}{\numberline {3.6.3.3}Run the model}{67}{subsubsection.3.6.3.3}
+\contentsline {subsubsection}{\numberline {3.6.3.4}Check and visualize model outputs}{67}{subsubsection.3.6.3.4}
+\contentsline {paragraph}{Check the model}{67}{section*.17}
+\contentsline {paragraph}{Visualize outputs}{67}{section*.18}
+\contentsline {subsubsection}{\numberline {3.6.3.5}Get and visualize mean comparisons}{67}{subsubsection.3.6.3.5}
+\contentsline {paragraph}{Get mean comparisons}{68}{section*.19}
+\contentsline {paragraph}{Visualize mean comparisons}{68}{section*.20}
+\contentsline {subsubsection}{\numberline {3.6.3.6}Get and visualize biplot}{68}{subsubsection.3.6.3.6}
+\contentsline {paragraph}{Get biplot}{68}{section*.21}
+\contentsline {paragraph}{Visualize biplot}{68}{section*.22}
+\contentsline {subsubsection}{\numberline {3.6.3.7}Get and vizualise groups of parameters}{74}{subsubsection.3.6.3.7}
+\contentsline {paragraph}{Get groups of parameters}{75}{section*.23}
+\contentsline {paragraph}{Visualize groups of parameters}{75}{section*.24}
+\contentsline {subsection}{\numberline {3.6.4}model\_2 to analyse $G \times E$ interaction in the network of farms }{76}{subsection.3.6.4}
+\contentsline {subsubsection}{\numberline {3.6.4.1}Theory of the model}{76}{subsubsection.3.6.4.1}
+\contentsline {subsubsection}{\numberline {3.6.4.2}Steps with \texttt {PPBstats}}{77}{subsubsection.3.6.4.2}
+\contentsline {subsubsection}{\numberline {3.6.4.3}Run the model}{77}{subsubsection.3.6.4.3}
+\contentsline {subsubsection}{\numberline {3.6.4.4}Check and visualize model outputs}{78}{subsubsection.3.6.4.4}
+\contentsline {paragraph}{Check the model}{78}{section*.25}
+\contentsline {paragraph}{Visualize outputs}{79}{section*.26}
+\contentsline {subsubsection}{\numberline {3.6.4.5}Perform cross validation studies}{81}{subsubsection.3.6.4.5}
+\contentsline {subsubsection}{\numberline {3.6.4.6}Get and visualize mean comparisons}{82}{subsubsection.3.6.4.6}
+\contentsline {paragraph}{Get mean comparisons}{82}{section*.27}
+\contentsline {paragraph}{Vizualise mean comparisons}{82}{section*.28}
+\contentsline {subsubsection}{\numberline {3.6.4.7}Get and vizualise groups of parameters}{83}{subsubsection.3.6.4.7}
+\contentsline {paragraph}{Get groups of parameters}{83}{section*.29}
+\contentsline {paragraph}{Visualize groups of parameters}{85}{section*.30}
+\contentsline {subsubsection}{\numberline {3.6.4.8}Predict the past}{89}{subsubsection.3.6.4.8}
+\contentsline {section}{\numberline {3.7}Family of analysis 3 : effects from family 1 and 2 in a network of farms}{91}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}model 3 }{91}{subsection.3.7.1}
+\contentsline {section}{\numberline {3.8}Family of analysis 4 : specific research questions on one farm or more}{92}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}migrant residant}{92}{subsection.3.8.1}
+\contentsline {subsection}{\numberline {3.8.2}Version}{93}{subsection.3.8.2}
+\contentsline {section}{\numberline {3.9}Family of analysis 5 : multivariate analysis}{94}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}Multivariate analysis}{94}{subsection.3.9.1}
+\contentsline {subsubsection}{\numberline {3.9.1.1}Format the data}{94}{subsubsection.3.9.1.1}
+\contentsline {subsubsection}{\numberline {3.9.1.2}Run the analysis}{94}{subsubsection.3.9.1.2}
+\contentsline {chapter}{\numberline {4}Organoleptic analysis}{97}{chapter.4}
+\contentsline {chapter}{\numberline {5}Molecular analysis}{99}{chapter.5}
+\contentsline {chapter}{\numberline {6}contribute}{101}{chapter.6}
+\contentsline {section}{\numberline {6.1}Test and report bugs}{101}{section.6.1}
+\contentsline {section}{\numberline {6.2}Translate}{101}{section.6.2}
+\contentsline {section}{\numberline {6.3}Add new functions}{101}{section.6.3}
+\contentsline {chapter}{To cite \texttt {PPBstats}}{103}{chapter*.31}
+\contentsline {chapter}{Aknowledgement}{105}{chapter*.32}
+\contentsline {chapter}{References}{107}{chapter*.33}
