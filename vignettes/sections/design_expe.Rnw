@@ -32,6 +32,42 @@ The key elements to choose an appropriate experimental designs are:
 
 \subsubsection{fully-replicated}
 \label{fully_replicated}
+
+\begin{center}
+\begin{tikzpicture}[mindmap,
+every node/.style=concept, concept color=teal!40,
+every node/.append style={scale=0.5},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=2cm, sibling distance= 9cm, concept color=teal!40, font=\huge, text width=4cm},
+    level 2/.style={level distance=3cm, sibling distance= 9cm, concept color=green!40, font=\huge, text width=4cm},
+    level 3/.style={level distance=4cm, sibling distance= 4cm, concept color=yellow!40, font=\huge, text width=6cm},
+    level 4/.style={level distance=5.5cm, concept color=red!40, font=\huge, text width=6cm},
+    level 5/.style={level distance=5cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
+    ]
+    
+\node{ \huge \textbf{Analysis} }
+      child { node {\textbf{Family 1}}
+        child { node {Number of plots per location large}
+      		child { node {One location and one year}
+	      		child { node {All entries are replicated at least twice \\ \textbf{fully-repicated \\ cf section \ref{fully_replicated}} }
+		      		child { node { \textbf{Anova \\ cf section \ref{classic_anova}}} }
+		      	}
+        	}
+        }
+      }
+      child { node {\textbf{Family 2}}
+        child { node {Number of plots per location large}
+      		child { node {At least two locations and at least one year}
+      			child { node {Same entries are in all locations; all entries are replicated at least twice in each location \\ \textbf{fully-repicated \\ cf section \ref{fully_replicated}} }
+		      		child { node {\textbf{AMMI, GGE \\ cf sections \ref{ammi} and \ref{gge}} }}  			
+      			}
+      		}
+        }
+      };
+\end{tikzpicture}
+\end{center}
+
+
 <<message=TRUE,cache=FALSE>>=
 p_fr = design_experiment(
   location = "Location-1",
