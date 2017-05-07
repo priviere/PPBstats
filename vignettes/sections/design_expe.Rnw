@@ -30,7 +30,8 @@ The key elements to choose an appropriate experimental designs are:
 \noindent A description of the algorithm is describe in the help of the function: \texttt{?design\_experiment}.
 
 
-\subsubsection{Case 1}
+\subsubsection{fully-replicated}
+\label{fully_replicated}
 <<message=TRUE,cache=FALSE>>=
 p_fr = design_experiment(
   location = "Location-1",
@@ -70,7 +71,9 @@ p_fr$"fully-replicated"$design
 
 
 
-\subsubsection{Case 2}
+\subsubsection{row-column}
+\label{row_column}
+
 <<message=TRUE,cache=FALSE>>=
 p_case2 = design_experiment(
   location = "Location-3",
@@ -96,7 +99,8 @@ The function return an error.
 The controls must catch as much as possible of the trial variation.
 
 
-\subsubsection{Case 3}
+\subsubsection{Regional and satellite farms}
+\label{rf_sf}
 
 Regional farms had several entries (i.e. a germplasm in an environment) in two or more blocks with entries replicated in each block.
 Satellite farms had no block and one entry replicated twice.
@@ -224,7 +228,8 @@ For \texttt{expe.type = "regional-farm"}, there is a warning message if controls
 It is better to catch as much as possible of the trial variation.
 If there are less than 2 blocks, an error is returned.
 
-\subsubsection{Case 4}
+\subsubsection{IBD}
+\label{ibd}
 
 Incomplete block design.
 Entries are not replicated. Some entries are shared by some locations.
