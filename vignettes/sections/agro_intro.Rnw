@@ -1,5 +1,191 @@
 \section{Introduction}
+
+\subsection{Decision tree to choose analysis and experimental design regarding agronomic analysis}
+
+Based on the research question, an analysis is carried on.
+
+Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
+The different effects that can be estimated are:
+\begin{itemize}
+\item \textbf{entry}: a combinaison of a germplasm and an location or an environment
+\item \textbf{germplasm}
+\item \textbf{location}
+\item \textbf{environment}: a combinaison of a location and a year
+\item \textbf{interaction}: interaction between germplasm and location or germplasm and environment
+\item \textbf{year}
+\item \textbf{migrant-resident}: migrant refers to germplasm that was not grown on previous generation on location; resident refers to germplasm that was grown  on previous generation on location.
+\item \textbf{version}: version within a germplasm, for example selected vs non-selected
+\end{itemize}
+
+\noindent The analysis are divided into four families:
+\begin{itemize}
+\item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
+\item \textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+\item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
+\item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
+\end{itemize}
+Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
+
+\textbf{Family 5} refers to multivariate analysis and is mentionned in section \ref{multivariate_analysis}.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{ccccccccccc}
+\hline
+Family & Name & Section &
+\rotatebox{90}{entry effects} &
+\rotatebox{90}{germpasm effects} &
+\rotatebox{90}{location effects} &
+\rotatebox{90}{environments effects} &
+\rotatebox{90}{interaction effects} &
+\rotatebox{90}{year effects} &
+\rotatebox{90}{migrant-resident effects} &
+\rotatebox{90}{version effects}
+\\
+\hline
+1 & Anova & \ref{classic_anova} & X & & & & & & \\
+  & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & \\
+  & Bayesian model 1 & \ref{model_1} & X & & & & & & & \\
+\hline
+2 & IBD & \ref{ibd} & & X & & & & & & \\
+  & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
+  & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
+  & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
+\hline
+3 & Bayesian model 3 & \ref{model_3} & X & X & X & & X & X & & \\
+\hline
+4 & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
+  & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
+\hline
+\end{tabular}
+\caption{Analysis carry out in \pack. X: effects that are estimated. (X): effects that can be estimated.}
+\label{summary_analysis}
+\end{center}
+\end{table}
+
+\subsection{Family 1}
+
+\textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
+
+\begin{center}
+\begin{tikzpicture}[mindmap,
+every node/.style=concept, concept color=teal!40,
+every node/.append style={scale=0.5},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=1.5cm, sibling distance= 9cm, concept color=green!40, font=\huge, text width=4cm},
+    level 2/.style={level distance=4cm, sibling distance= 4cm, concept color=yellow!40, font=\huge, text width=6cm},
+    level 3/.style={level distance=5.5cm, concept color=red!40, font=\huge, text width=6cm},
+    level 4/.style={level distance=5cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
+    ]
+    
+\node{ \huge \textbf{Family 1} }
+        child { node {Number of plots per location large}
+      		child { node {One location and one year}
+	      		child { node {All entries are replicated at least twice \\ \textbf{fully-repicated \\ cf section \ref{fully_replicated}} }
+		      		child { node { \textbf{Anova \\ cf section \ref{classic_anova}}} }
+		      	}
+    	  		child { node {Entries are not replicated; only a control is replicated in rows and columns \\ \textbf{row-colum \\ cf section \ref{row_column}} }
+    	  			child { node {\textbf{Spatial analysis  \\ cf section \ref{spatial_analysis}}} }
+      			}
+        	}
+        }
+        child { node {Number of plots per location low}
+       		child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
+        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf section \ref{rf_sf}} }
+	      			child { node {\textbf{model 1 \\ cf section \ref{model_1}}} }
+        		}    	
+       		}
+		};
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Family 2}
+
+\textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+
+\begin{center}
+\begin{tikzpicture}[mindmap,
+every node/.style=concept, concept color=teal!40,
+every node/.append style={scale=0.5},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=1.5cm, sibling distance= 9cm, concept color=green!40, font=\huge, text width=4cm},
+    level 2/.style={level distance=4cm, sibling distance= 4cm, concept color=yellow!40, font=\huge, text width=6cm},
+    level 3/.style={level distance=5.5cm, concept color=red!40, font=\huge, text width=6cm},
+    level 4/.style={level distance=5cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
+    ]
+
+\node{\huge \textbf{Family 2} }
+        child { node {Number of plots per location large}
+      		child { node {At least two locations and at least one year}
+      			child { node {Same entries are in all locations; all entries are replicated at least twice in each location \\ \textbf{fully-repicated \\ cf section \ref{fully_replicated}} }
+		      		child { node {\textbf{AMMI, GGE \\ cf sections \ref{ammi} and \ref{gge}} }}  			
+      			}
+      		}
+        }
+        child { node {Number of plots per farm low}
+        	child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
+        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf section \ref{rf_sf}} }
+					child { node {\textbf{model 2 \\ cf section \ref{model_2}} }}
+	        	}
+        	}
+        };
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Family 3}
+
+\textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
+
+
+\subsection{Family 4}
+
+\textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
+
+%
+%\noindent Table \ref{cases_expe} summarize the different experimental design regarding %analysis.
+%
+%\begin{table}[H]
+%\begin{tabular}{
+%c
+%p{.1\textwidth}
+%p{.1\textwidth}
+%p{.4\textwidth}
+%p{.2\textwidth}
+%p{.1\textwidth}
+%}
+%\hline
+%case & number of locations & number of years & comments regarding entries replication & %design of experiment & analysis \\
+%\hline
+%1 & 1 & 1 & All entries are replicated at least twice & \multirow{3}{.2\textwidth}{\texttt%{fully-repicated}} & Anova \\
+%\cline{2-4}\cline{6-6}
+%  & 2 or more & 1 or more & Same entries are in all locations. All entries are replicated %at least twice in each location & & AMMI; GGE \\
+%\hline
+%2 & 1 & 1 & Entries not replicated. Only a control is replicated in rows and columns & %\texttt{row-column} & Spatial analysis \\
+%\hline
+%3 & 25 or more & 1 or more & \multirow{3}{.35\textwidth}{All locations share a control. %Entries are not replicated.} & \multirow{3}{.2\textwidth}{\texttt{satellite-farm} and %\texttt{regional-farm}} & \multirow{2}{.1\textwidth}{B models 1 and 2} \\
+%  & 12 or more & 2 or more & & & \\
+%  \cline{2-3} \cline{6-6}
+%  & 25 or more & 3 or more & & & B model 3 \\
+%\hline
+%4 & 2 or more & 1 & Entries not replicated. Some entries are shared by some locations & %\texttt{IBD} & IBD \\
+%\hline
+%\end{tabular}
+%\caption{Experimental design specification linked to dedicated analysis. Column 'design of experiments' corresponds to the argument \texttt{expe.type} in the \texttt{design\_experiment} function.}
+%\label{cases_expe}
+%\end{table}
+%
+
 \subsection{Workflow and function relations in \pack~regarding agronomic analysis}
+
+After deign the experiment and describe the data, each family of analysis is implemented by several analysis with the same workflow :
+\begin{enumerate}
+\item Run the model
+\item check the model and visualize outputs
+\item compare means and visualize outputs
+\end{enumerate}
+Note that for model 2 and GGE other analysis are possible : predict the past and cross validation regarding model 2 and biplot regarding GGE.
 
 \pack~is divided into two sets of functions:
 
@@ -17,9 +203,6 @@ Figure~\ref{workflow_2} displays second functions used in the main functions.
 Table~\ref{function_descriptions_workflow_2} describes each of the second functions.
 
 You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
-
-%get.PPBstats.data
-%extra_functions
 
 
 \begin{figure}[H]
