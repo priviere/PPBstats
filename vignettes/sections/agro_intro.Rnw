@@ -63,6 +63,44 @@ Family & Name & Section &
 \end{center}
 \end{table}
 
+
+For each family, a decision tree are divided into five categories (Figure \ref{tree}):
+\begin{enumerate}
+\item Family of analysis
+\item Number of plots per location
+\item Number of locations years
+\item Experimental design
+\item Statistical analysis
+\end{enumerate}
+
+In sections design of experiment and analysis, the branchs of the descision tree concerned are displayed. 
+
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}[mindmap,
+every node/.style=concept, concept color=teal!40,
+every node/.append style={scale=0.5},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=3cm, sibling distance= 9cm, concept color=green!40, font=\huge, text width=4cm},
+    level 2/.style={level distance=3.5cm, sibling distance= 4cm, concept color=yellow!40, font=\huge, text width=6cm},
+    level 3/.style={level distance=4.5cm, concept color=red!40, font=\huge, text width=6cm},
+    level 4/.style={level distance=4cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
+    ]
+    
+\node{ \huge \textbf{Family} }
+        child { node {Number of plots per location}
+      		child { node {Number of locations years}
+	      		child { node {Experimental design}
+		      		child { node { Statistical analysis } }
+		      	}
+        	}
+        };
+\end{tikzpicture}
+\caption{Decision tree for analysis in \pack}
+\label{tree}
+\end{center}
+\end{figure}
+
 \subsection{Family 1}
 
 \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
@@ -74,7 +112,7 @@ every node/.append style={scale=0.5},
 %every concept/.style={rectangle},
     level 1/.style={level distance=1.5cm, sibling distance= 9cm, concept color=green!40, font=\huge, text width=4cm},
     level 2/.style={level distance=4cm, sibling distance= 4cm, concept color=yellow!40, font=\huge, text width=6cm},
-    level 3/.style={level distance=5.5cm, concept color=red!40, font=\huge, text width=6cm},
+    level 3/.style={level distance=6cm, concept color=red!40, font=\huge, text width=6cm},
     level 4/.style={level distance=5cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
     ]
     
