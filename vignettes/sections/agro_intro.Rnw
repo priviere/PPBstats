@@ -1,8 +1,21 @@
 \section{Introduction}
 
-\subsection{Decision tree to choose analysis and experimental design regarding agronomic analysis}
+\subsection{Experimental design}
 
-Based on the research question, an analysis is carried on.
+Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the space available.
+
+The experimental design is thought in relation to the analysis.
+The key elements to choose an appropriate experimental designs are:
+\begin{itemize}
+\item the number of locations
+\item the number of years
+\item the replication of entries within and between locations
+\end{itemize}
+
+Several designs used in PPB programmes are presented in section \ref{doe}.
+
+
+\subsection{Analysis carried out}
 
 Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
 The different effects that can be estimated are:
@@ -17,16 +30,17 @@ The different effects that can be estimated are:
 \item \textbf{version}: version within a germplasm, for example selected vs non-selected
 \end{itemize}
 
-\noindent The analysis are divided into four families:
+\noindent The analysis are divided into five families:
 \begin{itemize}
 \item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
 \item \textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
 \item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
 \item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
+\item \textbf{Family 5} refers to multivariate analysis and is mentionned in section \ref{multivariate_analysis}.
 \end{itemize}
+
 Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
 
-\textbf{Family 5} refers to multivariate analysis and is mentionned in section \ref{multivariate_analysis}.
 
 \begin{table}[H]
 \begin{center}
@@ -63,17 +77,157 @@ Family & Name & Section &
 \end{center}
 \end{table}
 
+\subsubsection{Frequentist statistics}
 
-For each family, a decision tree are divided into five categories (Figure \ref{tree}):
+!!! TO DO !!!
+
+\paragraph{Theory}
+
+
+\paragraph{Mean comparisons}
+
+
+\subsubsection{Bayesian statistics}
+\label{section_bayes}
+
+\paragraph{Theory}
+
+The analyses performed in \pack~are based on Bayesian statistics.
+
+Bayesian statistics are based on the Bayes theorem:
+
+\begin{displaymath}
+Pr(\theta|y) \propto Pr(\theta) Pr(y|\theta)
+\end{displaymath}
+
+with
+$Pr(\theta|y)$ the posterior,
+$Pr(y|\theta)$ the likelihood and
+$Pr(\theta)$ the prior.
+
+The parameters' distribution, knowing the data (the posterior), is proportional to the distribution \textit{a  priori} (the prior) $\times$ the information brought by the data (the likelihood).
+
+The more information (i.e. the larger the data set and the better the model fits the data), the less the prior would be of importance.
+If the priors equal the posteriors, it means that there is not enough data or the model does not fit the data.
+
+
+Bayesian inference is based on the posterior distribution of model parameters.
+This distribution could not be calculated explicitely for the hierarchical model used in here (see section~\ref{section_model1} and section~\ref{section_model2}) but could be estimated using Markov Chain and Monte Carlo (MCMC) methods.
+
+These methods simulate values of model parameters according to a Markov chain that converges to the posterior distribution of model parameters \citep{robert_bayesian_2001}.
+
+MCMC methods were implemented using \texttt{JAGS} by the \texttt{R} package \texttt{rjags} that performed Gibbs sampling \citep{robert_bayesian_2001}.
+Two MCMC chains were run independently to test for convergence using the Gelman-Rubin test.
+This test was based on the variance within and between the chains \citep{gelman_inference_1992}.
+
+A burn-in and lots of iterations were needed in the MCMC procedure.
+In our case, the burn-in had 1000 iterations, then 100 000 iterations are done by default\footnote{You can change it with the argument \texttt{nb\_iterations} in functions \texttt{MC} and \texttt{FWH}} with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples were available for inference for each chain by default\footnote{There are \texttt{nb\_iterations}/10 values for each chain. This can be changed with the \texttt{thin} argument of the functions.}.
+
+The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
+
+
+\paragraph{Mean comparisons}
+\label{mean_comp}
+
+In this part, the mean of each entry is compared to the mean of each other entry.
+Let $H_{0}$ and $H_{1}$ denote the hypotheses:
+
+\begin{displaymath}
+  H_{0} : \mu_{ij} \ge \mu_{i'j} , \; H_{1} : \mu_{ij} < \mu_{i'j}.
+\end{displaymath}
+
+The difference $\mu_{ij}-\mu_{i'j}$ between the means of germplasm $i$ and population $i'$ in environment $j$ was considered as significant if either $H_{0}$ or $H_{1}$ had a high posterior probability, that is if $Pr\{H_{0}|y\} > 1 - \alpha$ or $Pr\{H_{1}|y\}> 1 - \alpha$, where
+$\alpha$ was some specified threshold.
+The difference was considered as not significant otherwise.
+The posterior probability of a hypothesis was estimated by the proportion of MCMC simulations for
+which this hypothesis was satisfied (Figure~\ref{proba}).
+
+Groups are made based on the probabilites.
+Germplasms which share the same group are not different.
+Germplasms which do not share the same group are different.
+
+The threshold $\alpha$ that depends on agronomic objectives.
+This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given environnement).
+It corresponded to a `soft' Bonferroni correction, the Bonferroni correction being very conservative.
+
+As one objective of this PPB programme is that farmers (re)learn selection, the threshold could be adjusted to allow the detection of at least two groups instead of having farmers choose at random.
+The initial value could be set to $\alpha=0.1/I$ and if only one group is obtained, then this value could be adjusted to allow the detection of two groups.
+In this cases, the farmers should be informed of the lower degree of confidence that there are significant differences among entries.
+
+\begin{figure}[H]
+\begin{center}
+\begin{pspicture}(10,10)
+\rput[bl](0,0){\includegraphics[width=.6\textwidth]{proba}}
+\rput[b](3,7){$\mu_{ij}$}
+\rput[b](7.5,7){$\mu_{i'j}$}
+\rput[b](3,3){$\mu_{ij} - \mu_{i'j}$}
+\end{pspicture}
+\end{center}
+\caption{Mean comparison between $\mu_{ij}$ (dash line) and $\mu_{i'j}$ (plain line).}
+\label{proba}
+\end{figure}
+
+%% R code to get proba.pdf %%
+%
+%pdf("proba.pdf")
+%
+%par(mfrow=c(2,1),mar=c(3,5,1,1))
+%
+%a = rnorm(100000,10)
+%d <- density(a)
+%plot(d, type='l', xlab="", main="", xlim=c(5,18), lty=2, lwd=3)
+%
+%b = rnorm(100000,12)
+%d <- density(b)
+%lines(d,lty=1, lwd=3)
+%
+%diff = a - b
+%
+%d <- density(diff)
+%plot(d, type='l', xlab="", main="", lty=1, lwd=3)
+%
+%toget = which(d$x>=0)
+%H0x = d$x[toget]
+%H0y = d$y[toget]
+%
+%toget = which(d$x<0)
+%H1x = d$x[toget]
+%H1y = d$y[toget]
+%
+%x <- H0x
+%y <- H0y
+%polygon( c(x,rev(x)), c(rep(0,length(x)),rev(y)), border=NA, col="orange" )
+%
+%x <- H1x
+%y <- H1y
+%polygon( c(x,rev(x)), c(rep(0,length(x)),rev(y)), border=NA, col="darkgreen" )
+%
+%text(-2.5,0.02,"H1", cex=2, col="white")
+%text(0.55,0.02,"H0", cex=2, col="white")
+%
+%dev.off()
+
+In \pack, mean comparisons are done with \texttt{mean\_comparisons}.
+You can choose on which parameters to run the comparison (\texttt{parameter} argument) and the $\alpha$ type one error (\texttt{alpha} argument).
+The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
+More informations on this function by typing \texttt{?mean\_comparisons}.
+
+
+
+\subsection{Decision tree}
+
+For each family of analysis, a decision tree is divided into five categories (Figure \ref{tree}):
 \begin{enumerate}
 \item Family of analysis
 \item Number of plots per location
 \item Number of locations years
-\item Experimental design
+\item Experimental design appropriated
 \item Statistical analysis
 \end{enumerate}
 
-In sections design of experiment and analysis, the branchs of the descision tree concerned are displayed. 
+In sections \ref{doe} regarding design of experiments, the branchs of the decision tree concerned are displayed. 
+Decision tree regarding Family 1 is displayed in Figure \ref{tree_f1}.
+Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 
 \begin{figure}[H]
 \begin{center}
@@ -89,7 +243,7 @@ every node/.append style={scale=0.5},
     
 \node{ \huge \textbf{Family} }
         child { node {Number of plots per location}
-      		child { node {Number of locations years}
+      		child { node {Number of locations and years}
 	      		child { node {Experimental design}
 		      		child { node { Statistical analysis } }
 		      	}
@@ -101,10 +255,8 @@ every node/.append style={scale=0.5},
 \end{center}
 \end{figure}
 
-\subsection{Family 1}
 
-\textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
-
+\begin{figure}[H]
 \begin{center}
 \begin{tikzpicture}[mindmap,
 every node/.style=concept, concept color=teal!40,
@@ -135,13 +287,14 @@ every node/.append style={scale=0.5},
        		}
 		};
 \end{tikzpicture}
+\caption{Decision tree regarding Family 1}
+\label{tree_f1}
 \end{center}
+\end{figure}
 
 
-\subsection{Family 2}
 
-\textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
-
+\begin{figure}[H]
 \begin{center}
 \begin{tikzpicture}[mindmap,
 every node/.style=concept, concept color=teal!40,
@@ -169,17 +322,11 @@ every node/.append style={scale=0.5},
         	}
         };
 \end{tikzpicture}
+\caption{Decision tree regarding Family 2}
+\label{tree_f2}
 \end{center}
+\end{figure}
 
-
-\subsection{Family 3}
-
-\textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
-
-
-\subsection{Family 4}
-
-\textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
 
 %
 %\noindent Table \ref{cases_expe} summarize the different experimental design regarding %analysis.
@@ -217,7 +364,7 @@ every node/.append style={scale=0.5},
 
 \subsection{Workflow and function relations in \pack~regarding agronomic analysis}
 
-After deign the experiment and describe the data, each family of analysis is implemented by several analysis with the same workflow :
+After designing the experiment and describing the data, each family of analysis is implemented by several analysis with the same workflow :
 \begin{enumerate}
 \item Run the model
 \item check the model and visualize outputs
@@ -225,15 +372,9 @@ After deign the experiment and describe the data, each family of analysis is imp
 \end{enumerate}
 Note that for model 2 and GGE other analysis are possible : predict the past and cross validation regarding model 2 and biplot regarding GGE.
 
-\pack~is divided into two sets of functions:
+\pack~is divided into two sets of functions: Main functions and second functions.
+In this vignette, we only used examples with main functions as second functions are called within main functions.
 
-\begin{itemize}
-\item Main functions
-\item Second functions
-\end{itemize}
-
-In this vignette, we only used examples with main functions.
-Nevertheless, second functions could be used in other contexts to answer specific questions.
 Figure~\ref{main_workflow} displays the main functions and their relations.
 Table~\ref{function_descriptions_workflow} describes each of the main functions.
 
@@ -374,139 +515,11 @@ Two other funtions are also in the package:
 
 
 
-\subsection{Frequentist statistics}
-
-!!! TO DO !!!
-
-\subsubsection{Theory}
-
-\subsubsection{Mean comparisons}
-
-\subsection{Bayesian statistics}
-\label{section_bayes}
-
-\subsubsection{Theory}
-
-The analyses performed in \pack~are based on Bayesian statistics.
-
-Bayesian statistics are based on the Bayes theorem:
-
-\begin{displaymath}
-Pr(\theta|y) \propto Pr(\theta) Pr(y|\theta)
-\end{displaymath}
-
-with
-$Pr(\theta|y)$ the posterior,
-$Pr(y|\theta)$ the likelihood and
-$Pr(\theta)$ the prior.
-
-The parameters' distribution, knowing the data (the posterior), is proportional to the distribution \textit{a  priori} (the prior) $\times$ the information brought by the data (the likelihood).
-
-The more information (i.e. the larger the data set and the better the model fits the data), the less the prior would be of importance.
-If the priors equal the posteriors, it means that there is not enough data or the model does not fit the data.
-
-
-Bayesian inference is based on the posterior distribution of model parameters.
-This distribution could not be calculated explicitely for the hierarchical model used in here (see section~\ref{section_model1} and section~\ref{section_model2}) but could be estimated using Markov Chain and Monte Carlo (MCMC) methods.
-
-These methods simulate values of model parameters according to a Markov chain that converges to the posterior distribution of model parameters \citep{robert_bayesian_2001}.
-
-MCMC methods were implemented using \texttt{JAGS} by the \texttt{R} package \texttt{rjags} that performed Gibbs sampling \citep{robert_bayesian_2001}.
-Two MCMC chains were run independently to test for convergence using the Gelman-Rubin test.
-This test was based on the variance within and between the chains \citep{gelman_inference_1992}.
-
-A burn-in and lots of iterations were needed in the MCMC procedure.
-In our case, the burn-in had 1000 iterations, then 100 000 iterations are done by default\footnote{You can change it with the argument \texttt{nb\_iterations} in functions \texttt{MC} and \texttt{FWH}} with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples were available for inference for each chain by default\footnote{There are \texttt{nb\_iterations}/10 values for each chain. This can be changed with the \texttt{thin} argument of the functions.}.
-
-The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
-
-
-\subsubsection{Mean comparisons}
-\label{mean_comp}
-In this part, the mean of each entry is compared to the mean of each other entry.
-Let $H_{0}$ and $H_{1}$ denote the hypotheses:
-
-\begin{displaymath}
-  H_{0} : \mu_{ij} \ge \mu_{i'j} , \; H_{1} : \mu_{ij} < \mu_{i'j}.
-\end{displaymath}
-
-The difference $\mu_{ij}-\mu_{i'j}$ between the means of germplasm $i$ and population $i'$ in environment $j$ was considered as significant if either $H_{0}$ or $H_{1}$ had a high posterior probability, that is if $Pr\{H_{0}|y\} > 1 - \alpha$ or $Pr\{H_{1}|y\}> 1 - \alpha$, where
-$\alpha$ was some specified threshold.
-The difference was considered as not significant otherwise.
-The posterior probability of a hypothesis was estimated by the proportion of MCMC simulations for
-which this hypothesis was satisfied (Figure~\ref{proba}).
-
-Groups are made based on the probabilites.
-Germplasms which share the same group are not different.
-Germplasms which do not share the same group are different.
-
-The threshold $\alpha$ that depends on agronomic objectives.
-This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given environnement).
-It corresponded to a `soft' Bonferroni correction, the Bonferroni correction being very conservative.
-
-As one objective of this PPB programme is that farmers (re)learn selection, the threshold could be adjusted to allow the detection of at least two groups instead of having farmers choose at random.
-The initial value could be set to $\alpha=0.1/I$ and if only one group is obtained, then this value could be adjusted to allow the detection of two groups.
-In this cases, the farmers should be informed of the lower degree of confidence that there are significant differences among entries.
-
-\begin{figure}[H]
-\begin{center}
-\begin{pspicture}(10,10)
-\rput[bl](0,0){\includegraphics[width=.6\textwidth]{proba}}
-\rput[b](3,7){$\mu_{ij}$}
-\rput[b](7.5,7){$\mu_{i'j}$}
-\rput[b](3,3){$\mu_{ij} - \mu_{i'j}$}
-\end{pspicture}
-\end{center}
-\caption{Mean comparison between $\mu_{ij}$ (dash line) and $\mu_{i'j}$ (plain line).}
-\label{proba}
-\end{figure}
-
-%% R code to get proba.pdf %%
-%
-%pdf("proba.pdf")
-%
-%par(mfrow=c(2,1),mar=c(3,5,1,1))
-%
-%a = rnorm(100000,10)
-%d <- density(a)
-%plot(d, type='l', xlab="", main="", xlim=c(5,18), lty=2, lwd=3)
-%
-%b = rnorm(100000,12)
-%d <- density(b)
-%lines(d,lty=1, lwd=3)
-%
-%diff = a - b
-%
-%d <- density(diff)
-%plot(d, type='l', xlab="", main="", lty=1, lwd=3)
-%
-%toget = which(d$x>=0)
-%H0x = d$x[toget]
-%H0y = d$y[toget]
-%
-%toget = which(d$x<0)
-%H1x = d$x[toget]
-%H1y = d$y[toget]
-%
-%x <- H0x
-%y <- H0y
-%polygon( c(x,rev(x)), c(rep(0,length(x)),rev(y)), border=NA, col="orange" )
-%
-%x <- H1x
-%y <- H1y
-%polygon( c(x,rev(x)), c(rep(0,length(x)),rev(y)), border=NA, col="darkgreen" )
-%
-%text(-2.5,0.02,"H1", cex=2, col="white")
-%text(0.55,0.02,"H0", cex=2, col="white")
-%
-%dev.off()
-
-In \pack, mean comparisons are done with \texttt{mean\_comparisons}.
-You can choose on which parameters to run the comparison (\texttt{parameter} argument) and the $\alpha$ type one error (\texttt{alpha} argument).
-The soft Bonferonni correction is applied by default (\texttt{p.adj} argument).
-More informations on this function by typing \texttt{?mean\_comparisons}.
-
-\subsection{data formating}
+\subsection{Data format}
 
 The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables.
+<<message=TRUE,cache=FALSE>>=
+data("data_GxE")
+head(data_GxE)
+@
 
