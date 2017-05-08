@@ -1,19 +1,8 @@
 \section{Design the experiment}
 \label{doe}
 
-Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the space available.
 
-\subsection{Experimental design}
-
-The experimental design is thought in relation to the analysis.
-The key elements to choose an appropriate experimental designs are:
-\begin{itemize}
-\item the number of locations
-\item the number of years
-\item the replication of entries within and between locations
-\end{itemize}
-
-\noindent Function \texttt{design\_experiment} settle experimental design based on :
+Function \texttt{design\_experiment} settle experimental design based on :
 \begin{itemize}
 \item the number of entries
 \item the number of controls per blocks
@@ -30,9 +19,12 @@ The key elements to choose an appropriate experimental designs are:
 \noindent A description of the algorithm is describe in the help of the function: \texttt{?design\_experiment}.
 
 
-\subsubsection{fully-replicated}
+\subsection{fully-replicated}
 \label{fully_replicated}
 
+Decision tree where fully-replicated design are used is displayed in Figure \ref{tree_fully_replicated}.
+
+\begin{figure}[H]
 \begin{center}
 \begin{tikzpicture}[mindmap,
 every node/.style=concept, concept color=teal!40,
@@ -65,8 +57,12 @@ every node/.append style={scale=0.5},
         }
       };
 \end{tikzpicture}
+\caption{Decision tree where fully-replicated design are used}
+\label{tree_fully_replicated}
 \end{center}
+\end{figure}
 
+The \R~code to implement is the following :
 
 <<message=TRUE,cache=FALSE>>=
 p_fr = design_experiment(
@@ -107,8 +103,38 @@ p_fr$"fully-replicated"$design
 
 
 
-\subsubsection{row-column}
+\subsection{row-column}
 \label{row_column}
+
+Decision tree where row-column design are used is displayed in Figure \ref{tree_row_column}.
+
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}[mindmap,
+every node/.style=concept, concept color=teal!40,
+every node/.append style={scale=0.5},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=3cm, sibling distance= 9cm, concept color=green!40, font=\huge, text width=4cm},
+    level 2/.style={level distance=4cm, sibling distance= 4cm, concept color=yellow!40, font=\huge, text width=6cm},
+    level 3/.style={level distance=6cm, concept color=red!40, font=\huge, text width=6cm},
+    level 4/.style={level distance=5cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
+    ]
+    
+\node{ \huge \textbf{Family 1} }
+        child { node {Number of plots per location large}
+      		child { node {One location and one year}
+    	  		child { node {Entries are not replicated; only a control is replicated in rows and columns \\ \textbf{row-colum \\ cf section \ref{row_column}} }
+    	  			child { node {\textbf{Spatial analysis  \\ cf section \ref{spatial_analysis}}} }
+      			}
+        	}
+        };
+\end{tikzpicture}
+\caption{Decision tree where row-column design are used}
+\label{tree_row_column}
+\end{center}
+\end{figure}
+
+The \R~code to implement is the following :
 
 <<message=TRUE,cache=FALSE>>=
 p_case2 = design_experiment(
@@ -135,7 +161,7 @@ The function return an error.
 The controls must catch as much as possible of the trial variation.
 
 
-\subsubsection{Regional and satellite farms}
+\subsection{Regional and satellite farms}
 \label{rf_sf}
 
 Regional farms had several entries (i.e. a germplasm in an environment) in two or more blocks with entries replicated in each block.
@@ -144,6 +170,48 @@ Farmers chose the other entries to be sown that were not replicated.
 The number of entries may vary between farms.
 Note that at least 25 locations or environments (location $\times$ year) are need in order to get confident analysis.
 
+Decision tree where regional and satellite farms design are used is displayed in Figure \ref{tree_rf_sf}.
+
+\begin{figure}[H]
+\begin{center}
+
+\begin{tikzpicture}[mindmap,
+every node/.style=concept, concept color=teal!40,
+every node/.append style={scale=0.5},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=2cm, sibling distance= 9cm, concept color=teal!40, font=\huge, text width=4cm},
+    level 2/.style={level distance=3cm, sibling distance= 9cm, concept color=green!40, font=\huge, text width=4cm},
+    level 3/.style={level distance=4cm, sibling distance= 4cm, concept color=yellow!40, font=\huge, text width=6cm},
+    level 4/.style={level distance=6cm, concept color=red!40, font=\huge, text width=6cm},
+    level 5/.style={level distance=5cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
+    ]
+    
+\node{ \huge \textbf{Analysis} }
+      child { node {\textbf{Family 1}}
+        child { node {Number of plots per location low}
+       		child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
+        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf section \ref{rf_sf}} }
+	      			child { node {\textbf{model 1 \\ cf section \ref{model_1}}} }
+        		}    	
+       		}
+		    }
+      }
+      child { node {\textbf{Family 2}}
+        child { node {Number of plots per farm low}
+        	child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
+        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf section \ref{rf_sf}} }
+					child { node {\textbf{model 2 \\ cf section \ref{model_2}} }}
+	        	}
+        	}
+        }
+      };
+\end{tikzpicture}
+\caption{Decision tree where regional and satellite farms design are used}
+\label{tree_rf_sf}
+\end{center}
+\end{figure}
+
+The \R~code to implement is the following :
 
 Here, six designs are generated: four for satellite farm and two for regional farm.
 
@@ -264,7 +332,7 @@ For \texttt{expe.type = "regional-farm"}, there is a warning message if controls
 It is better to catch as much as possible of the trial variation.
 If there are less than 2 blocks, an error is returned.
 
-\subsubsection{IBD}
+\subsection{IBD}
 \label{ibd}
 
 Incomplete block design.
