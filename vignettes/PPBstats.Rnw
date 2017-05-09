@@ -116,6 +116,7 @@ Decision tree regarding Family 1 is displayed in Figure \ref{tree_f1}.
 \newpage
 
 \section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
+\label{section_analysis2}
 
 \textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
 Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
@@ -137,12 +138,14 @@ Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 
 
 \section{Family of analysis 3 : effects from family 1 and 2 in a network of farms}
+\label{section_analysis3}
 
 <<child='sections/model_3.Rnw'>>=
 @
 \newpage
 
 \section{Family of analysis 4 : specific research questions on one farm or more}
+\label{section_analysis4}
 
 <<child='sections/migrant_residant.Rnw'>>=
 @
@@ -153,6 +156,8 @@ Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 \newpage
 
 \section{Family of analysis 5 : multivariate analysis}
+\label{section_analysis5}
+
 <<child='sections/multivariate_analysis.Rnw'>>=
 @
 \newpage

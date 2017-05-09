@@ -1,8 +1,8 @@
 PPBstats 0.18 ---------------------------------------
 -----------------------------------------------------
 * update vignette
-  - reorganise introdution of agro
-  - add decision tree
+  - cf #36 : add decision tree + update
+  - reorganise introduction of agro section
 
 
 PPBstats 0.17 ---------------------------------------
