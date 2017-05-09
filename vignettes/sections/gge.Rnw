@@ -3,7 +3,7 @@
 
 \subsubsection{Theory of the model}
 
-The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the location: germplasm and interaction effects are merged.
+The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the location: germplasm and interaction effects are merged \footnote{Note than in \pack, as for AMMI, the PCA is done on germplasm and interaction effects + residuals.}.
 
 The GGE model can be written as followed:
 
