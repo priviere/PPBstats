@@ -12,10 +12,14 @@ The key elements to choose an appropriate experimental designs are:
 \item the replication of entries within and between locations
 \end{itemize}
 
-Several designs used in PPB programmes are presented in section \ref{doe}.
+\noindent Several designs used in PPB programmes are presented in section \ref{doe} and are mentionned in decision tree in section \ref{decision_tree}.
+
+Then, you can sow, note, harvest, measure (see section \ref{section_sow}) ...
 
 
 \subsection{Analysis carried out}
+
+After describing the data (see section \ref{describe_data}), you can run statistical analysis.
 
 Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
 The different effects that can be estimated are:
@@ -76,6 +80,10 @@ Family & Name & Section &
 \label{summary_analysis}
 \end{center}
 \end{table}
+
+
+\noindent Analysis used in PPB programmes are mentionned in decision tree in section \ref{decision_tree}.
+
 
 \subsubsection{Frequentist statistics}
 
@@ -215,6 +223,7 @@ More informations on this function by typing \texttt{?mean\_comparisons}.
 
 
 \subsection{Decision tree}
+\label{decision_tree}
 
 For each family of analysis, a decision tree is divided into five categories (Figure \ref{tree}):
 \begin{enumerate}
@@ -244,8 +253,8 @@ every node/.append style={scale=0.5},
 \node{ \huge \textbf{Family} }
         child { node {Number of plots per location}
       		child { node {Number of locations and years}
-	      		child { node {Experimental design}
-		      		child { node { Statistical analysis } }
+	      		child { node {Experimental design \\ cf section \ref{doe} }
+		      		child { node { Statistical analysis  \\ cf sections \ref{section_analysis1}, \ref{section_analysis2}, \ref{section_analysis3}, \ref{section_analysis4}, \ref{section_analysis5} } }
 		      	}
         	}
         };
