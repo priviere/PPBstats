@@ -52,13 +52,13 @@ $\varepsilon_{ijk}$ & the residuals.\\
 \end{tabular}
 
 
-\item a \textbf{PCA} which analyse deeper the germplasm $\times$ location interaction: 
+\item a \textbf{PCA} which analyse deeper the germplasm $\times$ location interaction : 
 
 \begin{displaymath}
-\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}
+\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} \footnote{Note than in \pack, the PCA is done on $\eta_{i}\nu_{j} + \varepsilon_{ijk}$. The residuals is in the last dimension of the PCA}
 \end{displaymath}
 
-which can also be written:
+which can also be written :
 
 \begin{displaymath}
 \eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})
