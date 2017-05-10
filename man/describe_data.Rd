@@ -20,7 +20,7 @@ The function returns a list with,
  \item A summary of the whole data set
  \item for each variable, a list with :
   \itemize{
-  \item A presence.abscence plot  that represents the presence/abscence matrix of GxE combinaisons. 
+  \item A presence.absence plot  that represents the presence/absence matrix of GxE combinaisons. 
   \item A list with histogram for
    \itemize{
     \item germplasm

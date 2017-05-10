@@ -39,7 +39,7 @@ The function returns a list with
 
 \itemize{
 \item "data.model1": the dataframe used to run model 1
-\item "presence.abscence.matrix": a matrix entry x environment with the number of occurence
+\item "presence.absence.matrix": a matrix entry x environment with the number of occurence
 \item "vec_env_with_no_data": a vector with the environments without data for the given variable
 \item "vec_env_with_no_controls": a vector with the environments with no controls
 \item "data_env_with_no_controls": a dataframe with the data from environments without controls.
