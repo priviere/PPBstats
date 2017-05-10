@@ -71,7 +71,7 @@
 #' \itemize{
 #'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. (See details for more information).
 #'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
-#'  \item model2.presence.abscence.matrix : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
+#'  \item model2.presence.absence.matrix : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 #'  \item data_ggplot a list containing information for ggplot:
 #'  \itemize{
 #'   \item alpha
