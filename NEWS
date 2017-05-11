@@ -1,3 +1,9 @@
+PPBstats 0.19 under progress ------------------------
+-----------------------------------------------------
+* update functions
+  - #50 : get.PPBstats.data.R with the right set of .RData 
+
+
 PPBstats 0.18 ---------------------------------------
 -----------------------------------------------------
 * update vignette
