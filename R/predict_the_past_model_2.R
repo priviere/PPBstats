@@ -33,10 +33,17 @@
 predict_the_past_model_2 = function(
   out_check_model_model_2,
   env = NULL
-)
-{
+) {
+  ## TODO: Ideally, there should be a generic predict_the_past()
+  ## which only has a method for a "check_model_2" object.
+  ## This way is extensible to a future situation where there might be more
+  ## models to which the past can be "predicted" with other methods.
+  ## For the moment, I leave it as it to preserve back-compatibility.
+  
   # 1. Error message ----------  
-  if( attributes(out_check_model_model_2)$PPBstats.object != "check_model_model_2") {  stop("out_check_model_model_2 must come from check_model and model_2.") }
+  if( !inherits(out_check_model_model_2, "check_model_2") ) {
+    stop("out_check_model_model_2 must come from check_model and model_2.")
+  }
   
   w = out_check_model_model_2$model2.presence.abscence.matrix
   MCMC = out_check_model_model_2$MCMC
@@ -88,6 +95,6 @@ predict_the_past_model_2 = function(
     "MCMC" = OUT_MCMC,
     "parameter_statuts" = parameter_statuts
     )
-  attributes(out)$PPBstats.object = "predict_the_past_model_2"
+  class(out) <- c("PPBstats", "predict_the_past_model_2")
   return(out)
 }
