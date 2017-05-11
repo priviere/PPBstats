@@ -40,30 +40,55 @@ parameter_groups = function(
   parameter
 )
 {
+  valid_models <- c("check_model_2", "check_model_GxE")
   # 1. Error message ----------
   if( length(list_out_check_model) <= 1 ) { stop("list_out_check_model must have at least two elements (i.e. two variables).") }
   if( is.null(names(list_out_check_model)) ){ stop("Each element of list_out_check_model must have a name") }
   if( is.element(TRUE, is.element(names(list_out_check_model), "")) ){ stop("Each element of list_out_check_model must have a name") }
   
-  for(i in 1:length(list_out_check_model)) {
-    l = list_out_check_model[[i]]
-    if( !is.element(attributes(l)$PPBstats.object, c("check_model_model_2", "check_model_GxE")) ) {
-      stop("All the element of list_out_check_model must come from check_model with model_2 or GxE. This is not the case with the ", i, " element.")
-    }
+  if (!all(
+    idx <- vapply(list_out_check_model, inherits, TRUE, valid_models)
+  )) {
+    ## some (idx) elements of the list are either not a check_model or not
+    ## a model_2 nor GxE. Pinpoint all of them.
+    mess <- paste(
+      "Element(s)",
+      paste(names(list_out_check_model)[which(idx)], collapse = ", "),
+      "in", substitute(list_out_check_model), "must come from check_model()",
+      "from etiher a model_2() of GxE()."
+    )
+    stop(mess)
   }
   
-  # 2. Get matrix
-  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_GxE" ) { 
-    out = parameter_groups_GxE(list_out_check_model, parameter) 
-    }
+  ## Check that all elements are consistently from the same model (right?)
+  ## Matrix where each column (element in the list) contains the idx of the
+  ## element's class in the position matching valid_models
+  model_classes.idx <- vapply(
+    list_out_check_model,
+    inherits,
+    rep(1,length(valid_models)),
+    valid_models,
+    which = TRUE)
+  rownames(model_classes.idx) <- valid_models
+  all_by_model <- apply(model_classes.idx > 0, 1, all)
+  if (sum(all_by_model) != 1) {
+    ## not all elements are from the same model
+    model.idx <- apply(model_classes.idx > 0, 2, function(x) valid_models[which(x)])
+    print(model.idx)
+    stop("All elements in", substitute(list_out_check_model),
+         "need to come from the same model")
+  }
+  
+  
 
-  if( attributes(list_out_check_model[[1]])$PPBstats.object == "check_model_model_2" ) { 
-    out = parameter_groups_model_2(list_out_check_model, parameter) 
-    }
-  
-  
+  # 2. Get matrix
+  ## function look-up (in the order of valid_models)
+  get_matrix <- 
+    c(parameter_groups_model_2, parameter_groups_GxE)[[which(all_by_model)]]
+  mat <- get_matrix(list_out_check_model, parameter)
+
   # 3. Run the PCA ----------
-  obj.pca = PCA(out, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
+  obj.pca = PCA(mat, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
   
   # 4. Get the clusters ----------  
   # see method here: http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning
@@ -73,7 +98,7 @@ parameter_groups = function(
   
   # 6. Return the outputs ----------
   out = list("obj.pca" = obj.pca, "clust" = list("res.hcpc"= res.hcpc, "clust"=clust))
-  attributes(out)$PPBstats.object = "parameter_groups"
+  class(out) <- c("PPBstats", "parameter_groups")
   
   return(out)
 
