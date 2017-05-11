@@ -125,7 +125,6 @@ GxE = function(
     
     message(gxe_analysis, " model done for ", variable)
     
-    attributes(out)$PPBstats.object = "GxE"
-    
+    class(out) <- c("PPBstats", "fit_model_GxE")
     return(out)
   }
