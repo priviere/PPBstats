@@ -22,13 +22,31 @@ get.PPBstats.data = function()
   }
   
   system(paste("mkdir ", "data_PPBstats"))
-  vec_files = c("comp.mu.RData", "out1.RData", "out.cv.RData", "out.model1.RData", "out.model2_y1.RData", "out.model2_y3.RData", "out1_bis.RData", "out2.RData", "out.model1_bis.RData", "out.model2.RData", "out.model2_y2.RData", "out.predict.the.past.RData")
+  vec_files = c(
+    "c_m2_y1.RData",
+    "model_2_alpha.RData",
+    "out_check_model_1_bis.RData",
+    "out_cross_validation_model_2.RData",
+    "out_model_1.RData",
+    "out_model_2_y2.RData",
+    "c_m2_y2.RData",
+    "model_2_beta.RData",
+    "out_check_model_1.RData",
+    "out_mean_comparisons_model_1_mu.RData",
+    "out_model_2.RData",
+    "out_model_2_y3.RData",
+    "c_m2_y3.RData",
+    "model_2_theta.RData",
+    "out_check_model_2.RData",
+    "out_model_1_bis.RData",
+    "out_model_2_y1.RData"
+    )
   
   setwd("data_PPBstats")
   
   pb <- txtProgressBar(min = 0, max = length(vec_files), style = 3)
   for(i in c(1:length(vec_files))){
-    dl_from_dropbox(vec_files[i], "6qvl515k5484zg4")  
+    dl_from_dropbox(vec_files[i], "6qvl515k5484zg4")
     setTxtProgressBar(pb, i)
   }
   close(pb)
