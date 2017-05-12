@@ -166,13 +166,13 @@ ggplot_mean_comparisons_model_1 = function(
             
             if(attributes(data)$PPBstats.object == "data_env_with_no_controls" |
                attributes(data)$PPBstats.object == "data_env_whose_param_did_not_converge") {
-              p = add_stars_version(dx, data, data_version)
+              p = add_stars_version(dx, data = NULL, data_version)
             }
             
             return(p)
           }
           
-          fun1 = function(x, data){ lapply(x, fun_barplot_version, data) }
+          fun1 = function(x, data){ lapply(x, fun_barplot_version, data, data_version) }
           
           OUT = lapply(d_env_b, fun1, data)
           names(OUT) = names(d_env_b)
