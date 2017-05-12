@@ -443,7 +443,11 @@ Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two ver
 
 Lets' make the plots:
 <<message=TRUE,cache=FALSE>>=
-p_barplot_mu_version = get_ggplot(out_mean_comparisons_model_1_mu, data_version = data_version, ggplot.type = "barplot")
+p_barplot_mu_version = get_ggplot(
+  out_mean_comparisons_model_1_mu, 
+  data_version = data_version, 
+  ggplot.type = "barplot"
+  )
 p_barplot_mu_version$data_mean_comparisons$`env1-1:2010`
 @
 
