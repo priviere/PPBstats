@@ -24,7 +24,6 @@ Depends:
     agricolae,
     factoextra,
     ibd,
-    RCurl,
     bitops
 Suggests: 
     ggmcmc,

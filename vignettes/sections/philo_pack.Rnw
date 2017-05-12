@@ -58,14 +58,7 @@ Then you can load the package :
 library(PPBstats)
 @
 
-and download from internet the data used in this vignette (this is useful to earn lots of time!) :
-
-<<message=FALSE,cache=FALSE,eval=FALSE>>=
-get.PPBstats.data() # not run
-# |=======================================================================| 100%
-# The data are downloaded in ./data_PPBstats/
-# You can now load the data, for example load("./data_PPBstats/out1.Rdata").
-@
+and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \url{https://github.com/priviere/PPBstats/releases}.
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
