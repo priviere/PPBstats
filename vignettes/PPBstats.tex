@@ -82,7 +82,7 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.18}
+\newcommand{\versionnumber}{0.19}
 \newcommand{\PPB}{Participatory Plant Breeding}
 
 
@@ -174,18 +174,7 @@ Then you can load the package :
 \end{kframe}
 \end{knitrout}
 
-and download from internet the data used in this vignette (this is useful to earn lots of time!) :
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{get.PPBstats.data}\hlstd{()} \hlcom{# not run}
-\hlcom{# |=======================================================================| 100%}
-\hlcom{# The data are downloaded in ./data_PPBstats/}
-\hlcom{# You can now load the data, for example load("./data_PPBstats/out1.Rdata").}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \url{https://github.com/priviere/PPBstats/releases}.
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
@@ -863,11 +852,11 @@ By default, the data frame is under a standard format:
 \end{alltt}
 \begin{verbatim}
 ##     location year germplasm block X Y
-## 1 Location-1 2016   germ:12     1 A 1
-## 2 Location-1 2016   germ:13     1 A 2
-## 3 Location-1 2016    germ:7     1 A 3
-## 4 Location-1 2016    germ:3     1 A 4
-## 5 Location-1 2016   germ:15     1 A 5
+## 1 Location-1 2016   germ:10     1 A 1
+## 2 Location-1 2016   germ:12     1 A 2
+## 3 Location-1 2016    germ:2     1 A 3
+## 4 Location-1 2016    germ:8     1 A 4
+## 5 Location-1 2016   germ:16     1 A 5
 ## 6 Location-1 2016    germ:5     1 B 1
 \end{verbatim}
 \end{kframe}
@@ -897,12 +886,12 @@ You can set the format to a SHiNeMaS\footnote{Seeds History and Network Manageme
 \end{alltt}
 \begin{verbatim}
 ##   project sown_year harvested_year        id_seed_lot_sown
-## 1              2016                 germ:8_Location-2_2016
-## 2              2016                germ:20_Location-2_2016
-## 3              2016                 germ:7_Location-2_2016
-## 4              2016                 germ:9_Location-2_2016
-## 5              2016                germ:18_Location-2_2016
-## 6              2016                 germ:3_Location-2_2016
+## 1              2016                 germ:5_Location-2_2016
+## 2              2016                 germ:1_Location-2_2016
+## 3              2016                 germ:2_Location-2_2016
+## 4              2016                germ:19_Location-2_2016
+## 5              2016                germ:10_Location-2_2016
+## 6              2016                germ:18_Location-2_2016
 ##   intra_selection_name etiquette split quantity_sown
 ## 1                                                   
 ## 2                                                   
@@ -929,7 +918,7 @@ You can set the format to a SHiNeMaS\footnote{Seeds History and Network Manageme
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-27-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-26-1} 
 
 }
 
@@ -995,12 +984,12 @@ The \R~code to implement is the following :
 \end{alltt}
 \begin{verbatim}
 ##     location year germplasm block X Y
-## 1 Location-3 2016   germ:11     1 A 1
-## 2 Location-3 2016      toto     1 A 2
-## 3 Location-3 2016    germ:2     1 A 3
-## 4 Location-3 2016   germ:19     1 A 4
-## 5 Location-3 2016    germ:1     1 B 1
-## 6 Location-3 2016    germ:6     1 B 2
+## 1 Location-3 2016   germ:12     1 A 1
+## 2 Location-3 2016   germ:13     1 A 2
+## 3 Location-3 2016   germ:17     1 A 3
+## 4 Location-3 2016      toto     1 A 4
+## 5 Location-3 2016   germ:14     1 B 1
+## 6 Location-3 2016      toto     1 B 2
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1012,7 +1001,7 @@ The \R~code to implement is the following :
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-30-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-29-1} 
 
 }
 
@@ -1140,11 +1129,11 @@ Here, six designs are generated: four for satellite farm and two for regional fa
 
 {\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 2. You can rise nb.controls.per.block.}}
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in rows 4. You can rise nb.controls.per.block.}}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in rows 3. You can rise nb.controls.per.block.}}
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 2. You can rise nb.controls.per.block.}}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in columns 1. You can rise nb.controls.per.block.}}
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in rows 3. You can rise nb.controls.per.block.}}\begin{alltt}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in place\_controls(d, expe.type): Controls are missing in rows 4. You can rise nb.controls.per.block.}}\begin{alltt}
 \hlstd{p_case3_rf2} \hlkwb{=} \hlstd{p_case3_rf2}\hlopt{$}\hlstd{`regional-farms`}\hlopt{$}\hlstd{design}
 \end{alltt}
 \end{kframe}
@@ -1176,7 +1165,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-33-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-32-1} 
 
 }
 
@@ -1187,7 +1176,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-34-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-33-1} 
 
 }
 
@@ -1199,7 +1188,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-35-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-34-1} 
 
 }
 
@@ -1210,7 +1199,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-36-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-35-1} 
 
 }
 
@@ -1222,7 +1211,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-37-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-36-1} 
 
 }
 
@@ -1233,7 +1222,7 @@ Each row beeing a sower width.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-38-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-37-1} 
 
 }
 
@@ -1286,10 +1275,10 @@ There is one block per location.
 ##   germplasm block X Y   location year
 ## 1    germ:1     1 A 1 Location-9 2016
 ## 2    germ:4     2 A 2 Location-9 2016
-## 3    germ:1     3 A 3 Location-9 2016
-## 4    germ:3     4 A 4 Location-9 2016
-## 5    germ:1     5 A 5 Location-9 2016
-## 6    germ:3     6 A 6 Location-9 2016
+## 3    germ:5     3 A 3 Location-9 2016
+## 4    germ:1     4 A 4 Location-9 2016
+## 5    germ:3     5 A 5 Location-9 2016
+## 6    germ:2     6 A 6 Location-9 2016
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1302,7 +1291,7 @@ There is one block per location.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-41-1} 
+{\centering \includegraphics[width=.4\textwidth]{figures/PPBstats_unnamed-chunk-40-1} 
 
 }
 
@@ -1349,7 +1338,7 @@ The function returns a list with,
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-43-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-42-1} 
 
 }
 
@@ -1365,7 +1354,7 @@ The function returns a list with,
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-44-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-43-1} 
 
 }
 
@@ -1395,7 +1384,7 @@ The function returns a list with,
 
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# `stat\_bin()` using `bins = 30`. Pick better value with\\\#\# `binwidth`.}}\end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-45-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-44-1} 
 
 }
 
@@ -1429,7 +1418,7 @@ The function returns a list with,
 \end{verbatim}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-46-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-45-1} 
 
 }
 
@@ -1457,7 +1446,7 @@ The function returns a list with,
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-47-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-46-1} 
 
 }
 
@@ -1831,8 +1820,8 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-56-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-56-2} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-55-1} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-55-2} 
 
 }
 
@@ -1874,7 +1863,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-57-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-56-1} 
 
 }
 
@@ -1906,7 +1895,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-58-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-57-1} 
 
 }
 
@@ -1929,7 +1918,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-59-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-58-1} 
 
 }
 
@@ -1947,7 +1936,7 @@ If the model went well it should be between -2 and 2.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-60-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-59-1} 
 
 }
 
@@ -1998,8 +1987,8 @@ When considering \texttt{p\_out\_check\_model\_1\_bis}, there is no convergence 
 \end{kframe}
 
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-62-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-62-2} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-61-1} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-61-2} 
 
 }
 
@@ -2045,7 +2034,7 @@ It goes pretty well!
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-64-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-63-1} 
 
 }
 
@@ -2288,10 +2277,10 @@ alpha = Imp means that no differences were possible to find.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-74-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-74-2} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-74-3} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-74-4} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-73-1} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-73-2} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-73-3} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-73-4} 
 
 }
 
@@ -2314,7 +2303,7 @@ For \texttt{data\_env\_with\_no\_controls}, only environments where there were n
 
 
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-75-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-74-1} 
 
 }
 
@@ -2365,7 +2354,11 @@ Lets' make the plots:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{p_barplot_mu_version} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(out_mean_comparisons_model_1_mu,} \hlkwc{data_version} \hlstd{= data_version,} \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\hlstd{p_barplot_mu_version} \hlkwb{=} \hlkwd{get_ggplot}\hlstd{(}
+  \hlstd{out_mean_comparisons_model_1_mu,}
+  \hlkwc{data_version} \hlstd{= data_version,}
+  \hlkwc{ggplot.type} \hlstd{=} \hlstr{"barplot"}
+  \hlstd{)}
 \end{alltt}
 
 
@@ -2373,7 +2366,7 @@ Lets' make the plots:
 
 {\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_env\_with\_no\_controls: the following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012.}}
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_env\_with\_no\_controls: no t.test are done as there are not enough observations.}}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in add\_stars\_version(dx, data = NULL, data\_version): : no t.test are done as there are not enough observations.}}
 
 {\ttfamily\noindent\color{warningcolor}{\#\# Warning in FUN(X[[i]], ...): data\_env\_whose\_param\_did\_not\_converge: the following environments in data\_version are not taken: env1-1:2010, env1-2:2010, env1-1:2012, env5:2010.}}
 
@@ -2386,7 +2379,7 @@ Lets' make the plots:
 \end{kframe}
 
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-78-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-77-1} 
 
 }
 
@@ -2426,7 +2419,7 @@ For environments where MCMC did not converge or without environments, it is a \t
 
 
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-79-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-78-1} 
 
 }
 
@@ -2484,10 +2477,10 @@ For each element of the list, there are as many graph as needed with \texttt{nb\
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-81-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-81-2} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-81-3} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-81-4} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-80-1} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-80-2} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-80-3} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-80-4} 
 
 }
 
@@ -2528,10 +2521,10 @@ This plot is useful to look at year effects.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-82-1} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-82-2} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-82-3} 
-\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-82-4} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-81-1} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-81-2} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-81-3} 
+\includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-81-4} 
 
 }
 
@@ -3004,7 +2997,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# `stat\_bin()` using `bins = 30`. Pick better value with\\\#\# `binwidth`.}}\end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-96-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-95-1} 
 
 }
 
@@ -3019,7 +3012,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-97-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-96-1} 
 
 }
 
@@ -3036,7 +3029,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-98-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-97-1} 
 
 }
 
@@ -3060,7 +3053,7 @@ This has to been seen with caution:
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-99-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-98-1} 
 
 }
 
@@ -3076,7 +3069,7 @@ This has to been seen with caution:
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-100-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-99-1} 
 
 }
 
@@ -3141,7 +3134,7 @@ The error I (alpha) and the alpha correction are displayed in the title.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-103-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-102-1} 
 
 }
 
@@ -3164,7 +3157,7 @@ The error I (alpha) and the alpha correction are displayed in the title.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-104-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-103-1} 
 
 }
 
@@ -3236,7 +3229,7 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-108-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-107-1} 
 
 }
 
@@ -3253,7 +3246,7 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-109-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-108-1} 
 
 }
 
@@ -3270,7 +3263,7 @@ Ecovalances are represented in fonction of mean effects by germplasm and locatio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-110-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-109-1} 
 
 }
 
@@ -3393,7 +3386,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-116-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-115-1} 
 
 }
 
@@ -3409,7 +3402,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-117-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-116-1} 
 
 }
 
@@ -3425,7 +3418,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-118-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-117-1} 
 
 }
 
@@ -3443,7 +3436,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-119-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-118-1} 
 
 }
 
@@ -3633,7 +3626,7 @@ See \texttt{?get\_ggplot} for more details on this plot.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-128-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-127-1} 
 
 }
 
@@ -3659,7 +3652,7 @@ The longer the arrow is, the more important is germplasm effect and the more mea
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-129-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-128-1} 
 
 }
 
@@ -3680,7 +3673,7 @@ A high score represents a low stability (i.e. an high entry by location interact
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-130-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-129-1} 
 
 }
 
@@ -3708,7 +3701,7 @@ The higher the value, the highest the discrimitiveness for locations.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-131-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-130-1} 
 
 }
 
@@ -3727,7 +3720,7 @@ The highest the value, the less representative the location.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-132-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-131-1} 
 
 }
 
@@ -3747,7 +3740,7 @@ The highest the score, the more representative the location.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-133-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-132-1} 
 
 }
 
@@ -4092,7 +4085,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-142-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-141-1} 
 
 }
 
@@ -4116,7 +4109,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-143-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-142-1} 
 
 }
 
@@ -4139,7 +4132,7 @@ Once the computation is done, you can visualize the results with \texttt{get\_gg
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-144-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-143-1} 
 
 }
 
@@ -4156,7 +4149,7 @@ If the model went well it should be between -2 and 2.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-145-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-144-1} 
 
 }
 
@@ -4210,7 +4203,7 @@ Let’s have a look at the relation between both values.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-148-1} 
+{\centering \includegraphics[width=.6\textwidth]{figures/PPBstats_unnamed-chunk-147-1} 
 
 }
 
@@ -4300,7 +4293,7 @@ The percentage of confidence (i.e. the probability $H0$: the bias is equal to ze
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-151-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-150-1} 
 
 }
 
@@ -4380,7 +4373,7 @@ For \texttt{ggplot.type = "biplot-alpha-beta"}, the biplot with $\alpha_i$ on th
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-154-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-153-1} 
 
 }
 
@@ -4403,7 +4396,7 @@ For \texttt{ggplot.type = "biplot-alpha-beta"}, the biplot with $\alpha_i$ on th
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-155-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-154-1} 
 
 }
 
@@ -4422,7 +4415,7 @@ A germplasm with an high genetic effect and a low sensitivity to interaction (i.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-156-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-155-1} 
 
 }
 
@@ -4445,7 +4438,7 @@ A germplasm with an high genetic effect and a low sensitivity to interaction (i.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-157-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-156-1} 
 
 }
 
@@ -4559,7 +4552,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-162-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-161-1} 
 
 }
 
@@ -4575,7 +4568,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-163-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-162-1} 
 
 }
 
@@ -4591,7 +4584,7 @@ Visualize outputs with \texttt{get\_ggplot}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-164-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-163-1} 
 
 }
 
@@ -4736,7 +4729,7 @@ And look at the results thanks to the \texttt{factoextra}\footnote{https://githu
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-170-1} 
+{\centering \includegraphics[width=\maxwidth]{figures/PPBstats_unnamed-chunk-169-1} 
 
 }
 

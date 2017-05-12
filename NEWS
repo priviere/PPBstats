@@ -1,10 +1,10 @@
 PPBstats 0.19 under progress ------------------------
 -----------------------------------------------------
 * update functions
-  - #50 : get.PPBstats.data.R with the right set of .RData 
   - #35 : add add_stars_version() in ggplot_mean_comparisons_model_1.R
-
-
+  - #51 ok + update vignette
+  
+  
 PPBstats 0.18 ---------------------------------------
 -----------------------------------------------------
 * update vignette
