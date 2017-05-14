@@ -3,7 +3,7 @@
 #' @description
 #' \code{ggplot_check_model_GxE} returns ggplot from \code{\link{check_model_GxE}}
 #' 
-#' @param out_check_model_GxE outputs from \code{\link{check_model_GxE}} function
+#' @param x outputs from \code{\link{check_model_GxE}} function
 #' 
 #' @details See \code{\link{get_ggplot}}
 #' 
@@ -15,15 +15,15 @@
 #' \item \code{\link{check_model_GxE}}
 #' }
 #' 
-ggplot_check_model_GxE = function(
-  out_check_model,
+plot.check_model_GxE <- function(
+  x,
   nb_parameters_per_plot = 10
 ){
   # Get data ----------
   
-  variable = out_check_model$GxE$info$variable
+  variable = x$GxE$info$variable
   
-  data_ggplot = out_check_model$data_ggplot
+  data_ggplot = x$data_ggplot
   
   data_ggplot_normality = data_ggplot$data_ggplot_residuals$data_ggplot_normality
   data_ggplot_skewness_test = data_ggplot$data_ggplot_residuals$data_ggplot_skewness_test
@@ -32,7 +32,7 @@ ggplot_check_model_GxE = function(
   data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
   data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
   
-  data_ggplot_pca = out_check_model$GxE$PCA
+  data_ggplot_pca = x$GxE$PCA
   
   
   # 1. Normality ----------
