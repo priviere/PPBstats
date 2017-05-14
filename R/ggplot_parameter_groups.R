@@ -3,7 +3,7 @@
 #' @description
 #' \code{ggplot_parameter_groups} returns ggplot from \code{\link{parameter_groups}}
 #' 
-#' @param out_parameter_groups outputs from \code{\link{parameter_groups}} function
+#' @param x outputs from \code{\link{parameter_groups}} function
 #' 
 #' @details See \code{\link{get_ggplot}}
 #' 
@@ -15,10 +15,10 @@
 #' \item \code{\link{parameter_groups}}
 #' }
 #' 
-ggplot_parameter_groups = function(out_parameter_groups){
+plot.parameter_groups <- function(x){
 
-  pca = out_parameter_groups$obj.pca
-  res.hcpc = out_parameter_groups$clust$res.hcpc
+  pca = x$obj.pca
+  res.hcpc = x$clust$res.hcpc
   
   out = list(
     "pca" = list(

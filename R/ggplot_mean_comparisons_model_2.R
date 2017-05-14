@@ -3,7 +3,7 @@
 #' @description
 #' \code{ggplot_mean_comparisons_model_2} returns ggplot from \code{\link{mean_comparisons_model_2}}
 #' 
-#' @param out_mean_comparisons_model_2 outputs from \code{\link{mean_comparisons_model_2}}
+#' @param x, y outputs from \code{\link{mean_comparisons_model_2}}
 #' 
 #' @details See \code{\link{get_ggplot}}
 #' 
@@ -15,20 +15,26 @@
 #' \item \code{\link{mean_comparisons_model_2}}
 #' }
 #'
-ggplot_mean_comparisons_model_2 = function(
-  out_mean_comparisons_model_2,
-  out_mean_comparisons_model_2_bis = NULL,
-  ggplot.type,
+plot.mean_comparisons_model_2 <- function(
+  x,
+  y = NULL,
+  ggplot.type = c("biplot-alpha-beta", "barplot"),
   nb_parameters_per_plot = 10
-){
+) {
   
   # 1. Error message
-  if( is.null(out_mean_comparisons_model_2_bis) & ggplot.type == "biplot-alpha-beta" ) { stop("With ggplot.type = \"biplot-alpha-beta\", out_mean_comparisons_model_2_bis can not be NULL.") }
+  ggplot.type <- match.arg(ggplot.type, several.ok = FALSE)
   
-  if( !is.element(ggplot.type, c("biplot-alpha-beta", "barplot")) ) { stop("ggplot.type must be barplot or biplot-alpha-beta with output from model_2") }
+  if( is.null(y) & ggplot.type == "biplot-alpha-beta" ) {
+    stop("With ggplot.type = \"biplot-alpha-beta\", y can not be NULL.")
+  }
   
-  data_Mpvalue = out_mean_comparisons_model_2$Mpvalue
-  data = out_mean_comparisons_model_2$mean.comparisons
+  if (!is.null(y) && !inherits(y, "mean_comparisons_model_2")) {
+    stop(substitute(y), "must come from PPBstats::check_model from model_2.")
+  }
+  
+  data_Mpvalue = x$Mpvalue
+  data = x$mean.comparisons
   
   if(ggplot.type == "barplot") {  
     data = arrange(data, median)  
@@ -60,7 +66,7 @@ ggplot_mean_comparisons_model_2 = function(
     colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
     colnames(a)[which(colnames(a) == "median")] = "alpha_i"
     
-    b = out_mean_comparisons_model_2_bis$mean.comparisons
+    b = y$mean.comparisons
     test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
     if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
     b$germplasm = gsub("beta", "", b$parameter)

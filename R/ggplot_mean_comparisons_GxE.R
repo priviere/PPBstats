@@ -1,9 +1,9 @@
-#' Get ggplot from mean_comparisons_GxE
+#' Get ggplot from mean_comparisons_model_GxE
 #'
 #' @description
-#' \code{ggplot_mean_comparisons_GxE} returns ggplot from \code{\link{mean_comparisons_GxE}}
+#' \code{ggplot_x} returns ggplot from \code{\link{x}}
 #' 
-#' @param out_mean_comparisons_GxE outputs from \code{\link{mean_comparisons_GxE}}
+#' @param out_x outputs from \code{\link{x}}
 #' 
 #' @details See \code{\link{get_ggplot}}
 #' 
@@ -12,23 +12,21 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{get_ggplot}}, 
-#' \item \code{\link{mean_comparisons_GxE}}
+#' \item \code{\link{x}}
 #' }
 #'
-ggplot_mean_comparisons_GxE = function(
-  mean_comparisons_GxE,
-  ggplot.type = "barplot",
+plot.mean_comparisons_model_GxE <- function(
+  x,
   nb_parameters_per_plot = 10
   ){
   
   # 1. Error message ----------
-  if( !is.element(ggplot.type, c("barplot")) ) { stop("ggplot.type must be barplot with output from GxE.") }
+
+  variable = x$info$variable
   
-  variable = mean_comparisons_GxE$info$variable
-  
-  data_ggplot_LSDbarplot_germplasm = mean_comparisons_GxE$data_ggplot_LSDbarplot_germplasm
-  data_ggplot_LSDbarplot_location = mean_comparisons_GxE$data_ggplot_LSDbarplot_location
-  data_ggplot_LSDbarplot_year = mean_comparisons_GxE$data_ggplot_LSDbarplot_year
+  data_ggplot_LSDbarplot_germplasm = x$data_ggplot_LSDbarplot_germplasm
+  data_ggplot_LSDbarplot_location = x$data_ggplot_LSDbarplot_location
+  data_ggplot_LSDbarplot_year = x$data_ggplot_LSDbarplot_year
   
   # 2. Functions used in the function ----------
   
