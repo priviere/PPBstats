@@ -32,8 +32,16 @@
 #' 
 biplot_GxE = function(out_check_model_GxE){
   
+  ## TODO: Ideally, there should be a generic biplot()
+  ## which only has a method for a "model_GxE" object.
+  ## This way is extensible to a future situation where there might be more
+  ## models to which biplots would be interesting.
+  ## For the moment, I leave it as it to preserve back-compatibility.
+  
   # 1. Error message ----------
-  if( attributes(out_check_model_GxE)$PPBstats.object != "check_model_GxE" ) { stop("data must come from PPBstats::check_model with GxE.") }
+  if( !inherits(out_check_model_GxE, "check_model_GxE") ) {
+    stop("data must come from PPBstats::check_model with GxE.")
+  }
   
   data_interaction = out_check_model_GxE$GxE$ANOVA$interaction_matrix
   
@@ -68,7 +76,7 @@ biplot_GxE = function(out_check_model_GxE){
     "pca" = out_check_model_GxE$GxE$PCA
   )
   
-  attributes(out)$PPBstats.object = "biplot_GxE"
+  class(out) <- c("PPBstats", "biplot_GxE")
   
   return(out)
 }
