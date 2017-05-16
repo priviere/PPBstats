@@ -1,6 +1,8 @@
 PPBstats 0.20 under progress ------------------------
 -----------------------------------------------------
-
+* update functions
+  - ggplot_mean_comparisons_model_1.R
+  - ggplot_mean_comparisons_predict_the_past_model_2.R : cf #34
 
 
 PPBstats 0.19 ---------------------------------------
