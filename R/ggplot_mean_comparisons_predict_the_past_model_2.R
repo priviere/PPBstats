@@ -31,7 +31,23 @@ ggplot_mean_comparisons_predict_the_past_model_2 = function(
   
   attributes(out_mean_comparisons_predict_the_past_model_2)$PPBstats.object = "mean_comparisons_model_1"
   
+  if(ggplot.type == "score" | ggplot.type == "interaction") {
+    ylab = paste(
+      out_mean_comparisons_predict_the_past_model_2$data_mean_comparisons[[1]]$mean.comparisons$entry,
+      " (",
+      out_mean_comparisons_predict_the_past_model_2$data_mean_comparisons[[1]]$mean.comparisons$parameter_statuts,
+      ")", sep = ""
+    )
+    out_mean_comparisons_predict_the_past_model_2$data_mean_comparisons[[1]]$mean.comparisons$entry = ylab
+  }
+  
   out = ggplot_mean_comparisons_model_1(out_mean_comparisons_predict_the_past_model_2, data_version, ggplot.type, nb_parameters_per_plot)
+  
+  if(ggplot.type == "barplot") {
+    p1 = lapply(out$data_mean_comparisons[[1]], function(x){ x + geom_bar(aes(fill = parameter_statuts), stat = "identity") } )
+    out$data_mean_comparisons[[1]] = p1
+  }
+  
   out = out[1]
   
   return(out)
