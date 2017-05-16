@@ -133,13 +133,23 @@ ggplot_mean_comparisons_model_1 = function(
       if(!is.null(data_version)) {
         data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
         data_version$mu = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
+        
+        # check for env
         vec_env = unique(data_version$environment)
         vec_env_to_get = vec_env[is.element(vec_env, names(data))]
         vec_env_not_to_get = vec_env[!is.element(vec_env, names(data))]
         if( length(vec_env_not_to_get) > 0 ){ 
           warning(attributes(data)$PPBstats.object, ": the following environments in data_version are not taken: ", paste(vec_env_not_to_get, collapse = ", "),".") 
-          }
+        }
         
+        # check for entry
+        vec_entry = data_version$germplasm
+        lapply(data, function(x, vec_entry){
+          vec_entry_not_ok = vec_entry[!is.element(vec_entry, x$mean.comparisons$entry)]
+          if( length(vec_entry_not_ok) > 0 ) {  stop("The following entries do not exist in the data: ", paste(vec_entry_not_ok, collapse = ", ") ) }
+          }, vec_entry)
+
+        # If tests OK, lets go
         if( length(vec_env_to_get) == 0 ) { 
           OUT = NULL
           warning(attributes(data)$PPBstats.object, ": there are no environment to display") 
@@ -154,6 +164,7 @@ ggplot_mean_comparisons_model_1 = function(
             x = arrange(x, parameter)
             x$split = add_split_col(x, nb_parameters_per_plot)
             x_split = plyr:::splitter_d(x, .(split))
+            print(x_split)
             return(x_split)
           }
           
