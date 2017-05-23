@@ -19,7 +19,7 @@ plot.mean_comparisons_model_2 <- function(
   x,
   y = NULL,
   ggplot.type = c("biplot-alpha-beta", "barplot"),
-  nb_parameters_per_plot = 10
+  nb_parameters_per_plot = 8
 ) {
   
   # 1. Error message

@@ -309,7 +309,6 @@ plot.PPBstats <- function(
   x, y = NULL,
   data_version = NULL,
   ggplot.type = c("interaction", "barplot", "biplot-alpha-beta", "score"),
-  nb_parameters_per_plot = 8,
   ...
 ) {
   ## common tasks
