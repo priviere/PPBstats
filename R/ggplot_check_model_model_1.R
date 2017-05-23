@@ -17,7 +17,7 @@
 #' 
 plot.check_model_1 <- function(
   x,
-  nb_parameters_per_plot = 10
+  nb_parameters_per_plot = 8
 ){
   # Get data ----------
   data_ggplot = x$data_ggplot

@@ -18,7 +18,7 @@
 #'
 plot.check_model_2 <- function(
   x,
-  nb_parameters_per_plot = 10
+  nb_parameters_per_plot = 8
 ){
   # Get data ----------
   

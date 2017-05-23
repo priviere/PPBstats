@@ -19,7 +19,7 @@ plot.mean_comparisons_predict_the_past_model_2 <- function(
   x,
   data_version = NULL,
   ggplot.type = "interaction",
-  nb_parameters_per_plot = 10
+  nb_parameters_per_plot = 8
 ){
 
   x = list(

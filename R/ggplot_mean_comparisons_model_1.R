@@ -20,7 +20,7 @@ plot.mean_comparisons_model_1 <- function(
   x,
   data_version = NULL,
   ggplot.type = c("interaction", "barplot", "score"),
-  nb_parameters_per_plot = 10
+  nb_parameters_per_plot = 8
   ){
   
   # 1. Error message ----------

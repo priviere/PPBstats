@@ -17,7 +17,7 @@
 #' 
 plot.check_model_GxE <- function(
   x,
-  nb_parameters_per_plot = 10
+  nb_parameters_per_plot = 8
 ){
   # Get data ----------
   
