@@ -332,7 +332,7 @@ For \texttt{expe.type = "regional-farm"}, there is a warning message if controls
 It is better to catch as much as possible of the trial variation.
 If there are less than 2 blocks, an error is returned.
 
-\subsection{IBD}
+\subsection{Incomplete Block Design}
 \label{ibd}
 
 Incomplete block design.
