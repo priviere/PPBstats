@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2014.12.4)  12 MAY 2017 14:59
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2014.12.4)  29 MAY 2017 10:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1237,7 +1237,7 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 3.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-<./figures/warning.png, id=308, 1027.84pt x 855.998pt>
+<./figures/warning.png, id=312, 1027.84pt x 855.998pt>
 File: ./figures/warning.png Graphic file (type png)
 
 <use ./figures/warning.png>
@@ -1283,21 +1283,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--38
 
  []
 
-<./figures/cc-by-nc-sa.png, id=320, 97.0827pt x 33.9669pt>
+<./figures/cc-by-nc-sa.png, id=324, 97.0827pt x 33.9669pt>
 File: ./figures/cc-by-nc-sa.png Graphic file (type png)
 
 <use ./figures/cc-by-nc-sa.png>
 Package pdftex.def Info: ./figures/cc-by-nc-sa.png used on input line 45.
 (pdftex.def)             Requested size: 70.8018pt x 24.77281pt.
 
-<./figures/Logo-RSP.png, id=321, 1127.99016pt x 1140.13152pt>
+<./figures/Logo-RSP.png, id=325, 1127.99016pt x 1140.13152pt>
 File: ./figures/Logo-RSP.png Graphic file (type png)
 
 <use ./figures/Logo-RSP.png>
 Package pdftex.def Info: ./figures/Logo-RSP.png used on input line 52.
 (pdftex.def)             Requested size: 70.8018pt x 71.55379pt.
 
-<./figures/Logo-UMRGV.jpg, id=323, 1277.77374pt x 496.85625pt>
+<./figures/Logo-UMRGV.jpg, id=327, 1277.77374pt x 496.85625pt>
 File: ./figures/Logo-UMRGV.jpg Graphic file (type jpg)
 
 <use ./figures/Logo-UMRGV.jpg>
@@ -1313,7 +1313,7 @@ Non-PDF special ignored!
 Non-PDF special ignored!
 Non-PDF special ignored!{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./
 figures/warning.png> <./figures/cc-by-nc-sa.png>]
-<./figures/Logo-maiage.png, id=340, 301.125pt x 52.195pt>
+<./figures/Logo-maiage.png, id=344, 301.125pt x 52.195pt>
 File: ./figures/Logo-maiage.png Graphic file (type png)
 
 <use ./figures/Logo-maiage.png>
@@ -1330,7 +1330,7 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
 \openout5 = `PPBstats.toc'.
 
 
-<./figures/wheat.JPG, id=431, 2826.56pt x 2119.92pt>
+<./figures/wheat.JPG, id=436, 2826.56pt x 2119.92pt>
 File: ./figures/wheat.JPG Graphic file (type jpg)
  <use ./figures/wheat.JPG>
 Package pdftex.def Info: ./figures/wheat.JPG used on input line 99.
@@ -1345,14 +1345,14 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <24.88> not available
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 131.
 
-Package xcolor Warning: Incompatible color definition on input line 157.
-
-
-Package xcolor Warning: Incompatible color definition on input line 170.
+Package xcolor Warning: Incompatible color definition on input line 166.
 
 [7]
 
-Package xcolor Warning: Incompatible color definition on input line 184.
+Package xcolor Warning: Incompatible color definition on input line 179.
+
+
+Package xcolor Warning: Incompatible color definition on input line 193.
 
 [8]
 Chapter 2.
@@ -1362,31 +1362,29 @@ Chapter 2.
 
 ]
 Chapter 3.
-[11]
-
-LaTeX Warning: Reference `section_model1' on page 12 undefined on input line 33
-9.
-
-
-LaTeX Warning: Reference `section_model2' on page 12 undefined on input line 33
-9.
-
-[12pdfTeX warning (ext4): destination with the same identifier (name{table.3.1}
-) has been already used, duplicate ignored
+[11] [12pdfTeX warning (ext4): destination with the same identifier (name{table
+.3.1}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.340 
+l.356 
       ]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 348.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 348.
- <./figures/proba.pdf, id=523, 505.89pt x 505.89pt>
-File: ./figures/proba.pdf Graphic file (type pdf)
 
-<use ./figures/proba.pdf>
-Package pdftex.def Info: ./figures/proba.pdf used on input line 384.
+LaTeX Warning: Reference `section_model1' on page 13 undefined on input line 35
+9.
+
+
+LaTeX Warning: Reference `section_model2' on page 13 undefined on input line 35
+9.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 368.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 368.
+<./figures/proba.pdf, id=527, 505.89pt x 505.89pt>
+File: ./figures/proba.pdf Graphic file (type pdf)
+ <use ./figures/proba.pdf>
+Package pdftex.def Info: ./figures/proba.pdf used on input line 404.
 (pdftex.def)             Requested size: 283.22162pt x 283.22699pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1399,7 +1397,7 @@ Underfull \vbox (badness 4144) has occurred while \output is active []
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.482 
+l.502 
        <./figures/proba.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -1408,7 +1406,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.519 
+l.539 
       ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -1417,24 +1415,24 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.554 
+l.574 
       ]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 590.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 610.
  [17pdfTeX warning (ext4): destination with the same identifier (name{figure.3.
 4}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.600 \pack
+l.620 \pack
            ~is divided into two sets of functions: Main functions and second...
 ]
-<./figures/PBBstats_function_relations.pdf, id=599, page=1, 845.1575pt x 597.23
+<./figures/PBBstats_function_relations.pdf, id=604, page=1, 845.1575pt x 597.23
 125pt>
 File: ./figures/PBBstats_function_relations.pdf Graphic file (type pdf)
  <use ./figures/PBBstats_function_relations.pdf, page 1>
 Package pdftex.def Info: ./figures/PBBstats_function_relations.pdf, page1 used 
-on input line 614.
+on input line 634.
 (pdftex.def)             Requested size: 472.03123pt x 333.57236pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1444,22 +1442,22 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.654 
+l.674 
        <./figures/PBBstats_function_relations.pdf>]
-<./figures/PBBstats_function_relations.pdf, id=626, page=2, 845.1575pt x 597.23
+<./figures/PBBstats_function_relations.pdf, id=631, page=2, 845.1575pt x 597.23
 125pt>
 File: ./figures/PBBstats_function_relations.pdf Graphic file (type pdf)
  <use ./figures/PBBstats_function_relations.pdf, page 2>
 Package pdftex.def Info: ./figures/PBBstats_function_relations.pdf, page2 used 
-on input line 658.
+on input line 678.
 (pdftex.def)             Requested size: 472.03123pt x 333.57236pt.
 
-<./figures/PBBstats_function_relations.pdf, id=627, page=3, 845.1575pt x 597.23
+<./figures/PBBstats_function_relations.pdf, id=632, page=3, 845.1575pt x 597.23
 125pt>
 File: ./figures/PBBstats_function_relations.pdf Graphic file (type pdf)
  <use ./figures/PBBstats_function_relations.pdf, page 3>
 Package pdftex.def Info: ./figures/PBBstats_function_relations.pdf, page3 used 
-on input line 659.
+on input line 679.
 (pdftex.def)             Requested size: 472.03123pt x 333.57236pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1469,7 +1467,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.664 
+l.684 
       ]
 Overfull \vbox (20.9297pt too high) has occurred while \output is active []
 
@@ -1479,64 +1477,64 @@ Overfull \vbox (20.9297pt too high) has occurred while \output is active []
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.664 
+l.684 
        <./figures/PBBstats_function_relations.pdf> <./figures/PBBstats_function
 _relations.pdf
 
 pdfTeX warning: pdflatex (file ./figures/PBBstats_function_relations.pdf): PDF 
 inclusion: multiple pdfs with page group included in a single page
 >]
-Underfull \hbox (badness 10000) in paragraph at lines 691--691
-[]|\T1/cmr/m/n/10 Get mean com-par-isons from
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 693--693
-[]|\T1/cmr/m/n/10 Get mean com-par-isons from
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 695--695
-[]|\T1/cmr/m/n/10 Get mean com-par-isons from
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 697--697
-[]|\T1/cmr/m/n/10 Get mean com-par-isons from
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 707--707
-[]|\T1/cmr/m/n/10 Get gg-plot from
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 711--711
-[]|\T1/cmr/m/n/10 Get gg-plot from
+[]|\T1/cmr/m/n/10 Get mean com-par-isons from
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 713--713
-[]|\T1/cmr/m/n/10 Get gg-plot from
+[]|\T1/cmr/m/n/10 Get mean com-par-isons from
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 715--715
+[]|\T1/cmr/m/n/10 Get mean com-par-isons from
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 717--717
+[]|\T1/cmr/m/n/10 Get mean com-par-isons from
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 727--727
 []|\T1/cmr/m/n/10 Get gg-plot from
  []
 
 
-Overfull \hbox (26.38785pt too wide) in paragraph at lines 715--715
+Underfull \hbox (badness 10000) in paragraph at lines 731--731
+[]|\T1/cmr/m/n/10 Get gg-plot from
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 733--733
+[]|\T1/cmr/m/n/10 Get gg-plot from
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 735--735
+[]|\T1/cmr/m/n/10 Get gg-plot from
+ []
+
+
+Overfull \hbox (26.38785pt too wide) in paragraph at lines 735--735
 \T1/cmtt/m/n/10 mean_comparisons_predict_the_past_model_2| 
  []
 
 
-Underfull \hbox (badness 3058) in paragraph at lines 719--719
+Underfull \hbox (badness 3058) in paragraph at lines 739--739
 []|\T1/cmr/m/n/10 Get "dis-crim-i-tive-ness vs rep-re-sen-ta-tive-
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 747.
+Package xcolor Warning: Incompatible color definition on input line 767.
 
 
 Underfull \vbox (badness 1242) has occurred while \output is active []
@@ -1546,73 +1544,73 @@ Underfull \vbox (badness 1242) has occurred while \output is active []
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.747 ....969, 0.969}\color{fgcolor}\begin{kframe}
+l.767 ....969, 0.969}\color{fgcolor}\begin{kframe}
                                                   ] [22]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [23]
 
-Package xcolor Warning: Incompatible color definition on input line 834.
+Package xcolor Warning: Incompatible color definition on input line 854.
 
 [24pdfTeX warning (ext4): destination with the same identifier (name{figure.3.7
 }) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.834 ....969, 0.969}\color{fgcolor}\begin{kframe}
+l.854 ....969, 0.969}\color{fgcolor}\begin{kframe}
                                                   ]
 
-Package xcolor Warning: Incompatible color definition on input line 849.
+Package xcolor Warning: Incompatible color definition on input line 869.
 
 
-Underfull \hbox (badness 7685) in paragraph at lines 865--865
+Underfull \hbox (badness 7685) in paragraph at lines 885--885
 [][][]\T1/cmr/m/n/8 Seeds His-tory and Net-work Man-age-ment Sys-tem, see [][]$
 \T1/cmtt/m/n/8 http : / / moulon . inra . fr / index . php / en / tranverse-[]t
 eam /
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 868.
+Package xcolor Warning: Incompatible color definition on input line 888.
 
 
-Package xcolor Warning: Incompatible color definition on input line 883.
+Package xcolor Warning: Incompatible color definition on input line 903.
 
 
-Package xcolor Warning: Incompatible color definition on input line 915.
+Package xcolor Warning: Incompatible color definition on input line 935.
 
-[25] <figures/PPBstats_unnamed-chunk-26-1.pdf, id=686, 505.89pt x 505.89pt>
+[25] <figures/PPBstats_unnamed-chunk-26-1.pdf, id=691, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-26-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-26-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-26-1.pdf used on input 
-line 921.
+line 941.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [26 <./figures/PPBstats_unnamed-chunk-26-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 965.
+Package xcolor Warning: Incompatible color definition on input line 985.
 
 [27pdfTeX warning (ext4): destination with the same identifier (name{figure.3.8
 }) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.977 \end{kframe}
+l.997 \end{kframe}
                   ]
 
-Package xcolor Warning: Incompatible color definition on input line 981.
+Package xcolor Warning: Incompatible color definition on input line 1001.
 
 
-Package xcolor Warning: Incompatible color definition on input line 998.
+Package xcolor Warning: Incompatible color definition on input line 1018.
 
-<figures/PPBstats_unnamed-chunk-29-1.pdf, id=704, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-29-1.pdf, id=709, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-29-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-29-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-29-1.pdf used on input 
-line 1004.
+line 1024.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1625,55 +1623,55 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1069 H
+l.1089 H
         ere, six designs are generated: four for satellite farm and two for ...
 ]
 
-Package xcolor Warning: Incompatible color definition on input line 1072.
+Package xcolor Warning: Incompatible color definition on input line 1092.
 
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 108
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 110
 3.
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 
-Package xcolor Warning: Incompatible color definition on input line 1130.
+Package xcolor Warning: Incompatible color definition on input line 1150.
 
 
-Overfull \hbox (16.09956pt too wide) in paragraph at lines 1130--1131
-[]\T1/cmtt/m/n/10 ## Warning in place_controls(d, expe.type): Controls are miss
-ing in columns 2. You can rise
- []
-
-
-Package xcolor Warning: Incompatible color definition on input line 1132.
-
-
-Overfull \hbox (0.35341pt too wide) in paragraph at lines 1132--1133
-[]\T1/cmtt/m/n/10 ## Warning in place_controls(d, expe.type): Controls are miss
-ing in rows 3. You can rise
- []
-
-
-Package xcolor Warning: Incompatible color definition on input line 1134.
-
-
-Overfull \hbox (16.09956pt too wide) in paragraph at lines 1134--1135
+Overfull \hbox (16.09956pt too wide) in paragraph at lines 1150--1151
 []\T1/cmtt/m/n/10 ## Warning in place_controls(d, expe.type): Controls are miss
 ing in columns 1. You can rise
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 1136.
+Package xcolor Warning: Incompatible color definition on input line 1152.
 
 
-Overfull \hbox (0.35341pt too wide) in paragraph at lines 1136--1136
+Overfull \hbox (0.35341pt too wide) in paragraph at lines 1152--1153
 []\T1/cmtt/m/n/10 ## Warning in place_controls(d, expe.type): Controls are miss
 ing in rows 4. You can rise
  []
 
 
-Underfull \vbox (badness 2050) detected at line 1139
+Package xcolor Warning: Incompatible color definition on input line 1154.
+
+
+Overfull \hbox (16.09956pt too wide) in paragraph at lines 1154--1155
+[]\T1/cmtt/m/n/10 ## Warning in place_controls(d, expe.type): Controls are miss
+ing in columns 2. You can rise
+ []
+
+
+Package xcolor Warning: Incompatible color definition on input line 1156.
+
+
+Overfull \hbox (0.35341pt too wide) in paragraph at lines 1156--1156
+[]\T1/cmtt/m/n/10 ## Warning in place_controls(d, expe.type): Controls are miss
+ing in rows 4. You can rise
+ []
+
+
+Underfull \vbox (badness 2050) detected at line 1159
  []
 
 
@@ -1681,72 +1679,72 @@ Underfull \vbox (badness 1484) has occurred while \output is active []
 
  [30]
 
-Package xcolor Warning: Incompatible color definition on input line 1146.
-
-
 Package xcolor Warning: Incompatible color definition on input line 1166.
 
-<figures/PPBstats_unnamed-chunk-32-1.pdf, id=729, 505.89pt x 505.89pt>
+
+Package xcolor Warning: Incompatible color definition on input line 1186.
+
+<figures/PPBstats_unnamed-chunk-32-1.pdf, id=734, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-32-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-32-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-32-1.pdf used on input 
-line 1168.
+line 1188.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1177.
+Package xcolor Warning: Incompatible color definition on input line 1197.
 
-<figures/PPBstats_unnamed-chunk-33-1.pdf, id=730, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-33-1.pdf, id=735, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-33-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-33-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-33-1.pdf used on input 
-line 1179.
+line 1199.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1189.
+Package xcolor Warning: Incompatible color definition on input line 1209.
 
-<figures/PPBstats_unnamed-chunk-34-1.pdf, id=731, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-34-1.pdf, id=736, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-34-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-34-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-34-1.pdf used on input 
-line 1191.
+line 1211.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1200.
+Package xcolor Warning: Incompatible color definition on input line 1220.
 
-<figures/PPBstats_unnamed-chunk-35-1.pdf, id=732, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-35-1.pdf, id=737, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-35-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-35-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-35-1.pdf used on input 
-line 1202.
+line 1222.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1212.
+Package xcolor Warning: Incompatible color definition on input line 1232.
 
-<figures/PPBstats_unnamed-chunk-36-1.pdf, id=733, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-36-1.pdf, id=738, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-36-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-36-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-36-1.pdf used on input 
-line 1214.
+line 1234.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1223.
+Package xcolor Warning: Incompatible color definition on input line 1243.
 
-<figures/PPBstats_unnamed-chunk-37-1.pdf, id=734, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-37-1.pdf, id=739, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-37-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-37-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-37-1.pdf used on input 
-line 1225.
+line 1245.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1757,101 +1755,101 @@ nk-33-1.pdf> <./figures/PPBstats_unnamed-chunk-34-1.pdf> <./figures/PPBstats_un
 named-chunk-35-1.pdf> <./figures/PPBstats_unnamed-chunk-36-1.pdf> <./figures/PP
 Bstats_unnamed-chunk-37-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1256.
+Package xcolor Warning: Incompatible color definition on input line 1276.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1270.
+Package xcolor Warning: Incompatible color definition on input line 1290.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1288.
+Package xcolor Warning: Incompatible color definition on input line 1308.
 
-<figures/PPBstats_unnamed-chunk-40-1.pdf, id=775, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-40-1.pdf, id=780, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-40-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-40-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-40-1.pdf used on input 
-line 1294.
+line 1314.
 (pdftex.def)             Requested size: 188.8096pt x 188.81284pt.
  [33 <./figures/PPBstats_unnamed-chunk-40-1.pdf>] [34]
 
-Package xcolor Warning: Incompatible color definition on input line 1317.
+Package xcolor Warning: Incompatible color definition on input line 1337.
 
 
-Overfull \hbox (31.84572pt too wide) in paragraph at lines 1319--1319
+Overfull \hbox (31.84572pt too wide) in paragraph at lines 1339--1339
 [][]\T1/cmtt/m/n/10 describe_data_GxE[] []=[] []describe_data[][](data_GxE,[] [
 ]vec_variables[] []=[] []c[][]([][]"y1"[][]),[] []nb_parameters_per_plot[] []=[
 ] []5[][])[][] 
  []
 
 
-Overfull \hbox (73.83546pt too wide) in paragraph at lines 1320--1320
+Overfull \hbox (73.83546pt too wide) in paragraph at lines 1340--1340
 [][]\T1/cmtt/m/n/10 describe_data_model_2[] []=[] []describe_data[][](data_mode
 l_2,[] []vec_variables[] []=[] []c[][]([][]"y1"[][]),[] []nb_parameters_per_plo
 t[] []=[] []5[][])[][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 1335.
+Package xcolor Warning: Incompatible color definition on input line 1355.
 
-<figures/PPBstats_unnamed-chunk-42-1.pdf, id=789, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-42-1.pdf, id=794, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-42-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-42-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-42-1.pdf used on input 
-line 1341.
+line 1361.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1351.
+Package xcolor Warning: Incompatible color definition on input line 1371.
 
-<figures/PPBstats_unnamed-chunk-43-1.pdf, id=790, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-43-1.pdf, id=795, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-43-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-43-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-43-1.pdf used on input 
-line 1357.
+line 1377.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
  [35 <./figures/PPBstats_unnamed-chunk-42-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1372.
+Package xcolor Warning: Incompatible color definition on input line 1392.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1385.
+Package xcolor Warning: Incompatible color definition on input line 1405.
 
-<figures/PPBstats_unnamed-chunk-44-1.pdf, id=801, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-44-1.pdf, id=806, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-44-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-44-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-44-1.pdf used on input 
-line 1387.
+line 1407.
 (pdftex.def)             Requested size: 406.33124pt x 406.3413pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [36 <./figures/PPBstats_unnamed-chunk-43-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1402.
+Package xcolor Warning: Incompatible color definition on input line 1422.
 
-<figures/PPBstats_unnamed-chunk-45-1.pdf, id=817, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-45-1.pdf, id=822, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-45-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-45-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-45-1.pdf used on input 
-line 1421.
+line 1441.
 (pdftex.def)             Requested size: 406.33124pt x 406.3413pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [37 <./figures/PPBstats_unnamed-chunk-44-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1436.
+Package xcolor Warning: Incompatible color definition on input line 1456.
 
-<figures/PPBstats_unnamed-chunk-46-1.pdf, id=828, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-46-1.pdf, id=833, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-46-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-46-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-46-1.pdf used on input 
-line 1449.
+line 1469.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1859,282 +1857,282 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [38 <./figures/PPBstats_unnamed-chunk-45-1.pdf>] [39 <./figures/PPBstats_unnam
 ed-chunk-46-1.pdf>] [40] [41]
 
-LaTeX Warning: Reference `section_model1' on page 42 undefined on input line 14
-93.
+LaTeX Warning: Reference `section_model1' on page 42 undefined on input line 15
+13.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1561.
+Package xcolor Warning: Incompatible color definition on input line 1581.
 
 [42]
 
-Package xcolor Warning: Incompatible color definition on input line 1604.
+Package xcolor Warning: Incompatible color definition on input line 1624.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1631.
+Package xcolor Warning: Incompatible color definition on input line 1651.
 
 [43]
 
-Package xcolor Warning: Incompatible color definition on input line 1694.
+Package xcolor Warning: Incompatible color definition on input line 1714.
 
 [44]
 
-Package xcolor Warning: Incompatible color definition on input line 1728.
+Package xcolor Warning: Incompatible color definition on input line 1748.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1745.
+Package xcolor Warning: Incompatible color definition on input line 1765.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1774.
+Package xcolor Warning: Incompatible color definition on input line 1794.
 
 
-Overfull \hbox (416.73784pt too wide) in paragraph at lines 1779--1779
+Overfull \hbox (416.73784pt too wide) in paragraph at lines 1799--1799
 [][]\T1/cmtt/m/it/10 # The two MCMC of the following parameters do not converge
  thanks to the Gelman-Rubin test : nu, rho, sigma[env2-2:2010]. Therefore, they
  are not present in MCMC output.[][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 1793.
+Package xcolor Warning: Incompatible color definition on input line 1813.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1799.
+Package xcolor Warning: Incompatible color definition on input line 1819.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1801.
+Package xcolor Warning: Incompatible color definition on input line 1821.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1803.
+Package xcolor Warning: Incompatible color definition on input line 1823.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1805.
+Package xcolor Warning: Incompatible color definition on input line 1825.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1807.
+Package xcolor Warning: Incompatible color definition on input line 1827.
 
 [45]
 
-Package xcolor Warning: Incompatible color definition on input line 1816.
+Package xcolor Warning: Incompatible color definition on input line 1836.
 
-<figures/PPBstats_unnamed-chunk-55-1.pdf, id=901, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-55-1.pdf, id=906, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-55-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-55-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-55-1.pdf used on input 
-line 1823.
+line 1843.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
-<figures/PPBstats_unnamed-chunk-55-2.pdf, id=902, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-55-2.pdf, id=907, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-55-2.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-55-2.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-55-2.pdf used on input 
-line 1824.
+line 1844.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 2698) has occurred while \output is active []
 
  [46 <./figures/PPBstats_unnamed-chunk-55-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1834.
+Package xcolor Warning: Incompatible color definition on input line 1854.
 
 [47 <./figures/PPBstats_unnamed-chunk-55-2.pdf>]
-<figures/PPBstats_unnamed-chunk-56-1.pdf, id=921, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-56-1.pdf, id=926, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-56-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-56-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-56-1.pdf used on input 
-line 1866.
+line 1886.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1876.
+Package xcolor Warning: Incompatible color definition on input line 1896.
 
 [48 <./figures/PPBstats_unnamed-chunk-56-1.pdf>]
-<figures/PPBstats_unnamed-chunk-57-1.pdf, id=932, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-57-1.pdf, id=937, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-57-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-57-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-57-1.pdf used on input 
-line 1898.
+line 1918.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1909.
+Package xcolor Warning: Incompatible color definition on input line 1929.
 
 
-Overfull \hbox (15.65211pt too wide) in paragraph at lines 1907--1909
+Overfull \hbox (15.65211pt too wide) in paragraph at lines 1927--1929
 []\T1/cmtt/m/n/10 sigma_j \T1/cmr/m/n/10 : dis-tri-bu-tion of each \T1/cmtt/m/n
 /10 sigma_j\T1/cmr/m/n/10 . There are as many graph as needed with \T1/cmtt/m/n
 /10 nb_parameters_per_plot
  []
 
-<figures/PPBstats_unnamed-chunk-58-1.pdf, id=933, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-58-1.pdf, id=938, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-58-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-58-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-58-1.pdf used on input 
-line 1921.
+line 1941.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
  [49 <./figures/PPBstats_unnamed-chunk-57-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1933.
+Package xcolor Warning: Incompatible color definition on input line 1953.
 
-<figures/PPBstats_unnamed-chunk-59-1.pdf, id=945, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-59-1.pdf, id=950, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-59-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-59-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-59-1.pdf used on input 
-line 1939.
+line 1959.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [50 <./figures/PPBstats_unnamed-chunk-58-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1950.
+Package xcolor Warning: Incompatible color definition on input line 1970.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1965.
+Package xcolor Warning: Incompatible color definition on input line 1985.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1971.
+Package xcolor Warning: Incompatible color definition on input line 1991.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1973.
+Package xcolor Warning: Incompatible color definition on input line 1993.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1975.
+Package xcolor Warning: Incompatible color definition on input line 1995.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1977.
+Package xcolor Warning: Incompatible color definition on input line 1997.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1979.
+Package xcolor Warning: Incompatible color definition on input line 1999.
 
 [51 <./figures/PPBstats_unnamed-chunk-59-1.pdf>]
-<figures/PPBstats_unnamed-chunk-61-1.pdf, id=966, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-61-1.pdf, id=971, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-61-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-61-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-61-1.pdf used on input 
-line 1990.
+line 2010.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
-<figures/PPBstats_unnamed-chunk-61-2.pdf, id=967, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-61-2.pdf, id=972, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-61-2.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-61-2.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-61-2.pdf used on input 
-line 1991.
+line 2011.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [52 <./figures/PPBstats_unnamed-chunk-61-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2004.
+Package xcolor Warning: Incompatible color definition on input line 2024.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2030.
+Package xcolor Warning: Incompatible color definition on input line 2050.
 
-<figures/PPBstats_unnamed-chunk-63-1.pdf, id=977, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-63-1.pdf, id=982, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-63-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-63-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-63-1.pdf used on input 
-line 2037.
+line 2057.
 (pdftex.def)             Requested size: 283.22162pt x 283.22699pt.
  [53 <./figures/PPBstats_unnamed-chunk-61-2.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2058.
+Package xcolor Warning: Incompatible color definition on input line 2078.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2081.
+Package xcolor Warning: Incompatible color definition on input line 2101.
 
 [54 <./figures/PPBstats_unnamed-chunk-63-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2097.
+Package xcolor Warning: Incompatible color definition on input line 2117.
 
 
-Overfull \hbox (47.35344pt too wide) in paragraph at lines 2099--2099
+Overfull \hbox (47.35344pt too wide) in paragraph at lines 2119--2119
 [][]\T1/cmtt/m/n/10 head[][](out_mean_comparisons_model_1_mu[][]$[][]data_mean_
 comparisons[][]$[][]\TS1/cmtt/m/n/10 `\T1/cmtt/m/n/10 env1-1:2010\TS1/cmtt/m/n/
 10 `[][]\T1/cmtt/m/n/10 $[][]mean.comparisons)[][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 2122.
+Package xcolor Warning: Incompatible color definition on input line 2142.
 
 
-Overfull \hbox (21.10985pt too wide) in paragraph at lines 2124--2124
+Overfull \hbox (21.10985pt too wide) in paragraph at lines 2144--2144
 [][]\T1/cmtt/m/n/10 out_mean_comparisons_model_1_mu[][]$[][]data_mean_compariso
 ns[][]$[][]\TS1/cmtt/m/n/10 `\T1/cmtt/m/n/10 env1-1:2010\TS1/cmtt/m/n/10 `[][]\
 T1/cmtt/m/n/10 $[][]Mpvalue[[][]1[][]:[][]3[][],[] []1[][]:[][]3[][]][][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 2143.
+Package xcolor Warning: Incompatible color definition on input line 2163.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2155.
+Package xcolor Warning: Incompatible color definition on input line 2175.
 
 
-Overfull \hbox (35.85088pt too wide) in paragraph at lines 2157--2157
+Overfull \hbox (35.85088pt too wide) in paragraph at lines 2177--2177
 [][]\T1/cmtt/m/n/10 head[][](out_mean_comparisons_model_1_mu[][]$[][]data_env_w
 ith_no_controls[][]$[][]\TS1/cmtt/m/n/10 `\T1/cmtt/m/n/10 env5:2010\TS1/cmtt/m/
 n/10 `[][]\T1/cmtt/m/n/10 $[][]mean.comparisons)[][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 2180.
+Package xcolor Warning: Incompatible color definition on input line 2200.
 
 [55]
 
-Package xcolor Warning: Incompatible color definition on input line 2192.
+Package xcolor Warning: Incompatible color definition on input line 2212.
 
 
-Overfull \hbox (35.85088pt too wide) in paragraph at lines 2194--2194
+Overfull \hbox (35.85088pt too wide) in paragraph at lines 2214--2214
 [][]\T1/cmtt/m/n/10 head[][](out_mean_comparisons_model_1_mu[][]$[][]data_env_w
 ith_no_controls[][]$[][]\TS1/cmtt/m/n/10 `\T1/cmtt/m/n/10 env5:2010\TS1/cmtt/m/
 n/10 `[][]\T1/cmtt/m/n/10 $[][]mean.comparisons)[][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 2234.
+Package xcolor Warning: Incompatible color definition on input line 2254.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2255.
+Package xcolor Warning: Incompatible color definition on input line 2275.
 
-[56] <figures/PPBstats_unnamed-chunk-73-1.pdf, id=1014, 505.89pt x 505.89pt>
+[56] <figures/PPBstats_unnamed-chunk-73-1.pdf, id=1019, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-73-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-73-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-73-1.pdf used on input 
-line 2280.
+line 2300.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-73-2.pdf, id=1015, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-73-2.pdf, id=1020, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-73-2.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-73-2.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-73-2.pdf used on input 
-line 2281.
+line 2301.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-73-3.pdf, id=1016, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-73-3.pdf, id=1021, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-73-3.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-73-3.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-73-3.pdf used on input 
-line 2282.
+line 2302.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-73-4.pdf, id=1017, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-73-4.pdf, id=1022, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-73-4.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-73-4.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-73-4.pdf used on input 
-line 2283.
+line 2303.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -2147,706 +2145,674 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [59 <./figures/PPBstats_unnamed-chunk-73-3.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2294.
+Package xcolor Warning: Incompatible color definition on input line 2314.
 
-<figures/PPBstats_unnamed-chunk-74-1.pdf, id=1045, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-74-1.pdf, id=1050, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-74-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-74-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-74-1.pdf used on input 
-line 2306.
+line 2326.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [60 <./figures/PPBstats_unnamed-chunk-73-4.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2318.
+Package xcolor Warning: Incompatible color definition on input line 2338.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2334.
+Package xcolor Warning: Incompatible color definition on input line 2354.
 
 [61 <./figures/PPBstats_unnamed-chunk-74-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2355.
+Package xcolor Warning: Incompatible color definition on input line 2375.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2365.
+Package xcolor Warning: Incompatible color definition on input line 2385.
 
 
-Overfull \hbox (47.59187pt too wide) in paragraph at lines 2365--2366
+Overfull \hbox (47.59187pt too wide) in paragraph at lines 2385--2386
 []\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): data_mean_comparisons: the fo
 llowing environments in data_version
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 2367.
+Package xcolor Warning: Incompatible color definition on input line 2387.
 
 
-Overfull \hbox (0.35341pt too wide) in paragraph at lines 2367--2368
-[]\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): data_env_with_no_controls: th
-e following environments in
+Overfull \hbox (10.85085pt too wide) in paragraph at lines 2387--2387
+[]\T1/cmtt/m/n/10 ## Error in FUN(X[[i]], ...): The following entries do not ex
+ist in the data: tem-2, tem-2[] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 2369.
+Package xcolor Warning: Incompatible color definition on input line 2392.
 
 
-Overfull \hbox (26.597pt too wide) in paragraph at lines 2369--2370
-[]\T1/cmtt/m/n/10 ## Warning in add_stars_version(dx, data = NULL, data_version
-): : no t.test are done as there
- []
+Package xcolor Warning: Incompatible color definition on input line 2415.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2371.
+Package xcolor Warning: Incompatible color definition on input line 2421.
 
 
-Overfull \hbox (47.59187pt too wide) in paragraph at lines 2371--2372
-[]\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): data_env_whose_param_did_not_
-converge: the following environments
- []
-
-
-Package xcolor Warning: Incompatible color definition on input line 2373.
-
-
-Overfull \hbox (37.09444pt too wide) in paragraph at lines 2373--2373
-[]\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): data_env_whose_param_did_not_
-converge: there are no environment
- []
-
-<figures/PPBstats_unnamed-chunk-77-1.pdf, id=1065, 505.89pt x 505.89pt>
-File: figures/PPBstats_unnamed-chunk-77-1.pdf Graphic file (type pdf)
-
-<use figures/PPBstats_unnamed-chunk-77-1.pdf>
-Package pdftex.def Info: figures/PPBstats_unnamed-chunk-77-1.pdf used on input 
-line 2382.
-(pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [62]
-
-Package xcolor Warning: Incompatible color definition on input line 2410.
-
-<figures/PPBstats_unnamed-chunk-78-1.pdf, id=1071, 505.89pt x 505.89pt>
-File: figures/PPBstats_unnamed-chunk-78-1.pdf Graphic file (type pdf)
-
-<use figures/PPBstats_unnamed-chunk-78-1.pdf>
-Package pdftex.def Info: figures/PPBstats_unnamed-chunk-78-1.pdf used on input 
-line 2422.
-(pdftex.def)             Requested size: 283.22162pt x 283.22699pt.
+Package xcolor Warning: Incompatible color definition on input line 2425.
 
 
 Package xcolor Warning: Incompatible color definition on input line 2431.
 
-[63 <./figures/PPBstats_unnamed-chunk-77-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2456.
+Package xcolor Warning: Incompatible color definition on input line 2449.
 
-<figures/PPBstats_unnamed-chunk-80-1.pdf, id=1082, 505.89pt x 505.89pt>
+[62] <figures/PPBstats_unnamed-chunk-80-1.pdf, id=1077, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-80-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-80-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-80-1.pdf used on input 
-line 2480.
+line 2473.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-80-2.pdf, id=1083, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-80-2.pdf, id=1078, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-80-2.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-80-2.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-80-2.pdf used on input 
-line 2481.
+line 2474.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-80-3.pdf, id=1084, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-80-3.pdf, id=1079, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-80-3.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-80-3.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-80-3.pdf used on input 
-line 2482.
+line 2475.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-80-4.pdf, id=1085, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-80-4.pdf, id=1080, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-80-4.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-80-4.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-80-4.pdf used on input 
-line 2483.
+line 2476.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-Underfull \vbox (badness 5316) has occurred while \output is active []
-
- [64 <./figures/PPBstats_unnamed-chunk-78-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [65 <./figures/PPBstats_unnamed-chunk-80-1.pdf>]
+ [63 <./figures/PPBstats_unnamed-chunk-80-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [66 <./figures/PPBstats_unnamed-chunk-80-2.pdf>]
+ [64 <./figures/PPBstats_unnamed-chunk-80-2.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [67 <./figures/PPBstats_unnamed-chunk-80-3.pdf>]
+ [65 <./figures/PPBstats_unnamed-chunk-80-3.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2500.
+Package xcolor Warning: Incompatible color definition on input line 2493.
 
-[68 <./figures/PPBstats_unnamed-chunk-80-4.pdf>]
-<figures/PPBstats_unnamed-chunk-81-1.pdf, id=1138, 505.89pt x 505.89pt>
+[66 <./figures/PPBstats_unnamed-chunk-80-4.pdf>]
+<figures/PPBstats_unnamed-chunk-81-1.pdf, id=1122, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-81-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-81-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-81-1.pdf used on input 
-line 2524.
+line 2517.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-81-2.pdf, id=1139, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-81-2.pdf, id=1123, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-81-2.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-81-2.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-81-2.pdf used on input 
-line 2525.
+line 2518.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-81-3.pdf, id=1140, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-81-3.pdf, id=1124, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-81-3.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-81-3.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-81-3.pdf used on input 
-line 2526.
+line 2519.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
-<figures/PPBstats_unnamed-chunk-81-4.pdf, id=1141, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-81-4.pdf, id=1125, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-81-4.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-81-4.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-81-4.pdf used on input 
-line 2527.
+line 2520.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [69]
+ [67]
 Overfull \vbox (263.92067pt too high) has occurred while \output is active []
 
 
-[70 <./figures/PPBstats_unnamed-chunk-81-1.pdf> <./figures/PPBstats_unnamed-chu
+[68 <./figures/PPBstats_unnamed-chunk-81-1.pdf> <./figures/PPBstats_unnamed-chu
 nk-81-2.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [71 <./figures/PPBstats_unnamed-chunk-81-3.pdf>] [72 <./figures/PPBstats_unnam
+ [69 <./figures/PPBstats_unnamed-chunk-81-3.pdf>] [70 <./figures/PPBstats_unnam
 ed-chunk-81-4.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 2551.
+Package xcolor Warning: Incompatible color definition on input line 2544.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2590--2591
+[71]
+Underfull \hbox (badness 10000) in paragraph at lines 2584--2585
 
  []
 
-[73]
-Overfull \hbox (24.6728pt too wide) in paragraph at lines 2632--2639
+
+Overfull \hbox (24.6728pt too wide) in paragraph at lines 2626--2633
 [][] 
  []
 
+[72]
 
-Package xcolor Warning: Incompatible color definition on input line 2669.
+Package xcolor Warning: Incompatible color definition on input line 2663.
+
+
+Package xcolor Warning: Incompatible color definition on input line 2686.
 
 
 Package xcolor Warning: Incompatible color definition on input line 2692.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2698.
+Package xcolor Warning: Incompatible color definition on input line 2701.
+
+
+Package xcolor Warning: Incompatible color definition on input line 2718.
+
+[73]
+Underfull \vbox (badness 10000) detected at line 2796
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2796
+ []
 
 [74]
 
-Package xcolor Warning: Incompatible color definition on input line 2707.
+Package xcolor Warning: Incompatible color definition on input line 2800.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2724.
+Package xcolor Warning: Incompatible color definition on input line 2823.
+
+
+Package xcolor Warning: Incompatible color definition on input line 2841.
+
+
+Package xcolor Warning: Incompatible color definition on input line 2860.
 
 [75]
 
-Package xcolor Warning: Incompatible color definition on input line 2806.
+Package xcolor Warning: Incompatible color definition on input line 2872.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2829.
+Package xcolor Warning: Incompatible color definition on input line 2904.
 
 [76]
 
-Package xcolor Warning: Incompatible color definition on input line 2847.
+Package xcolor Warning: Incompatible color definition on input line 2942.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2866.
+Package xcolor Warning: Incompatible color definition on input line 2972.
 
 
-Package xcolor Warning: Incompatible color definition on input line 2878.
-
-
-Package xcolor Warning: Incompatible color definition on input line 2910.
-
-[77]
-
-Package xcolor Warning: Incompatible color definition on input line 2948.
-
-
-Package xcolor Warning: Incompatible color definition on input line 2978.
+Package xcolor Warning: Incompatible color definition on input line 2986.
 
 
 Package xcolor Warning: Incompatible color definition on input line 2992.
 
-
-Package xcolor Warning: Incompatible color definition on input line 2998.
-
-[78] <figures/PPBstats_unnamed-chunk-95-1.pdf, id=1228, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-95-1.pdf, id=1211, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-95-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-95-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-95-1.pdf used on input 
-line 3000.
+line 2994.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Package xcolor Warning: Incompatible color definition on input line 3009.
+ [77]
 
-<figures/PPBstats_unnamed-chunk-96-1.pdf, id=1229, 505.89pt x 505.89pt>
+Package xcolor Warning: Incompatible color definition on input line 3003.
+
+<figures/PPBstats_unnamed-chunk-96-1.pdf, id=1218, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-96-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-96-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-96-1.pdf used on input 
-line 3015.
+line 3009.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [79 <./figures/PPBstats_unnamed-chunk-95-1.pdf>]
+ [78 <./figures/PPBstats_unnamed-chunk-95-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3026.
+Package xcolor Warning: Incompatible color definition on input line 3020.
 
-<figures/PPBstats_unnamed-chunk-97-1.pdf, id=1240, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-97-1.pdf, id=1228, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-97-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-97-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-97-1.pdf used on input 
-line 3032.
+line 3026.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [80 <./figures/PPBstats_unnamed-chunk-96-1.pdf>]
+ [79 <./figures/PPBstats_unnamed-chunk-96-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3050.
+Package xcolor Warning: Incompatible color definition on input line 3044.
 
-<figures/PPBstats_unnamed-chunk-98-1.pdf, id=1251, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-98-1.pdf, id=1240, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-98-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-98-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-98-1.pdf used on input 
-line 3056.
+line 3050.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 4505) has occurred while \output is active []
 
- [81 <./figures/PPBstats_unnamed-chunk-97-1.pdf>]
+ [80 <./figures/PPBstats_unnamed-chunk-97-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3066.
+Package xcolor Warning: Incompatible color definition on input line 3060.
 
-<figures/PPBstats_unnamed-chunk-99-1.pdf, id=1261, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-99-1.pdf, id=1250, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-99-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-99-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-99-1.pdf used on input 
-line 3072.
+line 3066.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [82 <./figures/PPBstats_unnamed-chunk-98-1.pdf>]
+ [81 <./figures/PPBstats_unnamed-chunk-98-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3089.
-
-
-Package xcolor Warning: Incompatible color definition on input line 3108.
+Package xcolor Warning: Incompatible color definition on input line 3083.
 
 
-Overfull \hbox (10.85085pt too wide) in paragraph at lines 3110--3110
+Package xcolor Warning: Incompatible color definition on input line 3102.
+
+
+Overfull \hbox (10.85085pt too wide) in paragraph at lines 3104--3104
 [][]\T1/cmtt/m/n/10 p_out_mean_comparisons_ammi[] []=[] []get_ggplot[][](out_me
 an_comparisons_ammi,[] []ggplot.type[] []=[] []"barplot"[][])[][] 
  []
 
-[83 <./figures/PPBstats_unnamed-chunk-99-1.pdf>]
+[82 <./figures/PPBstats_unnamed-chunk-99-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3124.
+Package xcolor Warning: Incompatible color definition on input line 3118.
 
-<figures/PPBstats_unnamed-chunk-102-1.pdf, id=1283, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-102-1.pdf, id=1272, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-102-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-102-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-102-1.pdf used on input
- line 3137.
+ line 3131.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3147.
+Package xcolor Warning: Incompatible color definition on input line 3141.
 
-[84 <./figures/PPBstats_unnamed-chunk-102-1.pdf>]
-<figures/PPBstats_unnamed-chunk-103-1.pdf, id=1295, 505.89pt x 505.89pt>
+[83 <./figures/PPBstats_unnamed-chunk-102-1.pdf>]
+<figures/PPBstats_unnamed-chunk-103-1.pdf, id=1283, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-103-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-103-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-103-1.pdf used on input
- line 3160.
+ line 3154.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3172.
+Package xcolor Warning: Incompatible color definition on input line 3166.
 
-[85 <./figures/PPBstats_unnamed-chunk-103-1.pdf>]
+[84 <./figures/PPBstats_unnamed-chunk-103-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3195.
-
-
-Package xcolor Warning: Incompatible color definition on input line 3205.
+Package xcolor Warning: Incompatible color definition on input line 3189.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3226.
+Package xcolor Warning: Incompatible color definition on input line 3199.
 
-<figures/PPBstats_unnamed-chunk-107-1.pdf, id=1308, 505.89pt x 505.89pt>
+
+Package xcolor Warning: Incompatible color definition on input line 3220.
+
+<figures/PPBstats_unnamed-chunk-107-1.pdf, id=1296, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-107-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-107-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-107-1.pdf used on input
- line 3232.
+ line 3226.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [86]
+ [85]
 
-Package xcolor Warning: Incompatible color definition on input line 3243.
+Package xcolor Warning: Incompatible color definition on input line 3237.
 
-<figures/PPBstats_unnamed-chunk-108-1.pdf, id=1316, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-108-1.pdf, id=1305, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-108-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-108-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-108-1.pdf used on input
- line 3249.
+ line 3243.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [87 <./figures/PPBstats_unnamed-chunk-107-1.pdf>]
+ [86 <./figures/PPBstats_unnamed-chunk-107-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3260.
+Package xcolor Warning: Incompatible color definition on input line 3254.
 
-<figures/PPBstats_unnamed-chunk-109-1.pdf, id=1328, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-109-1.pdf, id=1317, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-109-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-109-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-109-1.pdf used on input
- line 3266.
+ line 3260.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [88 <./figures/PPBstats_unnamed-chunk-108-1.pdf>]
-Overfull \hbox (13.07756pt too wide) in paragraph at lines 3274--3275
+ [87 <./figures/PPBstats_unnamed-chunk-108-1.pdf>]
+Overfull \hbox (13.07756pt too wide) in paragraph at lines 3268--3269
 []\T1/cmr/m/n/10 Regarding the other el-e-ments of the list, it re-turns \T1/cm
 tt/m/n/10 NULL \T1/cmr/m/n/10 as these vi-su-al-i-sa-tion is only done for \T1/
 cmtt/m/n/10 gxe_analysis
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 3277.
+Package xcolor Warning: Incompatible color definition on input line 3271.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [89 <./figures/PPBstats_unnamed-chunk-109-1.pdf>]
-Overfull \hbox (69.33803pt too wide) in paragraph at lines 3309--3310
+ [88 <./figures/PPBstats_unnamed-chunk-109-1.pdf>]
+Overfull \hbox (69.33803pt too wide) in paragraph at lines 3303--3304
 \T1/cmtt/m/n/10 hcpc-[]hierarchical-[]clustering-[]on-[]principal-[]components-
 []hybrid-[]approach-[]2-[]2-[]unsupervised-[]machine-[]learning$[][] 
  []
 
 
+Package xcolor Warning: Incompatible color definition on input line 3309.
+
+
 Package xcolor Warning: Incompatible color definition on input line 3315.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3321.
+Package xcolor Warning: Incompatible color definition on input line 3320.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3326.
+Package xcolor Warning: Incompatible color definition on input line 3325.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3331.
+Package xcolor Warning: Incompatible color definition on input line 3336.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3342.
+Package xcolor Warning: Incompatible color definition on input line 3362.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3368.
+Package xcolor Warning: Incompatible color definition on input line 3377.
 
-
-Package xcolor Warning: Incompatible color definition on input line 3383.
-
-<figures/PPBstats_unnamed-chunk-115-1.pdf, id=1351, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-115-1.pdf, id=1340, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-115-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-115-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-115-1.pdf used on input
- line 3389.
+ line 3383.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
- [90]
+ [89]
 
-Package xcolor Warning: Incompatible color definition on input line 3399.
+Package xcolor Warning: Incompatible color definition on input line 3393.
 
-<figures/PPBstats_unnamed-chunk-116-1.pdf, id=1359, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-116-1.pdf, id=1348, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-116-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-116-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-116-1.pdf used on input
- line 3405.
+ line 3399.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [91 <./figures/PPBstats_unnamed-chunk-115-1.pdf>]
+ [90 <./figures/PPBstats_unnamed-chunk-115-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3415.
+Package xcolor Warning: Incompatible color definition on input line 3409.
 
-<figures/PPBstats_unnamed-chunk-117-1.pdf, id=1371, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-117-1.pdf, id=1359, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-117-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-117-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-117-1.pdf used on input
- line 3421.
+ line 3415.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [92 <./figures/PPBstats_unnamed-chunk-116-1.pdf>]
+ [91 <./figures/PPBstats_unnamed-chunk-116-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3433.
+Package xcolor Warning: Incompatible color definition on input line 3427.
 
-<figures/PPBstats_unnamed-chunk-118-1.pdf, id=1382, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-118-1.pdf, id=1371, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-118-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-118-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-118-1.pdf used on input
- line 3439.
+ line 3433.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [93 <./figures/PPBstats_unnamed-chunk-117-1.pdf>]
-Overfull \hbox (33.30766pt too wide) in paragraph at lines 3468--3479
+ [92 <./figures/PPBstats_unnamed-chunk-117-1.pdf>] [93 <./figures/PPBstats_unna
+med-chunk-118-1.pdf>]
+Overfull \hbox (33.30766pt too wide) in paragraph at lines 3463--3474
 [][] 
  []
 
 
-Underfull \vbox (badness 3189) has occurred while \output is active []
-
- [94 <./figures/PPBstats_unnamed-chunk-118-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 3480--3481
+Underfull \hbox (badness 10000) in paragraph at lines 3475--3476
 
  []
 
 
-Overfull \hbox (11.1819pt too wide) in paragraph at lines 3510--3512
+Overfull \hbox (11.1819pt too wide) in paragraph at lines 3505--3507
 \T1/cmr/m/n/10 For GGE anal-y-sis, ev-ery-thing is ex-actly the same than for A
 MMI anal-y-sis ex-cept you should set-tle \T1/cmtt/m/n/10 gxe_analysis
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 3527.
+Package xcolor Warning: Incompatible color definition on input line 3522.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3533.
+Package xcolor Warning: Incompatible color definition on input line 3528.
+
+[94]
+
+Package xcolor Warning: Incompatible color definition on input line 3535.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3540.
+Package xcolor Warning: Incompatible color definition on input line 3544.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3549.
-
-[95]
-
-Package xcolor Warning: Incompatible color definition on input line 3560.
+Package xcolor Warning: Incompatible color definition on input line 3555.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3569.
+Package xcolor Warning: Incompatible color definition on input line 3564.
 
 
-Overfull \hbox (0.35341pt too wide) in paragraph at lines 3571--3571
+Overfull \hbox (0.35341pt too wide) in paragraph at lines 3566--3566
 [][]\T1/cmtt/m/n/10 p_out_mean_comparisons_gge[] []=[] []get_ggplot[][](out_mea
 n_comparisons_gge,[] []ggplot.type[] []=[] []"barplot"[][])[][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 3580.
+Package xcolor Warning: Incompatible color definition on input line 3575.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3589.
+Package xcolor Warning: Incompatible color definition on input line 3584.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3605.
+Package xcolor Warning: Incompatible color definition on input line 3600.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3623.
+Package xcolor Warning: Incompatible color definition on input line 3618.
 
-<figures/PPBstats_unnamed-chunk-127-1.pdf, id=1426, 505.89pt x 505.89pt>
+[95] <figures/PPBstats_unnamed-chunk-127-1.pdf, id=1427, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-127-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-127-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-127-1.pdf used on input
- line 3629.
+ line 3624.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
- [96]
 
-Package xcolor Warning: Incompatible color definition on input line 3649.
 
-<figures/PPBstats_unnamed-chunk-128-1.pdf, id=1439, 505.89pt x 505.89pt>
+Package xcolor Warning: Incompatible color definition on input line 3644.
+
+<figures/PPBstats_unnamed-chunk-128-1.pdf, id=1428, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-128-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-128-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-128-1.pdf used on input
- line 3655.
+ line 3650.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 7326) has occurred while \output is active []
 
- [97 <./figures/PPBstats_unnamed-chunk-127-1.pdf>]
+ [96 <./figures/PPBstats_unnamed-chunk-127-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3670.
+Package xcolor Warning: Incompatible color definition on input line 3665.
 
-<figures/PPBstats_unnamed-chunk-129-1.pdf, id=1451, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-129-1.pdf, id=1439, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-129-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-129-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-129-1.pdf used on input
- line 3676.
+ line 3671.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [98 <./figures/PPBstats_unnamed-chunk-128-1.pdf>]
+ [97 <./figures/PPBstats_unnamed-chunk-128-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3698.
+Package xcolor Warning: Incompatible color definition on input line 3693.
 
-<figures/PPBstats_unnamed-chunk-130-1.pdf, id=1467, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-130-1.pdf, id=1456, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-130-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-130-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-130-1.pdf used on input
- line 3704.
+ line 3699.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [99 <./figures/PPBstats_unnamed-chunk-129-1.pdf>]
+ [98 <./figures/PPBstats_unnamed-chunk-129-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3717.
+Package xcolor Warning: Incompatible color definition on input line 3712.
 
-<figures/PPBstats_unnamed-chunk-131-1.pdf, id=1483, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-131-1.pdf, id=1472, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-131-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-131-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-131-1.pdf used on input
- line 3723.
+ line 3718.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [100 <./figures/PPBstats_unnamed-chunk-130-1.pdf>]
+ [99 <./figures/PPBstats_unnamed-chunk-130-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3737.
+Package xcolor Warning: Incompatible color definition on input line 3732.
 
 
-Overfull \hbox (15.86113pt too wide) in paragraph at lines 3739--3739
+Overfull \hbox (15.86113pt too wide) in paragraph at lines 3734--3734
 [][]\T1/cmtt/m/n/10 biplot[][]$[][]discrimitiveness_vs_representativeness[][]$[
 ][]discrimitiveness_vs_representativeness[][] 
  []
 
-<figures/PPBstats_unnamed-chunk-132-1.pdf, id=1499, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-132-1.pdf, id=1488, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-132-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-132-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-132-1.pdf used on input
- line 3743.
+ line 3738.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [101 <./figures/PPBstats_unnamed-chunk-131-1.pdf>]
+ [100 <./figures/PPBstats_unnamed-chunk-131-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3760.
+Package xcolor Warning: Incompatible color definition on input line 3755.
+
+
+Package xcolor Warning: Incompatible color definition on input line 3762.
 
 
 Package xcolor Warning: Incompatible color definition on input line 3767.
 
 
-Package xcolor Warning: Incompatible color definition on input line 3772.
-
-
-Overfull \hbox (122.80962pt too wide) in paragraph at lines 3777--3777
+Overfull \hbox (122.80962pt too wide) in paragraph at lines 3772--3772
 [][]\T1/cmtt/m/it/10 # Then run the function for germplasm. It can also be done
  on location or year if there are year in the data set.[][] 
  []
 
-[102 <./figures/PPBstats_unnamed-chunk-132-1.pdf>]
+[101 <./figures/PPBstats_unnamed-chunk-132-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 3788.
+Package xcolor Warning: Incompatible color definition on input line 3783.
 
-[103]
+[102] [103]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 3799.
+(Font)              <12> on input line 3801.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 3799.
+(hyperref)                removing `math shift' on input line 3801.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\times' on input line 3799.
+(hyperref)                removing `\times' on input line 3801.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 3799.
+(hyperref)                removing `math shift' on input line 3801.
 
 
 LaTeX Warning: Reference `section_model2' on page 104 undefined on input line 3
-803.
+805.
 
 
 Package natbib Warning: Citation `gelman__2006' on page 104 undefined on input 
-line 3865.
+line 3867.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3864--3867
+Underfull \hbox (badness 10000) in paragraph at lines 3866--3869
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3868--3869
+Underfull \hbox (badness 10000) in paragraph at lines 3870--3871
 
  []
 
 
 LaTeX Warning: Reference `function_relations' on page 104 undefined on input li
-ne 3888.
+ne 3890.
 
 [104]
 
-Package xcolor Warning: Incompatible color definition on input line 3904.
+Package xcolor Warning: Incompatible color definition on input line 3906.
 
 ! Too many }'s.
-l.3930 To run model\_2}
+l.3932 To run model\_2}
                         on the dataset, used the function \texttt{model\_2}.
 You've closed more groups than you opened.
 Such booboos are generally harmless, so keep going.
 
 
-Overfull \hbox (62.83794pt too wide) in paragraph at lines 3934--3943
+Overfull \hbox (62.83794pt too wide) in paragraph at lines 3936--3945
 \T1/cmtt/m/n/10 TRUE\T1/cmr/m/n/10 ), $\OML/cmm/m/it/10 ^^L[]$ \T1/cmr/m/n/10 (
 \T1/cmtt/m/n/10 return.beta = TRUE\T1/cmr/m/n/10 ), $\OML/cmm/m/it/10 ^^[[]$ \T
 1/cmr/m/n/10 (\T1/cmtt/m/n/10 return.sigma_beta = TRUE\T1/cmr/m/n/10 ), $\OML/c
@@ -2856,24 +2822,21 @@ heta
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 3949.
+Package xcolor Warning: Incompatible color definition on input line 3951.
 
 [105]
 
-Package xcolor Warning: Incompatible color definition on input line 3992.
+Package xcolor Warning: Incompatible color definition on input line 3994.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4011.
+Package xcolor Warning: Incompatible color definition on input line 4013.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4028.
+Package xcolor Warning: Incompatible color definition on input line 4030.
 
 [106]
 
-Package xcolor Warning: Incompatible color definition on input line 4056.
-
-
-Package xcolor Warning: Incompatible color definition on input line 4062.
+Package xcolor Warning: Incompatible color definition on input line 4058.
 
 
 Package xcolor Warning: Incompatible color definition on input line 4064.
@@ -2882,87 +2845,90 @@ Package xcolor Warning: Incompatible color definition on input line 4064.
 Package xcolor Warning: Incompatible color definition on input line 4066.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4074.
+Package xcolor Warning: Incompatible color definition on input line 4068.
 
 
-Overfull \hbox (13.34712pt too wide) in paragraph at lines 4072--4074
+Package xcolor Warning: Incompatible color definition on input line 4076.
+
+
+Overfull \hbox (13.34712pt too wide) in paragraph at lines 4074--4076
 []\T1/cmtt/m/n/10 alpha_i \T1/cmr/m/n/10 : dis-tri-bu-tion of each al-pha_i. Th
 ere are as many graph as needed with \T1/cmtt/m/n/10 nb_parameters_per_plot
  []
 
-<figures/PPBstats_unnamed-chunk-141-1.pdf, id=1572, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-141-1.pdf, id=1565, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-141-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-141-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-141-1.pdf used on input
- line 4088.
+ line 4090.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [107]
 
-Package xcolor Warning: Incompatible color definition on input line 4098.
+Package xcolor Warning: Incompatible color definition on input line 4100.
 
 
-Overfull \hbox (3.37733pt too wide) in paragraph at lines 4096--4098
+Overfull \hbox (3.37733pt too wide) in paragraph at lines 4098--4100
 []\T1/cmtt/m/n/10 beta_i \T1/cmr/m/n/10 : dis-tri-bu-tion of each beta_i. There
  are as many graph as needed with \T1/cmtt/m/n/10 nb_parameters_per_plot
  []
 
-<figures/PPBstats_unnamed-chunk-142-1.pdf, id=1578, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-142-1.pdf, id=1571, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-142-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-142-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-142-1.pdf used on input
- line 4112.
+ line 4114.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [108 <./figures/PPBstats_unnamed-chunk-141-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4122.
+Package xcolor Warning: Incompatible color definition on input line 4124.
 
 
-Overfull \hbox (12.51399pt too wide) in paragraph at lines 4120--4122
+Overfull \hbox (12.51399pt too wide) in paragraph at lines 4122--4124
 []\T1/cmtt/m/n/10 theta_j \T1/cmr/m/n/10 : dis-tri-bu-tion of each theta_j. The
 re are as many graph as needed with \T1/cmtt/m/n/10 nb_parameters_per_plot
  []
 
-<figures/PPBstats_unnamed-chunk-143-1.pdf, id=1589, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-143-1.pdf, id=1582, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-143-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-143-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-143-1.pdf used on input
- line 4135.
+ line 4137.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [109 <./figures/PPBstats_unnamed-chunk-142-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4146.
+Package xcolor Warning: Incompatible color definition on input line 4148.
 
-<figures/PPBstats_unnamed-chunk-144-1.pdf, id=1601, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-144-1.pdf, id=1594, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-144-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-144-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-144-1.pdf used on input
- line 4152.
+ line 4154.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [110 <./figures/PPBstats_unnamed-chunk-143-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4164.
+Package xcolor Warning: Incompatible color definition on input line 4166.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4180.
+Package xcolor Warning: Incompatible color definition on input line 4182.
 
 
-Overfull \hbox (68.58675pt too wide) in paragraph at lines 4190--4190
+Overfull \hbox (68.58675pt too wide) in paragraph at lines 4192--4192
 [][]\T1/cmtt/m/n/10 check_data[] []=[] []cbind.data.frame[][]([][]alpha_i[] []=
  alpha_i,[] []alpha_i_estimated[] []= alpha_i_estimated[[][]names[][](alpha_i)]
 )[][] 
@@ -2970,69 +2936,69 @@ Overfull \hbox (68.58675pt too wide) in paragraph at lines 4190--4190
 
 [111 <./figures/PPBstats_unnamed-chunk-144-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4199.
+Package xcolor Warning: Incompatible color definition on input line 4201.
 
-<figures/PPBstats_unnamed-chunk-147-1.pdf, id=1622, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-147-1.pdf, id=1615, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-147-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-147-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-147-1.pdf used on input
- line 4206.
+ line 4208.
 (pdftex.def)             Requested size: 283.22162pt x 283.22699pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4237.
+Package xcolor Warning: Incompatible color definition on input line 4239.
 
 
-Overfull \hbox (38.83012pt too wide) in paragraph at lines 4239--4239
+Overfull \hbox (38.83012pt too wide) in paragraph at lines 4241--4241
 [][]\T1/cmtt/m/it/10 # out_cross_validation_model_2 = cross_validation_model_2(
 data_model_2, "y1", nb_iterations = 10)[][] 
  []
 
 [112 <./figures/PPBstats_unnamed-chunk-147-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4259.
+Package xcolor Warning: Incompatible color definition on input line 4261.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4290.
+Package xcolor Warning: Incompatible color definition on input line 4292.
 
-<figures/PPBstats_unnamed-chunk-150-1.pdf, id=1636, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-150-1.pdf, id=1629, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-150-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-150-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-150-1.pdf used on input
- line 4296.
+ line 4298.
 (pdftex.def)             Requested size: 447.0312pt x 447.03719pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [113]
 
-Package xcolor Warning: Incompatible color definition on input line 4306.
+Package xcolor Warning: Incompatible color definition on input line 4308.
 
 
-Overfull \hbox (4.35857pt too wide) in paragraph at lines 4318--4318
+Overfull \hbox (4.35857pt too wide) in paragraph at lines 4320--4320
 []\T1/cmtt/m/n/10 ## lm(formula = observed.value ~ estimated.value, data = out_
 cross_validation_model_2)[] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 4333.
+Package xcolor Warning: Incompatible color definition on input line 4335.
 
 [114 <./figures/PPBstats_unnamed-chunk-150-1.pdf>]
-Overfull \hbox (2.0891pt too wide) in paragraph at lines 4336--4336
+Overfull \hbox (2.0891pt too wide) in paragraph at lines 4338--4338
 [][]\T1/cmtt/m/it/10 # model_2_beta = mean_comparisons(out_check_model_2, param
 eter = "beta", precision = 0.05)[][] 
  []
 
 
-Overfull \hbox (12.58653pt too wide) in paragraph at lines 4337--4337
+Overfull \hbox (12.58653pt too wide) in paragraph at lines 4339--4339
 [][]\T1/cmtt/m/it/10 # model_2_theta = mean_comparisons(out_check_model_2, para
 meter = "theta", precision = 0.05)[][] 
  []
 
 ! Undefined control sequence.
-l.4352 ...re as many graph as needed with \textttt
+l.4354 ...re as many graph as needed with \textttt
                                                   {nb\_parameters\_per\_plot...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3041,299 +3007,275 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4362.
+Package xcolor Warning: Incompatible color definition on input line 4364.
 
-<figures/PPBstats_unnamed-chunk-153-1.pdf, id=1656, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-153-1.pdf, id=1649, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-153-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-153-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-153-1.pdf used on input
- line 4376.
+ line 4378.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4385.
+Package xcolor Warning: Incompatible color definition on input line 4387.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [115]
-<figures/PPBstats_unnamed-chunk-154-1.pdf, id=1663, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-154-1.pdf, id=1656, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-154-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-154-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-154-1.pdf used on input
- line 4399.
+ line 4401.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [116 <./figures/PPBstats_unnamed-chunk-153-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4411.
+Package xcolor Warning: Incompatible color definition on input line 4413.
 
-<figures/PPBstats_unnamed-chunk-155-1.pdf, id=1674, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-155-1.pdf, id=1666, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-155-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-155-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-155-1.pdf used on input
- line 4418.
+ line 4420.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4428.
+Package xcolor Warning: Incompatible color definition on input line 4430.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [117 <./figures/PPBstats_unnamed-chunk-154-1.pdf>]
-<figures/PPBstats_unnamed-chunk-156-1.pdf, id=1684, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-156-1.pdf, id=1677, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-156-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-156-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-156-1.pdf used on input
- line 4441.
+ line 4443.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [118 <./figures/PPBstats_unnamed-chunk-155-1.pdf>]
-Overfull \hbox (69.33803pt too wide) in paragraph at lines 4459--4460
+Overfull \hbox (69.33803pt too wide) in paragraph at lines 4461--4462
 \T1/cmtt/m/n/10 hcpc-[]hierarchical-[]clustering-[]on-[]principal-[]components-
 []hybrid-[]approach-[]2-[]2-[]unsupervised-[]machine-[]learning$[][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 4466.
+Package xcolor Warning: Incompatible color definition on input line 4468.
 
 [119 <./figures/PPBstats_unnamed-chunk-156-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4482.
+Package xcolor Warning: Incompatible color definition on input line 4484.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4507.
+Package xcolor Warning: Incompatible color definition on input line 4509.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4533.
+Package xcolor Warning: Incompatible color definition on input line 4535.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4549.
+Package xcolor Warning: Incompatible color definition on input line 4551.
 
-<figures/PPBstats_unnamed-chunk-161-1.pdf, id=1706, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-161-1.pdf, id=1699, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-161-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-161-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-161-1.pdf used on input
- line 4555.
+ line 4557.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 1661) has occurred while \output is active []
 
  [120]
 
-Package xcolor Warning: Incompatible color definition on input line 4565.
+Package xcolor Warning: Incompatible color definition on input line 4567.
 
-<figures/PPBstats_unnamed-chunk-162-1.pdf, id=1712, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-162-1.pdf, id=1705, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-162-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-162-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-162-1.pdf used on input
- line 4571.
+ line 4573.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [121 <./figures/PPBstats_unnamed-chunk-161-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4581.
+Package xcolor Warning: Incompatible color definition on input line 4583.
 
-<figures/PPBstats_unnamed-chunk-163-1.pdf, id=1724, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-163-1.pdf, id=1717, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-163-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-163-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-163-1.pdf used on input
- line 4587.
+ line 4589.
 (pdftex.def)             Requested size: 425.0312pt x 425.03732pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [122 <./figures/PPBstats_unnamed-chunk-162-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 4599.
+Package xcolor Warning: Incompatible color definition on input line 4601.
 
 
 LaTeX Warning: Reference `section_model1' on page 123 undefined on input line 4
-611.
+613.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4621.
+Package xcolor Warning: Incompatible color definition on input line 4623.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4631.
-
-
-Package xcolor Warning: Incompatible color definition on input line 4642.
-
-
-Overfull \hbox (47.59187pt too wide) in paragraph at lines 4642--4643
-[]\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): data_mean_comparisons: the fo
-llowing environments in data_version
- []
+Package xcolor Warning: Incompatible color definition on input line 4633.
 
 
 Package xcolor Warning: Incompatible color definition on input line 4644.
 
 
-Overfull \hbox (10.85085pt too wide) in paragraph at lines 4644--4645
-[]\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): data_mean_comparisons: there 
-are no environment to display[] 
+Overfull \hbox (47.59187pt too wide) in paragraph at lines 4644--4645
+[]\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): data_mean_comparisons: the fo
+llowing environments in data_version
  []
 
 
 Package xcolor Warning: Incompatible color definition on input line 4646.
 
 
-Overfull \hbox (16.09956pt too wide) in paragraph at lines 4646--4647
-[]\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): : the following environments 
-in data_version are not taken:
+Overfull \hbox (16.09956pt too wide) in paragraph at lines 4646--4646
+[]\T1/cmtt/m/n/10 ## Error in FUN(X[[i]], ...): The following entries do not ex
+ist in the data: tem-1, tem-2,
  []
 
+[123 <./figures/PPBstats_unnamed-chunk-163-1.pdf>] [124] [125] [126]
 
-Package xcolor Warning: Incompatible color definition on input line 4648.
-
-
-Package xcolor Warning: Incompatible color definition on input line 4650.
+Package xcolor Warning: Incompatible color definition on input line 4689.
 
 
-Overfull \hbox (16.09956pt too wide) in paragraph at lines 4650--4651
-[]\T1/cmtt/m/n/10 ## Warning in FUN(X[[i]], ...): : the following environments 
-in data_version are not taken:
- []
+Package xcolor Warning: Incompatible color definition on input line 4702.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4652.
-
-[123 <./figures/PPBstats_unnamed-chunk-163-1.pdf>] [124] [125] [126] [127]
-
-Package xcolor Warning: Incompatible color definition on input line 4703.
+Package xcolor Warning: Incompatible color definition on input line 4712.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4716.
-
-
-Package xcolor Warning: Incompatible color definition on input line 4726.
-
-
-Overfull \hbox (5.60213pt too wide) in paragraph at lines 4728--4728
+Overfull \hbox (5.60213pt too wide) in paragraph at lines 4714--4714
 [][]\T1/cmtt/m/n/10 fviz_pca_ind[][](res.pca,[] []label[][]=[][]"none"[][],[] [
 ]habillage[][]=[][]"year"[][],[] []addEllipses[][]=[][]TRUE[][],[] []ellipse.le
 vel[][]=[][]0.95[][])[][] 
  []
 
-<figures/PPBstats_unnamed-chunk-169-1.pdf, id=1762, 505.89pt x 505.89pt>
+<figures/PPBstats_unnamed-chunk-169-1.pdf, id=1750, 505.89pt x 505.89pt>
 File: figures/PPBstats_unnamed-chunk-169-1.pdf Graphic file (type pdf)
 
 <use figures/PPBstats_unnamed-chunk-169-1.pdf>
 Package pdftex.def Info: figures/PPBstats_unnamed-chunk-169-1.pdf used on input
- line 4732.
+ line 4718.
 (pdftex.def)             Requested size: 472.03123pt x 472.03983pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [128]
-[129 <./figures/PPBstats_unnamed-chunk-169-1.pdf>] [130
-
-]
+ [127]
+[128 <./figures/PPBstats_unnamed-chunk-169-1.pdf>]
 Chapter 4.
-[131] [132
+[129
+
+] [130
 
 ]
 Chapter 5.
-[133] [134
+[131] [132
 
 ]
 Chapter 6.
 
+Package xcolor Warning: Incompatible color definition on input line 4771.
+
+
 Package xcolor Warning: Incompatible color definition on input line 4785.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4799.
+Package xcolor Warning: Incompatible color definition on input line 4800.
 
+[133]
 
-Package xcolor Warning: Incompatible color definition on input line 4814.
+Package xcolor Warning: Incompatible color definition on input line 4812.
 
-[135]
 
 Package xcolor Warning: Incompatible color definition on input line 4826.
 
 
-Package xcolor Warning: Incompatible color definition on input line 4840.
+Package xcolor Warning: Incompatible color definition on input line 4838.
 
 
 Package xcolor Warning: Incompatible color definition on input line 4852.
 
+[134]
 
-Package xcolor Warning: Incompatible color definition on input line 4866.
-
-[136]
-
-Package xcolor Warning: Incompatible color definition on input line 4883.
+Package xcolor Warning: Incompatible color definition on input line 4869.
 
 
-Overfull \hbox (346.76881pt too wide) in paragraph at lines 4905--4905
+Overfull \hbox (346.76881pt too wide) in paragraph at lines 4891--4891
 []\T1/cmtt/m/n/10 ##     title = {PPBstats: An R package for statistical analys
 is of balanced and unbalanced trials in decentralized participatory plant breed
 ing programmes},[] 
  []
 
-(./sections/tail.tex [137
+(./sections/tail.tex [135
 
-] [138
+] [136
 
 ]
-<./figures/Logo-Diversifood.jpg, id=1830, 664.4022pt x 285.9483pt>
+<./figures/Logo-Diversifood.jpg, id=1815, 664.4022pt x 285.9483pt>
 File: ./figures/Logo-Diversifood.jpg Graphic file (type jpg)
 
 <use ./figures/Logo-Diversifood.jpg>
 Package pdftex.def Info: ./figures/Logo-Diversifood.jpg used on input line 8.
 (pdftex.def)             Requested size: 132.16817pt x 56.88321pt.
 
-<./figures/Logo-SOLIBAM.jpg, id=1831, 301.125pt x 253.94875pt>
+<./figures/Logo-SOLIBAM.jpg, id=1816, 301.125pt x 253.94875pt>
 File: ./figures/Logo-SOLIBAM.jpg Graphic file (type jpg)
 
 <use ./figures/Logo-SOLIBAM.jpg>
 Package pdftex.def Info: ./figures/Logo-SOLIBAM.jpg used on input line 9.
 (pdftex.def)             Requested size: 84.96216pt x 71.65152pt.
 
-<./figures/Logo-EU.jpg, id=1832, 5722.37875pt x 3788.1525pt>
+<./figures/Logo-EU.jpg, id=1817, 5722.37875pt x 3788.1525pt>
 File: ./figures/Logo-EU.jpg Graphic file (type jpg)
 
 <use ./figures/Logo-EU.jpg>
 Package pdftex.def Info: ./figures/Logo-EU.jpg used on input line 10.
 (pdftex.def)             Requested size: 94.4048pt x 62.48447pt.
 
-<./figures/Logo-FdF.jpg, id=1833, 595.22375pt x 621.32124pt>
+<./figures/Logo-FdF.jpg, id=1818, 595.22375pt x 621.32124pt>
 File: ./figures/Logo-FdF.jpg Graphic file (type jpg)
 
 <use ./figures/Logo-FdF.jpg>
 Package pdftex.def Info: ./figures/Logo-FdF.jpg used on input line 11.
 (pdftex.def)             Requested size: 84.96216pt x 88.6814pt.
- (./PPBstats.bbl [139 <./figures/Logo-Diversifood.jpg> <./figures/Logo-SOLIBAM.
-jpg> <./figures/Logo-EU.jpg> <./figures/Logo-FdF.jpg>] [140
+ (./PPBstats.bbl [137 <./figures/Logo-Diversifood.jpg> <./figures/Logo-SOLIBAM.
+jpg> <./figures/Logo-EU.jpg> <./figures/Logo-FdF.jpg>] [138
 
 ]))
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 4911.
-[141]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 4911.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 4897.
+[139]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 4897.
  (./PPBstats.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 4911.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 4911.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 4897.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 4897.
 
 Package rerunfilecheck Info: File `PPBstats.out' has not changed.
-(rerunfilecheck)             Checksum: 69C53C4080D90F1D38AD6485A55AB7F3;5940.
+(rerunfilecheck)             Checksum: 1EC4E23952EDC3CF96D620A89B87F92B;6102.
 
 
 LaTeX Warning: There were undefined references.
@@ -3341,13 +3283,13 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 4911.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 4897.
  ) 
 Here is how much of TeX's memory you used:
- 20625 strings out of 493485
- 391678 string characters out of 3143526
- 527935 words of memory out of 3000000
- 23097 multiletter control sequences out of 15000+200000
+ 20615 strings out of 493485
+ 391284 string characters out of 3143526
+ 527938 words of memory out of 3000000
+ 23090 multiletter control sequences out of 15000+200000
  20503 words of font info for 48 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  56i,18n,80p,550b,2024s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -3377,10 +3319,10 @@ er/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></us
 r/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texmf/fonts/
 type1/public/cm-super/sftt1200.pfb></usr/share/texmf/fonts/type1/public/cm-supe
 r/sftt1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt2488.pfb>
-Output written on PPBstats.pdf (141 pages, 7008298 bytes).
+Output written on PPBstats.pdf (139 pages, 7000439 bytes).
 PDF statistics:
- 2022 PDF objects out of 2073 (max. 8388607)
- 1638 compressed objects within 17 object streams
- 325 named destinations out of 1000 (max. 500000)
- 1043 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2005 PDF objects out of 2073 (max. 8388607)
+ 1627 compressed objects within 17 object streams
+ 324 named destinations out of 1000 (max. 500000)
+ 1041 words of extra memory for PDF output out of 10000 (max. 10000000)
 
