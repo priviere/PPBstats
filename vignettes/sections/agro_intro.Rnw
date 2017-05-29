@@ -79,8 +79,8 @@ Family & Name & Section &
 2 & IBD & \ref{ibd} & & X & & & & & & \\
   & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
   & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
-  & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
   & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
+  & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
 \hline
 3 & Bayesian model 3 & \ref{model_3} & X & X & X & & X & X & & \\
 \hline
