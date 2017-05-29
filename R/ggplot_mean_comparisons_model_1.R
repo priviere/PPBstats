@@ -142,11 +142,12 @@ ggplot_mean_comparisons_model_1 = function(
           warning(attributes(data)$PPBstats.object, ": the following environments in data_version are not taken: ", paste(vec_env_not_to_get, collapse = ", "),".") 
         }
         
-        # check for entry
+        # check for entry in each element of data (i.e. in each environment)
         vec_entry = data_version$germplasm
         lapply(data, function(x, vec_entry){
           vec_entry_not_ok = vec_entry[!is.element(vec_entry, x$mean.comparisons$entry)]
-          if( length(vec_entry_not_ok) > 0 ) {  stop("The following entries do not exist in the data: ", paste(vec_entry_not_ok, collapse = ", ") ) }
+          if( length(vec_entry_not_ok) > 0 ) { 
+            warning("The following entries do not exist in ", x$mean.comparisons$environment[1]," : ", paste(vec_entry_not_ok, collapse = ", "), ". The graph is not done." ) }
           }, vec_entry)
 
         # If tests OK, lets go
@@ -164,7 +165,6 @@ ggplot_mean_comparisons_model_1 = function(
             x = arrange(x, parameter)
             x$split = add_split_col(x, nb_parameters_per_plot)
             x_split = plyr:::splitter_d(x, .(split))
-            print(x_split)
             return(x_split)
           }
           
