@@ -123,13 +123,18 @@ Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 
 <<child='sections/ibd.Rnw'>>=
 @
+\newpage
 
 <<child='sections/ammi.Rnw'>>=
 @
+\newpage
 
 <<child='sections/gge.Rnw'>>=
 @
+\newpage
 
+<<child='sections/migrant_residant.Rnw'>>=
+@
 \newpage
 
 <<child='sections/model_2.Rnw'>>=
@@ -146,10 +151,6 @@ Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 
 \section{Family of analysis 4 : specific research questions on one farm or more}
 \label{section_analysis4}
-
-<<child='sections/migrant_residant.Rnw'>>=
-@
-\newpage
 
 <<child='sections/version.Rnw'>>=
 @
