@@ -36,11 +36,22 @@ The different effects that can be estimated are:
 
 \noindent The analysis are divided into five families:
 \begin{itemize}
-\item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
-\item \textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+
+\item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm. 
+It allows to compare different entries on each farm for selection.
+Version effect
+
+\item \textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model. Specific analysis regarding migrant or residant can also be done.
+It allows to study the response of germplasm over several farms or environnements for selection.
+
 \item \textbf{Family 3} gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
-\item \textbf{Family 4} gathers analysis answering specific research questions. This is for analysis on one farm or more.
+It allows to study the response of entries over several farms or environnements for selection.
+
+\item \textbf{Family 4} gathers analysis answering specific research questions. 
+This is for analysis on one farm or more.
+
 \item \textbf{Family 5} refers to multivariate analysis and is mentionned in section \ref{multivariate_analysis}.
+
 \end{itemize}
 
 Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
@@ -69,11 +80,11 @@ Family & Name & Section &
   & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
   & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
   & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
+  & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
 \hline
 3 & Bayesian model 3 & \ref{model_3} & X & X & X & & X & X & & \\
 \hline
-4 & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
-  & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
+4 & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
 \hline
 \end{tabular}
 \caption{Analysis carry out in \pack. X: effects that are estimated. (X): effects that can be estimated.}
