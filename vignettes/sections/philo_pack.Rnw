@@ -41,6 +41,15 @@ Up to now, only agronomic analysis is under development.
 Please, feel free to contribute to other aspects of analysis, see section \ref{contribute} for more information.
 
 
+\subsection{Decision tree to choose the right analysis according to question and experimental design}
+
+
+!!! 
+TO DO : integrer decision tree avec même normencalture que dans la vignette + référer aux parties adéquates
+
++ attente complément Camille
+
+!!!
 
 \section{Let's go!}
 To continue, load the development version of the package :
