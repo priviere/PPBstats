@@ -37,6 +37,7 @@
 
 
 % warning
+\def\colwarning{black}
 \newcommand{\warning}[1]{
 \setlength{\fboxrule}{1.5mm}\noindent
 \begin{minipage}[t]{.1\textwidth}

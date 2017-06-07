@@ -109,7 +109,7 @@ head(data_model_2)
 
 \subsubsection{Run the model}
 
-To run model\_2} on the dataset, used the function \texttt{model\_2}.
+To run \texttt{model\_2} on the dataset, use the function \texttt{model\_2}.
 You can run it on one variable.
 Here it is on thousand kernel weight (tkw)
 
@@ -372,7 +372,7 @@ load("./data_PPBstats/model_2_theta.RData")
 
 To see the output, use \texttt{get\_ggplot}.
 
-There are as many graph as needed with \textttt{nb\_parameters\_per\_plot} parameters per graph.
+There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
 
 For \texttt{ggplot.type = "barplot"},
 Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
