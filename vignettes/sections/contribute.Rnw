@@ -41,7 +41,7 @@ my_model = function(...){
 }
 @
 
-\item create the \emph{fit_my_model} method for \texttt{check\_model()}
+\item create the \emph{fit\_my\_model} method for \texttt{check\_model()}
 <<message=FALSE,cache=FALSE>>=
 check_model.fit_my_model = function(x){
   ...
@@ -53,7 +53,7 @@ check_model.fit_my_model = function(x){
 @
   
 
-\item create the \emph{check_my_model} method for \texttt{mean\_comparisons()}
+\item create the \emph{check\_my\_model} method for \texttt{mean\_comparisons()}
 
 <<message=FALSE,cache=FALSE>>=
 mean_comparisons.check_my_model = function(x, ...){
@@ -65,7 +65,7 @@ mean_comparisons.check_my_model = function(x, ...){
 }
 @
 
-\item create the \emph{mean_comparisons_my_model} method for \texttt{plot()}
+\item create the \emph{mean\_comparisons\_my\_model} method for \texttt{plot()}
 
 <<message=FALSE,cache=FALSE>>=
 plot.mean_comparisons_my_model = function(x, y, ...){
