@@ -195,7 +195,7 @@ out_check_ammi = check_model(out_ammi)
 Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_check_ammi = get_ggplot(out_check_ammi)
+p_out_check_ammi = plot(out_check_ammi)
 @
 
 \texttt{p\_out\_check\_ammi} is a list with:
@@ -260,7 +260,7 @@ out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni
 \paragraph{Visualize mean comparisons}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_mean_comparisons_ammi = get_ggplot(out_mean_comparisons_ammi, ggplot.type = "barplot")
+p_out_mean_comparisons_ammi = plot(out_mean_comparisons_ammi)
 @
 
 \texttt{out\_mean\_comparisons\_ammi} is a list of three elements with barplots :
@@ -310,7 +310,7 @@ out_biplot_ammi = biplot_GxE(out_check_ammi)
 \paragraph{Visualize biplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_biplot_ammi = get_ggplot(out_biplot_ammi)
+p_out_biplot_ammi = plot(out_biplot_ammi)
 @
 
 \texttt{p\_out\_biplot\_ammi} is a list of three elements :
@@ -401,7 +401,7 @@ out_parameter_groups = parameter_groups(
 Visualize outputs with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_germplasm_group = get_ggplot(out_parameter_groups)
+p_germplasm_group = plot(out_parameter_groups)
 @
 
 \texttt{p\_germplasm\_group} is list of two elements :
