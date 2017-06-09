@@ -32,7 +32,7 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.19}
+\newcommand{\versionnumber}{\Sexpr{packageVersion("PPBstats")}}
 \newcommand{\PPB}{Participatory Plant Breeding}
 
 
