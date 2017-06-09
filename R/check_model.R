@@ -4,7 +4,7 @@
 #' \code{check_model} computes tests to assess if the model went well. 
 #' It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #' 
-#' @param out_model outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}
+#' @param x outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}
 #' 
 #' @details
 #' 
@@ -97,22 +97,14 @@
 #' \item \code{\link{mean_comparisons}}
 #' }
 #' 
-check_model = function(
-out_model
-)
-{
-  # 1. Error message and update arguments ----------
-  mess = "check_model should be an output from model 1 (PPBstats::model_1), model 2 (PPBstats::model_2) or GxE (PPBstats::GxE)."
-  if( is.null(attributes(out_model)$PPBstats.object) ) { stop(mess) } 
-  if( !is.element(attributes(out_model)$PPBstats.object, c("model_1", "model_2", "GxE")) ) { stop(mess) } 
-  
-  # 2. Check model ----------
-  if(attributes(out_model)$PPBstats.object == "model_1") { out = check_model_model_1(out_model) }
-  
-  if(attributes(out_model)$PPBstats.object == "model_2") { out = check_model_model_2(out_model) }
-  
-  if(attributes(out_model)$PPBstats.object == "GxE") { out = check_model_GxE(out_model) }
+check_model <- function(x) UseMethod("check_model")
 
-return(out)
+check_model.default <- function(x) {
+  ## Method not found
+  ## This message needs updating whenever new models are included in PPBstats
+  ## TODO: have a list of supported models somewhere, and use it to compose
+  ## the error message automatically, or use a more generic message.
+  mess = paste(substitute(x),
+               "is a model type not yet fully supported by PPBstats")
+  stop(mess)
 }
-

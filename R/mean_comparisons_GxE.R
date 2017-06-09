@@ -4,7 +4,7 @@
 #' \code{mean_comparisons_GxE} performs mean comparisons from object coming from \code{\link{check_model_GxE}}
 #' See \code{\link{mean_comparisons}} for more information.
 #' 
-#' @param out_check_model_GxE 
+#' @param x 
 #' 
 #' @param alpha
 #' 
@@ -20,16 +20,14 @@
 #'  \item \code{\link{get_ggplot}}
 #' }
 #'
-mean_comparisons_GxE = function(
-  out_check_model_GxE, 
+mean_comparisons.check_model_GxE <- function(
+  x, 
   alpha = 0.05,
   p.adj = "none"
-  ){
-  # 1. Error message
-  if( attributes(out_check_model_GxE)$PPBstats.object != "check_model_GxE" ) { stop("data must come from check_model and GxE") }
-  
-  model = out_check_model_GxE$GxE$ANOVA$model
-  variable = out_check_model_GxE$GxE$info$variable
+){
+
+  model = x$GxE$ANOVA$model
+  variable = x$GxE$info$variable
   
   data_ggplot_LSDbarplot = function(model, fac, p.adj){
     lsd = LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
@@ -55,14 +53,14 @@ mean_comparisons_GxE = function(
   data_ggplot_LSDbarplot_year = data_ggplot_LSDbarplot(model, fac = "year", p.adj)
   
   # 5. return results
-  out = list(
-    "info" = out_check_model_GxE$info,
+  out <- list(
+    "info" = x$info,
     "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm,
     "data_ggplot_LSDbarplot_location" = data_ggplot_LSDbarplot_location,
     "data_ggplot_LSDbarplot_year" = data_ggplot_LSDbarplot_year
   )
   
-  attributes(out)$PPBstats.object = "mean_comparisons_GxE"
+  class(out) <- c("PPBstats", "mean_comparisons_model_GxE")
   
  return(out)
 }

@@ -4,7 +4,7 @@
 #' \code{mean_comparisons_model_1} performs mean comparisons from object coming from \code{\link{check_model model_1}}
 #' See \code{\link{mean_comparisons}} for more information.
 #' 
-#' @param out_check_model_1
+#' @param x
 #' 
 #' @param parameter
 #' 
@@ -30,8 +30,8 @@
 #'  \item \code{\link{get_ggplot}}
 #' }
 #'
-mean_comparisons_model_1 = function(
-  out_check_model_1,
+mean_comparisons.check_model_1 <- function(
+  x,
   parameter,
   alpha = 0.05,
   type = 1,
@@ -41,8 +41,6 @@ mean_comparisons_model_1 = function(
   p.adj = "soft.bonf"
 ){
   # 1. Error message
-  if( attributes(out_check_model_1)$PPBstats.object != "check_model_model_1" ) { stop("data must come from check_model and model_1") }
-  
   if(!is.element(parameter, c("mu", "beta"))) { stop("With outputs from model 1, the parameters must be mu or beta.") }
   
   # 2. Get square matrice with pvalue or vector with pvalue ----------
@@ -66,9 +64,7 @@ mean_comparisons_model_1 = function(
     return(out)
   }
   
-  if(parameter == "mu") { data_mean_comparisons = MCMC_par(out_check_model_1$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
-  
-  if(parameter == "beta") { data_mean_comparisons = MCMC_par(out_check_model_1$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) }
+  data_mean_comparisons = MCMC_par(x$MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups)
   
   attributes(data_mean_comparisons)$PPBstats.object = "data_mean_comparisons"
   
@@ -80,28 +76,28 @@ mean_comparisons_model_1 = function(
     return(out)
   }
   
-  if( length(out_check_model_1$data_env_with_no_controls) > 0 ) { 
-    data_env_with_no_controls = fun_format_data(out_check_model_1$data_env_with_no_controls)
+  if( length(x$data_env_with_no_controls) > 0 ) { 
+    data_env_with_no_controls = fun_format_data(x$data_env_with_no_controls)
     attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls"
   } else { 
-    data_env_with_no_controls = out_check_model_1$data_env_with_no_controls
+    data_env_with_no_controls = x$data_env_with_no_controls
     }
   
-  if( length(out_check_model_1$data_env_whose_param_did_not_converge) > 0 ) { 
-    data_env_whose_param_did_not_converge = fun_format_data(out_check_model_1$data_env_whose_param_did_not_converge) 
+  if( length(x$data_env_whose_param_did_not_converge) > 0 ) { 
+    data_env_whose_param_did_not_converge = fun_format_data(x$data_env_whose_param_did_not_converge) 
     attributes(data_env_whose_param_did_not_converge)$PPBstats.object = "data_env_whose_param_did_not_converge"
   } else { 
-      data_env_whose_param_did_not_converge = out_check_model_1$data_env_whose_param_did_not_converge 
+      data_env_whose_param_did_not_converge = x$data_env_whose_param_did_not_converge 
       }
   
   # 4. Return results
-  out = list(
+  out <- list(
     "data_mean_comparisons" = data_mean_comparisons,
     "data_env_with_no_controls" = data_env_with_no_controls,
     "data_env_whose_param_did_not_converge" = data_env_whose_param_did_not_converge
   )
 
-  attributes(out)$PPBstats.object = "mean_comparisons_model_1"
+  class(out) <- c("PPBstats", "mean_comparisons_model_1")
   
   return(out)
 }
