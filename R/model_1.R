@@ -110,6 +110,12 @@ model_1 = function(
     Y = as.factor(as.character(data$Y)),
     variable = as.numeric(as.character(data[,variable]))
   )
+  
+  # If there is only data for block 2 (no block 1) then change block 2 to block 1
+  D$envBlock = paste(D$environment,D$block,sep=":")
+  for (i in 1:nrow(D)){if(D[i,"block"] != 1 & length(grep(D[i,"environment"],unique(D$envBlock))) ==1){D[i,"block"] =1}}
+  D=D[,-grep("^envBlock$",colnames(D))]
+  
 
   # Mean for each entry (i.e. each germplasm in each environment in each block)
   D$ID = paste(D$entry, D$germplasm, D$environment, D$block, D$X, D$Y, sep = ":")
