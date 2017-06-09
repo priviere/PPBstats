@@ -109,7 +109,7 @@ head(data_model_2)
 
 \subsubsection{Run the model}
 
-To run model\_2} on the dataset, used the function \texttt{model\_2}.
+To run \texttt{model\_2} on the dataset, use the function \texttt{model\_2}.
 You can run it on one variable.
 Here it is on thousand kernel weight (tkw)
 
@@ -213,7 +213,7 @@ dim(out_check_model_2$MCMC)
 
 Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
 <<message=TRUE,cache=FALSE>>=
-p_out_check_model_2 = get_ggplot(out_check_model_2)
+p_out_check_model_2 = plot(out_check_model_2)
 @
 
 \texttt{p\_out\_check\_model\_2} is a list with 4 elements:
@@ -311,7 +311,7 @@ head(out_cross_validation_model_2)
 The outputs are visualized with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_cv = get_ggplot(out_cross_validation_model_2)
+p_out_cv = plot(out_cross_validation_model_2)
 @
 
 \texttt{p\_out\_cv} is a list of two elements:
@@ -372,7 +372,7 @@ load("./data_PPBstats/model_2_theta.RData")
 
 To see the output, use \texttt{get\_ggplot}.
 
-There are as many graph as needed with \textttt{nb\_parameters\_per\_plot} parameters per graph.
+There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
 
 For \texttt{ggplot.type = "barplot"},
 Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
@@ -382,13 +382,13 @@ alpha = Imp means that no differences were possible to find.
 For \texttt{ggplot.type = "biplot-alpha-beta"}, the biplot with $\alpha_i$ on the x axis and $\beta_i$ on the y axis.
 
 <<message=TRUE,cache=FALSE>>=
-p_a = get_ggplot(model_2_alpha, ggplot.type = "barplot")
+p_a = plot(model_2_alpha, ggplot.type = "barplot")
 names(p_a$alpha)
 p_a$alpha$`1`
 @
 
 <<message=TRUE,cache=FALSE>>=
-p_b = get_ggplot(model_2_beta, ggplot.type = "barplot")
+p_b = plot(model_2_beta, ggplot.type = "barplot")
 names(p_b$beta)
 p_b$beta$`1`
 @
@@ -397,13 +397,13 @@ It is interessting to compare genetic effect versus sensibility to interaction.
 A germplasm with an high genetic effect and a low sensitivity to interaction (i.e. close to 0) may be a good candidate to sown.
 
 <<message=TRUE,cache=FALSE>>=
-p_ab = get_ggplot(model_2_alpha, model_2_beta, ggplot.type = "biplot-alpha-beta")
+p_ab = plot(model_2_alpha, model_2_beta, ggplot.type = "biplot-alpha-beta")
 p_ab$`1`
 @
 
 
 <<message=TRUE,cache=FALSE>>=
-p_t = get_ggplot(model_2_theta, ggplot.type = "barplot")
+p_t = plot(model_2_theta, ggplot.type = "barplot")
 names(p_t$theta)
 p_t$theta$`9`
 @
@@ -480,7 +480,7 @@ out_parameter_groups = parameter_groups(
 Visualize outputs with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
-ppg = get_ggplot(out_parameter_groups)
+ppg = plot(out_parameter_groups)
 @
 
 \texttt{ppg} is list of two elements:
@@ -532,13 +532,13 @@ ptp = predict_the_past_model_2(out_check_model_2, env = "loc-6:year-5")
 <<message=TRUE,cache=FALSE>>=
 m_ptp = mean_comparisons(ptp)
 
-p = get_ggplot(m_ptp, ggplot.type = "barplot")
+p = plot(m_ptp, ggplot.type = "barplot")
 
 data("data_version")
-p = get_ggplot(m_ptp, data_version = data_version, ggplot.type = "barplot")
+p = plot(m_ptp, data_version = data_version, ggplot.type = "barplot")
 
-p = get_ggplot(m_ptp, ggplot.type = "score")
+p = plot(m_ptp, ggplot.type = "score")
 
-p = get_ggplot(m_ptp, ggplot.type = "interaction")
+p = plot(m_ptp, ggplot.type = "interaction")
 @
 
