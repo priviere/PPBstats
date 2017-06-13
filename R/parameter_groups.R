@@ -60,7 +60,7 @@ parameter_groups = function(
     stop(mess)
   }
   
-  ## Check that all elements are consistently from the same model (right?)
+  ## Check that all elements are consistently from the same model
   ## Matrix where each column (element in the list) contains the idx of the
   ## element's class in the position matching valid_models
   model_classes.idx <- vapply(
