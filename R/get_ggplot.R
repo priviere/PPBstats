@@ -1,7 +1,7 @@
 #' Get ggplot to visualize output
 #'
 #' @description
-#' \code{get_ggplot} returns ggplot to visualize outputs from several functions
+#' \code{plot.PPBstat_model_check} returns ggplot to visualize outputs from several functions
 #'
 #' @param data Outputs from 
 #' \itemize{
@@ -305,75 +305,65 @@
 #'  \item \code{cross_validation_model_2}
 #' }
 #' 
-get_ggplot = function(
-  data,
-  data_2 = NULL,
+plot.PPBstats <- function(
+  x, y = NULL,
   data_version = NULL,
-  ggplot.type = "interaction",
-  nb_parameters_per_plot = 8
-)
-  # let's go !!! ----------
-{
-  # 1. error messages ----------
-  mess = "data must come from functions PPBstats::check_model, PPBstats::mean_comparisons, PPBstats::parameter_groups, PPBstats::biplot_GxE or PPBstats::cross_validation_model_2"
-  
-  if (is.null(attributes(data)$PPBstats.object)) { stop(mess) }
-  
-  if (!is.element(attributes(data)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE", "mean_comparisons_GxE", "mean_comparisons_model_1", "mean_comparisons_model_2", "mean_comparisons_predict_the_past_model_2", "biplot_GxE", "parameter_groups", "cross_validation_model_2"))) { stop(mess) }
-  
-  if( !is.element(ggplot.type, c("barplot", "biplot-alpha-beta", "interaction", "score"))) { stop("ggplot.type must be either \"barplot\", \"biplot-alpha-beta\", \"interaction\", \"score\".") }
+  ggplot.type = c("interaction", "barplot", "biplot-alpha-beta", "score"),
+  ...
+) {
+  ## common tasks
+  ggplot.type <- match.arg(ggplot.type, several.ok = FALSE)
   
   if( !is.null(data_version) ){
-    mess = "In data_version, the following column are compulsory in data_version : c(\"year\", \"germplasm\", \"location\", \"group\", \"version\"."
-    if(!is.element("year", colnames(data_version))) { stop(mess) }
-    if(!is.element("germplasm", colnames(data_version))) { stop(mess) }
-    if(!is.element("location", colnames(data_version))) { stop(mess) }
-    if(!is.element("group", colnames(data_version))) { stop(mess) }
-    if(!is.element("version", colnames(data_version))) { stop(mess) }
+    mandatory_dvcols <- c("year", "germplasm", "location", "group", "version")
+
+    ## check compulsory columns
+    if (!all(mandatory_dvcols %in% colnames(data_version))) {
+      stop(
+        paste("The following columns are compulsory in data_version:",
+              paste(mandatory_dvcols, collapse = ", "))
+      )
+    }
     
-    mess = "In data_version, the following column must be set as factor : c(\"location\", \"year\", \"germplasm\", \"group\", \"version\"."
-    if(!is.factor(data_version$location)) { stop(mess) }
-    if(!is.factor(data_version$year)) { stop(mess) }
-    if(!is.factor(data_version$germplasm)) { stop(mess) }
-    if(!is.factor(data_version$group)) { stop(mess) }
-    if(!is.factor(data_version$version)) { stop(mess) }
-    
+    ## check factor
+    if (!all(idx <- vapply(data_version[, mandatory_dvcols], is.factor, TRUE))) {
+      stop(
+        paste("The following column(s) must be factor in data_version:",
+              paste(mandatory_dvcols[!idx], collapse = ", "))
+      )
+    }
+
     # delete version where there are not v1 AND v2
     vec_group = unique(data_version$group)
     for(gp in vec_group){
       d_tmp = droplevels(filter(data_version, group == gp))
-      if(nlevels(d_tmp$version) != 2 ){ stop("There must be 2 levels per group in data_version. This is not the case for group ", gp) }
+      if(nlevels(d_tmp$version) != 2 ) {
+        stop("There must be 2 levels per group in data_version. ",
+             "This is not the case for group ", gp)
+      }
     }
   }
   
-  # 2. Run functions ----------
-  if( attributes(data)$PPBstats.object == "check_model_model_1" ) { out = ggplot_check_model_model_1(data, nb_parameters_per_plot) }
-
-  if( attributes(data)$PPBstats.object == "check_model_model_2" ) { out = ggplot_check_model_model_2(data, nb_parameters_per_plot) }
+  ## perform model-specific tasks
+  out <- try(NextMethod("plot"), silent = TRUE)
   
-  if( attributes(data)$PPBstats.object == "check_model_GxE" ) { out = ggplot_check_model_GxE(data, nb_parameters_per_plot) }
-  
-  if( attributes(data)$PPBstats.object == "mean_comparisons_GxE" ) { out = ggplot_mean_comparisons_GxE(data, ggplot.type, nb_parameters_per_plot) }
-  
-  if( attributes(data)$PPBstats.object == "mean_comparisons_model_1" ) { out = ggplot_mean_comparisons_model_1(data, data_version, ggplot.type, nb_parameters_per_plot) }
-  
-  if( attributes(data)$PPBstats.object == "mean_comparisons_model_2" ) { 
-    if( !is.null(data_2) ) {
-      if( attributes(data_2)$PPBstats.object != "mean_comparisons_model_2" ) { 
-        stop("data_2 must come from PPBstats::check_model from model_2.")
-      }
+  ## Method not found
+  if (inherits(out, "try-error")) {
+    if (grepl("NextMethod", out)) {
+      ## Method not found
+      ## This message needs updating whenever new models are included in PPBstats
+      ## TODO: have a list of supported models somewhere, and use it to compose
+      ## the error message automatically
+      mess = paste(substitute(x),
+                   "must come from functions PPBstats::check_model(),",
+                   "PPBstats::mean_comparisons(), PPBstats::parameter_groups(),", 
+                   "PPBstats::biplot_GxE() or PPBstats::cross_validation_model_2()")
+    } else {
+      ## some error within the more specific plot method
+      mess = out
     }
-    out = ggplot_mean_comparisons_model_2(data, data_2, ggplot.type, nb_parameters_per_plot) 
-    }
-  
-  if( attributes(data)$PPBstats.object == "mean_comparisons_predict_the_past_model_2" ) { out = ggplot_mean_comparisons_predict_the_past_model_2(data, data_version, ggplot.type, nb_parameters_per_plot) }
-  
-  if( attributes(data)$PPBstats.object == "biplot_GxE" ) { out = ggplot_biplot_GxE(data) }
-  
-  if( attributes(data)$PPBstats.object == "parameter_groups" ) { out = ggplot_parameter_groups(data) }
-
-  if( attributes(data)$PPBstats.object == "cross_validation_model_2" ) { out = ggplot_cross_validation_model_2(data) }
+    stop(mess)
+  }
   
   return(out)
 }
-
