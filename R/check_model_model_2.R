@@ -1,28 +1,11 @@
-#' Check if the model_2 model went well 
-#'
-#' @description
-#' \code{check_model_model_2} computes tests to assess if the model_2 model went well
-#' 
-#' @param out_model_2 outputs from \code{\link{model_2}}
-#' 
-#' @details See \code{\link{check_model}}
-#' 
-#' @return See \code{\link{check_model}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{model_2}}, 
-#' \item \code{\link{check_model}}
-#' }
-#' 
-check_model_model_2 = function(
-  out_model_2
-){
+check_model.fit_model_2 <- function(
+  x
+) {
   # Default settings
-  model2.presence.abscence.matrix = out_model_2$model2.presence.abscence.matrix
+  model2.presence.abscence.matrix = x$model2.presence.abscence.matrix
   
   # 1. Convergence, update MCMC when parameters did not converge ----------
-  out.conv = check_convergence(out_model_2, model_name = "model2")
+  out.conv = check_convergence(x, model_name = "model2")
   MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   conv_not_ok = out.conv$conv_not_ok
@@ -49,7 +32,7 @@ check_model_model_2 = function(
     
     germ_not_ok = unique(c(germ_not_ok_alpha, germ_not_ok_beta))
     
-    mat = out_model_2$model2.presence.abscence.matrix
+    mat = x$model2.presence.abscence.matrix
     if( !is.null(germ_not_ok) ) { mat = mat[!is.element(rownames(mat), germ_not_ok),] }
     if( !is.null(env_not_ok) ) { mat = mat[,!is.element(colnames(mat), env_not_ok)] }
     model2.presence.abscence.matrix = mat
@@ -80,8 +63,8 @@ check_model_model_2 = function(
   } else { data_ggplot_model_2_theta = NULL }
   
   # 2.4. standardized epsilon_ijk distribution ----------
-  if ( !is.null(out_model_2$epsilon)  ) {      
-    epsilon_ijk = out_model_2$epsilon     
+  if ( !is.null(x$epsilon)  ) {      
+    epsilon_ijk = x$epsilon     
     sigma_epsilon = sq_MCMC[grep("sigma_epsilon", sq_MCMC$parameter), "q3"]
     std_res = epsilon_ijk / sigma_epsilon
     data_ggplot_model_2_epsilon = cbind.data.frame(x = c(1:length(epsilon_ijk)), std_res)
@@ -102,7 +85,7 @@ check_model_model_2 = function(
     )
   )
   
-  attributes(out)$PPBstats.object = "check_model_model_2"
+  class(out) <- c("PPBstats", "check_model_2")
   
   return(out)
 }

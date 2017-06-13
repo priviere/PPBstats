@@ -3,7 +3,7 @@
 #' @description
 #' \code{ggplot_check_model_model_2} returns ggplot from \code{\link{check_model_model_2}}
 #' 
-#' @param out_check_model_model_2 outputs from \code{\link{check_model_model_2 function}}
+#' @param x outputs from \code{\link{check_model_model_2 function}}
 #' 
 #' @details See \code{\link{get_ggplot}}
 #' 
@@ -16,18 +16,18 @@
 #' }
 #'
 #'
-ggplot_check_model_model_2 = function(
-  out_check_model_model_2,
-  nb_parameters_per_plot = 10
+plot.check_model_2 <- function(
+  x,
+  nb_parameters_per_plot = 8
 ){
   # Get data ----------
   
-  data_ggplot = out_check_model_model_2$data_ggplot
+  data_ggplot = x$data_ggplot
   data_ggplot_model_2_alpha = data_ggplot$alpha
   data_ggplot_model_2_beta = data_ggplot$beta
   data_ggplot_model_2_theta = data_ggplot$theta
   data_ggplot_model_2_epsilon = data_ggplot$epsilon
-  MCMC_conv_not_ok = out_check_model_model_2$MCMC_conv_not_ok
+  MCMC_conv_not_ok = x$MCMC_conv_not_ok
   
   # 2.1. alpha_i caterpillar plot distribution ----------
   if ( !is.null(data_ggplot_model_2_alpha) ) {

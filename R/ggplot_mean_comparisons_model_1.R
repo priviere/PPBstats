@@ -3,7 +3,7 @@
 #' @description
 #' \code{ggplot_mean_comparisons_model_1} returns ggplot from \code{\link{mean_comparisons_model_1}}
 #' 
-#' @param out_mean_comparisons_model_1 outputs from \code{\link{mean_comparisons_model_1}}
+#' @param x outputs from \code{\link{mean_comparisons_model_1}}
 #' 
 #' @details See \code{\link{get_ggplot}}
 #' 
@@ -16,21 +16,21 @@
 #' }
 #' 
 #'
-ggplot_mean_comparisons_model_1 = function(
-  out_mean_comparisons_model_1,
+plot.mean_comparisons_model_1 <- function(
+  x,
   data_version = NULL,
-  ggplot.type = "interaction",
-  nb_parameters_per_plot = 10
+  ggplot.type = c("interaction", "barplot", "score"),
+  nb_parameters_per_plot = 8
   ){
   
   # 1. Error message ----------
-  if( !is.element(ggplot.type, c("interaction", "barplot", "score")) ) { stop("ggplot.type must be score, barplot or interaction with output from mean_comparisons and model_1") }
-  
+  ggplot.type <- match.arg(ggplot.type, several.ok = FALSE)
+
   # 2. get data ----------
   all_data = list(
-    "data_mean_comparisons" = out_mean_comparisons_model_1$data_mean_comparisons,
-    "data_env_with_no_controls" = out_mean_comparisons_model_1$data_env_with_no_controls,
-    "data_env_whose_param_did_not_converge" = out_mean_comparisons_model_1$data_env_whose_param_did_not_converge
+    "data_mean_comparisons" = x$data_mean_comparisons,
+    "data_env_with_no_controls" = x$data_env_with_no_controls,
+    "data_env_whose_param_did_not_converge" = x$data_env_whose_param_did_not_converge
   )
   
   # 3. get ggplot ----------

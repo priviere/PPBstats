@@ -3,7 +3,7 @@
 #' @description
 #' \code{ggplot_biplot_GxE} returns ggplot from \code{\link{biplot_GxE}}
 #' 
-#' @param out_biplot_GxE outputs from \code{\link{biplot_GxE}} function
+#' @param x outputs from \code{\link{biplot_GxE}} function
 #' 
 #' @details See \code{\link{get_ggplot}}
 #' 
@@ -16,13 +16,13 @@
 #' }
 #' 
 #' 
-ggplot_biplot_GxE = function(out_biplot_GxE){
+plot.biplot_GxE <- function(x){
   
-  variable = out_biplot_GxE$info$variable
-  gxe_analysis =out_biplot_GxE$info$gxe_analysis
-  data_ecovalence = out_biplot_GxE$data_ecovalence
-  data_interaction = out_biplot_GxE$data_interaction
-  data_pca = out_biplot_GxE$pca
+  variable = x$info$variable
+  gxe_analysis =x$info$gxe_analysis
+  data_ecovalence = x$data_ecovalence
+  data_interaction = x$data_interaction
+  data_pca = x$pca
   
   # Ecovalence ----------
   p_eco = ggplot(data_ecovalence, aes(x = location, y = germplasm, fill = variable)) + geom_raster()
