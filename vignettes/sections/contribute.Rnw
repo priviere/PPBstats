@@ -36,63 +36,45 @@ my_model = function(...){
   ...
   ...
   ...
-  attributes(OUT)$PPBstats.object = "my_model"
+  class(OUT) = c("PPBstats", "fit_my_model")
+  return(OUT)
 }
 @
 
-\item create the check function that is called in \texttt{check\_model}
+\item create the \emph{fit\_my\_model} method for \texttt{check\_model()}
 <<message=FALSE,cache=FALSE>>=
-check_model_my_model = function(my_model){
+check_model.fit_my_model = function(x){
   ...
   ...
   ...
-  attributes(out)$PPBstats.object = "check_model_my_model"
+  class(out) <- c("PPBstats", "check_my_model")
+  return(OUT)
 }
 @
   
-and in \texttt{check\_model} add:
 
-<<message=FALSE,cache=FALSE,eval=FALSE>>=
-if( attributes(out_model)$PPBstats.object == "my_model" ){ 
-  check_model_my_model(out_model) 
-  }
-@
-
-\item create the mean comparison function that is called in \texttt{mean\_comparison}
+\item create the \emph{check\_my\_model} method for \texttt{mean\_comparisons()}
 
 <<message=FALSE,cache=FALSE>>=
-mean_comparisons_my_model = function(out_check_model){
+mean_comparisons.check_my_model = function(x, ...){
   ...
   ...
   ...
-  attributes(out)$PPBstats.object = "mean_comparisons_my_model"
+  class(out) <- c("PPBstats", "mean_comparisons_my_model")
+  return(out)
 }
 @
-and in \texttt{mean\_comparison} add:
 
-<<message=FALSE,cache=FALSE,eval=FALSE>>=
-if( attributes(out_check_model)$PPBstats.object == "check_model_my_model" ){ 
-  mean_comparisons_my_model(out_check_model, ...) 
-  }
-@  
-
-\item create the ggplot function that is called in \texttt{get\_ggplot}
+\item create the \emph{mean\_comparisons\_my\_model} method for \texttt{plot()}
 
 <<message=FALSE,cache=FALSE>>=
-ggplot_mean_comparisons_my_model = function(data, ...){
+plot.mean_comparisons_my_model = function(x, y, ...){
   ...
   ...
   ...
 }
 @  
 
-and in \texttt{get\_ggplot} add:
-
-<<message=FALSE,cache=FALSE,eval=FALSE>>=
-if( attributes(data)$PPBstats.object == "mean_comparisons_my_model" ){ 
-  ggplot_mean_comparisons_my_model(data, ...) 
-  }
-@  
 
 \end{enumerate}
 
