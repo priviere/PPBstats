@@ -1,4 +1,4 @@
-PPBstats 0.20 under progress ------------------------
+PPBstats 0.21 under progress ------------------------
 -----------------------------------------------------
 * update functions
   - ggplot_mean_comparisons_model_1.R
@@ -7,6 +7,13 @@ PPBstats 0.20 under progress ------------------------
 * vignette
   - update text
   
+
+PPBstats 0.20 ---------------------------------------
+-----------------------------------------------------
+* substitute get_ggplot() by plot() methods (#21)
+
+* update vignette and cached results
+
 
 PPBstats 0.19 ---------------------------------------
 -----------------------------------------------------

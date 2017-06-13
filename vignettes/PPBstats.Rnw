@@ -32,11 +32,12 @@
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
-\newcommand{\versionnumber}{0.19}
+\newcommand{\versionnumber}{\Sexpr{packageVersion("PPBstats")}}
 \newcommand{\PPB}{Participatory Plant Breeding}
 
 
 % warning
+\def\colwarning{black}
 \newcommand{\warning}[1]{
 \setlength{\fboxrule}{1.5mm}\noindent
 \begin{minipage}[t]{.1\textwidth}
