@@ -7,7 +7,7 @@ Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
     person("Gaelle", "Van Franck", role = "ctb"),
     person("Olivier", "David", role = "ctb")
     )
-Author: Pierre Riviere and Jonathan Locqueville and Maxime Garnault and Gaelle Van Franck and Olivier David
+Author: Pierre Riviere and Gaelle Van Franck and Olivier David
 Maintainer: Pierre Riviere <pierre@semencespaysannes.org>
 Description: This package applies statistical methods to analyse unbalanced trials from decentralized participatory plant breeding  programmes
 License: GPL-3
