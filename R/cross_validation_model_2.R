@@ -39,7 +39,7 @@ cross_validation_model_2 = function(
   mc.cores = 1)
 {
   ## TODO: Ideally, there should be a generic cross_validation()
-  ## which only has a method for a "check_model_2" (?) object.
+  ## which only has a method for a "check_model_2" object.
   ## This way is extensible to a future situation where there might be more
   ## models that can be "cross-validated" with other methods.
   ## For the moment, I leave it as it to preserve back-compatibility.
