@@ -3,7 +3,7 @@
 
 \subsubsection{Theory of the model}
 
-The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the location: germplasm and interaction effects are merged.
+The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the location: germplasm and interaction effects are merged \footnote{Note than in \pack, as for AMMI, the PCA is done on germplasm and interaction effects + residuals.}.
 
 The GGE model can be written as followed:
 
@@ -85,7 +85,7 @@ out_check_gge = check_model(out_gge)
 
 \paragraph{Visualize outputs}
 <<message=TRUE,cache=FALSE>>=
-p_out_check_gge = get_ggplot(out_check_gge)
+p_out_check_gge = plot(out_check_gge)
 @
 
 \subsubsection{Get and visualize mean comparisons}
@@ -97,7 +97,7 @@ out_mean_comparisons_gge = mean_comparisons(out_check_gge, p.adj = "bonferroni")
 
 \paragraph{Visualize mean comparisons}
 <<message=TRUE,cache=FALSE>>=
-p_out_mean_comparisons_gge = get_ggplot(out_mean_comparisons_gge, ggplot.type = "barplot")
+p_out_mean_comparisons_gge = plot(out_mean_comparisons_gge)
 @
 
 \subsubsection{Get and visualize biplot}
@@ -109,7 +109,7 @@ out_biplot_gge = biplot_GxE(out_check_gge)
 
 \paragraph{Visualize biplot}
 <<message=TRUE,cache=FALSE>>=
-p_out_biplot_gge = get_ggplot(out_biplot_gge)
+p_out_biplot_gge = plot(out_biplot_gge)
 @
 
 Compared to AMMI analysis, in the output of \texttt{p\_out\_biplot\_gge}, 
@@ -223,6 +223,6 @@ out_parameter_groups = parameter_groups(
 
 \paragraph{Visualize groups of parameters}
 <<message=TRUE,cache=FALSE>>=
-p_germplasm_group = get_ggplot(out_parameter_groups)
+p_germplasm_group = plot(out_parameter_groups)
 @
 

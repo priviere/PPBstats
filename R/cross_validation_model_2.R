@@ -38,6 +38,12 @@ cross_validation_model_2 = function(
   nb_iterations = 100000,
   mc.cores = 1)
 {
+  ## TODO: Ideally, there should be a generic cross_validation()
+  ## which only has a method for a "check_model_2" object.
+  ## This way is extensible to a future situation where there might be more
+  ## models that can be "cross-validated" with other methods.
+  ## For the moment, I leave it as it to preserve back-compatibility.
+
   # 1. Error message ----------
   check_data_vec_variables(data, variable)
   
@@ -126,7 +132,7 @@ cross_validation_model_2 = function(
   
   out = cbind.data.frame(observed.value, estimated.value)
   
-  attributes(out)$PPBstats.object = "cross_validation_model_2"
+  class(out) <- c("PPBstats", "cross_validation_model_2", "data.frame")
   
   return(out)
 }

@@ -1,27 +1,10 @@
-#' Check if the model_1 model went well 
-#'
-#' @description
-#' \code{check_model_model_1} computes tests to assess if the model_1 model went well
-#' 
-#' @param out_model_1 outputs from \code{\link{model_1}}
-#' 
-#' @details See \code{\link{check_model}}
-#' 
-#' @return See \code{\link{check_model}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{model_1}}, 
-#' \item \code{\link{check_model}}
-#' }
-#' 
-check_model_model_1 = function(
-  out_model_1
+check_model.fit_model_1 <- function(
+  x
 )
   {
   
   # 1. Convergence, update MCMC and data frame with environments where some parameters did not converge ----------
-  out.conv = check_convergence(out_model_1, model_name = "model_1")
+  out.conv = check_convergence(x, model_name = "model_1")
   MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   conv_not_ok = out.conv$conv_not_ok
@@ -49,7 +32,7 @@ check_model_model_1 = function(
     # update data
     env_not_ok = unique(c(env_not_ok_mu, env_not_ok_beta, env_not_ok_sigma))
     if( length(env_not_ok) > 0 ) {
-      data_env_whose_param_did_not_converge = droplevels(filter(out_model_1$data.model1, environment %in% env_not_ok))
+      data_env_whose_param_did_not_converge = droplevels(filter(x$data.model1, environment %in% env_not_ok))
       data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
       data_env_whose_param_did_not_converge$parameter = paste("mu", data_env_whose_param_did_not_converge$parameter, sep = "")
       data_env_whose_param_did_not_converge$location = unlist(lapply(as.character(data_env_whose_param_did_not_converge$environment),function(x){strsplit(x,":")[[1]][1]}))
@@ -116,8 +99,8 @@ check_model_model_1 = function(
   } else { data_ggplot_model_1_sigma_j_2 = NULL }
   
   # 2.5. standardized epsilon_ijk distribution ----------
-  if ( !is.null(out_model_1$epsilon)  ) {
-    epsilon_ijk = out_model_1$epsilon
+  if ( !is.null(x$epsilon)  ) {
+    epsilon_ijk = x$epsilon
     sigma_j = sq_MCMC[grep("sigma", sq_MCMC$parameter), "q3"]
     names(sigma_j) = sq_MCMC$parameter[grep("sigma", sq_MCMC$parameter)]
     env = sub("\\]", "", sapply(names(epsilon_ijk), function(x) { sub("epsilon\\[", "", sapply(x, function(x){unlist(strsplit(as.character(x), ","))[2]})) }))
@@ -127,7 +110,7 @@ check_model_model_1 = function(
   
 
   # 3. Return results ----------
-  data_env_with_no_controls = out_model_1$data_env_with_no_controls
+  data_env_with_no_controls = x$data_env_with_no_controls
   if( !is.null(data_env_with_no_controls) ){
     data_env_with_no_controls$parameter = paste("mu", data_env_with_no_controls$parameter, sep = "")
     data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
@@ -148,7 +131,7 @@ check_model_model_1 = function(
     )
   )
   
-  attributes(out)$PPBstats.object = "check_model_model_1"
+  class(out) <- c("PPBstats", "check_model_1")
   
   return(out)
 }

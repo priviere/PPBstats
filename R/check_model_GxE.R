@@ -1,25 +1,8 @@
-#' Check if the GxE model went well 
-#'
-#' @description
-#' \code{check_model_GxE} computes tests to assess if the GxE model went well
-#' 
-#' @param out_GxE outputs from \code{\link{GxE}}
-#' 
-#' @details See \code{\link{check_model}}
-#' 
-#' @return See \code{\link{check_model}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{GxE}}, 
-#' \item \code{\link{check_model}}
-#' }
-#' 
-check_model_GxE = function(
-  out_GxE
+check_model.fit_model_GxE <- function(
+  x
 ){
-  model = out_GxE$ANOVA$model
-  anova_model = out_GxE$ANOVA$anova_model
+  model = x$ANOVA$model
+  anova_model = x$ANOVA$anova_model
   
   # 1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
   r = residuals(model)
@@ -67,7 +50,7 @@ check_model_GxE = function(
   data_ggplot_var_intra = data.frame(x = model$model$germplasm, y = model$residuals)
   
   out = list(
-    "GxE" = out_GxE,
+    "GxE" = x,
     "data_ggplot" = list(
       "data_ggplot_residuals" = list(
         "data_ggplot_normality" = data_ggplot_normality,
@@ -80,7 +63,7 @@ check_model_GxE = function(
     )
   )
   
-  attributes(out)$PPBstats.object = "check_model_GxE"
+  class(out) <- c("PPBstats", "check_model_GxE")
   
   return(out)
 }

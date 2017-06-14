@@ -89,67 +89,14 @@
 #'  \code{\link{get_ggplot}}
 #' }
 #' 
-mean_comparisons = function(
-  out_check_model,
-  parameter,
-  alpha = 0.05,
-  type = 1,
-  get.at.least.X.groups = 2,
-  precision = 0.0005,
-  threshold = 1,
-  p.adj = "soft.bonf"
-)
-{
-  # 1. Error message and update arguments ----------
-  mess = "out_check_model must come from check_model or predict_the_past_model_2."
-  if( is.null(attributes(out_check_model)$PPBstats.object) ) { stop(mess) } 
-  if( !is.element(attributes(out_check_model)$PPBstats.object, c("check_model_model_1", "check_model_model_2", "check_model_GxE", "predict_the_past_model_2")) ) { stop(mess) } 
-  
-  if( attributes(out_check_model)$PPBstats.object == "check_model_GxE" ) { 
-    out = mean_comparisons_GxE(
-      out_check_model, 
-      alpha, 
-      p.adj
-      ) 
-  }
-  
-  if( attributes(out_check_model)$PPBstats.object == "check_model_model_1" ) { 
-    out = mean_comparisons_model_1(
-      out_check_model, 
-      parameter,
-      alpha,
-      type,
-      get.at.least.X.groups,
-      precision,
-      threshold,
-      p.adj
-    )
-  }
-  
-  if( attributes(out_check_model)$PPBstats.object == "check_model_model_2" ) { 
-    out = mean_comparisons_model_2(
-      out_check_model, 
-      parameter,
-      alpha,
-      type,
-      get.at.least.X.groups,
-      precision,
-      threshold,
-      p.adj
-    )
-    }
+mean_comparisons <- function(x, ...) UseMethod("mean_comparisons")
 
-  if( attributes(out_check_model)$PPBstats.object == "predict_the_past_model_2" ) { 
-    out = mean_comparisons_predict_the_past_model_2(
-      out_predict_the_past_model_2 = out_check_model,
-      alpha = alpha,
-      type = type,
-      get.at.least.X.groups = get.at.least.X.groups,
-      precision = precision,
-      threshold = threshold,
-      p.adj = p.adj
-    )
-  }
-  
-  return(out)
+
+mean_comparisons.default <- function(x, ...) {
+  ## No method found
+  mess = paste(substitute(x),
+               "must come from check_model() or predict_the_past_model_2()."
+  )
+  stop(mess)
 }
+

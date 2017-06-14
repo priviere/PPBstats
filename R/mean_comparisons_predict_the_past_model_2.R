@@ -4,7 +4,7 @@
 #' \code{mean_comparisons_predict_the_past_model_2} performs mean comparisons from object coming from \code{\link{predict_the_past_model_2}}
 #' See \code{\link{mean_comparisons}} for more information.
 #' 
-#' @param out_predict_the_past_model_2
+#' @param x
 #' 
 #' @param alpha
 #' 
@@ -28,8 +28,8 @@
 #'  \item \code{\link{get_ggplot}}
 #' }
 #'
-mean_comparisons_predict_the_past_model_2 = function(
-  out_predict_the_past_model_2,
+mean_comparisons.predict_the_past_model_2 <- function(
+  x,
   alpha = 0.05,
   type = 1,
   get.at.least.X.groups = 2,
@@ -37,15 +37,21 @@ mean_comparisons_predict_the_past_model_2 = function(
   threshold = 1,
   p.adj = "soft.bonf"
 ){
-  # 1. Error message
-  if( attributes(out_predict_the_past_model_2)$PPBstats.object != "predict_the_past_model_2" ) { stop("data must come from predict_the_past_model_2") }
+
+  out <- mean_comparisons.check_model_1(
+    x, parameter = "mu", alpha = alpha, type = type, threshold = threshold,
+    p.adj = p.adj, get.at.least.X.groups = get.at.least.X.groups,
+    precision = precision)
   
-  attributes(out_predict_the_past_model_2)$PPBstats.object = "check_model_model_1"
+  out <- out[1]
   
-  out = mean_comparisons_model_1(out_predict_the_past_model_2, parameter = "mu", alpha = alpha, type = type, threshold = threshold, p.adj = p.adj, get.at.least.X.groups = get.at.least.X.groups, precision = precision)
+  d <- out$data_mean_comparisons[[1]]$mean.comparisons
+  d$parameter_statuts <- x$parameter_statuts[d$parameter]
   
-  out = out[1]
-  attributes(out)$PPBstats.object = "mean_comparisons_predict_the_past_model_2"
-return(out)
+  out$data_mean_comparisons[[1]]$mean.comparisons <- d
+  
+  class(out) <- c("PPBstats", "mean_comparisons_predict_the_past_model_2")
+  
+  return(out)
 }
 
