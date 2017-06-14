@@ -15,15 +15,15 @@ The function returns a list with,
   \item for each variable, a list with :
 
   \begin{itemize}
-    \item A presence.abscence plot. Note that it may be different from experimental design planned because of NA.
-    The plot represents the presence/abscence matrix of G $\times$ E combinaisons. 
+    \item A presence.absence plot. Note that it may be different from experimental design planned because of NA.
+    The plot represents the presence/absence matrix of G $\times$ E combinaisons. 
     <<message=TRUE,cache=FALSE>>=
-    describe_data_GxE$each_variable$y1$presence.abscence
+    describe_data_GxE$each_variable$y1$presence.absence
     @
     A score of 3 is for a given germplasm replicated three times in a given environement.
     
     <<message=TRUE,cache=FALSE>>=
-    describe_data_model_2$each_variable$y1$presence.abscence
+    describe_data_model_2$each_variable$y1$presence.absence
     @
     Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
     A score of 1 is for a given germplasm in a given environment.

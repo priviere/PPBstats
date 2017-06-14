@@ -197,7 +197,7 @@ dim(out_check_model_2$MCMC)
 
 \item \texttt{MCMC\_conv\_not\_ok} : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
 
-\item \texttt{model2.presence.abscence.matrix} : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
+\item \texttt{model2.presence.absence.matrix} : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
 
 \item \texttt{data\_ggplot} a list containing information for ggplot:
   \begin{itemize}
