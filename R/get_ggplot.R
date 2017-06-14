@@ -1,7 +1,7 @@
 #' Get ggplot to visualize output
 #'
 #' @description
-#' \code{plot.PPBstat_model_check} returns ggplot to visualize outputs from several functions
+#' \code{plot.PPBstats} returns ggplot to visualize outputs from several functions
 #'
 #' @param data Outputs from 
 #' \itemize{
