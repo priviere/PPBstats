@@ -3,7 +3,7 @@
 #' @description
 #' \code{ggplot_mean_comparisons_model_1} returns ggplot from \code{\link{mean_comparisons_model_1}}
 #' 
-#' @param out_mean_comparisons_model_1 outputs from \code{\link{mean_comparisons_model_1}}
+#' @param x outputs from \code{\link{mean_comparisons_model_1}}
 #' 
 #' @details See \code{\link{get_ggplot}}
 #' 
@@ -16,37 +16,141 @@
 #' }
 #' 
 #'
-ggplot_mean_comparisons_model_1 = function(
-  out_mean_comparisons_model_1,
+plot.mean_comparisons_model_1 <- function(
+  x,
   data_version = NULL,
-  ggplot.type = "interaction",
-  nb_parameters_per_plot = 10
+  ggplot.type = c("interaction", "barplot", "score"),
+  nb_parameters_per_plot = 8
   ){
   
   # 1. Error message ----------
-  if( !is.element(ggplot.type, c("interaction", "barplot", "score")) ) { stop("ggplot.type must be score, barplot or interaction with output from mean_comparisons and model_1") }
-  
+  ggplot.type <- match.arg(ggplot.type, several.ok = FALSE)
+
   # 2. get data ----------
   all_data = list(
-    "data_mean_comparisons" = out_mean_comparisons_model_1$data_mean_comparisons,
-    "data_env_with_no_controls" = out_mean_comparisons_model_1$data_env_with_no_controls,
-    "data_env_whose_param_did_not_converge" = out_mean_comparisons_model_1$data_env_whose_param_did_not_converge
+    "data_mean_comparisons" = x$data_mean_comparisons,
+    "data_env_with_no_controls" = x$data_env_with_no_controls,
+    "data_env_whose_param_did_not_converge" = x$data_env_whose_param_did_not_converge
   )
   
   # 3. get ggplot ----------
+  
+  # 3.1. function used in the code ----------
+  add_stars_version = function(dx, data, data_version){
+    # Add letters of significant groups
+    env = dx$environment[1]
+    if( !is.null(data) ){ data_Mpvalue_env = data[[env]]$Mpvalue } else { data_Mpvalue_env = NULL }
+    data_version_tmp = droplevels(filter(data_version, environment == env))
+    gp = unique(data_version_tmp$group)
+    
+    STARS = NULL
+    for(g in gp){
+      dtmp = droplevels(filter(data_version_tmp, group == g))
+      vec_version = levels(dtmp$version)
+      v1 = unique(as.character(filter(dtmp, version == vec_version[1])$mu))
+      v2 = unique(as.character(filter(dtmp, version == vec_version[2])$mu))
+      
+      if( !is.null(data_Mpvalue_env) ){ 
+        for (i in 1:ncol(data_Mpvalue_env)) { 
+          if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
+          if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
+        }
+        pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
+      } else {
+        if( length(v1) > 1 & length(v2) > 1) {
+          pvalue = t.test(v1, v2)$p.value
+        } else { 
+          pvalue = NULL
+          warning(attributes(data)$PPBstats.object, ": no t.test are done as there are not enough observations.") 
+        }
+      }
+      
+      if(is.null(pvalue)) { stars = " "} else {
+        if(pvalue < 0.001) { stars = "***" }
+        if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
+        if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
+        if(pvalue > 0.01) { stars = "." }
+      }
+      names(stars) = g
+      STARS = c(STARS, stars)
+    }
+    
+    colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
+    d = join(data_version_tmp, dx, by = "mu")
+    
+    # delete version where there are not v1 AND v2
+    group_to_keep = NULL
+    vec_group = unique(d$group)
+    
+    for(gp in vec_group){
+      d_tmp = droplevels(d[d$group %in% gp,])
+      t = tapply(d_tmp$median, d_tmp$version, mean, na.rm = TRUE)
+      if(!is.na(t[1]) & !is.na(t[2])){ group_to_keep = c(group_to_keep, gp)} 
+    }
+    
+    d = droplevels(d[d$group %in% group_to_keep,])
+    STARS = STARS[is.element(names(STARS), group_to_keep)]
+    
+    p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
+    y = tapply(d$median, d$group, mean, na.rm = TRUE)
+    y = y + (max(y) * 0.2)
+    label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
+    p = p + geom_text(data = label_stars, aes(label = STARS))
+    p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + coord_cartesian(ylim = c(0, dx[1,"max"]))
+    return(p)
+  }
+  
+  
+  get.loc.year = function(data, nb_parameters_per_plot){
+    
+    if( length(data) > 0 ) {
+      dtmp = data.frame()
+      for(i in 1:length(data)){ dtmp = rbind.data.frame(dtmp, data[[i]]$mean.comparisons) }
+      data = dtmp
+      
+      d_loc = plyr:::splitter_d(data, .(location))
+      
+      d_loc_b = lapply(d_loc, function(x){
+        x = arrange(x, entry)
+        x$split = as.numeric(factor(x$entry))
+        seq_nb_para = unique(c(seq(1, max(x$split), nb_parameters_per_plot), max(x$split)*2))
+        for(i in 1:(length(seq_nb_para) - 1) ) { x$split[seq_nb_para[i] <= x$split & x$split < seq_nb_para[i+1]] = i }
+        x_split = plyr:::splitter_d(x, .(split))
+        return(x_split)
+      } )
+    } else { d_loc_b = NULL }
+    
+    return(d_loc_b)
+  }
+  
+  
+  
+  # 3.2. run function for barplot ----------
+  
   if( ggplot.type == "barplot") {
     
     fun_barplot = function(data, data_version, nb_parameters_per_plot){
       if(!is.null(data_version)) {
         data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
         data_version$mu = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
+        
+        # check for env
         vec_env = unique(data_version$environment)
         vec_env_to_get = vec_env[is.element(vec_env, names(data))]
         vec_env_not_to_get = vec_env[!is.element(vec_env, names(data))]
         if( length(vec_env_not_to_get) > 0 ){ 
           warning(attributes(data)$PPBstats.object, ": the following environments in data_version are not taken: ", paste(vec_env_not_to_get, collapse = ", "),".") 
-          }
+        }
         
+        # check for entry in each element of data (i.e. in each environment)
+        vec_entry = data_version$germplasm
+        lapply(data, function(x, vec_entry){
+          vec_entry_not_ok = vec_entry[!is.element(vec_entry, x$mean.comparisons$entry)]
+          if( length(vec_entry_not_ok) > 0 ) { 
+            warning("The following entries do not exist in ", x$mean.comparisons$environment[1]," : ", paste(vec_entry_not_ok, collapse = ", "), ". The graph is not done." ) }
+          }, vec_entry)
+
+        # If tests OK, lets go
         if( length(vec_env_to_get) == 0 ) { 
           OUT = NULL
           warning(attributes(data)$PPBstats.object, ": there are no environment to display") 
@@ -66,119 +170,20 @@ ggplot_mean_comparisons_model_1 = function(
           
           d_env_b = lapply(d_env, fun, data_version, nb_parameters_per_plot)
           
-          fun_barplot_version = function(dx, data){
+          fun_barplot_version = function(dx, data, data_version){
             if(attributes(data)$PPBstats.object == "data_mean_comparisons") { 
-              # Add letters of significant groups
-              env = dx$environment[1]
-              data_Mpvalue_env = data[[env]]$Mpvalue
-              data_version_tmp = droplevels(filter(data_version, environment == env))
-              gp = unique(data_version_tmp$group)
-              STARS = NULL
-              for(g in gp){
-                dtmp = droplevels(filter(data_version_tmp, group == g))
-                vec_version = levels(dtmp$version)
-                v1 = unique(as.character(filter(dtmp, version == vec_version[1])$mu))
-                v2 = unique(as.character(filter(dtmp, version == vec_version[2])$mu))
-                for (i in 1:ncol(data_Mpvalue_env)) { 
-                  if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
-                  if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
-                }
-                pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
-                
-                if(is.null(pvalue)) { stars = " "} else {
-                  if(pvalue < 0.001) { stars = "***" }
-                  if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
-                  if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
-                  if(pvalue > 0.01) { stars = "." }
-                }
-                names(stars) = g
-                STARS = c(STARS, stars)
-              }
-              
-              colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
-              d = join(data_version_tmp, dx, by = "mu")
-              
-              # delete version where there are not v1 AND v2
-              group_to_keep = NULL
-              vec_group = unique(d$group)
-              
-              for(gp in vec_group){
-                d_tmp = droplevels(d[d$group %in% gp,])
-                t = tapply(d_tmp$median, d_tmp$version, mean, na.rm = TRUE)
-                if(!is.na(t[1]) & !is.na(t[2])){ group_to_keep = c(group_to_keep, gp)} 
-              }
-              
-              d = droplevels(d[d$group %in% group_to_keep,])
-              STARS = STARS[is.element(names(STARS), group_to_keep)]
-
-              p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
-              y = tapply(d$median, d$group, mean, na.rm = TRUE)
-              y = y + (max(y) * 0.2)
-              label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
-              p = p + geom_text(data = label_stars, aes(label = STARS))
-              p = p + xlab("") + theme(axis.text.x = element_text(angle = 90))
+              p = add_stars_version(dx, data, data_version)
             }
             
             if(attributes(data)$PPBstats.object == "data_env_with_no_controls" |
                attributes(data)$PPBstats.object == "data_env_whose_param_did_not_converge") {
-              
-              env = dx$environment[1]
-              data_version_tmp = droplevels(filter(data_version, environment == env))
-              
-              gp = unique(data_version_tmp$group)
-              STARS = NULL
-              for(g in gp){
-                dtmp = droplevels(filter(data_version_tmp, group == g))
-                vec_version = levels(dtmp$version)
-                v1 = unique(as.character(filter(dtmp, version == vec_version[1])$median))
-                v2 = unique(as.character(filter(dtmp, version == vec_version[2])$median))
-                
-                if( length(v1) > 1 & length(v2) > 1) {
-                  pvalue = t.test(v1, v2)$p.value
-                } else { 
-                  pvalue = NULL
-                  warning(attributes(data)$PPBstats.object, ": no t.test are done as there are not enough observations.") 
-                  }
-                
-                if(is.null(pvalue)) { stars = " "} else {
-                  if(pvalue < 0.001) { stars = "***" }
-                  if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
-                  if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
-                  if(pvalue > 0.01) { stars = "." }
-                }
-                names(stars) = g
-                STARS = c(STARS, stars)
-              }
-              
-              colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
-              d = join(data_version_tmp, dx, "mu")
-              
-              
-              # delete version where there are not v1 AND v2
-              group_to_keep = NULL
-              vec_group = unique(d$group)
-              
-              for(gp in vec_group){
-                d_tmp = droplevels(d[d$group %in% gp,])
-                t = tapply(d_tmp$median, d_tmp$version, mean, na.rm = TRUE)
-                if(!is.na(t[1]) & !is.na(t[2])){ group_to_keep = c(group_to_keep, gp)} 
-              }
-              
-              d = droplevels(d[d$group %in% group_to_keep,])
-              STARS = STARS[is.element(names(STARS), group_to_keep)]
-              
-              p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
-              y = tapply(d$median, d$group, mean, na.rm = TRUE)
-              y = y + (max(y) * 0.2)
-              label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
-              p = p + geom_text(data = label_stars, aes(label = STARS))
-              p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + coord_cartesian(ylim = c(0, dx[1,"max"]))
+              p = add_stars_version(dx, data = NULL, data_version)
             }
             
             return(p)
           }
           
-          fun1 = function(x, data){ lapply(x, fun_barplot_version, data) }
+          fun1 = function(x, data){ lapply(x, fun_barplot_version, data, data_version) }
           
           OUT = lapply(d_env_b, fun1, data)
           names(OUT) = names(d_env_b)
@@ -226,30 +231,7 @@ ggplot_mean_comparisons_model_1 = function(
     
   }
   
-  
-  
-  get.loc.year = function(data, nb_parameters_per_plot){
-    
-    if( length(data) > 0 ) {
-      dtmp = data.frame()
-      for(i in 1:length(data)){ dtmp = rbind.data.frame(dtmp, data[[i]]$mean.comparisons) }
-      data = dtmp
-      
-      d_loc = plyr:::splitter_d(data, .(location))
-      
-      d_loc_b = lapply(d_loc, function(x){
-        x = arrange(x, entry)
-        x$split = as.numeric(factor(x$entry))
-        seq_nb_para = unique(c(seq(1, max(x$split), nb_parameters_per_plot), max(x$split)*2))
-        for(i in 1:(length(seq_nb_para) - 1) ) { x$split[seq_nb_para[i] <= x$split & x$split < seq_nb_para[i+1]] = i }
-        x_split = plyr:::splitter_d(x, .(split))
-        return(x_split)
-      } )
-    } else { d_loc_b = NULL }
-    
-    return(d_loc_b)
-  }
-  
+  # 3.3. run function for score ----------
   
   if(ggplot.type == "score") {  
     
@@ -288,7 +270,7 @@ ggplot_mean_comparisons_model_1 = function(
   }
   
   
-  # 2.2. interaction ----------
+  # 3.4. run function for interaction ----------
   if(ggplot.type == "interaction") {
 
     fun_interaction = function(data, nb_parameters_per_plot){

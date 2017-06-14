@@ -10,7 +10,7 @@ More informations about this licence [here](http://creativecommons.org/licenses/
 The copyright of the R code and the vignette are owned by Réseau Semences Paysannes and Institut National de la Recherche Agronomique
 
 ## Version
-`PPBstats` is now at version 0.15
+`PPBstats` is now at version 0.20
 
 The version number is under the form A.B with
 
@@ -44,7 +44,7 @@ First, load the development version:
 
 The easiest way to start is to look at the vignette to know how the package works.
 
-You can see the vignette [here](https://www.dropbox.com/s/gtv22p7hxkbbrxb/PPBstats.pdf?dl=0). 
+You can download the vignette [here](https://github.com/priviere/PPBstats/releases/download/v0.20/PPBstats.pdf).
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
 - some points are not clear in the vignette or you find bugs

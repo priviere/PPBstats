@@ -180,13 +180,7 @@ See details for more information.}
      \item ind : graph of individuals
      \item var : graph of variables
     }
-   \item clust
-    \itemize{
-     \item nb_k : output from \code{factextra::fviz_nbclust(data, kmeans, method = "silhouette")}
-     See \code{?factoextra::fviz_nbclust} for more details
-     \item pca : output from \code{factextra::fviz_cluster(km.res, data, frame.type = "norm")}
-     See \code{?factoextra::fviz_cluster} for more details
-    }
+   \item clust : output from \code{factextra::fviz_nbclust()}. See \code{?factoextra::fviz_nbclust} for more details
   }
 
 

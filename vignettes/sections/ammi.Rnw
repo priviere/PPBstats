@@ -52,13 +52,13 @@ $\varepsilon_{ijk}$ & the residuals.\\
 \end{tabular}
 
 
-\item a \textbf{PCA} which analyse deeper the germplasm $\times$ location interaction: 
+\item a \textbf{PCA} which analyse deeper the germplasm $\times$ location interaction : 
 
 \begin{displaymath}
-\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}
+\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} \footnote{Note than in \pack, the PCA is done on $\eta_{i}\nu_{j} + \varepsilon_{ijk}$. The residuals is in the last dimension of the PCA}
 \end{displaymath}
 
-which can also be written:
+which can also be written :
 
 \begin{displaymath}
 \eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})
@@ -195,7 +195,7 @@ out_check_ammi = check_model(out_ammi)
 Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_check_ammi = get_ggplot(out_check_ammi)
+p_out_check_ammi = plot(out_check_ammi)
 @
 
 \texttt{p\_out\_check\_ammi} is a list with:
@@ -260,7 +260,7 @@ out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni
 \paragraph{Visualize mean comparisons}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_mean_comparisons_ammi = get_ggplot(out_mean_comparisons_ammi, ggplot.type = "barplot")
+p_out_mean_comparisons_ammi = plot(out_mean_comparisons_ammi)
 @
 
 \texttt{out\_mean\_comparisons\_ammi} is a list of three elements with barplots :
@@ -310,7 +310,7 @@ out_biplot_ammi = biplot_GxE(out_check_ammi)
 \paragraph{Visualize biplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_out_biplot_ammi = get_ggplot(out_biplot_ammi)
+p_out_biplot_ammi = plot(out_biplot_ammi)
 @
 
 \texttt{p\_out\_biplot\_ammi} is a list of three elements :
@@ -360,24 +360,20 @@ In order to cluster locations or germplasms, you may use mulivariate analysis on
 
 This is done with \texttt{parameter\_groups} which do a PCA on this matrix.
 
-Clusters are done based on Average silhouette method for k-means clustering as explained here \url{http://www.sthda.com/english/wiki/determining-the-optimal-number-of-clusters-3-must-known-methods-unsupervised-machine-learning#r-codes-1}
-
-The hcluster are computed with the function \texttt{hclust(dist())}
-
-The kmeans are computed with the function \texttt{kmeans()}
+Clusters are done based on HCPC method as explained here \url{http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning}
 
 Lets' have an example with three variables.
 
 First run the models
 <<message=TRUE,cache=FALSE>>=
-ammi_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "AMMI")
-ammi_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "AMMI")
+out_ammi_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "AMMI")
+out_ammi_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "AMMI")
 @
 
 Then check the models
 <<message=TRUE,cache=FALSE>>=
-out_check_ammi_2 = check_model(ammi_2)
-out_check_ammi_3 = check_model(ammi_3)
+out_check_ammi_2 = check_model(out_ammi_2)
+out_check_ammi_3 = check_model(out_ammi_3)
 @
 
 Then run the function for germplasm. It can also be done on location or year if there are year in the data set.
@@ -389,12 +385,23 @@ out_parameter_groups = parameter_groups(
   )
 @
 
+\texttt{out\_parameter\_groups} is list of two elements:
+
+\begin{itemize}
+\item\texttt{obj.pca} : the PCA object from \texttt{FactoMineR::PCA}
+\item \texttt{clust}, a list of two elements:
+\begin{itemize}
+  \item \texttt{res.hcpc} : the HCPC object from \texttt{FactoMineR::HCPC}
+  \item \texttt{clust} : the dataframe with cluster assigned to each individual
+  \end{itemize}
+\end{itemize}
+
 \paragraph{Visualize groups of parameters}
 
 Visualize outputs with \texttt{get\_ggplot}
 
 <<message=TRUE,cache=FALSE>>=
-p_germplasm_group = get_ggplot(out_parameter_groups)
+p_germplasm_group = plot(out_parameter_groups)
 @
 
 \texttt{p\_germplasm\_group} is list of two elements :
@@ -420,23 +427,11 @@ p_germplasm_group = get_ggplot(out_parameter_groups)
   
   \end{itemize}
 
-
-\item \texttt{clust}
-  \begin{itemize}
-  \item \texttt{nb\_k} : output from \texttt{factextra::fviz\_nbclust(data, kmeans, method = "silhouette")}
-  See \texttt{?factoextra::fviz\_nbclust} for more details
+\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}
   <<message=TRUE,cache=FALSE>>=
-  p_germplasm_group$clust$nb_k
+  p_germplasm_group$clust
   @
 
-  \item \texttt{pca} : output from \texttt{factextra::fviz\_cluster(km.res, data, frame.type = "norm")}
-  See \texttt{?factoextra::fviz\_cluster} for more details
-  <<message=TRUE,cache=FALSE>>=
-  p_germplasm_group$clust$pca
-  @
-
-  \end{itemize}
- 
 \end{itemize}
 
 

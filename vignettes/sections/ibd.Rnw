@@ -1,0 +1,12 @@
+\subsection{Incomplete Block Design}
+\label{ibd}
+
+!!! TO DO !!!
+
+<<message=TRUE,cache=FALSE>>=
+#library(ibd)
+#data(ibddata)
+#aov.ibd(y~factor(trt)+factor(blk),data=ibddata)
+#contrast=matrix(c(1,-1,0,0,0,0,0,0,0,0,0,1,-1,0,0,0,0,0),nrow=2,byrow=TRUE)
+#aov.ibd(y~factor(trt)+factor(blk),specs="trt",data=ibddata,contrast=contrast)
+@

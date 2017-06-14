@@ -362,7 +362,7 @@ model_1 = function(
     "DIC"= DIC
   )
   
-  attributes(OUT)$PPBstats.object = "model_1"
+  class(OUT) <- c("PPBstats", "fit_model_1")
   return(OUT)
 }
 
