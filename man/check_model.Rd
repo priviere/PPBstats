@@ -4,10 +4,10 @@
 \alias{check_model}
 \title{Check if the model went well}
 \usage{
-check_model(out_model)
+check_model(x)
 }
 \arguments{
-\item{out_model}{outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}}
+\item{x}{outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}}
 }
 \value{
 The function returns a list depending on check_model input
