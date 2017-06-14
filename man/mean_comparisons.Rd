@@ -4,9 +4,7 @@
 \alias{mean_comparisons}
 \title{Get mean comparisons}
 \usage{
-mean_comparisons(out_check_model, parameter, alpha = 0.05, type = 1,
-  get.at.least.X.groups = 2, precision = 5e-04, threshold = 1,
-  p.adj = "soft.bonf")
+mean_comparisons(x, ...)
 }
 \arguments{
 \item{out_check_model}{outputs from \code{\link{check_model}} or \code{\link{predict_the_past_model_2}}}
