@@ -1,3 +1,140 @@
+# Nettoyage
+rm(list=ls())
+
+# importation des données
+d <-read.csv("2016_organo_foirebio-villeneuve_7082016.csv",sep = "\t", header = TRUE)
+code <-read.csv("code_tomates.csv",sep = "\t", header = TRUE)
+
+# chargement des outils
+library(ggplot2)
+library(dplyr)
+library(plyr)
+library(agricolae)
+
+# rassemblement des données grâce à la colonne commune 'code'
+a <- join(code,d, by="code")
+
+# mise en forme des adjectifs
+# création du data frame qui contiendra les valeurs logiques (0 ou 1) pour chacun des adjectifs
+adjectif = as.vector (as.character(a$adjectif))
+split = unlist(strsplit(adjectif, "[;]"))
+split = unique(split)
+split = sort(split)
+df = matrix(0, ncol=length(split), nrow=nrow(a))
+df = as.data.frame(df)
+colnames(df) = split
+out = cbind.data.frame(a,df)
+
+# attribution des valeurs logiques (0 ou 1)
+for (i in 1:nrow(out)){
+  vec_adj = out[i,"adjectif"]
+  vec_adj = unlist(strsplit(as.character(vec_adj), ";"))
+  
+  for (j in 1:length(vec_adj)) {
+    e = vec_adj[j]
+    if (length(e)>0) {
+      if (!is.na(e)) { out[i,e]= 1 }
+    }
+  }
+}
+
+#visualisation du data frame créé
+edit(out)
+
+#définition des types de données
+code = as.factor(out$code)
+out$env = as.factor(out$environnement)
+out$var = as.factor(out$variete)
+out$note = as.numeric (as.character(out$note))
+id_juge = as.factor (out$id_juge)
+sex = as.factor(out$sexe)
+age = as.factor(out$age)
+regime = as.factor(out$ab_ou_non)
+circuit = as.factor(out$circuit)
+adj = as.character.factor(out$adjectif)
+
+l<-nlevels(out$code)
+for (i in 1:l){
+  n<-nrow(out$id_juge==i)
+  if (n<l){
+    i=j
+    i=i+1
+  }
+  j=j+1
+}
+levels(j)
+
+
+###    Stats descriptives   ###
+
+# Histogramme des moyennes par variété
+#g<-ggplot(data=out, aes(var,note, color=env)) +
+#  geom_bar(aes(fill=env),position="dodge",na.rm=TRUE, colour='black',width=0.6) +
+#  stat_identity()+
+#  ggtitle("Appréciation globale moyenne par variété") +
+#  xlab("Variétés") + ylab("Appréciation moyenne globale")
+
+# Boxplot des moyennes par variété
+b1<-ggplot(data=out, aes(x = var, y = note, color=var)) +
+  geom_boxplot(na.rm=TRUE) +
+  facet_wrap(c("env"),nrow = 2) +
+  ggtitle("Appréciation globale par variété") +
+  xlab("Variétés") + ylab("Appréciation globale") +
+  theme(axis.text.x=element_text(size=8,angle=90))
+b1 
+
+###     ANOVA     ####
+
+model <- lm(note~env+var+env*var, data = out)
+anova(model)
+
+# analyse des résidus
+residus=rstudent(model)
+par(mfrow=c(2,2))
+plot(model,which=1:4)
+
+# test hsd
+hsd<- HSD.test(model, "var")
+
+# boxplot avec les lettres
+par(mfrow=c(1,1))
+bp <- boxplot(note~var, data=out)
+lettres<-hsd$groups$M
+names(lettres)<-gsub(pattern=" ", replacement="", x=hsd$groups$trt)
+moys<- hsd$groups$means
+names(moys)<-gsub(pattern=" ", replacement="", x=hsd$groups$trt)
+text(1:9,moys[bp$names], labels=lettres[bp$names])
+
+# LSD test 'Least Significance Difference'
+gLSDplot=function(model,x,y,adjust){
+  #model : modèle complet, x : facteur étudié, y : variable étudiée, adjust : ajustement ("bonferroni" / "holm" / "none" / "hochberg" / "BH" / "BY")
+  
+  LSD=LSD.test(model, x, p.adj=adjust) #pareil pour p.adj : "bonferroni" / "holm" / "none" / "hochberg" / "BH" / "BY"
+  LSD$groups$trt=factor(LSD$groups$trt, levels=LSD$groups$trt)
+  
+  if (x=="var"){
+    LSD$groups$var=LSD$groups$trt
+    p=ggplot(data=LSD$groups, aes(x=var, y=means)) # ,color=var))
+    p=p + geom_text(data=LSD$groups, aes(x=var, y=means, label=M, vjust=-1))
+    p=p + labs(title = paste("Groupes de variétés significativement differents pour la variable :",y))
+  }
+  else if (x=="env"){
+    LSD$groups$env=LSD$groups$trt
+    p=ggplot(data=LSD$groups, aes(x=env, y=means)) # ,color=env))
+    p=p + geom_text(data=LSD$groups, aes(x=env, y=means, label=M, vjust=-1))
+    p=p + labs(title = paste("Groupes d'environnements significativement differents pour la variable :",y))
+  }
+  
+  p=p + geom_bar(stat="identity") #aes(fill=var), position="dodge")
+  p=p + theme(legend.position="none", axis.text.x=element_text(size=15,angle=90), plot.title = element_text(lineheight=.8, face="bold"))
+  p=p + scale_y_continuous(name=y)
+  
+  return(p)
+} 
+
+model <- lm(note~env+var+env*var, data = out)
+gLSDplot(model,x="var", y="note", adjust = "bonferroni")
+
 library(FactoMineR)
 occmot<- read.table("C:/Users/ITAB1/Desktop/AnalyseR/Carac_Ter_Panicol_AFC/Carac_Ter_Panicol.txt", header=TRUE, sep="\t")
 
