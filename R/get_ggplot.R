@@ -147,7 +147,7 @@
 #'     \itemize{
 #'      \item residuals
 #'       \itemize{
-#'        \item histogramm : histogramm with the distribution of the residuals
+#'        \item histogram : histogram with the distribution of the residuals
 #'        \item qqplot
 #'       }
 #'      \item variability_repartition : pie with repartition of SumSq for each factor
