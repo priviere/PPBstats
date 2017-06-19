@@ -203,9 +203,9 @@ p_out_check_ammi = plot(out_check_ammi)
 \begin{itemize}
 \item \texttt{residuals}
   \begin{itemize}
-  \item \texttt{histogramm} : histogramm with the distribution of the residuals
+  \item \texttt{histogram} : histogram with the distribution of the residuals
   <<message=TRUE,cache=FALSE>>=
-  p_out_check_ammi$residuals$histogramm
+  p_out_check_ammi$residuals$histogram
   @
   \item \texttt{qqplot}
   <<message=TRUE,cache=FALSE>>=
