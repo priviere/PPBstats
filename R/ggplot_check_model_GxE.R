@@ -36,7 +36,7 @@ plot.check_model_GxE <- function(
   
   
   # 1. Normality ----------
-  # 1.1. Histogramm ----------
+  # 1.1. Histogram ----------
   p = ggplot(data_ggplot_normality, aes(x = r), binwidth = 2)
   p = p + geom_histogram() + geom_vline(xintercept = 0)
   p = p + ggtitle("Test for normality", paste("Skewness:", signif(data_ggplot_skewness_test, 3), "; Kurtosis:", signif(data_ggplot_kurtosis_test, 3)))
@@ -69,7 +69,7 @@ plot.check_model_GxE <- function(
   
   out = list(
     "residuals" = list(
-      "histogramm" = p1.1,
+      "histogram" = p1.1,
       "qqplot" = p1.2),
     "variability_repartition" = p2,
     "variance_intra_germplasm" = p3,
