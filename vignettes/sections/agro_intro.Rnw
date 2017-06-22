@@ -440,7 +440,7 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 \texttt{biplot\_GxE} & Compute ecovalence and format PCA results \\ \hline
 
-\texttt{get\_ggplot} & Get ggplot objects to visualize output \\ \hline
+\texttt{plot} & Build ggplot objects to visualize output \\ \hline
 
 \end{tabular}
 \caption{Main function descriptions.}
