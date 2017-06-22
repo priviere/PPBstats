@@ -93,9 +93,9 @@ For model\_2, you can follow these steps (Figure \ref{function_relations}):
 \item Run the model with \texttt{model\_2}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
 \item Perform cross validation studies with \texttt{cross\_validation\_model\_2} in order to assess the quality of the model
-\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{get\_ggplot}
-\item Get groups of parameters for $\alpha$, $\beta$ and $\theta$ with \texttt{parameters\_groups} and visualise it with \texttt{get\_ggplot}
-\item Predict the past with \texttt{predict\_the\_past\_model\_2} and vizualise it with \texttt{get\_ggplot}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
+\item Get groups of parameters for $\alpha$, $\beta$ and $\theta$ with \texttt{parameters\_groups} and visualise it with \texttt{plot}
+\item Predict the past with \texttt{predict\_the\_past\_model\_2} and vizualise it with \texttt{plot}
 \end{enumerate}
 
 Let's get the data.
@@ -211,7 +211,7 @@ dim(out_check_model_2$MCMC)
 
 \paragraph{Visualize outputs}
 
-Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
+Once the computation is done, you can visualize the results with \texttt{plot}
 <<message=TRUE,cache=FALSE>>=
 p_out_check_model_2 = plot(out_check_model_2)
 @
@@ -308,7 +308,7 @@ load("./data_PPBstats/out_cross_validation_model_2.RData") # to save lots of tim
 head(out_cross_validation_model_2)
 @
 
-The outputs are visualized with \texttt{get\_ggplot}
+The outputs are visualized with \texttt{plot}
 
 <<message=TRUE,cache=FALSE>>=
 p_out_cv = plot(out_cross_validation_model_2)
@@ -370,7 +370,7 @@ load("./data_PPBstats/model_2_theta.RData")
 
 \paragraph{Vizualise mean comparisons}
 
-To see the output, use \texttt{get\_ggplot}.
+To see the output, use \texttt{plot}.
 
 There are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
 
@@ -477,7 +477,7 @@ out_parameter_groups = parameter_groups(
 
 \paragraph{Visualize groups of parameters}
 
-Visualize outputs with \texttt{get\_ggplot}
+Visualize outputs with \texttt{plot}
 
 <<message=TRUE,cache=FALSE>>=
 ppg = plot(out_parameter_groups)

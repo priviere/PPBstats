@@ -62,7 +62,7 @@ For model\_1, you can follow these steps (Figure \ref{main_workflow}):
 \begin{enumerate}
 \item Run the model with \texttt{model\_1}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
-\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{get\_ggplot}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
 \end{enumerate}
 
 Let's get the data.
@@ -207,7 +207,7 @@ load("./data_PPBstats/out_check_model_1_bis.RData") # To save time
 
 \paragraph{Visualize outputs}
 
-Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
+Once the computation is done, you can visualize the results with \texttt{plot}
 <<message=TRUE,cache=FALSE>>=
 p_out_check_model_1 = plot(out_check_model_1)
 @
@@ -377,7 +377,7 @@ head(out_mean_comparisons_model_1_mu$data_env_with_no_controls$`env5:2010`$mean.
 
 \paragraph{Visualize mean comparisons}
 
-To see the output, use \texttt{get\_ggplot}.
+To see the output, use \texttt{plot}.
 On each plot, the \texttt{alpha} (type one error) value and the alpha correction are displayed.
 \texttt{alpha = Imp} means that no differences were possible to find.
 For \texttt{ggplot.type = "interaction"} and \texttt{ggplot.type = "score"}, it is display under the form: \texttt{alpha | alpha correction}.
