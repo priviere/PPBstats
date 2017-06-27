@@ -8,7 +8,14 @@
 \usetikzlibrary{mindmap}
 \usepackage{pstricks}
 
-\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{
+  shapes,          % 
+  arrows,          %
+  decorations.pathreplacing,    % paths with shapes of curly braces
+  positioning,     % positions like above of node
+  fit              % legend bounding box fitting all nodes
+}
+
 \graphicspath{{./figures/}}
 \usepackage{wrapfig}
 
