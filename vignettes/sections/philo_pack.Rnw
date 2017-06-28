@@ -12,7 +12,7 @@ Broad sens heritability of a given trait is then:
 h^2_{sl} = \frac{var(G)}{var(G) + var(E) + var(G\times E)}
 \end{displaymath}
 
-Heritability taking into account the network is therefore superior or equal to heritability on a given site because $var(G\times E) > 0$.
+Heritability taking into account the network is therefore inferior or equal to heritability on a given site because $var(G\times E) > 0$.
 When facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted varieties to local agro-systems.
 
 \item \textbf{involve all actors in the breeding decision process}: farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors  \citep{sperling_framework_2001}.

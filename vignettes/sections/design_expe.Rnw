@@ -2,7 +2,7 @@
 \label{doe}
 
 
-Function \texttt{design\_experiment} settle experimental design based on :
+Function \texttt{design\_experiment} sets the experimental design based on :
 \begin{itemize}
 \item the number of entries
 \item the number of controls per blocks
