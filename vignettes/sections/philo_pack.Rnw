@@ -26,19 +26,19 @@ When facing a wide diversity of agroecological environment and practices, decent
 
 \begin{itemize}
 
-\item network (section \ref{network})
+\item network (Section~\ref{network})
 
-\item agronomic (section \ref{agronomic}) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
+\item agronomic (Section~\ref{agronomic}) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
 The statistical procedures are based on frequentist and bayesian approaches.
 
-\item organoleptic (section \ref{organoleptic})
+\item organoleptic (Section~\ref{organoleptic})
 
-\item molecular (section \ref{molecular})
+\item molecular (Section~\ref{molecular})
 
 \end{itemize}
 
 Up to now, only agronomic analysis is under development. 
-Please, feel free to contribute to other aspects of analysis, see section \ref{contribute} for more information.
+Please, feel free to contribute to other aspects of analysis, see Section~\ref{contribute} for more information.
 
 
 \subsection{Decision tree to choose the right analysis according to question and experimental design}

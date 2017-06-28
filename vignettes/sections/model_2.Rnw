@@ -353,7 +353,7 @@ p_out_cv$regression
 
 \paragraph{Get mean comparisons}
 
-For mean comparisons of parameters, it is the same method that presented in section \ref{mean_comp}.
+For mean comparisons of parameters, it is the same method that presented in Section~\ref{mean_comp}.
 It can be done for $\alpha_i$, $\beta_i$ and $\theta_j$.
 
 <<message=TRUE,cache=FALSE>>=
@@ -514,7 +514,7 @@ ppg = plot(out_parameter_groups)
 
 \end{itemize}
 
-A farmer may find a germplasm that behaves well according to informations from model\_1 (section \ref{section_model1}) in a farm that shares its cluster.
+A farmer may find a germplasm that behaves well according to informations from model\_1 (Section~\ref{section_model1}) in a farm that shares its cluster.
 
 
 

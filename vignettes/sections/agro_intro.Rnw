@@ -12,14 +12,14 @@ The key elements to choose an appropriate experimental designs are:
 \item the replication of entries within and between locations
 \end{itemize}
 
-\noindent Several designs used in PPB programmes are presented in section \ref{doe} and are mentionned in decision tree in section \ref{decision_tree}.
+\noindent Several designs used in PPB programmes are presented in Section~\ref{doe} and are mentionned in decision tree in Section~\ref{decision_tree}.
 
-Then, you can sow, note, harvest, measure (see section \ref{section_sow}) ...
+Then, you can sow, note, harvest, measure (see Section~\ref{section_sow}) ...
 
 
 \subsection{Analysis carried out}
 
-After describing the data (see section \ref{describe_data}), you can run statistical analysis.
+After describing the data (see Section~\ref{describe_data}), you can run statistical analysis.
 
 Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
 The different effects that can be estimated are:
@@ -50,7 +50,7 @@ It allows to study the response of entries over several farms or environnements 
 \item \textbf{Family 4} gathers analysis answering specific research questions. 
 This is for analysis on one farm or more.
 
-\item \textbf{Family 5} refers to multivariate analysis and is mentionned in section \ref{multivariate_analysis}.
+\item \textbf{Family 5} refers to multivariate analysis and is mentionned in Section~\ref{multivariate_analysis}.
 
 \end{itemize}
 
@@ -93,7 +93,7 @@ Family & Name & Section &
 \end{table}
 
 
-\noindent Analysis used in PPB programmes are mentionned in decision tree in section \ref{decision_tree}.
+\noindent Analysis used in PPB programmes are mentionned in decision tree in Section~\ref{decision_tree}.
 
 
 \subsubsection{Frequentist statistics}
@@ -245,7 +245,7 @@ For each family of analysis, a decision tree is divided into five categories (Fi
 \item Statistical analysis
 \end{enumerate}
 
-In sections \ref{doe} regarding design of experiments, the branchs of the decision tree concerned are displayed. 
+In Section~\ref{doe} regarding design of experiments, the branchs of the decision tree concerned are displayed. 
 Decision tree regarding Family 1 is displayed in Figure \ref{tree_f1}.
 Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 
@@ -264,8 +264,8 @@ every node/.append style={scale=0.5},
 \node{ \huge \textbf{Family} }
         child { node {Number of plots per location}
       		child { node {Number of locations and years}
-	      		child { node {Experimental design \\ cf section \ref{doe} }
-		      		child { node { Statistical analysis  \\ cf sections \ref{section_analysis1}, \ref{section_analysis2}, \ref{section_analysis3}, \ref{section_analysis4}, \ref{section_analysis5} } }
+	      		child { node {Experimental design \\ cf Section~\ref{doe} }
+		      		child { node { Statistical analysis  \\ cf Sections~\ref{section_analysis1}, \ref{section_analysis2}, \ref{section_analysis3}, \ref{section_analysis4}, \ref{section_analysis5} } }
 		      	}
         	}
         };
@@ -291,18 +291,18 @@ every node/.append style={scale=0.5},
 \node{ \huge \textbf{Family 1} }
         child { node {Number of plots per location large}
       		child { node {One location and one year}
-	      		child { node {All entries are replicated at least twice \\ \textbf{fully-repicated \\ cf section \ref{fully_replicated}} }
-		      		child { node { \textbf{Anova \\ cf section \ref{classic_anova}}} }
+	      		child { node {All entries are replicated at least twice \\ \textbf{fully-repicated \\ cf Section~\ref{fully_replicated}} }
+		      		child { node { \textbf{Anova \\ cf Section~\ref{classic_anova}}} }
 		      	}
-    	  		child { node {Entries are not replicated; only a control is replicated in rows and columns \\ \textbf{row-colum \\ cf section \ref{row_column}} }
-    	  			child { node {\textbf{Spatial analysis  \\ cf section \ref{spatial_analysis}}} }
+    	  		child { node {Entries are not replicated; only a control is replicated in rows and columns \\ \textbf{row-colum \\ cf Section~\ref{row_column}} }
+    	  			child { node {\textbf{Spatial analysis  \\ cf Section~\ref{spatial_analysis}}} }
       			}
         	}
         }
         child { node {Number of plots per location low}
        		child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
-        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf section \ref{rf_sf}} }
-	      			child { node {\textbf{model 1 \\ cf section \ref{model_1}}} }
+        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf Section~\ref{rf_sf}} }
+	      			child { node {\textbf{model 1 \\ cf Section~\ref{model_1}}} }
         		}    	
        		}
 		};
@@ -329,15 +329,15 @@ every node/.append style={scale=0.5},
 \node{\huge \textbf{Family 2} }
         child { node {Number of plots per location large}
       		child { node {At least two locations and at least one year}
-      			child { node {Same entries are in all locations; all entries are replicated at least twice in each location \\ \textbf{fully-repicated \\ cf section \ref{fully_replicated}} }
-		      		child { node {\textbf{AMMI, GGE \\ cf sections \ref{ammi} and \ref{gge}} }}  			
+      			child { node {Same entries are in all locations; all entries are replicated at least twice in each location \\ \textbf{fully-repicated \\ cf Section~\ref{fully_replicated}} }
+		      		child { node {\textbf{AMMI, GGE \\ cf Sections~\ref{ammi} and \ref{gge}} }}  			
       			}
       		}
         }
         child { node {Number of plots per farm low}
         	child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
-        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf section \ref{rf_sf}} }
-					child { node {\textbf{model 2 \\ cf section \ref{model_2}} }}
+        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf Section~\ref{rf_sf}} }
+					child { node {\textbf{model 2 \\ cf Section~\ref{model_2}} }}
 	        	}
         	}
         };

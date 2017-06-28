@@ -310,7 +310,7 @@ p + stat_smooth(method = "lm") + geom_point()
 \paragraph{Get mean comparisons}
 
 Get mean comparisons with \texttt{mean\_comparisons}.
-The theory behind mean comparisons are explained in section \ref{mean_comp}.
+The theory behind mean comparisons are explained in Section~\ref{mean_comp}.
 
 Below is an example for $\mu$, the same can be done for $\beta$.
 
@@ -466,7 +466,7 @@ $> 0.01$ & . \\
 \end{tabular}
 \end{center}
 
-The pvalue is computed as describe in section \ref{mean_comp} if the parameters have been estimated with the model.
+The pvalue is computed as describe in Section~\ref{mean_comp} if the parameters have been estimated with the model.
 
 For environments where MCMC did not converge or without environments, it is a \texttt{t.test} which is perform.
 
@@ -483,7 +483,7 @@ p_barplot_mu_version$data_env_whose_param_did_not_converge
 With \texttt{ggplot.type = "interaction"}, you can display the year effect as well as detect groups.
 One group is represented by one vertical line.
 Germplasms which share the same group are not different.
-Germplasms which do not share the same groupe are different (section \ref{mean_comp}).
+Germplasms which do not share the same groupe are different (Section~\ref{mean_comp}).
 
 The ggplot are done for each element of the list coming rom \texttt{mean\_comparisons}.
 
