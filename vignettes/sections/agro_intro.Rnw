@@ -5,7 +5,7 @@
 Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the space available.
 
 The experimental design is thought in relation to the analysis.
-The key elements to choose an appropriate experimental designs are:
+The key elements to choose an appropriate experimental design are:
 \begin{itemize}
 \item the number of locations
 \item the number of years
@@ -17,24 +17,24 @@ The key elements to choose an appropriate experimental designs are:
 Then, you can sow, note, harvest, measure (see Section~\ref{section_sow}) ...
 
 
-\subsection{Analysis carried out}
+\subsection{Analyses carried out}
 
 After describing the data (see Section~\ref{describe_data}), you can run statistical analysis.
 
-Table \ref{summary_analysis} summarize the analysis possible in \pack~and their specificities.
-The different effects that can be estimated are:
+Table \ref{summary_analysis} summarize the possible analyses in \pack~and their specificities.
+The various effects that can be estimated are:
 \begin{itemize}
-\item \textbf{entry}: a combinaison of a germplasm and an location or an environment
+\item \textbf{entry}: a combination of a germplasm and an location or an environment
 \item \textbf{germplasm}
 \item \textbf{location}
-\item \textbf{environment}: a combinaison of a location and a year
+\item \textbf{environment}: a combination of a location and a year
 \item \textbf{interaction}: interaction between germplasm and location or germplasm and environment
 \item \textbf{year}
 \item \textbf{migrant-resident}: migrant refers to germplasm that was not grown on previous generation on location; resident refers to germplasm that was grown  on previous generation on location.
 \item \textbf{version}: version within a germplasm, for example selected vs non-selected
 \end{itemize}
 
-\noindent The analysis are divided into five families:
+\noindent The analyses are divided into five families:
 \begin{itemize}
 
 \item \textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm. 
@@ -87,7 +87,7 @@ Family & Name & Section &
 4 & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
 \hline
 \end{tabular}
-\caption{Analysis carry out in \pack. X: effects that are estimated. (X): effects that can be estimated.}
+\caption{Analyses carried out in \pack. X: effects that are estimated. (X): effects that can be estimated.}
 \label{summary_analysis}
 \end{center}
 \end{table}
@@ -241,11 +241,11 @@ For each family of analysis, a decision tree is divided into five categories (Fi
 \item Family of analysis
 \item Number of plots per location
 \item Number of locations years
-\item Experimental design appropriated
+\item Experimental design
 \item Statistical analysis
 \end{enumerate}
 
-In Section~\ref{doe} regarding design of experiments, the branchs of the decision tree concerned are displayed. 
+In Section~\ref{doe} regarding design of experiments, the branches of the decision tree concerned are displayed. 
 Decision tree regarding Family 1 is displayed in Figure \ref{tree_f1}.
 Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 
@@ -392,14 +392,14 @@ After designing the experiment and describing the data, each family of analysis 
 \end{enumerate}
 Note that for model 2 and GGE other analysis are possible : predict the past and cross validation regarding model 2 and biplot regarding GGE.
 
-\pack~is divided into two sets of functions: Main functions and second functions.
-In this vignette, we only used examples with main functions as second functions are called within main functions.
+\pack~is divided into two sets of functions: Main functions and secondary functions.
+In this vignette, we only used examples with main functions as secondary functions are called within main functions.
 
 Figure~\ref{main_workflow} displays the main functions and their relations.
 Table~\ref{function_descriptions_workflow} describes each of the main functions.
 
-Figure~\ref{workflow_2} displays second functions used in the main functions.
-Table~\ref{function_descriptions_workflow_2} describes each of the second functions.
+Figure~\ref{workflow_2} displays secondary functions used in the main functions.
+Table~\ref{function_descriptions_workflow_2} describes each of the secondary functions.
 
 You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
 
@@ -452,7 +452,7 @@ You can have more information for each function by typing \texttt{?function\_nam
 \begin{center}
 \input{figures/PPBstats_secondary_functions.tex}
 \end{center}
-\caption{Second functions used in main functions.}
+\caption{Secondary functions used within main functions.}
 \label{workflow_2}
 \end{figure}
 

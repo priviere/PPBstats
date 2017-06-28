@@ -1,10 +1,10 @@
 \subsection{model\_2 to analyse $G \times E$ interaction in the network of farms }
 \label{model_2}
 
-At the \textbf{network level}, there is a large germplasm $\times$ environment combinaisons that are missing, leading to a poor estimation of germplasm, environment and interaction effects.
+At the \textbf{network level}, there is a large germplasm $\times$ environment combinations that are missing, leading to a poor estimation of germplasm, environment and interaction effects.
 Hence, model\_2 was implemented (section~\ref{section_model2}).
 
-For model\_2, it gave nice results with 75 environments and 120 germplasms present in at least two environments (95\% of missing $G \times E$ combinaisons) \citep{riviere_hierarchical_2016}.
+For model\_2, it gave nice results with 75 environments and 120 germplasms present in at least two environments (95\% of missing $G \times E$ combinations) \citep{riviere_hierarchical_2016}.
 
 
 \subsubsection{Theory of the model}
