@@ -15,7 +15,7 @@ Description: This package applies statistical methods to analyse unbalanced tria
 License: GPL-3
 URL: http://github.com/priviere/PPBstats
 BugReports: http://github.com/priviere/PPBstats/issues
-Depends: 
+Depends:
     rjags,
     FactoMineR, 
     ggplot2,
@@ -27,10 +27,11 @@ Depends:
     factoextra,
     ibd,
     bitops
-Suggests: 
+Suggests:
     ggmcmc,
     GGEBiplotGUI,
-    knitr
+    knitr,
+    rmarkdown
 LazyLoad: yes
 LazyData: true
 VignetteBuilder: knitr

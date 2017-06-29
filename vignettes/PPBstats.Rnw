@@ -179,10 +179,6 @@ Please, feel free to contribute to this part of analysis, see Section~\ref{contr
 \label{molecular}
 Please, feel free to contribute to this part of analysis, see Section~\ref{contribute} for more information.
 
-<<child='sections/contribute.Rnw'>>=
-@
-\newpage
-
 \chapter*{To cite \pack} \addcontentsline{toc}{chapter}{To cite \pack}
 To cite this package and or this vignette:
 
