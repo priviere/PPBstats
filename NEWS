@@ -4,9 +4,10 @@ PPBstats 0.21 under progress ------------------------
   - ggplot_mean_comparisons_model_1.R
   - ggplot_mean_comparisons_predict_the_past_model_2.R : cf #34
   - model_1.R
+  - fix typo (cf #53)
 
 * vignette
-  - update text
+  - update text, fix typo, update fig (cf #49)
   - add Rmd regarding contributions
   
 
