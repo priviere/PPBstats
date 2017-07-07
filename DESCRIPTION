@@ -2,6 +2,7 @@ Package: PPBstats
 Type: Package
 Title: An R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes
 Version: 0.20
+Encoding: UTF-8
 Date: 2017-05-12
 Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
     person("Gaelle", "Van Franck", role = "ctb"),
@@ -14,7 +15,7 @@ Description: This package applies statistical methods to analyse unbalanced tria
 License: GPL-3
 URL: http://github.com/priviere/PPBstats
 BugReports: http://github.com/priviere/PPBstats/issues
-Depends: 
+Depends:
     rjags,
     FactoMineR, 
     ggplot2,
@@ -26,10 +27,11 @@ Depends:
     factoextra,
     ibd,
     bitops
-Suggests: 
+Suggests:
     ggmcmc,
     GGEBiplotGUI,
-    knitr
+    knitr,
+    rmarkdown
 LazyLoad: yes
 LazyData: true
 VignetteBuilder: knitr

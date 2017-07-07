@@ -1,0 +1,111 @@
+% \documentclass[tikz, border=10pt]{standalone}
+
+\definecolor{sv}{HTML}{90F7EC}
+\definecolor{m1}{HTML}{FDEB71}
+\definecolor{m2}{HTML}{FEB692}
+\definecolor{ge}{HTML}{ABDCFF}
+
+% \usetikzlibrary{
+%   positioning,     % positions like above of node
+%   fit              % legend bounding box fitting all nodes
+% }
+\tikzset{
+    node distance=4ex and 4ex,
+    % on grid,  % node distance from the centers
+    every node/.style = {
+        rectangle,
+        minimum width=5em,
+        minimum height=3ex,
+        text depth=1pt,
+        draw,
+        outer sep = 2pt,
+        inner sep = 3pt,
+    },
+    every edge/.style = {->},
+    virtual/.append style = {draw = none},
+    several/.append style = {fill = sv},
+    m1/.append style = {fill = m1},
+    m2/.append style = {fill = m2},
+    gxe/.append style = {fill = ge},
+    legendkey/.append style = {minimum width=3ex},
+    legendtext/.append style = {draw=none, fill = black!10},
+    ->,        % arrows for all
+    >=stealth  % arrow type
+}
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+% \begin{document}
+
+\begin{tikzpicture}
+
+  %% nodes
+  \node[several] (DE)                   {desing\_experiment};
+  
+  \node[several] (DD) [below=of DE]     {describe\_data};
+  
+  \node[m1]   (M1)  [below left=of DD]   {model\_1};
+  \node[m2]   (M2)  [below=of DD]        {model\_2};
+  \node[gxe]  (GxE) [below right=of DD]  {GxE};
+  
+  \node[several] (CM) [below=of M2]     {check\_model};
+  
+  \node[virtual] (belowCM) [below=of CM] {};
+
+  \node[m2] (PPM2)  [below left=of belowCM] {predict\_the\_past\_model\_2};
+  
+  \node[m2]       (CVM2)  [below right=of CM] {cross\_validation\_model\_2};
+  \node[gxe]      (BGxE)  [below=of CVM2]     {biplot\_GxE};
+  \node[several]  (PG)    [below=of BGxE]     {parameter\_groups};
+  
+  \node[several] (MC) [below=of CM, yshift=-25ex] {mean\_comparisons};
+  
+  \node[several] (P) [right=of BGxE, xshift=5em] {plot};
+  
+  
+  %% arrows
+  % \draw node[vertex] (Joint) at (1,0) {};
+  \draw (M1) to (CM);
+  \draw (M2) to (CM);
+  \draw (GxE) to (CM);
+    
+  \draw (CM) to [bend right] (PPM2);
+  \draw (CM) to (MC);
+  \draw (CM) to [bend right] (CVM2.west);
+  \draw (CM) to [bend right] (BGxE.west);
+  \draw (CM) to [bend right] (PG.west);
+  
+  \draw (PPM2) to [bend right] (MC);
+  
+  \draw (CM.east) to [bend left] (P);
+  \draw (CVM2) to (P);
+  \draw (BGxE) to (P);
+  \draw (PG) to (P);
+  \draw (MC.east) to [bend right] (P);
+  
+  %% legend
+  \node[several,legendkey]  (LS)  [right=of DE, xshift=6em] {};
+  \node[right,legendtext] (LStext) at (LS.east) {Functions for several models};
+
+  \node[m1,legendkey]  (LM1)  [below=of LS,yshift=3ex] {};
+  \node[right,legendtext] at (LM1.east) {Model 1 functions};
+
+  \node[m2,legendkey]  (LM2)  [below=of LM1,yshift=3ex] {};
+  \node[right,legendtext] at (LM2.east) {Model 2 functions};
+
+  \node[gxe,legendkey]  (LGxE)  [below=of LM2,yshift=3ex] {};
+  \node[right,legendtext] at (LGxE.east) {GxE functions};
+
+  %% legend bounding box
+  \begin{pgfonlayer}{background}
+    \node[
+      fill=black!10,
+      rounded corners,
+      fit = (LS) (LGxE) (LStext)
+    ] {};
+  \end{pgfonlayer}
+
+
+\end{tikzpicture}
+
+% \end{document}
