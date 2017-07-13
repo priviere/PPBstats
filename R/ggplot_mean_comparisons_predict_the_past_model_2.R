@@ -30,6 +30,8 @@ plot.mean_comparisons_predict_the_past_model_2 <- function(
   
   attributes(x)$PPBstats.object = "mean_comparisons_model_1"
   
+  if( !is.null(data_version) ) { stop("data_version must be NULL with data plot from predict_the_past()") }
+  
   if(ggplot.type == "score" | ggplot.type == "interaction") {
     ylab = paste(
       x$data_mean_comparisons[[1]]$mean.comparisons$entry,
