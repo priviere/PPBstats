@@ -6,6 +6,9 @@ PPBstats 0.21 under progress ------------------------
   - model_1.R
   - fix typo (cf #53)
 
+* update RData
+  - Add the date in format of data #48
+
 * vignette
   - update text, fix typo, update fig (cf #34, #49)
   - add Rmd regarding contributions
