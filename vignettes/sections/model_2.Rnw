@@ -527,18 +527,26 @@ For example for \texttt{"loc-6:year-5"}
 ptp = predict_the_past_model_2(out_check_model_2, env = "loc-6:year-5")
 @
 
-\texttt{ptp} can be handle exacly as \texttt{out\_model\_1}.
+\texttt{ptp} can be handle exacly as \texttt{out\_model\_1} for mean comparisons
 
 <<message=TRUE,cache=FALSE>>=
 m_ptp = mean_comparisons(ptp)
+@
 
+and visualize the output, for \textttt{ggplot.type = "barplot"}, there is two colors regarding estimated and predicted results.
+
+<<message=TRUE,cache=FALSE>>=
 p = plot(m_ptp, ggplot.type = "barplot")
+p$data_mean_comparisons$`loc-6:year-5`$`1`
+@
 
-data("data_version")
-p = plot(m_ptp, data_version = data_version, ggplot.type = "barplot")
+For \textttt{ggplot.type = "score"} and \textttt{ggplot.type = "interaction"}, predicted and estimated are mention between brakets after germplasm name.
 
+<<message=TRUE,cache=FALSE>>=
 p = plot(m_ptp, ggplot.type = "score")
+p$`loc-6`$`1`
 
 p = plot(m_ptp, ggplot.type = "interaction")
+p$data_mean_comparisons$`loc-6`$`1`
 @
 
