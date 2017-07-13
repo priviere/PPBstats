@@ -7,7 +7,7 @@ PPBstats 0.21 under progress ------------------------
   - fix typo (cf #53)
 
 * vignette
-  - update text, fix typo, update fig (cf #49)
+  - update text, fix typo, update fig (cf #34, #49)
   - add Rmd regarding contributions
   
 
