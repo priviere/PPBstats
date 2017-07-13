@@ -447,9 +447,14 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 \subsection{Data format}
 
-The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables.
+The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables and their corresponding dates.
+The dates are associated to their corresponding variable by \texttt{$}.
+For example the date associated to variable \texttt{y1} is \texttt{y1$date}.
+
 <<message=TRUE,cache=FALSE>>=
 data("data_GxE")
 head(data_GxE)
 @
+
+
 
