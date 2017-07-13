@@ -45,7 +45,7 @@ predict_the_past_model_2 = function(
     stop("out_check_model_model_2 must come from check_model and model_2.")
   }
   
-  w = out_check_model_model_2$model2.presence.absence.matrix
+  w = out_check_model_model_2$model2.presence.abscence.matrix
   MCMC = out_check_model_model_2$MCMC
   
   if( is.null(env) ){ stop("env can not be NULL") }
