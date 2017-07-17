@@ -4,12 +4,13 @@
 \name{data_model_1}
 \alias{data_model_1}
 \title{Simulated data set for housand kernel weight (tkw) of bread wheat to test model_1 model}
-\format{A data frame with 1574 rows and 11 columns}
+\format{A data frame with 1574 rows and 12 columns}
 \usage{
 data(data_model_1)
 }
 \description{
-A dataset containing one variable (tkw) and values for the following factors: location, year, germplasm, block, X and Y. 
+A dataset containing one variable (tkw) and its date (tkw$date) 
+and values for the following factors: location, year, germplasm, block, X and Y. 
 The different values of the parameters to create the dataset are also in columns: mu_ij, beta_jk, epsilon_ijk and sigma_j
 }
 \details{
