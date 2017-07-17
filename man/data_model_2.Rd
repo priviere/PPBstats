@@ -4,12 +4,14 @@
 \name{data_model_2}
 \alias{data_model_2}
 \title{Simulated data set for three variables to test model_2 model}
-\format{A data frame with 2430 rows and 12 columns}
+\format{A data frame with 2430 rows and 15 columns}
 \usage{
 data(data_model_2)
 }
 \description{
-A dataset containing three variables (y1, y2 and y3) and values for the following factors: location, year, germplasm, block, X and Y. 
+A dataset containing three variables (y1, y2 and y3) 
+with their respective dates (y1$date, y2$date and y3$date)
+and values for the following factors: location, year, germplasm, block, X and Y. 
 The different values of the parameters to create y1 are also in columns: alpha_i-1, beta_i-1, and theta_j-1.
 }
 \author{
