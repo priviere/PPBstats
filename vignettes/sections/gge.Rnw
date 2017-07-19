@@ -62,8 +62,8 @@ You can follow these steps (Figure \ref{main_workflow}):
 \begin{enumerate}
 \item Run the model with \texttt{GxE} and \texttt{gxe\_analysis = "GGE"}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
-\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{get\_ggplot}
-\item Get groups of each parameters with \texttt{parameters\_groups} and visualise it with \texttt{get\_ggplot}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
+\item Get groups of each parameters with \texttt{parameters\_groups} and visualise it with \texttt{plot}
 \end{enumerate}
 
 We will not details everything as it the same than AMMI in the code.
@@ -131,7 +131,7 @@ biplot = p_out_biplot_gge$biplot
 This graph allow to detect location where germplasm (and the interaction) behave better : 'which won where' \citep{gauch_statistical_2008,yan_gge_2007}.
 The germplasms which have the largest value in a sector "win" in the location present in that sector.
 The information is summarized in the legend of the plot.
-See \texttt{?get\_ggplot} for more details on this plot.
+See \texttt{?plot.PPBstats} for more details on this plot.
 
 
 <<message=TRUE,cache=FALSE>>=
