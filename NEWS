@@ -4,9 +4,14 @@ PPBstats 0.21 under progress ------------------------
   - ggplot_mean_comparisons_model_1.R
   - ggplot_mean_comparisons_predict_the_past_model_2.R : cf #34
   - model_1.R
+  - fix typo (cf #53)
+
+* update RData
+  - Add the date in format of data #48
 
 * vignette
-  - update text
+  - update text, fix typo, update fig (cf #34, #49)
+  - add Rmd regarding contributions
   
 
 PPBstats 0.20 ---------------------------------------
@@ -205,7 +210,7 @@ PPBstats 0.10.0 -------------------------------------
 PPBstats 0.9.2 --------------------------------------
 -----------------------------------------------------
 * fix little bugs
-* add the presence.abscence.matrix for the model in FWH, analyse.outputs and predict.the.past
+* add the presence.absence.matrix for the model in FWH, analyse.outputs and predict.the.past
 * add model1.data_env_whose_param_did_not_converge in analyse.outputs and get.ggplot
 * return MCMC only for parameters that converge
 * possible to choose NULL for get.at.least.X.groups

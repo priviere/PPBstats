@@ -2,8 +2,8 @@ check_model.fit_model_2 <- function(
   x
 ) {
   # Default settings
-  model2.presence.abscence.matrix = x$model2.presence.abscence.matrix
-  
+  model2.presence.absence.matrix = x$model2.presence.absence.matrix
+
   # 1. Convergence, update MCMC when parameters did not converge ----------
   out.conv = check_convergence(x, model_name = "model2")
   MCMC = out.conv$MCMC
@@ -32,10 +32,10 @@ check_model.fit_model_2 <- function(
     
     germ_not_ok = unique(c(germ_not_ok_alpha, germ_not_ok_beta))
     
-    mat = x$model2.presence.abscence.matrix
+    mat = x$model2.presence.absence.matrix
     if( !is.null(germ_not_ok) ) { mat = mat[!is.element(rownames(mat), germ_not_ok),] }
     if( !is.null(env_not_ok) ) { mat = mat[,!is.element(colnames(mat), env_not_ok)] }
-    model2.presence.abscence.matrix = mat
+    model2.presence.absence.matrix = mat
     
     # update MCMC
     mcmc_to_delete = MCMC[,!is.element(colnames(MCMC), conv_not_ok)]
@@ -76,7 +76,7 @@ check_model.fit_model_2 <- function(
   out = list(
     "MCMC" = MCMC,
     "MCMC_conv_not_ok" = mcmc_to_delete,
-    "model2.presence.abscence.matrix" = model2.presence.abscence.matrix,
+    "model2.presence.absence.matrix" = model2.presence.absence.matrix,
     "data_ggplot" = list(
       "alpha" = data_ggplot_model_2_alpha,
       "beta" = data_ggplot_model_2_beta,

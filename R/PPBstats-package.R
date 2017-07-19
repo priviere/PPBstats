@@ -18,14 +18,15 @@ NULL
 #' Simulated data set for housand kernel weight (tkw) of bread wheat to test model_1 model
 #'
 #' @description
-#' A dataset containing one variable (tkw) and values for the following factors: location, year, germplasm, block, X and Y. 
+#' A dataset containing one variable (tkw) and its date (tkw$date) 
+#' and values for the following factors: location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create the dataset are also in columns: mu_ij, beta_jk, epsilon_ijk and sigma_j
 #'
 #' @usage
 #' data(data_model_1)
 #'
 #' @format
-#' A data frame with 1574 rows and 11 columns
+#' A data frame with 1574 rows and 12 columns
 #'  
 #' @details
 #' tkw is in grams
@@ -39,14 +40,16 @@ NULL
 #' Simulated data set for three variables to test model_2 model
 #'
 #' @description
-#' A dataset containing three variables (y1, y2 and y3) and values for the following factors: location, year, germplasm, block, X and Y. 
+#' A dataset containing three variables (y1, y2 and y3) 
+#' with their respective dates (y1$date, y2$date and y3$date)
+#' and values for the following factors: location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create y1 are also in columns: alpha_i-1, beta_i-1, and theta_j-1.
 #' 
 #' @usage
 #' data(data_model_2)
 #'
 #' @format
-#' A data frame with 2430 rows and 12 columns
+#' A data frame with 2430 rows and 15 columns
 #' 
 #' @author Pierre Rivière
 "data_model_2"
@@ -75,13 +78,15 @@ NULL
 #' Simulated data set for three variables to test GxE model
 #'
 #' @description
-#' A dataset containing three variables (y1, y2 and y3) and values for the following factors: location, year, germplasm, block, X and Y. 
+#' A dataset containing three variables (y1, y2 and y3) 
+#' with their respective dates (y1$date, y2$date and y3$date)
+#' and values for the following factors: location, year, germplasm, block, X and Y. 
 #'
 #' @usage
 #' data(data_GxE)
 #'
 #' @format
-#' A data frame with 180 rows and 9 columns
+#' A data frame with 180 rows and 12 columns
 #' 
 #' @author Pierre Rivière
 "data_GxE"

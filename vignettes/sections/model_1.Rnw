@@ -62,7 +62,7 @@ For model\_1, you can follow these steps (Figure \ref{main_workflow}):
 \begin{enumerate}
 \item Run the model with \texttt{model\_1}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
-\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{get\_ggplot}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
 \end{enumerate}
 
 Let's get the data.
@@ -207,7 +207,7 @@ load("./data_PPBstats/out_check_model_1_bis.RData") # To save time
 
 \paragraph{Visualize outputs}
 
-Once the computation is done, you can visualize the results with \texttt{get\_ggplot}
+Once the computation is done, you can visualize the results with \texttt{plot}
 <<message=TRUE,cache=FALSE>>=
 p_out_check_model_1 = plot(out_check_model_1)
 @
@@ -310,7 +310,7 @@ p + stat_smooth(method = "lm") + geom_point()
 \paragraph{Get mean comparisons}
 
 Get mean comparisons with \texttt{mean\_comparisons}.
-The theory behind mean comparisons are explained in section \ref{mean_comp}.
+The theory behind mean comparisons are explained in Section~\ref{mean_comp}.
 
 Below is an example for $\mu$, the same can be done for $\beta$.
 
@@ -377,7 +377,7 @@ head(out_mean_comparisons_model_1_mu$data_env_with_no_controls$`env5:2010`$mean.
 
 \paragraph{Visualize mean comparisons}
 
-To see the output, use \texttt{get\_ggplot}.
+To see the output, use \texttt{plot}.
 On each plot, the \texttt{alpha} (type one error) value and the alpha correction are displayed.
 \texttt{alpha = Imp} means that no differences were possible to find.
 For \texttt{ggplot.type = "interaction"} and \texttt{ggplot.type = "score"}, it is display under the form: \texttt{alpha | alpha correction}.
@@ -466,7 +466,7 @@ $> 0.01$ & . \\
 \end{tabular}
 \end{center}
 
-The pvalue is computed as describe in section \ref{mean_comp} if the parameters have been estimated with the model.
+The pvalue is computed as describe in Section~\ref{mean_comp} if the parameters have been estimated with the model.
 
 For environments where MCMC did not converge or without environments, it is a \texttt{t.test} which is perform.
 
@@ -483,7 +483,7 @@ p_barplot_mu_version$data_env_whose_param_did_not_converge
 With \texttt{ggplot.type = "interaction"}, you can display the year effect as well as detect groups.
 One group is represented by one vertical line.
 Germplasms which share the same group are not different.
-Germplasms which do not share the same groupe are different (section \ref{mean_comp}).
+Germplasms which do not share the same groupe are different (Section~\ref{mean_comp}).
 
 The ggplot are done for each element of the list coming rom \texttt{mean\_comparisons}.
 
