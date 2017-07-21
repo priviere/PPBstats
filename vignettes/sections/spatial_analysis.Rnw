@@ -16,7 +16,7 @@ Y_{ijk} = \alpha_{i} + r_{j} + c_{k} + f(u,v) + \varepsilon_{ijk}; \quad \vareps
 
 With,
 
-\begin{tabular}{ll}
+\begin{tabular}{l p{.8\textwidth}}
 $Y_{ijk}$ & the phenotypic value for germplasm $i$, row $j$ and column $k$, \\
 $\alpha_{i}$ & the germplasm $i$ effect, \\
 $r_{j}$ & row $j$ effect, \\

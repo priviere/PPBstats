@@ -425,6 +425,8 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 \texttt{GxE} & Run AMMI or GGE model \\ \hline
 
+\texttt{spatial} & Run spatial row and column model \\ \hline
+
 \texttt{check\_model} &  Check if the model went well \\ \hline
 
 \texttt{mean\_comparisons} &  Get mean comparisons \\ \hline
