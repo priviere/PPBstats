@@ -1,21 +1,3 @@
-#' Get ggplot from check_model_model_2
-#'
-#' @description
-#' \code{ggplot_check_model_model_2} returns ggplot from \code{\link{check_model_model_2}}
-#' 
-#' @param x outputs from \code{\link{check_model_model_2 function}}
-#' 
-#' @details See \code{\link{get_ggplot}}
-#' 
-#' @return See \code{\link{get_ggplot}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item  \code{\link{get_ggplot}}, 
-#' \item \code{\link{check_model_model_2}}
-#' }
-#'
-#'
 plot.check_model_2 <- function(
   x,
   nb_parameters_per_plot = 8

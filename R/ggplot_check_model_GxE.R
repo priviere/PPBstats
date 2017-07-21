@@ -1,20 +1,3 @@
-#' Get ggplot from check_model_GxE
-#'
-#' @description
-#' \code{ggplot_check_model_GxE} returns ggplot from \code{\link{check_model_GxE}}
-#' 
-#' @param x outputs from \code{\link{check_model_GxE}} function
-#' 
-#' @details See \code{\link{get_ggplot}}
-#' 
-#' @return See \code{\link{get_ggplot}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{get_ggplot}}, 
-#' \item \code{\link{check_model_GxE}}
-#' }
-#' 
 plot.check_model_GxE <- function(
   x,
   nb_parameters_per_plot = 8

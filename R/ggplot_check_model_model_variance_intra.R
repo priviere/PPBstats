@@ -1,20 +1,3 @@
-#' Get ggplot from check_model_model_variance_intra
-#'
-#' @description
-#' \code{ggplot_check_model_model_variance_intra} returns ggplot from \code{\link{check_model_model_variance_intra}}
-#' 
-#' @param out_check_model_model_variance_intra outputs from \code{\link{check_model_model_variance_intra}} function
-#' 
-#' @details See \code{\link{get_ggplot}}
-#' 
-#' @return See \code{\link{get_ggplot}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{get_ggplot}}, 
-#' \item \code{\link{check_model_model_variance_intra}}
-#' }
-#' 
 ggplot_check_model_model_variance_intra = function(
   out_check_model_varintra,
   nb_parameters_per_plot = 10

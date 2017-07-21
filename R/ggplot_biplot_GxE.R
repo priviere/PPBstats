@@ -1,21 +1,3 @@
-#' Get ggplot from biplot_GxE
-#'
-#' @description
-#' \code{ggplot_biplot_GxE} returns ggplot from \code{\link{biplot_GxE}}
-#' 
-#' @param x outputs from \code{\link{biplot_GxE}} function
-#' 
-#' @details See \code{\link{get_ggplot}}
-#' 
-#' @return See \code{\link{get_ggplot}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{get_ggplot}}, 
-#' \item \code{\link{biplot_GxE}}
-#' }
-#' 
-#' 
 plot.biplot_GxE <- function(x){
   
   variable = x$info$variable
