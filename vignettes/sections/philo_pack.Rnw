@@ -38,7 +38,7 @@ The statistical procedures are based on frequentist and bayesian approaches.
 \end{itemize}
 
 Up to now, only agronomic analysis is under development. 
-Please, feel free to contribute to other aspects of analysis, see Section~\ref{contribute} for more information.
+Please, feel free to contribute to other aspects of analysis, see \url{https://github.com/priviere/PPBstats/blob/master/vignettes/contribute.Rmd} for more information.
 
 
 \subsection{Decision tree to choose the right analysis according to question and experimental design}
