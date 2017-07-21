@@ -110,6 +110,7 @@ model_1 = function(
     Y = as.factor(as.character(data$Y)),
     variable = as.numeric(as.character(data[,variable]))
   )
+  D=D[!is.na(D$variable),]
   
   # If there is only data for block 2 (no block 1) then change block 2 to block 1
   D$envBlock = paste(D$environment,D$block,sep=":")
