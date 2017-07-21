@@ -66,6 +66,8 @@ If you have any ideas,
 - on new functions to add based on analysis you carry out in your PPB trials
 - ...
 
+Refer to the vignette [here](https://github.com/priviere/PPBstats/blob/master/vignettes/contribute.Rmd) to see how to contribute.
+
 even if it is not R written, send me an email and we'll see how we can work together!
 
 
