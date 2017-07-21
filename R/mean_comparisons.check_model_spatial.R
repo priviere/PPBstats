@@ -1,25 +1,3 @@
-#' Get mean comparisons from check_model_spatial
-#'
-#' @description
-#' \code{mean_comparisons.check_model_spatial} performs mean comparisons from object coming from \code{\link{check_model_spatial}}
-#' See \code{\link{mean_comparisons}} for more information.
-#' 
-#' @param x 
-#' 
-#' @param alpha
-#' 
-#' @param p.adj
-#' 
-#' @details See \code{\link{mean_comparisons}}
-#' 
-#' @return See \code{\link{mean_comparisons}}
-#' 
-#' @seealso 
-#' \itemize{
-#'  \item \code{\link{mean_comparisons}}
-#'  \item \code{\link{get_ggplot}}
-#' }
-#'
 mean_comparisons.check_model_spatial <- function(
   x, 
   alpha = 0.05,
