@@ -7,7 +7,7 @@
 check_model(x)
 }
 \arguments{
-\item{x}{outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}}
+\item{x}{outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}, \code{\link{spatial}},}
 }
 \value{
 The function returns a list depending on check_model input 
@@ -61,6 +61,22 @@ The function returns a list depending on check_model input
   \item theta
   \item epsilon
  }
+}
+
+\item spatial
+\itemize{
+ \item spatial : the output from the model
+ \item data_ggplot a list containing information for ggplot:
+ \itemize{
+  \item data_ggplot_residuals a list containing :
+   \itemize{
+    \item data_ggplot_normality
+    \item data_ggplot_skewness_test
+    \item data_ggplot_kurtosis_test
+    \item data_ggplot_qqplot
+    }
+  \item data_ggplot_variability_repartition_pie
+  }
 }
 
 }
