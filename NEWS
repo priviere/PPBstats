@@ -9,6 +9,13 @@ PPBstats 0.21 under progress ------------------------
 * update RData
   - Add the date in format of data #48
 
+* add new functions that implement spatial analysis (cf #20)
+  - spatial.R 
+  - check_model.fit_model_spatial.R
+  - plot.check_model_spatial.R
+  - mean_comparisons.check_model_spatial.R
+  - plot.mean_comparisons_model_spatial.R
+  
 * vignette
   - update text, fix typo, update fig (cf #34, #49)
   - add Rmd regarding contributions

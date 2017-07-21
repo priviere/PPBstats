@@ -1,6 +1,96 @@
 \subsection{Spatial analysis}
 \label{spatial_analysis}
 
+Note that this section is still under development : cf \url{https://github.com/priviere/PPBstats/issues/20}
 
-!!! TO DO !!!
+\subsubsection{Theory of the model}
+
+The following model is used to take into account environmental variation within a block with few control replicated in rows and columns.
+
+It is based on a SpATS (Spatial Analysis of Field Trials with Splines) model proposed by \citet{rodriguez_spatial_2016} :
+
+\begin{equation}
+Y_{ijk} = \alpha_{i} + r_{j} + c_{k} + f(u,v) + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)
+\label{spatial}
+\end{equation}
+
+With,
+
+\begin{tabular}{ll}
+$Y_{ijk}$ & the phenotypic value for germplasm $i$, row $j$ and column $k$, \\
+$\alpha_{i}$ & the germplasm $i$ effect, \\
+$r_{j}$ & row $j$ effect, \\
+$c_{k}$ & col $k$ effect, \\
+$f(u,v)$ & the smooth bivariate function that simultaneously accounts for the spatial trend across both directions of the filed (i.e. row and column).\\
+$\varepsilon_{ijk}$ & the residuals.\\
+\end{tabular}
+
+Note that $f(u,v)$ is divided into 8 components excluding the intercept \citep{rodriguez_spatial_2016}:
+
+\begin{itemize}
+\item the linear effects for the rows (row),
+\item the linear effects for the columns (col), 
+\item the linear interaction of rows and columns (row:col),
+\item the main row effect (f(row)),
+\item the main column effect (f(col)),
+\item the smooth varying coefficient terms regarding rows (f(col):row),
+\item the smooth varying coefficient terms regarding columns (row:f(col))),
+\item the smooth-by-smooth interaction component (f(col):f(row))
+\end{itemize}
+
+Much more information regarding the model as well as example of \texttt{R} package \texttt{SpATS} can be found in \citet{rodriguez_spatial_2016}.
+
+
+\subsubsection{Steps with \pack}
+
+\begin{enumerate}
+\item Run the model with \texttt{spatial}
+\item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model} and vizualise it with \texttt{plot}
+\item Get mean comparisons for germplasms with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
+\end{enumerate}
+
+\subsubsection{Run the model}
+<<message=TRUE,cache=FALSE>>=
+p_case2 = design_experiment(
+  location = "Location-3",
+  year = "2016",
+  expe.type = "row-column",
+  germplasm = paste("germ", c(1:20), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 7,
+  nb.blocks = 1,
+  nb.cols = 7)
+
+d = p_case2$`row-column`$data.frame
+d$variable = as.numeric(rnorm(nrow(d), 50, 10))
+
+out_spatial = spatial(data = d, variable = "variable")
+@
+
+
+\subsubsection{Check and visualize model outputs}
+
+\paragraph{Check the model}
+<<message=TRUE,cache=FALSE>>=
+out_check_spatial = check_model(out_spatial)
+@
+
+\paragraph{Visualize outputs}
+<<message=TRUE,cache=FALSE>>=
+p_out_check_spatial = plot(out_check_spatial)
+@
+
+
+\subsubsection{Get and visualize mean comparisons}
+
+\paragraph{Get mean comparisons}
+<<message=TRUE,cache=FALSE>>=
+out_mean_comparisons_spatial = mean_comparisons(out_check_spatial, p.adj = "bonferroni")
+@
+
+\paragraph{Visualize mean comparisons}
+<<message=TRUE,cache=FALSE>>=
+p_out_mean_comparisons_spatial = plot(out_mean_comparisons_spatial)
+@
+
 

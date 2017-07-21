@@ -1,7 +1,7 @@
 Package: PPBstats
 Type: Package
 Title: An R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes
-Version: 0.20
+Version: 0.21
 Encoding: UTF-8
 Date: 2017-05-12
 Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
@@ -26,7 +26,8 @@ Depends:
     agricolae,
     factoextra,
     ibd,
-    bitops
+    bitops,
+    SpATS
 Suggests:
     ggmcmc,
     GGEBiplotGUI,
