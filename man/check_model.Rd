@@ -108,11 +108,9 @@ The outputs of the function is used in
 \seealso{
 \itemize{
 \item \code{\link{GxE}}, 
+\item \code{\link{spatial}}, 
 \item \code{\link{model_1}}, 
 \item \code{\link{model_2}}, 
-\item \code{\link{check_model_GxE}}, 
-\item \code{\link{check_model_1}}, 
-\item \code{\link{check_model_2}}, 
 \item \code{\link{mean_comparisons}}
 }
 }
