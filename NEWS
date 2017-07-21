@@ -5,6 +5,7 @@ PPBstats 0.21 under progress ------------------------
   - ggplot_mean_comparisons_predict_the_past_model_2.R : cf #34
   - model_1.R
   - fix typo (cf #53)
+  - rename file .R in order to have same name of files and functions
 
 * update RData
   - Add the date in format of data #48
