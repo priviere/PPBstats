@@ -1,21 +1,4 @@
-#' Check if the model_variance_intra model went well 
-#'
-#' @description
-#' \code{check_model_variance_intra} computes tests to assess if the model_variance_intra model went well
-#' 
-#' @param out_model_variance_intra outputs from \code{\link{model_variance_intra}}
-#' 
-#' @details See \code{\link{check_model}}
-#' 
-#' @return See \code{\link{check_model}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{model_variance_intra}}, 
-#' \item \code{\link{check_model}}
-#' }
-#' 
-check_model_model_variance_intra = function(
+check_model.fit_model_variance_intra = function(
   out_model_varintra
 )
 {

@@ -1,4 +1,4 @@
-ggplot_check_model_model_variance_intra = function(
+plot.check_model_model_variance_intra = function(
   out_check_model_varintra,
   nb_parameters_per_plot = 10
 ){
