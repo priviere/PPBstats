@@ -1,9 +1,12 @@
 % \documentclass[tikz, border=10pt]{standalone}
 
-\definecolor{sv}{HTML}{90F7EC}
-\definecolor{m1}{HTML}{FDEB71}
-\definecolor{m2}{HTML}{FEB692}
-\definecolor{ge}{HTML}{ABDCFF}
+\definecolor{sv-all}{RGB}{0,153,0}
+\definecolor{sv-gxe-m2}{RGB}{178,255,102}
+\definecolor{m1}{RGB}{255,255,51}
+\definecolor{m2}{RGB}{255,51,51}
+\definecolor{ge}{RGB}{102,102,255}
+\definecolor{sp}{RGB}{204,153,255}
+
 
 % \usetikzlibrary{
 %   positioning,     % positions like above of node
@@ -23,10 +26,12 @@
     },
     every edge/.style = {->},
     virtual/.append style = {draw = none},
-    several/.append style = {fill = sv},
+    several-all/.append style = {fill = sv-all},
+    several-gxe-m2/.append style = {fill = sv-gxe-m2},
     m1/.append style = {fill = m1},
     m2/.append style = {fill = m2},
     gxe/.append style = {fill = ge},
+    spatial/.append style = {fill = sp},
     legendkey/.append style = {minimum width=3ex},
     legendtext/.append style = {draw=none, fill = black!10},
     ->,        % arrows for all
@@ -40,15 +45,16 @@
 \begin{tikzpicture}
 
   %% nodes
-  \node[several] (DE)                   {desing\_experiment};
+  \node[several-all] (DE)                   {design\_experiment};
   
-  \node[several] (DD) [below=of DE]     {describe\_data};
+  \node[several-all] (DD) [below=of DE]     {describe\_data};
   
   \node[m1]   (M1)  [below left=of DD]   {model\_1};
   \node[m2]   (M2)  [below=of DD]        {model\_2};
-  \node[gxe]  (GxE) [below right=of DD]  {GxE};
+  \node[gxe]  (GxE) [left=of M1]  {GxE};
+  \node[spatial]  (spatial) [right=of M2]  {spatial};
   
-  \node[several] (CM) [below=of M2]     {check\_model};
+  \node[several-all] (CM) [below=of M2]     {check\_model};
   
   \node[virtual] (belowCM) [below=of CM] {};
 
@@ -56,11 +62,11 @@
   
   \node[m2]       (CVM2)  [below right=of CM] {cross\_validation\_model\_2};
   \node[gxe]      (BGxE)  [below=of CVM2]     {biplot\_GxE};
-  \node[several]  (PG)    [below=of BGxE]     {parameter\_groups};
+  \node[several-gxe-m2]  (PG)    [below=of BGxE]     {parameter\_groups};
   
-  \node[several] (MC) [below=of CM, yshift=-25ex] {mean\_comparisons};
+  \node[several-all] (MC) [below=of CM, yshift=-25ex] {mean\_comparisons};
   
-  \node[several] (P) [right=of BGxE, xshift=5em] {plot};
+  \node[several-all] (P) [right=of BGxE, xshift=5em] {plot};
   
   
   %% arrows
@@ -68,6 +74,7 @@
   \draw (M1) to (CM);
   \draw (M2) to (CM);
   \draw (GxE) to (CM);
+  \draw (spatial) to (CM);
     
   \draw (CM) to [bend right] (PPM2);
   \draw (CM) to (MC);
@@ -84,10 +91,13 @@
   \draw (MC.east) to [bend right] (P);
   
   %% legend
-  \node[several,legendkey]  (LS)  [right=of DE, xshift=6em] {};
-  \node[right,legendtext] (LStext) at (LS.east) {Functions for several models};
+  \node[several-all,legendkey]  (LS)  [right=of DE, xshift=6em] {};
+  \node[right,legendtext] (LStext) at (LS.east) {Functions for all models};
 
-  \node[m1,legendkey]  (LM1)  [below=of LS,yshift=3ex] {};
+  \node[several-gxe-m2,legendkey]  (LS2)  [below=of LS, yshift=3ex] {};
+  \node[right,legendtext] (LS2text) at (LS2.east) {Functions for models GxE and model\_2};
+
+  \node[m1,legendkey]  (LM1)  [below=of LS2,yshift=3ex] {};
   \node[right,legendtext] at (LM1.east) {Model 1 functions};
 
   \node[m2,legendkey]  (LM2)  [below=of LM1,yshift=3ex] {};
@@ -95,13 +105,17 @@
 
   \node[gxe,legendkey]  (LGxE)  [below=of LM2,yshift=3ex] {};
   \node[right,legendtext] at (LGxE.east) {GxE functions};
+  
+  \node[spatial,legendkey]  (Lspatial)  [below=of LGxE,yshift=3ex] {};
+  \node[right,legendtext] at (Lspatial.east) {spatial functions};
+
 
   %% legend bounding box
   \begin{pgfonlayer}{background}
     \node[
       fill=black!10,
       rounded corners,
-      fit = (LS) (LGxE) (LStext)
+      fit = (LS) (LS2) (LGxE) (LStext)(Lspatial)
     ] {};
   \end{pgfonlayer}
 
