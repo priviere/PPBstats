@@ -90,88 +90,88 @@ Please, feel free to contribute to this part of analysis, see Section~\ref{contr
 @
 \newpage
 
-%<<child='sections/design_expe.Rnw'>>=
-%@
-%\newpage
-%
-%\section{Sow, note, harvest, measure ... }
-%\label{section_sow}
-%
-%!!! TO DO !!!
-%
-%\newpage
-%
-%<<child='sections/describe_data.Rnw'>>=
-%@
-%\newpage
-%
-%
-%\section{Family of analysis 1 : entry effects on one farm}
-%\label{section_analysis1}
+<<child='sections/design_expe.Rnw'>>=
+@
+\newpage
 
-%\textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
-%Decision tree regarding Family 1 is displayed in Figure \ref{tree_f1}.
-%
-%<<child='sections/classic_anova.Rnw'>>=
-%@
-%\newpage
-%
-%<<child='sections/spatial_analysis.Rnw'>>=
-%@
-%\newpage
-%
-%<<child='sections/model_1.Rnw'>>=
-%@
-%\newpage
-%
-%\section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
-%\label{section_analysis2}
-%
-%\textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
-%Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
-%
-%<<child='sections/ibd.Rnw'>>=
-%@
-%\newpage
-%
-%<<child='sections/ammi.Rnw'>>=
-%@
-%\newpage
-%
-%<<child='sections/gge.Rnw'>>=
-%@
-%\newpage
-%
-%<<child='sections/migrant_residant.Rnw'>>=
-%@
-%\newpage
-%
-%<<child='sections/model_2.Rnw'>>=
-%@
-%\newpage
-%
-%
-%\section{Family of analysis 3 : effects from family 1 and 2 in a network of farms}
-%\label{section_analysis3}
-%
-%<<child='sections/model_3.Rnw'>>=
-%@
-%\newpage
-%
-%\section{Family of analysis 4 : specific research questions on one farm or more}
-%\label{section_analysis4}
-%
-%<<child='sections/version.Rnw'>>=
-%@
-%\newpage
-%
-%\section{Family of analysis 5 : multivariate analysis}
-%\label{section_analysis5}
-%
-%<<child='sections/multivariate_analysis.Rnw'>>=
-%@
-%\newpage
-%
+\section{Sow, note, harvest, measure ... }
+\label{section_sow}
+
+!!! TO DO !!!
+
+\newpage
+
+<<child='sections/describe_data.Rnw'>>=
+@
+\newpage
+
+
+\section{Family of analysis 1 : entry effects on one farm}
+\label{section_analysis1}
+
+\textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
+Decision tree regarding Family 1 is displayed in Figure \ref{tree_f1}.
+
+<<child='sections/classic_anova.Rnw'>>=
+@
+\newpage
+
+<<child='sections/spatial_analysis.Rnw'>>=
+@
+\newpage
+
+<<child='sections/model_1.Rnw'>>=
+@
+\newpage
+
+\section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
+\label{section_analysis2}
+
+\textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
+
+<<child='sections/ibd.Rnw'>>=
+@
+\newpage
+
+<<child='sections/ammi.Rnw'>>=
+@
+\newpage
+
+<<child='sections/gge.Rnw'>>=
+@
+\newpage
+
+<<child='sections/migrant_residant.Rnw'>>=
+@
+\newpage
+
+<<child='sections/model_2.Rnw'>>=
+@
+\newpage
+
+
+\section{Family of analysis 3 : effects from family 1 and 2 in a network of farms}
+\label{section_analysis3}
+
+<<child='sections/model_3.Rnw'>>=
+@
+\newpage
+
+\section{Family of analysis 4 : specific research questions on one farm or more}
+\label{section_analysis4}
+
+<<child='sections/version.Rnw'>>=
+@
+\newpage
+
+\section{Family of analysis 5 : multivariate analysis}
+\label{section_analysis5}
+
+<<child='sections/multivariate_analysis.Rnw'>>=
+@
+\newpage
+
 \chapter{Organoleptic analysis}
 \label{organoleptic}
 Please, feel free to contribute to this part of analysis, see Section~\ref{contribute} for more information.
