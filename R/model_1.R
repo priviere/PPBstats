@@ -42,7 +42,7 @@
 #' 
 #' \itemize{
 #' \item "data.model1": the dataframe used to run model 1
-#' \item "presence.abscence.matrix": a matrix entry x environment with the number of occurence
+#' \item "presence.absence.matrix": a matrix entry x environment with the number of occurence
 #' \item "vec_env_with_no_data": a vector with the environments without data for the given variable
 #' \item "vec_env_with_no_controls": a vector with the environments with no controls
 #' \item "data_env_with_no_controls": a dataframe with the data from environments without controls.
@@ -147,7 +147,7 @@ model_1 = function(
   D_RF = out$D_RF
   D_SF = out$D_SF
   
-  presence.abscence.matrix = with(rbind.data.frame(D_RF, D_SF), table(entry, environment))
+  presence.absence.matrix = with(rbind.data.frame(D_RF, D_SF), table(entry, environment))
   
   if( length(vec_env_with_controls) == 0 ) { stop("There are no controls on any environment so the model can not be run.") }
   
@@ -351,7 +351,7 @@ model_1 = function(
   # 7. Return results ----------
   OUT = list(
     "data.model1" = data.model1,
-    "data.presence.abscence.matrix" = presence.abscence.matrix,
+    "data.presence.absence.matrix" = presence.absence.matrix,
     "vec_env_with_no_data" = vec_env_with_no_data,
     "vec_env_with_no_controls" = vec_env_with_no_controls,
     "data_env_with_no_controls" = data_env_with_no_controls,

@@ -16,7 +16,7 @@
 #'  \item A summary of the whole data set
 #'  \item for each variable, a list with :
 #'   \itemize{
-#'   \item A presence.abscence plot  that represents the presence/abscence matrix of GxE combinaisons. 
+#'   \item A presence.absence plot  that represents the presence/absence matrix of GxE combinaisons. 
 #'   \item A list with histogram for
 #'    \itemize{
 #'     \item germplasm
@@ -60,7 +60,7 @@ describe_data = function(
     xlim = c(min(dtmp$variable, na.rm = TRUE), max(dtmp$variable, na.rm = TRUE))
     ylim = c(0,max(dtmp$variable, na.rm = TRUE))
     
-      # 2.1. Presence/abscence for each germplasm, location and year
+      # 2.1. Presence/absence for each germplasm, location and year
       m = as.data.frame(with(dtmp, table(germplasm, location, year)))
       m$Freq = as.factor(m$Freq)
       colnames(m)[4] = "nb_measures"
@@ -69,10 +69,10 @@ describe_data = function(
       p = p + geom_raster(aes(fill = nb_measures)) + facet_grid(year ~ .)
       nb_NA = round(length(which(m$nb_measures == 0)) / ( length(which(m$nb_measures == 0)) + length(which(m$nb_measures != 0)) ), 2) * 100
       p = p + ggtitle(
-        paste("Presence abscence repartition for ", variable, sep = ""),
+        paste("Presence absence repartition for ", variable, sep = ""),
         paste("(",  nb_NA, "% of 0)", sep = "")
       ) + theme(axis.text.x=element_text(angle=90))
-      out.presence.abscence = p
+      out.presence.absence = p
 
       # 2.2. Histogram and boxplot
       out_all_hist = ggplot(dtmp, aes(variable)) + geom_histogram() + ggtitle(variable)
@@ -152,7 +152,7 @@ describe_data = function(
       out_y_int = lapply(dtmp_int, fun_int, ylim)
       
       
-      OUT = list("presence.abscence" = out.presence.abscence, 
+      OUT = list("presence.absence" = out.presence.absence, 
                  "histogram" = list(
                    "all" = out_all_hist, 
                    "germplasm" = out_g_hist, 
