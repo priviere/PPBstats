@@ -263,7 +263,7 @@ out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni
 p_out_mean_comparisons_ammi = plot(out_mean_comparisons_ammi)
 @
 
-\texttt{out\_mean\_comparisons\_ammi} is a list of three elements with barplots :
+\texttt{p\_out\_mean\_comparisons\_ammi} is a list of three elements with barplots :
 
 For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
 Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
