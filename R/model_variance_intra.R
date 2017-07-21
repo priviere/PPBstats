@@ -59,7 +59,7 @@ model_varintra <- function(data,
   D_RF = out$D_RF
   D_SF = out$D_SF
 
-  presence.abscence.matrix = with(rbind.data.frame(D_RF, D_SF), table(entry, environment))
+  presence.absence.matrix = with(rbind.data.frame(D_RF, D_SF), table(entry, environment))
   
   D = rbind.data.frame(D_RF,D_SF)
   
