@@ -18,7 +18,8 @@ PPBstats 0.21 under progress ------------------------
   - plot.mean_comparisons_model_spatial.R
   
 * vignette
-  - update text, fix typo, update fig (cf #34, #49)
+  - update text, fix typo, update fig (cf #20, #34, #49)
+  - add section on spatial analysis
   - add Rmd regarding contributions
   
 
