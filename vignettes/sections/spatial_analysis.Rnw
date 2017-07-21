@@ -68,6 +68,36 @@ out_spatial = spatial(data = d, variable = "variable")
 @
 
 
+\texttt{out\_spatial} is a list containing two elements :
+
+\begin{itemize}
+\item \texttt{info} : a list with variable and data
+<<message=TRUE,cache=FALSE>>=
+out_spatial$info$variable
+
+head(out_spatial$info$data)
+@
+\item \texttt{model} a list with five elements :
+  \begin{itemize}
+  \item \texttt{model}
+  <<message=TRUE,cache=FALSE>>=
+  out_spatial$model$model
+  @
+  \item \texttt{summary}
+  <<message=TRUE,cache=FALSE>>=
+  out_spatial$model$summary
+  @
+  \item \texttt{germplasm\_effects}
+  <<message=TRUE,cache=FALSE>>=
+  out_spatial$model$germplasm_effects
+  @
+  \item \texttt{var\_res} the variance of the residuals
+  <<message=TRUE,cache=FALSE>>=
+  out_spatial$model$var_res
+  @
+  \end{itemize}
+\end{itemize}
+
 \subsubsection{Check and visualize model outputs}
 
 \paragraph{Check the model}
@@ -75,22 +105,93 @@ out_spatial = spatial(data = d, variable = "variable")
 out_check_spatial = check_model(out_spatial)
 @
 
+
+\texttt{out\_check\_spatial} is a list containing two elements :
+
+\begin{itemize}
+\item \texttt{spatial} the output from the model
+\item \texttt{data\_ggplot} a list containing information for ggplot:
+  \begin{itemize}
+  \item \texttt{data\_ggplot\_residuals} a list containing :
+    \begin{itemize}
+    \item \texttt{data\_ggplot\_normality}
+    \item \texttt{data\_ggplot\_skewness\_test}
+    \item \texttt{data\_ggplot\_kurtosis\_test}
+    \item \texttt{data\_ggplot\_qqplot}
+    \end{itemize}
+  \item \texttt{data\_ggplot\_variability\_repartition\_pie}
+  \end{itemize}
+\end{itemize}
+
+
 \paragraph{Visualize outputs}
+
+Once the computation is done, you can visualize the results with \texttt{plot}
+
 <<message=TRUE,cache=FALSE>>=
 p_out_check_spatial = plot(out_check_spatial)
 @
 
 
+\texttt{p\_out\_check\_spatial} is a list with:
+
+\begin{itemize}
+\item \texttt{residuals}
+  \begin{itemize}
+  \item \texttt{histogram} : histogram with the distribution of the residuals
+  <<message=TRUE,cache=FALSE>>=
+  p_out_check_spatial$residuals$histogram
+  @
+  \item \texttt{qqplot}
+  <<message=TRUE,cache=FALSE>>=
+  p_out_check_spatial$residuals$qqplot
+  @
+  \end{itemize}
+  
+\item \texttt{variability\_repartition} : pie with repartition of variance for each factor
+<<message=TRUE,cache=FALSE>>=
+p_out_check_spatial$variability_repartition
+@
+
+\end{itemize}
+
+
 \subsubsection{Get and visualize mean comparisons}
 
 \paragraph{Get mean comparisons}
+
+Get mean comparisons with \texttt{mean\_comparisons}.
+
 <<message=TRUE,cache=FALSE>>=
 out_mean_comparisons_spatial = mean_comparisons(out_check_spatial, p.adj = "bonferroni")
 @
+
+
+\texttt{out\_mean\_comparisons\_spatial} is a list of two elements:
+
+\begin{itemize}
+\item \texttt{info} : a list with variable and data
+\item \texttt{data\_ggplot\_LSDbarplot\_germplasm}
+\end{itemize}
 
 \paragraph{Visualize mean comparisons}
 <<message=TRUE,cache=FALSE>>=
 p_out_mean_comparisons_spatial = plot(out_mean_comparisons_spatial)
 @
+
+\texttt{p\_out\_mean\_comparisons\_spatial} is a list of one elements with barplots :
+
+For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+The error I (alpha) and the alpha correction are displayed in the title. 
+
+\begin{itemize}
+\item \texttt{germplasm} : mean comparison for germplasm
+<<message=TRUE,cache=FALSE>>=
+pg = p_out_mean_comparisons_spatial$germplasm
+names(pg)
+pg$`1`
+@
+\end{itemize}
 
 
