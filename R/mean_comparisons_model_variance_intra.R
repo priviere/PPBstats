@@ -1,4 +1,4 @@
-mean_comparisons_model_varintra = function(
+mean_comparisons.check_model_varintra = function(
   data,
   parameter,
   alpha = 0.05,
