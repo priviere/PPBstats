@@ -1,25 +1,3 @@
-#' Get mean comparisons from check_model_GxE
-#'
-#' @description
-#' \code{mean_comparisons_GxE} performs mean comparisons from object coming from \code{\link{check_model_GxE}}
-#' See \code{\link{mean_comparisons}} for more information.
-#' 
-#' @param x 
-#' 
-#' @param alpha
-#' 
-#' @param p.adj
-#' 
-#' @details See \code{\link{mean_comparisons}}
-#' 
-#' @return See \code{\link{mean_comparisons}}
-#' 
-#' @seealso 
-#' \itemize{
-#'  \item \code{\link{mean_comparisons}}
-#'  \item \code{\link{get_ggplot}}
-#' }
-#'
 mean_comparisons.check_model_GxE <- function(
   x, 
   alpha = 0.05,

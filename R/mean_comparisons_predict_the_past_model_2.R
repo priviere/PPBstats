@@ -1,33 +1,3 @@
-#' Get mean comparisons from predict_the_past_model_2
-#'
-#' @description
-#' \code{mean_comparisons_predict_the_past_model_2} performs mean comparisons from object coming from \code{\link{predict_the_past_model_2}}
-#' See \code{\link{mean_comparisons}} for more information.
-#' 
-#' @param x
-#' 
-#' @param alpha
-#' 
-#' @param type
-#' 
-#' @param get.at.least.X.groups
-#' 
-#' @param precision
-#' 
-#' @param threshold
-#' 
-#' @param p.adj
-#' 
-#' @details See \code{\link{mean_comparisons}}
-#' 
-#' @return See \code{\link{mean_comparisons}}
-#' 
-#' @seealso 
-#' \itemize{
-#'  \item \code{\link{mean_comparisons}}
-#'  \item \code{\link{get_ggplot}}
-#' }
-#'
 mean_comparisons.predict_the_past_model_2 <- function(
   x,
   alpha = 0.05,
