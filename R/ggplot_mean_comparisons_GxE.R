@@ -1,20 +1,3 @@
-#' Get ggplot from mean_comparisons_model_GxE
-#'
-#' @description
-#' \code{ggplot_x} returns ggplot from \code{\link{x}}
-#' 
-#' @param out_x outputs from \code{\link{x}}
-#' 
-#' @details See \code{\link{get_ggplot}}
-#' 
-#' @return See \code{\link{get_ggplot}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{get_ggplot}}, 
-#' \item \code{\link{x}}
-#' }
-#'
 plot.mean_comparisons_model_GxE <- function(
   x,
   nb_parameters_per_plot = 8

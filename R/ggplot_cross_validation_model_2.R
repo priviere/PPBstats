@@ -1,20 +1,3 @@
-#' Get ggplot from cross_validation_model_2
-#'
-#' @description
-#' \code{ggplot_cross_validation_model_2} returns ggplot from \code{\link{cross_validation_model_2}}
-#' 
-#' @param x outputs from \code{\link{cross_validation_model_2}}
-#' 
-#' @details See \code{\link{get_ggplot}}
-#' 
-#' @return See \code{\link{get_ggplot}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{get_ggplot}}, 
-#' \item \code{\link{cross_validation_model_2}}
-#' }
-#' 
 plot.cross_validation_model_2 <- function(
   x
 ){
