@@ -1,6 +1,6 @@
 Package: PPBstats
 Type: Package
-Title: An R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes
+Title: An R package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments
 Version: 0.21
 Encoding: UTF-8
 Date: 2017-05-12
