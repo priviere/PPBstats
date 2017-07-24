@@ -37,14 +37,16 @@
 #' 
 spatial = function(data, variable, genotype.as.random = TRUE){
 
-  # 1. Error messages ----------
+  # 1. Error messages, update arg ----------
   check_data_vec_variables(data, variable)
+  data_tmp = data
+  colnames(data_tmp)[which(colnames(data_tmp) == variable)] = "variable"
   
   # 2. Set up data set ----------
-  data$col = as.numeric(data$X)
-  data$row = as.numeric(data$Y)
-  data$col_f = as.factor(data$col)
-  data$row_f = as.factor(data$row)
+  data_tmp$col = as.numeric(data_tmp$X)
+  data_tmp$row = as.numeric(data_tmp$Y)
+  data_tmp$col_f = as.factor(data_tmp$col)
+  data_tmp$row_f = as.factor(data_tmp$row)
   
   # 3. Run the model ----------
   m = suppressMessages(
@@ -52,9 +54,9 @@ spatial = function(data, variable, genotype.as.random = TRUE){
     response = "variable", 
     genotype = "germplasm", 
     genotype.as.random = genotype.as.random,
-    spatial = ~ SAP(col, row, nseg = c(nlevels(data$X), nlevels(data$Y))),
+    spatial = ~ PSANOVA(col, row, nseg = c(nlevels(data_tmp$X), nlevels(data_tmp$Y))),
     random = ~ col_f + row_f, 
-    data = data)
+    data = data_tmp)
   )
   
   # 4. Get effetcs ----------

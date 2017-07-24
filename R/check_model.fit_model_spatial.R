@@ -18,7 +18,6 @@ check_model.fit_model_spatial <- function(
   rs = r/s
   data_ggplot_qqplot = data.frame(x = qnorm(ppoints(rs)), y = sort(rs))
   
-  
   # 2. repartition of variability among factors ----------
   var_comp = summary_model$p.table.vc
   var_comp = var_comp[!is.na(var_comp[,"Variance"]),] # In case there is NA because of non estimation of f(col):row and col:f(row)
