@@ -4,7 +4,7 @@ plot.check_model_spatial <- function(
 ){
   # Get data ----------
   
-  variable = x$GxE$info$variable
+  variable = x$spatial$info$variable
   
   data_ggplot = x$data_ggplot
   
