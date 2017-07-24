@@ -50,6 +50,9 @@ Much more information regarding the model as well as example of \texttt{R} packa
 \end{enumerate}
 
 \subsubsection{Run the model}
+
+By default, germplasm are settled as random (\texttt{genotype.as.random = TRUE}).
+
 <<message=TRUE,cache=FALSE>>=
 p_case2 = design_experiment(
   location = "Location-3",
