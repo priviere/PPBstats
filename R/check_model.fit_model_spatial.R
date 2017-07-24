@@ -20,11 +20,12 @@ check_model.fit_model_spatial <- function(
   
   
   # 2. repartition of variability among factors ----------
-  var_comp = summary_model$var.comp
-  total_Sum_Sq = sum(var_comp)
-  Sum_sq = var_comp
+  var_comp = summary_model$p.table.vc
+  var_comp = var_comp[!is.na(var_comp[,"Variance"]),] # In case there is NA because of non estimation of f(col):row and col:f(row)
+  total_Sum_Sq = sum(as.numeric(as.character(var_comp[,"Variance"])))
+  Sum_sq = as.numeric(as.character(var_comp[,"Variance"]))
   percentage_Sum_sq = Sum_sq/total_Sum_Sq*100
-  factor = names(var_comp)
+  factor = rownames(var_comp)
   data_ggplot_variability_repartition_pie = cbind.data.frame(factor, pvalue = NA, Sum_sq, percentage_Sum_sq)
   
   # 3. Return results ----------
