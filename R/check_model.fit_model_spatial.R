@@ -26,6 +26,11 @@ check_model.fit_model_spatial <- function(
   Sum_sq = as.numeric(as.character(var_comp[,"Variance"]))
   percentage_Sum_sq = Sum_sq/total_Sum_Sq*100
   factor = rownames(var_comp)
+  # rename col_f and row_f to col and row, f was put for factor for the model 
+  # but is not useful for the user to know
+  factor[which(factor == "col_f")] = "col"
+  factor[which(factor == "row_f")] = "row"
+  
   data_ggplot_variability_repartition_pie = cbind.data.frame(factor, pvalue = NA, Sum_sq, percentage_Sum_sq)
   
   # 3. Return results ----------
