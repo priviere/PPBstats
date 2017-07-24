@@ -2,6 +2,7 @@ PPBstats 0.22 under progress ------------------------
 -----------------------------------------------------
 * update functions
   - model_1.R : correct bug model_1 (cf #60)
+  - check_model.fit_model_spatial.R : add residuals in the variance component
 
 
 PPBstats 0.21 ---------------------------------------
