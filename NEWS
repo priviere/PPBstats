@@ -1,5 +1,7 @@
 PPBstats 0.22 under progress ------------------------
 -----------------------------------------------------
+* update functions
+  - model_1.R : correct bug model_1 (cf #60)
 
 
 PPBstats 0.21 ---------------------------------------
