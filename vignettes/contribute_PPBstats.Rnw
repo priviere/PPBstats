@@ -1,0 +1,328 @@
+%\VignetteIndexEntry{contribute_PPBstats}
+%\VignetteEngine{knitr::knitr}
+
+\documentclass{article}
+
+% to draw on figure or create figures
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+\usepackage{pstricks}
+
+\usetikzlibrary{
+  shapes,          % 
+  arrows,          %
+  decorations.pathreplacing,    % paths with shapes of curly braces
+  positioning,     % positions like above of node
+  fit              % legend bounding box fitting all nodes
+}
+
+\graphicspath{{./figures/}}
+\usepackage{wrapfig}
+
+\usepackage{multicol}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage[top=2cm, bottom=2cm, left=3cm, right=2cm]{geometry}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{url}
+\usepackage[round]{natbib}
+\usepackage[a4paper=true, colorlinks=true, linkcolor=black,urlcolor=blue,citecolor=black]{hyperref}
+
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{lscape}
+\usepackage{multirow}
+
+\newcommand{\pack}{\texttt{PPBstats}}
+\newcommand{\R}{\texttt{R}}
+\newcommand{\versionnumber}{\Sexpr{packageVersion("PPBstats")}}
+\newcommand{\PPB}{Participatory Plant Breeding}
+
+
+% warning
+\def\colwarning{black}
+\newcommand{\warning}[1]{
+\setlength{\fboxrule}{1.5mm}\noindent
+\begin{minipage}[t]{.1\textwidth}
+\parbox[c]{\textwidth}{\includegraphics[width=\textwidth]{warning}}
+\end{minipage}
+\fcolorbox{red}{white}{
+\begin{minipage}[t]{.85\textwidth}
+\textcolor{\colwarning}{\textbf{{#1}}}
+\end{minipage}
+}~\\
+}
+
+\begin{document}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(xtable)
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figures/PPBstats_', cache.path='cache/PPBstats-', fig.align='center', fig.show='hold', fig.pos='H', par=TRUE)
+## I use = but I can replace it with <-; set code/output width to be 68
+options(replace.assign=TRUE, width=68)
+## tune details of base graphics (http://yihui.name/knitr/hooks)
+knit_hooks$set(par=function(before, options, envir){
+if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axis=.9,mgp=c(2,.7,0),tcl=-.3)
+})
+@
+
+
+
+\begin{center}
+\Huge{Contribute to \pack} \\
+
+~\\
+
+\Large{An \R~package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments}
+
+~\\
+
+version \versionnumber \\
+
+~\\
+\today
+
+~\\~\\
+
+Pierre Rivi\`ere\textsuperscript{1} \hspace{.5cm} 
+\end{center}
+
+~\\~\\ 
+
+\noindent\textsuperscript{1} R\'eseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France \\
+\textbf{Contact:} \href{mailto:pierre@semencespaysannes.org}{pierre@semencespaysannes.org} \\
+
+\vspace{2cm}
+
+\tableofcontents
+
+\vspace{2cm}
+
+You can contribute to \pack~in three ways:
+
+\begin{itemize}
+\item test \pack~and its vignette and report bugs
+
+\item translate
+
+\item add new functions 
+
+\end{itemize}
+
+
+\section{Test and report bugs}
+
+First, load the development version:
+
+<<message=TRUE,cache=FALSE,eval=FALSE>>=
+devtools::install_github("priviere/PPBstats")
+@
+
+
+The easiest way to start is to look at the vignette to know how the package works.
+
+You can download the vignette \href{https://github.com/priviere/PPBstats/releases/download/v0.22/PPBstats.pdf}{here}.
+Do not hesitate to let a message \href{https://github.com/priviere/PPBstats/issues}{in the issues} or to send me an email if
+
+\begin{itemize}
+\item some points are not clear in the vignette or you find bugs
+\item you find bugs with your data (If so, you can send it to me so that I can see
+where could be the problems)
+\end{itemize}
+
+\section{Translate}
+
+The package is in english. 
+Every contributions to other languages are welcome!
+More informations on R package translation
+\href{http://developer.r-project.org/Translations30.html}{here}
+
+\section{Add new functions}
+
+If you have any ideas, 
+
+\begin{itemize}
+\item on the improvement of the current package (graph or table for example)
+
+\item on new functions that may be useful in the analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
+Up to now, only agronomic (throught the master branch) and organoleptic (throught the organo branch) analysis are under development
+
+\item ...
+\end{itemize}
+
+even if it is not \texttt{R} written, send me an email and we'll see how we can work together!
+
+If you wish to add a new model, you should follow different steps :
+
+\begin{itemize}
+
+\item create the model function
+
+<<message=TRUE,cache=FALSE,eval=FALSE>>=
+    my_model <- function(...){
+      ...
+      ...
+      ...
+      class(out) = c("PPBstats", "fit_my_model")
+      return(out)
+    }
+@
+
+\item create the fit\_my\_model method for `check\_model()`
+
+<<message=TRUE,cache=FALSE,eval=FALSE>>=
+    check_model.fit_my_model <- function(x){
+      ...
+      ...
+      ...
+      class(out) <- c("PPBstats", "check_my_model")
+      return(out)
+    }
+@
+
+\item create the check\_my\_model method for `mean\_comparisons()`
+
+<<message=TRUE,cache=FALSE,eval=FALSE>>=
+    mean_comparisons.check_my_model <- function(x, ...){
+      ...
+      ...
+      ...
+      class(out) <- c("PPBstats", "mean_comparisons_my_model")
+      return(out)
+    }
+@
+
+\item create the mean\_comparisons\_my\_model method for `plot()`
+
+<<message=TRUE,cache=FALSE,eval=FALSE>>=
+    plot.mean_comparisons_my_model <- function(x, y, ...){
+      ...
+      ...
+      ...
+    }
+@
+
+\end{itemize}
+
+
+\section{How to contribute}
+
+\begin{enumerate}
+
+\item If you want to interact with us, please file an issue first to share your
+intentions. We can help you plan the curse of action.
+
+\item Fork the git repository
+
+\item Include your contributions in your fork (preferably in a specific branch)
+
+\item Update the documentation if necessary (help files, vignette)
+
+\item Write unit tests for your functions, if any
+
+\item Pull the latest changes in the `master` branch of the upstream repository and
+rebase your work on top of them.
+
+\item Run all tests and compile the vignette. Make sure everything works as
+expected.
+
+\item Send a Pull Request with a reference to the original issue
+
+\end{enumerate}
+
+
+\section{Internal function structure}
+
+The internal function used in \pack~are presented in Figure \ref{workflow_2} and Table \ref{function_descriptions_workflow_2}. 
+Note that one additional funtion is also defined in the package: \texttt{common\_functions} which gather some functions used in several functions of \pack.
+
+
+\begin{figure}
+\begin{center}
+\input{figures/PPBstats_secondary_functions.tex}
+\end{center}
+\caption{Internal functions used within main functions.}
+\label{workflow_2}
+\end{figure}
+
+
+\begin{table}
+\begin{tabular}{lp{.4\textwidth}}
+
+\hline
+\textbf{function name} & \textbf{description} \\ \hline
+
+\texttt{get.env.info} & Get regional farms data and satellite farms data \\ \hline
+
+\texttt{GxE\_build\_interaction\_matrix} & Compute interaction matrix \\ \hline
+
+\texttt{check\_model.fit\_model\_1} & Check if the \texttt{model\_1} model went well  \\ \hline
+
+\texttt{check\_model.fit\_model\_2} & Check if the \texttt{model\_2} model went well \\ \hline
+
+\texttt{check\_model.fit\_model\_GxE} & Check if the \texttt{GxE} model went well \\ \hline
+
+\texttt{check\_model.fit\_model\_spatial} & Check if the \texttt{spatial} model went well \\ \hline
+
+\texttt{parameter\_groups\_GxE} & Get matrix with variables in column and effect in row from \texttt{check\_modelfit\_model\_GxE} \\ \hline
+
+\texttt{parameter\_groups\_model\_2} & Get matrix with variables in column and effect in row from \texttt{check\_model.fit\_model\_2} \\ \hline
+
+\texttt{comp.parameters} & Get parameter comparisons two by two or to a given threshold based on MCMC outputs \\ \hline
+
+\texttt{get.significant.groups} & Get significant groups of differences for a set of parameters based on MCMC outputs \\ \hline
+
+\texttt{get.at.least.X.groups} & Get the value of type one error needed to have X groups \\ \hline
+
+\texttt{mean\_comparisons.check\_model\_GxE} & Get mean comparisons from \texttt{check\_model.fit\_model\_GxE} \\ \hline
+
+\texttt{mean\_comparisons.check\_model\_1} & Get mean comparisons from \texttt{check\_model.fit\_model\_1} \\ \hline
+
+\texttt{mean\_comparisons.check\_model\_2} &Get mean comparisons from \texttt{check\_model.fit\_model\_2}  \\ \hline
+
+\texttt{mean\_comparisons.check\_model\_spatial} & Get mean comparisons from \texttt{check\_model.fit\_model\_spatial}  \\ \hline
+
+\texttt{mean\_comparisons.check\_predict\_the\_past\_model\_2} & Get mean comparisons from \texttt{predict\_the\_past\_model\_2} \\ \hline
+
+\texttt{plot.parameter\_groups} & Get ggplot from \texttt{parameter\_groups} \\ \hline
+
+\texttt{plot.check\_model\_GxE} & Get ggplot from \texttt{check\_model.fit\_model\_GxE} \\ \hline
+
+\texttt{plot.check\_model\_model\_1} & Get ggplot from \texttt{check\_model.fit\_model\_1} \\ \hline
+
+\texttt{plot.check\_model\_model\_2} & Get ggplot from \texttt{check\_model.fit\_model\_2} \\ \hline
+
+\texttt{plot.check\_model\_model\_spatial} & Get ggplot from \texttt{check\_model.fit\_model\_spatial} \\ \hline
+
+\texttt{plot.cross\_validation\_model\_2} & Get ggplot from \texttt{cross\_validation\_model\_2} \\ \hline
+
+\texttt{plot.mean\_comparisons\_GxE} & Get ggplot from \texttt{mean\_comparisons.check\_model\_GxE} \\ \hline
+
+\texttt{plot.mean\_comparisons\_model\_1} & Get ggplot from \texttt{mean\_comparisons.check\_model\_1} \\ \hline
+
+\texttt{plot.mean\_comparisons\_model\_2} & Get ggplot from \texttt{mean\_comparisons.check\_model\_2} \\ \hline
+
+\texttt{plot.mean\_comparisons\_predict\_the\_past\_model\_2} & Get ggplot from \texttt{mean\_comparisons.predict\_the\_past\_model\_2} \\ \hline
+
+\texttt{plot.biplot\_GxE} & Get ggplot from \texttt{biplot\_GxE} \\ \hline
+
+\texttt{ggplot\_discrimitiveness\_vs\_representativeness} & Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix \\ \hline
+
+\texttt{ggplot\_mean\_vs\_stability} & Get "mean vs stability" ggplot from PCA on interaction matrix \\ \hline
+
+\texttt{ggplot\_which\_won\_where} & Get "which won where" ggplot from PCA on interaction matrix \\ \hline
+
+\end{tabular}
+\caption{Internal functions}
+\label{function_descriptions_workflow_2}
+\end{table}
+
+
+\end{document}
