@@ -287,8 +287,8 @@ plot.mean_comparisons_model_1 <- function(
             if( attributes(data)$PPBstats.object == "data_mean_comparisons" ){
               SEG = NULL
               
-              letters = c(letters, paste(rep(LETTERS, times = 15), rep(c(1:5), each = 15), sep = ""))
-              gp_letters = letters[1:max(x_loc$nb_group)]
+              vec_letters = c(letters, paste(rep(LETTERS, times = 15), rep(c(1:5), each = 15), sep = ""))
+              gp_letters = vec_letters[1:max(x_loc$nb_group)]
               xadjust = seq(0.05, 0.9, length = 25) # it is assumed max 25 letters (i.e. groups)
               xadjust = xadjust[c(1:length(gp_letters))]
               names(xadjust) = gp_letters
@@ -297,10 +297,11 @@ plot.mean_comparisons_model_1 <- function(
                 subx = droplevels(x_loc_year[[i]])
                 
                 # get rid of non sens information
-                # This is useful if a germplasm is in group 'a' and 'b' alone. This is possible because other germplasm in groups 'a' and 'b' are in another year
+                # This is useful if a germplasm is in group 'a' and 'b' alone.
+                # This is possible because other germplasm in groups 'a' and 'b' are in another year
                 subx = arrange(subx, median) # To get the letter in the right order
                 groups = as.character(subx$groups)
-                
+
                 a = lapply(groups, function(x) { unlist(strsplit(x, "")) } )
                 row = unique(unlist(a))
                 m = matrix(0, ncol = length(groups), nrow = length(row))
@@ -308,23 +309,23 @@ plot.mean_comparisons_model_1 <- function(
                 for(jj in 1:length(a)) { m[a[[jj]], jj] = 1 }
                 m = unique(m)
                 if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
-                
+
                 if( nrow(m) > 1) {
                   todelete = NULL
                   for(jj in 1:ncol(m)) {
                     toget = which(m[,jj] == 1)
-                    if( length(toget) >  1 ) {    
+                    if( length(toget) >  1 ) {
                       for(ii in toget) {
                         if( sum(m[ii,]) == 1 ) { todelete = c(todelete, ii) }
-                      } 
-                    } 
+                      }
+                    }
                   }
-                  
+
                   if (!is.null(todelete)) { m = m[-todelete,] }
                   if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
                 }
-                
-                
+
+
                 # Following code to discard redondant informations
                 # For example
                 # 1 1 0 0
@@ -334,27 +335,32 @@ plot.mean_comparisons_model_1 <- function(
                 # 1 1 0 0
                 # 0 1 1 1
                 # indeed, the last row brings no informations
-                
+
                 if( nrow(m) > 1) {
                   todelete = NULL
-                  for(ii in 1:(nrow(m)-1) ) { 
+                  for(ii in 1:(nrow(m)-1) ) {
                     w1 = which( m[ii,] == 1 )
                     w2 = which( m[ii+1,] == 1 )
                     t = which(is.element(w1, w1[is.element(w1, w2)]))
                     test = length(w2) == length(t)
-                    
+
                     if( test ) { todelete = c(todelete, ii+1)}
                   }
                   if( !is.null(todelete) ) { m = m[-todelete,] }
                   if( is.vector(m) ) { m = as.data.frame(matrix(m, nrow = 1)) }
                 }
-                
-                
+
+
                 # Initialize the letters
                 if( nrow(m) > 1) {
-                  for(ii in 1:nrow(m)) { m[ii, which(m[ii,] == 1)] = letters[ii]; m[ii, which(m[ii,] == 0)] = ""  }
-                } else { m[1, which(m[1,] == 1)] = letters[1]  }
-                
+                  for(ii in 1:nrow(m)) { 
+                    m[ii, which(m[ii,] == 1)] = vec_letters[ii]
+                    m[ii, which(m[ii,] == 0)] = ""
+                    }
+                } else { 
+                  m[1, which(m[1,] == 1)] = vec_letters[1] 
+                  }
+
                 groups = apply(m, 2, function(x){paste(x, collapse="")})
                 
                 subx$groups = factor(groups)
@@ -392,7 +398,6 @@ plot.mean_comparisons_model_1 <- function(
               for(i in 1:nrow(SEG)){
                 if( SEG$ymin[i] == SEG$ymax[i] ) { SEG$ymax[i] = SEG$ymax[i] + min(SEG$ymax)/30 }
               }
-              
               
               if(!is.null(SEG)) {
                 p = p + geom_segment(aes(x = x, y = ymin, xend = x, yend = ymax, group = NULL), colour =  as.numeric(as.factor(SEG$groups)), data = SEG)
