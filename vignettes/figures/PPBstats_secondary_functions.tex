@@ -1,9 +1,13 @@
 % \documentclass[tikz, border=10pt]{standalone}
 
-\definecolor{sv}{HTML}{90F7EC}
-\definecolor{m1}{HTML}{FDEB71}
-\definecolor{m2}{HTML}{FEB692}
-\definecolor{ge}{HTML}{ABDCFF}
+% cf http://cloford.com/resources/colours/websafe1.htm
+
+\definecolor{sv}{RGB}{255,153,255}
+\definecolor{m1}{RGB}{153,153,255}
+\definecolor{m2}{RGB}{153,255,153}
+\definecolor{ge}{RGB}{255,255,153}
+\definecolor{sp}{RGB}{255,153,153}
+
 
 \usetikzlibrary{
   decorations.pathreplacing,    % paths with shoapes of curly braces
@@ -29,6 +33,7 @@
     m1/.append style = {fill = m1},
     m2/.append style = {fill = m2},
     gxe/.append style = {fill = ge},
+    sp/.append style = {fill = sp},
     aux/.append style = {fill = none},
     legendkey/.append style = {minimum width=3ex},
     legendtext/.append style = {draw=none, fill = black!10},
@@ -55,81 +60,84 @@
 
 
   %% check_model
-  \node [m1, below=of GEBIM.east, left, yshift=-4ex] (cmm1) {check\_model\_model\_1};
-  \node [m2, below=of cmm1.east, left] (cmm2) {check\_model\_model\_2};
-  \node [gxe, below=of cmm2.east, left] (cmgxe) {check\_model\_GxE};
   
-  \node [several, right=of cmm2] (cm) {check\_model};
+  \node [m1, below=of GEBIM.east, left, yshift=-4ex] (cmm1) {check\_model.fit\_model\_1};
+  \node [m2, below=of cmm1.east, left] (cmm2) {check\_model.fit\_model\_2};
+  \node [gxe, below=of cmm2.east, left] (cmgxe) {check\_model.fit\_model\_GxE};
+  \node [sp, below=of cmgxe.east, left] (cmsp) {check\_model.fit\_model\_spatial};
   
-  \draw [bend right] (cmm1.east) to (cm.west);
-  \draw (cmm2) to (cm);
-  \draw [bend left] (cmgxe.east) to (cm.west);
-
-
+  \draw [-, decorate,decoration=brace] (cmm1.north east) -- (cmsp.south east)
+    node [midway, virtual, xshift=-4pt] (X1) {};
+  \node [several, right=of X1] (cm) {check\_model};
+  \draw (X1) to (cm);
+  
+  
   %% parameter_groups
-  \node [gxe, below=of cmgxe.east, left, yshift=-4ex] (pggxe) {parameter\_groups\_GxE};
+  \node [gxe, below=of cmsp.east, left, yshift=-4ex] (pggxe) {parameter\_groups\_GxE};
   \node [m2, below=of pggxe.east, left] (pgm2) {parameter\_groups\_model\_2};
-
-  \node [several, right=of pgm2, yshift=2ex] (pg) {parameter\_groups};
-
-  \draw [bend right] (pggxe.east) to (pg.west);
-  \draw [bend left] (pgm2.east) to (pg.west);
+  
+  \draw [-, decorate,decoration=brace] (pggxe.north east) -- (pgm2.south east)
+    node [midway, virtual, xshift=-4pt] (X2) {};
+  \node [several, right=of X2] (pg) {parameter\_groups};
+  \draw (X2) to (pg);
 
 
   %% mean_comparisons
+  
   \node [aux, below=of pgm2.east, left, yshift=-12ex] (cp) {comp.parameters};
   \node [aux, below=of cp.east, left] (gsg) {get.significant.groups};
   \node [aux, below=of gsg.east, left] (galXg) {get.at.least.X.groups};
   
-  \node [m1, right=of galXg, yshift=2ex] (MCM1) {mean\_comparisons\_model\_1};
-  \node [m2, above=of MCM1.east, left] (MCM2) {mean\_comparisons\_model\_2};
-  \node [gxe, above=of MCM2.east, left, yshift=2ex] (MCGxE) {mean\_comparisons\_GxE};
-  \node [m2, below=of MCM1.east, left, yshift=-2ex] (MCPPM2) {mean\_comparisons\_predict\_the\_past\_model\_2};
+  \node [m1, right=of galXg, yshift=2ex] (MCM1) {mean\_comparisons.check\_model\_1};
+  \node [m2, above=of MCM1.east, left] (MCM2) {mean\_comparisons.check\_model\_2};
+  \node [gxe, above=of MCM2.east, left, yshift=2ex] (MCGxE) {mean\_comparisons.check\_model\_GxE};
+  \node [m2, below=of MCM1.east, left, yshift=-2ex] (MCPPM2) {mean\_comparisons.check\_predict\_the\_past\_model\_2};
+  \node [sp, below=of MCPPM2.east, left, yshift=-2ex] (MCSP) {mean\_comparisons.check\_model\_spatial};
   
-  \node [virtual, above=of MCM1.west, yshift=-4ex, xshift=4pt] (X1) {};
-  \node [virtual, above=of MCM1.east, yshift=-4ex, xshift=-4pt] (X2) {};
-  
-  \node [several, right=of MCM1, yshift=2ex] (MC) {mean\_comparisons};
+  \node [virtual, above=of MCM1.west, yshift=-4ex, xshift=4pt] (X3) {};
   
   \draw [bend right=45] (gsg.west) to (galXg.west);
   \draw (MCM1) to (MCPPM2);
   
   % braces
   \draw [-, decorate,decoration=brace] (MCM1.south west) -- (MCM2.north west);
-  \draw [-, decorate,decoration=brace] (MCGxE.north east) -- (MCPPM2.south east);
+  \draw [bend right] (cp.east) to (X3);
+  \draw (gsg) to (X3);
+  \draw [bend left] (galXg.east) to (X3);
   
-  \draw [bend right] (cp.east) to (X1);
-  \draw (gsg) to (X1);
-  \draw [bend left] (galXg.east) to (X1);
-  \draw (X2) to (MC);
- 
+  
+  \draw [-, decorate,decoration=brace] (MCGxE.north east) -- (MCSP.south east)
+    node [midway, virtual, xshift=-4pt] (X4) {};
+  \node [several, right=of X4] (MC) {mean\_comparisons};
+  \draw (X4) to (MC);
+
 
   %% plot
-  \node [aux, below=of MCPPM2.east, left, yshift=-8ex] (GPG) {ggplot\_parameter\_groups};
-  \node [gxe, below=of GPG.east, left] (GCMGxE) {ggplot\_check\_model\_GxE};
-  \node [m1, below=of GCMGxE.east, left] (GCMM1) {ggplot\_check\_model\_model\_1};
-  \node [m2, below=of GCMM1.east, left] (GCMM2) {ggplot\_check\_model\_model\_2};
-  \node [m2, below=of GCMM2.east, left] (GCVM2) {ggplot\_cross\_validation\_model\_2};
-  \node [gxe, below=of GCVM2.east, left] (GMCGxE) {ggplot\_mean\_comparisons\_GxE};
-  \node [m1, below=of GMCGxE.east, left] (GMCM1) {ggplot\_mean\_comparisons\_model\_1};
-  \node [m2, below=of GMCM1.east, left] (GMCM2) {ggplot\_mean\_comparisons\_model\_2};
-  \node [m2, below=of GMCM2.east, left] (GMCPPM2) {ggplot\_mean\_comparisons\_predict\_the\_past\_model\_2};
+  \node [aux, below=of MCSP.east, left, yshift=-8ex] (GPG) {plot.parameter\_groups};
+  \node [gxe, below=of GPG.east, left] (GCMGxE) {plot.check\_model\_GxE};
+  \node [m1, below=of GCMGxE.east, left] (GCMM1) {plot.check\_model\_model\_1};
+  \node [m2, below=of GCMM1.east, left] (GCMM2) {plot.check\_model\_model\_2};
+  \node [m2, below=of GCMM2.east, left] (GCVM2) {plot.cross\_validation\_model\_2};
+  \node [gxe, below=of GCVM2.east, left] (GMCGxE) {plot.mean\_comparisons\_GxE};
+  \node [m1, below=of GMCGxE.east, left] (GMCM1) {plot.mean\_comparisons\_model\_1};
+  \node [m2, below=of GMCM1.east, left] (GMCM2) {plot.mean\_comparisons\_model\_2};
+  \node [m2, below=of GMCM2.east, left] (GMCPPM2) {plot.mean\_comparisons\_predict\_the\_past\_model\_2};
+  \node [sp, below=of GMCPPM2.east, left] (GCMSP) {plot.check\_model\_spatial};
+  \node [sp, below=of GCMSP.east, left] (GMCSP) {plot.mean\_comparisons\_model\_spatial};
   
-  \node [gxe, below=of GMCPPM2.east, left, yshift=-6ex] (GBGxE) {ggplot\_biplot\_GxE};
+  \node [gxe, below=of GMCSP.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
   \node [gxe, left=of GBGxE] (GMS) {ggplot\_mean\_vs\_stability};
   \node [gxe, above=of GMS.east, left] (GDR) {ggplot\_discrimitiveness\_vs\_representativeness};
   \node [gxe, below=of GMS.east, left] (GWWW) {ggplot\_which\_won\_where};
 
   \draw [-, decorate,decoration=brace] (GDR.north east) -- (GWWW.south east)
-    node [midway, virtual, xshift=-4pt] (X3) {};
+    node [midway, virtual, xshift=-4pt] (X5) {};
+  \draw (X5) to (GBGxE);
     
   \draw [-, decorate,decoration=brace] (GPG.north east) -- (GBGxE.south east)
-    node [midway, virtual, xshift=-4pt] (X4) {};
-  
-  \node [several, right=of X4] (P) {plot};
-  
-  \draw (X3) to (GBGxE);
-  \draw (X4) to (P);
+    node [midway, virtual, xshift=-4pt] (X6) {};
+  \node [several, right=of X6] (P) {plot};
+  \draw (X6) to (P);
 
   %% legend
   \node[several,legendkey]  (LS)  [right=of m1, xshift=6em] {};
@@ -144,12 +152,15 @@
   \node[gxe,legendkey]  (LGxE)  [below=of LM2,yshift=3ex] {};
   \node[right,legendtext] at (LGxE.east) {GxE functions};
 
+  \node[sp,legendkey]  (LSP)  [below=of LGxE,yshift=3ex] {};
+  \node[right,legendtext] at (LSP.east) {Spatial functions};
+
   %% legend bounding box
   \begin{pgfonlayer}{background}
     \node[
       fill=black!10,
       rounded corners,
-      fit = (LS) (LGxE) (LStext)
+      fit = (LS) (LGxE) (LSP) (LStext)
     ] {};
   \end{pgfonlayer}
 
