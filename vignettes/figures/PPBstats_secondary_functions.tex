@@ -117,13 +117,15 @@
   \node [gxe, below=of GPG.east, left] (GCMGxE) {plot.check\_model\_GxE};
   \node [m1, below=of GCMGxE.east, left] (GCMM1) {plot.check\_model\_model\_1};
   \node [m2, below=of GCMM1.east, left] (GCMM2) {plot.check\_model\_model\_2};
-  \node [m2, below=of GCMM2.east, left] (GCVM2) {plot.cross\_validation\_model\_2};
+  \node [sp, below=of GCMM2.east, left] (GCMSP) {plot.check\_model\_spatial};
+
+  \node [m2, below=of GCMSP.east, left] (GCVM2) {plot.cross\_validation\_model\_2};
+
   \node [gxe, below=of GCVM2.east, left] (GMCGxE) {plot.mean\_comparisons\_GxE};
   \node [m1, below=of GMCGxE.east, left] (GMCM1) {plot.mean\_comparisons\_model\_1};
   \node [m2, below=of GMCM1.east, left] (GMCM2) {plot.mean\_comparisons\_model\_2};
   \node [m2, below=of GMCM2.east, left] (GMCPPM2) {plot.mean\_comparisons\_predict\_the\_past\_model\_2};
-  \node [sp, below=of GMCPPM2.east, left] (GCMSP) {plot.check\_model\_spatial};
-  \node [sp, below=of GCMSP.east, left] (GMCSP) {plot.mean\_comparisons\_model\_spatial};
+  \node [sp, below=of GMCPPM2.east, left] (GMCSP) {plot.mean\_comparisons\_model\_spatial};
   
   \node [gxe, below=of GMCSP.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
   \node [gxe, left=of GBGxE] (GMS) {ggplot\_mean\_vs\_stability};
