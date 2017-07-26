@@ -226,3 +226,22 @@ out_parameter_groups = parameter_groups(
 p_germplasm_group = plot(out_parameter_groups)
 @
 
+
+\subsubsection{Apply the workflow to several variables}
+
+If you wish to apply the AMMI workflow to several variables, you can use the function \texttt{workflow\_gxe} presented in section \ref{workflow_gxe} with the following code :
+
+<<message=TRUE,cache=FALSE>>=
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_gxe, "GGE")
+names(out) = vec_variables
+
+out_parameter_groups = parameter_groups(
+  list("y1" = out$y1$out_check_gxe, "y2" = out$y2$out_check_gxe, "y3" = out$y3$out_check_gxe), 
+  "germplasm" )
+
+p_germplasm_group = plot(out_parameter_groups)
+
+@
+
