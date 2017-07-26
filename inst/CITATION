@@ -2,7 +2,7 @@ citHeader("To cite the PPBstats package in publications use:")
 
 citEntry(
   entry = 'manual',
-  title = 'PPBstats: An \R~package to perform analysis found within PPB programmes
+  title = 'PPBstats: An R package to perform analysis found within PPB programmes
   regarding network of seeds circulation, agronomic trials, organoleptic tests and
   molecular experiments. Version 0.22',
   author = '{Pierre Riviere, Gaelle Van Franck and Olivier David and Facundo Muñoz}',
