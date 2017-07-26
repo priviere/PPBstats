@@ -550,3 +550,61 @@ p = plot(m_ptp, ggplot.type = "interaction")
 p$data_mean_comparisons$`loc-6`$`1`
 @
 
+
+\subsubsection{Apply the workflow to several variables}
+
+If you wish to apply the model\_2 workflow to several variables, you can use \texttt{lapply} with the following code :
+
+<<message=TRUE,cache=FALSE>>=
+workflow_model_2 = function(x){
+  out_model_2 = model_2(data = data_model_2, variable = x, return.epsilon = TRUE)
+  
+  out_check_model_2 = check_model(out_model_2)
+  p_out_check_model_2 = plot(out_check_model_2)
+  
+  out_cross_validation_model_2 = cross_validation_model_2(data_model_2, x, nb_iterations = 10)
+  p_out_cv = plot(out_cross_validation_model_2)
+  
+  model_2_alpha = mean_comparisons(out_check_model_2, parameter = "alpha")
+  model_2_beta = mean_comparisons(out_check_model_2, parameter = "beta", precision = 0.05)
+  model_2_theta = mean_comparisons(out_check_model_2, parameter = "theta", precision = 0.05)
+  p_a = plot(model_2_alpha, ggplot.type = "barplot")
+  p_b = plot(model_2_beta, ggplot.type = "barplot")
+  p_ab = plot(model_2_alpha, model_2_beta, ggplot.type = "biplot-alpha-beta")
+  p_t = plot(model_2_theta, ggplot.type = "barplot")
+  
+  out = list(
+      out_model_2 = out_model_2,
+      out_check_model_2 = out_check_model_2,
+      p_out_check_model_2 = p_out_check_model_2,
+      out_cross_validation_model_2 = out_cross_validation_model_2,
+      p_out_cv = p_out_cv,
+      model_2_alpha = model_2_alpha,
+      model_2_beta = model_2_beta,
+      model_2_theta = model_2_theta,
+      p_a = p_a,
+      p_b = p_b,
+      p_ab = p_ab,
+      p_t = p_t
+      )
+  return(out)
+}
+
+## Not run because of memory and time issues !
+# vec_variables = c("y1", "y2", "y3")
+#
+# out = lapply(vec_variables, workflow_model_2)
+# names(out) = vec_variables
+#
+# out_parameter_groups = parameter_groups(
+#   list("y1" = out$y1$out_check_model_2, 
+#        "y2" = out$y2$out_check_model_2, "
+#        y3" = out$y3$out_check_model_2), 
+#   "germplasm" )
+#
+# ppg = plot(out_parameter_groups)
+#
+# predict the past is not done here as it is more specific question
+#
+@
+
