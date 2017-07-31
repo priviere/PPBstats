@@ -1,12 +1,49 @@
 #' Run model to analyse intra-population variance
 #'
 #' @description
-#' \code
+#' \code{model_varintra} runs model to get intra-population variance on each environment of the network. See details for more information.
 #'
 #' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
-#'  
-#'  
+#' @param variable The variable on which runs the model
+#' 
+#' @param nb_iterations Number of iterations of the MCMC
+#' 
+#' @param thin thinning interval to reduce autocorrelations between samples of the MCMC
+#' 
+#' @param return.mu Return the value for each entry in each environment (mu_ijk)
+#' 
+#' @param return.sigma Return the value for each within-environment variance (sigma_ij)
+#' 
+#' @param return.DIC Return the DIC value of the model. See details for more information.
+#' 
+#' @details
+#' 
+#' Model on intra-population variance estimates entry effects (mu_ijk) and within-population variance (sigma_ij) on each environment. 
+#' An environment is a combinaison of a location and a year.
+#' 
+#' The variance are taken in an inverse Gamma distribution of parameters 10\^-6. 
+#' More information can be found in the vignette.
+#' 
+#' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
+#' 
+#' @return The function returns a list with 
+#' 
+#' \itemize{
+#' \item "data.modelvarIntra": the dataframe used to run the model
+#' \item "vec_env_RF": a vector with the environments as regional farms (i.e. with at least two blocks)
+#' \item "vec_env_SF": a vector with the environments as satellite farms (i.e. with one block)
+#' \item "MCMC": a list with the two MCMC chains (mcmc object)
+#' \item "DIC": the DIC value of the model
+#' }
+#' 
+#' @author Gaëlle van Frank and Pierre Riviere for R code and Olivier David for JAGS code
+#' 
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{check_model_model_variance_intra}}
+#' }
+#' 
 model_varintra <- function(data,
   variable,
   nb_iterations = 100000,
