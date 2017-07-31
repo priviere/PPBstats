@@ -1,0 +1,41 @@
+% \documentclass[tikz, border=10pt]{standalone}
+\input{figures/PPBstats_tikz_main}
+
+\begin{tikzpicture}
+
+%% plot
+\node [aux, below=of MCVI.east, left, yshift=-8ex] (GPG) {plot.parameter\_groups};
+\node [gxe, below=of GPG.east, left] (GCMGxE) {plot.check\_model\_GxE};
+\node [m1, below=of GCMGxE.east, left] (GCMM1) {plot.check\_model\_model\_1};
+\node [m2, below=of GCMM1.east, left] (GCMM2) {plot.check\_model\_model\_2};
+\node [sp, below=of GCMM2.east, left] (GCMSP) {plot.check\_model\_spatial};
+\node [vi, below=of GCMSP.east, left] (GCMVI) {plot.check\_model\_variance\_intra};
+
+\node [m2, below=of GCMVI.east, left] (GCVM2) {plot.cross\_validation\_model\_2};
+
+\node [gxe, below=of GCVM2.east, left] (GMCGxE) {plot.mean\_comparisons\_GxE};
+\node [m1, below=of GMCGxE.east, left] (GMCM1) {plot.mean\_comparisons\_model\_1};
+\node [m2, below=of GMCM1.east, left] (GMCM2) {plot.mean\_comparisons\_model\_2};
+\node [m2, below=of GMCM2.east, left] (GMCPPM2) {plot.mean\_comparisons\_predict\_the\_past\_model\_2};
+\node [sp, below=of GMCPPM2.east, left] (GMCSP) {plot.mean\_comparisons\_model\_spatial};
+\node [vi, below=of GMCSP.east, left] (GMCVI) {plot.mean\_comparisons\_model\_variance\_intra};
+
+\node [gxe, below=of GMCVI.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
+\node [gxe, left=of GBGxE] (GMS) {ggplot\_mean\_vs\_stability};
+\node [gxe, above=of GMS.east, left] (GDR) {ggplot\_discrimitiveness\_vs\_representativeness};
+\node [gxe, below=of GMS.east, left] (GWWW) {ggplot\_which\_won\_where};
+
+\draw [-, decorate,decoration=brace] (GDR.north east) -- (GWWW.south east)
+node [midway, virtual, xshift=-4pt] (X5) {};
+\draw (X5) to (GBGxE);
+
+\draw [-, decorate,decoration=brace] (GPG.north east) -- (GBGxE.south east)
+node [midway, virtual, xshift=-4pt] (X6) {};
+\node [several-all, right=of X6] (P) {plot};
+\draw (X6) to (P);
+
+
+
+\end{tikzpicture}
+
+% \end{document}
