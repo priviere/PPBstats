@@ -7,7 +7,7 @@
 \definecolor{m2}{RGB}{153,255,153}
 \definecolor{ge}{RGB}{255,255,153}
 \definecolor{sp}{RGB}{255,153,153}
-
+\definecolor{vi}{RGB}{255,204,153}
 
 \usetikzlibrary{
   decorations.pathreplacing,    % paths with shoapes of curly braces
@@ -34,6 +34,7 @@
     m2/.append style = {fill = m2},
     gxe/.append style = {fill = ge},
     sp/.append style = {fill = sp},
+    vi/.append style = {fill = vi},
     aux/.append style = {fill = none},
     legendkey/.append style = {minimum width=3ex},
     legendtext/.append style = {draw=none, fill = black!10},
@@ -65,8 +66,9 @@
   \node [m2, below=of cmm1.east, left] (cmm2) {check\_model.fit\_model\_2};
   \node [gxe, below=of cmm2.east, left] (cmgxe) {check\_model.fit\_model\_GxE};
   \node [sp, below=of cmgxe.east, left] (cmsp) {check\_model.fit\_model\_spatial};
+  \node [vi, below=of cmsp.east, left] (cmvi) {check\_model.fit\_model\_variance\_intra};
   
-  \draw [-, decorate,decoration=brace] (cmm1.north east) -- (cmsp.south east)
+  \draw [-, decorate,decoration=brace] (cmm1.north east) -- (cmvi.south east)
     node [midway, virtual, xshift=-4pt] (X1) {};
   \node [several, right=of X1] (cm) {check\_model};
   \draw (X1) to (cm);
@@ -93,6 +95,7 @@
   \node [gxe, above=of MCM2.east, left, yshift=2ex] (MCGxE) {mean\_comparisons.check\_model\_GxE};
   \node [m2, below=of MCM1.east, left, yshift=-2ex] (MCPPM2) {mean\_comparisons.check\_predict\_the\_past\_model\_2};
   \node [sp, below=of MCPPM2.east, left, yshift=-2ex] (MCSP) {mean\_comparisons.check\_model\_spatial};
+  \node [vi, below=of MCSP.east, left, yshift=-2ex] (MCVI) {mean\_comparisons.check\_model\_variance\_intra};
   
   \node [virtual, above=of MCM1.west, yshift=-4ex, xshift=4pt] (X3) {};
   
@@ -106,28 +109,30 @@
   \draw [bend left] (galXg.east) to (X3);
   
   
-  \draw [-, decorate,decoration=brace] (MCGxE.north east) -- (MCSP.south east)
+  \draw [-, decorate,decoration=brace] (MCGxE.north east) -- (MCVI.south east)
     node [midway, virtual, xshift=-4pt] (X4) {};
   \node [several, right=of X4] (MC) {mean\_comparisons};
   \draw (X4) to (MC);
 
 
   %% plot
-  \node [aux, below=of MCSP.east, left, yshift=-8ex] (GPG) {plot.parameter\_groups};
+  \node [aux, below=of MCVI.east, left, yshift=-8ex] (GPG) {plot.parameter\_groups};
   \node [gxe, below=of GPG.east, left] (GCMGxE) {plot.check\_model\_GxE};
   \node [m1, below=of GCMGxE.east, left] (GCMM1) {plot.check\_model\_model\_1};
   \node [m2, below=of GCMM1.east, left] (GCMM2) {plot.check\_model\_model\_2};
   \node [sp, below=of GCMM2.east, left] (GCMSP) {plot.check\_model\_spatial};
+  \node [vi, below=of GCMSP.east, left] (GCMVI) {plot.check\_model\_variance\_intra};
 
-  \node [m2, below=of GCMSP.east, left] (GCVM2) {plot.cross\_validation\_model\_2};
+  \node [m2, below=of GCMVI.east, left] (GCVM2) {plot.cross\_validation\_model\_2};
 
   \node [gxe, below=of GCVM2.east, left] (GMCGxE) {plot.mean\_comparisons\_GxE};
   \node [m1, below=of GMCGxE.east, left] (GMCM1) {plot.mean\_comparisons\_model\_1};
   \node [m2, below=of GMCM1.east, left] (GMCM2) {plot.mean\_comparisons\_model\_2};
   \node [m2, below=of GMCM2.east, left] (GMCPPM2) {plot.mean\_comparisons\_predict\_the\_past\_model\_2};
   \node [sp, below=of GMCPPM2.east, left] (GMCSP) {plot.mean\_comparisons\_model\_spatial};
+  \node [vi, below=of GMCSP.east, left] (GMCVI) {plot.mean\_comparisons\_model\_variance\_intra};
   
-  \node [gxe, below=of GMCSP.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
+  \node [gxe, below=of GMCVI.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
   \node [gxe, left=of GBGxE] (GMS) {ggplot\_mean\_vs\_stability};
   \node [gxe, above=of GMS.east, left] (GDR) {ggplot\_discrimitiveness\_vs\_representativeness};
   \node [gxe, below=of GMS.east, left] (GWWW) {ggplot\_which\_won\_where};
@@ -157,12 +162,15 @@
   \node[sp,legendkey]  (LSP)  [below=of LGxE,yshift=3ex] {};
   \node[right,legendtext] at (LSP.east) {Spatial functions};
 
+  \node[vi,legendkey]  (LVI)  [below=of LSP,yshift=3ex] {};
+  \node[right,legendtext] at (LVI.east) {Variance intra functions};
+
   %% legend bounding box
   \begin{pgfonlayer}{background}
     \node[
       fill=black!10,
       rounded corners,
-      fit = (LS) (LGxE) (LSP) (LStext)
+      fit = (LS) (LVI) (LStext) 
     ] {};
   \end{pgfonlayer}
 
