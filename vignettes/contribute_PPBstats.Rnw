@@ -37,6 +37,7 @@
 \usepackage{float}
 \usepackage{lscape}
 \usepackage{multirow}
+\usepackage{longtable}
 
 \newcommand{\pack}{\texttt{PPBstats}}
 \newcommand{\R}{\texttt{R}}
@@ -240,7 +241,7 @@ expected.
 
 \section{Internal function structure}
 
-The internal function used in \pack~are presented in Figure \ref{workflow_2} and Table \ref{function_descriptions_workflow_2}. 
+The internal function used in \pack~are presented in Figure \ref{workflow_2_1} and  \ref{workflow_2_2} and Table \ref{function_descriptions_workflow_2}. 
 Note that one additional funtion is also defined in the package: \texttt{common\_functions} which gather some functions used in several functions of \pack.
 
 
@@ -248,14 +249,24 @@ Note that one additional funtion is also defined in the package: \texttt{common\
 \begin{center}
 \input{figures/PPBstats_secondary_functions.tex}
 \end{center}
-\caption{Internal functions used within main functions.}
-\label{workflow_2}
+\caption{Internal functions used within main functions (1/2).}
+\label{workflow_2_1}
+\end{figure}
+
+\newpage
+
+\begin{figure}
+\begin{center}
+\input{figures/PPBstats_secondary_functions_2.tex}
+\end{center}
+\caption{Internal functions used within main functions (2/2).}
+\label{workflow_2_2}
 \end{figure}
 
 
-\begin{table}
-\begin{tabular}{lp{.4\textwidth}}
-
+\begin{longtable}{lp{.4\textwidth}}
+\caption{Name and description of internal functions} \\
+\label{function_descriptions_workflow_2} \\
 \hline
 \textbf{function name} & \textbf{description} \\ \hline
 
@@ -270,6 +281,8 @@ Note that one additional funtion is also defined in the package: \texttt{common\
 \texttt{check\_model.fit\_model\_GxE} & Check if the \texttt{GxE} model went well \\ \hline
 
 \texttt{check\_model.fit\_model\_spatial} & Check if the \texttt{spatial} model went well \\ \hline
+
+\texttt{check\_model.fit\_model\_variance\_intra} & Check if the \texttt{model\_variance\_intra} model went well \\ \hline
 
 \texttt{parameter\_groups\_GxE} & Get matrix with variables in column and effect in row from \texttt{check\_modelfit\_model\_GxE} \\ \hline
 
@@ -291,6 +304,8 @@ Note that one additional funtion is also defined in the package: \texttt{common\
 
 \texttt{mean\_comparisons.check\_predict\_the\_past\_model\_2} & Get mean comparisons from \texttt{predict\_the\_past\_model\_2} \\ \hline
 
+\texttt{mean\_comparisons.check\_model\_variance\_intra} & Get mean comparisons from \texttt{check\_model.fit\_model\_variance\_intra} \\ \hline
+
 \texttt{plot.parameter\_groups} & Get ggplot from \texttt{parameter\_groups} \\ \hline
 
 \texttt{plot.check\_model\_GxE} & Get ggplot from \texttt{check\_model.fit\_model\_GxE} \\ \hline
@@ -300,6 +315,8 @@ Note that one additional funtion is also defined in the package: \texttt{common\
 \texttt{plot.check\_model\_model\_2} & Get ggplot from \texttt{check\_model.fit\_model\_2} \\ \hline
 
 \texttt{plot.check\_model\_model\_spatial} & Get ggplot from \texttt{check\_model.fit\_model\_spatial} \\ \hline
+
+\texttt{plot.check\_model\_variance\_intra} & Get ggplot from \texttt{check\_model.fit\_model\_variance\_intra} \\ \hline
 
 \texttt{plot.cross\_validation\_model\_2} & Get ggplot from \texttt{cross\_validation\_model\_2} \\ \hline
 
@@ -311,6 +328,8 @@ Note that one additional funtion is also defined in the package: \texttt{common\
 
 \texttt{plot.mean\_comparisons\_predict\_the\_past\_model\_2} & Get ggplot from \texttt{mean\_comparisons.predict\_the\_past\_model\_2} \\ \hline
 
+\texttt{plot.mean\_comparisons\_model\_variance\_intra} & Get ggplot from \texttt{mean\_comparisons.check\_model\_variance\_intra} \\ \hline
+
 \texttt{plot.biplot\_GxE} & Get ggplot from \texttt{biplot\_GxE} \\ \hline
 
 \texttt{ggplot\_discrimitiveness\_vs\_representativeness} & Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix \\ \hline
@@ -319,10 +338,7 @@ Note that one additional funtion is also defined in the package: \texttt{common\
 
 \texttt{ggplot\_which\_won\_where} & Get "which won where" ggplot from PCA on interaction matrix \\ \hline
 
-\end{tabular}
-\caption{Internal functions}
-\label{function_descriptions_workflow_2}
-\end{table}
+\end{longtable}
 
 
 \end{document}
