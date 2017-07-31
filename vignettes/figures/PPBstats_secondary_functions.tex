@@ -27,7 +27,7 @@
   
   \draw [-, decorate,decoration=brace] (cmm1.north east) -- (cmvi.south east)
     node [midway, virtual, xshift=-4pt] (X1) {};
-  \node [several, right=of X1] (cm) {check\_model};
+  \node [several-all, right=of X1] (cm) {check\_model};
   \draw (X1) to (cm);
   
   
@@ -37,7 +37,7 @@
   
   \draw [-, decorate,decoration=brace] (pggxe.north east) -- (pgm2.south east)
     node [midway, virtual, xshift=-4pt] (X2) {};
-  \node [several, right=of X2] (pg) {parameter\_groups};
+  \node [several-all, right=of X2] (pg) {parameter\_groups};
   \draw (X2) to (pg);
 
 
@@ -68,11 +68,11 @@
   
   \draw [-, decorate,decoration=brace] (MCGxE.north east) -- (MCVI.south east)
     node [midway, virtual, xshift=-4pt] (X4) {};
-  \node [several, right=of X4] (MC) {mean\_comparisons};
+  \node [several-all, right=of X4] (MC) {mean\_comparisons};
   \draw (X4) to (MC);
 
   %% legend
-  \node[several,legendkey]  (LS)  [right=of m1, xshift=6em] {};
+  \node[several-all,legendkey]  (LS)  [right=of m1, xshift=6em] {};
   \node[right,legendtext] (LStext) at (LS.east) {Functions in main workflow};
 
   \node[m1,legendkey]  (LM1)  [below=of LS,yshift=3ex] {};
