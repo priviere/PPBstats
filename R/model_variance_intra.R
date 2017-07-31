@@ -1,11 +1,11 @@
-#' Run model to analyse intra-population variance
+#' Run model to analyze intra-population variance
 #'
 #' @description
 #' \code{model_varintra} runs model to get intra-population variance on each environment of the network. See details for more information.
 #'
 #' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
-#' @param variable The variable on which runs the model
+#' @param variable The variables on which runs the model
 #' 
 #' @param nb_iterations Number of iterations of the MCMC
 #' 
