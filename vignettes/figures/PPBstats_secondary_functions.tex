@@ -1,48 +1,5 @@
 % \documentclass[tikz, border=10pt]{standalone}
-
-% cf http://cloford.com/resources/colours/websafe1.htm
-
-\definecolor{sv}{RGB}{255,153,255}
-\definecolor{m1}{RGB}{153,153,255}
-\definecolor{m2}{RGB}{153,255,153}
-\definecolor{ge}{RGB}{255,255,153}
-\definecolor{sp}{RGB}{255,153,153}
-\definecolor{vi}{RGB}{255,204,153}
-
-\usetikzlibrary{
-  decorations.pathreplacing,    % paths with shoapes of curly braces
-  positioning,     % positions like above of node
-  fit              % legend bounding box fitting all nodes
-}
-\tikzset{
-    node distance=4ex and 4ex,
-    % on grid,  % node distance from the centers
-    every node/.style = {
-        rectangle,
-        minimum width=5em,
-        minimum height=3ex,
-        text depth=1pt,
-        draw,
-        outer sep = 2pt,
-        inner sep = 3pt
-    },
-    every edge/.style = {->,draw},
-    virtual/.append style = {draw=none, circle, minimum width=1em},
-    % virtual/.append style = {draw, color=black!50},   % debugging purposes
-    several/.append style = {fill = sv},
-    m1/.append style = {fill = m1},
-    m2/.append style = {fill = m2},
-    gxe/.append style = {fill = ge},
-    sp/.append style = {fill = sp},
-    vi/.append style = {fill = vi},
-    aux/.append style = {fill = none},
-    legendkey/.append style = {minimum width=3ex},
-    legendtext/.append style = {draw=none, fill = black!10},
-    ->,        % arrows for all
-    >=stealth  % arrow type
-}
-\pgfdeclarelayer{background}
-\pgfsetlayers{background,main}
+\input{figures/PPBstats_tikz_main}
 
 % \begin{document}
 
@@ -114,38 +71,6 @@
   \node [several, right=of X4] (MC) {mean\_comparisons};
   \draw (X4) to (MC);
 
-
-  %% plot
-  \node [aux, below=of MCVI.east, left, yshift=-8ex] (GPG) {plot.parameter\_groups};
-  \node [gxe, below=of GPG.east, left] (GCMGxE) {plot.check\_model\_GxE};
-  \node [m1, below=of GCMGxE.east, left] (GCMM1) {plot.check\_model\_model\_1};
-  \node [m2, below=of GCMM1.east, left] (GCMM2) {plot.check\_model\_model\_2};
-  \node [sp, below=of GCMM2.east, left] (GCMSP) {plot.check\_model\_spatial};
-  \node [vi, below=of GCMSP.east, left] (GCMVI) {plot.check\_model\_variance\_intra};
-
-  \node [m2, below=of GCMVI.east, left] (GCVM2) {plot.cross\_validation\_model\_2};
-
-  \node [gxe, below=of GCVM2.east, left] (GMCGxE) {plot.mean\_comparisons\_GxE};
-  \node [m1, below=of GMCGxE.east, left] (GMCM1) {plot.mean\_comparisons\_model\_1};
-  \node [m2, below=of GMCM1.east, left] (GMCM2) {plot.mean\_comparisons\_model\_2};
-  \node [m2, below=of GMCM2.east, left] (GMCPPM2) {plot.mean\_comparisons\_predict\_the\_past\_model\_2};
-  \node [sp, below=of GMCPPM2.east, left] (GMCSP) {plot.mean\_comparisons\_model\_spatial};
-  \node [vi, below=of GMCSP.east, left] (GMCVI) {plot.mean\_comparisons\_model\_variance\_intra};
-  
-  \node [gxe, below=of GMCVI.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
-  \node [gxe, left=of GBGxE] (GMS) {ggplot\_mean\_vs\_stability};
-  \node [gxe, above=of GMS.east, left] (GDR) {ggplot\_discrimitiveness\_vs\_representativeness};
-  \node [gxe, below=of GMS.east, left] (GWWW) {ggplot\_which\_won\_where};
-
-  \draw [-, decorate,decoration=brace] (GDR.north east) -- (GWWW.south east)
-    node [midway, virtual, xshift=-4pt] (X5) {};
-  \draw (X5) to (GBGxE);
-    
-  \draw [-, decorate,decoration=brace] (GPG.north east) -- (GBGxE.south east)
-    node [midway, virtual, xshift=-4pt] (X6) {};
-  \node [several, right=of X6] (P) {plot};
-  \draw (X6) to (P);
-
   %% legend
   \node[several,legendkey]  (LS)  [right=of m1, xshift=6em] {};
   \node[right,legendtext] (LStext) at (LS.east) {Functions in main workflow};
@@ -174,7 +99,7 @@
     ] {};
   \end{pgfonlayer}
 
-
 \end{tikzpicture}
+
 
 % \end{document}
