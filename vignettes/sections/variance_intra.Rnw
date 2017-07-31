@@ -8,7 +8,7 @@
 For variance intra analysis, you can follow these steps (Figure \ref{main_workflow}) :
 
 \begin{enumerate}
-\item Run the model with \texttt{} 
+\item Run the model with \texttt{model\_variance\_intra} 
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
 \item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
 \end{enumerate}
