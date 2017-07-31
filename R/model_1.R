@@ -62,7 +62,7 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}
-#' \item \code{\link{check_model_model_1}}
+#' \item \code{\link{check_model.model_1}}
 #' }
 #' 
 model_1 = function(
