@@ -179,8 +179,6 @@ model_varintra <- function(data,
    
     # sigma_y dpend du germplasme et de l'environnement
     for (i in 1:nb_entry){
-#  	tau_y[i] <- 1/pow(sigma_y[i],2)
-#    sigma_y[i] ~ dnorm(mean_prior_sigma[i],1.0E-6)T(0,)
 
     tau_y[i] ~ dgamma(1.0E-6,1.0E-6) 
     sigma_y[i] <- pow(tau_y[i],-0.5)
