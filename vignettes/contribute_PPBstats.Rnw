@@ -247,7 +247,7 @@ Note that one additional funtion is also defined in the package: \texttt{common\
 
 \begin{figure}
 \begin{center}
-\input{figures/PPBstats_secondary_functions.tex}
+\input{figures/PPBstats_secondary_functions_1.tex}
 \end{center}
 \caption{Internal functions used within main functions (1/2).}
 \label{workflow_2_1}
