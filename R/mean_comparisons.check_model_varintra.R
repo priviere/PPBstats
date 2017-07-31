@@ -1,4 +1,4 @@
-mean_comparisons.check_model_varintra = function(
+mean_comparisons.check_model_variance_intra = function(
   data,
   parameter,
   alpha = 0.05,
@@ -39,8 +39,21 @@ mean_comparisons.check_model_varintra = function(
   }
   
   data_mean_comparisons = MCMC_par(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups)
-
   attributes(data_mean_comparisons)$PPBstats.object = "data_mean_comparisons"
   
-  return(data_mean_comparisons)
+  # 3. Format data_env_with_no_controls and data_env_whose_param_did_not_converge
+  # to do !!!
+  data_env_with_no_controls = NULL
+  data_env_whose_param_did_not_converge = NULL
+  
+  # 4. Return results
+  out <- list(
+    "data_mean_comparisons" = data_mean_comparisons,
+    "data_env_with_no_controls" = data_env_with_no_controls,
+    "data_env_whose_param_did_not_converge" = data_env_whose_param_did_not_converge
+  )
+  
+  class(out) <- c("PPBstats", "mean_comparisons_model_variance_intra")
+  
+  return(out)
 }

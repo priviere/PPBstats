@@ -1,10 +1,9 @@
 check_model.fit_model_variance_intra = function(
-  out_model_varintra
+  x
 )
 {
-  
   # 1. Convergence, update MCMC and data frame with environments where some parameters did not converge ----------
-  out.conv = check_convergence(out_model_varintra, model_name = "model_varintra")
+  out.conv = check_convergence(x, model_name = "model_variance_intra")
   MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   conv_not_ok = out.conv$conv_not_ok
@@ -26,10 +25,11 @@ check_model.fit_model_variance_intra = function(
     # update data
     env_not_ok = unique(c(env_not_ok_mu, env_not_ok_sigma))
     if( length(env_not_ok) > 0 ) {
-      data_env_whose_param_did_not_converge = droplevels(filter(out_model_varintra$data.modelvarIntra, environment %in% env_not_ok))
+      print("test")
+      data_env_whose_param_did_not_converge = droplevels(filter(x$data.model_variance_intra, environment %in% env_not_ok))
       data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
       data_env_whose_param_did_not_converge$parameter = paste("mu", data_env_whose_param_did_not_converge$parameter, sep = "")
-      
+
       # Update MCMC, delete all environments where at least one parameter do not converge
       message("MCMC are updated, the following environment were deleted : ", paste(env_not_ok, collapse = ", "))
       message("data_env_whose_param_did_not_converge contains the raw data for these environments.")
@@ -72,7 +72,7 @@ check_model.fit_model_variance_intra = function(
 
   
   # 3. Return results ----------
-  data_env_with_no_controls = out_model_varintra$data_env_with_no_controls
+  data_env_with_no_controls = x$data_env_with_no_controls
   if( !is.null(data_env_with_no_controls) ){
     data_env_with_no_controls$parameter = paste("mu", data_env_with_no_controls$parameter, sep = "")
     data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
@@ -90,7 +90,7 @@ check_model.fit_model_variance_intra = function(
     )
   )
   
-  attributes(out)$PPBstats.object = "check_model_model_varintra"
+  class(out) <- c("PPBstats", "check_model_variance_intra")
   
   return(out)
 }

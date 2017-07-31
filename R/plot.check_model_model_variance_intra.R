@@ -1,16 +1,16 @@
 plot.check_model_model_variance_intra = function(
-  out_check_model_varintra,
+  x,
   nb_parameters_per_plot = 10
 ){
   # Get data ----------
-  data_ggplot = out_check_model_varintra$data_ggplot
+  data_ggplot = x$data_ggplot
   data_ggplot_model_varintra_sigma_ij = data_ggplot$sigma_ij
   data_ggplot_model_varintra_mu_ij = data_ggplot$mu_ij
   colnames(data_ggplot_model_varintra_mu_ij)[grep("environment",colnames(data_ggplot_model_varintra_mu_ij))] = "plot"
   data_ggplot_model_varintra_mu_ij$environment = paste(data_ggplot_model_varintra_mu_ij$location,data_ggplot_model_varintra_mu_ij$year,sep=":")
   data_ggplot_model_varintra_sigma_ij$environment = unlist(lapply(data_ggplot_model_varintra_sigma_ij$environment, function(x){return(strsplit(x,",")[[1]][2])}))
   data_ggplot_model_varintra_sigma_ij$entry = paste(data_ggplot_model_varintra_sigma_ij$location,data_ggplot_model_varintra_sigma_ij$year,sep=":")
-  MCMC_conv_not_ok = out_check_model_varintra$MCMC_conv_not_ok
+  MCMC_conv_not_ok = x$MCMC_conv_not_ok
   
   
   # mu_ij caterpillar plot ----------
@@ -54,11 +54,11 @@ plot.check_model_model_variance_intra = function(
   }
   
   # Return results ---------- 
-  out_model_varintra = list(
+  out_model_variance_intra = list(
     "mu_ij" = out_mu_ij,
     "sigma_ij" = out_sigma_ij,
     "mcmc_not_converge_traceplot_density" = out_mcmc_not_converge
   )
   
-  return(out_model_varintra)
+  return(out_model_variance_intra)
 }

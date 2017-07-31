@@ -1,0 +1,97 @@
+\subsection{Variance intra}
+\label{var_intra}
+
+\subsubsection{Theory of the model}
+
+\subsubsection{Steps with \pack}
+
+For variance intra analysis, you can follow these steps (Figure \ref{main_workflow}) :
+
+\begin{enumerate}
+\item Run the model with \texttt{} 
+\item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
+\item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
+\end{enumerate}
+
+Let's get the data.
+
+<<message=TRUE,cache=FALSE>>=
+# to do 
+data_variance_intra = data_model_1
+@
+
+
+\subsubsection{Run the model}
+To run the model , used the function \texttt{model\_variance\_intra}.
+You can run it on one variable.
+
+<<message=TRUE,cache=FALSE>>=
+out_vi = model_variance_intra(data_variance_intra, variable = "tkw", nb_iterations = 100)
+@
+
+
+\subsubsection{Check and visualize model outputs}
+
+\paragraph{Check the model}
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from \texttt{check\_model}).
+
+<<message=TRUE,cache=FALSE>>=
+out_check_vi = check_model.fit_model_variance_intra(out_vi)
+@
+
+\paragraph{Visualize outputs}
+
+Once the computation is done, you can visualize the results with \texttt{plot}
+
+<<message=TRUE,cache=FALSE>>=
+p_out_check_vi = plot(out_check_vi)
+@
+
+\subsubsection{Get and visualize mean comparisons}
+
+\paragraph{Get mean comparisons}
+
+Get mean comparisons with \texttt{mean\_comparisons}.
+
+<<message=TRUE,cache=FALSE>>=
+out_mean_comparisons_vi = mean_comparisons(out_check_vi, p.adj = "bonferroni")
+@
+
+
+\subsubsection{Apply the workflow to several variables}
+\label{workflow_variance_intra}
+
+If you wish to apply the variance\_intra workflow to several variables, you can use \texttt{lapply} with the following code :
+
+<<message=TRUE,cache=FALSE>>=
+workflow_model_variance_intra = function(x){
+  out_vi = model_variance_intra(data_variance_intra, variable = x)
+  
+  out_check_vi = check_model(out_vi)
+  p_out_check_vi = plot(out_check_vi)
+  
+  out_mean_comparisons_vi = mean_comparisons(out_check_vi, p.adj = "bonferroni")
+  p_out_mean_comparisons_vi = plot(out_mean_comparisons_vi)
+  
+  out = list(
+    "out_vi" = out_vi,
+    "out_check_vi" = out_check_vi,
+    "p_out_check_vi" = p_out_check_vi,
+    "out_mean_comparisons_vi" = out_mean_comparisons_vi,
+    "p_out_mean_comparisons_vi" = p_out_mean_comparisons_vi
+  )
+  
+  return(out)
+}
+
+## Not run because of memory and time issues !
+# vec_variables = c("y1", "y2", "y3")
+#
+# out = lapply(vec_variables, workflow_model_variance_intra)
+# names(out) = vec_variables
+
+@
+
+
