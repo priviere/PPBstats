@@ -252,10 +252,6 @@ model_variance_intra <- function(
 
   OUT = list(
     "data.model_variance_intra" = data,
-    "vec_env_with_no_data" = NULL,
-    "vec_env_with_no_controls" = NULL,
-    "data_env_with_no_controls" = NULL,
-    "vec_env_with_controls" = NULL,
     "vec_env_RF" = vec_env_RF,
     "vec_env_SF" = vec_env_SF,
     "MCMC" = mcmc,
