@@ -1,16 +1,39 @@
-PPBstats 0.21 under progress ------------------------
+PPBstats 0.22 under progress ------------------------
+-----------------------------------------------------
+* update functions
+  - model_1.R : correct bug model_1 (cf #60)
+  - workflow regarding spatial analysis : improve and debug
+  - update workflow regarding variance_intra model (cf #28, #29, #30, #31, #32) but still work to do : cf #62
+  - better plot for score regarding model 1 (cf #61)
+
+* vignette
+  - update text (typo + cf #36)
+  - add new section on variance_intra + update workflow figure, functions table, analysis families
+  - update contributions
+  
+
+PPBstats 0.21 ---------------------------------------
 -----------------------------------------------------
 * update functions
   - ggplot_mean_comparisons_model_1.R
   - ggplot_mean_comparisons_predict_the_past_model_2.R : cf #34
   - model_1.R
   - fix typo (cf #53)
+  - rename file .R in order to have same name of files and functions
 
 * update RData
   - Add the date in format of data #48
 
+* add new functions that implement spatial analysis (cf #20)
+  - spatial.R 
+  - check_model.fit_model_spatial.R
+  - plot.check_model_spatial.R
+  - mean_comparisons.check_model_spatial.R
+  - plot.mean_comparisons_model_spatial.R
+  
 * vignette
-  - update text, fix typo, update fig (cf #34, #49)
+  - update text, fix typo, update fig (cf #20, #34, #49)
+  - add section on spatial analysis
   - add Rmd regarding contributions
   
 

@@ -1,20 +1,3 @@
-#' Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix
-#'
-#' @description
-#' \code{ggplot_discrimitiveness_vs_representativeness} returns ggplot from PCA on interaction matrix
-#' 
-#' @param res.pca PCA object on interaction matrix
-#' 
-#' @details See \code{\link{get_ggplot}}
-#' 
-#' @return See \code{\link{get_ggplot}}
-#' 
-#' @seealso 
-#' \itemize{
-#' \item \code{\link{get_ggplot}}, 
-#' \item \code{\link{biplot_GxE}}
-#' }
-#'
 ggplot_discrimitiveness_vs_representativeness = function(res.pca){
 
   p = get_biplot(res.pca)

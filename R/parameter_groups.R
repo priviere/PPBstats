@@ -28,11 +28,9 @@
 #' @seealso 
 #' \itemize{
 #'  \item \code{\link{check_model}},
-#'  \item \code{\link{check_model_model_2}},
-#'  \item \code{\link{check_model_GxE}},
 #'  \item \code{\link{parameter_groups_GxE}},
 #'  \item \code{\link{parameter_groups_model_2}},
-#'  \item \code{\link{get_ggplot}}
+#'  \item \code{\link{plot.PPBstats}}
 #' }
 #'
 parameter_groups = function(

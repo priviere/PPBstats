@@ -1,2 +1,2 @@
 exportPattern("^[[:alpha:]]+")
-import(rjags,FactoMineR,ggplot2,plyr,dplyr,gridExtra,parallel,agricolae,factoextra,ibd,bitops)
+import(rjags,FactoMineR,ggplot2,plyr,dplyr,gridExtra,parallel,agricolae,factoextra,ibd,bitops,SpATS)

@@ -530,4 +530,40 @@ p_env$`4`
 
 @
 
+\subsubsection{Apply the workflow to several variables}
+
+If you wish to apply the model\_1 workflow to several variables, you can use \texttt{lapply} with the following code :
+
+<<message=TRUE,cache=FALSE>>=
+workflow_model_1 = function(x){
+  out_model_1 = model_1(data = data_model_1, variable = x, return.epsilon = TRUE)
+  
+  out_check_model_1 = check_model(out_model_1)
+  p_out_check_model_1 = plot(out_check_model_1)
+  
+  out_mean_comparisons_model_1_mu = mean_comparisons(out_check_model_1, parameter = "mu")
+  p_barplot_mu = plot(out_mean_comparisons_model_1_mu, ggplot.type = "barplot")
+  p_interaction = plot(out_mean_comparisons_model_1_mu, ggplot.type = "interaction")
+  p_score = plot(out_mean_comparisons_model_1_mu, ggplot.type = "score")
+  
+  out = list(
+    "out_model_1" = out_model_1,
+    "out_check_model_1" = out_check_model_1,
+    "p_out_check_model_1" = p_out_check_model_1,
+    "out_mean_comparisons_model_1_mu" = out_mean_comparisons_model_1_mu,
+    "p_barplot_mu" = p_barplot_mu,
+    "p_interaction" = p_interaction,
+    "p_score" = p_score
+    )
+  return(out)
+}
+
+## Not run because of memory and time issues !
+# vec_variables = c("y1", "y2", "y3")
+#
+# out = lapply(vec_variables, workflow_model_1)
+# names(out) = vec_variables
+
+@
+
 

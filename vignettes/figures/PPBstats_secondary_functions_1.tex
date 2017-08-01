@@ -1,0 +1,105 @@
+% \documentclass[tikz, border=10pt]{standalone}
+\input{figures/PPBstats_tikz_head}
+
+% \begin{document}
+
+\begin{tikzpicture}
+
+  %% Model 1
+  \node [m1] (GEI) {get.env.info};
+  \node [m1, right=of GEI] (m1) {model\_1};
+  \draw (GEI) to (m1);
+  
+  
+  %% GxE
+  \node [gxe, below=of GEI.east, left, yshift=-4ex] (GEBIM) {GxE\_build\_interaction\_matrix};
+  \node [gxe, right=of GEBIM] (GxE) {GxE};
+  \draw (GEBIM) to (GxE);
+
+
+  %% check_model
+  
+  \node [m1, below=of GEBIM.east, left, yshift=-4ex] (cmm1) {check\_model.fit\_model\_1};
+  \node [m2, below=of cmm1.east, left] (cmm2) {check\_model.fit\_model\_2};
+  \node [gxe, below=of cmm2.east, left] (cmgxe) {check\_model.fit\_model\_GxE};
+  \node [sp, below=of cmgxe.east, left] (cmsp) {check\_model.fit\_model\_spatial};
+  \node [vi, below=of cmsp.east, left] (cmvi) {check\_model.fit\_model\_variance\_intra};
+  
+  \draw [-, decorate,decoration=brace] (cmm1.north east) -- (cmvi.south east)
+    node [midway, virtual, xshift=-4pt] (X1) {};
+  \node [several-all, right=of X1] (cm) {check\_model};
+  \draw (X1) to (cm);
+  
+  
+  %% parameter_groups
+  \node [gxe, below=of cmsp.east, left, yshift=-4ex] (pggxe) {parameter\_groups\_GxE};
+  \node [m2, below=of pggxe.east, left] (pgm2) {parameter\_groups\_model\_2};
+  
+  \draw [-, decorate,decoration=brace] (pggxe.north east) -- (pgm2.south east)
+    node [midway, virtual, xshift=-4pt] (X2) {};
+  \node [several-all, right=of X2] (pg) {parameter\_groups};
+  \draw (X2) to (pg);
+
+
+  %% mean_comparisons
+  
+  \node [aux, below=of pgm2.east, left, yshift=-12ex] (cp) {comp.parameters};
+  \node [aux, below=of cp.east, left] (gsg) {get.significant.groups};
+  \node [aux, below=of gsg.east, left] (galXg) {get.at.least.X.groups};
+  
+  \node [m1, right=of galXg, yshift=2ex] (MCM1) {mean\_comparisons.check\_model\_1};
+  \node [m2, above=of MCM1.east, left] (MCM2) {mean\_comparisons.check\_model\_2};
+  \node [gxe, above=of MCM2.east, left, yshift=2ex] (MCGxE) {mean\_comparisons.check\_model\_GxE};
+  \node [m2, below=of MCM1.east, left, yshift=-2ex] (MCPPM2) {mean\_comparisons.check\_predict\_the\_past\_model\_2};
+  \node [sp, below=of MCPPM2.east, left, yshift=-2ex] (MCSP) {mean\_comparisons.check\_model\_spatial};
+  \node [vi, below=of MCSP.east, left, yshift=-2ex] (MCVI) {mean\_comparisons.check\_model\_variance\_intra};
+  
+  \node [virtual, above=of MCM1.west, yshift=-4ex, xshift=4pt] (X3) {};
+  
+  \draw [bend right=45] (gsg.west) to (galXg.west);
+  \draw (MCM1) to (MCPPM2);
+  
+  % braces
+  \draw [-, decorate,decoration=brace] (MCM1.south west) -- (MCM2.north west);
+  \draw [bend right] (cp.east) to (X3);
+  \draw (gsg) to (X3);
+  \draw [bend left] (galXg.east) to (X3);
+  
+  
+  \draw [-, decorate,decoration=brace] (MCGxE.north east) -- (MCVI.south east)
+    node [midway, virtual, xshift=-4pt] (X4) {};
+  \node [several-all, right=of X4] (MC) {mean\_comparisons};
+  \draw (X4) to (MC);
+
+  %% legend
+  \node[several-all,legendkey]  (LS)  [right=of m1, xshift=6em] {};
+  \node[right,legendtext] (LStext) at (LS.east) {Functions in main workflow};
+
+  \node[m1,legendkey]  (LM1)  [below=of LS,yshift=3ex] {};
+  \node[right,legendtext] at (LM1.east) {Model 1 functions};
+
+  \node[m2,legendkey]  (LM2)  [below=of LM1,yshift=3ex] {};
+  \node[right,legendtext] at (LM2.east) {Model 2 functions};
+
+  \node[gxe,legendkey]  (LGxE)  [below=of LM2,yshift=3ex] {};
+  \node[right,legendtext] at (LGxE.east) {GxE functions};
+
+  \node[sp,legendkey]  (LSP)  [below=of LGxE,yshift=3ex] {};
+  \node[right,legendtext] at (LSP.east) {Spatial functions};
+
+  \node[vi,legendkey]  (LVI)  [below=of LSP,yshift=3ex] {};
+  \node[right,legendtext] at (LVI.east) {Variance intra functions};
+
+  %% legend bounding box
+  \begin{pgfonlayer}{background}
+    \node[
+      fill=black!10,
+      rounded corners,
+      fit = (LS) (LVI) (LStext) 
+    ] {};
+  \end{pgfonlayer}
+
+\end{tikzpicture}
+
+
+% \end{document}
