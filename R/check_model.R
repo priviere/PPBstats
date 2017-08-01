@@ -4,7 +4,7 @@
 #' \code{check_model} computes tests to assess if the model went well. 
 #' It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #' 
-#' @param x outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}
+#' @param x outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}, \code{\link{spatial}},
 #' 
 #' @details
 #' 
@@ -81,6 +81,22 @@
 #'  }
 #' }
 #' 
+#' \item spatial
+#' \itemize{
+#'  \item spatial : the output from the model
+#'  \item data_ggplot a list containing information for ggplot:
+#'  \itemize{
+#'   \item data_ggplot_residuals a list containing :
+#'    \itemize{
+#'     \item data_ggplot_normality
+#'     \item data_ggplot_skewness_test
+#'     \item data_ggplot_kurtosis_test
+#'     \item data_ggplot_qqplot
+#'     }
+#'   \item data_ggplot_variability_repartition_pie
+#'   }
+#' }
+#' 
 #' }
 #'
 #' 
@@ -89,11 +105,9 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{GxE}}, 
+#' \item \code{\link{spatial}}, 
 #' \item \code{\link{model_1}}, 
 #' \item \code{\link{model_2}}, 
-#' \item \code{\link{check_model_GxE}}, 
-#' \item \code{\link{check_model_1}}, 
-#' \item \code{\link{check_model_2}}, 
 #' \item \code{\link{mean_comparisons}}
 #' }
 #' 

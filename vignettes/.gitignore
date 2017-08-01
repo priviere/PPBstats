@@ -1,4 +1,4 @@
-*.tex
+.tex
 *.R
 *.aux
 *.bbl

@@ -1,6 +1,6 @@
 # PPBstats
 
-`PPBstats` is an R package to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes 
+`PPBstats` is an R package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
 
 The R code is under licence GPL-3.
 
@@ -10,7 +10,7 @@ More informations about this licence [here](http://creativecommons.org/licenses/
 The copyright of the R code and the vignette are owned by Réseau Semences Paysannes and Institut National de la Recherche Agronomique
 
 ## Version
-`PPBstats` is now at version 0.20
+`PPBstats` is now at version 0.21
 
 The version number is under the form A.B with
 
@@ -26,7 +26,8 @@ You can contribute in three ways:
 
 1. test this development version and report bugs
 2. translate the package
-3. add new functions that may be useful in the analysis of trials that can be found in PPB programmes
+3. add new functions that may be useful in the analysis that can be found in PPB programmes.
+Up to now, only agronomic (throught the master branch) and organoleptic (throught the organo branch) analysis are under development
 
 If you update the code, you can refer to 
 [the issues](https://github.com/priviere/PPBstats/issues)
@@ -38,13 +39,13 @@ Anyhow, send me an email if you wish to participate in order to coordinate our e
 
 First, load the development version:
 
-  `
-  devtools::install_github("priviere/PPBstats")
-  `
+```r
+devtools::install_github("priviere/PPBstats")
+```
 
 The easiest way to start is to look at the vignette to know how the package works.
 
-You can download the vignette [here](https://github.com/priviere/PPBstats/releases/download/v0.20/PPBstats.pdf).
+You can download the vignette [here](https://github.com/priviere/PPBstats/releases/download/v0.21/PPBstats.pdf).
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
 - some points are not clear in the vignette or you find bugs
@@ -64,6 +65,8 @@ If you have any ideas,
 - on the improvement of the current package
 - on new functions to add based on analysis you carry out in your PPB trials
 - ...
+
+Refer to the vignette [here](https://github.com/priviere/PPBstats/blob/master/vignettes/contribute.Rmd) to see how to contribute.
 
 even if it is not R written, send me an email and we'll see how we can work together!
 

@@ -41,6 +41,12 @@ For \code{check_model} of GxE, p.adj can be NULL, "holm", "hochberg", "bonferron
    \item data_ggplot_LSDbarplot_year
   }
  
+ \item From \code{\link{check_model}} from \code{\link{spatial}}, list of four elements : 
+  \itemize{
+   \item info : a list with variable and data
+   \item data_ggplot_LSDbarplot_germplasm
+  }
+  
  \item From \code{\link{check_model}} from \code{\link{model_1}}, list of three elements : 
   \itemize{
    \item data_mean_comparisons a list with as many elements as environment.
@@ -86,11 +92,8 @@ When there is only one group with the value of alpha, the function (via \code{ge
 \seealso{
 \itemize{
  \item \code{\link{check_model}},
- \item \code{\link{check_model_GxE}},
- \item \code{\link{check_model_model_1}},
- \item \code{\link{check_model_model_2}},
  \code{\link{predict_the_past_model_2}},
- \code{\link{get_ggplot}}
+ \code{\link{plot.PPBstats}}
 }
 }
 \author{

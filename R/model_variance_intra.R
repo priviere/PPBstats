@@ -1,11 +1,11 @@
-#' Run model to analyze intra-population variance
+#' Run model variance_intra
 #'
 #' @description
-#' \code{model_varintra} runs model to get intra-population variance on each environment of the network. See details for more information.
+#' \code{model_variance_intra} runs model to get intra-population variance on each environment of the network. See details for more information.
 #'
 #' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
-#' @param variable The variables on which runs the model
+#' @param variable The variable on which runs the model
 #' 
 #' @param nb_iterations Number of iterations of the MCMC
 #' 
@@ -32,21 +32,23 @@
 #' @return The function returns a list with 
 #' 
 #' \itemize{
-#' \item "data.modelvarIntra": the dataframe used to run the model
+#' \item "data.model_variance_intra": the dataframe used to run mode variance_intra
 #' \item "vec_env_RF": a vector with the environments as regional farms (i.e. with at least two blocks)
 #' \item "vec_env_SF": a vector with the environments as satellite farms (i.e. with one block)
 #' \item "MCMC": a list with the two MCMC chains (mcmc object)
 #' \item "DIC": the DIC value of the model
 #' }
 #' 
-#' @author Gaëlle van Frank and Pierre Riviere for R code and Olivier David for JAGS code
+#' @author Pierre Riviere and Gaelle Van Frank for R code; Olivier David for JAGS code
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{check_model_model_variance_intra}}
+#' \item \code{\link{check_model}}
+#' \item \code{\link{check_model.model_variance_intra}}
 #' }
 #' 
-model_varintra <- function(data,
+model_variance_intra <- function(
+  data,
   variable,
   nb_iterations = 100000,
   thin = 10,
@@ -57,7 +59,7 @@ model_varintra <- function(data,
 )
 {
   # 1. Error message and update arguments ----------
-#  check_data_vec_variables(data, variable)
+  check_data_vec_variables(data, variable)
   
   if(nb_iterations < 20000) { warning("nb_iterations is below 20 000, which seems small to get convergence in the MCMC.")  }
   
@@ -176,20 +178,15 @@ model_varintra <- function(data,
   }
   "
   
-  priors_model_jags = paste(
-    "
-    for (i in 1:nb_ID) { 
-    mu[i] ~ dnorm(mean_prior_mu[i],1.0E-6)}
-   
-    # sigma_y dpend du germplasme et de l'environnement
-    for (i in 1:nb_entry){
-
-    tau_y[i] ~ dgamma(1.0E-6,1.0E-6) 
-    sigma_y[i] <- pow(tau_y[i],-0.5)
-    }
-    
-    ",
-    sep = "")
+  priors_model_jags = "
+  for (i in 1:nb_ID) { 
+  mu[i] ~ dnorm(mean_prior_mu[i],1.0E-6)}   
+  # sigma_y depends of germplasm  and environment
+  for (i in 1:nb_entry){
+  tau_y[i] ~ dgamma(1.0E-6,1.0E-6) 
+  sigma_y[i] <- pow(tau_y[i],-0.5)
+  }
+  "
   
   d_model <- list(y = y, nb_y = length(y), entry=entry,nb_entry=nb_entry,ID=ID,nb_ID=nb_ID, mean_prior_mu=mean_prior_mu)    
   
@@ -254,16 +251,18 @@ model_varintra <- function(data,
   } else {epsilon = NULL}
 
   OUT = list(
-    "data.modelvarIntra" = data,
+    "data.model_variance_intra" = data,
+    "vec_env_with_no_data" = NULL,
+    "vec_env_with_no_controls" = NULL,
+    "data_env_with_no_controls" = NULL,
+    "vec_env_with_controls" = NULL,
     "vec_env_RF" = vec_env_RF,
     "vec_env_SF" = vec_env_SF,
     "MCMC" = mcmc,
     "epsilon" = epsilon,
     "DIC"= DIC
   )
-  attributes(OUT)$PPBstats.object = "model_varintra"
   
+  class(OUT) <- c("PPBstats", "fit_model_variance_intra")
   return(OUT)
-  
-  
 }

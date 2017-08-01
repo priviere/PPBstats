@@ -263,7 +263,7 @@ out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni
 p_out_mean_comparisons_ammi = plot(out_mean_comparisons_ammi)
 @
 
-\texttt{out\_mean\_comparisons\_ammi} is a list of three elements with barplots :
+\texttt{p\_out\_mean\_comparisons\_ammi} is a list of three elements with barplots :
 
 For each element of the list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph.
 Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
@@ -433,5 +433,49 @@ p_germplasm_group = plot(out_parameter_groups)
   @
 
 \end{itemize}
+
+\subsubsection{Apply the workflow to several variables}
+\label{workflow_gxe}
+
+If you wish to apply the AMMI workflow to several variables, you can use \texttt{lapply} with the following code :
+
+<<message=TRUE,cache=FALSE>>=
+workflow_gxe = function(x, gxe){
+  out_gxe = GxE(data_GxE, variable = x, gxe_analysis = gxe)
+  
+  out_check_gxe = check_model(out_gxe)
+  p_out_check_gxe = plot(out_check_gxe)
+  
+  out_mean_comparisons_gxe = mean_comparisons(out_check_gxe, p.adj = "bonferroni")
+  p_out_mean_comparisons_gxe = plot(out_mean_comparisons_gxe)
+  
+  out_biplot_gxe = biplot_GxE(out_check_gxe)
+  p_out_biplot_gxe = plot(out_biplot_gxe)
+
+  out = list(
+    "out_gxe" = out_gxe,
+    "out_check_gxe" = out_check_gxe,
+    "p_out_check_gxe" = p_out_check_gxe,
+    "out_mean_comparisons_gxe" = out_mean_comparisons_gxe,
+    "p_out_mean_comparisons_gxe" = p_out_mean_comparisons_gxe,
+    "out_biplot_gxe" = out_biplot_gxe,
+    "p_out_biplot_gxe" = p_out_biplot_gxe
+  )
+  
+  return(out)
+}
+
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_gxe, "AMMI")
+names(out) = vec_variables
+
+out_parameter_groups = parameter_groups(
+  list("y1" = out$y1$out_check_gxe, "y2" = out$y2$out_check_gxe, "y3" = out$y3$out_check_gxe), 
+  "germplasm" )
+
+p_germplasm_group = plot(out_parameter_groups)
+
+@
 
 
