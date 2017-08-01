@@ -3,6 +3,32 @@
 
 \subsubsection{Theory of the model}
 
+The phenotypic value $Y_{ijkl}$ for a given variable $Y$, germplasm $i$, environment $j$, plot $k$ and individual $l$ is modeled as :
+
+\begin{displaymath}
+Y_{ijkl} = \mu_{ijk} + \varepsilon_{ijkl} ; \quad \varepsilon_{ijkl} \sim \mathcal{N} (0,\sigma^2_{ij}),
+\label{modele_varIntra}
+\end{displaymath}
+
+
+Where $Y_{ijkl}$ is the phenotypic value for germplasm $i$, environment $j$, plot $k$ and individual $l$;
+$\mu_{ijk}$ is the mean of population $i$ in environnement $j$ and plot $k$ (nested in environment $j$);
+$\varepsilon_{ijkl}$ is what is not explained by the model in germplasm $i$, environment $j$, plot $k$ and individual $l$. 
+
+$\varepsilon_{ijkl}$ is taken from a normal distribution, centered on 0 with variance $\sigma^2_{ij}$
+
+With priors :
+\begin{displaymath}
+\sigma^2_{ij} \sim 1/Gamma(10^{-6},10^{-6})
+\end{displaymath}
+and
+\begin{displaymath}
+\mu_{ijk} \sim N(\mu_{.j.},10^{6})
+\end{displaymath}
+
+$\sigma^2_{ij}$ correspond to the intra-germplasm variance.
+
+
 \subsubsection{Steps with \pack}
 
 For variance intra analysis, you can follow these steps (Figure \ref{main_workflow}) :
