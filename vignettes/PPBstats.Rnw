@@ -165,6 +165,10 @@ Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 @
 \newpage
 
+<<child='sections/variance_intra.Rnw'>>=
+@
+\newpage
+
 \section{Family of analysis 5 : multivariate analysis}
 \label{section_analysis5}
 

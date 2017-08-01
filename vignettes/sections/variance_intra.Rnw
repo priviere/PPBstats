@@ -1,5 +1,5 @@
-\subsection{Variance intra}
-\label{var_intra}
+\subsection{Variance intra : to estimate variance within germplasm}
+\label{variance_intra}
 
 \subsubsection{Theory of the model}
 
@@ -28,6 +28,7 @@ and
 
 $\sigma^2_{ij}$ correspond to the intra-germplasm variance.
 
+No specific experimental design is needed as long as there are several individuals measured for a given germplasm.
 
 \subsubsection{Steps with \pack}
 
@@ -52,7 +53,7 @@ To run the model , used the function \texttt{model\_variance\_intra}.
 You can run it on one variable.
 
 <<message=TRUE,cache=FALSE>>=
-out_vi = model_variance_intra(data_variance_intra, variable = "tkw", nb_iterations = 100)
+#out_vi = model_variance_intra(data_variance_intra, variable = "tkw", nb_iterations = 100)
 @
 
 
