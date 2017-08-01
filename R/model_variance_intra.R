@@ -15,6 +15,8 @@
 #' 
 #' @param return.sigma Return the value for each within-environment variance (sigma_ij)
 #' 
+#' @param return.epsilon Return the value of all residuals in each environment on each plot (epsilon_ijkl)
+#' 
 #' @param return.DIC Return the DIC value of the model. See details for more information.
 #' 
 #' @details
@@ -50,6 +52,7 @@ model_varintra <- function(data,
   thin = 10,
   return.mu = TRUE,
   return.sigma = TRUE,
+  return.epsilon = FALSE,
   return.DIC = FALSE
 )
 {
@@ -169,6 +172,7 @@ model_varintra <- function(data,
   likelihood_model_jags = "
   for (i in 1:nb_y) {
   y[i] ~ dnorm(mu[ID[i]],tau_y[entry[i]])
+  epsilon[i] <- (y[i] - mu[ID[i]])
   }
   "
   
@@ -234,12 +238,27 @@ model_varintra <- function(data,
   
   colnames(mcmc[[1]]) = colnames(mcmc[[2]]) = para.name
   
+  # 6. For residuals, it is done alone otherwise the memory do not manage with too big MCMC data frame ----------
+  if(return.epsilon) {
+    mcmc_res <- coda.samples(model, "epsilon", n.iter= nb_iterations, thin = thin)
+    
+    mcmc1_res = mcmc_res[[1]]
+    mcmc2_res = mcmc_res[[2]]
+    MCMC_res = rbind.data.frame(as.data.frame(mcmc1_res), as.data.frame(mcmc2_res))
+    
+    MCMCres = MCMC_res[,grep("epsilon", colnames(MCMC_res))]
+    epsilon = apply(MCMCres, 2, median, na.rm = TRUE)
+    
+    names(epsilon) = paste("epsilon[", names(ID.names.jags), "]", sep = "") # not really rigorous but ok for analysis.outputs (it misses the l in epsilon_ijkl)
+    
+  } else {epsilon = NULL}
 
   OUT = list(
     "data.modelvarIntra" = data,
     "vec_env_RF" = vec_env_RF,
     "vec_env_SF" = vec_env_SF,
     "MCMC" = mcmc,
+    "epsilon" = epsilon,
     "DIC"= DIC
   )
   attributes(OUT)$PPBstats.object = "model_varintra"
