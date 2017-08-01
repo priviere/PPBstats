@@ -4,6 +4,7 @@ PPBstats 0.22 under progress ------------------------
   - model_1.R : correct bug model_1 (cf #60)
   - workflow regarding spatial analysis : improve and debug
   - update workflow regarding variance_intra model (cf #28, #29, #30, #31, #32) but still work to do : cf #62
+  - better plot for score regarding model 1 (cf #61)
 
 * vignette
   - update text (typo + cf #36)

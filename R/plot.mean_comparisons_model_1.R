@@ -222,25 +222,39 @@ plot.mean_comparisons_model_1 <- function(
     if( !is.null(d_loc_out) ) {
       out = lapply(d_loc_out, function(x){
         lapply(x, function(env){
+          
+          env = arrange(env, median)
+          
           # assign a number according to the group
-          vec_letters = sort(unique(unlist(sapply(as.character(env[,"groups"]), function(x){unlist(strsplit(x, ""))}))), decreasing = TRUE)
+          vec_letters = sort(
+            unique(
+              unlist(
+                sapply(as.character(env[,"groups"]), 
+                       function(x){unlist(strsplit(x, ""))})
+                )
+              )
+            )
           
-          SCORE = c(1:1000)
-          SEQ = sort(unique(c(seq(1, length(SCORE), floor(length(SCORE)/length(vec_letters))), max(SCORE))), decreasing = TRUE)
+          SCORE = seq(
+            min(env$median), 
+            max(env$median), 
+            length.out = length(vec_letters)
+            )
+          names(SCORE) = vec_letters
+
           GP = as.character(env[,"groups"])
-          gp_nb = rep(0, length(GP))
-          
-          for(l in 1:length(vec_letters)) {
-            b = grep(vec_letters[l], GP)
-            GP[b] = "" 
-            gp_nb[b] = SEQ[l]
+          score = NULL
+          for(gp in GP){
+            score = c(score, mean(SCORE[unlist(strsplit(gp, ""))], na.rm = TRUE))
           }
-          env$score = gp_nb  
           
+          env$score = score
           alpha.info = paste(env$alpha, "|", env$alpha.correction)
           env$alpha.info_year = paste(env$year, alpha.info, sep = " - ")
-          
-          p = ggplot(env, aes(y = entry, x = alpha.info_year)) + geom_tile(aes(fill = score))
+          env$median_text = as.character(round(env$median, 1))
+
+          p = ggplot(env, aes(y = entry, x = alpha.info_year, label = median_text, fill = score))
+          p = p +  geom_tile() + geom_text()
           p = p + scale_fill_gradient(low = "blue",high = "red")
           p = p + xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle(env[1, "location"])
           return(p)
