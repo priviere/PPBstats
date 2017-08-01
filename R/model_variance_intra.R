@@ -1,7 +1,7 @@
 #' Run model variance_intra
 #'
 #' @description
-#' \code{model_variance_intra} runs model variance_intra
+#' \code{model_variance_intra} runs model to get intra-population variance on each environment of the network. See details for more information.
 #'
 #' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
@@ -11,14 +11,23 @@
 #' 
 #' @param thin thinning interval to reduce autocorrelations between samples of the MCMC
 #' 
-#' @param return.mu Return the value for each entry in each environment (mu_ij)
+#' @param return.mu Return the value for each entry in each environment (mu_ijk)
 #' 
-#' @param return.sigma Return the value for each within-environment variance (sigma_j)
-#'
+#' @param return.sigma Return the value for each within-environment variance (sigma_ij)
+#' 
+#' @param return.epsilon Return the value of all residuals in each environment on each plot (epsilon_ijkl)
+#' 
 #' @param return.DIC Return the DIC value of the model. See details for more information.
 #' 
 #' @details
-#' TO DO, see model 1 to get inspiration
+#' 
+#' Model on intra-population variance estimates entry effects (mu_ijk) and within-population variance (sigma_ij) on each environment. 
+#' An environment is a combinaison of a location and a year.
+#' 
+#' The variance are taken in an inverse Gamma distribution of parameters 10\^-6. 
+#' More information can be found in the vignette.
+#' 
+#' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 #' 
 #' @return The function returns a list with 
 #' 
@@ -38,7 +47,6 @@
 #' \item \code{\link{check_model.model_variance_intra}}
 #' }
 #' 
-
 model_variance_intra <- function(
   data,
   variable,
@@ -46,6 +54,7 @@ model_variance_intra <- function(
   thin = 10,
   return.mu = TRUE,
   return.sigma = TRUE,
+  return.epsilon = FALSE,
   return.DIC = FALSE
 )
 {
@@ -165,13 +174,13 @@ model_variance_intra <- function(
   likelihood_model_jags = "
   for (i in 1:nb_y) {
   y[i] ~ dnorm(mu[ID[i]],tau_y[entry[i]])
+  epsilon[i] <- (y[i] - mu[ID[i]])
   }
   "
   
   priors_model_jags = "
   for (i in 1:nb_ID) { 
-  mu[i] ~ dnorm(mean_prior_mu[i],1.0E-6)}
-   
+  mu[i] ~ dnorm(mean_prior_mu[i],1.0E-6)}   
   # sigma_y depends of germplasm  and environment
   for (i in 1:nb_entry){
   tau_y[i] ~ dgamma(1.0E-6,1.0E-6) 
@@ -226,6 +235,21 @@ model_variance_intra <- function(
   
   colnames(mcmc[[1]]) = colnames(mcmc[[2]]) = para.name
   
+  # 6. For residuals, it is done alone otherwise the memory do not manage with too big MCMC data frame ----------
+  if(return.epsilon) {
+    mcmc_res <- coda.samples(model, "epsilon", n.iter= nb_iterations, thin = thin)
+    
+    mcmc1_res = mcmc_res[[1]]
+    mcmc2_res = mcmc_res[[2]]
+    MCMC_res = rbind.data.frame(as.data.frame(mcmc1_res), as.data.frame(mcmc2_res))
+    
+    MCMCres = MCMC_res[,grep("epsilon", colnames(MCMC_res))]
+    epsilon = apply(MCMCres, 2, median, na.rm = TRUE)
+    
+    names(epsilon) = paste("epsilon[", names(ID.names.jags), "]", sep = "") # not really rigorous but ok for analysis.outputs (it misses the l in epsilon_ijkl)
+    
+  } else {epsilon = NULL}
+
   OUT = list(
     "data.model_variance_intra" = data,
     "vec_env_with_no_data" = NULL,
@@ -235,7 +259,7 @@ model_variance_intra <- function(
     "vec_env_RF" = vec_env_RF,
     "vec_env_SF" = vec_env_SF,
     "MCMC" = mcmc,
-    "epsilon" = NULL,
+    "epsilon" = epsilon,
     "DIC"= DIC
   )
   
