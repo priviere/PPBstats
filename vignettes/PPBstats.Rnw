@@ -81,7 +81,7 @@ if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axi
 
 \chapter{Network analysis}
 \label{network}
-Please, feel free to contribute to this part of analysis, see Section~\ref{contribute} for more information.
+Please, feel free to contribute to this part of analysis, see \href{https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf}{here} for more details.
 
 \chapter{Agronomic analysis}
 \label{agronomic}
@@ -178,11 +178,11 @@ Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
 
 \chapter{Organoleptic analysis}
 \label{organoleptic}
-Please, feel free to contribute to this part of analysis, see Section~\ref{contribute} for more information.
+Please, feel free to contribute to this part of analysis, see \href{https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf}{here} for more details.
 
 \chapter{Molecular analysis}
 \label{molecular}
-Please, feel free to contribute to this part of analysis, see Section~\ref{contribute} for more information.
+Please, feel free to contribute to this part of analysis, see \href{https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf}{here} for more details.
 
 \chapter*{To cite \pack} \addcontentsline{toc}{chapter}{To cite \pack}
 To cite this package and or this vignette:
