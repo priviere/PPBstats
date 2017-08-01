@@ -59,7 +59,7 @@ Within family analysis 1 and 2, the differences are in the experimental designs 
 
 \begin{table}[H]
 \begin{center}
-\begin{tabular}{ccccccccccc}
+\begin{tabular}{cccccccccccc}
 \hline
 Family & Name & Section &
 \rotatebox{90}{entry effects} &
@@ -69,22 +69,24 @@ Family & Name & Section &
 \rotatebox{90}{interaction effects} &
 \rotatebox{90}{year effects} &
 \rotatebox{90}{migrant-resident effects} &
-\rotatebox{90}{version effects}
+\rotatebox{90}{version effects} & 
+\rotatebox{90}{variance intra population effects} & 
 \\
 \hline
-1 & Anova & \ref{classic_anova} & X & & & & & & \\
-  & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & \\
-  & Bayesian model 1 & \ref{model_1} & X & & & & & & & \\
+1 & Anova & \ref{classic_anova} & X & & & & & & & \\
+  & Spatial analysis & \ref{spatial_analysis} & X & & & & & & & & \\
+  & Bayesian model 1 & \ref{model_1} & X & & & & & & & & \\
 \hline
-2 & IBD & \ref{ibd} & & X & & & & & & \\
-  & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & \\
-  & GGE & \ref{gge} & & X & X & (X) & X & (X) & & \\
-  & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & \\
-  & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & \\
+2 & IBD & \ref{ibd} & & X & & & & & & & \\
+  & AMMI & \ref{ammi} & & X & X & (X) & X & (X) & & & \\
+  & GGE & \ref{gge} & & X & X & (X) & X & (X) & & & \\
+  & Migrant-residant & \ref{migrant_residant} & X & X & (X) & (X) & (X) & (X) & X & & \\
+  & Bayesian model 2 & \ref{model_2} & & X & X & (X) & X & & & & \\
 \hline
-3 & Bayesian model 3 & \ref{model_3} & X & X & X & & X & X & & \\
+3 & Bayesian model 3 & \ref{model_3} & X & X & X & & X & X & & & \\
 \hline
-4 & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X \\
+4 & Version & \ref{version} & X & (X) & (X) & (X) & (X) & (X) & & X & \\
+  & Variance intra & \ref{variance_intra} & & & & & & & & & X \\
 \hline
 \end{tabular}
 \caption{Analyses carried out in \pack. X: effects that are estimated. (X): effects that can be estimated.}

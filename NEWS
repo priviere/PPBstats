@@ -8,7 +8,7 @@ PPBstats 0.22 under progress ------------------------
 
 * vignette
   - update text (typo + cf #36)
-  - add new section on variance_intra + update workflow figure and functions table
+  - add new section on variance_intra + update workflow figure, functions table, analysis families
   - update contributions
   
 
