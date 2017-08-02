@@ -200,7 +200,8 @@ This argument is used only when argument data comes from \code{\link{mean_compar
      \item ind : graph of individuals
      \item var : graph of variables
     }
-   \item clust : output from \code{factextra::fviz_nbclust()}. See \code{?factoextra::fviz_nbclust} for more details
+   \item clust : output from \code{factextra::fviz_nbclust()}. See \code{?factoextra::fviz_nbclust} for more details, 
+   a list of number of cluster + 1 element
   }
   
   
