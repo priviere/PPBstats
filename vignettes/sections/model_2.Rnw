@@ -104,6 +104,7 @@ This dataset is representative of data you can get in a PPB programme.
 
 <<message=TRUE,cache=FALSE>>=
 data(data_model_2)
+data_model_2 = format_data_PPBstats(data_model_2, type = "data_agro")
 head(data_model_2)
 @
 

@@ -105,6 +105,7 @@ Let's get the data.
 
 <<message=TRUE,cache=FALSE>>=
 data(data_GxE)
+data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
 head(data_GxE)
 @
 

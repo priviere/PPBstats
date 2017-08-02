@@ -419,6 +419,8 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 \texttt{design\_experiment} & Provides experimental design for several situations \\ \hline
 
+\texttt{format\_data\_PPBstats} & Check and format the data to be used in \pack~functions \\ \hline
+
 \texttt{describe\_data} & Describe the data set in order to choose the appropriate analysis to carry out \\ \hline
 
 \texttt{model\_1} & Run model 1 \\ \hline

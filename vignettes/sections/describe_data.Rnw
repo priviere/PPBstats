@@ -4,7 +4,12 @@
 When the data are collected, a first step is to describe it with \texttt{describe\_data}.
 
 <<message=TRUE,cache=FALSE>>=
+data("data_GxE")
+data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
 describe_data_GxE = describe_data(data_GxE, vec_variables = c("y1"), nb_parameters_per_plot = 5)
+
+data("data_model_2")
+data_model_2 = format_data_PPBstats(data_model_2, type = "data_agro")
 describe_data_model_2 = describe_data(data_model_2, vec_variables = c("y1"), nb_parameters_per_plot = 5)
 @
 

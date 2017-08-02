@@ -67,6 +67,8 @@ p_case2 = design_experiment(
 d = p_case2$`row-column`$data.frame
 d$variable = as.numeric(rnorm(nrow(d), 50, 10))
 
+d = format_data_PPBstats(d, type = "data_agro")
+
 out_spatial = spatial(data = d, variable = "variable")
 @
 
