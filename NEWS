@@ -12,7 +12,7 @@ PPBstats 0.22 under progress ------------------------
   - format_data_PPBstats.R
 
 * vignette
-  - update text (typo + cf #36, #47)
+  - update text (typo + format_data_PPBstats + cf #36, #47)
   - add new section on variance_intra + update workflow figure, functions table, analysis families
   - update contributions
   
