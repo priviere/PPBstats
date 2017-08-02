@@ -51,11 +51,11 @@ TO DO : integrer decision tree avec même normencalture que dans la vignette + r
 
 !!!
 
-\subsection{Data formating}
+\section{Data formating}
 \label{data_formating}
 
 To be analyzed by PPBstats, the data must have a certain format.
-Up to now, there are two format supported:
+Up to now, there are two formats supported:
 \begin{itemize}
 \item \texttt{network}
 \item \texttt{agro}
@@ -63,12 +63,11 @@ Up to now, there are two format supported:
 
 To check and give the right format, you must use the \texttt{format\_data\_PPBstats} function.
 
-
-\subsubsection{\texttt{network}}
+\subsection{\texttt{network}}
 
 !!! TO DO !!!
 
-\subsubsection{\texttt{agro}}
+\subsection{\texttt{agro}}
 
 The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables and their corresponding dates.
 The dates are associated to their corresponding variable by \texttt{\$}.
