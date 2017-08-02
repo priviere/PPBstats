@@ -8,6 +8,9 @@ PPBstats 0.22 under progress ------------------------
   - update workflow regarding variance_intra model (cf #28, #29, #30, #31, #32) but still work to do : cf #62
   - plot.parameter_groups.R : split plot ACP cluster (cf #47) + update Rd in plot.PPBstats.R
 
+* add new functions that implement formating of data
+  - format_data_PPBstats.R
+
 * vignette
   - update text (typo + cf #36, #47)
   - add new section on variance_intra + update workflow figure, functions table, analysis families
