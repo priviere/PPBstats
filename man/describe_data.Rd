@@ -4,7 +4,7 @@
 \alias{describe_data}
 \title{Describe the data set in order to choose the appropriate analysis to carry out}
 \usage{
-describe_data(data, vec_variables, nb_parameters_per_plot = 5)
+describe_data(x, ...)
 }
 \arguments{
 \item{data}{The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
