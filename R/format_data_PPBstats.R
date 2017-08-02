@@ -12,6 +12,9 @@
 #'  \item For type = "data_network" :
 #'  \item For type = "data_agro" : 
 #'  It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
+#'  The variables can be linked to their corresponding dates. 
+#'  The dates are associated to their corresponding variable by $.
+#'  For example the date associated to variable y1 is y1$date.
 #' }
 #' 
 #' 
