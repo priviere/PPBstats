@@ -507,10 +507,21 @@ ppg = plot(out_parameter_groups)
 
   \end{itemize}
 
-\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}
+
+\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}, a list of number of cluster + 1 element
   <<message=TRUE,cache=FALSE>>=
-  ppg$clust
+  cl = ppg$clust
+  names(cl)
   @
+
+  <<message=TRUE,cache=FALSE>>=
+  cl$cluster_all
+  @
+
+  <<message=TRUE,cache=FALSE>>=
+  cl$cluster_1
+  @
+\end{itemize}
 
 \end{itemize}
 
