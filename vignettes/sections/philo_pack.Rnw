@@ -41,7 +41,7 @@ Up to now, only agronomic analysis is under development.
 Please, feel free to contribute to other aspects of analysis, see \href{https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf}{here} for more information.
 
 
-\subsection{Decision tree to choose the right analysis according to question and experimental design}
+\section{Decision tree to choose the right analysis according to question and experimental design}
 
 
 !!! 
@@ -50,6 +50,37 @@ TO DO : integrer decision tree avec même normencalture que dans la vignette + r
 + attente complément Camille
 
 !!!
+
+\subsection{Data formating}
+\label{data_formating}
+
+To be analyzed by PPBstats, the data must have a certain format.
+Up to now, there are two format supported:
+\begin{itemize}
+\item \texttt{network}
+\item \texttt{agro}
+\end{itemize}
+
+To check and give the right format, you must use the \texttt{format\_data\_PPBstats} function.
+
+
+\subsubsection{\texttt{network}}
+
+!!! TO DO !!!
+
+\subsubsection{\texttt{agro}}
+
+The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables and their corresponding dates.
+The dates are associated to their corresponding variable by \texttt{\$}.
+For example the date associated to variable \texttt{y1} is \texttt{y1\$date}.
+
+<<message=TRUE,cache=FALSE>>=
+data("data_GxE")
+data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
+head(data_GxE)
+class(data_GxE)
+@
+
 
 \section{Let's go!}
 To continue, load the development version of the package :
