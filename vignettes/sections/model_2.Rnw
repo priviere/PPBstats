@@ -509,7 +509,7 @@ ppg = plot(out_parameter_groups)
 
 \item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}
   <<message=TRUE,cache=FALSE>>=
-  ppg$clust$nb_k
+  ppg$clust
   @
 
 \end{itemize}
