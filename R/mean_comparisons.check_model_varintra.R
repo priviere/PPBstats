@@ -1,5 +1,5 @@
 mean_comparisons.check_model_variance_intra = function(
-  data,
+  x,
   parameter,
   alpha = 0.05,
   type = 1,
@@ -14,6 +14,8 @@ mean_comparisons.check_model_variance_intra = function(
 
   if(!is.element(parameter, c("mu", "sigma"))) { stop("With outputs from model 1, the parameters must be mu or sigma") }
   
+  MCMC =x$MCMC
+  
   # 2. Get square matrice with pvalue or vector with pvalue ----------
   MCMC_par = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
     a = colnames(MCMC)[grep(paste("^", parameter, "\\[", sep = ""), colnames(MCMC))]
@@ -22,12 +24,12 @@ mean_comparisons.check_model_variance_intra = function(
     out = lapply(vec_MCMC_par, get_mean_comparisons_and_Mpvalue, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) 
     
     fun = function(out, para){
-      data = out$mean.comparisons
-      data$entry = sub(paste(para, "\\[", sep=""), "", sapply(data$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
-      data$environment =  sub("\\]", "", sapply(data$parameter, function(x){unlist(strsplit(as.character(x), ","))[2]}))
-      data$location = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
-      data$year = sapply(data$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
-      out$mean.comparisons = data
+      x = out$mean.comparisons
+      x$entry = sub(paste(para, "\\[", sep=""), "", sapply(x$parameter, function(x){unlist(strsplit(as.character(x), ","))[1]}))
+      x$environment =  sub("\\]", "", sapply(x$parameter, function(x){unlist(strsplit(as.character(x), ","))[2]}))
+      x$location = sapply(x$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
+      x$year = sapply(x$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
+      out$mean.comparisons = x
       return(out)
     }
     out = lapply(out, fun, parameter)
