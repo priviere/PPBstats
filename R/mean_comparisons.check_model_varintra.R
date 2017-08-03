@@ -14,8 +14,6 @@ mean_comparisons.check_model_variance_intra = function(
 
   if(!is.element(parameter, c("mu", "sigma"))) { stop("With outputs from model 1, the parameters must be mu or sigma") }
   
-  MCMC = rbind.data.frame(as.data.frame(data$MCMC[[1]],as.data.frame(data$MCMC[[2]])))
-  
   # 2. Get square matrice with pvalue or vector with pvalue ----------
   MCMC_par = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
     a = colnames(MCMC)[grep(paste("^", parameter, "\\[", sep = ""), colnames(MCMC))]
