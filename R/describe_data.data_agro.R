@@ -1,140 +1,350 @@
 describe_data.data_agro = function(
-  x,
-  vec_variables,
-  nb_parameters_per_plot = 5
+  data,
+  plot_type = c("histogramm", "barplot", "boxplot", "interaction", "biplot", "radar"),
+  x_axis = NULL,
+  in_col = NULL,
+  vec_variables = NULL,
+  nb_parameters_per_plot_x_axis = 5,
+  nb_parameters_per_plot_in_col = 5,
+  labels_on = NULL,
+  labels_size = 4
 ){
-  data = x
-  
   # 1. Error message ----------  
-  check_data_vec_variables(data, vec_variables)
-  
-  # 2. Description all variables ----------
-  summary_all = summary(data)
-  
-  # 3. Description for each variable ----------
-  fun = function(variable, data){
-    
-    colnames(data)[which(colnames(data) == variable)] = "variable"
-    
-    dtmp = droplevels(na.omit(data[,c("germplasm", "location", "year", "variable")]))
-    dtmp$variable = as.numeric(dtmp$variable)
-    xlim = c(min(dtmp$variable, na.rm = TRUE), max(dtmp$variable, na.rm = TRUE))
-    ylim = c(0,max(dtmp$variable, na.rm = TRUE))
-    
-    # 2.1. Presence/absence for each germplasm, location and year
-    m = as.data.frame(with(dtmp, table(germplasm, location, year)))
-    m$Freq = as.factor(m$Freq)
-    colnames(m)[4] = "nb_measures"
-    
-    p = ggplot(m, aes(x = germplasm, y = location))
-    p = p + geom_raster(aes(fill = nb_measures)) + facet_grid(year ~ .)
-    nb_NA = round(length(which(m$nb_measures == 0)) / ( length(which(m$nb_measures == 0)) + length(which(m$nb_measures != 0)) ), 2) * 100
-    p = p + ggtitle(
-      paste("Presence absence repartition for ", variable, sep = ""),
-      paste("(",  nb_NA, "% of 0)", sep = "")
-    ) + theme(axis.text.x=element_text(angle=90))
-    out.presence.absence = p
-    
-    # 2.2. Histogram and boxplot
-    out_all_hist = ggplot(dtmp, aes(variable)) + geom_histogram() + ggtitle(variable)
-    
-    # per germplasm
-    dtmp_g =  split_data_for_ggplot(dtmp, "germplasm", nb_parameters_per_plot)
-    
-    fun_g = function(x, xlim, variable_name){
-      ggplot(x, aes(variable)) + geom_histogram() + facet_grid(germplasm ~ .) + ggtitle(variable_name)  + coord_cartesian(xlim = xlim)
-    }
-    out_g_hist = lapply(dtmp_g, function(x){fun_g(x, xlim, variable)})
-    
-    fun_g = function(x, ylim){
-      plot = ggplot(x, aes(x = germplasm, y = variable)) + geom_boxplot() + ggtitle(variable)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))  + coord_cartesian(ylim = ylim)
-      outliers = boxplot(x$variable, x$germplasm, plot = FALSE)$out
-      names(outliers) = x$germplasm[which(x$variable %in% outliers)]
-      return(list("plot" = plot, "outliers" = outliers))
-    }
-    out_g_box = lapply(dtmp_g, fun_g, xlim)
-    
-    # per location
-    dtmp_l = split_data_for_ggplot(dtmp, "location", nb_parameters_per_plot)
-    
-    fun_l = function(x, xlim){
-      ggplot(x, aes(variable)) + geom_histogram() + facet_grid(location ~ .) + ggtitle(variable)  + coord_cartesian(xlim = xlim)
-    }
-    out_l_hist = lapply(dtmp_l, fun_l, xlim)
-    
-    fun_l = function(x, ylim){
-      plot = ggplot(x, aes(x = location, y = variable)) + geom_boxplot() + ggtitle(variable)  + coord_cartesian(ylim = ylim)
-      outliers = boxplot(x$variable, x$location, plot = FALSE)$out
-      names(outliers) = x$location[which(x$variable %in% outliers)]
-      return(list("plot" = plot, "outliers" = outliers))
-    }
-    
-    out_l_box = lapply(dtmp_l, fun_l, xlim)
-    
-    # per year
-    dtmp_y = split_data_for_ggplot(dtmp, "year", nb_parameters_per_plot)
-    
-    fun_y = function(x, xlim){
-      ggplot(x, aes(variable)) + geom_histogram() + facet_grid(year ~ .) + ggtitle(variable)  + coord_cartesian(xlim = xlim)
-    }
-    out_y_hist = lapply(dtmp_y, fun_y, xlim)
-    
-    fun_y = function(x, ylim){
-      plot = ggplot(x, aes(x = year, y = variable)) + geom_boxplot() + ggtitle(variable) + coord_cartesian(ylim = ylim)
-      outliers = boxplot(x$variable, x$year, plot = FALSE)$out
-      names(outliers) = x$year[which(x$variable %in% outliers)]
-      return(list("plot" = plot, "outliers" = outliers))
-    }
-    out_y_box = lapply(dtmp_y, fun_y, xlim)
-    
-    # interaction ----------
-    dtmp$int = paste(dtmp$germplasm,dtmp$location,dtmp$year,sep=":")
-    A = unlist(lapply(unique(dtmp$int), function(x){mean(na.omit(dtmp[dtmp$int %in% x,"variable"]))}))
-    ylim = c(min(A),max(A))
-    dtmp_int = split_data_for_ggplot(dtmp, "germplasm", nb_parameters_per_plot)
-    
-    fun_int = function(x, xlim){
-      p_gxe = ggplot(data = x, aes(x = location, y = variable, colour = germplasm, group = germplasm))
-      #  p_gxe = p_gxe + stat_summary(fun.y= mean, geom = "point")
-      p_gxe = p_gxe + stat_summary(fun.y = mean, geom = "line", aes(linetype = germplasm), size = 0.65) # + scale_linetype_manual(values=rep(c("solid", "dotted"), 6))
-      
-      #cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-      #cbbPalette <- c("#000000", "#E69F00", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
-      
-      #p_gxe = p_gxe + scale_color_manual(values=rep(cbbPalette, each = 2))
-      
-      p_gxe = p_gxe + theme(axis.text.x=element_text(angle=90))
-      p_gxe = p_gxe + ylab(variable)
-      # p2_GxE + ggtitle("") + xlab("") + ylab("") + theme(legend.title=element_blank())
-      
-      out_gxe = p_gxe + facet_grid(year ~ .) + coord_cartesian(ylim = xlim)
-      return(out_gxe)
-    }
-    out_y_int = lapply(dtmp_int, fun_int, ylim)
-    
-    
-    OUT = list("presence.absence" = out.presence.absence, 
-               "histogram" = list(
-                 "all" = out_all_hist, 
-                 "germplasm" = out_g_hist, 
-                 "location" = out_l_hist, 
-                 "year" = out_y_hist
-               ),
-               "boxplot" = list(
-                 "germplasm" = out_g_box, 
-                 "location" = out_l_box, 
-                 "year" = out_y_box
-               ),
-               "interaction" = out_y_int
-    )
+  mess = "plot_type must be \"histogramm\", \"barplot\", \"boxplot\", \"interaction\", \"biplot\" or \"radar\"."
+  if(length(plot_type) != 1) { stop(mess) }
+  if(!is.element(plot_type, c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar"))) { 
+    stop(mess) 
   }
   
-  out_each_variable = lapply(vec_variables, fun, data)
-  names(out_each_variable) = vec_variables
+  if(is.null(vec_variables)){ stop("You must settle vec_variables") }
   
-  OUT = list("all_variables" = summary_all,
-             "each_variable" = out_each_variable
-  )
+  check_arg = function(x, vec_x) { 
+    for(i in x) { 
+      if(!is.element(i, vec_x)) { 
+        stop("Regarding ", substitute(x),", ", i," is not in data") 
+      } 
+    } 
+  }
   
-  return(OUT)
+  if(!is.null(x_axis)){ check_arg(x_axis, colnames(data)) }
+  if(!is.null(in_col)){ check_arg(in_col, colnames(data)) }
+  check_arg(vec_variables, colnames(data))
+  if(!is.null(labels_on)){ check_arg(labels_on, colnames(data)) }
+  
+  if( plot_type == "histogramm" & !is.null(x_axis) ){ 
+    warning("Note than with plot_type == histogramm, x_axis is not used can not be NULL.")
+  }
+  if( plot_type == "barplot" & is.null(x_axis) ){ 
+    stop("With plot_type == barplot, x_axis can not be NULL.")
+  }
+  if( plot_type == "boxplot" & is.null(x_axis) ){ 
+    stop("With plot_type == boxplot, x_axis can not be NULL.")
+  }
+  if( plot_type == "interaction" & (is.null(x_axis) | is.null(in_col)) ){ 
+    stop("With plot_type == interaction, x_axis and in_col can not be NULL.")
+  }
+  if( plot_type == "biplot" & !is.null(x_axis) ){ 
+    warning("Note than with plot_type == biplot, x_axis is not used can not be NULL.")
+  }
+  if( plot_type == "biplot" & length(vec_variables) < 2 ){ 
+    stop("With plot_type == biplot, vec_variables must have at least 2 elements.")
+  }
+  if( plot_type == "biplot" & is.null(labels_on) ){ 
+    stop("With plot_type == biplot, labels_on can not be NULL.")
+  }
+  if( plot_type == "biplot" & length(labels_on) != 1 ){ 
+    stop("labels_on must be of length one..")
+  }
+  if( plot_type == "radar" & length(vec_variables) < 2 ){ 
+    stop("With plot_type == radar, vec_variables must have at least 2 elements.")
+  }
+  if( plot_type == "radar" & is.null(in_col) ){ 
+    stop("With plot_type == radar, in_col must not be NULL.")
+  }
+  
+  # 2. Functions used in the newt steps ----------
+  # 2.1. Reshape data in a list based on nb_parameters_per_plot arguments ----------
+  reshape_data = function(
+    d, 
+    vec_variables, 
+    labels_on,
+    x_axis, 
+    nb_parameters_per_plot_x_axis, 
+    in_col, 
+    nb_parameters_per_plot_in_col
+  ){
+    
+    if(!is.null(x_axis)){ d$x_axis = as.factor(as.character(d[,x_axis])) } else { d$x_axis = NA }
+    if(!is.null(in_col)){ d$in_col = as.factor(as.character(d[,in_col])) } else { d$in_col = NA }
+    if(!is.null(labels_on)){ d$labels_text = d[,labels_on] } else { d$labels_text = NA }
+    d_head = d[,c("labels_text", "x_axis", "in_col")]
+    
+    d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
+    
+    # get rid off rows with only NA
+    tokeep = apply(d_var, 1, function(x){length(which(is.na(x))) != length(x)})
+    t = length(which(!tokeep))
+    if( t > 0 ) { warning(t, " rows have been deleted for ", paste(vec_variables, collapse = ", "), " because of only NA on the row for these variables.") }
+    d_var = d_var[tokeep,]
+    d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
+    colnames(d_var) = vec_variables
+    
+    d_head = d_head[tokeep,]
+    
+    d = droplevels(cbind.data.frame(d_head, d_var))
+    
+    # split for x_axis
+    if(!is.null(x_axis)){
+      ns = unique(d$x_axis)
+      s = rep(c(1:length(ns)), each = nb_parameters_per_plot_x_axis)[1:length(ns)]
+      names(s) = ns
+      d$split_x_axis = s[d$x_axis]
+    } else { d$split_x_axis = NA }
+    
+    # split for in_col
+    if(!is.null(in_col)){
+      ns = unique(d$in_col)
+      s = rep(c(1:length(ns)), each = nb_parameters_per_plot_in_col)[1:length(ns)]
+      names(s) = ns
+      d$split_in_col = s[d$in_col]
+    } else { d$split_in_col = NA }
+    
+    # Overall split
+    d$split = paste(
+      paste(x_axis, d$split_x_axis, sep = "-"), 
+      paste(in_col, d$split_in_col, sep = "-"), 
+      sep = "|")
+    d = dplyr::select(d, - split_x_axis, - split_in_col)
+    d = plyr:::splitter_d(d, .(split))
+    
+    return(d)
+  }		
+  
+  
+  # 2.2. Function to run presence abscence matrix ----------
+  fun_pam = function(data, vec_variables){
+    
+    fun_pam_1 = function(variable, data){
+      dtmp = droplevels(na.omit(data[,c("germplasm", "location", "year", variable)]))
+      dtmp[,variable] = as.numeric(dtmp[,variable])
+      
+      xlim = c(min(dtmp[,variable], na.rm = TRUE), max(dtmp[,variable], na.rm = TRUE))
+      ylim = c(0,max(dtmp[,variable], na.rm = TRUE))
+      m = as.data.frame(with(dtmp, table(germplasm, location, year)))
+      m$Freq = as.factor(m$Freq)
+      colnames(m)[4] = "nb_measures"
+      
+      p = ggplot(m, aes(x = germplasm, y = location))
+      p = p + geom_raster(aes(fill = nb_measures)) + facet_grid(year ~ .)
+      nb_NA = round(length(which(m$nb_measures == 0)) / ( length(which(m$nb_measures == 0)) + length(which(m$nb_measures != 0)) ), 2) * 100
+      p = p + ggtitle(
+        paste("Presence absence repartition for ", variable, sep = ""),
+        paste("(",  nb_NA, "% of 0)", sep = "")
+      ) + theme(axis.text.x=element_text(angle=90))
+      return(p)
+    }
+    out = lapply(vec_variables, fun_pam_1, data)
+    names(out) = vec_variables
+    return(out)
+  }
+  
+  
+  # 2.3. Function to run histogramm, barplot, boxplot, interaction ----------
+  fun_hbbi_1 = function(d, x_axis, in_col, plot_type, variable, ylim){
+    
+    d$variable = d[,variable]
+    
+    # histogramm
+    if(plot_type == "histogramm") {
+      p = ggplot(d, aes( x = variable))
+      if( is.null(in_col) ) { 
+        p = p + geom_histogram() 
+      } else { 
+        p = p + geom_histogram(aes(fill = in_col)) 
+      }
+    }
+    
+    # barplot
+    if(plot_type == "barplot") {	
+      if(is.null(in_col)) {	
+        mm2 = ddply(d, "x_axis", summarise, mean = mean(variable, na.rm = TRUE), sd = sd(variable, na.rm = TRUE))
+        p = ggplot(mm2, aes(x = x_axis, y = mean)) + geom_bar(stat = "identity") 
+        limits <- aes(ymax = mean + sd, ymin = mean - sd)
+        p = p + geom_errorbar(limits, position = position_dodge(width=0.9), width=0.25)
+      } else {
+        d$toto = paste(d$in_col, d$x_axis, sep = "azerty")
+        mm = ddply(d, "toto", summarise, mean = mean(variable, na.rm = TRUE), sd = sd(variable, na.rm = TRUE)) 
+        mm$in_col = as.factor(sapply(mm$toto, function(x){unlist(strsplit(x, "azerty"))[1]}))
+        mm$x_axis = as.factor(sapply(mm$toto, function(x){unlist(strsplit(x, "azerty"))[2]}))
+        
+        p = ggplot(mm, aes(x = x_axis, y = mean, fill = in_col))
+        p = p + geom_bar(position = "dodge", stat = "identity") 
+        limits <- aes(ymax = mean + sd, ymin = mean - sd)
+        p = p + geom_errorbar(limits, position = position_dodge(width=0.9), width=0.25)
+      }
+    }
+    
+    
+    # boxplot
+    if(plot_type == "boxplot") {
+      p = ggplot(d, aes( x = x_axis, y = variable))
+      if( is.null(in_col) ) { 
+        p = p + geom_boxplot(position="dodge") 
+      } else { 
+        p = p + geom_boxplot(aes(fill = in_col)) 
+      }
+    }
+    
+    # interaction
+    if(plot_type == "interaction") {										
+      p = ggplot(d, aes(y = variable, x = factor(x_axis), colour = factor(in_col), group = factor(in_col)))
+      p = p + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line")
+    }
+    
+    if(is.element(plot_type, c("barplot", "boxplot", "interaction"))) {
+      p = p + xlab("") + ylab(variable) + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.title = element_blank())	
+      p = p + coord_cartesian(xlim = NULL, ylim)
+    }
+    
+    return(p)
+  }
+  
+  fun_hbbi = function(d, vec_variables,
+                      x_axis, nb_parameters_per_plot_x_axis, 
+                      in_col, nb_parameters_per_plot_in_col, 
+                      plot_type){ 
+    
+    out = lapply(vec_variables, 
+                 function(variable, d, labels_on,
+                          x_axis, nb_parameters_per_plot_x_axis,
+                          in_col, nb_parameters_per_plot_in_col,
+                          plot_type){
+                   
+                   d = reshape_data(d, variable, labels_on,
+                                    x_axis, nb_parameters_per_plot_x_axis,
+                                    in_col, nb_parameters_per_plot_in_col
+                   )
+                   ylim = range(unlist(lapply(d, function(x){ range(x[,variable], na.omit = TRUE) } )))
+                   out = lapply(d, fun_hbbi_1, x_axis, in_col, plot_type, variable, ylim)
+                   return(out)
+                 },
+                 d, labels_on,
+                 x_axis, nb_parameters_per_plot_x_axis,
+                 in_col, nb_parameters_per_plot_in_col,
+                 plot_type
+    )
+    names(out) = vec_variables
+    return(out)
+  }
+  
+  
+  # 2.4. Function to run biplot ----------
+  fun_biplot = function(d, vec_variables, labels_on, labels_size,
+                        x_axis, nb_parameters_per_plot_x_axis, 
+                        in_col, nb_parameters_per_plot_in_col
+  ){
+    
+    d = reshape_data(d, vec_variables, labels_on,
+                     x_axis, nb_parameters_per_plot_x_axis, 
+                     in_col, nb_parameters_per_plot_in_col
+    )
+    
+    ylim = NULL
+    for(variable in vec_variables){
+      ylim = c(ylim, list(
+        range(unlist(lapply(d, function(x){ range(x[,variable], na.omit = TRUE) } )))
+      )
+      )
+    }
+    names(ylim) = vec_variables
+    
+    fun_biplot_1 = function(pair_var, d, in_col, labels_size, ylim){
+      fun_biplot_2 = function(d, pair_var, in_col, labels_size, ylim){
+        var_ = unlist(strsplit(pair_var, " -azerty- "))
+        var1 = var_[1]; d$var1 = d[,var1]
+        var2 = var_[2]; d$var2 = d[,var2]
+        ylim = range(unlist(ylim[c(var_[1], var_[2])]))
+        if(!is.null(in_col)){ 
+          dtmp = d[,c("in_col", "var1", "var2", "labels_text")] 
+        } else {
+          dtmp = d[,c("var1", "var2", "labels_text")] 
+        }
+        dtmp = na.omit(dtmp)
+        if( nrow(dtmp) == 0){
+          warning("No biplot is done for ", var1, " and ", var2, " as there are only NA. This can be due to missing data."); 
+          p = NULL
+        } else {
+          p = ggplot(dtmp, aes(x = var1, y = var2, label = labels_text)) 
+          if(!is.null(in_col)){
+            p = p + geom_text(aes(colour = in_col), size = labels_size)             
+          } else {
+            p = p + geom_text(size = labels_size) 
+          }
+          p = p + coord_cartesian(xlim = NULL, ylim = ylim)
+          p = p + stat_smooth(method = "lm", se = FALSE)
+          p = p  + xlab(var1) + ylab(var2) + theme(axis.text.x = element_text(angle=90, hjust=1), legend.title = element_blank()) 
+        }
+        return(p)
+      }
+      p = lapply(d, fun_biplot_2, pair_var, in_col, labels_size, ylim)
+      return(p)
+    }
+    
+    pair_var = apply(combn(vec_variables, 2), 2, function(x){paste(x, collapse = " -azerty- ")})
+    out = lapply(pair_var, fun_biplot_1, d, in_col, labels_size, ylim)
+    names(out) = sub(" -azerty- ", " - ", pair_var)
+    return(out)
+  }
+  
+  # 2.5. Function to run radar ----------
+  fun_radar = function(d, vec_variables, in_col){
+    d$group = d[,in_col]
+    
+    m = data.frame(matrix(levels(d$group), ncol = 1))
+    for(variable in vec_variables){
+      value = tapply(d[,variable], d$group, mean, na.rm = TRUE)
+      # rescale all variables to lie between 0 and 1
+      value_ok = value / sum(value, na.rm = TRUE)
+      m = cbind.data.frame(m, value_ok)
+    }
+    colnames(m) = c("group", vec_variables)
+    
+    p = ggradar(m, 
+                grid.label.size = labels_size, 
+                axis.label.size = labels_size,
+                group.point.size = labels_size,
+                legend.text.size = labels_size*2.5)
+    p = p + theme(legend.title = element_blank()) 
+    return(p)
+  }
+  
+  # 3. Run code ----------
+  # 3.1. Presence absence for each germplasm, location and year
+  if(plot_type == "pam"){ 
+    p_out = fun_pam(data, vec_variables) 
+  }
+  
+  # 3.2. histogramm, barplot, boxplot, interaction ----------
+  if( is.element(plot_type, c("histogramm", "barplot", "boxplot", "interaction") )) { 
+    p_out = fun_hbbi(data, vec_variables,
+                     x_axis, nb_parameters_per_plot_x_axis, 
+                     in_col, nb_parameters_per_plot_in_col, 
+                     plot_type)  
+  }
+  
+  # 3.3. biplot ----------
+  if(plot_type == "biplot") {
+    p_out = fun_biplot(data, vec_variables, labels_on, labels_size,
+                       x_axis, nb_parameters_per_plot_x_axis, 
+                       in_col, nb_parameters_per_plot_in_col)
+  }
+  
+  # 3.4. radar ----------
+  if(plot_type == "radar") {
+    p_out = fun_radar(data, vec_variables, in_col)
+  }
+  
+  # 4. Return results ----------
+  return(p_out)
 }
+
