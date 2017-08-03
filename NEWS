@@ -7,9 +7,12 @@ PPBstats 0.22 under progress ------------------------
   - workflow regarding spatial analysis : improve and debug
   - update workflow regarding variance_intra model (cf #28, #29, #30, #31, #32) but still work to do : cf #62
   - plot.parameter_groups.R : split plot ACP cluster (cf #47) + update Rd in plot.PPBstats.R
+  - describe_data.R : create class
 
 * add new functions that implement formating of data
   - format_data_PPBstats.R
+  - describe_data.data_agro.R : huge refactoring, cf #68
+  - describe_data.data_network.R : empty from now
 
 * vignette
   - update text (typo + format_data_PPBstats + cf #36, #47)
