@@ -83,6 +83,16 @@
 #'    }
 #' }
 #' 
+#'  \item From \code{\link{check_model}} from \code{\link{model_variance_intra}}, list of one elements : 
+#'   \itemize{
+#'    \item data_mean_comparisons a list with as many elements as environment.
+#'    Each element of the list is composed of two elements:
+#'    \itemize{
+#'     \item mean.comparisons: a dataframe with the following columns : parameter, median, groups, number of groups, alpha (type one error), alpha.correction (correction used), entry, environment, location and year.
+#'     \item Mpvalue : a square matrix with pvalue computed for each pair of parameter.
+#'    }
+#'   }
+#'   
 #' @author Pierre Riviere
 #' 
 #' @seealso 
