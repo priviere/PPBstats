@@ -11,8 +11,7 @@ mean_comparisons.check_model_variance_intra = function(
   
   library(qdapRegex)
   # 1. Error message
-  if( attributes(data)$PPBstats.object != "model_varintra" ) { stop("data must come from check_model and model_1") }
-  
+
   if(!is.element(parameter, c("mu", "sigma"))) { stop("With outputs from model 1, the parameters must be mu or sigma") }
   
   MCMC = rbind.data.frame(as.data.frame(data$MCMC[[1]],as.data.frame(data$MCMC[[2]])))
