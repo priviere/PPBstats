@@ -15,7 +15,8 @@ check_model.fit_model_variance_intra = function(
     sigma_not_ok = conv_not_ok[grep("sigma\\[", conv_not_ok)]
   
     mcmc_to_delete = c(mu_not_ok, sigma_not_ok)
-    MCMC = MCMC[,-mcmc_to_delete]
+    for (i in mcmc_to_delete){MCMC = MCMC[,names(MCMC)!=i]}
+
     data_whose_param_did_not_converge=mcmc_to_delete
    } else {   data_whose_param_did_not_converge = NULL }
   
