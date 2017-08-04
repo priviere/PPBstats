@@ -27,7 +27,8 @@ Depends:
     factoextra,
     ibd,
     bitops,
-    SpATS
+    SpATS,
+    qdapRegex
 Suggests:
     ggmcmc,
     GGEBiplotGUI,
