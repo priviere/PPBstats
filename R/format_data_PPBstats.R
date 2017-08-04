@@ -28,6 +28,7 @@ format_data_PPBstats = function(
   type = "data_agro"
   )
   {
+  match.arg(type, c("data_agro", "data_network"))
   d = data
   if(type == "data_agro"){
     mess = "The following column are compulsory : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
