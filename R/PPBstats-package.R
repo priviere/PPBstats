@@ -15,7 +15,7 @@ NULL
 
 
 # data_model_1 ----------
-#' Simulated data set for housand kernel weight (tkw) of bread wheat to test model_1 model
+#' Simulated data set for thousand kernel weight (tkw) of bread wheat to test model_1 model
 #'
 #' @description
 #' A dataset containing one variable (tkw) and its date (tkw$date) 
@@ -92,3 +92,24 @@ NULL
 "data_GxE"
 NULL
 
+
+# data_model_variance_intra ----------
+#' Simulated data set for spike weight of bread wheat to test model_variance_intra
+#'
+#' @description
+#' A dataset containing one variable (spike weight) 
+#' and values for the following factors: location, year, germplasm, block, X and Y. 
+#' The different values of the parameters to create the dataset are also in columns: mu_ijk, sigma_ij and epsilon_ijkl
+#'
+#' @usage
+#' data(data_model_variance_intra)
+#'
+#' @format
+#' A data frame with 1182 rows and 10 columns
+#'  
+#' @details
+#' spike weight is in grams
+#' 
+#' @author Gaelle Van Frank
+"data_model_variance_intra"
+NULL
