@@ -2,72 +2,178 @@
 \label{describe_data}
 
 When the data are collected, a first step is to describe it with \texttt{describe\_data}.
+Five types of plot, throught the \texttt{plot\_type} argument are possible:
+\begin{itemize}
+\item presence abscence matrix that represent the combinaison of germplasm $\times$ location
+\item histogramm
+\item barplot, where sd error are displayed
+\item boxplot
+\item interaction
+\item biplot
+\item radar
+\end{itemize}
+Then you must choose which factor to represent on the x axis (\texttt{x\_axis} argument),
+the factor to display in color (\texttt{in\_col} argument), and of course the variable to describe (\texttt{vec\_variables} argument).
 
+It is possible to tune the number of factor displayed (\texttt{nb\_parameters\_per\_plot\_x\_axis} and \texttt{nb\_parameters\_per\_plot\_in\_col} arguments) and the size of the labels regarding biplot and radar (\texttt{labels\_on} and \texttt{labels\_size} arguments).
+
+Get two data set to look at some examples
 <<message=TRUE,cache=FALSE>>=
 data("data_GxE")
-data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
-describe_data_GxE = describe_data(data_GxE, vec_variables = c("y1"), nb_parameters_per_plot = 5)
+data_GxE = format_data_PPBstats(data_GxE)
 
 data("data_model_2")
-data_model_2 = format_data_PPBstats(data_model_2, type = "data_agro")
-describe_data_model_2 = describe_data(data_model_2, vec_variables = c("y1"), nb_parameters_per_plot = 5)
+data_model_2 = format_data_PPBstats(data_model_2)
 @
 
-The function returns a list with, 
-\begin{itemize}
-  \item A summary of the whole data set
 
-  \item for each variable, a list with :
+\subsection{presence abscence matrix}
 
-  \begin{itemize}
-    \item A presence.absence plot. Note that it may be different from experimental design planned because of NA.
-    The plot represents the presence/absence matrix of G $\times$ E combinations. 
-    <<message=TRUE,cache=FALSE>>=
-    describe_data_GxE$each_variable$y1$presence.absence
-    @
-    A score of 3 is for a given germplasm replicated three times in a given environement.
-    
-    <<message=TRUE,cache=FALSE>>=
-    describe_data_model_2$each_variable$y1$presence.absence
-    @
-    Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
-    A score of 1 is for a given germplasm in a given environment.
-    A score of 2 is for a given germplasm replicated twice in a given environement.
-    
-    \item A list with histogram. Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph
-    \begin{itemize}
-      \item germplasm
-      <<message=TRUE,cache=FALSE>>=
-      pg_hist = describe_data_GxE$each_variable$y1$histogram$germplasm
-      names(pg_hist)
-      pg_hist$`1`
-      @
-      \item location
-      \item year
-    \end{itemize}
-    
-    \item A list with boxplot, containg a list with plot and outliers. Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph
-    \begin{itemize}
-      \item germplasm
-      <<message=TRUE,cache=FALSE>>=
-      pg_box = describe_data_GxE$each_variable$y1$boxplot$germplasm
-      names(pg_box)
-      pg_box$`1`
-      @
-      In this example there no outliers.
-      
-      \item location
-      \item year
-    \end{itemize}
-    
-    \item interaction. Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_plot} parameters per graph
-    <<message=TRUE,cache=FALSE>>=
-    p_int = describe_data_GxE$each_variable$y1$interaction
-    names(p_int)
-    p_int$`1`
-    @
-  \end{itemize}
+The presence absence matrix may be different from experimental design planned because of NA.
+The plot represents the presence/absence matrix of G $\times$ E combinations.
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "pam",
+  vec_variables = c("y1", "y2")
+  )
+names(p)
+p$y1
+@
+A score of 3 is for a given germplasm replicated three times in a given environement.
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_model_2, plot_type = "pam",
+  vec_variables = c("y1", "y2")
+  )
+p$y1
+@
+Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
+A score of 1 is for a given germplasm in a given environment.
+A score of 2 is for a given germplasm replicated twice in a given environement.
 
 
-\end{itemize}
+\subsection{histogramm}
 
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "histogramm",
+  vec_variables = c("y1", "y2")
+  )
+p$y1
+@
+
+
+\subsection{barplot}
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "barplot",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm"
+  )
+@
+
+Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_x\_axis} parameters per graph.
+
+<<message=TRUE,cache=FALSE>>=
+names(p$y1)
+p$y1$`germplasm-1|-NA`
+@
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "barplot",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm",
+  in_col = "location"
+  )
+@
+
+Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_x\_axis} and \texttt{nb\_parameters\_per\_in\_col} parameters per graph.
+<<message=TRUE,cache=FALSE>>=
+names(p$y1)
+p$y1$`germplasm-1|location-1`
+@
+
+
+\subsection{boxplot}
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "boxplot",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm"
+  )
+@
+
+Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_x\_axis} parameters per graph.
+
+<<message=TRUE,cache=FALSE>>=
+names(p$y1)
+p$y1$`germplasm-1|-NA`
+@
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "boxplot",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm",
+  in_col = "location"
+  )
+@
+
+Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_x\_axis} and \texttt{nb\_parameters\_per\_in\_col} parameters per graph.
+<<message=TRUE,cache=FALSE>>=
+names(p$y1)
+p$y1$`germplasm-1|location-1`
+@
+
+
+\subsection{interaction}
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "interaction",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm",
+  in_col = "location"
+  )
+@
+
+Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_x\_axis} and \texttt{nb\_parameters\_per\_in\_col} parameters per graph.
+<<message=TRUE,cache=FALSE>>=
+names(p$y1)
+p$y1$`germplasm-1|location-1`
+@
+
+
+\subsection{biplot}
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "biplot",
+  vec_variables = c("y1", "y2", "y3"),
+  in_col = "germplasm", labels_on = "germplasm"
+  )
+@
+
+The name of the list correspond to the pairs of variables displayed.
+Note that for each element of the following list, there are as many graph as needed with \texttt{nb\_parameters\_per\_in\_col} parameters per graph.
+<<message=TRUE,cache=FALSE>>=
+names(p)
+p$`y1 - y2`$`-NA|germplasm-1`
+@
+
+
+\subsection{radar}
+
+<<message=TRUE,cache=FALSE>>=
+p = describe_data(
+  data_GxE, plot_type = "radar",
+  vec_variables = c("y1", "y2", "y3"),
+  in_col = "location"
+  )
+p
+@
