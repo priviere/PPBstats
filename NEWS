@@ -15,7 +15,7 @@ PPBstats 0.22 under progress ------------------------
   - describe_data.data_network.R : empty from now
 
 * vignette
-  - update text (typo + format_data_PPBstats + cf #36, #47)
+  - update text (typo + format_data_PPBstats + cf #36, #47, #68)
   - add new section on variance_intra + update workflow figure, functions table, analysis families
   - update contributions
   
