@@ -18,7 +18,7 @@ mean_comparisons.check_model_variance_intra = function(
   # 2. Get square matrice with pvalue or vector with pvalue ----------
   MCMC_par = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
     a = colnames(MCMC)[grep(paste("^", parameter, "\\[", sep = ""), colnames(MCMC))]
-    vec_env = unlist(lapply(a,function(x){b = strsplit(x,",")[[1]]; b=b[grep("loc",b)]; b=strsplit(b,":")[[1]][1]}))
+    vec_env = unique(unlist(lapply(a,function(x){b = strsplit(x,",")[[1]]; b=b[grep("loc",b)]; b=strsplit(b,":")[[1]][1]})))
     vec_MCMC_par = lapply(vec_env, function(env, MCMC){ MCMC[grep(env, colnames(MCMC))] }, MCMC)
     out = lapply(vec_MCMC_par, get_mean_comparisons_and_Mpvalue, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups) 
     
