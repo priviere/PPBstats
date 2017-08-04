@@ -169,6 +169,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
      \item score : The score is set according to which group the entry was allocated.
        An high score means that the entry was in a group with an high mean.
        A low score means that the entry was in a group with an low mean.
+       In the legend, the score goes from 1 (first group) to the number of groups of significativity.
        The error I (alpha) and the alpha correction are displayed in the x.axis under the form "alpha | alpha correction".
        alpha = Imp means that no differences were possible to find.
     }
