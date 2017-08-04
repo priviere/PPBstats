@@ -5,11 +5,12 @@
 #'
 #' @param out_check_model outputs from \code{\link{check_model}} or \code{\link{predict_the_past_model_2}}
 #'  
-#' @param parameter parameter on which the mean comparison is done. Used only for \code{\link{check_model}} from \code{\link{model_1}} and \code{\link{model_2}}.
+#' @param parameter parameter on which the mean comparison is done. Used only for \code{\link{check_model}} from \code{\link{model_1}}, \code{\link{model_2}} and \code{\link{model_variance_intra}}.
 #' The possible values are:
 #' \itemize{
 #'  \item for \code{\link{check_model}} from \code{\link{model_1}} : "mu", "beta"
 #'  \item for \code{\link{check_model}} from \code{\link{model_2}} : 'alpha", "beta", "theta"
+#'  \item for \code{\link{check_model}} from \code{\link{model_variance_intra}} : "mu", "sigma"
 #' }
 #' 
 #' @param alpha level of type one error. 0.05 (5\%) by default
@@ -24,7 +25,7 @@
 #' @param threshold For type = 2. The threshold to which a parameter is different
 #' 
 #' @param p.adj For all excpet type = 2. NULL for no adjustement of the type one error. 
-#' For \code{check_model} of model_1, model_2 and predict_the_past_model_2, p.adj can be NULL or "soft.bonf".
+#' For \code{check_model} of model_1, model_2, model_variance_intra and predict_the_past_model_2, p.adj can be NULL or "soft.bonf".
 #' For \code{check_model} of GxE, p.adj can be NULL, "holm", "hochberg", "bonferroni", "BH", "BY" or "fdr". see p.adjust() p-adj = "none" is t-student.
 #' 
 #' @details
