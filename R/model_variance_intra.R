@@ -11,11 +11,11 @@
 #' 
 #' @param thin thinning interval to reduce autocorrelations between samples of the MCMC
 #' 
-#' @param return.mu Return the value for each entry in each environment (mu_ijk)
+#' @param return.mu Return the value for each entry in each environment and each plot (mu_ijk)
 #' 
-#' @param return.sigma Return the value for each within-environment variance (sigma_ij)
+#' @param return.sigma Return the value for each intra-population variance in each environment (sigma_ij)
 #' 
-#' @param return.epsilon Return the value of all residuals in each environment on each plot (epsilon_ijkl)
+#' @param return.epsilon Return the value of all residuals in each environment on each plot (epsilon_ijk)
 #' 
 #' @param return.DIC Return the DIC value of the model. See details for more information.
 #' 
@@ -24,7 +24,7 @@
 #' Model on intra-population variance estimates entry effects (mu_ijk) and within-population variance (sigma_ij) on each environment. 
 #' An environment is a combinaison of a location and a year.
 #' 
-#' The variance are taken in an inverse Gamma distribution of parameters 10\^-6. 
+#' The variance are taken in an inverse Gamma distribution of parameters 10^-6. 
 #' More information can be found in the vignette.
 #' 
 #' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
@@ -33,13 +33,11 @@
 #' 
 #' \itemize{
 #' \item "data.model_variance_intra": the dataframe used to run mode variance_intra
-#' \item "vec_env_RF": a vector with the environments as regional farms (i.e. with at least two blocks)
-#' \item "vec_env_SF": a vector with the environments as satellite farms (i.e. with one block)
 #' \item "MCMC": a list with the two MCMC chains (mcmc object)
 #' \item "DIC": the DIC value of the model
 #' }
 #' 
-#' @author Pierre Riviere and Gaelle Van Frank for R code; Olivier David for JAGS code
+#' @author Pierre Riviere and Gaelle van Frank for R code; Olivier David for JAGS code
 #' 
 #' @seealso 
 #' \itemize{
@@ -92,46 +90,14 @@ model_variance_intra <- function(
   
   D$ID = paste(D$germplasm, paste(D$environment, D$block, D$X, D$Y, sep = ":"),sep=",")
   D=D[!is.na(D$variable),]
-  
-  # Get regional farms (RF) and satellite farms (SF)
-  out = get.env.info(D, nb_ind = 1)
-  
-  vec_env_with_controls = out$vec_env_with_controls
-  vec_env_RF = out$vec_env_RF
-  vec_env_SF = out$vec_env_SF
-  D_RF = out$D_RF
-  D_SF = out$D_SF
-
-  presence.absence.matrix = with(rbind.data.frame(D_RF, D_SF), table(entry, environment))
-  
-  D = rbind.data.frame(D_RF,D_SF)
-  
-  
+ 
   # 3. Get the informations for the model ----------
-  if( !is.null(D_RF) ) {
-  	germplasm_RF = as.character(D_RF$germplasm)
-    environment_RF = as.character(D_RF$environment)
-    block.temp = as.character(D_RF$block)
-    block_RF = paste(environment_RF, block.temp, sep = ",")
-    entry_RF = as.character(D_RF$entry) 
-    y_RF = D_RF$variable
-  } else { environment_RF = block_RF = entry_RF = y_RF = NULL }
-  
-  if( !is.null(D_SF) ) {
-  	germplasm_SF = as.character(D_SF$germplasm)
-    environment_SF = as.character(D_SF$environment)
-    block.temp = as.character(D_SF$block)
-    block_SF = paste(environment_SF, block.temp, sep = ",")
-    entry_SF = as.character(D_SF$entry) 
-    y_SF = D_SF$variable
-  } else { environment_SF = block_SF = entry_SF = y_SF = NULL }
-  
-  germplasm = c(germplasm_RF, germplasm_SF)
-  environment = c(as.character(environment_RF), as.character(environment_SF))
-  block = c(block_RF, block_SF)
-  entry = c(entry_RF, entry_SF) 
-  ID = c(D_RF$ID,D_SF$ID)
-  y=c(y_RF,y_SF)
+  germplasm = as.character(D$germplasm)
+  environment = as.character(D$environment)
+  block = as.character(D$block)
+  entry = as.character(D$entry) 
+  y = D$variable
+  ID = D$ID
 
   # Transform names with numbers to be ok with jags
   b = unique(block)
@@ -168,8 +134,7 @@ model_variance_intra <- function(
   nb_ID=max(ID)
 	nb_germplasm = max(germplasm)
   
-  # The data for the model are concatenate in the next part according to nb_RF and nb_SF
-  
+
   # 4. Write and run the model ----------
   
   likelihood_model_jags = "
@@ -253,8 +218,6 @@ model_variance_intra <- function(
 
   OUT = list(
     "data.model_variance_intra" = data,
-    "vec_env_RF" = vec_env_RF,
-    "vec_env_SF" = vec_env_SF,
     "MCMC" = mcmc,
     "epsilon" = epsilon,
     "DIC"= DIC
