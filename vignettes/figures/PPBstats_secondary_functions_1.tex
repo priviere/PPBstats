@@ -15,11 +15,21 @@
   \node [gxe, below=of GEI.east, left, yshift=-4ex] (GEBIM) {GxE\_build\_interaction\_matrix};
   \node [gxe, right=of GEBIM] (GxE) {GxE};
   \draw (GEBIM) to (GxE);
+  
+    %% describe_data
+  
+  \node [, below=of GEBIM.east, left, yshift=-4ex] (DDN) {describe\_data.data\_agro};
+  \node [, below=of DDN.east, left] (DDA) {describe\_data.data\_network};
+
+  \draw [-, decorate,decoration=brace] (DDN.north east) -- (DDA.south east)
+    node [midway, virtual, xshift=-4pt] (X0) {};
+  \node [several-all, right=of X0] (DD) {describe\_data};
+  \draw (X0) to (DD);
 
 
   %% check_model
   
-  \node [m1, below=of GEBIM.east, left, yshift=-4ex] (cmm1) {check\_model.fit\_model\_1};
+  \node [m1, below=of DDA.east, left, yshift=-4ex] (cmm1) {check\_model.fit\_model\_1};
   \node [m2, below=of cmm1.east, left] (cmm2) {check\_model.fit\_model\_2};
   \node [gxe, below=of cmm2.east, left] (cmgxe) {check\_model.fit\_model\_GxE};
   \node [sp, below=of cmgxe.east, left] (cmsp) {check\_model.fit\_model\_spatial};
