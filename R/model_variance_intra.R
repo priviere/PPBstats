@@ -15,7 +15,7 @@
 #' 
 #' @param return.sigma Return the value for each intra-population variance in each environment (sigma_ij)
 #' 
-#' @param return.epsilon Return the value of all residuals in each environment on each plot (epsilon_ijkl)
+#' @param return.epsilon Return the value of all residuals in each environment on each plot (epsilon_ijk)
 #' 
 #' @param return.DIC Return the DIC value of the model. See details for more information.
 #' 
@@ -24,7 +24,7 @@
 #' Model on intra-population variance estimates entry effects (mu_ijk) and within-population variance (sigma_ij) on each environment. 
 #' An environment is a combinaison of a location and a year.
 #' 
-#' The variance are taken in an inverse Gamma distribution of parameters 10\^-6. 
+#' The variance are taken in an inverse Gamma distribution of parameters 10^-6. 
 #' More information can be found in the vignette.
 #' 
 #' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
@@ -37,7 +37,7 @@
 #' \item "DIC": the DIC value of the model
 #' }
 #' 
-#' @author Pierre Riviere and Gaelle Van Frank for R code; Olivier David for JAGS code
+#' @author Pierre Riviere and Gaelle van Frank for R code; Olivier David for JAGS code
 #' 
 #' @seealso 
 #' \itemize{
