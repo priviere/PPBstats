@@ -5,16 +5,16 @@
 \title{ggradar taken from github 2017 08 03
 https://github.com/ricardo-bion/ggradar/blob/master/R/ggradar.R}
 \usage{
-ggradar(plot.data, font.radar = "Circular Air Light",
-  values.radar = c("0\%", "50\%", "100\%"),
-  axis.labels = colnames(plot.data)[-1], grid.min = 0, grid.mid = 0.5,
-  grid.max = 1, centre.y = grid.min - ((1/9) * (grid.max - grid.min)),
-  plot.extent.x.sf = 1, plot.extent.y.sf = 1.2, x.centre.range = 0.02 *
-  (grid.max - centre.y), label.centre.y = FALSE, grid.line.width = 0.5,
-  gridline.min.linetype = "longdash", gridline.mid.linetype = "longdash",
-  gridline.max.linetype = "longdash", gridline.min.colour = "grey",
-  gridline.mid.colour = "#007A87", gridline.max.colour = "grey",
-  grid.label.size = 7, gridline.label.offset = -0.1 * (grid.max - centre.y),
+ggradar(plot.data, font.radar = NULL, values.radar = c("0\%", "50\%",
+  "100\%"), axis.labels = colnames(plot.data)[-1], grid.min = 0,
+  grid.mid = 0.5, grid.max = 1, centre.y = grid.min - ((1/9) * (grid.max -
+  grid.min)), plot.extent.x.sf = 1, plot.extent.y.sf = 1.2,
+  x.centre.range = 0.02 * (grid.max - centre.y), label.centre.y = FALSE,
+  grid.line.width = 0.5, gridline.min.linetype = "longdash",
+  gridline.mid.linetype = "longdash", gridline.max.linetype = "longdash",
+  gridline.min.colour = "grey", gridline.mid.colour = "#007A87",
+  gridline.max.colour = "grey", grid.label.size = 7,
+  gridline.label.offset = -0.1 * (grid.max - centre.y),
   label.gridline.min = TRUE, axis.label.offset = 1.15,
   axis.label.size = 8, axis.line.colour = "grey", group.line.width = 1.5,
   group.point.size = 6, background.circle.colour = "#D7D6D1",
