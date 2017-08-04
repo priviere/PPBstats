@@ -1,0 +1,5 @@
+\chapter{Organoleptic analysis}
+\label{organoleptic}
+Please, feel free to contribute to this part of analysis, see \href{https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf}{here} for more details.
+
+
