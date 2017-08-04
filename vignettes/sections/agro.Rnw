@@ -1,0 +1,92 @@
+\chapter{Agronomic analysis}
+\label{agronomic}
+
+<<child='agro_intro.Rnw'>>=
+@
+\newpage
+
+<<child='agro_design_expe.Rnw'>>=
+@
+\newpage
+
+\section{Sow, note, harvest, measure ... }
+\label{section_sow}
+
+!!! TO DO !!!
+
+\newpage
+
+<<child='agro_describe_data.Rnw'>>=
+@
+\newpage
+
+
+\section{Family of analysis 1 : entry effects on one farm}
+\label{section_analysis1}
+
+\textbf{Family 1} gathers analysis that estimate entry effects. This is for analysis on one farm.
+Decision tree regarding Family 1 is displayed in Figure \ref{tree_f1}.
+
+<<child='agro_classic_anova.Rnw'>>=
+@
+\newpage
+
+<<child='agro_spatial_analysis.Rnw'>>=
+@
+\newpage
+
+<<child='agro_model_1.Rnw'>>=
+@
+\newpage
+
+\section{Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms}
+\label{section_analysis2}
+
+\textbf{Family 2} gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+Decision tree regarding Family 2 is displayed in Figure \ref{tree_f2}.
+
+<<child='agro_ibd.Rnw'>>=
+@
+\newpage
+
+<<child='agro_ammi.Rnw'>>=
+@
+\newpage
+
+<<child='agro_gge.Rnw'>>=
+@
+\newpage
+
+<<child='agro_migrant_residant.Rnw'>>=
+@
+\newpage
+
+<<child='agro_model_2.Rnw'>>=
+@
+\newpage
+
+
+\section{Family of analysis 3 : effects from family 1 and 2 in a network of farms}
+\label{section_analysis3}
+
+<<child='agro_model_3.Rnw'>>=
+@
+\newpage
+
+\section{Family of analysis 4 : specific research questions on one farm or more}
+\label{section_analysis4}
+
+<<child='agro_version.Rnw'>>=
+@
+\newpage
+
+<<child='agro_variance_intra.Rnw'>>=
+@
+\newpage
+
+\section{Family of analysis 5 : multivariate analysis}
+\label{section_analysis5}
+
+<<child='agro_multivariate_analysis.Rnw'>>=
+@
+\newpage
