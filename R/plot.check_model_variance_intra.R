@@ -1,4 +1,4 @@
-plot.check_model_model_variance_intra = function(
+plot.check_model_variance_intra = function(
   x,
   nb_parameters_per_plot = 10
 ){

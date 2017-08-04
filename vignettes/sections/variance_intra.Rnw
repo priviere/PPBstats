@@ -43,8 +43,7 @@ For variance intra analysis, you can follow these steps (Figure \ref{main_workfl
 Let's get the data.
 
 <<message=TRUE,cache=FALSE>>=
-# to do 
-data_model_variance_intra = data_model_1
+data(data_model_variance_intra)
 data_model_variance_intra = format_data_PPBstats(data_model_variance_intra, type = "data_agro")
 @
 
@@ -54,7 +53,7 @@ To run the model , used the function \texttt{model\_variance\_intra}.
 You can run it on one variable.
 
 <<message=TRUE,cache=FALSE>>=
-#out_vi = model_variance_intra(data_model_variance_intra, variable = "tkw", nb_iterations = 100)
+#out_vi = model_variance_intra(data_model_variance_intra, variable = "spike_weight", nb_iterations = 100)
 @
 
 
@@ -66,7 +65,7 @@ Once the model is run, it is necessary to check if the outputs can be taken with
 This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from \texttt{check\_model}).
 
 <<message=TRUE,cache=FALSE>>=
-out_check_vi = check_model.fit_model_variance_intra(out_vi)
+out_check_vi = check_model(out_vi)
 @
 
 \paragraph{Visualize outputs}
