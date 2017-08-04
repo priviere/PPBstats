@@ -34,10 +34,10 @@ check_model.fit_model_variance_intra = function(
   sq_MCMC$year = sapply(sq_MCMC$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
   
   
-  # 2.1. mu_ij caterpillar plot ----------
+  # 2.1. mu_ijk caterpillar plot ----------
   if ( length(grep("mu", rownames(sq_MCMC))) > 0  ) {
-    data_ggplot_model_varintra_mu_ij = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
-  } else { data_ggplot_model_varintra_mu_ij = NULL }
+    data_ggplot_model_varintra_mu_ijk = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
+  } else { data_ggplot_model_varintra_mu_ijk = NULL }
   
 
   # 2.2. sigma caterpillar plot ----------
@@ -51,7 +51,7 @@ check_model.fit_model_variance_intra = function(
     "MCMC" = MCMC,
     "MCMC_conv_not_ok" = mcmc_to_delete,
     "data_ggplot" = list(
-      "mu_ij" = data_ggplot_model_varintra_mu_ij,
+      "mu_ijk" = data_ggplot_model_varintra_mu_ijk,
       "sigma_ij" = data_ggplot_model_varintra_sigma_ij
     )
   )
