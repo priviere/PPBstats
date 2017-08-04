@@ -47,18 +47,9 @@ check_model.fit_model_variance_intra = function(
 
   
   # 3. Return results ----------
-  data_env_with_no_controls = x$data_env_with_no_controls
-  if( !is.null(data_env_with_no_controls) ){
-    data_env_with_no_controls$parameter = paste("mu", data_env_with_no_controls$parameter, sep = "")
-    data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
-  }
-  attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls"
-  
   out = list(
     "MCMC" = MCMC,
     "MCMC_conv_not_ok" = mcmc_to_delete,
-    "data_env_with_no_controls" = data_env_with_no_controls,
-    "data_whose_param_did_not_converge" = data_whose_param_did_not_converge,
     "data_ggplot" = list(
       "mu_ij" = data_ggplot_model_varintra_mu_ij,
       "sigma_ij" = data_ggplot_model_varintra_sigma_ij
