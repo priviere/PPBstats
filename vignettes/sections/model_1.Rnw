@@ -514,6 +514,7 @@ p_env$`4`
 For the score, more entries are displayed.
 An high score means that the entry was in a group with an high mean.
 A low socre means that the entry was in a group with an low mean.
+In the legend, the score goes from 1 (first group) to the number of groups of significativity.
 This plot is useful to look at year effects.
 
 <<message=TRUE,cache=FALSE>>=
