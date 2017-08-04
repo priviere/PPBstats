@@ -303,7 +303,7 @@ describe_data.data_agro = function(
   }
   
   # 2.5. Function to run radar ----------
-  fun_radar = function(d, vec_variables, in_col){
+  fun_radar = function(d, vec_variables, in_col, labels_size){
     d$group = d[,in_col]
     
     m = data.frame(matrix(levels(d$group), ncol = 1))
@@ -347,7 +347,7 @@ describe_data.data_agro = function(
   
   # 3.4. radar ----------
   if(plot_type == "radar") {
-    p_out = fun_radar(data, vec_variables, in_col)
+    p_out = fun_radar(data, vec_variables, in_col, labels_size)
   }
   
   # 4. Return results ----------
