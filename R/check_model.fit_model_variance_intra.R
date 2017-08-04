@@ -36,14 +36,14 @@ check_model.fit_model_variance_intra = function(
   
   # 2.1. mu_ijk caterpillar plot ----------
   if ( length(grep("mu", rownames(sq_MCMC))) > 0  ) {
-    data_ggplot_model_varintra_mu_ijk = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
-  } else { data_ggplot_model_varintra_mu_ijk = NULL }
+    data_ggplot_model_variance_intra_mu_ijk = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
+  } else { data_ggplot_model_variance_intra_mu_ijk = NULL }
   
 
   # 2.2. sigma caterpillar plot ----------
   if ( length(grep("sigma", rownames(sq_MCMC))) > 0  ) {
-    data_ggplot_model_varintra_sigma_ij = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])
-  } else { data_ggplot_model_varintra_sigma_j_2 = NULL }
+    data_ggplot_model_variance_intra_sigma_ij = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])
+  } else { data_ggplot_model_variance_intra_sigma_j_2 = NULL }
 
   
   # 3. Return results ----------
@@ -51,8 +51,8 @@ check_model.fit_model_variance_intra = function(
     "MCMC" = MCMC,
     "MCMC_conv_not_ok" = mcmc_to_delete,
     "data_ggplot" = list(
-      "mu_ijk" = data_ggplot_model_varintra_mu_ijk,
-      "sigma_ij" = data_ggplot_model_varintra_sigma_ij
+      "mu_ijk" = data_ggplot_model_variance_intra_mu_ijk,
+      "sigma_ij" = data_ggplot_model_variance_intra_sigma_ij
     )
   )
   
