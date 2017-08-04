@@ -1,6 +1,6 @@
 describe_data.data_agro = function(
   data,
-  plot_type = c("histogramm", "barplot", "boxplot", "interaction", "biplot", "radar"),
+  plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar"),
   x_axis = NULL,
   in_col = NULL,
   vec_variables = NULL,
@@ -10,7 +10,7 @@ describe_data.data_agro = function(
   labels_size = 4
 ){
   # 1. Error message ----------  
-  mess = "plot_type must be \"histogramm\", \"barplot\", \"boxplot\", \"interaction\", \"biplot\" or \"radar\"."
+  mess = "plot_type must be \"pam\", \"histogramm\", \"barplot\", \"boxplot\", \"interaction\", \"biplot\" or \"radar\"."
   if(length(plot_type) != 1) { stop(mess) }
   if(!is.element(plot_type, c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar"))) { 
     stop(mess) 
@@ -30,9 +30,12 @@ describe_data.data_agro = function(
   if(!is.null(in_col)){ check_arg(in_col, colnames(data)) }
   check_arg(vec_variables, colnames(data))
   if(!is.null(labels_on)){ check_arg(labels_on, colnames(data)) }
-  
+
+  if( plot_type == "pam" & (!is.null(x_axis) | !is.null(in_col)) ){ 
+    warning("Note than with plot_type == pam, x_axis and in_col are not used.")
+  }
   if( plot_type == "histogramm" & !is.null(x_axis) ){ 
-    warning("Note than with plot_type == histogramm, x_axis is not used can not be NULL.")
+    warning("Note than with plot_type == histogramm, x_axis can not be NULL.")
   }
   if( plot_type == "barplot" & is.null(x_axis) ){ 
     stop("With plot_type == barplot, x_axis can not be NULL.")
@@ -60,6 +63,9 @@ describe_data.data_agro = function(
   }
   if( plot_type == "radar" & is.null(in_col) ){ 
     stop("With plot_type == radar, in_col must not be NULL.")
+  }
+  if( plot_type == "radar" & !is.null(labels_on) ){ 
+    warning("Note that with plot_type == radar, labels_on is not used.")
   }
   
   # 2. Functions used in the newt steps ----------
