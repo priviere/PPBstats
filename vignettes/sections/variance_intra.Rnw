@@ -83,7 +83,15 @@ p_out_check_vi = plot(out_check_vi)
 Get mean comparisons with \texttt{mean\_comparisons}.
 
 <<message=TRUE,cache=FALSE>>=
-out_mean_comparisons_vi = mean_comparisons(out_check_vi, p.adj = "bonferroni")
+out_mean_comparisons_vi = mean_comparisons(out_check_vi, parameter = "mu", p.adj = "soft.bonf")
+@
+
+\paragraph{Visualize outputs}
+
+Once the computation is done, you can visualize the results with \texttt{plot}
+
+<<message=TRUE,cache=FALSE>>=
+p_out_mc_vi = plot(out_mean_comparisons_vi)
 @
 
 
