@@ -3,7 +3,7 @@
 \docType{data}
 \name{data_model_1}
 \alias{data_model_1}
-\title{Simulated data set for housand kernel weight (tkw) of bread wheat to test model_1 model}
+\title{Simulated data set for thousand kernel weight (tkw) of bread wheat to test model_1 model}
 \format{A data frame with 1574 rows and 12 columns}
 \usage{
 data(data_model_1)

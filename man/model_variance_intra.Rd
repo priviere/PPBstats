@@ -17,11 +17,11 @@ model_variance_intra(data, variable, nb_iterations = 1e+05, thin = 10,
 
 \item{thin}{thinning interval to reduce autocorrelations between samples of the MCMC}
 
-\item{return.mu}{Return the value for each entry in each environment (mu_ijk)}
+\item{return.mu}{Return the value for each entry in each environment and each plot (mu_ijk)}
 
-\item{return.sigma}{Return the value for each within-environment variance (sigma_ij)}
+\item{return.sigma}{Return the value for each intra-population variance in each environment (sigma_ij)}
 
-\item{return.epsilon}{Return the value of all residuals in each environment on each plot (epsilon_ijkl)}
+\item{return.epsilon}{Return the value of all residuals in each environment on each plot (epsilon_ijk)}
 
 \item{return.DIC}{Return the DIC value of the model. See details for more information.}
 }
@@ -30,8 +30,6 @@ The function returns a list with
 
 \itemize{
 \item "data.model_variance_intra": the dataframe used to run mode variance_intra
-\item "vec_env_RF": a vector with the environments as regional farms (i.e. with at least two blocks)
-\item "vec_env_SF": a vector with the environments as satellite farms (i.e. with one block)
 \item "MCMC": a list with the two MCMC chains (mcmc object)
 \item "DIC": the DIC value of the model
 }
@@ -43,7 +41,7 @@ The function returns a list with
 Model on intra-population variance estimates entry effects (mu_ijk) and within-population variance (sigma_ij) on each environment. 
 An environment is a combinaison of a location and a year.
 
-The variance are taken in an inverse Gamma distribution of parameters 10\^-6. 
+The variance are taken in an inverse Gamma distribution of parameters 10^-6. 
 More information can be found in the vignette.
 
 For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
@@ -55,5 +53,5 @@ For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more in
 }
 }
 \author{
-Pierre Riviere and Gaelle Van Frank for R code; Olivier David for JAGS code
+Pierre Riviere and Gaelle van Frank for R code; Olivier David for JAGS code
 }
