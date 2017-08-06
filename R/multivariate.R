@@ -7,7 +7,7 @@
 #' 
 #' @param vec_variables vector of variables to use in the analysis
 #' 
-#' @param FUN function to apply : FactoMineR::PCA
+#' @param FUN function to apply : PCA
 #' 
 #' @details 
 #' This function is useful to settle the right data set and quali.sup
