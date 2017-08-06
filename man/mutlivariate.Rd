@@ -11,7 +11,7 @@ mutlivariate(data, vec_variables, FUN)
 
 \item{vec_variables}{vector of variables to use in the analysis}
 
-\item{FUN}{function to apply : FactoMineR::PCA}
+\item{FUN}{function to apply : PCA}
 }
 \value{
 The function returns the FactoMineR object corresponding to FUN
