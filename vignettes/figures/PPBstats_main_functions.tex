@@ -9,15 +9,16 @@
   %% nodes
   \node[several-all] (DE)                   {design\_experiment};
   
-  \node[several-all] (FD) [below=2cm of DE]                {format\_data\_PPBstats};
+  \node[several-all] (FD) [below=3cm of DE]                {format\_data\_PPBstats};
 
   \node[several-all] (DD) [below left=of FD]     {describe\_data};
   
-  \node[m2]   (M2)  [below=2.5cm of FD]        {model\_2};
+  \node[m2]   (M2)  [below=4cm of FD]        {model\_2};
   \node[m1]   (M1)  [left=of M2]   {model\_1};
   \node[gxe]  (GxE) [left=of M1]  {GxE};
   \node[sp]  (SP) [right=of M2]  {spatial};
   \node[vi]  (VI) [right=of SP]  {variance\_intra};
+  \node[ma]  (MA) [right=of VI]  {multivariate};
   
   \node[several-all] (CM) [below=2cm of M2]     {check\_model};
   
@@ -42,6 +43,7 @@
   \draw (FD) to (GxE);
   \draw (FD) to (SP);
   \draw (FD) to (VI);
+  \draw (FD) to (MA);
   
   \draw (M1) to (CM);
   \draw (M2) to (CM);
@@ -85,12 +87,15 @@
   \node[vi,legendkey]  (LVI)  [below=of LSP,yshift=3ex] {};
   \node[right,legendtext] (LVItext) at (LVI.east) {Variance intra functions};
 
+  \node[ma,legendkey]  (LMA)  [below=of LVI,yshift=3ex] {};
+  \node[right,legendtext] (LMAtext) at (LMA.east) {Multivariate functions};
+
   %% legend bounding box
   \begin{pgfonlayer}{background}
     \node[
       fill=black!10,
       rounded corners,
-      fit = (LS) (LVI) (LS2text)
+      fit = (LS) (LMA) (LS2text)
     ] {};
   \end{pgfonlayer}
 
