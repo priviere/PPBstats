@@ -106,17 +106,20 @@ Pierre Rivi\`ere\textsuperscript{1} \hspace{.5cm}
 
 \vspace{2cm}
 
-You can contribute to \pack~in three ways:
+You can contribute to \pack~in four ways:
 
 \begin{itemize}
 \item test \pack~and its vignette and report bugs
 
 \item translate
 
+\item resolve open issues
+
 \item add new functions 
 
 \end{itemize}
 
+Any how, send me an email to see how we can collaborate !
 
 \section{Test and report bugs}
 
@@ -125,7 +128,6 @@ First, load the development version:
 <<message=TRUE,cache=FALSE,eval=FALSE>>=
 devtools::install_github("priviere/PPBstats")
 @
-
 
 The easiest way to start is to look at the vignette to know how the package works.
 
@@ -144,6 +146,10 @@ The package is in english.
 Every contributions to other languages are welcome!
 More informations on R package translation
 \href{http://developer.r-project.org/Translations30.html}{here}
+
+\section{Resolve open issues}
+
+Do not hesitate to contribute to open \href{https://github.com/priviere/PPBstats/issues}{issues}.
 
 \section{Add new functions}
 
