@@ -105,11 +105,7 @@ Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two ver
 
 
 \section{Let's go!}
-To continue, load the development version of the package :
-
-<<message=TRUE,cache=FALSE,eval=FALSE>>=
-devtools::install_github("priviere/PPBstats")
-@
+To continue, load the current development version of the package \href{https://github.com/priviere/PPBstats/archive/v0.22.zip}{here}.
 
 Note that JAGS must be installed on your computer.
 See \url{http://mcmc-jags.sourceforge.net/} for more details.
@@ -120,7 +116,7 @@ Then you can load the package :
 library(PPBstats)
 @
 
-and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \url{https://github.com/priviere/PPBstats/releases}.
+and download from internet the data used in this vignette (this is useful to earn lots of time!) here : \href{https://github.com/priviere/PPBstats/releases/download/v0.20/data_PPBstats.zip}{here}.
 
 %The example in this vignette were performed with a computer with 4 Gb of memory and the following processor : Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz.
 %This gives an idea about memory and processor needed to run the analysis.
