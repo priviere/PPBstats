@@ -12,9 +12,7 @@ citEntry(
   note = 'R code is under licence GPL-3. 
           Vignette is under licence creative commons BY-NC-SA 4.0.',
   textVersion =   'Pierre Riviere and al, 2017, 
-                  PPBstats: An R package for statistical analysis of 
-                  balanced and unbalanced trials in decentralized 
-                  participatory plant breeding programmes.
+                  PPBstats: An R package to perform analysis found within PPB programmes                      regarding network of seeds circulation, agronomic trials, organoleptic                      tests and molecular experiments.
                   Version 0.22,
                   URL: https://github.com/priviere/PPBstats'
 )
