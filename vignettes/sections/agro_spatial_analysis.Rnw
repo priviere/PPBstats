@@ -44,14 +44,13 @@ Much more information regarding the model as well as example of \texttt{R} packa
 \subsubsection{Steps with \pack}
 
 \begin{enumerate}
+\item Format the data with \texttt{format\_data\_PPBstats}
 \item Run the model with \texttt{spatial}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model} and vizualise it with \texttt{plot}
 \item Get mean comparisons for germplasms with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
 \end{enumerate}
 
-\subsubsection{Run the model}
-
-By default, germplasm are settled as random (\texttt{genotype.as.random = TRUE}).
+\subsubsection{Format the data}
 
 <<message=TRUE,cache=FALSE>>=
 p_case2 = design_experiment(
@@ -66,9 +65,16 @@ p_case2 = design_experiment(
 
 d = p_case2$`row-column`$data.frame
 d$variable = as.numeric(rnorm(nrow(d), 50, 10))
-
 d = format_data_PPBstats(d, type = "data_agro")
+@
 
+
+
+\subsubsection{Run the model}
+
+By default, germplasm are settled as random (\texttt{genotype.as.random = TRUE}).
+
+<<message=TRUE,cache=FALSE>>=
 out_spatial = spatial(data = d, variable = "variable")
 @
 

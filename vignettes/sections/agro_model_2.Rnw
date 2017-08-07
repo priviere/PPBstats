@@ -90,6 +90,7 @@ But keep in mind it has been corrected.
 For model\_2, you can follow these steps (Figure \ref{function_relations}):
 
 \begin{enumerate}
+\item Format the data with \texttt{format\_data\_PPBstats}
 \item Run the model with \texttt{model\_2}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
 \item Perform cross validation studies with \texttt{cross\_validation\_model\_2} in order to assess the quality of the model
@@ -98,7 +99,8 @@ For model\_2, you can follow these steps (Figure \ref{function_relations}):
 \item Predict the past with \texttt{predict\_the\_past\_model\_2} and vizualise it with \texttt{plot}
 \end{enumerate}
 
-Let's get the data.
+
+\subsubsection{Format the data}
 The values for $\alpha_i$, $\beta_i$, $\theta_j$ are the real value taken to create the dataset for y1.
 This dataset is representative of data you can get in a PPB programme.
 

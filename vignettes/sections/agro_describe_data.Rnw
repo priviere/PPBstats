@@ -17,6 +17,8 @@ the factor to display in color (\texttt{in\_col} argument), and of course the va
 
 It is possible to tune the number of factor displayed (\texttt{nb\_parameters\_per\_plot\_x\_axis} and \texttt{nb\_parameters\_per\_plot\_in\_col} arguments) and the size of the labels regarding biplot and radar (\texttt{labels\_on} and \texttt{labels\_size} arguments).
 
+\subsection{Format the data}
+
 Get two data set to look at some examples
 <<message=TRUE,cache=FALSE>>=
 data("data_GxE")
