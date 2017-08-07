@@ -60,12 +60,13 @@ Blocks were included in the model only if the trial had blocks.
 For model\_1, you can follow these steps (Figure \ref{main_workflow}):
 
 \begin{enumerate}
+\item Format the data with \texttt{format\_data\_PPBstats}
 \item Run the model with \texttt{model\_1}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
 \item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
 \end{enumerate}
 
-Let's get the data.
+\subsubsection{Format the data}
 The values for $\mu_{ij}$, $\beta_{jk}$, $\epsilon_{ijk}$ and $\sigma_j$ are the real value taken to create the dataset.
 This dataset is representative of data you can get in a PPB programme.
 

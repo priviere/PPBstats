@@ -35,12 +35,13 @@ No specific experimental design is needed as long as there are several individua
 For variance intra analysis, you can follow these steps (Figure \ref{main_workflow}) :
 
 \begin{enumerate}
+\item Format the data with \texttt{format\_data\_PPBstats}
 \item Run the model with \texttt{model\_variance\_intra} 
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
 \item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
 \end{enumerate}
 
-Let's get the data.
+\subsubsection{Format the data}
 
 <<message=TRUE,cache=FALSE>>=
 data(data_model_variance_intra)

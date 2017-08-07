@@ -95,13 +95,14 @@ This PCA allows to detect
 For AMMI analysis, you can follow these steps (Figure \ref{main_workflow}):
 
 \begin{enumerate}
+\item Format the data with \texttt{format\_data\_PPBstats}
 \item Run the model with \texttt{GxE} and \texttt{gxe\_analysis = "AMMI"}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
 \item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
 \item Get groups of each parameters with \texttt{parameters\_groups} and visualise it with \texttt{plot}
 \end{enumerate}
 
-Let's get the data.
+\subsubsection{Format the data}
 
 <<message=TRUE,cache=FALSE>>=
 data(data_GxE)
