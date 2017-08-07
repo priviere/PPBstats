@@ -438,6 +438,7 @@ This is useful if you want to compare two versions within a group.
 For exemple:
 <<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
 data(data_version)
+data_version = format_data_PPBstats(data_version, type = "data-agro-version")
 head(data_version)
 @
 
