@@ -17,6 +17,7 @@ PPBstats 0.22 ---------------------------------------
   - format_data_PPBstats.R
   - describe_data.data_agro.R : huge refactoring, cf #68
   - describe_data.data_network.R : empty from now
+  - multivariate.R
 
 * vignette
   - update text (typo + format_data_PPBstats + cf #36, #47, #68)
