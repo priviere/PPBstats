@@ -5,7 +5,7 @@
 #' 
 #' @param data The data frame. See details.
 #' 
-#' @param type type of format : "data_network" or "data_agro". See details.
+#' @param type type of format : "data_network", "data_agro" or "data_agro_version". See details.
 #' 
 #' @details 
 #' \itemize{
@@ -15,6 +15,11 @@
 #'  The variables can be linked to their corresponding dates. 
 #'  The dates are associated to their corresponding variable by $.
 #'  For example the date associated to variable y1 is y1$date.
+#'  \item For type = "data_agro_version" : 
+#'  It should have the following columns: c("year", "germplasm", "location", "group", "version").
+#'  The group refers to an id that contains two different versions.
+#'  For example for group 1, there is version 1 and 2. 
+#'  See data(data_version) for an example.
 #' }
 #' 
 #' 
@@ -28,8 +33,10 @@ format_data_PPBstats = function(
   type = "data_agro"
   )
   {
-  match.arg(type, c("data_agro", "data_network"))
+  match.arg(type, c("data_network", "data_agro_version", "data_agro"))
+  
   d = data
+  
   if(type == "data_agro"){
     mess = "The following column are compulsory : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
     if(!is.element("location", colnames(d))) { stop(mess) }
@@ -50,6 +57,11 @@ format_data_PPBstats = function(
     class(d) <- c("PPBstats", "data.frame", "data_agro")
     message(substitute(data), " has been formated for PPBstats functions.")
   }
+  
+  if(type == "data_agro_version"){
+    mess = "To do !!!."
+  }
+  
   return(d)
 }
 
