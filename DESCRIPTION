@@ -3,7 +3,7 @@ Type: Package
 Title: An R package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments
 Version: 0.22
 Encoding: UTF-8
-Date: 2017-05-12
+Date: 2017-08-07
 Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
     person("Gaelle", "Van Franck", role = "ctb"),
     person("Olivier", "David", role = "ctb"),
@@ -11,7 +11,7 @@ Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
     )
 Author: Pierre Riviere and Gaelle Van Franck and Olivier David and Facundo Muñoz
 Maintainer: Pierre Riviere <pierre@semencespaysannes.org>
-Description: This package applies statistical methods to analyse unbalanced trials from decentralized participatory plant breeding  programmes
+Description: This package performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments
 License: GPL-3
 URL: http://github.com/priviere/PPBstats
 BugReports: http://github.com/priviere/PPBstats/issues

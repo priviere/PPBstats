@@ -10,7 +10,7 @@ More informations about this licence [here](http://creativecommons.org/licenses/
 The copyright of the R code and the vignette are owned by Réseau Semences Paysannes and Institut National de la Recherche Agronomique
 
 ## Version
-`PPBstats` is now at version 0.21
+`PPBstats` is now at version 0.22 and can be downloaded [here]().
 
 The version number is under the form A.B with
 
@@ -20,54 +20,26 @@ The version number is under the form A.B with
 
 See NEWS [here](https://github.com/priviere/PPBstats/blob/master/NEWS) to know the evolution of the codes.
 
-## Contribute to development
+## Test `PPBstats`
 
-You can contribute in three ways:
-
-1. test this development version and report bugs
-2. translate the package
-3. add new functions that may be useful in the analysis that can be found in PPB programmes.
-Up to now, only agronomic (throught the master branch) and organoleptic (throught the organo branch) analysis are under development
-
-If you update the code, you can refer to 
-[the issues](https://github.com/priviere/PPBstats/issues)
-and do it in on another branch.
-Anyhow, send me an email if you wish to participate in order to coordinate our efforts!
-
-
-### 1. Test and report bugs
-
-First, load the development version:
-
-```r
-devtools::install_github("priviere/PPBstats")
-```
-
-The easiest way to start is to look at the vignette to know how the package works.
-
-You can download the vignette [here](https://github.com/priviere/PPBstats/releases/download/v0.21/PPBstats.pdf).
+You can download the vignette [here](https://github.com/priviere/PPBstats/releases/download/v0.22/PPBstats.pdf).
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
 - some points are not clear in the vignette or you find bugs
 - you find bugs with your data (If so, you can send it to me so that I can see where could be the problems)
 
-### 2. Translate
 
-The package is in english. 
-Every contributions to other languages are welcome!
-More informations on R package translation [here](http://developer.r-project.org/Translations30.html).
+## Contribute to development
 
+You can contribute in four ways:
 
-### 3. Add functions
+1. test this development version and report bugs
+2. translate the package
+3. solve open [issues](https://github.com/priviere/PPBstats/issues)
+4. add new functions that may be useful in the analysis that can be found in PPB programmes.
+Up to now, only agronomic (throught the master branch) and organoleptic (throught the organo branch) analysis are under development
 
-If you have any ideas, 
+Anyhow, send me an email if you wish to participate in order to coordinate our efforts!
 
-- on the improvement of the current package
-- on new functions to add based on analysis you carry out in your PPB trials
-- ...
-
-Refer to the vignette [here](https://github.com/priviere/PPBstats/blob/master/vignettes/contribute.Rmd) to see how to contribute.
-
-even if it is not R written, send me an email and we'll see how we can work together!
-
+Please refer to the [contribution vignette](https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf) to have more information.
 
