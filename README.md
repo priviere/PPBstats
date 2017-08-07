@@ -10,7 +10,12 @@ More informations about this licence [here](http://creativecommons.org/licenses/
 The copyright of the R code and the vignette are owned by Réseau Semences Paysannes and Institut National de la Recherche Agronomique
 
 ## Version
-`PPBstats` is now at version 0.22 and can be downloaded [here]().
+`PPBstats` is now at version 0.22 and can be downloaded [here](https://github.com/priviere/PPBstats/archive/v.022.zip).
+
+unzip and install it
+```r
+devtools::install("PPBstats-0.22")
+```
 
 The version number is under the form A.B with
 
@@ -23,6 +28,7 @@ See NEWS [here](https://github.com/priviere/PPBstats/blob/master/NEWS) to know t
 ## Test `PPBstats`
 
 You can download the vignette [here](https://github.com/priviere/PPBstats/releases/download/v0.22/PPBstats.pdf).
+
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) or to send me an email if
 
 - some points are not clear in the vignette or you find bugs
