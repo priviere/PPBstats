@@ -107,6 +107,11 @@ Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two ver
 \section{Let's go!}
 To continue, load the current development version of the package \href{https://github.com/priviere/PPBstats/archive/v0.22.zip}{here}.
 
+unzip the folder and then run 
+<<message=TRUE,cache=FALSE,eval=FALSE>>=
+devtools::install("PPBstats-0.22")
+@
+
 Note that JAGS must be installed on your computer.
 See \url{http://mcmc-jags.sourceforge.net/} for more details.
 
