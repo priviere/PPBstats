@@ -7,7 +7,7 @@
 #' 
 #' @param code data frame with the following columns germplasm, location, code
 #' 
-#' @param threshold number of occurence of descriptorss <= threshold are kept
+#' @param threshold number of occurence of descriptors <= threshold are kept
 #' 
 #' @details
 #' The function merge data and code to join the information
