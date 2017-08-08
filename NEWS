@@ -1,5 +1,7 @@
 PPBstats 0.23 ---------------------------------------
 -----------------------------------------------------
+* upate fnctions
+  - format_data_PPBstats.R : when date, add a column with julian day, cf #65
 
 
 PPBstats 0.22 ---------------------------------------
