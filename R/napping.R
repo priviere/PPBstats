@@ -21,14 +21,10 @@
 #' @author Pierre Riviere and Camille Vindras
 #' 
 #' 
-library(FactoMineR)
-library(plyr)
-
 napping = function(
   data
   )
 {
-  
   # 0. Error message ----------
   if(!is(data, "data_organo_napping")){ 
     stop(substitute(data), " must be formated, see PPBstats::format_data_PPBstats().") 
