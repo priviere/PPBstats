@@ -58,7 +58,7 @@ format_data_PPBstats = function(
   data, 
   type = "data_agro",
   code,
-  threshold
+  threshold = NULL
   )
   {
   # 0. Error messages ----------
@@ -133,16 +133,17 @@ format_data_PPBstats = function(
     N = join(data, code, by = "sample")
     N = N[,-1]
     N$sample = factor(paste(N$location, N$germplasm, sep = ":"))
-    N = N[,c("sample", "juges", "X", "Y", "descriptors")]
     
     N$juges<-as.factor(as.character(N$juges))
     N$sample<-as.factor(N$sample)
     
     # 2. Add the occurence of the different descriptors ----------
-    descriptors = as.vector (as.character(N$descriptors))
+    descriptors = as.vector(as.character(N$descriptors))
     vec_adj = unlist(strsplit(descriptors, ";"))
     vec_adj = sort(unique(vec_adj))
-    vec_adj = vec_adj[-which(vec_adj == "")]
+    if( length(which(vec_adj == "")) > 0 ) { 
+      vec_adj = vec_adj[-which(vec_adj == "")]
+    }
     
     df = matrix(0, ncol = length(vec_adj), nrow = nrow(N))
     df = as.data.frame(df)
@@ -180,9 +181,7 @@ format_data_PPBstats = function(
     
     # 4. Get frequency for each descriptor ----------
     N_freq = N_raw = N
-    adj = colnames(N)[5:ncol(N)]
-    
-    for (ad in adj) { 
+    for (ad in vec_adj) { 
       if( sum(N_raw[, ad], na.rm = TRUE) != 0 ) { 
         N_freq[, ad] = N_raw[, ad] / sum(N_raw[, ad], na.rm = TRUE) 
       }  
@@ -208,6 +207,7 @@ format_data_PPBstats = function(
     colnames(code)[3] = "sample"
     
     N = format_organo(data, code, threshold)
+    N = N[,c(6, 1, 2, 3, c(7:ncol(N)))]
     
     # Get table with, for each judge, the X and Y for each sample tasted ----------
     juges = levels(N$juges)
@@ -237,12 +237,12 @@ format_data_PPBstats = function(
     
     # 3.1. update juges for MFA after
     if( !is.null(juges_to_delete) ) { juges = juges[!is.element(juges, juges_to_delete)] }
-
+    
     # 3.2. Add to d_juges the number of time the adjective was cited
     adj = colnames(N)[5:ncol(N)]
     b = as.data.frame(matrix(0, ncol = length(adj), nrow = nrow(d_juges)))
     colnames(b) = adj
-
+    
     d_juges = cbind.data.frame(d_juges, b)
     
     sample = as.character(d_juges$sample)
@@ -265,7 +265,20 @@ format_data_PPBstats = function(
   }
   
   if(type == "data_organo_hedonic"){
+    mess = "In data, the following column are compulsory : \"sample\", \"juges\", \"note\", \"descriptors\"."
+    if(!is.element("sample", colnames(data))) { stop(mess) }
+    if(!is.element("juges", colnames(data))) { stop(mess) }
+    if(!is.element("note", colnames(data))) { stop(mess) }
+    if(!is.element("descriptors", colnames(data))) { stop(mess) }
     
+    mess = "In code, the following column are compulsory : \"germplasm\", \"location\", \"code\"."
+    if(!is.element("germplasm", colnames(code))) { stop(mess) }
+    if(!is.element("location", colnames(code))) { stop(mess) }
+    if(!is.element("code", colnames(code))) { stop(mess) }
+    
+    colnames(code)[3] = "sample"
+    
+    d = format_organo(data, code, threshold)
     
     class(d) <- c("PPBstats", "data.frame", "data_organo_hedonic")
     message(substitute(data), " has been formated for PPBstats functions.")
