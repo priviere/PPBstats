@@ -1,11 +1,13 @@
 PPBstats 0.23 ---------------------------------------
 -----------------------------------------------------
 * upate fonctions
-  - format_data_PPBstats.R : when date, add a column with julian day, cf #65
+  - format_data_PPBstats.R : 
+    - when date, add a column with julian day, cf #65
+    - add type data_organo_napping and data_organo_hedonic, cf #72
 
 * add new functions
-  - napping.R
-  - hedonic.R
+  - napping.R, cf #72
+  - hedonic.R, cf #72
 
 
 PPBstats 0.22 ---------------------------------------
