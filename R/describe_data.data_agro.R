@@ -1,6 +1,6 @@
 describe_data.data_agro = function(
   data,
-  plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar"),
+  plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster"),
   x_axis = NULL,
   in_col = NULL,
   vec_variables = NULL,
@@ -10,9 +10,9 @@ describe_data.data_agro = function(
   labels_size = 4
 ){
   # 1. Error message ----------  
-  mess = "plot_type must be \"pam\", \"histogramm\", \"barplot\", \"boxplot\", \"interaction\", \"biplot\" or \"radar\"."
+  mess = "plot_type must be \"pam\", \"histogramm\", \"barplot\", \"boxplot\", \"interaction\", \"biplot\", \"radar\" or \"raster\"."
   if(length(plot_type) != 1) { stop(mess) }
-  if(!is.element(plot_type, c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar"))) { 
+  if(!is.element(plot_type, c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster"))) { 
     stop(mess) 
   }
   
@@ -66,6 +66,13 @@ describe_data.data_agro = function(
   }
   if( plot_type == "radar" & !is.null(labels_on) ){ 
     warning("Note that with plot_type == radar, labels_on is not used.")
+  }
+
+  if( plot_type == "raster" & !is.null(in_col) ){ 
+    warning("Note that with plot_type == raster, in_col is not used.")
+  }
+  if( plot_type == "raster" & !is.null(labels_on) ){ 
+    warning("Note that with plot_type == raster, labels_on is not used.")
   }
   
   # 2. Functions used in the newt steps ----------
@@ -324,6 +331,37 @@ describe_data.data_agro = function(
     return(p)
   }
   
+  # 2.6. Function to run raster representation for factor variables ----------
+  fun_raster_1 = function(data, vec_variable){
+    vv = vm = vx = NULL
+    for(v in vec_variables) { 
+      vv = c(vv, as.character(rep(v, nrow(data))))
+      vm = c(vm, as.character(data[,v]))
+      vx = c(vx, as.character(data$x_axis))
+    }
+    
+    dtmp = cbind.data.frame(
+      variable = as.factor(vv),
+      value = as.factor(vm),
+      x_axis = as.factor(vx)
+      )
+    
+    p = ggplot(dtmp, aes(x = x_axis, y = variable))
+    p = p + geom_raster(aes(fill = value))
+    p = p + theme(axis.text.x=element_text(angle=90))
+    return(p)
+  }
+  
+  fun_raster = function(d, vec_variables,
+                        x_axis, nb_parameters_per_plot_x_axis){ 
+    d = reshape_data(d, vec_variables, labels_on = NULL,
+                     x_axis, nb_parameters_per_plot_x_axis,
+                     in_col = NULL, nb_parameters_per_plot_in_col = NULL
+    )
+    out = lapply(d, fun_raster_1, vec_variable)
+    return(out)
+  }
+  
   # 3. Run code ----------
   # 3.1. Presence absence for each germplasm, location and year
   if(plot_type == "pam"){ 
@@ -350,6 +388,11 @@ describe_data.data_agro = function(
     p_out = fun_radar(data, vec_variables, in_col, labels_size)
   }
   
+  # 3.5. raster ----------
+  if(plot_type == "raster") {
+    p_out = fun_raster(data, vec_variables, x_axis, nb_parameters_per_plot_x_axis)
+  } 
+   
   # 4. Return results ----------
   return(p_out)
 }
