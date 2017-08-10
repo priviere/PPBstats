@@ -18,6 +18,7 @@ describe_data(x, ...)
  \item "interaction"
  \item "biplot"
  \item "radar"
+ \item "raster"
 }}
 
 \item{x_axis}{factor displayed on the x.axis of a plot}
@@ -41,6 +42,8 @@ describe_data(x, ...)
  \item For plot_type "biplot",
  the function returns a list with ggplot objects for each pairs of variables of vec_variables. 
  \item For plot_type "radar",
+ the function returns a list with ggplot objects with all variables of vec_variables. 
+ \item For plot_type "raster"
  the function returns a list with ggplot objects with all variables of vec_variables. 
 }
 Each list is divided in several lists according to values 
