@@ -14,6 +14,7 @@
 #'  \item "interaction"
 #'  \item "biplot"
 #'  \item "radar"
+#'  \item "raster"
 #' }
 #' 
 #' @param x_axis factor displayed on the x.axis of a plot
@@ -38,10 +39,11 @@
 #'  the function returns a list with ggplot objects for each pairs of variables of vec_variables. 
 #'  \item For plot_type "radar",
 #'  the function returns a list with ggplot objects with all variables of vec_variables. 
+#'  \item For plot_type "raster"
+#'  the function returns a list with ggplot objects with all variables of vec_variables. 
 #' }
 #' Each list is divided in several lists according to values 
 #' of nb_parameters_per_plot_x_axis and nb_parameters_per_plot_in_col.
-#' 
 #' 
 #' @author Pierre Riviere
 #' 
