@@ -90,6 +90,7 @@ But keep in mind it has been corrected.
 For model\_2, you can follow these steps (Figure \ref{function_relations}):
 
 \begin{enumerate}
+\item Format the data with \texttt{format\_data\_PPBstats}
 \item Run the model with \texttt{model\_2}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
 \item Perform cross validation studies with \texttt{cross\_validation\_model\_2} in order to assess the quality of the model
@@ -98,12 +99,14 @@ For model\_2, you can follow these steps (Figure \ref{function_relations}):
 \item Predict the past with \texttt{predict\_the\_past\_model\_2} and vizualise it with \texttt{plot}
 \end{enumerate}
 
-Let's get the data.
+
+\subsubsection{Format the data}
 The values for $\alpha_i$, $\beta_i$, $\theta_j$ are the real value taken to create the dataset for y1.
 This dataset is representative of data you can get in a PPB programme.
 
 <<message=TRUE,cache=FALSE>>=
 data(data_model_2)
+data_model_2 = format_data_PPBstats(data_model_2, type = "data_agro")
 head(data_model_2)
 @
 
@@ -507,10 +510,21 @@ ppg = plot(out_parameter_groups)
 
   \end{itemize}
 
-\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}
+
+\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}, a list of number of cluster + 1 element
   <<message=TRUE,cache=FALSE>>=
-  ppg$clust$nb_k
+  cl = ppg$clust
+  names(cl)
   @
+
+  <<message=TRUE,cache=FALSE>>=
+  cl$cluster_all
+  @
+
+  <<message=TRUE,cache=FALSE>>=
+  cl$cluster_1
+  @
+\end{itemize}
 
 \end{itemize}
 

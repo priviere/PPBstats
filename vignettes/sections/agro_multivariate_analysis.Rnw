@@ -1,0 +1,42 @@
+\subsection{Multivariate analysis}
+\label{multivariate_analysis}
+
+\subsubsection{Steps with \pack}
+
+For variance intra analysis, you can follow these steps (Figure \ref{main_workflow}) :
+
+\begin{enumerate}
+\item Format the data with \texttt{format\_data\_PPBstats}
+\item Run the analysis with \texttt{multivariate} 
+\item Check outputs and results with functions from \texttt{factoextra}\footnote{https://github.com/kassambara/factoextra}
+\end{enumerate}
+
+
+\subsubsection{Format the data}
+
+<<message=TRUE,cache=FALSE>>=
+data("data_GxE")
+data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
+@
+
+
+\subsubsection{Run the analysis}
+
+<<message=TRUE,cache=FALSE>>=
+vec_variables = c("y1", "y2", "y3")
+res.pca = mutlivariate(data_GxE, vec_variables, PCA)
+@
+
+\subsubsection{Check outputs and results}
+
+Look at the results thanks to the \texttt{factoextra}\footnote{https://github.com/kassambara/factoextra} package:
+
+<<message=TRUE,cache=FALSE>>=
+fviz_eig(res.pca)
+@
+
+
+<<message=TRUE,cache=FALSE>>=
+fviz_pca_ind(res.pca, label="none", habillage="location", addEllipses=TRUE, ellipse.level=0.95)
+@
+

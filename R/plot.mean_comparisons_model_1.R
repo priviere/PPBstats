@@ -235,11 +235,7 @@ plot.mean_comparisons_model_1 <- function(
               )
             )
           
-          SCORE = seq(
-            min(env$median), 
-            max(env$median), 
-            length.out = length(vec_letters)
-            )
+          SCORE = c(1:length(vec_letters))
           names(SCORE) = vec_letters
 
           GP = as.character(env[,"groups"])
@@ -248,12 +244,12 @@ plot.mean_comparisons_model_1 <- function(
             score = c(score, mean(SCORE[unlist(strsplit(gp, ""))], na.rm = TRUE))
           }
           
-          env$score = score
+          env$group = score # group instead of score for the legend
           alpha.info = paste(env$alpha, "|", env$alpha.correction)
           env$alpha.info_year = paste(env$year, alpha.info, sep = " - ")
           env$median_text = as.character(round(env$median, 1))
 
-          p = ggplot(env, aes(y = entry, x = alpha.info_year, label = median_text, fill = score))
+          p = ggplot(env, aes(y = entry, x = alpha.info_year, label = median_text, fill = group))
           p = p +  geom_tile() + geom_text()
           p = p + scale_fill_gradient(low = "blue",high = "red")
           p = p + xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle(env[1, "location"])

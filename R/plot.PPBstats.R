@@ -246,6 +246,7 @@
 #'      \item score : The score is set according to which group the entry was allocated.
 #'        An high score means that the entry was in a group with an high mean.
 #'        A low score means that the entry was in a group with an low mean.
+#'        In the legend, the score goes from 1 (first group) to the number of groups of significativity.
 #'        The error I (alpha) and the alpha correction are displayed in the x.axis under the form "alpha | alpha correction".
 #'        alpha = Imp means that no differences were possible to find.
 #'     }
@@ -277,7 +278,8 @@
 #'      \item ind : graph of individuals
 #'      \item var : graph of variables
 #'     }
-#'    \item clust : output from \code{factextra::fviz_nbclust()}. See \code{?factoextra::fviz_nbclust} for more details
+#'    \item clust : output from \code{factextra::fviz_nbclust()}. See \code{?factoextra::fviz_nbclust} for more details, 
+#'    a list of number of cluster + 1 element
 #'   }
 #'   
 #'   
