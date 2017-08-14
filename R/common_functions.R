@@ -10,22 +10,6 @@
 
 # Function use in describe_data.R, GxE.R, model_1.R, model_2.R ----------
 check_data_vec_variables = function(data, vec_variables){
-  mess = "The following column are compulsory : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
-  if(!is.element("location", colnames(data))) { stop(mess) }
-  if(!is.element("year", colnames(data))) { stop(mess) }
-  if(!is.element("germplasm", colnames(data))) { stop(mess) }
-  if(!is.element("block", colnames(data))) { stop(mess) }
-  if(!is.element("X", colnames(data))) { stop(mess) }
-  if(!is.element("Y", colnames(data))) { stop(mess) }
-  
-  mess = "The following column must be set as factor : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
-  if(!is.factor(data$location)) { stop(mess) }
-  if(!is.factor(data$year)) { stop(mess) }
-  if(!is.factor(data$germplasm)) { stop(mess) }
-  if(!is.factor(data$block)) { stop(mess) }
-  if(!is.factor(data$X)) { stop(mess) }
-  if(!is.factor(data$Y)) { stop(mess) }
-  
   for(variable in vec_variables) { if(!is.element(variable, colnames(data))) { stop(variable," is not in data") } }
   for(variable in vec_variables) { 
     if(!is.numeric(data[,variable])) { stop(variable," is not numeric") } }

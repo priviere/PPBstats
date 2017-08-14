@@ -95,16 +95,18 @@ This PCA allows to detect
 For AMMI analysis, you can follow these steps (Figure \ref{main_workflow}):
 
 \begin{enumerate}
+\item Format the data with \texttt{format\_data\_PPBstats}
 \item Run the model with \texttt{GxE} and \texttt{gxe\_analysis = "AMMI"}
 \item Check model outputs with graphs to know if you can continue the analysis with \texttt{check\_model}
 \item Get mean comparisons for each factor with \texttt{mean\_comparisons} and vizualise it with \texttt{plot}
 \item Get groups of each parameters with \texttt{parameters\_groups} and visualise it with \texttt{plot}
 \end{enumerate}
 
-Let's get the data.
+\subsubsection{Format the data}
 
 <<message=TRUE,cache=FALSE>>=
 data(data_GxE)
+data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
 head(data_GxE)
 @
 
@@ -427,11 +429,19 @@ p_germplasm_group = plot(out_parameter_groups)
   
   \end{itemize}
 
-\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}
+\item \texttt{clust} : output from \texttt{factextra::fviz\_cluster()}, a list of number of cluster + 1 element
   <<message=TRUE,cache=FALSE>>=
-  p_germplasm_group$clust
+  cl = p_germplasm_group$clust
+  names(cl)
   @
 
+  <<message=TRUE,cache=FALSE>>=
+  cl$cluster_all
+  @
+
+  <<message=TRUE,cache=FALSE>>=
+  cl$cluster_1
+  @
 \end{itemize}
 
 \subsubsection{Apply the workflow to several variables}

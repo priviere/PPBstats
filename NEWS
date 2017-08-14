@@ -1,14 +1,37 @@
-PPBstats 0.22 under progress ------------------------
+PPBstats 0.23 ---------------------------------------
+-----------------------------------------------------
+* upate fonctions
+  - format_data_PPBstats.R : 
+    - when date, add a column with julian day, cf #65
+    - add type data_organo_napping and data_organo_hedonic, cf #72
+    - describe_data.data_agro.R : add raster arg for plot_type, cf #68
+
+* add new functions
+  - napping.R, cf #72
+  - hedonic.R, cf #72
+
+
+PPBstats 0.22 ---------------------------------------
 -----------------------------------------------------
 * update functions
-  - model_1.R : correct bug model_1 (cf #60)
+  - model_1.R : 
+    - correct bug model_1 (cf #60)
+    - better plot for score regarding model 1 (cf #61)
   - workflow regarding spatial analysis : improve and debug
   - update workflow regarding variance_intra model (cf #28, #29, #30, #31, #32) but still work to do : cf #62
-  - better plot for score regarding model 1 (cf #61)
+  - plot.parameter_groups.R : split plot ACP cluster (cf #47) + update Rd in plot.PPBstats.R
+  - describe_data.R : create class
+
+* add new functions
+  - format_data_PPBstats.R
+  - describe_data.data_agro.R : huge refactoring, cf #68
+  - describe_data.data_network.R : empty from now
+  - multivariate.R
 
 * vignette
-  - update text (typo + cf #36)
+  - update text (typo + format_data_PPBstats + cf #36, #47, #68)
   - add new section on variance_intra + update workflow figure, functions table, analysis families
+  - update multivariate analysis section
   - update contributions
   
 

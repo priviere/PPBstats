@@ -2,46 +2,55 @@
 % Please edit documentation in R/describe_data.R
 \name{describe_data}
 \alias{describe_data}
-\title{Describe the data set in order to choose the appropriate analysis to carry out}
+\title{Get ggplot to describe the data}
 \usage{
-describe_data(data, vec_variables, nb_parameters_per_plot = 5)
+describe_data(x, ...)
 }
 \arguments{
 \item{data}{The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
 
-\item{vec_variables}{Vector of variables to describe}
+\item{plot_type}{the type of plot you wish. It can be :
+\itemize{
+ \item "pam" for presence abscence matrix that represent the combinaison of germplasm x location
+ \item "histogramm"
+ \item "barplot", where sd error are displayed
+ \item "boxplot"
+ \item "interaction"
+ \item "biplot"
+ \item "radar"
+ \item "raster"
+}}
 
-\item{nb_parameters_per_plot}{Number of parameter on each histogram on the gird}
+\item{x_axis}{factor displayed on the x.axis of a plot}
+
+\item{in_col}{factor displayed in color of a plot}
+
+\item{vec_variables}{vector of variables to describe}
+
+\item{nb_parameters_per_plot_x_axis}{the number of parameters per plot on x_axis arguments}
+
+\item{nb_parameters_per_plot_in_col}{the number of parameters per plot for in_col arguments}
+
+\item{labels_on}{factor to display for plot_type = "biplot"}
+
+\item{labels_size}{size of the label for plot_type = "biplot" and "radar"}
 }
 \value{
-The function returns a list with, 
-
 \itemize{
- \item A summary of the whole data set
- \item for each variable, a list with :
-  \itemize{
-  \item A presence.absence plot  that represents the presence/absence matrix of GxE combinaisons. 
-  \item A list with histogram for
-   \itemize{
-    \item germplasm
-    \item location
-    \item year
-    }
-   For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
-  \item A list with boxplot, containg a list with plot and outliers, for
-   \itemize{
-    \item germplasm
-    \item location
-    \item year
-    }
-   For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
-   \item interaction
-   For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
-  }
+ \item For plot_type "histogramm", "barplot", "boxplot" or "interaction",
+ the function returns a list with ggplot objects for each variable of vec_variables.
+ \item For plot_type "biplot",
+ the function returns a list with ggplot objects for each pairs of variables of vec_variables. 
+ \item For plot_type "radar",
+ the function returns a list with ggplot objects with all variables of vec_variables. 
+ \item For plot_type "raster"
+ the function returns a list with ggplot objects with all variables of vec_variables. 
 }
+Each list is divided in several lists according to values 
+of nb_parameters_per_plot_x_axis and nb_parameters_per_plot_in_col.
 }
 \description{
-\code{describe_data} describes the data set in order to choose the appropriate analysis to carry out
+\code{describe_data} gets ggplot to describe the data
 }
 \author{
 Pierre Riviere

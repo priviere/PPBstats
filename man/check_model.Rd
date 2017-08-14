@@ -7,7 +7,7 @@
 check_model(x)
 }
 \arguments{
-\item{x}{outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}, \code{\link{spatial}},}
+\item{x}{outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}, \code{\link{spatial}}, \code{\link{model_variance_intra}}}
 }
 \value{
 The function returns a list depending on check_model input 
@@ -79,6 +79,18 @@ The function returns a list depending on check_model input
   }
 }
 
+\item model_variance_intra
+\itemize{
+ \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. (See details for more information).
+ \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
+ \item data_ggplot a list containing information for ggplot:
+ \itemize{
+  \item mu
+  \item sigma
+  \item epsilon
+ }
+}
+
 }
 }
 \description{
@@ -86,7 +98,7 @@ The function returns a list depending on check_model input
 It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 }
 \details{
-For \code{\link{model_1}} and \code{\link{model_2}}, the test used for convergence is the Gelman-Rubin test.
+For \code{\link{model_1}}, \code{\link{model_2}} and \code{\link{model_variance_intra}}, the test used for convergence is the Gelman-Rubin test.
 It may take some time to run.
 More details with ?\code{gelman.diag} from the \code{coda} package.
 Note that for \code{gelman.diag}, the argument \code{multivariate = FALSE} is used.
@@ -100,7 +112,7 @@ For \code{\link{model_1}}, all environments where at least one parameter do not 
 
 The outputs of the function is used in 
 \itemize{
- \item \code{\link{mean_comparisons}} for \code{\link{GxE}}, \code{\link{model_1}} and \code{\link{model_2}}
+ \item \code{\link{mean_comparisons}} for \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}} and \code{\link{model_variance_intra}}
  \item \code{\link{parameter_groups}} for \code{\link{GxE}} and \code{\link{model_2}}
  \item \code{\link{predict_the_past_model_2}} for \code{\link{model_2}}
 }

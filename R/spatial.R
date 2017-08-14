@@ -38,6 +38,7 @@
 spatial = function(data, variable, genotype.as.random = TRUE){
 
   # 1. Error messages, update arg ----------
+  if(!is(data, "data_agro")){ stop(substitute(data), " must be formated, see PPBstats::format_data_PPBstats().") }
   check_data_vec_variables(data, variable)
   data_tmp = data
   colnames(data_tmp)[which(colnames(data_tmp) == variable)] = "variable"
