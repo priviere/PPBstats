@@ -62,7 +62,7 @@ spatial = function(data, variable, genotype.as.random = TRUE){
   
   # 4. Get effetcs ----------
   intercept = mean(data$variable, na.rm = TRUE)
-  g_effect = m$coeff[is.element(names(m$coeff), levels(d$germplasm))]
+  g_effect = m$coeff[is.element(names(m$coeff), levels(data$germplasm))]
   g_effect = sort(g_effect + intercept)
   
   # 5. Residuals variance ----------
