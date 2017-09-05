@@ -143,10 +143,27 @@ plot.mean_comparisons_model_1 <- function(
             x = x$mean.comparisons
             p_to_get = filter(data_version, environment == x$environment[1])$mu
             x = filter(x, parameter %in% p_to_get)
-            x$max = max(x$median, na.rm = TRUE)
-            x = arrange(x, parameter)
-            x$split = add_split_col(x, nb_parameters_per_plot)
-            x_split = plyr:::splitter_d(x, .(split))
+            
+            # Check if we have all the data or if some is missing
+            pop_to_get = unique(data_version$mu)
+            pop_missing = setdiff(pop_to_get, x$parameter)
+            # get corresponding sl
+            if(length(pop_missing)>0){
+              pop_to_delete = NULL
+              for(i in pop_missing){
+                a = unique(data_version[data_version$mu %in% i,"group"])
+                a = unique(data_version[data_version$group %in% a,])
+                pop_to_delete = c(pop_to_delete, a$mu)
+              }
+              x=x[-grep(paste(pop_to_delete,collapse="|"),x$parameter),]
+            }
+            if(nrow(x)>0){
+              x$max = max(x$median, na.rm = TRUE)
+              x = arrange(x, parameter)
+              x$split = add_split_col(x, nb_parameters_per_plot)
+              x_split = plyr:::splitter_d(x, .(split))
+            }else{x_split=NULL}
+            
             return(x_split)
           }
           
