@@ -29,8 +29,8 @@ plot.mean_comparisons_model_1 <- function(
     for(g in gp){
       dtmp = droplevels(filter(data_version_tmp, group == g))
       vec_version = levels(dtmp$version)
-      v1 = unique(as.character(filter(dtmp, version == vec_version[1])$mu))
-      v2 = unique(as.character(filter(dtmp, version == vec_version[2])$mu))
+      v1 = unique(as.character(filter(dtmp, version == vec_version[1])$parameter))
+      v2 = unique(as.character(filter(dtmp, version == vec_version[2])$parameter))
       
       if( !is.null(data_Mpvalue_env) ){ 
         for (i in 1:ncol(data_Mpvalue_env)) { 
@@ -57,8 +57,8 @@ plot.mean_comparisons_model_1 <- function(
       STARS = c(STARS, stars)
     }
     
-    colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
-    d = join(data_version_tmp, dx, by = "mu")
+ #   colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
+    d = join(data_version_tmp, dx, by = "parameter")
     
     # delete version where there are not v1 AND v2
     group_to_keep = NULL
@@ -110,11 +110,12 @@ plot.mean_comparisons_model_1 <- function(
   # 3.2. run function for barplot ----------
   
   if( ggplot.type == "barplot") {
+    if(round(nb_parameters_per_plot/2) != nb_parameters_per_plot/2){nb_parameters_per_plot = nb_parameters_per_plot-1}
     
     fun_barplot = function(data, data_version, nb_parameters_per_plot){
       if(!is.null(data_version)) {
         data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
-        data_version$mu = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
+        data_version$parameter = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
         
         # check for env
         vec_env = unique(data_version$environment)
@@ -141,25 +142,28 @@ plot.mean_comparisons_model_1 <- function(
           
           fun = function(x, data_version, nb_parameters_per_plot){
             x = x$mean.comparisons
-            p_to_get = filter(data_version, environment == x$environment[1])$mu
+            p_to_get = filter(data_version, environment == x$environment[1])$parameter
             x = filter(x, parameter %in% p_to_get)
             
+            x = unique(merge(x,data_version[,c("parameter","group")]))
+            x = x[order(x$group),]
+            
             # Check if we have all the data or if some is missing
-            pop_to_get = unique(data_version$mu)
+            pop_to_get = unique(data_version$parameter)
             pop_missing = setdiff(pop_to_get, x$parameter)
             # get corresponding sl
             if(length(pop_missing)>0){
               pop_to_delete = NULL
               for(i in pop_missing){
-                a = unique(data_version[data_version$mu %in% i,"group"])
-                a = unique(data_version[data_version$group %in% a,])
-                pop_to_delete = c(pop_to_delete, a$mu)
+                a = unique(x[x$parameter %in% i,"group"])
+                a = unique(x[x$group %in% a,])
+                pop_to_delete = c(pop_to_delete, a$parameter)
               }
               x=x[-grep(paste(pop_to_delete,collapse="|"),x$parameter),]
             }
             if(nrow(x)>0){
               x$max = max(x$median, na.rm = TRUE)
-              x = arrange(x, parameter)
+         #     x = arrange(x, parameter)
               x$split = add_split_col(x, nb_parameters_per_plot)
               x_split = plyr:::splitter_d(x, .(split))
             }else{x_split=NULL}
