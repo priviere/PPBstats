@@ -96,6 +96,7 @@ format_data_PPBstats = function(
     
     # check and format date
     vec_date = colnames(d)[grep("\\$date", colnames(d))]
+    if( length(vec_date) == 0 ) { vec_date = NULL }
     if(!is.null(vec_date)){
       vec_date = colnames(d)[grep("\\$date", colnames(d))]
       
