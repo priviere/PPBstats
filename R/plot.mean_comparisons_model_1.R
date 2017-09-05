@@ -172,6 +172,7 @@ plot.mean_comparisons_model_1 <- function(
           }
           
           d_env_b = lapply(d_env, fun, data_version, nb_parameters_per_plot)
+          d_env_b = d_env_b[[!is.null(d_env_b)]]
           
           fun_barplot_version = function(dx, data, data_version){
             if(attributes(data)$PPBstats.object == "data_mean_comparisons") { 
@@ -190,6 +191,7 @@ plot.mean_comparisons_model_1 <- function(
           
           OUT = lapply(d_env_b, fun1, data)
           names(OUT) = names(d_env_b)
+          if(class(OUT) == "list"){if(length(OUT) ==0){OUT=NULL}}
           }
         
       
@@ -225,6 +227,7 @@ plot.mean_comparisons_model_1 <- function(
           return(out)
         })
         names(OUT) = names(d_env_b)
+        if(class(OUT) == "list"){if(length(OUT) ==0){OUT=NULL}}
       }
       return(OUT)
     }
