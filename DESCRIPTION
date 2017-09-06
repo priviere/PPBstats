@@ -28,7 +28,9 @@ Depends:
     ibd,
     bitops,
     SpATS,
-    qdapRegex
+    qdapRegex,
+    shiny,
+    shinydashboard
 Suggests:
     ggmcmc,
     GGEBiplotGUI,
