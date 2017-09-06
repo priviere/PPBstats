@@ -9,6 +9,9 @@ PPBstats 0.23 ---------------------------------------
 * add new functions
   - napping.R, cf #72
   - hedonic.R, cf #72
+  - PPBstats_interface.R, cf #64
+  - /inst/shiny_interface/agro/server.R, cf #64
+  - /inst/shiny_interface/agro/ui.R, cf #64
 
 
 PPBstats 0.22 ---------------------------------------
