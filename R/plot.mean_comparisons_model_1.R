@@ -159,7 +159,7 @@ plot.mean_comparisons_model_1 <- function(
                 a = unique(x[x$group %in% a,])
                 pop_to_delete = c(pop_to_delete, a$parameter)
               }
-              x=x[-grep(paste(pop_to_delete,collapse="|"),x$parameter),]
+              if(length(pop_to_delete)>0){x=x[-grep(paste(pop_to_delete,collapse="|"),x$parameter),]}
             }
             if(nrow(x)>0){
               x$max = max(x$median, na.rm = TRUE)
