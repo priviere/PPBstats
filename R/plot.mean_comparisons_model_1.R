@@ -141,6 +141,7 @@ plot.mean_comparisons_model_1 <- function(
           d_env = data[vec_env_to_get]
           
           fun = function(x, data_version, nb_parameters_per_plot){
+            Mpvalue = x$Mpvalue
             x = x$mean.comparisons
             p_to_get = filter(data_version, environment == x$environment[1])$parameter
             x = filter(x, parameter %in% p_to_get)
@@ -149,17 +150,20 @@ plot.mean_comparisons_model_1 <- function(
             x = x[order(x$group),]
             
             # Check if we have all the data or if some is missing
-            pop_to_get = unique(data_version$parameter)
-            pop_missing = setdiff(pop_to_get, x$parameter)
-            # get corresponding sl
-            if(length(pop_missing)>0){
-              pop_to_delete = NULL
-              for(i in pop_missing){
-                a = unique(x[x$parameter %in% i,"group"])
-                a = unique(x[x$group %in% a,])
-                pop_to_delete = c(pop_to_delete, a$parameter)
+            gp = unique(data_version$group)
+            for(g in gp){
+              dtmp = droplevels(filter(data_version, group == g))
+              vec_version = levels(dtmp$version)
+              v1 = unique(as.character(filter(dtmp, version == vec_version[1])$parameter))
+              v2 = unique(as.character(filter(dtmp, version == vec_version[2])$parameter))
+              
+              if( !is.null(Mpvalue) ){ 
+                for (i in 1:ncol(Mpvalue)) { 
+                  if (colnames(Mpvalue)[i] == v1) {c1 = i}
+                  if (colnames(Mpvalue)[i] == v2) {c2 = i}
+                }
               }
-              if(length(pop_to_delete)>0){x=x[-grep(paste(pop_to_delete,collapse="|"),x$parameter),]}
+              if(!exists("c1") | !exists("c2")){x = x[-grep(g,x$group),]}
             }
             if(nrow(x)>0){
               x$max = max(x$median, na.rm = TRUE)
