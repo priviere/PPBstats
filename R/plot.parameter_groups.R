@@ -1,19 +1,20 @@
 plot.parameter_groups <- function(x){
 
   pca = x$obj.pca
-  res.hcpc = x$clust$res.hcpc
+  res.hcpc = res = x$clust$res.hcpc
   
   # Get one plot per cluster with the rigth legend ----------
   nb_clust = nlevels(res.hcpc$call$X$clust)
   p_all = fviz_cluster(res.hcpc, repel = TRUE)
   list_p_clust = list(p_all)
   for(c in 1:nb_clust){
-    d = res.hcpc
+    d = res
     dX = filter(d$call$X, clust == c)
     rownames(dX) = rownames(d$call$X)[which(d$call$X$clust == c)]
     d$call$X = dX
     levels(d$call$X$clust) = c(1:nb_clust)
-    p1 = fviz_cluster(d, repel = TRUE)
+    res.hcpc=d
+    p1 = fviz_cluster(res.hcpc, repel = TRUE)
     xlim = range(p1$data$x)
     ylim = range(p1$data$y)
     levels(d$call$X$clust) = c(1:nb_clust)
