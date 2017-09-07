@@ -29,8 +29,8 @@ plot.mean_comparisons_model_1 <- function(
     for(g in gp){
       dtmp = droplevels(filter(data_version_tmp, group == g))
       vec_version = levels(dtmp$version)
-      v1 = unique(as.character(filter(dtmp, version == vec_version[1])$mu))
-      v2 = unique(as.character(filter(dtmp, version == vec_version[2])$mu))
+      v1 = unique(as.character(filter(dtmp, version == vec_version[1])$parameter))
+      v2 = unique(as.character(filter(dtmp, version == vec_version[2])$parameter))
       
       if( !is.null(data_Mpvalue_env) ){ 
         for (i in 1:ncol(data_Mpvalue_env)) { 
@@ -57,8 +57,8 @@ plot.mean_comparisons_model_1 <- function(
       STARS = c(STARS, stars)
     }
     
-    colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
-    d = join(data_version_tmp, dx, by = "mu")
+ #   colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
+    d = join(data_version_tmp, dx, by = "parameter")
     
     # delete version where there are not v1 AND v2
     group_to_keep = NULL
@@ -110,11 +110,12 @@ plot.mean_comparisons_model_1 <- function(
   # 3.2. run function for barplot ----------
   
   if( ggplot.type == "barplot") {
+    if(round(nb_parameters_per_plot/2) != nb_parameters_per_plot/2){nb_parameters_per_plot = nb_parameters_per_plot-1}
     
     fun_barplot = function(data, data_version, nb_parameters_per_plot){
       if(!is.null(data_version)) {
         data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
-        data_version$mu = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
+        data_version$parameter = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
         
         # check for env
         vec_env = unique(data_version$environment)
@@ -140,17 +141,42 @@ plot.mean_comparisons_model_1 <- function(
           d_env = data[vec_env_to_get]
           
           fun = function(x, data_version, nb_parameters_per_plot){
+            Mpvalue = x$Mpvalue
             x = x$mean.comparisons
-            p_to_get = filter(data_version, environment == x$environment[1])$mu
+            p_to_get = filter(data_version, environment == x$environment[1])$parameter
             x = filter(x, parameter %in% p_to_get)
-            x$max = max(x$median, na.rm = TRUE)
-            x = arrange(x, parameter)
-            x$split = add_split_col(x, nb_parameters_per_plot)
-            x_split = plyr:::splitter_d(x, .(split))
+            
+            x = unique(merge(x,data_version[,c("parameter","group")]))
+            x = x[order(x$group),]
+            
+            # Check if we have all the data or if some is missing
+            gp = unique(data_version$group)
+            for(g in gp){
+              dtmp = droplevels(filter(data_version, group == g))
+              vec_version = levels(dtmp$version)
+              v1 = unique(as.character(filter(dtmp, version == vec_version[1])$parameter))
+              v2 = unique(as.character(filter(dtmp, version == vec_version[2])$parameter))
+              
+              if( !is.null(Mpvalue) ){ 
+                for (i in 1:ncol(Mpvalue)) { 
+                  if(length(v1)>0){if(colnames(Mpvalue)[i] == v1) {c1 = i}} 
+                  if(length(v2)>0){if (colnames(Mpvalue)[i] == v2) {c2 = i}}
+                }
+              }
+              if(!exists("c1") | !exists("c2")){x = x[-grep(g,x$group),]}
+            }
+            if(nrow(x)>0){
+              x$max = max(x$median, na.rm = TRUE)
+         #     x = arrange(x, parameter)
+              x$split = add_split_col(x, nb_parameters_per_plot)
+              x_split = plyr:::splitter_d(x, .(split))
+            }else{x_split=NULL}
+            
             return(x_split)
           }
           
           d_env_b = lapply(d_env, fun, data_version, nb_parameters_per_plot)
+      #    d_env_b = d_env_b[[!is.null(d_env_b)]]
           
           fun_barplot_version = function(dx, data, data_version){
             if(attributes(data)$PPBstats.object == "data_mean_comparisons") { 
@@ -169,6 +195,8 @@ plot.mean_comparisons_model_1 <- function(
           
           OUT = lapply(d_env_b, fun1, data)
           names(OUT) = names(d_env_b)
+          OUT=lapply(OUT,function(x){if(class(x) == "list"){if(length(x) ==0){x=NULL}else{return(x)}}else{return(x)}})
+          
           }
         
       
@@ -204,6 +232,7 @@ plot.mean_comparisons_model_1 <- function(
           return(out)
         })
         names(OUT) = names(d_env_b)
+        OUT=lapply(OUT,function(x){if(class(x) == "list"){if(length(x) ==0){x=NULL}else{return(x)}}else{return(x)}})
       }
       return(OUT)
     }
