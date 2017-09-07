@@ -159,8 +159,8 @@ plot.mean_comparisons_model_1 <- function(
               
               if( !is.null(Mpvalue) ){ 
                 for (i in 1:ncol(Mpvalue)) { 
-                  if (colnames(Mpvalue)[i] == v1) {c1 = i}
-                  if (colnames(Mpvalue)[i] == v2) {c2 = i}
+                  if(length(v1)>0){if(colnames(Mpvalue)[i] == v1) {c1 = i}} 
+                  if(length(v2)>0){if (colnames(Mpvalue)[i] == v2) {c2 = i}}
                 }
               }
               if(!exists("c1") | !exists("c2")){x = x[-grep(g,x$group),]}
