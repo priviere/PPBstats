@@ -353,17 +353,7 @@ plot.PPBstats <- function(
               paste(mandatory_dvcols[!idx], collapse = ", "))
       )
     }
-
-    # delete version where there are not v1 AND v2
-    if(FALSE){
-      for(gp in vec_group){
-        d_tmp = droplevels(filter(data_version, group == gp))
-        if(nlevels(d_tmp$version) != 2 ) {
-          stop("There must be 2 levels per group in data_version. ",
-               "This is not the case for group ", gp)
-        }
-      }
-    }
+    
     vec_group = unique(data_version$group)
 
   }
