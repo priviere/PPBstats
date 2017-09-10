@@ -93,8 +93,24 @@ plot.mean_comparisons_model_1 <- function(
       d_loc = plyr:::splitter_d(data, .(location))
       
       d_loc_b = lapply(d_loc, function(x){
-        x = arrange(x, entry)
-        x$split = as.numeric(factor(x$entry))
+
+        # Arrange from the more recent year and by number of pop present in a year
+        t = table(x$entry, x$year)
+        t = as.data.frame.matrix(t)
+        t$s = apply(t, 1, sum)
+        
+        vec = NULL
+        for(i in (ncol(t)-1):1){
+          tmp = t[which(t[,i] > 0),]
+          tmp$rn = rownames(tmp)
+          tmp = arrange(tmp, -s)
+          vec = c(vec, tmp$rn)
+        }
+        vec = unique(vec)
+        ee = c(1:length(vec)); names(ee) = vec
+        x$split = ee[x$entry]
+        x = arrange(x, split)
+        
         seq_nb_para = unique(c(seq(1, max(x$split), nb_parameters_per_plot), max(x$split)*2))
         for(i in 1:(length(seq_nb_para) - 1) ) { x$split[seq_nb_para[i] <= x$split & x$split < seq_nb_para[i+1]] = i }
         x_split = plyr:::splitter_d(x, .(split))
@@ -314,6 +330,7 @@ plot.mean_comparisons_model_1 <- function(
               )
             )
           }
+          
           
           env$group = get_score(env) # group instead of score for the legend
           env$median_text = as.character(round(env$median, 1))
