@@ -1,14 +1,22 @@
 PPBstats 0.23 ---------------------------------------
 -----------------------------------------------------
-* upate fonctions
+* update fonctions
   - format_data_PPBstats.R : 
     - when date, add a column with julian day, cf #65
     - add type data_organo_napping and data_organo_hedonic, cf #72
     - describe_data.data_agro.R : add raster arg for plot_type, cf #68
+  - debugs several functions regarding tests
+  - plot.mean_comparisons_model_1.R
+    - improve display of score : cf #61
+  - plot.parameter_groups.R:
+   - model 2 ACP cluster : put in blod or color a given ind, cf #76
 
 * add new functions
   - napping.R, cf #72
   - hedonic.R, cf #72
+  - PPBstats_interface.R, cf #64
+  - /inst/shiny_interface/agro/server.R, cf #64
+  - /inst/shiny_interface/agro/ui.R, cf #64
 
 
 PPBstats 0.22 ---------------------------------------
