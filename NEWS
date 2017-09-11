@@ -8,6 +8,8 @@ PPBstats 0.23 ---------------------------------------
   - debugs several functions regarding tests
   - plot.mean_comparisons_model_1.R
     - improve display of score : cf #61
+  - plot.parameter_groups.R:
+   - model 2 ACP cluster : put in blod or color a given ind, cf #76
 
 * add new functions
   - napping.R, cf #72
