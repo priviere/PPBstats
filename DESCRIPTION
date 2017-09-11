@@ -9,7 +9,7 @@ Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
     person("Olivier", "David", role = "ctb"),
     person("Facundo", "Muñoz", role = "ctb")
     )
-Author: Pierre Riviere and Gaelle Van Franck and Olivier David and Facundo Muñoz
+Author: Pierre Riviere and Gaelle Van Frank and Olivier David and Facundo Muñoz
 Maintainer: Pierre Riviere <pierre@semencespaysannes.org>
 Description: This package performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments
 License: GPL-3
