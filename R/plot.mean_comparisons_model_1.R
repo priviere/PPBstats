@@ -93,8 +93,24 @@ plot.mean_comparisons_model_1 <- function(
       d_loc = plyr:::splitter_d(data, .(location))
       
       d_loc_b = lapply(d_loc, function(x){
-        x = arrange(x, entry)
-        x$split = as.numeric(factor(x$entry))
+
+        # Arrange from the more recent year and by number of pop present in a year
+        t = table(x$entry, x$year)
+        t = as.data.frame.matrix(t)
+        t$s = apply(t, 1, sum)
+        
+        vec = NULL
+        for(i in (ncol(t)-1):1){
+          tmp = t[which(t[,i] > 0),]
+          tmp$rn = rownames(tmp)
+          tmp = arrange(tmp, -s)
+          vec = c(vec, tmp$rn)
+        }
+        vec = unique(vec)
+        ee = c(1:length(vec)); names(ee) = vec
+        x$split = ee[x$entry]
+        x = arrange(x, split)
+        
         seq_nb_para = unique(c(seq(1, max(x$split), nb_parameters_per_plot), max(x$split)*2))
         for(i in 1:(length(seq_nb_para) - 1) ) { x$split[seq_nb_para[i] <= x$split & x$split < seq_nb_para[i+1]] = i }
         x_split = plyr:::splitter_d(x, .(split))
@@ -249,41 +265,84 @@ plot.mean_comparisons_model_1 <- function(
     d_loc_out = get.loc.year(all_data$data_mean_comparisons, nb_parameters_per_plot)
     
     if( !is.null(d_loc_out) ) {
+      
       out = lapply(d_loc_out, function(x){
-        lapply(x, function(env){
-          
-          env = arrange(env, median)
-          
-          # assign a number according to the group
+        
+        # assign a number according to the group
+        get_score = function(env){
           vec_letters = sort(
             unique(
               unlist(
                 sapply(as.character(env[,"groups"]), 
                        function(x){unlist(strsplit(x, ""))})
-                )
               )
             )
+          )
           
           SCORE = c(1:length(vec_letters))
           names(SCORE) = vec_letters
-
+          
           GP = as.character(env[,"groups"])
           score = NULL
           for(gp in GP){
             score = c(score, mean(SCORE[unlist(strsplit(gp, ""))], na.rm = TRUE))
           }
           
-          env$group = score # group instead of score for the legend
-          alpha.info = paste(env$alpha, "|", env$alpha.correction)
-          env$alpha.info_year = paste(env$year, alpha.info, sep = " - ")
+          return(score)
+        }
+        
+        
+        t = NULL
+        for(i in 1:length(x)) { t = c(t, x[[i]]$year) }
+        all_year = unique(t)
+        
+        all_x = x[[1]]
+        if( length(x) > 1 ){
+          for(i in 2:length(x)) { all_x = rbind.data.frame(all_x, x[[i]]) }
+        }
+        all_score = unique(sort(get_score(all_x)))
+        
+        lapply(x, function(env, all_year, all_score){
+          
+          env = arrange(env, median)
+          
+          # add missing year in order to have the same x axis in all plots
+          t = table(env$entry, env$year)
+          entry = rownames(t)
+          year = colnames(t)
+          year_to_add = all_year[!is.element(all_year, year)]
+          
+          if( length(year_to_add) > 0 ){
+            env = rbind.data.frame(
+              env, 
+              data.frame(
+                parameter = as.factor(NA),
+                median = as.numeric(NA),
+                groups = as.factor(NA),
+                nb_group = as.numeric(NA),
+                alpha = as.numeric(rep(env[1, "alpha"], times = length(year_to_add))),
+                alpha.correction = as.factor(as.character(rep(env[1, "alpha.correction"], times = length(year_to_add)))),
+                entry = as.character(rep(entry, times = length(year_to_add))),
+                environment = as.character(NA),
+                location = as.character(NA),
+                year = as.character(rep(year_to_add, each = length(entry))),
+                split = as.numeric(NA)
+              )
+            )
+          }
+          
+          
+          env$group = get_score(env) # group instead of score for the legend
           env$median_text = as.character(round(env$median, 1))
-
-          p = ggplot(env, aes(y = entry, x = alpha.info_year, label = median_text, fill = group))
+          
+          
+          p = ggplot(env, aes(y = entry, x = year, label = median_text, fill = group))
           p = p +  geom_tile() + geom_text()
-          p = p + scale_fill_gradient(low = "blue",high = "red")
-          p = p + xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle(env[1, "location"])
+          p = p + scale_fill_gradient2(low = "red", mid = "white", high = "blue", midpoint = mean(all_score), na.value = "transparent", limits = range(all_score) )
+          p = p + xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+          p = p + ggtitle(paste(env[1, "location"], "; alpha = ", env[1, "alpha"], "; correction : ", env[1, "alpha.correction"], sep = ""))
           return(p)
-        })
+        }, all_year, all_score)
       })
       names(out) = names(d_loc_out)
     } else { out = NULL }
