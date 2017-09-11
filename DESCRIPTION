@@ -5,7 +5,7 @@ Version: 0.23
 Encoding: UTF-8
 Date: 2017-08-07
 Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
-    person("Gaelle", "Van Franck", role = "ctb"),
+    person("Gaelle", "Van Frank", role = "ctb"),
     person("Olivier", "David", role = "ctb"),
     person("Facundo", "Muñoz", role = "ctb")
     )
