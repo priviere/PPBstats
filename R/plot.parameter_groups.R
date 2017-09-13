@@ -5,21 +5,23 @@ plot.parameter_groups <- function(x, ind_to_highlight){
   res.hcpc = x$clust$res.hcpc
   
   # ind_to_highlight ----------
-  res.hcpc$call$X$size = 1
   if( !is.element(ind_to_highlight, rownames(res.hcpc$call$X)) ) { 
-    stop(ind_to_highlight, " is not present in the data set.")
-    }
-  
-  res.hcpc$call$X$size[which(rownames(res.hcpc$call$X) == ind_to_highlight)] = 10
+    warning(ind_to_highlight, " is not present in the data set.")
+    highlight = F
+    }else{highlight = T}
   
   res = res.hcpc
   
   # Get one plot per cluster with the rigth legend ----------
   nb_clust = nlevels(res.hcpc$call$X$clust)
-  # vec_size = res.hcpc$call$X$size
-  vec_size = 10
-  p_all = fviz_cluster(res.hcpc, repel = TRUE, labelsize = vec_size)
-  
+
+  p_all = fviz_cluster(res.hcpc, repel = TRUE) 
+  if(highlight){
+    D = p_all$data
+    coord = D[grep(ind_to_highlight,D$name),c("x","y")]
+    p_all = p_all + geom_point(data=coord,mapping=aes(x=x,y=y))
+  }
+
   list_p_clust = list(p_all)
   for(c in 1:nb_clust){
     d = res
@@ -36,12 +38,17 @@ plot.parameter_groups <- function(x, ind_to_highlight){
     levels(d$call$X$clust) = c(1:nb_clust)
     for(cc in 1:nb_clust){ d$call$X = rbind.data.frame(d$call$X, c(NA, NA, cc, 1)) }
     rownames(d$call$X)[(nrow(d$call$X) - nb_clust + 1): nrow(d$call$X)] = paste("cluster", c(1:nb_clust))
-    
-    #vec_size = d$call$X$size
-    vec_size = 10
 
-    p = fviz_cluster(d, repel = TRUE, ellipse = FALSE, labelsize = vec_size)
+    p = fviz_cluster(d, repel = TRUE, ellipse = FALSE) 
     p = p + coord_cartesian(xlim = xlim, ylim = ylim)
+    
+    if(highlight){
+      D = p$data
+      coord = D[grep(ind_to_highlight,D$name),c("x","y")]
+      if(nrow(coord)>0){p = p + geom_point(data=coord,mapping=aes(x=x,y=y))}
+    }
+
+
     list_p_clust = c(list_p_clust, list(p))
   }
   names(list_p_clust) = paste("cluster", c("all", c(1:nb_clust)), sep = "_")
