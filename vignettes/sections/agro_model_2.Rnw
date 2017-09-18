@@ -467,6 +467,8 @@ out_parameter_groups = parameter_groups(
   )
 @
 
+Note that you can highlight some individual with the argument \texttt{ind\_to\_highlight}.
+
 \texttt{out\_parameter\_groups} is list of two elements:
 
 \begin{itemize}
