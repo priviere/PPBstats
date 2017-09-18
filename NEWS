@@ -18,6 +18,11 @@ PPBstats 0.23 ---------------------------------------
   - PPBstats_interface.R, cf #64
   - /inst/shiny_interface/agro/server.R, cf #64
   - /inst/shiny_interface/agro/ui.R, cf #64
+  - format_data_PPBstats.format_network.R, cf #65
+  - format_data_PPBstats.format_agro.R, cf #65
+  - format_data_PPBstats.format_agro_version.R, cf #65
+  - format_data_PPBstats.format_organo_napping.R, cf #65
+  - format_data_PPBstats.format_organo_hedonic.R, cf #65
 
 
 PPBstats 0.22 ---------------------------------------
