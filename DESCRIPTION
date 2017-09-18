@@ -30,7 +30,8 @@ Depends:
     SpATS,
     qdapRegex,
     shiny,
-    shinydashboard
+    shinydashboard,
+    ggrepel
 Suggests:
     ggmcmc,
     GGEBiplotGUI,
