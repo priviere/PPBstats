@@ -24,7 +24,10 @@ PPBstats 0.23 ---------------------------------------
   - format_data_PPBstats.format_organo_napping.R, cf #65
   - format_data_PPBstats.format_organo_hedonic.R, cf #65
 
-
+* vignette
+  - update text (cf #76)
+  
+  
 PPBstats 0.22 ---------------------------------------
 -----------------------------------------------------
 * update functions
