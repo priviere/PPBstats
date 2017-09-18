@@ -53,6 +53,8 @@
 #' 
 #' @param nb_parameters_per_plot The number of parameters per plot to facilitate the visualization
 #' 
+#' @param ind_to_highlight For parmater_group, individuals to highlight
+#' 
 #' @details
 #' Below are some details on the construction of the plots :
 #' 
