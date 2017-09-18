@@ -4,7 +4,8 @@ PPBstats 0.23 ---------------------------------------
   - format_data_PPBstats.R : 
     - when date, add a column with julian day, cf #65
     - add type data_organo_napping and data_organo_hedonic, cf #72
-    - describe_data.data_agro.R : add raster arg for plot_type, cf #68
+    - format data for data_network, cf #65
+  - describe_data.data_agro.R : add raster arg for plot_type, cf #68
   - debugs several functions regarding tests
   - plot.mean_comparisons_model_1.R
     - improve display of score : cf #61
