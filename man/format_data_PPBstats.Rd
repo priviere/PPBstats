@@ -4,7 +4,8 @@
 \alias{format_data_PPBstats}
 \title{Check and format the data to be used in PPBstats functions}
 \usage{
-format_data_PPBstats(data, type = "data_agro", code, threshold = NULL)
+format_data_PPBstats(data, type = "data_agro", code, threshold = NULL,
+  network_part = NULL)
 }
 \arguments{
 \item{data}{The data frame. See details.}
@@ -22,16 +23,49 @@ See details.}
 \item{code}{For type = data_organo, data frame with code of samles. See details.}
 
 \item{threshold}{For type = data_organo, number of occurence of descriptors <= threshold are kept}
+
+\item{network_part}{For type = "data_network", element of the network, it can
+\itemize{
+ \item for unipartite network : "seed_lots"
+ \item for bipartite network : 
+ \itemize{
+  \item c("germplasm", "location") or
+  \item c("location", "germplasm") or
+  \item c("germplasm", "year") or
+  \item c("year", "germplasm") or
+  \item c("location", "year") or
+  \item c("year", "location")
+ }
+}}
 }
 \value{
 The function returns the data with the right format (i.e. class)
+
+For "data_network", it return a igraph object coming from igraph::graph_from_data_frame()
 }
 \description{
 \code{format_data_PPBstats} checks and formats the data to be used in PPBstats functions
 }
 \details{
 \itemize{
- \item For type = "data_network" :
+ \item For type = "data_network" : The data frame are different regarding type of network
+ \itemize{
+  \item for unipartite network, the data must have the following columns : 
+  "seed_lot_parent", "seed_lot_child", "relation_type",
+  "germplasm_parent", "location_parent", "year_parent",
+  "germplasm_child", "location_child", "year_child".
+  
+  It can have in option : "alt_parent", "long_parent", "lat_parent", 
+  "alt_child", "long_child", "lat_child" to get map representation
+  
+  It can have supplementary variables with tags "_parent", "_child" or "_relation".
+  
+  
+  \item for bipartite network, the data must have the following columns : "germplasm", "location", "year"
+  
+  It can have in option : "alt", "long", "lat" to get map representation
+ }
+ 
  
  \item For type = "data_agro" : 
  It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
