@@ -1,14 +1,16 @@
-plot.parameter_groups <- function(x, ind_to_highlight){
+plot.parameter_groups <- function(x, ind_to_highlight = NULL){
 
   
   pca = x$obj.pca
   res.hcpc = x$clust$res.hcpc
   
   # ind_to_highlight ----------
-  if( !is.element(ind_to_highlight, rownames(res.hcpc$call$X)) ) { 
-    warning(ind_to_highlight, " is not present in the data set.")
-    highlight = F
-    }else{highlight = T}
+  if( !is.null(ind_to_highlight) ){
+    if( !is.element(ind_to_highlight, rownames(res.hcpc$call$X)) ) { 
+      warning(ind_to_highlight, " is not present in the data set.")
+      highlight = FALSE
+    } else { highlight = TRUE }
+  } else { highlight = FALSE }
   
   res = res.hcpc
   
