@@ -1,6 +1,8 @@
 format_data_PPBstats.data_network = function(data, network_part){
   d = data
   
+  # test git
+  
   # 1.1. Error message ----------
   mess = "
   You must settle appropriate network_part arg.\n
