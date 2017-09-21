@@ -1,13 +1,13 @@
-format_data_PPBstats.data_network = function(data, network_part){
+format_data_PPBstats.data_network = function(data, vertex_type){
   d = data
   
   # test git
   
   # 1.1. Error message ----------
   mess = "
-  You must settle appropriate network_part arg.\n
-  - It can be unipartite network with network_part = \"seed_lots\".\n
-  - It can be bipartite network with network_part = \n
+  You must settle appropriate vertex_type arg.\n
+  - It can be unipartite network with vertex_type = \"seed_lots\".\n
+  - It can be bipartite network with vertex_type = \n
   \t c(\"germplasm\", \"location\") or
   \t c(\"location\", \"germplasm\") or
   \t c(\"germplasm\", \"year\") or
@@ -15,18 +15,18 @@ format_data_PPBstats.data_network = function(data, network_part){
   \t c(\"location\", \"year\") or
   \t c(\"year\", \"location\").
   "
-  if( is.null(network_part) ) { stop(mess) }
+  if( is.null(vertex_type) ) { stop(mess) }
   
-  if( length(network_part) == 1 & network_part[1] != "seed_lots"  ) { stop(mess) }
+  if( length(vertex_type) == 1 & vertex_type[1] != "seed_lots"  ) { stop(mess) }
   
-  if( length(network_part) == 2 & network_part[1] == network_part[2] ) { stop(mess) }
-  if( length(network_part) == 2 & !is.element(network_part[1], c("germplasm", "location", "year"))  ) { stop(mess) }
-  if( length(network_part) == 2 & !is.element(network_part[2], c("germplasm", "location", "year"))  ) { stop(mess) }
+  if( length(vertex_type) == 2 & vertex_type[1] == vertex_type[2] ) { stop(mess) }
+  if( length(vertex_type) == 2 & !is.element(vertex_type[1], c("germplasm", "location", "year"))  ) { stop(mess) }
+  if( length(vertex_type) == 2 & !is.element(vertex_type[2], c("germplasm", "location", "year"))  ) { stop(mess) }
   
-  if( length(network_part) > 2 ) { stop(mess) }
+  if( length(vertex_type) > 2 ) { stop(mess) }
   
   # 1.2.1. Error message and data formating regarding unipartite network object ----------
-  if( network_part[1] == "seed_lots" ){
+  if( vertex_type[1] == "seed_lots" ){
     # Factors compulsory
     vec_factor = c("seed_lot_parent", "seed_lot_child", "relation_type",
                    "germplasm_parent", "location_parent", "year_parent",
@@ -66,7 +66,7 @@ format_data_PPBstats.data_network = function(data, network_part){
   }
   
   # 1.3.1. Error message and data formating regarding bipartite network object ----------
-  if( length(network_part) == 2 ){
+  if( length(vertex_type) == 2 ){
     # Factors compulsory
     vec_factor = c("germplasm", "location", "year")
     
@@ -84,7 +84,7 @@ format_data_PPBstats.data_network = function(data, network_part){
   
   
   # 1.4. Format unipartite network object ----------
-  if(network_part[1] == "seed_lots") {
+  if(vertex_type[1] == "seed_lots") {
     
     t = grep("_parent", colnames(d))
     tp = sub("_parent", "", colnames(d)[grep("_parent", colnames(d))])
@@ -105,21 +105,22 @@ format_data_PPBstats.data_network = function(data, network_part){
     d_vertex = unique(d_vertex)
     
     d_vertex = d_vertex[!duplicated(d_vertex$seed_lot),] # should not arrise !
+    # here : display duplicated sl with different attributes, warning we delete duplicated rows
     
     relation = unique(d[,c("seed_lot_parent", "seed_lot_child", "relation_type")])
   }
   
   # 1.5. Format bipartite network object ----------
-  if(length(network_part) == 2) {
+  if(length(vertex_type) == 2) {
     
-    d_vertex = data.frame(c(as.character(d[,network_part[1]]), 
-                            as.character(d[,network_part[2]]))
+    d_vertex = data.frame(c(as.character(d[,vertex_type[1]]), 
+                            as.character(d[,vertex_type[2]]))
     )
     colnames(d_vertex) = "vertex"
-    d_vertex$type = c(rep("network_part_1", nrow(d)), rep("network_part_2", nrow(d)))
+    d_vertex$type = c(rep("vertex_type_1", nrow(d)), rep("vertex_type_2", nrow(d)))
     d_vertex = unique(d_vertex)
     
-    relation = unique(d[,c(network_part[1], network_part[2])])
+    relation = unique(d[,c(vertex_type[1], vertex_type[2])])
   }
   
   
