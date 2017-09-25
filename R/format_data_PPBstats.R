@@ -39,11 +39,12 @@
 #'  \item For type = "data_network" : The data frame are different regarding type of network
 #'  \itemize{
 #'   \item for unipartite network, the data must have the following columns : 
-#'   "seed_lot_parent", "seed_lot_child", "relation_type",
+#'   "seed_lot_parent", "seed_lot_child",
+#'   "relation_type", "relation_year_start", "relation_year_end",
 #'   "germplasm_parent", "location_parent", "year_parent",
 #'   "germplasm_child", "location_child", "year_child".
 #'   
-#'   It can have in option : "alt_parent", "long_parent", "lat_parent", 
+#'   It can have in option : "alt_parent", "long_parent", "lat_parent",
 #'   "alt_child", "long_child", "lat_child" to get map representation
 #'   
 #'   It can have supplementary variables with tags "_parent", "_child" or "_relation".
