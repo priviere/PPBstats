@@ -28,7 +28,8 @@ format_data_PPBstats.data_network = function(data, vertex_type){
   # 1.2.1. Error message and data formating regarding unipartite network object ----------
   if( vertex_type[1] == "seed_lots" ){
     # Factors compulsory
-    vec_factor = c("seed_lot_parent", "seed_lot_child", "relation_type",
+    vec_factor = c("seed_lot_parent", "seed_lot_child", 
+                   "relation_type", "relation_year_start", "relation_year_end",
                    "germplasm_parent", "location_parent", "year_parent",
                    "germplasm_child", "location_child", "year_child"
     )
