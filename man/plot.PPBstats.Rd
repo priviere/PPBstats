@@ -58,6 +58,8 @@ See details for more information.}
 This argument is used only when argument data comes from \code{\link{mean_comparisons}} from \code{\link{check_model}} from \code{\link{model_2}}.}
 
 \item{nb_parameters_per_plot}{The number of parameters per plot to facilitate the visualization}
+
+\item{ind_to_highlight}{For parmater_group, individuals to highlight}
 }
 \value{
 \itemize{

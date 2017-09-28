@@ -2,10 +2,10 @@
 % Please edit documentation in R/format_data_PPBstats.R
 \name{format_data_PPBstats}
 \alias{format_data_PPBstats}
-\title{Check and format the data to be used in PPBstats functions}
+\title{Check and format the data to be used by PPBstats functions}
 \usage{
-format_data_PPBstats(data, type = "data_agro", code, threshold = NULL,
-  network_part = NULL)
+format_data_PPBstats(data, type = "data_agro", code, threshold, network_part,
+  vertex_type)
 }
 \arguments{
 \item{data}{The data frame. See details.}
@@ -24,46 +24,69 @@ See details.}
 
 \item{threshold}{For type = data_organo, number of occurence of descriptors <= threshold are kept}
 
-\item{network_part}{For type = "data_network", element of the network, it can
+\item{network_part}{For type = "data_network", element of the network, it can be "unipart" or "bipart"}
+
+\item{vertex_type}{For type = "data_network",
 \itemize{
- \item for unipartite network : "seed_lots"
- \item for bipartite network : 
- \itemize{
-  \item c("germplasm", "location") or
-  \item c("location", "germplasm") or
-  \item c("germplasm", "year") or
-  \item c("year", "germplasm") or
-  \item c("location", "year") or
-  \item c("year", "location")
- }
-}}
+ \item for unipart network : "seed_lots" or "location"
+ \item for bipart network : c("germplasm", "location")
+ }}
 }
 \value{
 The function returns the data with the right format (i.e. class)
 
-For "data_network", it return a igraph object coming from igraph::graph_from_data_frame()
+\itemize{
+ \item For "data_network",
+ \itemize{
+  \item it return a igraph object coming from igraph::graph_from_data_frame().
+  \item for unipart network on location, it return a list with as many elements as germplam in the data
+  as well as all germplasms merged in the first element of the list.
+  An atttribute number of germplams for each location are added.
+  \item for bipart network, it return a list with as many elements as year in the data 
+  as well as all years merged in the first element of the list.
+  If no year are provided into the data, all information are marged
+ }
+}
 }
 \description{
-\code{format_data_PPBstats} checks and formats the data to be used in PPBstats functions
+\code{format_data_PPBstats} checks and formats the data to be used by PPBstats functions
 }
 \details{
 \itemize{
  \item For type = "data_network" : The data frame are different regarding type of network
  \itemize{
-  \item for unipartite network, the data must have the following columns : 
-  "seed_lot_parent", "seed_lot_child", "relation_type",
-  "germplasm_parent", "location_parent", "year_parent",
-  "germplasm_child", "location_child", "year_child".
+  \item for unipart network, two vertex_type are possible :
+  \itemize{
+   \item "seed_lots" : the data must have the following columns : 
+   "seed_lot_parent", "seed_lot_child",
+   "relation_type", "relation_year_start", "relation_year_end",
+   "germplasm_parent", "location_parent", "year_parent",
+   "germplasm_child", "location_child", "year_child".
+   
+   It can have in option : "alt_parent", "long_parent", "lat_parent",
+   "alt_child", "long_child", "lat_child" to get map representation
+   
+   It can have supplementary variables with tags "_parent", "_child" or "_relation".
+   
+   \item "location" : the data can have two formats:
+   \itemize{
+    \item the same format than for unipart network and vertex_type = seed_lots
+    \item the following columns : 
+    "location_parent", "location_child"
+    "relation_year_start", "relation_year_end"
+    It can have in option : "germplasm_parent", "year_parent",
+    "germplasm_child", "year_child"
+    It can have in option : "alt_parent", "long_parent", "lat_parent",
+    "alt_child", "long_child", "lat_child" to get map representation
+    }
+   }
   
-  It can have in option : "alt_parent", "long_parent", "lat_parent", 
-  "alt_child", "long_child", "lat_child" to get map representation
-  
-  It can have supplementary variables with tags "_parent", "_child" or "_relation".
-  
-  
-  \item for bipartite network, the data must have the following columns : "germplasm", "location", "year"
-  
-  It can have in option : "alt", "long", "lat" to get map representation
+  \item for bipartite network, the data can have two formats:
+  \itemize{
+   \item the same format than for unipart network and vertex_type = seed_lots
+   \item the following columns : "germplasm", "location", "year"
+   It can have in option : "alt", "long", "lat" to get map representation
+  }
  }
  
  
