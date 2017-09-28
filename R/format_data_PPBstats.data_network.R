@@ -433,6 +433,7 @@ format_data_PPBstats.data_network = function(data, network_part = c("unipart", "
 
   d = lapply(OUT, function(out){
     i = igraph::graph_from_data_frame(d = out$relation, directed = TRUE, vertices = out$d_vertex) 
+    return(i)
     })
   
   class(d) <- c("PPBstats", "data_network")
