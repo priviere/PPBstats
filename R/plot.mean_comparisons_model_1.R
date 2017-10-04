@@ -31,30 +31,32 @@ plot.mean_comparisons_model_1 <- function(
       vec_version = levels(dtmp$version)
       v1 = unique(as.character(filter(dtmp, version == vec_version[1])$parameter))
       v2 = unique(as.character(filter(dtmp, version == vec_version[2])$parameter))
-      
-      if( !is.null(data_Mpvalue_env) ){ 
-        for (i in 1:ncol(data_Mpvalue_env)) { 
-          if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
-          if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
+      if(length(v1)>0 & length(v2)>0){
+        if( !is.null(data_Mpvalue_env) ){ 
+          
+          for (i in 1:ncol(data_Mpvalue_env)) { 
+            if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
+            if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
+          }
+          pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
+        } else {
+          if( length(v1) > 1 & length(v2) > 1) {
+            pvalue = t.test(v1, v2)$p.value
+          } else { 
+            pvalue = NULL
+            warning(attributes(data)$PPBstats.object, ": no t.test are done as there are not enough observations.") 
+          }
         }
-        pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
-      } else {
-        if( length(v1) > 1 & length(v2) > 1) {
-          pvalue = t.test(v1, v2)$p.value
-        } else { 
-          pvalue = NULL
-          warning(attributes(data)$PPBstats.object, ": no t.test are done as there are not enough observations.") 
+        
+        if(is.null(pvalue)) { stars = " "} else {
+          if(pvalue < 0.001) { stars = "***" }
+          if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
+          if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
+          if(pvalue > 0.01) { stars = "." }
         }
+        names(stars) = g
+        STARS = c(STARS, stars)
       }
-      
-      if(is.null(pvalue)) { stars = " "} else {
-        if(pvalue < 0.001) { stars = "***" }
-        if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
-        if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
-        if(pvalue > 0.01) { stars = "." }
-      }
-      names(stars) = g
-      STARS = c(STARS, stars)
     }
     
  #   colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
