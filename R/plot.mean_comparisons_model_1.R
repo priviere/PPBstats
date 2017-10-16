@@ -31,30 +31,32 @@ plot.mean_comparisons_model_1 <- function(
       vec_version = levels(dtmp$version)
       v1 = unique(as.character(filter(dtmp, version == vec_version[1])$parameter))
       v2 = unique(as.character(filter(dtmp, version == vec_version[2])$parameter))
-      
-      if( !is.null(data_Mpvalue_env) ){ 
-        for (i in 1:ncol(data_Mpvalue_env)) { 
-          if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
-          if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
+      if(length(v1)>0 & length(v2)>0){
+        if( !is.null(data_Mpvalue_env) ){ 
+          
+          for (i in 1:ncol(data_Mpvalue_env)) { 
+            if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
+            if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
+          }
+          pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
+        } else {
+          if( length(v1) > 1 & length(v2) > 1) {
+            pvalue = t.test(v1, v2)$p.value
+          } else { 
+            pvalue = NULL
+            warning(attributes(data)$PPBstats.object, ": no t.test are done as there are not enough observations.") 
+          }
         }
-        pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
-      } else {
-        if( length(v1) > 1 & length(v2) > 1) {
-          pvalue = t.test(v1, v2)$p.value
-        } else { 
-          pvalue = NULL
-          warning(attributes(data)$PPBstats.object, ": no t.test are done as there are not enough observations.") 
+        
+        if(is.null(pvalue)) { stars = " "} else {
+          if(pvalue < 0.001) { stars = "***" }
+          if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
+          if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
+          if(pvalue > 0.01) { stars = "." }
         }
+        names(stars) = g
+        STARS = c(STARS, stars)
       }
-      
-      if(is.null(pvalue)) { stars = " "} else {
-        if(pvalue < 0.001) { stars = "***" }
-        if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
-        if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
-        if(pvalue > 0.01) { stars = "." }
-      }
-      names(stars) = g
-      STARS = c(STARS, stars)
     }
     
  #   colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
@@ -94,19 +96,24 @@ plot.mean_comparisons_model_1 <- function(
       
       d_loc_b = lapply(d_loc, function(x){
 
+        data_year = max(as.numeric(as.character(x$year)))
         # Arrange from the more recent year and by number of pop present in a year
         t = table(x$entry, x$year)
         t = as.data.frame.matrix(t)
         t$s = apply(t, 1, sum)
+        t$median_year = unlist(lapply(rownames(t),function(y){
+          ifelse(nrow(x[x$year %in% data_year & x$entry %in% y,])>0,x[x$year %in% data_year & x$entry %in% y,"median"],NA)
+        }))
         
         vec = NULL
-        for(i in (ncol(t)-1):1){
+        for(i in (ncol(t)-2):1){
           tmp = t[which(t[,i] > 0),]
           tmp$rn = rownames(tmp)
           tmp = arrange(tmp, -s)
-          vec = c(vec, tmp$rn)
+          vec = rbind(vec, tmp[,c("rn","median_year")])
         }
-        vec = unique(vec)
+        vec = arrange(vec,-median_year)
+        vec = vec[!duplicated(vec$rn),"rn"]
         ee = c(1:length(vec)); names(ee) = vec
         x$split = ee[x$entry]
         x = arrange(x, split)
@@ -304,7 +311,7 @@ plot.mean_comparisons_model_1 <- function(
         
         lapply(x, function(env, all_year, all_score){
           
-          env = arrange(env, median)
+          env = arrange(env, -median)
           
           # add missing year in order to have the same x axis in all plots
           t = table(env$entry, env$year)
@@ -334,8 +341,9 @@ plot.mean_comparisons_model_1 <- function(
           
           env$group = get_score(env) # group instead of score for the legend
           env$median_text = as.character(round(env$median, 1))
-          
-          
+          env=arrange(env,-median)
+          env=arrange(env,-as.numeric(year))
+          env$entry = factor(env$entry,levels= env$entry[!duplicated(env$entry)][length(env$entry[!duplicated(env$entry)]):1])
           p = ggplot(env, aes(y = entry, x = year, label = median_text, fill = group))
           p = p +  geom_tile() + geom_text()
           p = p + scale_fill_gradient2(low = "red", mid = "white", high = "blue", midpoint = mean(all_score), na.value = "transparent", limits = range(all_score) )
