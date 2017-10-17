@@ -23,7 +23,7 @@ The version number is under the form A.B with
 
 * B: +1 when the code and/or the vignette change
 
-See NEWS [here](https://github.com/priviere/PPBstats/blob/master/NEWS) to know the evolution of the codes.
+See NEWS [here](https://github.com/priviere/PPBstats/blob/master/NEWS.md) to know the evolution of the codes.
 
 ## Test `PPBstats`
 
