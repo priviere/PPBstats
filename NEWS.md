@@ -4,6 +4,8 @@
     - when date, add a column with julian day, cf #65
     - add type data_organo_napping and data_organo_hedonic, cf #72
     - format data for data_network, cf #65
+        - add code regarding network_split arg
+        - better differentiate year, relation_year_start and relation_year_end : cf Rd
     - describe_data.data_agro.R : add raster arg for plot_type, cf #68
     - debugs several functions regarding tests
 - plot.mean_comparisons_model_1.R
