@@ -31,7 +31,8 @@ Depends:
     qdapRegex,
     shiny,
     shinydashboard,
-    ggrepel
+    ggrepel,
+    igraph
 Suggests:
     ggmcmc,
     GGEBiplotGUI,
