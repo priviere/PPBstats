@@ -68,10 +68,20 @@ The function returns the data with the right format (i.e. class)
   \item for unipart network, two vertex_type are possible :
   \itemize{
    \item "seed_lots" : the data must have the following columns : 
-   "seed_lot_parent", "seed_lot_child",
-   "relation_type", "relation_year_start", "relation_year_end",
-   "germplasm_parent", "location_parent", "year_parent",
-   "germplasm_child", "location_child", "year_child".
+   \itemize{
+    \item "seed_lot_parent" : name of the seed lot parent in the relation
+    \item "seed_lot_child" ; name of the seed lots child in the relation
+    \item "relation_type" : the type of relation between the seed lots
+    \item "relation_year_start" : the year when the relation starts
+    \item "relation_year_end" : the year when the relation stops
+    \item "germplasm_parent" : the germplasm associated to the seed lot father
+    \item "location_parent" : the location associated to the seed lot father
+    \item "year_parent" : represents the year of the last relation event of the seed lot father
+    \item "germplasm_child" : the germplasm associated to the seed lot child
+    \item "location_child" : the location associated to the seed lot child
+    \item "year_child" : represents the year of the last relation event of the seed lot child
+   }
+   
    
    It can have in option : "alt_parent", "long_parent", "lat_parent",
    "alt_child", "long_child", "lat_child" to get map representation
@@ -81,7 +91,7 @@ The function returns the data with the right format (i.e. class)
    \item "location" : the data can have two formats:
    \itemize{
     \item the same format than for unipart network and vertex_type = seed_lots
-    \item the following columns : 
+    \item the following columns (explained above): 
     "location_parent", "location_child"
     "relation_year_start", "relation_year_end"
     It can have in option : "germplasm_parent", "year_parent",
