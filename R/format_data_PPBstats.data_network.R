@@ -1,4 +1,9 @@
-format_data_PPBstats.data_network = function(data, network_part = c("unipart", "bipart"), vertex_type){
+format_data_PPBstats.data_network = function(
+  data, 
+  network_part = c("unipart", "bipart"), 
+  network_split = c("germplasm", "relation_year_start"),
+  vertex_type = NULL
+  ){
   d = data
   
   # 1.1. Error message ----------
@@ -22,6 +27,12 @@ format_data_PPBstats.data_network = function(data, network_part = c("unipart", "
   mess = "With network_part = \"bipart\", vertex_type must be c(\"germplasm\", \"location\")."
   if( network_part == "bipart" & vertex_type[1] == "seed_lots"){ stop(mess) }
   if( network_part == "bipart" & vertex_type[1] == "person"){ stop(mess) }
+  
+  
+  mess = "network_part must be either \"germplasm\" or \"relation_year_start\" and 
+         can be used only with network_part = \"unipart\" and vertex_type = \"location\"."
+  
+  if(!is.element(network_split[1], c("germplasm", "relation_year_start"))) { stop(mess) }
   
   # Functions used in this function ----------
   # Check data format ----------
@@ -227,7 +238,7 @@ format_data_PPBstats.data_network = function(data, network_part = c("unipart", "
     return(d_bipart)
   }
   
-  # unipart ----------
+  # unipart & seed_lots ----------
   if( network_part == "unipart" & vertex_type[1] == "seed_lots" ){
     d = check_unipart_sl_data(d)
     
@@ -263,7 +274,8 @@ format_data_PPBstats.data_network = function(data, network_part = c("unipart", "
     
     OUT = list(list("d_vertex" = d_vertex, "relation" = relation))
   }
-  
+
+  # unipart & location ----------
   if( network_part == "unipart" & vertex_type[1] == "location" ){
     
     d1 = check_unipart_sl_data(d, display_mess = FALSE)
@@ -295,69 +307,144 @@ format_data_PPBstats.data_network = function(data, network_part = c("unipart", "
       d$germplasm_parent = d$germplasm_child = "unknown_germplasm" 
       }
     
-    vec_germplasm = sort(unique(c(as.character(d$germplasm_parent), as.character(d$germplasm_child))))
-    d_all_germplasm = d
-    d_all_germplasm$germplasm_parent = paste(vec_germplasm, collapse = "-")
-    d_all_germplasm$germplasm_child = paste(vec_germplasm, collapse = "-")
-    d = rbind.data.frame(d, d_all_germplasm)
-    vec_germplasm = c(paste(vec_germplasm, collapse = "-"), vec_germplasm)
-    
-    
-    OUT = NULL
-    
-    for(g in vec_germplasm){
-      dg = filter(d, germplasm_parent == g | germplasm_child == g)
+    # Split on germplasm ----------
+    if( network_split == "germplasm" ){
+      vec_germplasm = sort(unique(c(as.character(d$germplasm_parent), as.character(d$germplasm_child))))
+      d_all_germplasm = d
+      d_all_germplasm$germplasm_parent = paste(vec_germplasm, collapse = "-")
+      d_all_germplasm$germplasm_child = paste(vec_germplasm, collapse = "-")
+      d = rbind.data.frame(d, d_all_germplasm)
+      vec_germplasm = c(paste(vec_germplasm, collapse = "-"), vec_germplasm)
       
-      t = grep("_parent", colnames(dg))
-      tp = sub("_parent", "", colnames(dg)[grep("_parent", colnames(dg))])
-      t = grep("_child", colnames(dg))
-      ts = sub("_child", "", colnames(dg)[grep("_child", colnames(dg))])
-      t = unique(tp, ts)
-      if( length(which(t == "")) > 0  ) { t = t[-which(t == "")] }
-      if( length(which(t == "seed_lot")) > 0  ) { t = t[-which(t == "seed_lot")] }
-      t = t[c(which(t == "location"), which(t != "location"))]
+      OUT = NULL
       
-      d_vertex = data.frame(c(as.character(dg[,paste(t[1], "_parent", sep = "")]), as.character(dg[,paste(t[1], "_child", sep = "")])))
-      for(i in 2:length(t)){
-        d_vertex = cbind.data.frame(
-          d_vertex,
-          c(as.character(dg[,paste(t[i], "_parent", sep = "")]), as.character(dg[,paste(t[i], "_child", sep = "")]))
+      for(g in vec_germplasm){
+        dg = filter(d, germplasm_parent == g | germplasm_child == g)
+        
+        t = grep("_parent", colnames(dg))
+        tp = sub("_parent", "", colnames(dg)[grep("_parent", colnames(dg))])
+        t = grep("_child", colnames(dg))
+        ts = sub("_child", "", colnames(dg)[grep("_child", colnames(dg))])
+        t = unique(tp, ts)
+        if( length(which(t == "")) > 0  ) { t = t[-which(t == "")] }
+        if( length(which(t == "seed_lot")) > 0  ) { t = t[-which(t == "seed_lot")] }
+        t = t[c(which(t == "location"), which(t != "location"))]
+        
+        d_vertex = data.frame(c(as.character(dg[,paste(t[1], "_parent", sep = "")]), as.character(dg[,paste(t[1], "_child", sep = "")])))
+        for(i in 2:length(t)){
+          d_vertex = cbind.data.frame(
+            d_vertex,
+            c(as.character(dg[,paste(t[i], "_parent", sep = "")]), as.character(dg[,paste(t[i], "_child", sep = "")]))
+          )
+        }
+        colnames(d_vertex) = t
+        
+        d_vertex_bis = data.frame(
+          c(as.character(dg[,"relation_year_start"]), as.character(dg[,"relation_year_start"])),
+          c(as.character(dg[,"relation_year_end"]), as.character(dg[,"relation_year_end"]))
         )
+        colnames(d_vertex_bis) = c("relation_year_start", "relation_year_end")
+        
+        d_vertex = cbind.data.frame(d_vertex, d_vertex_bis)
+        
+        t = as.data.frame(with(d_vertex, table(location, germplasm)))
+        colnames(t)[3] = "nb_sl"
+        
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_start")]
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_end")]
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "year")]
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
+        d_vertex = join(d_vertex, t, by = "location")
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
+        d_vertex = unique(d_vertex)
+        
+        dup = which(duplicated(d_vertex$location))
+        if( length(dup) > 0 ){
+          warning(paste("The following location are duplicated : ",
+                        paste(as.character(d_vertex$location[dup]), collapse = ","),
+                        ". Only one information per location has been kept.", sep = ""
+          )
+          )
+          d_vertex = d_vertex[!duplicated(d_vertex$location),]
+        }
+        
+        relation = unique(dg[,c("location_parent", "location_child")]) 
+        
+        out = list(d_vertex, relation); names(out) = c("d_vertex", "relation")
+        OUT = c(OUT, list(out))
       }
-      colnames(d_vertex) = t
-      
-      d_vertex_bis = data.frame(
-        c(as.character(dg[,"relation_year_start"]), as.character(dg[,"relation_year_start"])),
-        c(as.character(dg[,"relation_year_end"]), as.character(dg[,"relation_year_end"]))
-      )
-      colnames(d_vertex_bis) = c("relation_year_start", "relation_year_end")
-      
-      d_vertex = cbind.data.frame(d_vertex, d_vertex_bis)
-      
-      t = as.data.frame(with(d_vertex, table(location, germplasm)))
-      colnames(t)[3] = "nb_germplasm"
-      d_vertex = join(d_vertex, t, by = "location")
-      
-      d_vertex = d_vertex[,-which(colnames(d_vertex) == "year")]
-      d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
-      d_vertex = unique(d_vertex)
-      
-      dup = which(duplicated(d_vertex$location))
-      if( length(dup) > 0 ){
-        warning(paste("The following location are duplicated : ",
-                      paste(as.character(d_vertex$location[dup]), collapse = ","),
-                      ". Only one information per location has been kept.", sep = ""
-                      )
-                )
-        d_vertex = d_vertex[!duplicated(d_vertex$location),]
-      }
-      
-      relation = unique(dg[,c("location_parent", "location_child")]) 
-      
-      out = list(d_vertex, relation); names(out) = c("d_vertex", "relation")
-      OUT = c(OUT, list(out))
+      names(OUT) = vec_germplasm
     }
-    names(OUT) = vec_germplasm
+    
+    # Split on relation_year_start ----------
+    if( network_split == "relation_year_start" ){
+      vec_year = sort(unique(as.character(d$relation_year_start))) 
+      d_all_year = d
+      d_all_year$relation_year_start = paste(vec_year, collapse = "-")
+      d = rbind.data.frame(d, d_all_year)
+      vec_year = c(paste(vec_year, collapse = "-"), vec_year)
+      
+      OUT = NULL
+      
+      for(y in vec_year){
+        dy = filter(d, relation_year_start == y) # Only on child because year of the last event
+        
+        t = grep("_parent", colnames(dy))
+        tp = sub("_parent", "", colnames(dy)[grep("_parent", colnames(dy))])
+        t = grep("_child", colnames(dy))
+        ts = sub("_child", "", colnames(dy)[grep("_child", colnames(dy))])
+        t = unique(tp, ts)
+        if( length(which(t == "")) > 0  ) { t = t[-which(t == "")] }
+        if( length(which(t == "seed_lot")) > 0  ) { t = t[-which(t == "seed_lot")] }
+        t = t[c(which(t == "location"), which(t != "location"))]
+        
+        d_vertex = data.frame(c(as.character(dy[,paste(t[1], "_parent", sep = "")]), as.character(dy[,paste(t[1], "_child", sep = "")])))
+        for(i in 2:length(t)){
+          d_vertex = cbind.data.frame(
+            d_vertex,
+            c(as.character(dy[,paste(t[i], "_parent", sep = "")]), as.character(dy[,paste(t[i], "_child", sep = "")]))
+          )
+        }
+        colnames(d_vertex) = t
+        
+        d_vertex_bis = data.frame(
+          c(as.character(dy[,"relation_year_start"]), as.character(dy[,"relation_year_start"])),
+          c(as.character(dy[,"relation_year_end"]), as.character(dy[,"relation_year_end"]))
+        )
+        colnames(d_vertex_bis) = c("relation_year_start", "relation_year_end")
+        
+        d_vertex = cbind.data.frame(d_vertex, d_vertex_bis)
+        
+        t = as.data.frame(with(d_vertex, table(location, relation_year_start)))
+        colnames(t)[3] = "nb_sl"
+        
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_start")]
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_end")]
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "year")]
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
+        d_vertex = join(d_vertex, t, by = "location")
+        d_vertex = unique(d_vertex)
+        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_start")]
+        
+        dup = which(duplicated(d_vertex$year))
+        if( length(dup) > 0 ){
+          warning(paste("The following year are duplicated : ",
+                        paste(as.character(d_vertex$year[dup]), collapse = ","),
+                        ". Only one information per year has been kept.", sep = ""
+          )
+          )
+          d_vertex = d_vertex[!duplicated(d_vertex$year),]
+        }
+        
+        relation = unique(dy[,c("location_parent", "location_child")]) 
+        
+        out = list(d_vertex, relation); names(out) = c("d_vertex", "relation")
+        OUT = c(OUT, list(out))
+      }
+      names(OUT) = vec_year
+    }
+    
+    
   }
   
   # bipart ----------

@@ -21,11 +21,16 @@
 #' 
 #' @param network_part For type = "data_network", element of the network, it can be "unipart" or "bipart"
 #' 
+#' 
 #' @param vertex_type For type = "data_network",
 #' \itemize{
 #'  \item for unipart network : "seed_lots" or "location"
 #'  \item for bipart network : c("germplasm", "location")
 #'  }
+#'  
+#' @param network_split For type = "data_network" and network_part = "unipart" and 
+#' vertex_type = "location", split of the data that can be "germplasm" or "relation_year_start"
+#' 
 #' 
 #' @details 
 #' \itemize{
@@ -97,11 +102,18 @@
 #' \itemize{
 #'  \item For "data_network",
 #'  \itemize{
-#'   \item it return a igraph object coming from igraph::graph_from_data_frame().
-#'   \item for unipart network on location, it return a list with as many elements as germplam in the data
+#'   \item it returns a igraph object coming from igraph::graph_from_data_frame().
+#'   \item for unipart network on location
+#'   \itemize{
+#'    \item for network_split = "germplasm", 
+#'   it returns a list with as many elements as germplam in the data
 #'   as well as all germplasms merged in the first element of the list.
-#'   An atttribute number of germplams for each location are added.
-#'   \item for bipart network, it return a list with as many elements as year in the data 
+#'   An atttribute with the number of seed_lots (nb_sl) for each location are added.
+#'    \item for network_split = "relation_year_start", 
+#'   it returns a list with as many elements as year in the data
+#'   An atttribute with the number of seed_lots (nb_sl) for each location are added.
+#'   }
+#'   \item for bipart network, it returns a list with as many elements as year in the data 
 #'   as well as all years merged in the first element of the list.
 #'   If no year are provided into the data, all information are marged
 #'  }
