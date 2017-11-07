@@ -34,11 +34,6 @@ format_data_PPBstats.data_network = function(
   
   if(!is.element(network_split[1], c("germplasm", "relation_year_start"))) { stop(mess) }
 
-  if( !is.element("diffusion", as.character(data$relation_type)) ){ 
-    warning("There are no diffusion event in the column relation_type in data 
-(i.e. no \"diffusion\" in column relation_type). Note that \"diffusion\" are used in plot afterward.") 
-  }
-  
   # Functions used in this function ----------
   # Check data format ----------
   check_unipart_sl_data = function(d, display_mess = TRUE){
@@ -86,6 +81,28 @@ format_data_PPBstats.data_network = function(
         if( display_mess){ stop(i, " must be settle for _child") } else { return_d = FALSE }
         }
     }
+    
+    # Extra check
+    if( !is.element("diffusion", as.character(data$relation_type)) ){ 
+      warning("There are no diffusion event in the column relation_type in data 
+(i.e. no \"diffusion\" in column relation_type). Note that \"diffusion\" are used in plot afterward.") 
+    }
+    
+    lapply(data$seed_lot_parent, function(x){
+      if(length(unlist(strsplit(as.character(x), "_")))!=4){
+        warning("Note that \"seed_lot_parent\" must be under the following format : GERMPLASM_LOCATION_YEAR_DIGIT 
+                in order to display plot of network with argument organize_sl = TRUE.")
+      }
+    }
+    )
+    
+    lapply(data$seed_lot_child, function(x){
+      if(length(unlist(strsplit(as.character(x), "_")))!=4){
+        warning("Note that \"seed_lot_child\" must be under the following format : GERMPLASM_LOCATION_YEAR_DIGIT 
+                in order to display plot of network with argument organize_sl = TRUE.")
+      }
+    }
+    )
     
     if(!return_d){ d = NULL }
     return(d)
