@@ -14,8 +14,8 @@ plot.data_network = function(
     n = ggnetwork(net, arrow.gap = 0)
     ntmp = n
     
-    vt1 = which(n$type == "vertex_type_1")
-    vt2 = which(n$type == "vertex_type_2")
+    vt1 = which(n$type == "germplasm")
+    vt2 = which(n$type == "location")
     
     y_vt1 = rep(0, length(vt1))
     names(y_vt1) = n$y[vt1]

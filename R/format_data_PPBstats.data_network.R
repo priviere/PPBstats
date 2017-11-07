@@ -514,7 +514,7 @@ format_data_PPBstats.data_network = function(
       d_vertex = data.frame(
         c(as.character(dy[,"germplasm"]), as.character(dy[,"location"])),
         c(as.character(dy[,"year"]), as.character(dy[,"year"])),
-        c(rep("vertex_type_1", nrow(dy)), rep("vertex_type_2", nrow(dy)))
+        c(rep("germplasm", nrow(dy)), rep("location", nrow(dy)))
       )
       colnames(d_vertex) = c("vertex", "year", "type")
       d_vertex = unique(d_vertex)
