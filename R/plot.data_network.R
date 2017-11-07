@@ -70,9 +70,17 @@ plot.data_network = function(
     s = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
     s = s[which(vertex.attributes(net)$type == "germplasm")]
     d = data.frame(germplasm = names(s), nb_location = s)
-    p = ggplot(d, aes(x = reorder(germplasm, -nb_location), y = nb_location)) + geom_bar(stat="identity")
-    p = p + xlab("germplasm") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-    return(p)
+    pg = ggplot(d, aes(x = reorder(germplasm, -nb_location), y = nb_location)) + geom_bar(stat="identity")
+    pg = pg + xlab("germplasm") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    
+    s = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])]))
+    s = s[which(vertex.attributes(net)$type == "location")]
+    d = data.frame(germplasm = names(s), nb_location = s)
+    pl = ggplot(d, aes(x = reorder(germplasm, -nb_location), y = nb_location)) + geom_bar(stat="identity")
+    pl = pl + xlab("germplasm") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    
+    out = list("germplasm" = pg, "location" = pl)
+    return(out)
   }
   organize_sl_unipart = function(net){
     n = ggnetwork(net, arrow.gap = 0)
