@@ -33,6 +33,11 @@ format_data_PPBstats.data_network = function(
          can be used only with network_part = \"unipart\" and vertex_type = \"location\"."
   
   if(!is.element(network_split[1], c("germplasm", "relation_year_start"))) { stop(mess) }
+
+  if( !is.element("diffusion", as.character(data$relation_type)) ){ 
+    warning("There are no diffusion event in the column relation_type in data 
+(i.e. no \"diffusion\" in column relation_type). Note that \"diffusion\" are used in plot afterward.") 
+  }
   
   # Functions used in this function ----------
   # Check data format ----------
