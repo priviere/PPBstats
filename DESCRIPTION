@@ -32,7 +32,9 @@ Depends:
     shiny,
     shinydashboard,
     ggrepel,
-    igraph
+    igraph,
+    ggnetwork,
+    intergraph
 Suggests:
     ggmcmc,
     GGEBiplotGUI,

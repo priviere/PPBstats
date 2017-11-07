@@ -1,6 +1,3 @@
-library(ggnetwork)
-library(intergraph)
-
 plot.data_network = function(
   net, 
   in_col = NULL, 
