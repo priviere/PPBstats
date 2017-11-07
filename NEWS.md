@@ -24,6 +24,7 @@
 - format_data_PPBstats.format_agro_version.R, cf #65
 - format_data_PPBstats.format_organo_napping.R, cf #65
 - format_data_PPBstats.format_organo_hedonic.R, cf #65
+- plot.data_network.R, cf #67
 
 ### vignette
 - update text (cf #76)
