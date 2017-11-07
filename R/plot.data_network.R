@@ -182,14 +182,14 @@ plot.data_network = function(
       p = p + theme_blank()
       }
     
-    if( labels_on ){ 
-      p = p + geom_nodelabel_repel(
-        aes(label = vertex.names), 
-        size = labels_size,
-        segment.color = "black"
-      ) 
-    }
-    
+  }
+  
+  if( labels_on ){ 
+    p = p + geom_nodelabel_repel(
+      aes(label = vertex.names), 
+      size = labels_size,
+      segment.color = "black"
+    ) 
   }
   
   
