@@ -1,9 +1,13 @@
 plot.data_network = function(
-  net, 
-  in_col = NULL, 
-  labels_on = FALSE, 
-  labels_size = 4, 
-  organize_sl = TRUE
+  net,
+  plot_type = c("network", "barplot"),
+  in_col = NULL,
+  labels_on = FALSE,
+  labels_size = 4,
+  organize_sl = TRUE,
+  x_axis = NULL,
+  nb_parameters_per_plot_x_axis = 5,
+  nb_parameters_per_plot_in_col = 5
   ){
   
   # functions used afterward
@@ -63,6 +67,7 @@ plot.data_network = function(
     
     return(p)
   }
+  
   plot_barplot_bipart = function(net){
     s = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
     s = s[which(vertex.attributes(net)$type == "germplasm")]
@@ -79,6 +84,7 @@ plot.data_network = function(
     out = list("germplasm" = pg, "location" = pl)
     return(out)
   }
+  
   organize_sl_unipart = function(net){
     n = ggnetwork(net, arrow.gap = 0)
     
@@ -161,6 +167,7 @@ plot.data_network = function(
     
     return(out)
   }
+  
   plot_network_unipart = function(n){
     nr = n[which(n$relation_type != "diffusion"),]
     nd = n[which(n$relation_type == "diffusion"),]
@@ -175,6 +182,7 @@ plot.data_network = function(
     p = p + scale_linetype_manual(values = scale_ex[1:length(na.omit(unique(n$relation_type)))] )
     return(p)
   }
+  
   plot_network_organize_sl_unipart = function(n, person_limit){
     p = plot_network_unipart(n)
     r = range(as.numeric(as.character(n$x)))
@@ -199,38 +207,70 @@ plot.data_network = function(
     return(p)
   }
   
-  
-  if( is_bipartite(net) ) { 
-    out = list(
-      "network" = plot_network_bipart(net, labels_on, labels_size), 
-      "barplot" = plot_barplot_bipart(net)
-      )
-  } else {
+  plot_barplot_unipart = function(n){
+    n = ggnetwork(net, arrow.gap = 0)
+    n$count = 1
+    dall = reshape_data_split_x_axis_in_col(n, 
+                                            vec_variables = "count", 
+                                            labels_on = NULL,
+                                            x_axis = x_axis, 
+                                            nb_parameters_per_plot_x_axis = nb_parameters_per_plot_x_axis, 
+                                            in_col = in_col, 
+                                            nb_parameters_per_plot_in_col = nb_parameters_per_plot_in_col
+                                            )
     
-    if( organize_sl){ 
-      out = organize_sl_unipart(net) 
-      person_limit = out$person_limit
-      n = out$n
-    } else { 
-        n = ggnetwork(net, arrow.gap = 0.005) 
-        }
-    
-    if( is.null(in_col) ) { in_col = "location" }
-    if( organize_sl){ in_col = "germplasm"} 
-    colnames(n)[which(colnames(n) == in_col)] = "in_col" 
-    
-    if( organize_sl){ 
-      p = plot_network_organize_sl_unipart(n, person_limit) 
-    } else { 
-        p = plot_network_unipart(n) + theme_blank() 
-        }
-    
-    if( labels_on ){ 
-      p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size, 
-                                   segment.color = "black") 
+    fun_bar = function(d, in_col){
+      if(is.null(in_col)) {	
+        p = ggplot(d, aes(x = x_axis, fill = in_col)) + geom_bar()
+        p + xlab(x_axis) + ylab("") + labs(title = in_col)
+      } else {
+        p = ggplot(d, aes(x = x_axis)) + geom_bar() + xlab(x_axis) + ylab("")
+      }
     }
     
-    out = list("network" = p)
+    out = lapply(dall, fun_bar, in_col)
+
+    return(out)
+  }
+  
+  if( plot_type == "network" ) {
+    if( is_bipartite(net) ) { 
+      out = list("network" = plot_network_bipart(net, labels_on, labels_size))
+    } else {
+      
+      if( organize_sl){ 
+        out = organize_sl_unipart(net) 
+        person_limit = out$person_limit
+        n = out$n
+      } else { 
+        n = ggnetwork(net, arrow.gap = 0.005) 
+      }
+      
+      if( is.null(in_col) ) { in_col = "location" }
+      if( organize_sl){ in_col = "germplasm"} 
+      colnames(n)[which(colnames(n) == in_col)] = "in_col" 
+      
+      if( organize_sl){ 
+        p = plot_network_organize_sl_unipart(n, person_limit) 
+      } else { 
+        p = plot_network_unipart(n) + theme_blank() 
+      }
+      
+      if( labels_on ){ 
+        p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size, 
+                                     segment.color = "black") 
+      }
+      
+      out = list("network" = p)
+    }
+  }
+  
+  if( plot_type == "barplot" ) {
+    if( is_bipartite(net) ) { 
+      out = list("barplot" = plot_barplot_bipart(net))
+    } else {
+        out = list("barplot" = plot_barplot_unipart(n))
+      }
   }
   
   return(out)
