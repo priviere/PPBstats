@@ -76,65 +76,8 @@ describe_data.data_agro = function(
   }
   
   # 2. Functions used in the newt steps ----------
-  # 2.1. Reshape data in a list based on nb_parameters_per_plot arguments ----------
-  reshape_data = function(
-    d, 
-    vec_variables, 
-    labels_on,
-    x_axis, 
-    nb_parameters_per_plot_x_axis, 
-    in_col, 
-    nb_parameters_per_plot_in_col
-  ){
-    
-    if(!is.null(x_axis)){ d$x_axis = as.factor(as.character(d[,x_axis])) } else { d$x_axis = NA }
-    if(!is.null(in_col)){ d$in_col = as.factor(as.character(d[,in_col])) } else { d$in_col = NA }
-    if(!is.null(labels_on)){ d$labels_text = d[,labels_on] } else { d$labels_text = NA }
-    d_head = d[,c("labels_text", "x_axis", "in_col")]
-    
-    d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
-    
-    # get rid off rows with only NA
-    tokeep = apply(d_var, 1, function(x){length(which(is.na(x))) != length(x)})
-    t = length(which(!tokeep))
-    if( t > 0 ) { warning(t, " rows have been deleted for ", paste(vec_variables, collapse = ", "), " because of only NA on the row for these variables.") }
-    d_var = d_var[tokeep,]
-    d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
-    colnames(d_var) = vec_variables
-    
-    d_head = d_head[tokeep,]
-    
-    d = droplevels(cbind.data.frame(d_head, d_var))
-    
-    # split for x_axis
-    if(!is.null(x_axis)){
-      ns = unique(d$x_axis)
-      s = rep(c(1:length(ns)), each = nb_parameters_per_plot_x_axis)[1:length(ns)]
-      names(s) = ns
-      d$split_x_axis = s[d$x_axis]
-    } else { d$split_x_axis = NA }
-    
-    # split for in_col
-    if(!is.null(in_col)){
-      ns = unique(d$in_col)
-      s = rep(c(1:length(ns)), each = nb_parameters_per_plot_in_col)[1:length(ns)]
-      names(s) = ns
-      d$split_in_col = s[d$in_col]
-    } else { d$split_in_col = NA }
-    
-    # Overall split
-    d$split = paste(
-      paste(x_axis, d$split_x_axis, sep = "-"), 
-      paste(in_col, d$split_in_col, sep = "-"), 
-      sep = "|")
-    d = dplyr::select(d, - split_x_axis, - split_in_col)
-    d = plyr:::splitter_d(d, .(split))
-    
-    return(d)
-  }		
   
-  
-  # 2.2. Function to run presence abscence matrix ----------
+  # 2.1. Function to run presence abscence matrix ----------
   fun_pam = function(data, vec_variables){
     
     fun_pam_1 = function(variable, data){
@@ -162,7 +105,7 @@ describe_data.data_agro = function(
   }
   
   
-  # 2.3. Function to run histogramm, barplot, boxplot, interaction ----------
+  # 2.2. Function to run histogramm, barplot, boxplot, interaction ----------
   fun_hbbi_1 = function(d, x_axis, in_col, plot_type, variable, ylim){
     
     d$variable = d[,variable]
@@ -233,7 +176,7 @@ describe_data.data_agro = function(
                           in_col, nb_parameters_per_plot_in_col,
                           plot_type){
                    
-                   d = reshape_data(d, variable, labels_on,
+                   d = reshape_data_split_x_axis_in_col(d, variable, labels_on,
                                     x_axis, nb_parameters_per_plot_x_axis,
                                     in_col, nb_parameters_per_plot_in_col
                    )
@@ -251,13 +194,13 @@ describe_data.data_agro = function(
   }
   
   
-  # 2.4. Function to run biplot ----------
+  # 2.3. Function to run biplot ----------
   fun_biplot = function(d, vec_variables, labels_on, labels_size,
                         x_axis, nb_parameters_per_plot_x_axis, 
                         in_col, nb_parameters_per_plot_in_col
   ){
     
-    d = reshape_data(d, vec_variables, labels_on,
+    d = reshape_data_split_x_axis_in_col(d, vec_variables, labels_on,
                      x_axis, nb_parameters_per_plot_x_axis, 
                      in_col, nb_parameters_per_plot_in_col
     )
@@ -309,7 +252,7 @@ describe_data.data_agro = function(
     return(out)
   }
   
-  # 2.5. Function to run radar ----------
+  # 2.4. Function to run radar ----------
   fun_radar = function(d, vec_variables, in_col, labels_size){
     d$group = d[,in_col]
     
@@ -331,7 +274,7 @@ describe_data.data_agro = function(
     return(p)
   }
   
-  # 2.6. Function to run raster representation for factor variables ----------
+  # 2.5. Function to run raster representation for factor variables ----------
   fun_raster_1 = function(data, vec_variable){
     vv = vm = vx = NULL
     for(v in vec_variables) { 
@@ -354,7 +297,7 @@ describe_data.data_agro = function(
   
   fun_raster = function(d, vec_variables,
                         x_axis, nb_parameters_per_plot_x_axis){ 
-    d = reshape_data(d, vec_variables, labels_on = NULL,
+    d = reshape_data_split_x_axis_in_col(d, vec_variables, labels_on = NULL,
                      x_axis, nb_parameters_per_plot_x_axis,
                      in_col = NULL, nb_parameters_per_plot_in_col = NULL
     )
