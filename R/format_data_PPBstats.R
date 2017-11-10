@@ -75,7 +75,7 @@
 #'   \item for bipartite network, the data can have two formats:
 #'   \itemize{
 #'    \item the same format than for unipart network and vertex_type = seed_lots. 
-#'    In this case, relation type diffusion and reproduction are kept.
+#'    In this case, relation type diffusion or reproduction are kept.
 #'    \item the following columns : "germplasm", "location", "year"
 #'    It can have in option : "alt", "long", "lat" to get map representation
 #'   }
