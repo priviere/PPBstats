@@ -456,7 +456,6 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 
 \subsection{Data format}
-\subsection{\texttt{data-agro}}
 
 For \texttt{data-agro}, there are two format supported : \texttt{data-agro} and \texttt{data-agro-version}.
 
