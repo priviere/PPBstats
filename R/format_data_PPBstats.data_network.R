@@ -261,6 +261,8 @@ format_data_PPBstats.data_network = function(
       colnames(d_bipart)[ncol(d_bipart)] = "lat"
     }
     
+    d_bipart = unique(d_bipart) # redondant information when diffusion, reproduction, selection same year
+    
     return(d_bipart)
   }
   
