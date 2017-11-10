@@ -456,15 +456,41 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 
 \subsection{Data format}
+\subsection{\texttt{data-agro}}
 
+For \texttt{data-agro}, there are two format supported : \texttt{data-agro} and \texttt{data-agro-version}.
+
+\subsubsection{\texttt{data-agro}}
+
+\texttt{data-agro} format corresponds to all the data set used in the functions that run models.
 The data have always the following columns : location, year, germplasm, block, X, Y as factors followed by the variables and their corresponding dates.
 The dates are associated to their corresponding variable by \texttt{\$}.
 For example the date associated to variable \texttt{y1} is \texttt{y1\$date}.
 
 <<message=TRUE,cache=FALSE>>=
 data("data_GxE")
+data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
 head(data_GxE)
+class(data_GxE)
 @
+
+\subsubsection{\texttt{data-agro-version}}
+
+\texttt{data-agro-version} format corresponds to a specfic data set with pairs of entries in a given environment. 
+It is then possible to compare pairs of entries in a given location.
+This is useful if you want to compare two versions within a group.
+
+The data must have the following columns: year, germplasm, location, group, version as factors.
+The group refers to an id that contains two different versions.
+For example for group 1, there is version 1 and 2. 
+
+<<message=TRUE,cache=FALSE,out.width=".6\\textwidth">>=
+data(data_version)
+data_version = format_data_PPBstats(data_version, type = "data_agro_version")
+head(data_version)
+@
+
+Here, in location \texttt{env1-1}, \texttt{tem-1} and \texttt{tem-2} are two versions belonging to the same groupe.
 
 
 
