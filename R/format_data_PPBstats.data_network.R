@@ -221,11 +221,15 @@ format_data_PPBstats.data_network = function(
   unipart_sl_data_to_bipart_data = function(data){
     d = check_unipart_sl_data(data)
     
-    if( !is.element("reproduction", as.character(data$relation_type)) ){ 
-      stop("There are no reproduction event in the column relation_type in data. Transform data for network_part = \"bipart\" is not possible.") 
+    test = unique(is.element(c("reproduction", "diffusion"), as.character(data$relation_type)))
+    if( (length(test) == 1 & test[1]) | length(test) ==2 ) { test = TRUE } else { test = FALSE }
+    
+    if( !test ){ 
+      stop("There are no reproduction or diffusion event in the column relation_type in data. 
+           Transform data for network_part = \"bipart\" is not possible.") 
     }
     
-    d = filter(d, relation_type == "reproduction")
+    d = droplevels(filter(d, relation_type == "reproduction" | relation_type == "diffusion"))
     d_bipart = data.frame(
       c(as.character(d[,"germplasm_parent"]), as.character(d[,"germplasm_child"])),
       c(as.character(d[,"location_parent"]), as.character(d[,"location_child"])),
