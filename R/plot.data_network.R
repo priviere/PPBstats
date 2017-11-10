@@ -207,7 +207,7 @@ plot.data_network = function(
     return(p)
   }
   
-  plot_barplot_unipart = function(n){
+  plot_barplot_unipart = function(net){
     n = ggnetwork(net, arrow.gap = 0)
     n$count = 1
     dall = reshape_data_split_x_axis_in_col(n, 
@@ -233,45 +233,60 @@ plot.data_network = function(
     return(out)
   }
   
-  if( plot_type == "network" ) {
-    if( is_bipartite(net) ) { 
-      out = list("network" = plot_network_bipart(net, labels_on, labels_size))
-    } else {
-      
-      if( organize_sl){ 
-        out = organize_sl_unipart(net) 
-        person_limit = out$person_limit
-        n = out$n
-      } else { 
-        n = ggnetwork(net, arrow.gap = 0.005) 
+  run_fun = function(  net,
+                       plot_type,
+                       in_col,
+                       labels_on,
+                       labels_size,
+                       organize_sl,
+                       x_axis,
+                       nb_parameters_per_plot_x_axis,
+                       nb_parameters_per_plot_in_col
+  ){
+    if( plot_type == "network" ) {
+      if( is_bipartite(net) ) { 
+        out = list("network" = plot_network_bipart(net, labels_on, labels_size))
+      } else {
+        
+        if( organize_sl){ 
+          out = organize_sl_unipart(net) 
+          person_limit = out$person_limit
+          n = out$n
+        } else { 
+          n = ggnetwork(net, arrow.gap = 0.005) 
+        }
+        
+        if( is.null(in_col) ) { in_col = "location" }
+        if( organize_sl){ in_col = "germplasm"} 
+        colnames(n)[which(colnames(n) == in_col)] = "in_col" 
+        
+        if( organize_sl){ 
+          p = plot_network_organize_sl_unipart(n, person_limit) 
+        } else { 
+          p = plot_network_unipart(n) + theme_blank() 
+        }
+        
+        if( labels_on ){ 
+          p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size, 
+                                       segment.color = "black") 
+        }
+        
+        out = list("network" = p)
       }
-      
-      if( is.null(in_col) ) { in_col = "location" }
-      if( organize_sl){ in_col = "germplasm"} 
-      colnames(n)[which(colnames(n) == in_col)] = "in_col" 
-      
-      if( organize_sl){ 
-        p = plot_network_organize_sl_unipart(n, person_limit) 
-      } else { 
-        p = plot_network_unipart(n) + theme_blank() 
-      }
-      
-      if( labels_on ){ 
-        p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size, 
-                                     segment.color = "black") 
-      }
-      
-      out = list("network" = p)
     }
+    
+    if( plot_type == "barplot" ) {
+      if( is_bipartite(net) ) { 
+        out = list("barplot" = plot_barplot_bipart(net))
+      } else {
+        out = list("barplot" = plot_barplot_unipart(net))
+      }
+    }
+    return(out)
   }
   
-  if( plot_type == "barplot" ) {
-    if( is_bipartite(net) ) { 
-      out = list("barplot" = plot_barplot_bipart(net))
-    } else {
-        out = list("barplot" = plot_barplot_unipart(n))
-      }
-  }
+  out = lapply(net, run_fun, plot_type, in_col, labels_on, labels_size, organize_sl, x_axis, 
+               nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col)
   
   return(out)
 }
