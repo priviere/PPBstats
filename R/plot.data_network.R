@@ -173,7 +173,11 @@ plot.data_network = function(
     nd = n[which(n$relation_type == "diffusion"),]
     
     p = ggplot(n, aes(x = x, y = y, xend = xend, yend = yend))
-    p = p + geom_nodes(aes(color = in_col))
+    if(is.element("nb_sl", colnames(n))){
+      p = p + geom_nodes(aes(size = nb_sl))
+    } else { 
+      p = p + geom_nodes(aes(color = in_col)) 
+    }    
     p = p + geom_edges(data = nr, aes(linetype = relation_type), arrow = arrow(length = unit(4, "pt"), type = "closed"))
     p = p + geom_edges(data = nd, aes(linetype = relation_type), arrow = arrow(length = unit(4, "pt"), type = "closed"), curvature = 0.2)
     p$labels$colour = in_col
@@ -256,7 +260,7 @@ plot.data_network = function(
           n = ggnetwork(net, arrow.gap = 0.005) 
         }
         
-        if( is.null(in_col) ) { in_col = "location" }
+        # if( is.null(in_col) ) { in_col = "location" }
         if( organize_sl){ in_col = "germplasm"} 
         colnames(n)[which(colnames(n) == in_col)] = "in_col" 
         
@@ -285,6 +289,12 @@ plot.data_network = function(
     return(out)
   }
   
+  test = which(unlist(lapply(net, function(x){ length(E(x)) == 1 })))
+  if( length(test) > 0 ){ 
+    warning("The following element are not taken into account because they have only one edge: ", paste(names(net)[test], collapse = " ,"), ". igraph objet with only one edge are not handle by ggnetwork. See https://github.com/briatte/ggnetwork/pull/18")
+    net = net[-test]
+    }
+
   out = lapply(net, run_fun, plot_type, in_col, labels_on, labels_size, organize_sl, x_axis, 
                nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col)
   
