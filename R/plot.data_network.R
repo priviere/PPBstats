@@ -168,7 +168,7 @@ plot.data_network = function(
     return(out)
   }
   
-  plot_network_unipart = function(n){
+  plot_network_unipart = function(n, in_col){
     nr = n[which(n$relation_type != "diffusion"),]
     nd = n[which(n$relation_type == "diffusion"),]
     
@@ -183,8 +183,8 @@ plot.data_network = function(
     return(p)
   }
   
-  plot_network_organize_sl_unipart = function(n, person_limit){
-    p = plot_network_unipart(n)
+  plot_network_organize_sl_unipart = function(n, person_limit, in_col){
+    p = plot_network_unipart(n, in_col)
     r = range(as.numeric(as.character(n$x)))
     m = max(as.numeric(as.character(n$x)))
     m = m + (r[2]-r[1]) /length(r[1]:r[2])
@@ -261,9 +261,9 @@ plot.data_network = function(
         colnames(n)[which(colnames(n) == in_col)] = "in_col" 
         
         if( organize_sl){ 
-          p = plot_network_organize_sl_unipart(n, person_limit) 
+          p = plot_network_organize_sl_unipart(n, person_limit, in_col) 
         } else { 
-          p = plot_network_unipart(n) + theme_blank() 
+          p = plot_network_unipart(n, in_col) + theme_blank() 
         }
         
         if( labels_on ){ 
