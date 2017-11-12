@@ -113,3 +113,77 @@ NULL
 #' @author Gaelle Van Frank
 "data_model_variance_intra"
 NULL
+
+
+# data_network_unipart_sl ----------
+#' Simulated data set for unipart network for seed lots which represents relation between between seed lots
+#' 
+#' @description
+#' A dataset containing four locations, 15 germplasms and 5 years.
+#' Relation between seed lots are diffusion, mixture, reproduction and selection.
+#' The data set contain the following variables: seed_lot_parent, seed_lot_child, 
+#' relation_type, relation_year_start, relation_year_end, 
+#' germplasm_parent, location_parent, year_parent, alt_parent, long_parent, lat_parent, 
+#' germplasm_child, location_child, year_child, alt_child, long_child, lat_child
+#'
+#' See the vignette for more information.
+#'
+#' @usage
+#' data(data_network_unipart_sl)
+#'
+#' @format
+#' A data frame with 104 rows and 17 columns
+#'  
+#' @author Pierre Rivière
+"data_network_unipart_sl"
+NULL
+
+
+# data_network_unipart_location ----------
+#' Simulated data set for unipart network which represents relation of germplasm diffusion between location
+#'
+#' @description
+#' A dataset containing four locations, 15 germplasms and 5 years.
+#' Relation between seed lots concern diffusion.
+#' The data set contain the following variables: location_parent, location_child, 
+#' relation_year_start, relation_year_end, 
+#' germplasm_parent, year_parent, alt_parent, long_parent, lat_parent, 
+#' germplasm_child, year_child, alt_child, long_child, lat_child
+#'
+#' The data set have been generated from data_network_unipart_sl
+#'
+#' See the vignette for more information.
+#'
+#' @usage
+#' data(data_network_unipart_location)
+#'
+#' @format
+#' A data frame with 22 rows and 14 columns
+#'  
+#' @author Pierre Rivière
+"data_network_unipart_location"
+NULL
+
+
+# data_network_bipart ----------
+#' Simulated data set for bipart network which represents "which location has which germplasm which year": 
+#'
+#' @description
+#' A dataset containing 3 locations, 11 germplasms and 5 years.
+#' The data set contain the following variables: germplasm, location, year, alt, long, lat
+#'
+#' The data set have been generated from data_network_unipart_sl with relation diffusion or reproduction
+#'
+#' See the vignette for more information.
+#'
+#' @usage
+#' data(data_network_bipart)
+#'
+#' @format
+#' A data frame with 73 rows and 14 columns
+#'  
+#' @author Pierre Rivière
+"data_network_bipart"
+NULL
+
+

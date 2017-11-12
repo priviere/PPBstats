@@ -29,6 +29,11 @@
 ### vignette
 - update text (cf #76)
   
+### add new RData
+- data_network_unipart_sl.RData
+- data_network_unipart_location.RData
+- data_network_bipart.RData
+
   
 # **PPBstats 0.22**
 ### update functions
