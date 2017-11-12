@@ -339,7 +339,8 @@ format_data_PPBstats.data_network = function(
     
     if( !is.element("germplasm_parent", colnames(d)) ){ 
       d$germplasm_parent = d$germplasm_child = "unknown_germplasm" 
-      }
+    }
+    
     
     # Split on germplasm ----------
     if( network_split == "germplasm" ){
@@ -401,6 +402,8 @@ format_data_PPBstats.data_network = function(
           )
           d_vertex = d_vertex[!duplicated(d_vertex$location),]
         }
+        
+        d_vertex$relation_type = "diffusion"
         
         relation = unique(dg[,c("location_parent", "location_child")]) 
         
@@ -469,6 +472,8 @@ format_data_PPBstats.data_network = function(
           )
           d_vertex = d_vertex[!duplicated(d_vertex$year),]
         }
+        
+        d_vertex$relation_type = "diffusion"
         
         relation = unique(dy[,c("location_parent", "location_child")]) 
         
