@@ -1,0 +1,56 @@
+\section{Describe the data}
+\label{describe_data_network}
+
+\subsection{unipart network on seed lots}
+<<message=TRUE,cache=FALSE>>=
+p_net = plot.data_network(net_unipart_sl, plot_type = "network", in_col = "location",
+                      labels_on = FALSE, labels_size = 4, x_axis = "germplasm",
+                      nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5)
+p_net
+@
+
+In order to get the network organized in a chronolical order and by farm, set \texttt{organize\_sl = TRUE}:
+<<message=TRUE,cache=FALSE>>=
+p_net_org = plot.data_network(net_unipart_sl, plot_type = "network", in_col = "location",
+                      labels_on = FALSE, labels_size = 4, x_axis = "germplasm",
+                      nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5, organize_sl = TRUE)
+p_net_org
+@
+
+<<message=TRUE,cache=FALSE>>=
+p_bar = plot.data_network(net_unipart_sl, plot_type = "barplot", in_col = "location", 
+       labels_on = FALSE, labels_size = 4, x_axis = "germplasm",
+       nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5)
+p_bar
+@
+
+
+\subsection{unipart network on location}
+
+<<message=TRUE,cache=FALSE>>=
+p_net = plot.data_network(net_unipart_location_g, plot_type = "network", in_col = NULL,
+                      labels_on = TRUE, labels_size = 4, x_axis = "germplasm",
+                      nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5)
+p_net
+@
+
+<<message=TRUE,cache=FALSE>>=
+p_net = plot.data_network(net_unipart_location_y, plot_type = "network", in_col = "location",
+                      labels_on = TRUE, labels_size = 4, x_axis = "germplasm",
+                      nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5)
+p_net
+@
+
+\subsection{bipart network on germplasm and location}
+
+<<message=TRUE,cache=FALSE>>=
+p = plot.data_network(net_bipart, plot_type = "network", in_col = "location", labels_on = FALSE, labels_size = 4, x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5)
+@
+
+<<message=TRUE,cache=FALSE>>=
+p = plot.data_network(net_bipart, plot_type = "network", in_col = "location", labels_on = TRUE, labels_size = 4, x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5)
+@
+
+<<message=TRUE,cache=FALSE>>=
+p = plot.data_network(net_bipart, plot_type = "barplot", in_col = "location", labels_on = FALSE, labels_size = 4, x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5)
+@
