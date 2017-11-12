@@ -59,7 +59,7 @@
 #'    
 #'    It can have supplementary variables with tags "_parent", "_child" or "_relation".
 #'    
-#'    \item "location" : the data can have two formats:
+#'    \item "location" that represents each diffusion between location : the data can have two formats:
 #'    \itemize{
 #'     \item the same format than for unipart network and vertex_type = seed_lots
 #'     \item the following columns (explained above): 
@@ -72,7 +72,7 @@
 #'     }
 #'    }
 #'   
-#'   \item for bipartite network, the data can have two formats:
+#'   \item for bipartite network where a vertex can be a location or a germplasm, the data can have two formats:
 #'   \itemize{
 #'    \item the same format than for unipart network and vertex_type = seed_lots. 
 #'    In this case, relation type diffusion or reproduction are kept.
