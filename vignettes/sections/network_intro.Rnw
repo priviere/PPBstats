@@ -1,0 +1,261 @@
+\section{Introduction}
+
+Network of seed circulation are interesting to have insight on how exchanges are structured within a PPB programme or a Community Seed House (we prefere the term instead of Community Seed Banks).
+It can be done at several scale : local, regional and national.
+
+Two types of network are handle within \pack :
+
+\begin{itemize}
+
+\item unipart network where a vertex can be
+
+\begin{itemize}
+\item seed lot (i.e. a combinaison of a germplasm in a given location a given year) that can be linked by several relation such as diffusion, mixture, reproduction, crosses or selection for example.
+}
+\item location that represent each diffusion between location
+\end{itemize}
+
+\item bipart network where a vertex can be a location or a germplasm
+
+\end{itemize}
+
+
+
+\subsection{Workflow and function relations in \pack~regarding network analysis}
+
+The workflow is very simple as only descriptive analysis can be done.
+
+\pack~is divided into two sets of functions: Main functions and secondary, internal functions.
+In this vignette, we only used examples with main functions as internal functions are called within main functions.
+
+Figure~\ref{main_workflow_network} displays the main functions and their relationships.
+Table~\ref{function_descriptions_workflow_network} describes each of the main functions.
+
+You can have more information for each function by typing \texttt{?function\_name} in your \R~session.
+
+\begin{figure}[H]
+\begin{center}
+\input{figures/PPBstats_main_functions_network.tex}
+\end{center}
+\caption{Main functions used in the workflow.}
+\label{main_workflow_network}
+\end{figure}
+
+\begin{table}[H]
+\begin{tabular}{cp{.6\textwidth}}
+
+\hline
+\textbf{function name} & \textbf{description} \\ \hline
+
+\texttt{format\_data\_PPBstats} & Check and format the data to be used in \pack~functions \\ \hline
+
+\texttt{plot} & Build ggplot objects to visualize output \\ \hline
+
+\end{tabular}
+\caption{Main function descriptions.}
+\label{function_descriptions_workflow_network}
+\end{table}
+
+
+\subsection{Data format}
+
+Three formats are possible:
+
+\begin{enumerate}
+\item unipart network for seed lots which represents relation between between seed lots: a data frame with the followin compulsory columns:
+\begin{itemize}
+\item "seed\_lot\_parent" : name of the seed lot parent in the relation
+\item "seed\_lot\_child" ; name of the seed lots child in the relation
+\item "relation\_type" : the type of relation between the seed lots
+\item "relation\_year\_start" : the year when the relation starts
+\item "relation\_year\_end" : the year when the relation stops
+\item "germplasm\_parent" : the germplasm associated to the seed lot father
+\item "location\_parent" : the location associated to the seed lot father
+\item "year\_parent" : represents the year of the last relation event of the seed lot father
+\item "germplasm\_child" : the germplasm associated to the seed lot child
+\item "location\_child" : the location associated to the seed lot child
+\item "year\_child" : represents the year of the last relation event of the seed lot child
+\end{itemize}
+It can have in option : "alt\_parent", "long\_parent", "lat\_parent", "alt\_child", "long\_child", "lat\_child" to get map representation.
+It can have supplementary variables with tags "\_parent", "\_child" or "\_relation".
+
+\item unipart network for location which represents relation of germplasm diffusion between location: a data frame with the followin compulsory columns (explained above): "location\_parent", "location\_child", "relation\_year\_start", "relation\_year\_end".
+It can have in option : "germplasm\_parent", "year\_parent", "germplasm\_child", "year\_child".
+It can have in option : "alt\_parent", "long\_parent", "lat\_parent", "alt\_child", "long\_child", "lat\_child" to get map representation.
+
+\item bipart network for germplasm and location which represent "which location has which germplasm which year": a data frame with the followin compulsory columns: "germplasm", "location", "year".
+It can have in option : "alt", "long", "lat" to get map representation
+
+\end{enumerate}
+
+Note that format 1. can be convert to format 2. and 3. as summarized in Table \ref{network_format_analysis}.
+When bipart network come from unipart network for seed lots, relation reproduction and diffusion are taken.
+
+\begin{table}[H]
+\begin{tabular}{cccc}
+\hline
+network format / analysis & unipart for seed lots & unipart for location & bipart for germplasm and location  \\ \hline
+unipart for seed lots & X & X & X \\ \hline
+unipart for location & & X & \\ \hline
+bipart for germplasm and location & & & X \\ \hline
+\end{tabular}
+\caption{Possible analysis regarding network format.}
+\label{network_format_analysis}
+\end{table}
+
+The format of the data are check by the function \texttt{format\_data\_PPBstats}. The following argument can be used :
+\begin{itemize}
+\item type = data\_network
+\item network\_part : "unipart" or "bipart"
+\item vertex\_type :
+\begin{itemize}
+\item for unipart network : "seed\_lots" or "location"
+\item for bipart network : c("germplasm", "location")
+\end{itemize}
+\item network\_split for network\_part = "unipart" and vertex\_type = "location", split of the data that can be "germplasm" or "relation\_year\_start"
+\end{itemize}
+
+Possible values of argument regarding network format are displayed in Table \ref{network_format_arg}.
+
+\begin{table}[H]
+\begin{tabular}{cccc}
+\hline
+network format / argument & network\_part & vertex\_type & network\_split \\ \hline
+unipart for seed lots & "unipart" & "seed\_lots" & NULL \\ \hline
+unipart for location & "unipart" & "location" & "germplasm" or "relation\_year\_start" \\ \hline
+bipart for germplasm and location & "bipart" & c("germplasm", "location") & NULL \\ \hline
+\end{tabular}
+\caption{Possible values of argument regarding network format.}
+\label{network_format_arg}
+\end{table}
+
+Below are exemples for each network format.
+It returns a list with \texttt{igraph} object coming from \texttt{igraph::graph\_from\_data\_frame()}.
+
+\begin{itemize}
+\item unipart for seed lots for 
+<<message=TRUE,cache=FALSE>>=
+data(data_network_unipart_sl)
+head(data_network_unipart_sl)
+@
+
+\begin{itemize}
+\item unipart for seed lots
+<<message=TRUE,cache=FALSE>>=
+net_unipart_sl = format_data_PPBstats.data_network(
+  data = data_network_unipart_sl, 
+  network_part = "unipart", 
+  vertex_type =  "seed_lots")
+length(net_unipart_sl)
+head(net_unipart_sl)
+@
+
+\item unipart for location from unipart seed lots data
+<<message=TRUE,cache=FALSE>>=
+net_unipart_location_g = format_data_PPBstats.data_network(
+  data = data_network_unipart_sl, 
+  network_split = "germplasm",
+  network_part = "unipart", 
+  vertex_type =  "location")
+@
+
+For network\_split = "germplasm", it returns a list with as many elements as germplam in the data
+as well as all germplasms merged in the first element of the list.
+An atttribute with the number of seed lots (nb\_sl) for each location are added.
+<<message=TRUE,cache=FALSE>>=
+names(net_unipart_location_g)
+@
+
+<<message=TRUE,cache=FALSE>>=
+net_unipart_location_y = format_data_PPBstats.data_network(
+  data = data_network_unipart_sl, 
+  network_split = "relation_year_start",
+  network_part = "unipart", 
+  vertex_type =  "location")
+@
+For network\_split = "relation\_year\_start", it returns a list with as many elements as year in the data
+as well as all years merged in the first element of the list.
+An atttribute with the number of seed lots (nb\_sl) for each location are added.
+<<message=TRUE,cache=FALSE>>=
+names(net_unipart_location_y)
+@
+
+
+\item bipart for germplasm and location from unipart seed lots data
+<<message=TRUE,cache=FALSE>>=
+net_bipart = format_data_PPBstats.data_network(
+  data = data_network_unipart_sl, 
+  network_part = "bipart", 
+  vertex_type =  c("germplasm", "location")
+  )
+@
+
+For bipart network, it returns a list with as many elements as year in the data 
+as well as all years merged in the first element of the list.
+If no year are provided into the data, all information are merged.
+<<message=TRUE,cache=FALSE>>=
+names(net_bipart)
+@
+
+\end{itemize}
+
+\item unipart for location
+<<message=TRUE,cache=FALSE>>=
+data(data_network_unipart_location)
+head(data_network_unipart_location)
+@
+
+<<message=TRUE,cache=FALSE>>=
+net_unipart_location_g = format_data_PPBstats.data_network(
+  data = data_network_unipart_location, 
+  network_split = "germplasm",
+  network_part = "unipart", 
+  vertex_type =  "location")
+@
+
+For network\_split = "germplasm", it returns a list with as many elements as germplam in the data
+as well as all germplasms merged in the first element of the list.
+An atttribute with the number of seed lots (nb\_sl) for each location are added.
+<<message=TRUE,cache=FALSE>>=
+names(net_unipart_location_g)
+@
+
+<<message=TRUE,cache=FALSE>>=
+net_unipart_location_y = format_data_PPBstats.data_network(
+  data = data_network_unipart_location, 
+  network_split = "relation_year_start",
+  network_part = "unipart", 
+  vertex_type =  "location")
+@
+For network\_split = "relation\_year\_start", it returns a list with as many elements as year in the data
+as well as all years merged in the first element of the list.
+An atttribute with the number of seed lots (nb\_sl) for each location are added.
+<<message=TRUE,cache=FALSE>>=
+names(net_unipart_location_y)
+@
+
+\item bipart for germplasm and location
+<<message=TRUE,cache=FALSE>>=
+data(data_network_bipart)
+head(data_network_bipart)
+@
+
+<<message=TRUE,cache=FALSE>>=
+net_bipart = format_data_PPBstats.data_network(
+  data = data_network_bipart, 
+  network_part = "bipart", 
+  vertex_type =  c("germplasm", "location")
+  )
+@
+
+For bipart network, it returns a list with as many elements as year in the data 
+as well as all years merged in the first element of the list.
+If no year are provided into the data, all information are merged.
+<<message=TRUE,cache=FALSE>>=
+names(net_bipart)
+@
+
+
+\end{itemize}
+
+
