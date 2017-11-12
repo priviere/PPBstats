@@ -27,7 +27,7 @@
 - plot.data_network.R, cf #67
 
 ### vignette
-- update text (cf #76)
+- update text (cf #76, #65)
   
 ### add new RData
 - data_network_unipart_sl.RData
