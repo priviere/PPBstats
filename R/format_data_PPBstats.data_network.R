@@ -84,22 +84,28 @@ format_data_PPBstats.data_network = function(
     
     # Extra check
     if( !is.element("diffusion", as.character(data$relation_type)) ){ 
+      if( display_mess){ 
       warning("There are no diffusion event in the column relation_type in data 
 (i.e. no \"diffusion\" in column relation_type). Note that \"diffusion\" are used in plot afterward.") 
+      }
     }
     
     lapply(data$seed_lot_parent, function(x){
       if(length(unlist(strsplit(as.character(x), "_")))!=4){
+        if( display_mess){ 
         warning("Note that \"seed_lot_parent\" must be under the following format : GERMPLASM_LOCATION_YEAR_DIGIT 
                 in order to display plot of network with argument organize_sl = TRUE.")
+        }
       }
     }
     )
     
     lapply(data$seed_lot_child, function(x){
       if(length(unlist(strsplit(as.character(x), "_")))!=4){
+        if( display_mess){ 
         warning("Note that \"seed_lot_child\" must be under the following format : GERMPLASM_LOCATION_YEAR_DIGIT 
                 in order to display plot of network with argument organize_sl = TRUE.")
+        }
       }
     }
     )
