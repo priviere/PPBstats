@@ -42,6 +42,7 @@ The function returns the data with the right format (i.e. class)
  \item For "data_network",
  \itemize{
   \item it returns a igraph object coming from igraph::graph_from_data_frame().
+  \item for unipart network on seed lots, it a list of one element
   \item for unipart network on location
   \itemize{
    \item for network_split = "germplasm", 
@@ -50,11 +51,12 @@ The function returns the data with the right format (i.e. class)
   An atttribute with the number of seed_lots (nb_sl) for each location are added.
    \item for network_split = "relation_year_start", 
   it returns a list with as many elements as year in the data
+  as well as all years merged in the first element of the list.
   An atttribute with the number of seed_lots (nb_sl) for each location are added.
   }
   \item for bipart network, it returns a list with as many elements as year in the data 
   as well as all years merged in the first element of the list.
-  If no year are provided into the data, all information are marged
+  If no year are provided into the data, all information are merged.
  }
 }
 }
@@ -88,7 +90,7 @@ The function returns the data with the right format (i.e. class)
    
    It can have supplementary variables with tags "_parent", "_child" or "_relation".
    
-   \item "location" : the data can have two formats:
+   \item "location" that represents each diffusion between location : the data can have two formats:
    \itemize{
     \item the same format than for unipart network and vertex_type = seed_lots
     \item the following columns (explained above): 
@@ -101,9 +103,10 @@ The function returns the data with the right format (i.e. class)
     }
    }
   
-  \item for bipartite network, the data can have two formats:
+  \item for bipartite network where a vertex can be a location or a germplasm, the data can have two formats:
   \itemize{
-   \item the same format than for unipart network and vertex_type = seed_lots
+   \item the same format than for unipart network and vertex_type = seed_lots. 
+   In this case, relation type diffusion or reproduction are kept.
    \item the following columns : "germplasm", "location", "year"
    It can have in option : "alt", "long", "lat" to get map representation
   }
