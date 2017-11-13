@@ -7,7 +7,12 @@ plot.mean_comparisons_model_1 <- function(
   
   # 1. Error message ----------
   ggplot.type <- match.arg(ggplot.type, several.ok = FALSE)
-
+  if( !is.null(data_version)){
+    if(!is(data_version, "data_agro_version")){ 
+      stop(substitute(data_version), " must be formated, see PPBstats::format_data_PPBstats().") 
+    }
+  }
+  
   # 2. get data ----------
   all_data = list(
     "data_mean_comparisons" = x$data_mean_comparisons,
