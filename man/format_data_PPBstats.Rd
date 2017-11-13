@@ -123,8 +123,9 @@ The function returns the data with the right format (i.e. class)
  \item For type = "data_agro_version" : 
  It should have the following columns: c("year", "germplasm", "location", "group", "version").
  The group refers to an id that contains two different versions.
- For example for group 1, there is version 1 and 2. 
- See data(data_version) for an example.
+ For example for group 1, there are version 1 and 2.
+ Within each group, there must have different version and different germplasm 
+ (i.e. each version must have different germplasms.).
  
  \item For type = "data_organo_napping"
  \itemize{
