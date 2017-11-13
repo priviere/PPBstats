@@ -8,6 +8,7 @@
         - better differentiate year, relation_year_start and relation_year_end : cf Rd
     - describe_data.data_agro.R : add raster arg for plot_type, cf #68
     - debugs several functions regarding tests
+    - data_agro_version done
 - plot.mean_comparisons_model_1.R
     - improve display of score : cf #61
 - plot.parameter_groups.R:
