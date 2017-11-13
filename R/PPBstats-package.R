@@ -6,7 +6,7 @@
 #' @description
 #' \code{PPBstats} is an R package for statistical analysis of balanced and unbalanced trials in decentralized participatory plant breeding programmes
 #' 
-#' @author Pierre Riviere, Gaelle Van Franck and Olivier David
+#' @author Pierre Riviere, Gaelle Van Franck, Olivier David and Facundo Muñoz
 #' 
 #' @details
 #' How to use \code{PPBstats} is explained in the vignette: type vignette("PPBstats").
