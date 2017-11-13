@@ -1,3 +1,43 @@
+#' Plot network object from format_data_PPBstats()
+#' 
+#' @description
+#' \code{plot.data_network} returns ggplot to visualize outputs from format_data_PPBstats()
+#' 
+#' @param net output from format_data_PPBstats with data_type = "network"
+#' 
+#' @param plot_type "network" or "barplot"
+#' 
+#' @param in_col factor in color that fill the barplot or the vertex of the network
+#' 
+#' @param labels_on for plot_type = "network", labels to display on network
+#' 
+#' @param labels_size for plot_type = "network", size of the labels
+#' 
+#' @param organize_sl for plot_type = "network", if TRUE, organize the network for unipart seed lots format with year 
+#' in the chronological order on the x axis, location separated on the y axis
+#' 
+#' @param x_axis for plot_type = "barplot" and unipart seed lots network, factor on the x axis
+#' 
+#' @param nb_parameters_per_plot_x_axis for plot_type = "barplot" and unipart seed lots network, number of parameter on the x_axis
+#' 
+#' @param nb_parameters_per_plot_in_col for plot_type = "barplot" and unipart seed lots network, number of paramter by color that fill
+#' 
+#' @details
+#' For network diffusion are represented by a curve.
+#' For organize_sl, The representation is possible if the seed_lots are under the following format : 
+#' GERMPLASM_LOCATION_YEAR_DIGIT.
+#' 
+#' @return 
+#' A list with ggplot object.
+#' For plot_type = "network", a list with as many elements as net with the network representation in ggplot format
+#' For plot_type = "barplot"and bipart network, it represents the number of edges per vertex for each germplasm 
+#' and each location.
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso
+#' \code{format_data_PPBstats}
+#' 
 plot.data_network = function(
   net,
   plot_type = c("network", "barplot"),
@@ -77,9 +117,9 @@ plot.data_network = function(
     
     s = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])]))
     s = s[which(vertex.attributes(net)$type == "location")]
-    d = data.frame(germplasm = names(s), nb_location = s)
-    pl = ggplot(d, aes(x = reorder(germplasm, -nb_location), y = nb_location)) + geom_bar(stat="identity")
-    pl = pl + xlab("germplasm") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    d = data.frame(location = names(s), nb_germplasm = s)
+    pl = ggplot(d, aes(x = reorder(location, -nb_germplasm), y = nb_germplasm)) + geom_bar(stat="identity")
+    pl = pl + xlab("location") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     
     out = list("germplasm" = pg, "location" = pl)
     return(out)
@@ -212,7 +252,7 @@ plot.data_network = function(
     return(p)
   }
   
-  plot_barplot_unipart = function(net){
+  plot_barplot_unipart = function(net, in_col, nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col){
     n = ggnetwork(net, arrow.gap = 0)
     n$count = 1
     dall = reshape_data_split_x_axis_in_col(n, 
@@ -284,7 +324,8 @@ plot.data_network = function(
       if( is_bipartite(net) ) { 
         out = list("barplot" = plot_barplot_bipart(net))
       } else {
-        out = list("barplot" = plot_barplot_unipart(net))
+        out = list("barplot" = plot_barplot_unipart(net, in_col, nb_parameters_per_plot_x_axis, 
+                                                    nb_parameters_per_plot_in_col))
       }
     }
     return(out)
