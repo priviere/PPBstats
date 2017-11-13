@@ -57,7 +57,7 @@ plot.data_network = function(
     
     p = ggplot(ntmp, aes(x = x, y = y, xend = xend, yend = yend))
     p = p + geom_nodes(aes(color = type))
-    p = p + geom_edges(arrow = arrow(length = unit(0, "pt"), type = "closed"))
+    p = p + geom_edges()
     p = p + theme_blank()
     
     if( labels_on ){ 
@@ -175,11 +175,12 @@ plot.data_network = function(
     p = ggplot(n, aes(x = x, y = y, xend = xend, yend = yend))
     if(is.element("nb_sl", colnames(n))){
       p = p + geom_nodes(aes(size = nb_sl))
+      p = p + geom_edges(data = nd, aes(linetype = relation_type), curvature = 0.2)
     } else { 
       p = p + geom_nodes(aes(color = in_col)) 
+      p = p + geom_edges(data = nr, aes(linetype = relation_type), arrow = arrow(length = unit(4, "pt"), type = "closed"))
+      p = p + geom_edges(data = nd, aes(linetype = relation_type), arrow = arrow(length = unit(4, "pt"), type = "closed"), curvature = 0.2)
     }    
-    p = p + geom_edges(data = nr, aes(linetype = relation_type), arrow = arrow(length = unit(4, "pt"), type = "closed"))
-    p = p + geom_edges(data = nd, aes(linetype = relation_type), arrow = arrow(length = unit(4, "pt"), type = "closed"), curvature = 0.2)
     p$labels$colour = in_col
     
     scale_ex = c("solid", "dotted", "longdash", "dashed", "twodash", "dotdash")
