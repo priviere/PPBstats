@@ -12,5 +12,5 @@
 How to use \code{PPBstats} is explained in the vignette: type vignette("PPBstats").
 }
 \author{
-Pierre Riviere, Gaelle Van Franck and Olivier David
+Pierre Riviere, Gaelle Van Franck, Olivier David and Facundo Muñoz
 }
