@@ -7,7 +7,7 @@ mean_comparisons.check_model_GxE <- function(
   model = x$GxE$ANOVA$model
   variable = x$GxE$info$variable
   
-  data_ggplot_LSDbarplot = function(model, fac, p.adj){
+  data_ggplot_LSDbarplot = function(model, fac, p.adj, alpha){
     lsd = LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
     
     parameter = factor(lsd$groups$trt, levels = lsd$groups$trt)
@@ -22,13 +22,13 @@ mean_comparisons.check_model_GxE <- function(
   }
   
   # 2. Germplasm
-  data_ggplot_LSDbarplot_germplasm = data_ggplot_LSDbarplot(model, fac = "germplasm", p.adj)
+  data_ggplot_LSDbarplot_germplasm = data_ggplot_LSDbarplot(model, fac = "germplasm", p.adj, alpha)
   
   # 3. Location
-  data_ggplot_LSDbarplot_location = data_ggplot_LSDbarplot(model, fac = "location", p.adj)
+  data_ggplot_LSDbarplot_location = data_ggplot_LSDbarplot(model, fac = "location", p.adj, alpha)
   
   # 4. Year
-  data_ggplot_LSDbarplot_year = data_ggplot_LSDbarplot(model, fac = "year", p.adj)
+  data_ggplot_LSDbarplot_year = data_ggplot_LSDbarplot(model, fac = "year", p.adj, alpha)
   
   # 5. return results
   out <- list(
