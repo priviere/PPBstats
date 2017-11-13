@@ -12,9 +12,14 @@ The copyright of the R code and the vignette are owned by Réseau Semences Paysa
 ## Version
 `PPBstats` is now at version 0.22 and can be downloaded [here](https://github.com/priviere/PPBstats/archive/v.022.zip).
 
-unzip and install it
+unzip and install it:
 ```r
 devtools::install("PPBstats-0.22")
+```
+
+version 0.23 is under development and can be tested:
+```r
+devtools::install_github("priviere/PPBstats")
 ```
 
 The version number is under the form A.B with
