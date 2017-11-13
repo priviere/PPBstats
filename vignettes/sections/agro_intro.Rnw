@@ -405,7 +405,7 @@ You can have more information for each function by typing \texttt{?function\_nam
 
 \begin{figure}[H]
 \begin{center}
-\input{figures/PPBstats_main_functions.tex}
+\input{figures/PPBstats_main_functions_agro.tex}
 \end{center}
 \caption{Main functions used in the workflow.}
 \label{main_workflow}
