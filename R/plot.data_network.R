@@ -114,12 +114,14 @@ plot.data_network = function(
     d = data.frame(germplasm = names(s), nb_location = s)
     pg = ggplot(d, aes(x = reorder(germplasm, -nb_location), y = nb_location)) + geom_bar(stat="identity")
     pg = pg + xlab("germplasm") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    pg = pg + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     
     s = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])]))
     s = s[which(vertex.attributes(net)$type == "location")]
     d = data.frame(location = names(s), nb_germplasm = s)
     pl = ggplot(d, aes(x = reorder(location, -nb_germplasm), y = nb_germplasm)) + geom_bar(stat="identity")
     pl = pl + xlab("location") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    pl = pl + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     
     out = list("germplasm" = pg, "location" = pl)
     return(out)
@@ -252,7 +254,8 @@ plot.data_network = function(
     return(p)
   }
   
-  plot_barplot_unipart = function(net, in_col, nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col){
+  plot_barplot_unipart = function(net, x_axis, in_col, 
+                                  nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col){
     n = ggnetwork(net, arrow.gap = 0)
     n$count = 1
     dall = reshape_data_split_x_axis_in_col(n, 
@@ -265,11 +268,13 @@ plot.data_network = function(
                                             )
     
     fun_bar = function(d, in_col){
-      if(is.null(in_col)) {	
+      if(!is.null(in_col)) {	
         p = ggplot(d, aes(x = x_axis, fill = in_col)) + geom_bar()
-        p + xlab(x_axis) + ylab("") + labs(title = in_col)
+        p = p + xlab(x_axis) + ylab("") + theme(legend.title=element_blank())
+        p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       } else {
         p = ggplot(d, aes(x = x_axis)) + geom_bar() + xlab(x_axis) + ylab("")
+        p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       }
     }
     
@@ -324,7 +329,7 @@ plot.data_network = function(
       if( is_bipartite(net) ) { 
         out = list("barplot" = plot_barplot_bipart(net))
       } else {
-        out = list("barplot" = plot_barplot_unipart(net, in_col, nb_parameters_per_plot_x_axis, 
+        out = list("barplot" = plot_barplot_unipart(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
                                                     nb_parameters_per_plot_in_col))
       }
     }
