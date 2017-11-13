@@ -41,7 +41,7 @@ get_biplot = function(res.pca){
   vi$size = 4
   vi$size[which(vi$color == "darkgreen")] = 6
   
-  dimvar = round(res.pca$eig$`percentage of variance`[1:2], 1)
+  dimvar = round(as.data.frame(res.pca$eig)$`percentage of variance`[1:2], 1)
   
   p = ggplot(data = vi, aes(x = x, y = y, label = label)) + geom_text(color = as.character(vi$color), size = vi$size) + geom_point(color = as.character(vi$color))
   p = p + xlab(paste("Dim 1 (", dimvar[1], "%)", sep = "")) + ylab(paste("Dim 2 (", dimvar[2], "%)", sep = ""))
