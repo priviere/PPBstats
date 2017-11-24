@@ -8,6 +8,7 @@ Function `design_experiment` sets the experimental design based on :
 - the number of columns in the design. The number of rows is computed automaticaly.
 
 The function returns a list with
+
 - A data frame
 - An image of the experimental design
 
