@@ -6,4 +6,15 @@
 *.log
 *.out
 *.toc
+.Rproj.user
+.Rhistory
+.RData
+_publish.R
+_book
+_bookdown_files
+rsconnect
 data_PPBstats
+figures/*.pdf
+figures/*.aux
+figures/*.log
+docs
