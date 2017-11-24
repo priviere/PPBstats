@@ -21,7 +21,7 @@ This book introduces the R package `PPBstats`.
 knitr::include_graphics("figures/warning.png")
 ```
 Be aware that this package is under development and test: do not 100\% trust the functions!!! 
-You're welcome to contribute: see [here](https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf) for more details.
+You're welcome to contribute: see section \@ref{contributions}.
 
 ```{r , out.width='90%', fig.align='center', echo=FALSE, fig.cap="Wheat trials on farm within our participatory plant breeding programme, summer 2012, Auvergne, France. CC-BY-NC-SA. Pierre Rivière."}
 knitr::include_graphics("figures/wheat.JPG")
