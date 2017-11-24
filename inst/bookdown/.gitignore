@@ -1,6 +1,6 @@
 .tex
 *.R
-*.aux
+*.aux 
 *.bbl
 *.blg
 *.log
