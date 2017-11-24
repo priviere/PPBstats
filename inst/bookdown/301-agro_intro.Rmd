@@ -100,7 +100,7 @@ If the priors equal the posteriors, it means that there is not enough data or th
 
 
 Bayesian inference is based on the posterior distribution of model parameters.
-This distribution could not be calculated explicitely for the hierarchical model used in here (see section \@ref{section-model1} and section \@ref{section-model2}) but could be estimated using Markov Chain and Monte Carlo (MCMC) methods.
+This distribution could not be calculated explicitely for the hierarchical model used in here (see section \@ref{model-1} and section \@ref{model-2}) but could be estimated using Markov Chain and Monte Carlo (MCMC) methods.
 
 These methods simulate values of model parameters according to a Markov chain that converges to the posterior distribution of model parameters [@robert_bayesian_2001].
 
