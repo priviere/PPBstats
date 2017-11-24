@@ -1,5 +1,0 @@
-\subsection{Version}
-\label{version}
-
-
-!!! TO DO !!!

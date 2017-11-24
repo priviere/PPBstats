@@ -1,0 +1,428 @@
+### AMMI {#ammi}
+
+#### Theory of the model
+
+The Additive Main effects and Multiplicative Interaction (AMMI) model is based on two analyses [@gauch_statistical_2006] : 
+
+
+1. an **ANOVA** with the following model :
+
+$Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + \eta_{i}\nu_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
+
+With,
+
+- $Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and location $j$,
+- $\mu$ the general mean,
+- $\alpha_{i}$ the germplasm $i$ effect,
+- $\theta_{j}$ location $j$ effect,
+- $rep_{k}(\theta_{j})$ the replication $k$ nested in location effect,
+- $\eta_{i}\nu_{j}$ the germplasm $\times$ location effect,
+- $\varepsilon_{ijk}$ the residuals.
+
+
+Or, if there are several years in the data set:
+
+$Y_{ijkl} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}\beta_{l}) + \eta_{i}\nu_{j} + \beta_{l} + \beta_{l}\alpha_{i} + \beta_{l}\theta_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
+
+With,
+
+- $Y_{ijkl}$ the phenotypic value for replication $k$, germplasm $i$, location $j$ and year $l$,
+- $\mu$ the general mean,
+- $\alpha_{i}$ the germplasm $i$ effect,
+- $\theta_{j}$ location $j$ effect,
+- $rep_{k}(\theta_{j}\beta_{l})$ the replication $k$ nested in location and year effect,
+- $\eta_{i}\nu_{j}$ the germplasm $\times$ location effect,
+- $\beta_{l}$ the year $l$ effect,
+- $\beta_{l}\alpha_{i}$ the year $\times$ germplasm interaction effect,
+- $\beta_{l}\theta_{j}$ the year $\times$ location interaction effect,
+- $\varepsilon_{ijk}$ the residuals.
+
+
+2. a **PCA** which analyse deeper the germplasm $\times$ location interaction : 
+
+$\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}$ ^[Note than in `PPBstats`, the PCA is done on $\eta_{i}\nu_{j} + \varepsilon_{ijk}$. The residuals is in the last dimension of the PCA]
+
+
+which can also be written :
+
+$\eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})$
+
+With,
+
+- $\eta_{i}\nu_{j}$ interaction of germplasm $i$ with location $j$,
+- $N$ the number of dimension (PCA componant) which has as maximum value the number of location,
+- $\lambda_{n}$ the eigen value for componant $n$,
+- $\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
+- $\omega_{jn}$ eigen vector for  location $j$  for componant $n$.
+
+The data are double centered on location and germplasm.
+The PCA study the structure of the interaction matrix.
+The location are the variable and the germplasm are the individuals.
+
+This PCA allows to detect
+
+- germplasm that are stable (i.e. contribute less to interaction)
+- which germplasm interact the most with which location
+- which location have the same profile regarding interaction
+
+
+#### Steps with `PPBstats`
+
+For AMMI analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
+
+- Format the data with `format_data_PPBstats`
+- Run the model with `GxE` and `gxe_analysis = "AMMI"`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model`
+- Get mean comparisons for each factor with `mean_comparisons` and vizualise it with `plot`
+- Get groups of each parameters with `parameters_groups` and visualise it with `plot`
+
+#### Format the data
+
+```{r}
+data(data_GxE)
+data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
+head(data_GxE)
+```
+
+
+#### Run the model
+To run model GxE on the dataset, used the function `GxE`.
+You can run it on one variable.
+
+```{r}
+out_ammi = GxE(data_GxE, variable = "y1", gxe_analysis = "AMMI")
+```
+
+`out_ammi` is a list containing three elements :
+
+- `info` : a list with variable and gxe\_analysis
+```{r}
+out_ammi$info
+```
+- `ANOVA` a list with five elements :
+    - `model`
+    ```{r}
+    out_ammi$ANOVA$model
+    ```
+    - `anova_model`
+    ```{r}
+    out_ammi$ANOVA$anova_model
+    ```
+    - `germplasm_effects` a list of two elements :
+        - `effects`
+        ```{r}
+        out_ammi$ANOVA$germplasm_effects$effects
+        ```
+        - `intra_variance`
+        ```{r}
+        out_ammi$ANOVA$germplasm_effects$intra_variance
+        ```
+
+    - `location_effects`
+    ```{r}
+    out_ammi$ANOVA$location_effects$effects
+    ```
+    - `interaction_matrix`
+    ```{r}
+    out_ammi$ANOVA$interaction_matrix
+    ```
+- `PCA` : PCA object from FactoMineR
+```{r}
+out_ammi$PCA
+```
+
+#### Check and visualize model outputs
+
+##### Check the model
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from `check_model`).
+
+```{r}
+out_check_ammi = check_model(out_ammi)
+```
+
+`out_check_ammi` is a list containing four elements :
+
+- `GxE` the output from the model
+- `data_ggplot` a list containing information for ggplot:
+    - `data_ggplot_residuals` a list containing :
+        - `data_ggplot_normality`
+        - `data_ggplot_skewness_test`
+        - `data_ggplot_kurtosis_test`
+        - `data_ggplot_qqplot`
+    - `data_ggplot_variability_repartition_pie`
+    - `data_ggplot_var_intra`
+
+##### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot`
+
+```{r}
+p_out_check_ammi = plot(out_check_ammi)
+```
+
+`p_out_check_ammi` is a list with:
+
+- `residuals`
+    - `histogram` : histogram with the distribution of the residuals
+    ```{r}
+    p_out_check_ammi$residuals$histogram
+    ```
+    - `qqplot`
+    ```{r}
+    p_out_check_ammi$residuals$qqplot
+    ```
+
+- `variability_repartition` : pie with repartition of SumSq for each factor
+```{r}
+p_out_check_ammi$variability_repartition
+```
+
+- `variance_intra_germplasm` : repartition of the residuals for each germplasm (see Details for more information)
+
+This has to been seen with caution:
+    - If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+    - If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+  With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+
+```{r}
+p_out_check_ammi$variance_intra_germplasm
+```
+
+- `pca_composante_variance` : variance caught by each dimension of the PCA run on the interaction matrix
+```{r}
+p_out_check_ammi$pca_composante_variance
+```
+
+
+#### Get and visualize mean comparisons
+
+##### Get mean comparisons
+
+Get mean comparisons with `mean_comparisons`.
+
+```{r}
+#out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni")
+```
+
+`out_mean_comparisons_ammi` is a list of three elements:
+
+- `info` : a list with variable and gxe_analysis
+- `data_ggplot_LSDbarplot_germplasm`
+- `data_ggplot_LSDbarplot_location`
+- `data_ggplot_LSDbarplot_year`
+
+##### Visualize mean comparisons
+
+```{r}
+# p_out_mean_comparisons_ammi = plot(out_mean_comparisons_ammi)
+```
+
+`p_out_mean_comparisons_ammi` is a list of three elements with barplots :
+
+For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+The error I (alpha) and the alpha correction are displayed in the title. 
+
+- `germplasm` : mean comparison for germplasm
+```{r}
+#pg = p_out_mean_comparisons_ammi$germplasm
+#names(pg)
+#pg$`1`
+```
+
+- `location` : mean comparison for location
+```{r}
+#pl = p_out_mean_comparisons_ammi$location
+#names(pl)
+#pl$`1`
+```
+
+- `year` : mean comparison for year
+Here there are no more than 2 years in the data set so it is `NULL`
+```{r}
+#p_out_mean_comparisons_ammi$year
+```
+
+#### Get and visualize biplot
+
+The biplot represents information about the percentages of total variation explained by the two axes.
+It has to be linked to the total variation caught by the interaction.
+If the total variation is small, then the biplot is useless.
+If the total variation is high enought, then the biplot is useful if the two first dimension represented catch enought variation (the more the better).
+
+##### Get biplot
+
+```{r}
+out_biplot_ammi = biplot_GxE(out_check_ammi)
+```
+
+##### Visualize biplot
+
+```{r}
+p_out_biplot_ammi = plot(out_biplot_ammi)
+```
+
+`p_out_biplot_ammi` is a list of three elements :
+- `ecovalence`
+
+Ecovalence from @wricke_uber_1962 give part of interaction variance taken by germplasm and location.
+It is an indicator of stability: a low ecovalence means low interaction, i.e. more stability.
+
+Ecovalance of germplasm $i$ is $W_{i}=\sum_{i}^{n} (\eta_{i}\nu_{j})^{2}$
+
+Ecovalance of location $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
+
+Ecovalances are represented in fonction of mean effects by germplasm and location.
+
+```{r}
+p_out_biplot_ammi$ecovalence
+```
+
+- `interaction` which displays the interaction matrix
+
+```{r}
+p_out_biplot_ammi$interaction
+```
+
+
+- `biplot` being a list of four elements :
+```{r}
+p_out_biplot_ammi$biplot$simple_biplot
+```
+
+Regarding the other elements of the list, it returns `NULL` as these visualisation is only done for `gxe_analysis = "GGE"`.
+
+```{r}
+p_out_biplot_ammi$biplot$which_won_where
+p_out_biplot_ammi$biplot$mean_vs_stability
+p_out_biplot_ammi$biplot$discrimitiveness_vs_representativeness
+```
+
+
+#### Get and vizualise groups of parameters
+
+##### Get groups of parameters
+
+In order to cluster locations or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
+
+This is done with `parameter_groups` which do a PCA on this matrix.
+
+Clusters are done based on HCPC method as explained here http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning
+
+Lets' have an example with three variables.
+
+First run the models
+```{r}
+out_ammi_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "AMMI")
+out_ammi_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "AMMI")
+```
+
+Then check the models
+```{r}
+out_check_ammi_2 = check_model(out_ammi_2)
+out_check_ammi_3 = check_model(out_ammi_3)
+```
+
+Then run the function for germplasm. It can also be done on location or year if there are year in the data set.
+
+```{r}
+out_parameter_groups = parameter_groups(
+  list("y1" = out_check_ammi, "y2" = out_check_ammi_2, "y3" = out_check_ammi_3), 
+  "germplasm"
+  )
+```
+
+`out_parameter_groups` is list of two elements:
+
+- `obj.pca` : the PCA object from `FactoMineR::PCA`
+- `clust`, a list of two elements:
+    - `res.hcpc` : the HCPC object from `FactoMineR::HCPC`
+    - `clust` : the dataframe with cluster assigned to each individual
+
+##### Visualize groups of parameters
+
+Visualize outputs with `plot`
+
+```{r}
+p_germplasm_group = plot(out_parameter_groups)
+```
+
+`p_germplasm_group` is list of two elements :
+
+- `pca` : a list with three elements on the PCA on the group of parameters :
+
+    - `composante_variance` : variance caught by each dimension of the PCA
+    ```{r}
+    p_germplasm_group$pca$composante_variance
+    ```
+
+    - `ind` : graph of individuals
+    ```{r}
+    p_germplasm_group$pca$ind
+    ```
+
+    - `var` : graph of variables
+    ```{r}
+    p_germplasm_group$pca$var
+    ```
+  
+- `clust` : output from `factextra::fviz_cluster()`, a list of number of cluster + 1 element
+```{r}  
+cl = p_germplasm_group$clust
+names(cl)
+```
+
+```{r}  
+cl$cluster_all
+```
+
+```{r}
+cl$cluster_1
+```
+
+#### Apply the workflow to several variables {#workflow_gxe}
+
+If you wish to apply the AMMI workflow to several variables, you can use `lapply` with the following code :
+
+```{r}
+workflow_gxe = function(x, gxe){
+  out_gxe = GxE(data_GxE, variable = x, gxe_analysis = gxe)
+  
+  out_check_gxe = check_model(out_gxe)
+  p_out_check_gxe = plot(out_check_gxe)
+  
+  out_mean_comparisons_gxe = mean_comparisons(out_check_gxe, p.adj = "bonferroni")
+  p_out_mean_comparisons_gxe = plot(out_mean_comparisons_gxe)
+  
+  out_biplot_gxe = biplot_GxE(out_check_gxe)
+  p_out_biplot_gxe = plot(out_biplot_gxe)
+
+  out = list(
+    "out_gxe" = out_gxe,
+    "out_check_gxe" = out_check_gxe,
+    "p_out_check_gxe" = p_out_check_gxe,
+    "out_mean_comparisons_gxe" = out_mean_comparisons_gxe,
+    "p_out_mean_comparisons_gxe" = p_out_mean_comparisons_gxe,
+    "out_biplot_gxe" = out_biplot_gxe,
+    "p_out_biplot_gxe" = p_out_biplot_gxe
+  )
+  
+  return(out)
+}
+
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_gxe, "AMMI")
+names(out) = vec_variables
+
+out_parameter_groups = parameter_groups(
+  list("y1" = out$y1$out_check_gxe, "y2" = out$y2$out_check_gxe, "y3" = out$y3$out_check_gxe), 
+  "germplasm" )
+
+p_germplasm_group = plot(out_parameter_groups)
+
+```
+
+

@@ -1,0 +1,6 @@
+# Agronomic analysis {#agronomic}
+
+
+<!-- ```{r, child = 'sections/agro_model_1.Rmd'} -->
+<!-- ``` -->
+

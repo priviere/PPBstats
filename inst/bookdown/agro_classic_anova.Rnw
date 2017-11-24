@@ -1,6 +1,0 @@
-\subsection{Classic ANOVA}
-\label{classic_anova}
-
-!!! TO DO !!!
-
-% ANOVA classique BLUEs BLUPs

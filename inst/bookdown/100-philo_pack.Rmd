@@ -1,0 +1,83 @@
+# Philosophy of PPBstats {#philo}
+
+## What is Participatory Plant Bredding ?
+
+- **decentralized the selection**
+
+When decentralizing the selection in target environment [@desclaux_changes_2008], the phenotypic trait is the sum of genetic ($G$), environmental ($E$) and interaction between the two ($G \times E$) : $P = G + E + G \times E$.
+Broad sens heritability of a given trait is then: 
+
+$h^2_{sl} = \frac{var(G)}{var(G) + var(E) + var(G\times E)}$
+
+Heritability taking into account the network is therefore inferior or equal to heritability on a given site because $var(G\times E) > 0$.
+When facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted varieties to local agro-systems.
+
+- **involve all actors in the breeding decision process**: farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors  [@sperling_framework_2001].
+
+
+## Objectives of PPBstats
+
+PPBstats aims to perform analysis found within PPB programmes at four levels:
+
+- network of seeds circulation (Section \@ref{network))
+
+- agronomic trials (Section \@ref(agronomic) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
+The statistical procedures are based on frequentist and bayesian approaches.
+
+- organoleptic tests (Section \@ref(organoleptic))
+
+- molecular experiments (Section \@ref(molecular))
+
+
+Up to now, only agronomic analysis is under development. 
+Please, feel free to contribute to other aspects of analysis, see(here)[https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf] for more information.
+
+
+## Decision tree to choose the right analysis according to question and experimental design
+
+
+!!! 
+TO DO : integrer decision tree avec même normencalture que dans la vignette + référer aux parties adéquates
+
++ attente complément Camille
+
+!!!
+
+## Data formating 
+
+To be analyzed by PPBstats, the data must have a certain format.
+Up to now, there are two formats supported:
+
+- `data-network`
+- `data-agro`
+
+To check and give the right format, you must use the `format_data_PPBstats` function.
+Each format are detailed in their corresponding section.
+
+
+## Let's go!
+
+To continue, load the current development version of the package (here)[https://github.com/priviere/PPBstats/archive/v0.22.zip] 
+
+unzip the folder and then run 
+
+```{r, eval=FALSE}
+devtools::install("PPBstats-0.22")
+```
+
+Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
+
+Then you can load the package :
+
+```{r,warning=FALSE,message=FALSE}
+library(PPBstats)
+```
+
+and download from internet the data used in this vignette (this is useful to earn lots of time!) [here](https://github.com/priviere/PPBstats/releases/download/v0.20/data_PPBstats.zip).
+
+The following examples have been performed with the following R version :
+```{r}
+unlist(sessionInfo()$R.version)
+```
+
+

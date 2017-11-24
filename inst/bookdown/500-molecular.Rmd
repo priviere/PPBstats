@@ -1,0 +1,7 @@
+# Molecular analysis {#molecular}
+
+Please, feel free to contribute to this part of analysis, see 
+(here)[https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf] for more details.
+
+
+

@@ -1,0 +1,38 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{PPBstats-tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}[mindmap,
+every node/.style=concept, concept color=teal!40,
+every node/.append style={scale=0.5},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=2cm, sibling distance= 9cm, concept color=teal!40, font=\huge, text width=4cm},
+    level 2/.style={level distance=3cm, sibling distance= 9cm, concept color=green!40, font=\huge, text width=4cm},
+    level 3/.style={level distance=4cm, sibling distance= 4cm, concept color=yellow!40, font=\huge, text width=6cm},
+    level 4/.style={level distance=6cm, concept color=red!40, font=\huge, text width=6cm},
+    level 5/.style={level distance=5cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
+    ]
+
+\node{ \huge \textbf{Analysis} }
+      child { node {\textbf{Family 1}}
+        child { node {Number of plots per location low}
+       		child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
+        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf Section~\ref{rf_sf}} }
+	      			child { node {\textbf{model 1 \\ cf Section~\ref{model_1}}} }
+        		}
+       		}
+		    }
+      }
+      child { node {\textbf{Family 2}}
+        child { node {Number of plots per farm low}
+        	child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
+        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf Section~\ref{rf_sf}} }
+					child { node {\textbf{model 2 \\ cf Section~\ref{model_2}} }}
+	        	}
+        	}
+        }
+      };
+\end{tikzpicture}
+
+\end{document}
