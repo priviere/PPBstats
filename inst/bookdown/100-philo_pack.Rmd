@@ -19,7 +19,7 @@ When facing a wide diversity of agroecological environment and practices, decent
 
 PPBstats aims to perform analysis found within PPB programmes at four levels:
 
-- network of seeds circulation (Section \@ref{network))
+- network of seeds circulation (Section \@ref(network))
 
 - agronomic trials (Section \@ref(agronomic) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
 The statistical procedures are based on frequentist and bayesian approaches.
@@ -28,9 +28,7 @@ The statistical procedures are based on frequentist and bayesian approaches.
 
 - molecular experiments (Section \@ref(molecular))
 
-
-Up to now, only agronomic analysis is under development. 
-Please, feel free to contribute to other aspects of analysis, see(here)[https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf] for more information.
+Please, feel free to contribute to other aspects of analysis, see section \@ref(contributions) for more information.
 
 
 ## Decision tree to choose the right analysis according to question and experimental design
@@ -57,7 +55,7 @@ Each format are detailed in their corresponding section.
 
 ## Let's go!
 
-To continue, load the current development version of the package (here)[https://github.com/priviere/PPBstats/archive/v0.22.zip] 
+To continue, load the current development version of the package [here](https://github.com/priviere/PPBstats/archive/v0.22.zip)
 
 unzip the folder and then run 
 

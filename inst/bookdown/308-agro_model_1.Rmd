@@ -47,7 +47,7 @@ Blocks were included in the model only if the trial had blocks.
 
 #### Steps with \pack
 
-For model_1, you can follow these steps (Figure \@ref{fig:main-workflow}):
+For model_1, you can follow these steps (Figure \@ref(fig:main-workflow)):
 
 - Format the data with `format_data_PPBstats`
 - Run the model with `model_1`
@@ -312,7 +312,6 @@ load("./data_PPBstats/out_mean_comparisons_model_1_mu.RData") # To save time
 `out_mean_comparisons_model_1_mu` is a list of three elements:
 
 - `data_mean_comparisons` a list with as many elements as environment.
-
 ```{r}
 head(names(out_mean_comparisons_model_1_mu$data_mean_comparisons))
 ```
