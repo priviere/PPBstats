@@ -1,0 +1,74 @@
+## Describe the data {#describe-data-network}
+
+The different representations are done with the `plot` function.
+
+### unipart network on seed lots
+
+For network representation, set `plot_type = "network"` diffusion event are displayed with a curve.
+`in_col` can be settled to customize color of vertex.
+
+```{r}
+p_net = plot.data_network(net_unipart_sl, plot_type = "network", in_col = "location")
+p_net
+```
+
+In order to get the network organized in a chronolical order and by farm, set `organize_sl = TRUE`.
+This representation is possible if the seed lots are under the following format : `GERMPLASM_LOCATION_YEAR_DIGIT`.
+
+```{r}
+p_net_org = plot.data_network(net_unipart_sl, plot_type = "network", in_col = "location", 
+                              organize_sl = TRUE)
+p_net_org
+```
+
+To have information on the seed lots taht are represented, `plot_type = "barplot"` can be used.
+Choose what to represent on the x axis and in color as well as the number of parameter per plot.
+
+```{r}
+p_bar = plot.data_network(net_unipart_sl, plot_type = "barplot", in_col = "location", 
+                          x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5, 
+                          nb_parameters_per_plot_in_col = 5)
+p_bar[[1]]$barplot$`germplasm-1|location-1` # first element of the plot
+```
+
+
+### unipart network on location
+
+For network representation, set `plot_type = "network"` diffusion event are display with curve.
+`in_col` can be settle to customize color of vertex.
+The number of seed lots on each location are represented.
+
+```{r}
+p_net = plot.data_network(net_unipart_location_g, plot_type = "network", 
+                          labels_on = TRUE, labels_size = 4)
+names(p_net) # one element per germplasm, the first element with all the data
+p_net$C1
+```
+
+```{r}
+p_net = plot.data_network(net_unipart_location_y, plot_type = "network", 
+                          labels_on = TRUE, labels_size = 4)
+names(p_net) # one element per year, the first element with all the data
+p_net$`2012-2013-2014`
+```
+
+
+### bipart network on germplasm and location
+
+```{r}
+p_net = plot.data_network(net_bipart, plot_type = "network", 
+                          labels_on = TRUE, labels_size = 4)
+names(p_net) # one element per year, the first element with all the data
+p_net$`2014`
+```
+
+
+With barplots, it represents the number of edges per vertex for each germplasm and each location.
+```{r}
+p_bar = plot.data_network(net_bipart, plot_type = "barplot")
+names(p_bar) # one element per year, the first element with all the data
+p_bar = p_bar$`2010-2011-2012-2013-2014`$barplot
+p_bar$germplasm
+p_bar$location
+```
+

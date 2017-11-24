@@ -1,0 +1,116 @@
+### Variance intra : to estimate variance within germplasm {#variance-intra}
+
+#### Theory of the model
+
+The phenotypic value $Y_{ijkl}$ for a given variable $Y$, germplasm $i$, environment $j$, plot $k$ and individual $l$ is modeled as :
+
+$Y_{ijkl} = \mu_{ijk} + \varepsilon_{ijkl} ; \quad \varepsilon_{ijkl} \sim \mathcal{N} (0,\sigma^2_{ij})$,
+
+Where $Y_{ijkl}$ is the phenotypic value for germplasm $i$, environment $j$, plot $k$ and individual $l$;
+$\mu_{ijk}$ is the mean of population $i$ in environnement $j$ and plot $k$ (nested in environment $j$);
+$\varepsilon_{ijkl}$ is what is not explained by the model in germplasm $i$, environment $j$, plot $k$ and individual $l$. 
+
+$\varepsilon_{ijkl}$ is taken from a normal distribution, centered on 0 with variance $\sigma^2_{ij}$
+
+With priors :
+$\sigma^2_{ij} \sim 1/Gamma(10^{-6},10^{-6})$ and $\mu_{ijk} \sim N(\mu_{.j.},10^{6})$
+
+$\sigma^2_{ij}$ correspond to the intra-germplasm variance.
+
+No specific experimental design is needed as long as there are several individuals measured for a given germplasm.
+
+#### Steps with `PPBstats`
+
+For variance intra analysis, you can follow these steps (Figure \ref(fig:main-workflow)) :
+
+- Format the data with `format_data_PPBstats`
+- Run the model with `model_variance_intra` 
+- Check model outputs with graphs to know if you can continue the analysis with `check_model`
+- Get mean comparisons for each factor with `mean_comparisons` and vizualise it with `plot`
+
+#### Format the data
+
+```{r}
+data(data_model_variance_intra)
+data_model_variance_intra = format_data_PPBstats(data_model_variance_intra, type = "data_agro")
+```
+
+#### Run the model
+To run the model , used the function `model_variance_intra`.
+You can run it on one variable.
+
+```{r}
+#out_vi = model_variance_intra(data_model_variance_intra, variable = "spike_weight", nb_iterations = 100)
+```
+
+#### Check and visualize model outputs
+
+##### Check the model
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from `check_model`).
+
+```{r}
+#out_check_vi = check_model(out_vi)
+```
+
+##### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot`
+
+```{r}
+#p_out_check_vi = plot(out_check_vi)
+```
+
+#### Get and visualize mean comparisons
+
+##### Get mean comparisons
+
+Get mean comparisons with `mean_comparisons`.
+
+```{r}
+#out_mean_comparisons_vi = mean_comparisons(out_check_vi, parameter = "mu", p.adj = "soft.bonf")
+```
+
+##### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot`
+
+```{r}
+#p_out_mc_vi = plot(out_mean_comparisons_vi)
+```
+
+
+#### Apply the workflow to several variables
+
+If you wish to apply the variance\_intra workflow to several variables, you can use `lapply` with the following code :
+
+```{r}
+workflow_model_variance_intra = function(x){
+  out_vi = model_variance_intra(data_variance_intra, variable = x)
+  
+  out_check_vi = check_model(out_vi)
+  p_out_check_vi = plot(out_check_vi)
+  
+  out_mean_comparisons_vi = mean_comparisons(out_check_vi, p.adj = "bonferroni")
+  p_out_mean_comparisons_vi = plot(out_mean_comparisons_vi)
+  
+  out = list(
+    "out_vi" = out_vi,
+    "out_check_vi" = out_check_vi,
+    "p_out_check_vi" = p_out_check_vi,
+    "out_mean_comparisons_vi" = out_mean_comparisons_vi,
+    "p_out_mean_comparisons_vi" = p_out_mean_comparisons_vi
+  )
+  
+  return(out)
+}
+
+## Not run because of memory and time issues !
+# vec_variables = c("y1", "y2", "y3")
+#
+# out = lapply(vec_variables, workflow_model_variance_intra)
+# names(out) = vec_variables
+
+```
+

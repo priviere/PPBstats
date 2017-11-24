@@ -1,0 +1,180 @@
+## Describe the data {#describe-data-agro}
+
+When the data are collected, a first step is to describe it with `describe_data`.
+Five types of plot, throught the `plot_type` argument are possible:
+- presence abscence matrix that represent the combinaison of germplasm $\times$ location
+- histogramm
+- barplot, where sd error are displayed
+- boxplot
+- interaction
+- biplot
+- radar
+
+Then you must choose which factor to represent on the x axis (`x_axis` argument),
+the factor to display in color (`in_col` argument), and of course the variable to describe (`vec_variables` argument).
+
+It is possible to tune the number of factor displayed (`nb_parameters_per_plot_x_axis` and `nb_parameters_per_plot_in_col` arguments) and the size of the labels regarding biplot and radar (`labels_on` and `labels_size` arguments).
+
+### Format the data
+
+Get two data set to look at some examples
+```{r}
+data("data_GxE")
+data_GxE = format_data_PPBstats(data_GxE)
+
+data("data_model_2")
+data_model_2 = format_data_PPBstats(data_model_2)
+```
+
+
+### presence abscence matrix
+
+The presence absence matrix may be different from experimental design planned because of NA.
+The plot represents the presence/absence matrix of G $\times$ E combinations.
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "pam",
+  vec_variables = c("y1", "y2")
+  )
+names(p)
+p$y1
+```
+
+A score of 3 is for a given germplasm replicated three times in a given environement.
+
+```{r}
+p = describe_data(
+  data_model_2, plot_type = "pam",
+  vec_variables = c("y1", "y2")
+  )
+p$y1
+```
+
+Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
+A score of 1 is for a given germplasm in a given environment.
+A score of 2 is for a given germplasm replicated twice in a given environement.
+
+
+### histogramm
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "histogramm",
+  vec_variables = c("y1", "y2")
+  )
+p$y1
+```
+
+
+### barplot
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "barplot",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm"
+  )
+```
+
+Note that for each element of the following list, there are as many graph as needed with `nb_parameters_per_x_axis` parameters per graph.
+
+```{r}
+names(p$y1)
+p$y1$`germplasm-1|-NA`
+```
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "barplot",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm",
+  in_col = "location"
+  )
+```
+
+Note that for each element of the following list, there are as many graph as needed with `nb_parameters_per_x_axis` and `nb_parameters_per_in_col` parameters per graph.
+```{r}
+names(p$y1)
+p$y1$`germplasm-1|location-1`
+```
+
+
+### boxplot
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "boxplot",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm"
+  )
+```
+
+Note that for each element of the following list, there are as many graph as needed with `nb_parameters_per_x_axis` parameters per graph.
+
+```{r}
+names(p$y1)
+p$y1$`germplasm-1|-NA`
+```
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "boxplot",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm",
+  in_col = "location"
+  )
+```
+
+Note that for each element of the following list, there are as many graph as needed with `nb_parameters_per_x_axis` and `nb_parameters_per_in_col` parameters per graph.
+```{r}
+names(p$y1)
+p$y1$`germplasm-1|location-1`
+```
+
+
+### interaction
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "interaction",
+  vec_variables = c("y1", "y2"),
+  x_axis = "germplasm",
+  in_col = "location"
+  )
+```
+
+Note that for each element of the following list, there are as many graph as needed with `nb_parameters_per_x_axis` and `nb_parameters_per_in_col` parameters per graph.
+```{r}
+names(p$y1)
+p$y1$`germplasm-1|location-1`
+```
+
+
+### biplot
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "biplot",
+  vec_variables = c("y1", "y2", "y3"),
+  in_col = "germplasm", labels_on = "germplasm"
+  )
+```
+
+The name of the list correspond to the pairs of variables displayed.
+Note that for each element of the following list, there are as many graph as needed with `nb_parameters_per_in_col` parameters per graph.
+```{r}
+names(p)
+p$`y1 - y2`$`-NA|germplasm-1`
+```
+
+
+### radar
+
+```{r}
+p = describe_data(
+  data_GxE, plot_type = "radar",
+  vec_variables = c("y1", "y2", "y3"),
+  in_col = "location"
+  )
+```

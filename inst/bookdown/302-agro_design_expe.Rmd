@@ -1,0 +1,246 @@
+## Design the experiment {#doe}
+
+Function `design_experiment` sets the experimental design based on :
+
+- the number of entries
+- the number of controls per block
+- the number of blocks
+- the number of columns in the design. The number of rows is computed automaticaly.
+
+The function returns a list with
+- A data frame
+- An image of the experimental design
+
+A description of the algorithm is describe in the help of the function: `?design_experiment`.
+
+
+### fully-replicated {#fully-replicated}
+
+Decision tree where fully-replicated design are used is displayed in Figure \@ref(fig:tree-fully-replicated).
+
+```{r tree-fully-replicated, out.width='70%', fig.align='center', echo=FALSE, fig.cap="Decision tree where fully-replicated design are used."}
+knitr::include_graphics("figures/decision-tree-where-fully-replicated-design-are-used.png")
+```
+
+The R code to implement is the following :
+
+```{r}
+p_fr = design_experiment(
+  location = "Location-1",
+  year = "2016",
+  expe.type = "fully-replicated",
+  germplasm = paste("germ", c(1:20), sep = ":"),
+  nb.blocks = 3,
+  nb.cols = 4)
+```
+
+By default, the data frame is under a standard format:
+```{r}
+head(p_fr$"fully-replicated"$data.frame)
+```
+
+
+You can set the format to a `SHiNeMaS`^[Seeds History and Network Management System, see http://moulon.inra.fr/index.php/en/tranverse-team/atelier-de-bioinformatique/projects/181 for more details] reproduction template file:
+
+```{r}
+p_fr = design_experiment(
+  location = "Location-2",
+  year = "2016",
+  expe.type = "fully-replicated",
+  germplasm = paste("germ", c(1:20), sep = ":"),
+  nb.blocks = 3,
+  nb.cols = 4,
+  return.format = "shinemas")
+```
+
+```{r}
+head(p_fr$"fully-replicated"$data.frame)
+```
+
+
+```{r}
+p_fr$"fully-replicated"$design
+```
+
+
+
+### row-column {#row-column}
+
+Decision tree where row-column design are used is displayed in Figure \@ref(fig:tree-row-column).
+
+
+```{r tree-row-column, out.width='20%', fig.align='center', echo=FALSE, fig.cap="Decision tree where row-column design are used."}
+knitr::include_graphics("figures/decision-tree-where-row-column-design-are-used.png")
+```
+
+
+The R code to implement is the following :
+
+```{r}
+p_case2 = design_experiment(
+  location = "Location-3",
+  year = "2016",
+  expe.type = "row-column",
+  germplasm = paste("germ", c(1:20), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 7,
+  nb.blocks = 1,
+  nb.cols = 7)
+```
+
+```{r}
+head(p_case2$"row-column"$data.frame)
+```
+
+```{r}
+p_case2$"row-column"$design
+```
+
+Note that if controls are missing in rows or columns.
+The function return an error.
+The controls must catch as much as possible of the trial variation.
+
+
+### Regional and satellite farms {#rf-sf}
+
+Regional farms had several entries (i.e. a germplasm in an environment) in two or more blocks with entries replicated in each block.
+Satellite farms had no block and one entry replicated twice.
+Farmers chose the other entries to be sown that were not replicated.
+The number of entries may vary between farms.
+Note that at least 25 locations or environments (location $\times$ year) are need in order to get confident analysis.
+
+Decision tree where regional and satellite farms design are used is displayed in Figure \@ref(fig:tree-rf-sf).
+
+
+```{r tree-rf-sf, out.width='70%', fig.align='center', echo=FALSE, fig.cap="Decision tree where regional and satellite farms design are used."}
+knitr::include_graphics("figures/decision-tree-where-regional-and-satellite-farms-design-are-used.png")
+```
+
+
+The R code to implement is the following :
+
+Here, six designs are generated: four for satellite farm and two for regional farm.
+
+```{r}
+p_case3_sf1 = design_experiment(
+  location = "Location-4",
+  year = "2016",
+  expe.type = "satellite-farm",
+  germplasm = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 2,
+  nb.blocks = 1,
+  nb.cols = 2)
+p_case3_sf1 = p_case3_sf1$`satellite-farms`$design
+p_case3_sf1
+```
+
+```{r}
+p_case3_sf2 = design_experiment(
+  location = "Location-5",
+  year = "2016",
+  expe.type = "satellite-farm",
+  germplasm = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 2,
+  nb.blocks = 1,
+  nb.cols = 2)
+p_case3_sf2 = p_case3_sf2$`satellite-farms`$design
+p_case3_sf2
+```
+
+```{r}
+p_case3_sf3 = design_experiment(
+  location = "Location-6",
+  year = "2016",
+  expe.type = "satellite-farm",
+  germplasm = paste("germ", c(1:6), sep = ":"),
+  controls = "toto",
+  nb.controls.per.block = 2,
+  nb.blocks = 1,
+  nb.cols = 2)
+p_case3_sf3 = p_case3_sf3$`satellite-farms`$design
+p_case3_sf3
+```
+
+```{r}
+p_case3_rf1 = design_experiment(
+  location = "Location-7",
+  year = "2016",
+  expe.type = "regional-farm",
+  germplasm = paste("germ", c(1:16), sep = ":"),
+  controls = c("c1", "c2", "c3", "c4"),
+  nb.controls.per.block = 4,
+  nb.blocks = 2,
+  nb.cols = 4)
+p_case3_rf1 = p_case3_rf1$`regional-farms`$design
+p_case3_rf1
+```
+
+```{r}
+p_case3_rf2 = design_experiment(
+  location = "Location-8",
+  year = "2016",
+  expe.type = "regional-farm",
+  germplasm = paste("germ", c(1:16), sep = ":"),
+  controls = c("c1", "c2", "c3"),
+  nb.controls.per.block = 3,
+  nb.blocks = 2,
+  nb.cols = 3)
+p_case3_rf2 = p_case3_rf2$`regional-farms`$design
+p_case3_rf2
+```
+
+If you have many space and many seeds, you can adapt the satellite farm design with only one column.
+Each row beeing a sower width.
+
+```{r}
+p_case3_sf4 = design_experiment(
+  location = "Location-9",
+  year = "2016",
+  expe.type = "satellite-farm",
+  germplasm = paste("germ", c(1:6), sep = ":"),
+  controls = "C",
+  nb.controls.per.block = 2,
+  nb.blocks = 1,
+  nb.cols = 1)
+p_case3_sf4 = p_case3_sf4$`satellite-farms`$design
+p_case3_sf4
+```
+
+
+There some constraints regarding `expe.type = "satellite-farm"`:
+
+- if `nb.entries > 10`, a warning message recommand to have less than 10 entries.
+- There are two controls per block
+- There is one block
+- There are maximum two columns
+
+For `expe.type = "regional-farm"`, there is a warning message if controls are missing in rows or columns.
+It is better to catch as much as possible of the trial variation.
+If there are less than 2 blocks, an error is returned.
+
+### Incomplete Block Design {#ibd}
+
+Incomplete block design.
+Entries are not replicated. Some entries are shared by some locations.
+There is one block per location.
+
+```{r}
+p_ibd = design_experiment(
+  location = "Location-9",
+  year = "2016",
+  expe.type = "IBD",
+  germplasm = paste("germ", c(1:10), sep = ":"),
+  nb.blocks = 8,
+  nb.cols = 4)
+```
+
+```{r}
+head(p_ibd$`IBD`$data.frame)
+```
+
+
+```{r}
+p_ibd$`IBD`$design
+```

@@ -1,0 +1,92 @@
+--- 
+title: "Analysis of Participatory Plant Breeding programme with the R package `PPBstats`"
+author: "Pierre Rivière"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: biblio.bib
+biblio-style: apalike
+link-citations: yes
+github-repo: priviere/PPBstats_book
+description: "Tutorial on how to use the R package PPBstats."
+---
+
+
+# Preface {-}
+
+This book introduces the R package `PPBstats`.
+`PPBstats` is an R package that performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
+
+```{r, out.width='10%', fig.align='left', echo=FALSE}
+knitr::include_graphics("figures/warning.png")
+```
+Be aware that this package is under development and test: do not 100\% trust the functions!!! 
+You're welcome to contribute: see [here](https://github.com/priviere/PPBstats/releases/download/v0.22/contribute_PPBstats.pdf) for more details.
+
+```{r , out.width='90%', fig.align='center', echo=FALSE, fig.cap="Wheat trials on farm within our participatory plant breeding programme, summer 2012, Auvergne, France. CC-BY-NC-SA. Pierre Rivière."}
+knitr::include_graphics("figures/wheat.JPG")
+```
+
+
+## Authors of the package and affiliation {-}
+Pierre Rivière^1,2^
+Gaelle Van Frank^2^
+Olivier David^3^
+Facundo Muñoz^4^
+
+^1^ Réseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France
+```{r , out.width='30%', fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/Logo-RSP.png")
+```
+Le Réseau Semences Paysannes (the French Farmers' Seeds Network (RSP)), created in 2003, brings together a great diversity of collectives and people who preserve farmers' seeds in fields, orchards, vineyards and gardens. They are involved in supporting the consolidation of local initiatives to maintain and renew cultivated biodiversity through Community Seeds Systems. Over 80 organizations have come together to promote and develop farmers' seeds, and to protect farmers' rights over their seeds.
+www.semencespaysannes.org
+
+
+^2^ INRA, UMR 0320, Génétique Quantitative et Evolution, Ferme du Moulon F-91190 Gif sur Yvette, France
+```{r , out.width='30%', fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/Logo-UMRGV.jpg")
+```
+The Diversity, Evolution and Adaptation of Populations (DEAP) team led by Isabelle Goldringer is part of INRA UMR 0320 Quantitative Genetic and Evolution.
+Its work is based on the analysis of the genetic and evolutionary mechanisms underlying evolution and adaptation of crop populations.
+DEAP develops strategies for on farm management of crop genetic diversity and
+for plant breeding (evolutionary and/or participatory) adated to organic and low input agriculture.
+Assessing the benefits of in-field genetic diversity (variety mixtures, populations) and designing
+/ breeding optimized mixtures adapted to local conditions are also key research objectives.
+http://moulon.inra.fr/index.php/en/team/deap
+
+
+^3^ INRA, UR 1404 Unité Mathématiques et Informatique Appliquées du Génome à l'Environnement, F-78352 Jouy-en-Josas, France
+
+```{r , out.width='30%', fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/Logo-maiage.png")
+```
+The INRA UR1404 MaIAGE research laboratory gathers mathematicians, computer scientists, bioinformaticians and biologists to tackle problems coming from biology, agronomy and ecology; The addressed questions may concern processes at very different levels: molecular, cellular or multicellular, individual, populations, ecosystems oy landscapes. 
+MaIAGE develops original methods in mathematics, statistics and computer science which are generic or driven by specific biological problems. A particular attention is paid to develop and make available softwares, databases, ontologies and web services so that biologists can use them easily to analyze their data or to mine the scientific literature.
+http://maiage.jouy.inra.fr/?q=en/home
+
+
+^4^ INRA, Centre Val de Loire, Unité Amélioration, Génétique et Physiologie Forestières, F-45075 Orléans, France
+
+## Contact {-}
+Pierre Rivière: pierre@semencespaysannes.org
+
+## Contributions for the package and the book {-}
+PR coordinates the package development, wrote the R functions and the present book
+
+GVF test the package and updated the code regarding Sections \@ref(ammi), \@ref(gge), \@ref(model-1), \@ref(model-2) and \@ref(variance-intra)
+
+OD wrote the `JAGS` code and reviewed the R code and the book regarding Sections \@ref(model-1), \@ref(model-2), \@ref(model-1) and \@ref(variance-intra).
+
+FM reformated and improved all the code regarding S3 methods and improved the book by formating figure with `Tikz`.
+
+## Copyright and Licence {-}
+
+Copyright Réseau Semences Paysannes and Institut National de la Recherche Agronomique
+
+[Licence creative commons BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+```{r , out.width='30%', fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/cc-by-nc-sa.png")
+```
+
+

@@ -1,5 +1,0 @@
-\subsection{model 3 }
-\label{model_3}
-
-!!! TO DO !!!
-
