@@ -29,6 +29,7 @@
 
 ### vignette
 - update text (cf #76, #65, #67)
+- translate Rnw files to Rmd files, format to bookdown, put all files in inst/bookdown (cf #36)
   
 ### add new RData
 - data_network_unipart_sl.RData
