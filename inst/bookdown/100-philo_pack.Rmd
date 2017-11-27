@@ -2,7 +2,7 @@
 
 ## What is Participatory Plant Bredding ?
 
-- **decentralized the selection**
+- **decentralize the selection**
 
 When decentralizing the selection in target environment [@desclaux_changes_2008], the phenotypic trait is the sum of genetic ($G$), environmental ($E$) and interaction between the two ($G \times E$) : $P = G + E + G \times E$.
 Broad sens heritability of a given trait is then: 
@@ -15,41 +15,64 @@ When facing a wide diversity of agroecological environment and practices, decent
 - **involve all actors in the breeding decision process**: farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors  [@sperling_framework_2001].
 
 
-## Objectives of PPBstats
+## Objectives of `PPBstats`
 
-PPBstats aims to perform analysis found within PPB programmes at four levels:
+`PPBstats` aims to perform analysis found within PPB programmes at four levels:
 
-- network of seeds circulation (Section \@ref(network))
+- network of seeds circulation (section \@ref(network))
 
-- agronomic trials (Section \@ref(agronomic) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
+- agronomic trials (section \@ref(agronomic) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
 The statistical procedures are based on frequentist and bayesian approaches.
 
-- organoleptic tests (Section \@ref(organoleptic))
+- organoleptic tests (section \@ref(organoleptic))
 
-- molecular experiments (Section \@ref(molecular))
+- molecular experiments (section \@ref(molecular))
 
 Please, feel free to contribute to other aspects of analysis, see section \@ref(contributions) for more information.
 
 
-## Decision tree to choose the right analysis according to question and experimental design
+## Analysis according to the objectives
 
+Five main objectives dealing with PPB programmes can be :
 
-!!! 
-TO DO : integrer decision tree avec même normencalture que dans la vignette + référer aux parties adéquates
+- **Study network of seed circulation** to have insight on how exchanges are structured through network analysis (section \@ref(network)).
 
-+ attente complément Camille
+- **Improve the prediction of a target variable for selection**: this refers to non parametric and multivariate analysis, regression, classificationand regression trees, random forest.
+Only multivariate analyses are proposed in `PPBstats` in section \@ref(multivariate-analysis).
 
-!!!
+- **Compare different germplasms on each location for selection**.
+This can be done through 
+     - agronomic analysis within family 1 of analysis (section \@ref(family-1))
+         - classic anova (section \@ref(classic-anova))
+         - spatial model (section \@ref(spatial-analysis))
+         - bayesian hierarchical model (section \@ref(model-1))
+     - organoleptic analysis (section \@ref(organoleptic))
+
+- **Study response to selection of germplasm over several locations for selection**.
+This can be done through agronomic analysis within family 2 of analysis (section \@ref(family-2)):
+    - incomplete block design (section \@ref(ibd))
+    - AMMI (section \@ref(ammi))
+    - GGE (section \@ref(gge))
+    - migrant-residant (section) \@ref(migrant-residant))
+    - bayesian model (section \@ref(model-2))
+
+- **Study diversity structure and identify complementary or similar parents for cross**.
+This can be done through 
+    - agronomic:
+        - multivariate analysis and clustering mentionned in section \@ref(multivariate-analysis)
+    - molecular analysis (section \@ref(molecular))
+
+Each of these objective is explained throught exemple for each analyse in its corresponding section.
 
 ## Data formating 
 
-To be analyzed by PPBstats, the data must have a certain format.
+To be analyzed by `PPBstats`, the data must have a certain format.
 Up to now, there are two formats supported:
 
 - `data-network`
 - `data-agro`
 
-To check and give the right format, you must use the `format_data_PPBstats` function.
+To check and give the right format, you must use the `format_data_PPBstats()` function.
 Each format are detailed in their corresponding section.
 
 
