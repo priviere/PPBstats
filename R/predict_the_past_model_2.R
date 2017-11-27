@@ -1,7 +1,8 @@
-#' Predict value of a germplasm in an environment based on model 2
+#' Predict values of germplasms in environments where they have not been grown based on model 2
 #'
 #' @description
-#' \code{predict_the_past_model_2} predict value of a germplasm in an environment based on model 2.
+#' \code{predict_the_past_model_2} predicts values of germplasms in environments where 
+#' they have not been grown based on model 2.
 #' 
 #' @param out_check_model_model_2 object from \code{\link{check_model}} from \code{\link{model_2}}
 #' 

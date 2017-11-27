@@ -14,25 +14,25 @@ every node/.append style={scale=0.5},
     level 5/.style={level distance=5cm, sibling distance= 3cm, concept color=orange!40, font=\huge, text width=5cm},
     ]
 
-\node{ \huge \textbf{Analysis} }
-      child { node {\textbf{Family 1}}
-        child { node {Number of plots per location low}
-       		child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
-        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf Section~\ref{rf_sf}} }
-	      			child { node {\textbf{model 1 \\ cf Section~\ref{model_1}}} }
+\node{ \huge \textbf{Analyses} }
+       child { node {\textbf{Family 1}}
+         child { node {Number of plots per location: low}
+        		child { node {At least 25 environnements (i.e. number location $\times$ number year $\geq$~25)}
+        		child { node { All locations share a one replicated control or more; entries are not replicated within and among locations \\ \textbf{satellite-farm \& regional-farm} }
+ 	      			child { node {\textbf{model 1} }}
+         		}
         		}
-       		}
-		    }
-      }
-      child { node {\textbf{Family 2}}
-        child { node {Number of plots per farm low}
-        	child { node {At least 25 environnements (25 locations and 1 year or 13 locations and 2 years)}
-        		child { node { All locations share a replicated control; entries are not replicated on farm and among farms \\ \textbf{satellite-farm \& regional-farm \\ cf Section~\ref{rf_sf}} }
-					child { node {\textbf{model 2 \\ cf Section~\ref{model_2}} }}
-	        	}
-        	}
-        }
-      };
+ 		    }
+       }
+       child { node {\textbf{Family 2}}
+         child { node {Number of plots per farm: low}
+         	child { node {At least 25 environnements (i.e. number location $\times$ number year $\geq$~25)}
+        		child { node { All locations share a one replicated control or more; entries are not replicated within and among locations \\ \textbf{satellite-farm \& regional-farm} }
+ 					child { node {\textbf{model 2} }}
+ 	        	}
+         	}
+         }
+       }
 \end{tikzpicture}
 
 \end{document}

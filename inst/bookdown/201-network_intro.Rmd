@@ -16,11 +16,8 @@ Two types of network are handle within `PPBstats` :
 
 The workflow is very simple as only descriptive analysis can be done.
 
-`PPBstats` is divided into two sets of functions: Main functions and secondary, internal functions.
-In this vignette, we only used examples with main functions as internal functions are called within main functions.
-
-Figure \@ref(fig:main-workflow-network) displays the main functions and their relationships.
-Table \@ref(tab:function-descriptions-workflow-network) describes each of the main functions.
+Figure \@ref(fig:main-workflow-network) displays the functions and their relationships.
+Table \@ref(tab:function-descriptions-workflow-network) describes each of the functions.
 
 You can have more information for each function by typing `?function_name` in your R session.
 

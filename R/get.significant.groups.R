@@ -1,7 +1,9 @@
-#' Get significant groups of differences for a set of parameters based on MCMC outputs
+#' Get significant groups of means that are significantly different from each others
+#'  for a set of parameters based on MCMC outputs
 #'
 #' @description
-#' \code{get.significant.groups} gets significant groups of differences for a set of parameters based on MCMC outputs
+#' \code{get.significant.groups} gets significant groups of means that are significantly different 
+#' from each others for a set of parameters based on MCMC outputs
 #' 
 #' @param Mpvalue Square matrix with the probability of having a common distribution for each pair of parameter. It comes from \code{\link{comp.parameters}}
 #'

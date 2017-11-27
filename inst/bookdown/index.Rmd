@@ -27,18 +27,27 @@ You're welcome to contribute: see section \@ref(contributions).
 knitr::include_graphics("figures/wheat.JPG")
 ```
 
+## Contact {-}
+Pierre Rivière: pierre@semencespaysannes.org
 
-## Authors of the package and affiliation {-}
-Pierre Rivière^1,2^
-Gaelle Van Frank^2^
-Olivier David^3^
-Facundo Muñoz^4^
+## Authors of `PPBstats` and the book, affiliation and contribution {-}
+
+**Pierre Rivière^1^** coordinated the package development, wrote the R functions and the present book
+
+**Gaelle Van Frank^2^** tested the package and updated the code regarding sections \@ref(ammi), \@ref(gge), \@ref(model-1), \@ref(model-2) and \@ref(variance-intra)
+
+**Olivier David^3^** wrote the `JAGS` code and reviewed the R code and the book regarding sections \@ref(model-1), \@ref(model-2), \@ref(model-1) and \@ref(variance-intra).
+
+**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods and format figures with `Tikz`.
+
+**Isabelle Goldringer^2^** reviewed and improved all the text of the book
+
 
 ^1^ Réseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France
 ```{r , out.width='30%', fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/Logo-RSP.png")
 ```
-Le Réseau Semences Paysannes (the French Farmers' Seeds Network (RSP)), created in 2003, brings together a great diversity of collectives and people who preserve farmers' seeds in fields, orchards, vineyards and gardens. They are involved in supporting the consolidation of local initiatives to maintain and renew cultivated biodiversity through Community Seeds Systems. Over 80 organizations have come together to promote and develop farmers' seeds, and to protect farmers' rights over their seeds.
+Le Réseau Semences Paysannes (the French Farmers' Seeds Network (RSP)), created in 2003, brings together a great diversity of collectives and people who preserve farmers' seeds in fields, orchards, vineyards and gardens. They are involved in supporting the consolidation of local initiatives to maintain and renew cultivated biodiversity through Community Seeds Systems. Over 90 organizations have come together to promote and develop farmers' seeds, and to protect farmers' rights over their seeds.
 www.semencespaysannes.org
 
 
@@ -67,17 +76,6 @@ http://maiage.jouy.inra.fr/?q=en/home
 
 ^4^ INRA, Centre Val de Loire, Unité Amélioration, Génétique et Physiologie Forestières, F-45075 Orléans, France
 
-## Contact {-}
-Pierre Rivière: pierre@semencespaysannes.org
-
-## Contributions for the package and the book {-}
-PR coordinates the package development, wrote the R functions and the present book
-
-GVF test the package and updated the code regarding Sections \@ref(ammi), \@ref(gge), \@ref(model-1), \@ref(model-2) and \@ref(variance-intra)
-
-OD wrote the `JAGS` code and reviewed the R code and the book regarding Sections \@ref(model-1), \@ref(model-2), \@ref(model-1) and \@ref(variance-intra).
-
-FM reformated and improved all the code regarding S3 methods and improved the book by formating figure with `Tikz`.
 
 ## Copyright and Licence {-}
 

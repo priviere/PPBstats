@@ -1,5 +1,4 @@
-## Family of analysis 1 : entry effects on one farm {#section-analysis1}
+## Family of analysis 1 : entry effects on one farm {#family-1}
 
 **Family 1** gathers analysis that estimate entry effects.
-This is for analysis on one farm.
 Decision tree regarding Family 1 is displayed in Figure \@ref(fig:tree-f1).

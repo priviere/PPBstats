@@ -9,17 +9,17 @@ Function `design_experiment` sets the experimental design based on :
 
 The function returns a list with
 
-- A data frame
-- An image of the experimental design
+- a data frame
+- an image of the experimental design
 
 A description of the algorithm is describe in the help of the function: `?design_experiment`.
 
 
 ### fully-replicated {#fully-replicated}
 
-Decision tree where fully-replicated design are used is displayed in Figure \@ref(fig:tree-fully-replicated).
+The decision tree where fully-replicated designs are used is displayed in Figure \@ref(fig:tree-fully-replicated).
 
-```{r tree-fully-replicated, out.width='70%', fig.align='center', echo=FALSE, fig.cap="Decision tree where fully-replicated design are used."}
+```{r tree-fully-replicated, out.width='70%', fig.align='center', echo=FALSE, fig.cap="The decision tree where fully-replicated designs are used."}
 knitr::include_graphics("figures/decision-tree-where-fully-replicated-design-are-used.png")
 ```
 
@@ -67,10 +67,10 @@ p_fr$"fully-replicated"$design
 
 ### row-column {#row-column}
 
-Decision tree where row-column design are used is displayed in Figure \@ref(fig:tree-row-column).
+The decision tree where row-column design are used is displayed in Figure \@ref(fig:tree-row-column).
 
 
-```{r tree-row-column, out.width='20%', fig.align='center', echo=FALSE, fig.cap="Decision tree where row-column design are used."}
+```{r tree-row-column, out.width='20%', fig.align='center', echo=FALSE, fig.cap="The decision tree where row-column designs are used."}
 knitr::include_graphics("figures/decision-tree-where-row-column-design-are-used.png")
 ```
 
@@ -97,30 +97,29 @@ head(p_case2$"row-column"$data.frame)
 p_case2$"row-column"$design
 ```
 
-Note that if controls are missing in rows or columns.
-The function return an error.
+Note that if controls are missing in rows or columns, the function will return an error message.
 The controls must catch as much as possible of the trial variation.
 
 
 ### Regional and satellite farms {#rf-sf}
 
-Regional farms had several entries (i.e. a germplasm in an environment) in two or more blocks with entries replicated in each block.
-Satellite farms had no block and one entry replicated twice.
-Farmers chose the other entries to be sown that were not replicated.
+Regional farms must have several entries (i.e. a germplasm in an environment) in two or more blocks with some entries (i.e. controls) replicated in each block.
+Satellite farms has no block and only one entry is replicated twice.
+Farmers choose all entries that are not replicated.
 The number of entries may vary between farms.
-Note that at least 25 locations or environments (location $\times$ year) are need in order to get confident analysis.
+Note that at least 25 environments (location $\times$ year) are need in order to get confident analysis.
 
-Decision tree where regional and satellite farms design are used is displayed in Figure \@ref(fig:tree-rf-sf).
+The decision tree where regional and satellite farms designs are used is displayed in Figure \@ref(fig:tree-rf-sf).
 
 
-```{r tree-rf-sf, out.width='70%', fig.align='center', echo=FALSE, fig.cap="Decision tree where regional and satellite farms design are used."}
+```{r tree-rf-sf, out.width='70%', fig.align='center', echo=FALSE, fig.cap="The decision tree where regional and satellite farms designs are used."}
 knitr::include_graphics("figures/decision-tree-where-regional-and-satellite-farms-design-are-used.png")
 ```
 
 
 The R code to implement is the following :
 
-Here, six designs are generated: four for satellite farm and two for regional farm.
+As an exemple here, six designs are generated: four for satellite farms and two for regional farms.
 
 ```{r}
 p_case3_sf1 = design_experiment(
@@ -192,7 +191,7 @@ p_case3_rf2 = p_case3_rf2$`regional-farms`$design
 p_case3_rf2
 ```
 
-If you have many space and many seeds, you can adapt the satellite farm design with only one column.
+If you have enought space and lots of seeds, you can adapt the satellite farm design with only one column.
 Each row beeing a sower width.
 
 ```{r}
@@ -212,14 +211,14 @@ p_case3_sf4
 
 There some constraints regarding `expe.type = "satellite-farm"`:
 
-- if `nb.entries > 10`, a warning message recommand to have less than 10 entries.
+- if `nb.entries > 10`, a warning message recommands to have less than 10 germplasms or to choose `expe.type = "regional-farm"`.
 - There are two controls per block
 - There is one block
 - There are maximum two columns
 
 For `expe.type = "regional-farm"`, there is a warning message if controls are missing in rows or columns.
 It is better to catch as much as possible of the trial variation.
-If there are less than 2 blocks, an error is returned.
+If there are less than 2 blocks, an error message is returned.
 
 ### Incomplete Block Design {#ibd}
 
@@ -229,11 +228,10 @@ There is one block per location.
 
 ```{r}
 p_ibd = design_experiment(
-  location = "Location-9",
   year = "2016",
   expe.type = "IBD",
   germplasm = paste("germ", c(1:10), sep = ":"),
-  nb.blocks = 8,
+  nb.blocks = 8, # i.e. number of location
   nb.cols = 4)
 ```
 

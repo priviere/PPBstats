@@ -13,6 +13,8 @@
     - improve display of score : cf #61
 - plot.parameter_groups.R:
     - model 2 ACP cluster : put in blod or color a given ind, cf #76
+- design_experiment.R
+    - no location in title for IBD and in the data frame, cf #39
 
 ### add new functions
 - napping.R, cf #72
@@ -30,6 +32,7 @@
 ### vignette
 - update text (cf #76, #65, #67)
 - translate Rnw files to Rmd files, format to bookdown, put all files in inst/bookdown (cf #36)
+- text improved by Isabelle
   
 ### add new RData
 - data_network_unipart_sl.RData

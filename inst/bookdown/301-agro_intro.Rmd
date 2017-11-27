@@ -2,9 +2,9 @@
 
 ### Experimental design
 
-Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the space available.
+Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the number of plots available in each location.
 
-The experimental design is thought in relation to the analysis.
+The trial is designed in relation to the analysis you will perform.
 The key elements to choose an appropriate experimental design are:
 
 - the number of locations
@@ -12,44 +12,47 @@ The key elements to choose an appropriate experimental design are:
 - the replication of entries within and between locations
 
 
-Several designs used in PPB programmes are presented in Section \@ref(doe) and are mentionned in decision tree in Section \@ref(decision-tree).
+Several designs used in PPB programmes are presented in section \@ref(doe) and are mentionned in decision tree in section \@ref(decision-tree).
 
-Then, you can sow, note, harvest, measure (see Section \@ref(sow)) ...
+Then, you can sow, measure and harvest ... (section \@ref(sow))
 
 
 ### Analyses carried out
 
-After describing the data (see Section \@ref(describe-data-agro)), you can run statistical analysis.
+After describing the data (section \@ref(describe-data-agro)), you can run statistical analysis.
 
-Table \@ref(tab:summary-analysis) summarizes the possible analyses in `PPBstats` and their specificities.
+Table \@ref(tab:summary-analysis) summarizes the analyses available in `PPBstats` and their specificities.
 The various effects that can be estimated are:
 
-- **entry**: a combination of a germplasm and an location or an environment
-- **germplasm**
-- **location**
+- **germplasm**: a variety or a population
+- **location**: a farm or a station where a trial is carried out
 - **environment**: a combination of a location and a year
+- **entry**: the occurence of a germplasm in a given environment or location
 - **interaction**: interaction between germplasm and location or germplasm and environment
 - **year**
-- **migrant-resident**: migrant refers to germplasm that was not grown on previous generation on location; resident refers to germplasm that was grown  on previous generation on location.
+- **migrant-resident**: migrant in a location refers to a germplasm that has not been grown or selected in a given location; resident in a location refers to germplasm that has been grown or selected in a given location.
 - **version**: version within a germplasm, for example selected vs non-selected
 
 The analyses are divided into five families:
 
-- **Family 1** gathers analysis that estimate entry effects. This is for analysis on one farm. 
-It allows to compare different entries on each farm for selection.
+- **Family 1** (section \@ref(family-1)) gathers analyses that estimate entry effects.
+It allows to compare different entries on each location and test for selection.
 
-- **Family 2** gathers analysis that estimate germplasm or location or interaction effects. This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model. Specific analysis regarding migrant or residant can also be done.
-It allows to study the response of germplasm over several farms or environnements for selection.
+- **Family 2** (section \@ref(family-2)) gathers analyses that estimate germplasm and location and interaction effects. 
+This is to analyse the response over a network of farms. 
+Estimation of environment and year effects are in option depending of the model. 
+Specific analysis including migrant and residant can also be done.
+It allows to study the response of germplasm over several location or environnements.
 
-- **Family 3** gathers one analysis which estimates effects from family 1 and 2. This is for analysis in a network of farms. Environment effect can not be estimated as location, and year are separated.
-It allows to study the response of entries over several farms or environnements for selection.
+- **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses. 
+This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.
 
-- **Family 4** gathers analysis answering specific research questions. 
-This is for analysis on one farm or more.
+- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions. 
+This is for analysis on one location or more.
 
-- **Family 5** refers to multivariate analysis and is mentionned in Section \@ref{multivariate-analysis}.
+- **Family 5** (section \@ref(family-5)) refers to multivariate analysis
 
-Within family analysis 1 and 2, the differences are in the experimental designs which are presented in the next section.
+The different models in Family 1 and 2 correspond to experimental designs that are presented in the next section \@ref(doe).
 
 | Family | Name | Section | entry effects | germpasm effects | location effects | environments effects | interaction effects | year effects | migrant-resident effects | version effects | variance intra population effects |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
@@ -82,64 +85,64 @@ Analysis used in PPB programmes are mentionned in decision tree in Section \@ref
 
 ##### Theory
 
-The analyses performed in `PPBstats` are based on Bayesian statistics.
+Some analyses performed in `PPBstats` are based on Bayesian statistics.
 
 Bayesian statistics are based on the Bayes theorem:
 
 $Pr(\theta|y) \propto Pr(\theta) Pr(y|\theta)$
 
 with
-$Pr(\theta|y)$ the posterior,
-$Pr(y|\theta)$ the likelihood and
-$Pr(\theta)$ the prior.
+$y$ the observed value,
+$\theta$ the parameter to estimate,
+$Pr(\theta|y)$ the posterior distribution of the parameter given the data,
+$Pr(y|\theta)$ the likelihood of the observation and
+$Pr(\theta)$ the prior distribution of the parameter.
 
-The parameters' distribution, knowing the data (the posterior), is proportional to the distribution *a  priori* (the prior) $\times$ the information brought by the data (the likelihood).
+The parameters' distribution, knowing the data (the posterior), is proportional to the distribution of parameters *a  priori* (the prior) $\times$ the information brought by the data (the likelihood).
 
-The more information (i.e. the larger the data set and the better the model fits the data), the less the prior would be of importance.
+The more information (i.e. the larger the data set and the better the model fits the data), the less important is the prior.
 If the priors equal the posteriors, it means that there is not enough data or the model does not fit the data.
 
-
 Bayesian inference is based on the posterior distribution of model parameters.
-This distribution could not be calculated explicitely for the hierarchical model used in here (see section \@ref{model-1} and section \@ref{model-2}) but could be estimated using Markov Chain and Monte Carlo (MCMC) methods.
+This distribution can not be calculated explicitely for the hierarchical model used in here (section \@ref(model-1) and section \@ref(model-2)) but can be estimated using Markov Chain and Monte Carlo (MCMC) methods.
 
-These methods simulate values of model parameters according to a Markov chain that converges to the posterior distribution of model parameters [@robert_bayesian_2001].
+These methods simulate parameters according to a Markov chain that converges to the posterior distribution of model parameters [@robert_bayesian_2001].
 
 MCMC methods were implemented using `JAGS` by the R package `rjags` that performed Gibbs sampling [@robert_bayesian_2001].
 Two MCMC chains were run independently to test for convergence using the Gelman-Rubin test.
 This test was based on the variance within and between the chains [@gelman_inference_1992].
 
 A burn-in and lots of iterations were needed in the MCMC procedure.
-In our case, the burn-in had 1000 iterations, then 100 000 iterations are done by default
-^[You can change it with the argument `nb_iterations` in functions `model_1` and `model_2`] with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples were available for inference for each chain by default
+Here the burn-in has 1000 iterations, then 100 000 iterations are done by default
+^[You can change it with the argument `nb_iterations` in functions `model_1` and `model_2`] with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples are available for inference for each chain by default
 ^[There are `nb_iterations/10` values for each chain. This can be changed with the `thin` argument of the functions.]
 The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
 
 
 ##### Mean comparisons {#mean-comp}
 
-
 In this part, the mean of each entry is compared to the mean of each other entry.
 Let $H_{0}$ and $H_{1}$ denote the hypotheses:
 
 $H_{0} : \mu_{ij} \ge \mu_{i'j} , \; H_{1} : \mu_{ij} < \mu_{i'j}$.
 
-The difference $\mu_{ij}-\mu_{i'j}$ between the means of germplasm $i$ and population $i'$ in environment $j$ was considered as significant if either $H_{0}$ or $H_{1}$ had a high posterior probability, that is if $Pr\{H_{0}|y\} > 1 - \alpha$ or $Pr\{H_{1}|y\}> 1 - \alpha$, where
-$\alpha$ was some specified threshold.
-The difference was considered as not significant otherwise.
-The posterior probability of a hypothesis was estimated by the proportion of MCMC simulations for
-which this hypothesis was satisfied (Figure \@ref(fig:proba)).
+The difference $\mu_{ij}-\mu_{i'j}$ between the means of entry $ij$ and entry $i'j$ in environment $j$ is considered as significant if either $H_{0}$ or $H_{1}$ has a high posterior probability, that is if $Pr\{H_{0}|y\} > 1 - \alpha$ or $Pr\{H_{1}|y\}> 1 - \alpha$, where
+$\alpha$ is some specified threshold.
+The difference is considered as not significant otherwise.
+The posterior probability of a hypothesis is estimated by the proportion of MCMC simulations for
+which this hypothesis is satisfied (Figure \@ref(fig:proba)).
 
 Groups are made based on the probabilites.
-Germplasms which share the same group are not different.
-Germplasms which do not share the same group are different.
+Entries that belong to the same group are not significantly different.
+Entries that do not belong to the same group are significantly different.
 
 The threshold $\alpha$ that depends on agronomic objectives.
-This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given environnement).
-It corresponded to a `soft' Bonferroni correction, the Bonferroni correction being very conservative.
+This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given location).
+It corresponds to a `soft' Bonferroni correction, the Bonferroni correction being very conservative.
 
-As one objective of this PPB programme is that farmers (re)learn selection, the threshold could be adjusted to allow the detection of at least two groups instead of having farmers choose at random.
+As one objective of this PPB programme is that farmers (re)learn selection methods, the threshold could be adjusted to allow the detection of at least two groups instead of having farmers choose at random.
 The initial value could be set to $\alpha=0.1/I$ and if only one group is obtained, then this value could be adjusted to allow the detection of two groups.
-In this cases, the farmers should be informed of the lower degree of confidence that there are significant differences among entries.
+In this cases, the farmers should be informed that there is a lower degree of confidence for significant differences among entries.
 
 ```{r proba, out.width='70%', fig.align='center', echo=FALSE, fig.cap="Mean comparison between $\\mu_{ij}$ and $\\mu_{i'j}$"}
 library(ggplot2)
@@ -180,24 +183,24 @@ p
 In `PPBstats`, mean comparisons are done with `mean_comparisons`.
 You can choose on which parameters to run the comparison (`parameter` argument) and the $\alpha$ type one error (`alpha` argument).
 The soft Bonferonni correction is applied by default (`p.adj` argument).
-More informations on this function by typing `?mean_comparisons`.
+More informations can be obtain on this function by typing `?mean_comparisons`.
 
 
 ### Decision tree {#decision-tree}
 
-For each family of analysis, a decision tree is divided into five categories (Figure \@ref(fig:tree)):
+For each family of analysis, a decision tree divided in five levels is proposed (Figure \@ref(fig:tree)):
 
 - Family of analysis
 - Number of plots per location
-- Number of locations years
-- Experimental design
+- Number of locations and years
+- Relevant experimental design
 - Statistical analysis
 
-In Section \@ref(doe) regarding design of experiments, the branches of the decision tree concerned are displayed. 
-Decision tree regarding Family 1 is displayed in Figure \@ref(fig:tree-f1).
-Decision tree regarding Family 2 is displayed in Figure \@ref(fig:tree-f2).
+The corresponding decision trees are displayed in section \@ref(doe) regarding design of experiments. 
+Decision tree for Family 1 is displayed in Figure \@ref(fig:tree-f1).
+Decision tree for Family 2 is displayed in Figure \@ref(fig:tree-f2).
 
-```{r tree, out.width='20%', fig.align='center', echo=FALSE, fig.cap="Decision tree for analysis in `PPBstats`."}
+```{r tree, out.width='20%', fig.align='center', echo=FALSE, fig.cap="Levels in the decision tree for analysis in `PPBstats`."}
 knitr::include_graphics("figures/decision-tree-for-analysis-in-PPBstats.png")
 ```
 
@@ -214,16 +217,14 @@ knitr::include_graphics("figures/decision-tree-regarding-Family-2.png")
 
 After designing the experiment and describing the data, each family of analysis is implemented by several analysis with the same workflow :
 
+- Format the data
 - Run the model
 - Check the model and visualize outputs
 - Compare means and visualize outputs
 
-Note that for model 2 and GGE other analysis are possible : predict the past and cross validation regarding model 2 and biplot regarding GGE.
+Note that for model 2 and GGE other analyses are possible : predict the past and cross validation regarding model 2 and biplot regarding GGE.
 
-`PPBstats` is divided into two sets of functions: Main functions and secondary, internal functions.
-In this vignette, we only used examples with main functions as internal functions are called within main functions.
-
-Figure \@ref(fig:main-workflow) displays the main functions and their relationships.
+Figure \@ref(fig:main-workflow) displays the functions and their relationships.
 Table \@ref(tab:function-descriptions-workflow) describes each of the main functions.
 
 You can have more information for each function by typing `?function\_name` in your R session.
@@ -235,7 +236,7 @@ knitr::include_graphics("figures/PPBstats-main-functions-agro.png")
 
 | function name | description |
 | --- | --- |
-| `design_experiment` | Provides experimental design for several situations |
+| `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
 | `format_data_PPBstats` | | Check and format the data to be used in |pack~functions |
 | `describe_data` | Describe the data set in order to choose the appropriate analysis to carry out |
 | `model_1` | Run model 1 |
@@ -248,10 +249,10 @@ knitr::include_graphics("figures/PPBstats-main-functions-agro.png")
 | `mean_comparisons` |  Get mean comparisons |
 | `parameter_groups` | Get groups of parameters based on multivariate analysis |
 | `cross_validation_model_2` | Run complete cross validation with model 2 |
-| `predict_the_past_model_2` | Estimate value of a germplasm in an environment based on model 2 |
+| `predict_the_past_model_2` | predict values of germplasms in environments where they have not been grown based on model 2 |
 | `biplot_GxE` | Compute ecovalence and format PCA results |
 | `plot` | Build ggplot objects to visualize output |
-Table: (\#tab:function-descriptions-workflow) Main function descriptions.
+Table: (\#tab:function-descriptions-workflow) Function description.
 
 
 ### Data format
@@ -291,5 +292,4 @@ head(data_version)
 ```
 
 Here, in location `env1-1`, `tem-1` and `tem-2` are two versions belonging to the same groupe.
-
 

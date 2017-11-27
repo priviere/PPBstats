@@ -1,5 +1,6 @@
-## Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms {#section-analysis2}
+## Family of analysis 2 : germplasm, location, year, environment, and interaction effects in a network of farms {#family-2}
 
 **Family 2** gathers analysis that estimate germplasm or location or interaction effects.
-This is for analysis in a network of farms. Estimation of environment and year effects are in option depending of the model.
+This is for analysis in a network of farms. 
+Estimation of environment and year effects are in option depending of the model.
 Decision tree regarding Family 2 is displayed in Figure \@ref(fig:tree-f2).

@@ -124,38 +124,38 @@ knitr::include_graphics("figures/PPBstats-secondary-functions-2.png")
 | function name | description |
 | --- | --- |
 | `get.env.info` | Get regional farms data and satellite farms data |
-| `GxE\_build\_interaction\_matrix` | Compute interaction matrix |
-| `check\_model.fit\_model\_1` | Check if the `model\_1` model went well  |
-| `check\_model.fit\_model\_2` | Check if the `model\_2` model went well |
-| `check\_model.fit\_model\_GxE` | Check if the `GxE` model went well |
-| `check\_model.fit\_model\_spatial` | Check if the `spatial` model went well |
-| `check\_model.fit\_model\_variance\_intra` | Check if the `model\_variance\_intra` model went well |
-| `parameter\_groups\_GxE` | Get matrix with variables in column and effect in row from `check\_modelfit\_model\_GxE` |
-| `parameter\_groups\_model\_2` | Get matrix with variables in column and effect in row from `check\_model.fit\_model\_2` |
+| `GxE_build_interaction_matrix` | Compute interaction matrix |
+| `check_model.fit_model_1` | Check if the `model_1` model went well  |
+| `check_model.fit_model_2` | Check if the `model_2` model went well |
+| `check_model.fit_model_GxE` | Check if the `GxE` model went well |
+| `check_model.fit_model_spatial` | Check if the `spatial` model went well |
+| `check_model.fit_model_variance_intra` | Check if the `model_variance_intra` model went well |
+| `parameter_groups_GxE` | Get matrix with variables in column and effects in row from `check_modelfit_model_GxE` |
+| `parameter_groups_model_2` | Get matrix with variables in column and effect in row from `check_model.fit_model_2` |
 | `comp.parameters` | Get parameter comparisons two by two or to a given threshold based on MCMC outputs |
-| `get.significant.groups` | Get significant groups of differences for a set of parameters based on MCMC outputs |
+| `get.significant.groups` | Get significant groups of means that are significantly different from each others for a set of parameters based on MCMC outputs |
 | `get.at.least.X.groups` | Get the value of type one error needed to have X groups |
-| `mean\_comparisons.check\_model\_GxE` | Get mean comparisons from `check\_model.fit\_model\_GxE` |
-| `mean\_comparisons.check\_model\_1` | Get mean comparisons from `check\_model.fit\_model\_1` |
-| `mean\_comparisons.check\_model\_2` |Get mean comparisons from `check\_model.fit\_model\_2`  |
-| `mean\_comparisons.check\_model\_spatial` | Get mean comparisons from `check\_model.fit\_model\_spatial`  |
-| `mean\_comparisons.check\_predict\_the\_past\_model\_2` | Get mean comparisons from `predict\_the\_past\_model\_2` |
-| `mean\_comparisons.check\_model\_variance\_intra` | Get mean comparisons from `check\_model.fit\_model\_variance\_intra` |
-| `plot.parameter\_groups` | Get ggplot from `parameter\_groups` |
-| `plot.check\_model\_GxE` | Get ggplot from `check\_model.fit\_model\_GxE` |
-| `plot.check\_model\_model\_1` | Get ggplot from `check\_model.fit\_model\_1` |
-| `plot.check\_model\_model\_2` | Get ggplot from `check\_model.fit\_model\_2` |
-| `plot.check\_model\_model\_spatial` | Get ggplot from `check\_model.fit\_model\_spatial` |
-| `plot.check\_model\_variance\_intra` | Get ggplot from `check\_model.fit\_model\_variance\_intra` |
-| `plot.cross\_validation\_model\_2` | Get ggplot from `cross\_validation\_model\_2` |
-| `plot.mean\_comparisons\_GxE` | Get ggplot from `mean\_comparisons.check\_model\_GxE` |
-| `plot.mean\_comparisons\_model\_1` | Get ggplot from `mean\_comparisons.check\_model\_1` |
-| `plot.mean\_comparisons\_model\_2` | Get ggplot from `mean\_comparisons.check\_model\_2` |
-| `plot.mean\_comparisons\_predict\_the\_past\_model\_2` | Get ggplot from `mean\_comparisons.predict\_the\_past\_model\_2` |
-| `plot.mean\_comparisons\_model\_variance\_intra` | Get ggplot from `mean\_comparisons.check\_model\_variance\_intra` |
-| `plot.biplot\_GxE` | Get ggplot from `biplot\_GxE` |
-| `ggplot\_discrimitiveness\_vs\_representativeness` | Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix |
-| `ggplot\_mean\_vs\_stability` | Get "mean vs stability" ggplot from PCA on interaction matrix |
-| `ggplot\_which\_won\_where` | Get "which won where" ggplot from PCA on interaction matrix |
+| `mean_comparisons.check_model_GxE` | Get mean comparisons from `check_model.fit_model_GxE` |
+| `mean_comparisons.check_model_1` | Get mean comparisons from `check_model.fit_model_1` |
+| `mean_comparisons.check_model_2` |Get mean comparisons from `check_model.fit_model_2`  |
+| `mean_comparisons.check_model_spatial` | Get mean comparisons from `check_model.fit_model_spatial`  |
+| `mean_comparisons.check_predict_the_past_model_2` | Get mean comparisons from `predict_the_past_model\_2` |
+| `mean_comparisons.check_model_variance_intra` | Get mean comparisons from `check_model.fit_model_variance_intra` |
+| `plot.parameter_groups` | Get ggplot from `parameter_groups` |
+| `plot.check_model_GxE` | Get ggplot from `check_model.fit_model_GxE` |
+| `plot.check_model_model_1` | Get ggplot from `check_model.fit_model_1` |
+| `plot.check_model_model_2` | Get ggplot from `check_model.fit_model_2` |
+| `plot.check_model_model_spatial` | Get ggplot from `check_model.fit_model_spatial` |
+| `plot.check_model_variance_intra` | Get ggplot from `check_model.fit_model_variance_intra` |
+| `plot.cross_validation_model_2` | Get ggplot from `cross_validation_model_2` |
+| `plot.mean_comparisons_GxE` | Get ggplot from `mean_comparisons.check_model_GxE` |
+| `plot.mean_comparisons_model_1` | Get ggplot from `mean_comparisons.check_model_1` |
+| `plot.mean_comparisons_model_2` | Get ggplot from `mean_comparisons.check_model_2` |
+| `plot.mean_comparisons_predict_the_past_model_2` | Get ggplot from `mean_comparisons.predict_the_past_model_2` |
+| `plot.mean_comparisons_model_variance_intra` | Get ggplot from `mean_comparisons.check_model_variance_intra` |
+| `plot.biplot_GxE` | Get ggplot from `biplot_GxE` |
+| `ggplot_discrimitiveness_vs_representativeness` | Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix |
+| `ggplot_mean_vs_stability` | Get "mean vs stability" ggplot from PCA on interaction matrix |
+| `ggplot_which_won_where` | Get "which won where" ggplot from PCA on interaction matrix |
 Table: (\#tab:function-descriptions-workflow-2) Name and description of internal functions.
 
