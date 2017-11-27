@@ -1,7 +1,7 @@
 #' Get ggplot to describe the data
 #'
 #' @description
-#' \code{describe_data} gets ggplot to describe the data
+#' \code{plot.data_agro} gets ggplot to describe the data
 #' 
 #' @param data The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #' 
@@ -47,7 +47,7 @@
 #' 
 #' @author Pierre Riviere
 #' 
-describe_data.data_agro = function(
+plot.data_agro = function(
   data,
   plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster"),
   x_axis = NULL,
