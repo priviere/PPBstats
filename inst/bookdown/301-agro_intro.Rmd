@@ -63,7 +63,7 @@ This is for analysis on one location or more.
 
 - **Family 5** (section \@ref(family-5)) refers to multivariate analysis
 
-The different models in Family 1 and 2 correspond to experimental designs that are mentionned in the next section \@ref(#expe-design) and in the decision tree \@ref(#decision-tree).
+The different models in Family 1 and 2 correspond to experimental designs that are mentionned in the next section \@ref(expe-design) and in the decision tree \@ref(decision-tree).
 
 | Family | Name | Section | entry effects | germpasm effects | location effects | environments effects | interaction effects | year effects | migrant-resident effects | version effects | variance intra population effects |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
