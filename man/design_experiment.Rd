@@ -2,7 +2,8 @@
 % Please edit documentation in R/design_experiment.R
 \name{design_experiment}
 \alias{design_experiment}
-\title{Provides experimental design for several situations}
+\title{Provides experimental design for the different situations corresponding to 
+the choosen family of analysis}
 \usage{
 design_experiment(expe.type, location = "location", year = "2016",
   germplasm, controls, nb.controls.per.block, nb.blocks, nb.cols,
@@ -21,7 +22,7 @@ design_experiment(expe.type, location = "location", year = "2016",
 
 \item{nb.controls.per.block}{Number of controls per blocks.}
 
-\item{nb.blocks}{Number of blocks.}
+\item{nb.blocks}{Number of blocks. For expe.type = "IBD", it corresponds to the number of locations.}
 
 \item{nb.cols}{Number of columns in the design. The number of rows is computed automaticaly.}
 
@@ -35,7 +36,8 @@ The function returns a list with
  }
 }
 \description{
-\code{design_experiment} provides experimental design for several situations
+\code{design_experiment} provides experimental design for the different situations corresponding to 
+the choosen family of analysis
 }
 \details{
 regarding return.format :

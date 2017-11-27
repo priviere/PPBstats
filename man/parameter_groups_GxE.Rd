@@ -2,7 +2,7 @@
 % Please edit documentation in R/parameter_groups_GxE.R
 \name{parameter_groups_GxE}
 \alias{parameter_groups_GxE}
-\title{Get matrix with variables in column and effect in row from check_model_GxE}
+\title{Get matrix with variables in column and effects in row from check_model_GxE}
 \usage{
 parameter_groups_GxE(list_out_check_model_GxE, parameter)
 }
@@ -15,7 +15,7 @@ parameter_groups_GxE(list_out_check_model_GxE, parameter)
 The function returns a data frame with variables in column and effect of paramters in row
 }
 \description{
-\code{parameter_groups_GxE} gets matrix with variables in column and effect in row
+\code{parameter_groups_GxE} gets matrix with variables in column and effects in row
 }
 \seealso{
 \code{\link{parameter_groups}}
