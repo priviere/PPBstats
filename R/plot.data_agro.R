@@ -1,4 +1,4 @@
-#' Get ggplot to describe the data
+#' Plot agro object from format_data_PPBstats()
 #'
 #' @description
 #' \code{plot.data_agro} gets ggplot to describe the data
