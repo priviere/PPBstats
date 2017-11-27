@@ -38,7 +38,7 @@ Pierre Rivière: pierre@semencespaysannes.org
 
 **Olivier David^3^** wrote the `JAGS` code and reviewed the R code and the book regarding sections \@ref(model-1), \@ref(model-2), \@ref(model-1) and \@ref(variance-intra).
 
-**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods and format figures with `Tikz`.
+**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve contribution section.
 
 **Isabelle Goldringer^2^** reviewed and improved all the text of the book
 
