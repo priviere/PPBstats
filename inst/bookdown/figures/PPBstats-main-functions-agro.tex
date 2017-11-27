@@ -10,8 +10,6 @@
 
   \node[several-all] (FD) [below=3cm of DE]                {format\_data\_PPBstats};
 
-  \node[several-all] (DD) [below left=of FD]     {describe\_data};
-
   \node[m2]   (M2)  [below=4cm of FD]        {model\_2};
   \node[m1]   (M1)  [left=of M2]   {model\_1};
   \node[gxe]  (GxE) [left=of M1]  {GxE};
@@ -36,7 +34,7 @@
 
   %% arrows
   % \draw node[vertex] (Joint) at (1,0) {};
-  \draw (FD) to (DD.east);
+  \draw (FD.east) to[out=0,in=20] (P.east);
   \draw (FD) to (M1);
   \draw (FD) to (M2);
   \draw (FD) to (GxE);
