@@ -220,7 +220,7 @@ For `expe.type = "regional-farm"`, there is a warning message if controls are mi
 It is better to catch as much as possible of the trial variation.
 If there are less than 2 blocks, an error message is returned.
 
-### Incomplete Block Design {#ibd}
+### Incomplete Block Design
 
 Incomplete block design.
 Entries are not replicated. Some entries are shared by some locations.

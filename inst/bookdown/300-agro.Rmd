@@ -1,1 +1,10 @@
 # Agronomic analysis {#agronomic}
+
+In section \@ref(intro-agro), you will chose your objective, the analyses and the experimental design based on a decision tree and see how to implement it based on the workflow and function relations from formated data.
+
+Then, thanks to `PPBstats`, you will 
+
+- design the experiment (section \@ref(doe)),
+- sow, note, harvest, measure ... (section \@ref(sow)),
+- describe the data (section \@ref(describe-data-agro)),
+- run statistical analysis (sections \@ref(family-1), \@ref(family-2), \@ref(family-3), \@ref(family-4) and \@ref(family-5))

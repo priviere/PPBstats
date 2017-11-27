@@ -1,23 +1,34 @@
-## Introduction
+## Introduction {#intro-agro}
 
-### Experimental design
+First, chose your objective (\@ref(objective-agro)), then the analyses (\@ref(family-analysis-agro)) and the experimental design (\@ref(expe-design)) based on a decision tree (\@ref(decision-tree)).
+Finally see how to implement it based on the workflow and function relations (\@ref(workflow-agro)) from formated data (\@ref(data-format-agro)).
 
-Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the number of plots available in each location.
+### Analysis according to the objectives {#objective-agro}
 
-The trial is designed in relation to the analysis you will perform.
-The key elements to choose an appropriate experimental design are:
+Three main objectives dealing with PPB programmes agronomic analyses can be :
 
-- the number of locations
-- the number of years
-- the replication of entries within and between locations
+- **Compare different germplasms on each location for selection**.
+This can be done through family 1 of analysis (section \@ref(family-1))
+    - classic anova (section \@ref(classic-anova))
+    - spatial model (section \@ref(spatial-analysis))
+    - bayesian hierarchical model (section \@ref(model-1))
+It an be completed by organoleptic analysis (section \@ref(organoleptic)).
+
+- **Study response to selection of germplasm over several locations for selection**.
+This can be done through family 2 of analysis (section \@ref(family-2)):
+    - incomplete block design (section \@ref(ibd))
+    - AMMI (section \@ref(ammi))
+    - GGE (section \@ref(gge))
+    - migrant-residant (section) \@ref(migrant-residant))
+    - bayesian model (section \@ref(model-2))
+
+- **Study diversity structure and identify complementary or similar parents for cross**.
+This can be done through multivariate analysis and clustering mentionned in section \@ref(multivariate-analysis).
+It an be completed by molecular analysis (section \@ref(molecular)).
 
 
-Several designs used in PPB programmes are presented in section \@ref(doe) and are mentionned in decision tree in section \@ref(decision-tree).
 
-Then, you can sow, measure and harvest ... (section \@ref(sow))
-
-
-### Analyses carried out
+### Family of analyses {#family-analysis-agro}
 
 After describing the data (section \@ref(describe-data-agro)), you can run statistical analysis.
 
@@ -47,12 +58,12 @@ It allows to study the response of germplasm over several location or environnem
 - **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses. 
 This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.
 
-- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions. 
+- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions and objectives. 
 This is for analysis on one location or more.
 
 - **Family 5** (section \@ref(family-5)) refers to multivariate analysis
 
-The different models in Family 1 and 2 correspond to experimental designs that are presented in the next section \@ref(doe).
+The different models in Family 1 and 2 correspond to experimental designs that are mentionned in the next section \@ref(#expe-design) and in the decision tree \@ref(#decision-tree).
 
 | Family | Name | Section | entry effects | germpasm effects | location effects | environments effects | interaction effects | year effects | migrant-resident effects | version effects | variance intra population effects |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
@@ -186,6 +197,20 @@ The soft Bonferonni correction is applied by default (`p.adj` argument).
 More informations can be obtain on this function by typing `?mean_comparisons`.
 
 
+### Experimental design {#expe-design}
+
+Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the number of plots available in each location.
+
+The trial is designed in relation to the analysis you will perform.
+The key elements to choose an appropriate experimental design are:
+
+- the number of locations
+- the number of years
+- the replication of entries within and between locations
+
+Several designs used in PPB programmes are mentionned in decision tree in section \@ref(decision-tree) and are presented in section \@ref(doe).
+
+
 ### Decision tree {#decision-tree}
 
 For each family of analysis, a decision tree divided in five levels is proposed (Figure \@ref(fig:tree)):
@@ -212,8 +237,10 @@ knitr::include_graphics("figures/decision-tree-regarding-Family-1.png")
 knitr::include_graphics("figures/decision-tree-regarding-Family-2.png")
 ```
 
+Once you have chosen your objective, analysis and experimental design, you can sow, measure and harvest ... (section \@ref(sow)).
 
-### Workflow and function relations in `PPBstats` regarding agronomic analysis
+
+### Workflow and function relations in `PPBstats` regarding agronomic analysis {#workflow-agro}
 
 After designing the experiment and describing the data, each family of analysis is implemented by several analysis with the same workflow :
 
@@ -255,7 +282,7 @@ knitr::include_graphics("figures/PPBstats-main-functions-agro.png")
 Table: (\#tab:function-descriptions-workflow) Function description.
 
 
-### Data format
+### Data format {#data-format-agro}
 
 For `data-agro`, there are two format supported : `data-agro` and `data-agro-version`.
 
