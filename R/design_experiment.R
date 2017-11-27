@@ -1,7 +1,9 @@
-#' Provides experimental design for several situations
-#'
+#' Provides experimental design for the different situations corresponding to 
+#' the choosen family of analysis
+#' 
 #' @description
-#' \code{design_experiment} provides experimental design for several situations
+#' \code{design_experiment} provides experimental design for the different situations corresponding to 
+#' the choosen family of analysis
 #' 
 #' @param expe.type The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD". See details for more information.
 #' 
@@ -15,7 +17,7 @@
 #' 
 #' @param nb.controls.per.block Number of controls per blocks.
 #' 
-#' @param nb.blocks Number of blocks.
+#' @param nb.blocks Number of blocks. For expe.type = "IBD", it corresponds to the number of locations.
 #' 
 #' @param nb.cols Number of columns in the design. The number of rows is computed automaticaly.
 #' 
@@ -323,11 +325,16 @@ design_experiment = function(
       d$ymin = a[d$block]
       a = tapply(as.numeric(d$Y), d$block, max) + 0.45
       d$ymax = a[d$block]
+      if( !is.null(d[1,"location"])) {  
+        tit = paste(d[1,"location"], d[1,"year"], sep = ":")
+      } else {
+        tit = d[1,"year"]
+        }
       
       p = ggplot(data = d, aes(x = X, y = Y, label = germplasm))
       p = p + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
       p = p + geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, color = block), fill = NA, size = 1)
-      p = p + ggtitle(paste(d[1,"location"], d[1,"year"], sep = ":")) + theme(plot.title = element_text(hjust = 0.5))
+      p = p + ggtitle(tit) + theme(plot.title = element_text(hjust = 0.5))
       return(p)
     }
     
@@ -461,7 +468,6 @@ design_experiment = function(
       d$block = as.factor(d$block)
       d$X = as.factor(d$X)
       d$Y = as.factor(d$Y)
-      d$location = location
       d$year = year
       
       d = rename_d(d, germplasm, controls = NULL)
