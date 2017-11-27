@@ -1,14 +1,19 @@
 # Contribute to `PPBstats` {#contributions}
 
-You can contribute to `PPBstats` in four ways:
+You can contribute to `PPBstats` in five ways:
 
-- test `PPBstats` and its vignette and report bugs
+- test `PPBstats` and its book and report bugs
 - translate
-- resolve open issues
+- resolve open [issues](https://github.com/priviere/PPBstats/issues).
 - add new functions 
+- improve the book
 
+The code of PPBstats is on github : https://github.com/priviere/PPBstats
 
-Any how, send me an email to see how we can collaborate !
+The code of the book is also on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
+
+Anyhow, send me an email if you wish to participate in order to coordinate our efforts: pierre@semencespaysannes.org
+
 
 ## Test and report bugs
 
@@ -95,11 +100,12 @@ plot.mean_comparisons_my_model <- function(x, y, ...){
 
 ## How to contribute
 
-- If you want to interact with us, please file an issue first to share your intentions. We can help you plan the curse of action.
+- If you want to interact with us, please file an [issue](https://github.com/priviere/PPBstats/issues) or send me an email : pierre@semencespaysannes.org
+
 - Fork the git repository
 - Include your contributions in your fork (preferably in a specific branch)
 - Update the documentation if necessary (help files, `inst/bookdown` file)
--Write unit tests for your functions, if any
+- Write unit tests for your functions, if any
 - Pull the latest changes in the `master` branch of the upstream repository and rebase your work on top of them.
 - Run all tests and compile the vignette. Make sure everything works as
 expected.
@@ -159,3 +165,7 @@ knitr::include_graphics("figures/PPBstats-secondary-functions-2.png")
 | `ggplot_which_won_where` | Get "which won where" ggplot from PCA on interaction matrix |
 Table: (\#tab:function-descriptions-workflow-2) Name and description of internal functions.
 
+## Improve the book
+If you wish to improve the book, to add new sections on PPB, etc please file an [issue](https://github.com/priviere/PPBstats/issues) or send me an email : pierre@semencespaysannes.org 
+
+The code of the book is on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
