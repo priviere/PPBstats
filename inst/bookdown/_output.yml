@@ -5,8 +5,13 @@ bookdown::gitbook:
     toc:
       before: |
         <li><a href="./">PPBstats book</a></li>
+      after: |
+        <li><a href="https://https://github.com/priviere/PPBstats/tree/master/inst/bookdown" target="_blank">See code source of the book</a></li>
     edit: https://github.com/priviere/PPBstats/edit/master/%s
     download: ["pdf", "epub"]
+    sharing:
+      github: yes
+      facebook: no
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
