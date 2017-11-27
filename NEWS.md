@@ -15,6 +15,7 @@
     - model 2 ACP cluster : put in blod or color a given ind, cf #76
 - design_experiment.R
     - no location in title for IBD and in the data frame, cf #39
+- use plot methods for describe_data cf #79
 
 ### add new functions
 - napping.R, cf #72
