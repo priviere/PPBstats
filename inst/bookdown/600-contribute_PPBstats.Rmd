@@ -147,6 +147,8 @@ knitr::include_graphics("figures/PPBstats-secondary-functions-2.png")
 | `mean_comparisons.check_model_spatial` | Get mean comparisons from `check_model.fit_model_spatial`  |
 | `mean_comparisons.check_predict_the_past_model_2` | Get mean comparisons from `predict_the_past_model\_2` |
 | `mean_comparisons.check_model_variance_intra` | Get mean comparisons from `check_model.fit_model_variance_intra` |
+| `plot.data_agro` | Plot agro object from `format_data_PPBstats()` |
+| `plot.data_network` | Plot network object `from format_data_PPBstats()` |
 | `plot.parameter_groups` | Get ggplot from `parameter_groups` |
 | `plot.check_model_GxE` | Get ggplot from `check_model.fit_model_GxE` |
 | `plot.check_model_model_1` | Get ggplot from `check_model.fit_model_1` |
