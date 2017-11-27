@@ -355,13 +355,11 @@ head(out_mean_comparisons_model_1_mu$data_env_with_no_controls$`env5:2010`$mean.
 To see the output, use `plot`.
 On each plot, the `alpha` (type one error) value and the alpha correction are displayed.
 `alpha = Imp` means that no differences could be detected.
-For `ggplot.type = "interaction"` and `ggplot.type = "score"`, it is display under the form: `alpha | alpha correction`.
+For `ggplot.type = "interaction"` and `ggplot.type = "score"`, it is displayed under the form: `alpha | alpha correction`.
 
-The ggplot are done for each element of the list coming rom `mean_comparisons`.
-
-For each ggplot.type, it is a list of three elements being lists with as many elements as environment. 
-  
-For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+The ggplot are done for each element of the list coming from `mean_comparisons`.
+For each ggplot.type, it is a list of three lists each with as many elements as environments. 
+For each element of the list, there are as many graphs as needed with `nb_parameters_per_plot` parameters per graph.
 
 ###### barplot
 
@@ -370,12 +368,12 @@ p_barplot_mu = plot(out_mean_comparisons_model_1_mu, ggplot.type = "barplot")
 names(p_barplot_mu)
 ```
 
-From `data_mean_comparisons`, only environments where all MCMC converge are represented.
+From `data_mean_comparisons`, only environments where all MCMC converged are represented.
 
-Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+Letters are displayed on each bar. Parameters that do not share the same letters are different based on type I error (alpha) and alpha correction. 
 
 The error I (alpha) and the alpha correction are displayed in the title. 
-alpha = Imp means that no differences were possible to find.
+alpha = Imp means that no significant differences coumd be detected.
 
 ```{r}
 p = p_barplot_mu$data_mean_comparisons
