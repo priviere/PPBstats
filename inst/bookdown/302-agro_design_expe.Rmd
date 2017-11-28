@@ -15,7 +15,7 @@ The function returns a list with
 A description of the algorithm is describe in the help of the function: `?design_experiment`.
 
 
-### fully-replicated {#fully-replicated}
+### Fully-replicated {#fully-replicated}
 
 The decision tree where fully-replicated designs are used is displayed in Figure \@ref(fig:tree-fully-replicated).
 
@@ -65,7 +65,7 @@ p_fr$"fully-replicated"$design
 
 
 
-### row-column {#row-column}
+### Row-column {#row-column}
 
 The decision tree where row-column design are used is displayed in Figure \@ref(fig:tree-row-column).
 
