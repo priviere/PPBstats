@@ -2,6 +2,7 @@
 
 Once the data have been collected, a first step is to describe them with `describe_data`.
 Five types of plot, throught the `plot_type` argument are possible:
+
 - presence abscence matrix that represent the combinaison of germplasm $\times$ location
 - histogramm
 - barplot, where sd error are displayed
@@ -20,10 +21,10 @@ It is possible to tune the number of factor displayed (`nb_parameters_per_plot_x
 Get two data set to look at some examples
 ```{r}
 data("data_GxE")
-data_GxE = format_data_PPBstats(data_GxE)
+data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
 
 data("data_model_2")
-data_model_2 = format_data_PPBstats(data_model_2)
+data_model_2 = format_data_PPBstats(data_model_2, type = "data_agro")
 ```
 
 
