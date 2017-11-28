@@ -178,4 +178,5 @@ p = plot(
   vec_variables = c("y1", "y2", "y3"),
   in_col = "location"
   )
+p
 ```
