@@ -18,6 +18,8 @@
 - use plot methods for describe_data cf #79
 - plot.[...].R
     - change arg ggplot.type to plot_type cf #69
+- plot.data_agro.R
+    - debug radar + simplify ggradar function to get simple appearance, cf #68
 
 ### add new functions
 - napping.R, cf #72

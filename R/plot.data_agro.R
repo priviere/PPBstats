@@ -313,12 +313,12 @@ plot.data_agro = function(
       m = cbind.data.frame(m, value_ok)
     }
     colnames(m) = c("group", vec_variables)
-    
     p = ggradar(m, 
                 grid.label.size = labels_size, 
                 axis.label.size = labels_size,
                 group.point.size = labels_size,
-                legend.text.size = labels_size*2.5)
+                legend.text.size = labels_size*2.5,
+                group.line.width= labels_size/4)
     p = p + theme(legend.title = element_blank()) 
     return(p)
   }
