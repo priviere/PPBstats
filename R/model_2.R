@@ -82,7 +82,7 @@ model_2 = function(
 )
 {
   # 1. Error message and update arguments ----------
-  if(!is(data, "data_agro")){ stop(substitute(data), " must be formated, see PPBstats::format_data_PPBstats().") }
+  if(!is(data, "data_agro")){ stop(substitute(data), " must be formated with type = \"data_agro\", see PPBstats::format_data_PPBstats().") }
   check_data_vec_variables(data, variable)
 
   if(nb_iterations < 20000) { warning("nb_iterations is below 20 000, which seems small to get convergence in the MCMC.")  }
