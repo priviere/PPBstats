@@ -44,7 +44,7 @@ format_data_PPBstats.data_agro = function(data){
     }
   }
   
-  class(d) <- c("PPBstats", "data.frame", "data_agro")
+  class(d) <- c("PPBstats", "data_agro", "data.frame")
   message(substitute(data), " has been formated for PPBstats functions.")
   return(d)
 }

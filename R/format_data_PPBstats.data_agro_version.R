@@ -23,7 +23,7 @@ format_data_PPBstats.data_agro_version = function(data){
     if( nlevels(dg$germplasm) != nrow(dg) ) { stop("In group ", gp, " there must be ", nrow(dg), " germplasms") }    
   }
   
-  class(d) <- c("PPBstats", "data.frame", "data_agro_version")
+  class(d) <- c("PPBstats", "data_agro_version", "data.frame")
   message(substitute(data), " has been formated for PPBstats functions.")
   return(d)
 }

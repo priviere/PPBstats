@@ -69,7 +69,7 @@ format_data_PPBstats.data_organo_napping = function(data, code, threshold){
   row.names(d_MFA) <- d_MFA[, 1]
   d = d_MFA[,2:ncol(d_MFA)]
   
-  class(d) <- c("PPBstats", "data.frame", "data_organo_napping")
+  class(d) <- c("PPBstats", "data_organo_napping", "data.frame")
   message(substitute(data), " has been formated for PPBstats functions.")
   return(d)
 }

@@ -16,7 +16,7 @@ format_data_PPBstats.data_organo_hedonic = function(data,code, threshold){
   
   d = format_organo(data, code, threshold)
   
-  class(d) <- c("PPBstats", "data.frame", "data_organo_hedonic")
+  class(d) <- c("PPBstats", "data_organo_hedonic", "data.frame")
   message(substitute(data), " has been formated for PPBstats functions.")
   return(d)
 }
