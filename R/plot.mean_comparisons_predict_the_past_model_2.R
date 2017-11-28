@@ -1,7 +1,7 @@
 plot.mean_comparisons_predict_the_past_model_2 <- function(
   x,
   data_version = NULL,
-  ggplot.type = "interaction",
+  plot_type = "interaction",
   nb_parameters_per_plot = 8
 ){
 
@@ -15,7 +15,7 @@ plot.mean_comparisons_predict_the_past_model_2 <- function(
   
   if( !is.null(data_version) ) { stop("data_version must be NULL with data plot from predict_the_past()") }
   
-  if(ggplot.type == "score" | ggplot.type == "interaction") {
+  if(plot_type == "score" | plot_type == "interaction") {
     ylab = paste(
       x$data_mean_comparisons[[1]]$mean.comparisons$entry,
       " (",
@@ -25,9 +25,9 @@ plot.mean_comparisons_predict_the_past_model_2 <- function(
     x$data_mean_comparisons[[1]]$mean.comparisons$entry = ylab
   }
   
-  out = plot.mean_comparisons_model_1(x, data_version, ggplot.type, nb_parameters_per_plot)
+  out = plot.mean_comparisons_model_1(x, data_version, plot_type, nb_parameters_per_plot)
   
-  if(ggplot.type == "barplot") {
+  if(plot_type == "barplot") {
     p1 = lapply(out$data_mean_comparisons[[1]], function(x){ x + geom_bar(aes(fill = parameter_statuts), stat = "identity") } )
     out$data_mean_comparisons[[1]] = p1
   }

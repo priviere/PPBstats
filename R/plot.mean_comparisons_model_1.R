@@ -1,12 +1,12 @@
 plot.mean_comparisons_model_1 <- function(
   x,
   data_version = NULL,
-  ggplot.type = c("interaction", "barplot", "score"),
+  plot_type = c("interaction", "barplot", "score"),
   nb_parameters_per_plot = 8
   ){
   
   # 1. Error message ----------
-  ggplot.type <- match.arg(ggplot.type, several.ok = FALSE)
+  plot_type <- match.arg(plot_type, several.ok = FALSE)
   if( !is.null(data_version)){
     if(!is(data_version, "data_agro_version")){ 
       stop(substitute(data_version), " must be formated, see PPBstats::format_data_PPBstats().") 
@@ -137,7 +137,7 @@ plot.mean_comparisons_model_1 <- function(
   
   # 3.2. run function for barplot ----------
   
-  if( ggplot.type == "barplot") {
+  if( plot_type == "barplot") {
     if(round(nb_parameters_per_plot/2) != nb_parameters_per_plot/2){nb_parameters_per_plot = nb_parameters_per_plot-1}
     
     fun_barplot = function(data, data_version, nb_parameters_per_plot){
@@ -272,7 +272,7 @@ plot.mean_comparisons_model_1 <- function(
   
   # 3.3. run function for score ----------
   
-  if(ggplot.type == "score") {  
+  if(plot_type == "score") {  
     
     d_loc_out = get.loc.year(all_data$data_mean_comparisons, nb_parameters_per_plot)
     
@@ -364,7 +364,7 @@ plot.mean_comparisons_model_1 <- function(
   
   
   # 3.4. run function for interaction ----------
-  if(ggplot.type == "interaction") {
+  if(plot_type == "interaction") {
 
     fun_interaction = function(data, nb_parameters_per_plot){
       

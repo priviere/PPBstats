@@ -1,15 +1,15 @@
 plot.mean_comparisons_model_2 <- function(
   x,
   y = NULL,
-  ggplot.type = c("biplot-alpha-beta", "barplot"),
+  plot_type = c("biplot-alpha-beta", "barplot"),
   nb_parameters_per_plot = 8
 ) {
   
   # 1. Error message
-  ggplot.type <- match.arg(ggplot.type, several.ok = FALSE)
+  plot_type <- match.arg(plot_type, several.ok = FALSE)
   
-  if( is.null(y) & ggplot.type == "biplot-alpha-beta" ) {
-    stop("With ggplot.type = \"biplot-alpha-beta\", y can not be NULL.")
+  if( is.null(y) & plot_type == "biplot-alpha-beta" ) {
+    stop("With plot_type = \"biplot-alpha-beta\", y can not be NULL.")
   }
   
   if (!is.null(y) && !inherits(y, "mean_comparisons_model_2")) {
@@ -19,7 +19,7 @@ plot.mean_comparisons_model_2 <- function(
   data_Mpvalue = x$Mpvalue
   data = x$mean.comparisons
   
-  if(ggplot.type == "barplot") {  
+  if(plot_type == "barplot") {  
     data = arrange(data, median)  
     data$max = max(data$median, na.rm = TRUE)
     data$split = add_split_col(data, nb_parameters_per_plot)
@@ -40,18 +40,18 @@ plot.mean_comparisons_model_2 <- function(
   
   
   # 2.5. biplot-alpha-beta ----------
-  if(ggplot.type == "biplot-alpha-beta"){
+  if(plot_type == "biplot-alpha-beta"){
     
     a = data
     test_a = unlist(strsplit(as.character(a[1,"parameter"]), "\\["))[1]
-    if( test_a != "alpha" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
+    if( test_a != "alpha" ){ stop("With plot_type = \"biplot-alpha-beta\", data must come from get.mean.comparisons with paramater = \"alpha\".") }
     a$germplasm = gsub("alpha", "", a$parameter)
     colnames(a)[which(colnames(a) == "parameter")] = "parameter_a"
     colnames(a)[which(colnames(a) == "median")] = "alpha_i"
     
     b = y$mean.comparisons
     test_b = unlist(strsplit(as.character(b[1,"parameter"]), "\\["))[1]
-    if( test_b != "beta" ){ stop("With ggplot.type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
+    if( test_b != "beta" ){ stop("With plot_type = \"biplot-alpha-beta\", data_2 must come from get.mean.comparisons with paramater = \"beta\".") }
     b$germplasm = gsub("beta", "", b$parameter)
     colnames(b)[which(colnames(b) == "parameter")] = "parameter_b"
     colnames(b)[which(colnames(b) == "median")] = "beta_i"

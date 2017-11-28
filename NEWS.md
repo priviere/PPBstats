@@ -16,6 +16,8 @@
 - design_experiment.R
     - no location in title for IBD and in the data frame, cf #39
 - use plot methods for describe_data cf #79
+- plot.[...].R
+    - change arg ggplot.type to plot_type cf #69
 
 ### add new functions
 - napping.R, cf #72

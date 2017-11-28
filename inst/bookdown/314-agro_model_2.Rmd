@@ -338,21 +338,21 @@ To see the output, use `plot`.
 
 There are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
 
-For `ggplot.type = "barplot"`,
+For `plot_type = "barplot"`,
 Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
 The error I (alpha) and the alpha correction are displayed in the title. 
 alpha = Imp means that no differences were possible to find.
 
-For `ggplot.type = "biplot-alpha-beta"`, the biplot with $\alpha_i$ on the x axis and $\beta_i$ on the y axis.
+For `plot_type = "biplot-alpha-beta"`, the biplot with $\alpha_i$ on the x axis and $\beta_i$ on the y axis.
 
 ```{r}
-p_a = plot(model_2_alpha, ggplot.type = "barplot")
+p_a = plot(model_2_alpha, plot_type = "barplot")
 names(p_a$alpha)
 p_a$alpha$`1`
 ```
 
 ```{r}
-p_b = plot(model_2_beta, ggplot.type = "barplot")
+p_b = plot(model_2_beta, plot_type = "barplot")
 names(p_b$beta)
 p_b$beta$`1`
 ```
@@ -361,12 +361,12 @@ It is interessting to compare genetic effect versus sensibility to interaction.
 A germplasm with an high genetic effect and a low sensitivity to interaction (i.e. close to 0) may be a good candidate to sown.
 
 ```{r}
-p_ab = plot(model_2_alpha, model_2_beta, ggplot.type = "biplot-alpha-beta")
+p_ab = plot(model_2_alpha, model_2_beta, plot_type = "biplot-alpha-beta")
 p_ab$`1`
 ```
 
 ```{r}
-p_t = plot(model_2_theta, ggplot.type = "barplot")
+p_t = plot(model_2_theta, plot_type = "barplot")
 names(p_t$theta)
 p_t$theta$`9`
 ```
@@ -493,20 +493,20 @@ For example for `"loc-6:year-5"`
 #m_ptp = mean_comparisons(ptp)
 ```
 
-and visualize the output, for `ggplot.type = "barplot"`, there is two colors regarding estimated and predicted results.
+and visualize the output, for `plot_type = "barplot"`, there is two colors regarding estimated and predicted results.
 
 ```{r}
-#p = plot(m_ptp, ggplot.type = "barplot")
+#p = plot(m_ptp, plot_type = "barplot")
 #p$data_mean_comparisons$`loc-6:year-5`$`1`
 ```
 
-For `ggplot.type = "score"` and `ggplot.type = "interaction"`, predicted and estimated are mention between brakets after germplasm name.
+For `plot_type = "score"` and `plot_type = "interaction"`, predicted and estimated are mention between brakets after germplasm name.
 
 ```{r}
-#p = plot(m_ptp, ggplot.type = "score")
+#p = plot(m_ptp, plot_type = "score")
 #p$`loc-6`$`1`
 
-#p = plot(m_ptp, ggplot.type = "interaction")
+#p = plot(m_ptp, plot_type = "interaction")
 #p$data_mean_comparisons$`loc-6`$`1`
 ```
 
@@ -528,10 +528,10 @@ workflow_model_2 = function(x){
   model_2_alpha = mean_comparisons(out_check_model_2, parameter = "alpha")
   model_2_beta = mean_comparisons(out_check_model_2, parameter = "beta", precision = 0.05)
   model_2_theta = mean_comparisons(out_check_model_2, parameter = "theta", precision = 0.05)
-  p_a = plot(model_2_alpha, ggplot.type = "barplot")
-  p_b = plot(model_2_beta, ggplot.type = "barplot")
-  p_ab = plot(model_2_alpha, model_2_beta, ggplot.type = "biplot-alpha-beta")
-  p_t = plot(model_2_theta, ggplot.type = "barplot")
+  p_a = plot(model_2_alpha, plot_type = "barplot")
+  p_b = plot(model_2_beta, plot_type = "barplot")
+  p_ab = plot(model_2_alpha, model_2_beta, plot_type = "biplot-alpha-beta")
+  p_t = plot(model_2_theta, plot_type = "barplot")
   
   out = list(
       out_model_2 = out_model_2,

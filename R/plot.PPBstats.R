@@ -22,7 +22,7 @@
 #'  \item \code{\link{check_model}} from \code{\link{predict_the_past_model_2}}
 #' }
 #'
-#' @param ggplot.type The type of plot you wish.
+#' @param plot_type The type of plot you wish.
 #' \itemize{
 #'  \item "barplot" for \code{\link{mean_comparisons}} from 
 #'  \itemize{
@@ -220,8 +220,8 @@
 #'      \item germplasm : mean comparison for germplasm
 #'     }
 #'    
-#'    \item from \code{\link{model_1}}, a list with ggplot object depending on ggplot.type.
-#'    For each ggplot.type, it is a list of three elements being lists with as many elements as environment. 
+#'    \item from \code{\link{model_1}}, a list with ggplot object depending on plot_type.
+#'    For each plot_type, it is a list of three elements being lists with as many elements as environment. 
 #'        For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
 #'     \itemize{
 #'      \item barplot : 
@@ -254,7 +254,7 @@
 #'     }
 #'    
 #'    
-#'    \item from \code{\link{model_2}}, a list with ggplot object depending on ggplot.type.
+#'    \item from \code{\link{model_2}}, a list with ggplot object depending on plot_type.
 #'    There are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
 #'     \itemize{
 #'      \item barplot : 
@@ -266,7 +266,7 @@
 #'     }
 #'    
 #'    
-#'    \item \code{\link{predict_the_past_model_2}}, a list with ggplot object depending on ggplot.type. 
+#'    \item \code{\link{predict_the_past_model_2}}, a list with ggplot object depending on plot_type. 
 #'    It is the same outputs than for model_1
 #'     
 #'   }
@@ -331,11 +331,12 @@
 plot.PPBstats <- function(
   x, y = NULL,
   data_version = NULL,
-  ggplot.type = c("interaction", "barplot", "biplot-alpha-beta", "score"),
+  plot_type = c("interaction", "barplot", "biplot-alpha-beta", "score", 
+                "network", "pam", "histogramm", "boxplot","biplot", "radar", "raster"),
   ...
 ) {
   ## common tasks
-  ggplot.type <- match.arg(ggplot.type, several.ok = FALSE)
+  plot_type <- match.arg(plot_type, several.ok = FALSE)
   
   if( !is.null(data_version) ){
     mandatory_dvcols <- c("year", "germplasm", "location", "group", "version")

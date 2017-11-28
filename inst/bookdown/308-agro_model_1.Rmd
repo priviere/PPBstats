@@ -355,16 +355,16 @@ head(out_mean_comparisons_model_1_mu$data_env_with_no_controls$`env5:2010`$mean.
 To see the output, use `plot`.
 On each plot, the `alpha` (type one error) value and the alpha correction are displayed.
 `alpha = Imp` means that no differences could be detected.
-For `ggplot.type = "interaction"` and `ggplot.type = "score"`, it is displayed under the form: `alpha | alpha correction`.
+For `plot_type = "interaction"` and `plot_type = "score"`, it is displayed under the form: `alpha | alpha correction`.
 
 The ggplot are done for each element of the list coming from `mean_comparisons`.
-For each ggplot.type, it is a list of three lists each with as many elements as environments. 
+For each plot_type, it is a list of three lists each with as many elements as environments. 
 For each element of the list, there are as many graphs as needed with `nb_parameters_per_plot` parameters per graph.
 
 ###### barplot
 
 ```{r}
-p_barplot_mu = plot(out_mean_comparisons_model_1_mu, ggplot.type = "barplot")
+p_barplot_mu = plot(out_mean_comparisons_model_1_mu, plot_type = "barplot")
 names(p_barplot_mu)
 ```
 
@@ -420,7 +420,7 @@ Lets' make the plots:
 p_barplot_mu_version = plot(
   out_mean_comparisons_model_1_mu,
   data_version = data_version,
-  ggplot.type = "barplot"
+  plot_type = "barplot"
 )
 p_barplot_mu_version$data_mean_comparisons$`env1-1:2010`
 ```
@@ -449,20 +449,20 @@ p_barplot_mu_version$data_env_whose_param_did_not_converge
 
 ###### interaction
 
-With `ggplot.type = "interaction"`, you can display the year effect as well as detect groups.
+With `plot_type = "interaction"`, you can display the year effect as well as detect groups.
 One group is represented by one vertical line.
 Germplasms which share the same group are not different.
 Germplasms which do not share the same groupe are different (Section \@ref(mean-comp)).
 
 The ggplot are done for each element of the list coming rom `mean_comparisons`.
 
-For each ggplot.type, it is a list of three elements being lists with as many elements as environment. 
+For each plot_type, it is a list of three elements being lists with as many elements as environment. 
 
 For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
 
 
 ```{r}
-p_interaction = plot(out_mean_comparisons_model_1_mu, ggplot.type = "interaction")
+p_interaction = plot(out_mean_comparisons_model_1_mu, plot_type = "interaction")
 
 head(names(p_interaction$data_mean_comparisons))
 
@@ -485,7 +485,7 @@ In the legend, the score goes from 1 (first group) to the number of groups of si
 This plot is useful to look at year effects.
 
 ```{r}
-p_score = plot(out_mean_comparisons_model_1_mu, ggplot.type = "score")
+p_score = plot(out_mean_comparisons_model_1_mu, plot_type = "score")
 
 head(names(p_score))
 
@@ -511,9 +511,9 @@ workflow_model_1 = function(x){
   p_out_check_model_1 = plot(out_check_model_1)
   
   out_mean_comparisons_model_1_mu = mean_comparisons(out_check_model_1, parameter = "mu")
-  p_barplot_mu = plot(out_mean_comparisons_model_1_mu, ggplot.type = "barplot")
-  p_interaction = plot(out_mean_comparisons_model_1_mu, ggplot.type = "interaction")
-  p_score = plot(out_mean_comparisons_model_1_mu, ggplot.type = "score")
+  p_barplot_mu = plot(out_mean_comparisons_model_1_mu, plot_type = "barplot")
+  p_interaction = plot(out_mean_comparisons_model_1_mu, plot_type = "interaction")
+  p_score = plot(out_mean_comparisons_model_1_mu, plot_type = "score")
   
   out = list(
     "out_model_1" = out_model_1,
