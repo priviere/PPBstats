@@ -5,8 +5,8 @@
 \title{Get ggplot to visualize output}
 \usage{
 \method{plot}{PPBstats}(x, y = NULL, data_version = NULL,
-  ggplot.type = c("interaction", "barplot", "biplot-alpha-beta", "score"),
-  ...)
+  plot_type = c("interaction", "barplot", "biplot-alpha-beta", "score",
+  "network", "pam", "histogramm", "boxplot", "biplot", "radar", "raster"), ...)
 }
 \arguments{
 \item{data_version}{data set with the following columns: "year", "germplasm", "location", "group", "version". The group refers to an id that contains two different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
@@ -16,7 +16,7 @@ This argument is used only for \code{\link{mean_comparisons}} from
  \item \code{\link{check_model}} from \code{\link{predict_the_past_model_2}}
 }}
 
-\item{ggplot.type}{The type of plot you wish.
+\item{plot_type}{The type of plot you wish.
 \itemize{
  \item "barplot" for \code{\link{mean_comparisons}} from 
  \itemize{
@@ -143,8 +143,8 @@ This argument is used only when argument data comes from \code{\link{mean_compar
      \item germplasm : mean comparison for germplasm
     }
    
-   \item from \code{\link{model_1}}, a list with ggplot object depending on ggplot.type.
-   For each ggplot.type, it is a list of three elements being lists with as many elements as environment. 
+   \item from \code{\link{model_1}}, a list with ggplot object depending on plot_type.
+   For each plot_type, it is a list of three elements being lists with as many elements as environment. 
        For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
     \itemize{
      \item barplot : 
@@ -177,7 +177,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
     }
    
    
-   \item from \code{\link{model_2}}, a list with ggplot object depending on ggplot.type.
+   \item from \code{\link{model_2}}, a list with ggplot object depending on plot_type.
    There are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
     \itemize{
      \item barplot : 
@@ -189,7 +189,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
     }
    
    
-   \item \code{\link{predict_the_past_model_2}}, a list with ggplot object depending on ggplot.type. 
+   \item \code{\link{predict_the_past_model_2}}, a list with ggplot object depending on plot_type. 
    It is the same outputs than for model_1
     
   }
