@@ -21,6 +21,7 @@
 - plot.data_agro.R
     - debug radar + simplify ggradar function to get simple appearance, cf #68
 
+
 ### add new functions
 - napping.R, cf #72
 - hedonic.R, cf #72
