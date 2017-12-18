@@ -14,11 +14,11 @@ parameter_groups(list_out_check_model, parameter)
 \value{
 The function returns a list of two elements:
 \itemize{
-\item\texttt{obj.pca} : the PCA object from \texttt{FactoMineR::PCA}
-\item \texttt{clust}, a list of two elements:
+\item obj.pca : the PCA object from FactoMineR::PCA
+\item clust, a list of two elements:
  \itemize{
- \item \texttt{res.hcpc} : the HCPC object from \texttt{FactoMineR::HCPC}
- \item \texttt{clust} : the dataframe with cluster assigned to each individual
+ \item res.hcpc : the HCPC object from FactoMineR::HCPC
+ \item clust : the dataframe with cluster assigned to each individual
  }
 }
 }
