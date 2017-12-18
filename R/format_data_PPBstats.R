@@ -100,7 +100,7 @@
 #'  \itemize{
 #'   \item data is a data frame with the following columns: sample, juges, X, Y, descriptors. 
 #'   The descriptors must be separated by ";"
-#'   \item code is data frame with the following columns germplasm, location, code.
+#'   \item code is a data frame with the following columns: germplasm, location, code.
 #'   The function merge data and code to join the information.
 #'  }
 #' 
@@ -179,9 +179,7 @@ format_data_PPBstats = function(
     descriptors = as.vector(as.character(N$descriptors))
     vec_adj = unlist(strsplit(descriptors, ";"))
     vec_adj = sort(unique(vec_adj))
-    if( length(which(vec_adj == "")) > 0 ) { 
-      vec_adj = vec_adj[-which(vec_adj == "")]
-    }
+    if( length(which(vec_adj == "")) > 0 ) { vec_adj = vec_adj[-which(vec_adj == "")] }
     
     df = matrix(0, ncol = length(vec_adj), nrow = nrow(N))
     df = as.data.frame(df)
@@ -207,6 +205,7 @@ format_data_PPBstats = function(
     if( !is.null(threshold) ) {
       test = apply(N[, vec_adj], 2, sum)
       to_delete = which(test <= threshold)
+      to_keep = which(test > threshold)
       if( length(to_delete) > 0 ) { 
         adj_to_delete = vec_adj[to_delete] 
         N = N[,-which(colnames(N) %in% adj_to_delete)]
@@ -214,6 +213,7 @@ format_data_PPBstats = function(
         if( ncol(N) == 4 ){ stop("There are no more descriptors with threshold = ", threshold, 
                                  ". You must set another value.") }
       }
+      vec_adj = vec_adj[to_keep]
     }
     
     
@@ -234,7 +234,7 @@ format_data_PPBstats = function(
   }
   
   if(type == "data_organo_hedonic"){
-    d = format_data_PPBstats.data_organo_hedonic(data,code, threshold)
+    d = format_data_PPBstats.data_organo_hedonic(data, code, threshold)
   }
   
   # 4.Return results ----------
