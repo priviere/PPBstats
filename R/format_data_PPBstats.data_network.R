@@ -389,14 +389,9 @@ format_data_PPBstats.data_network = function(
         
         d_vertex = cbind.data.frame(d_vertex, d_vertex_bis)
         
-        t = as.data.frame(with(d_vertex, table(location, germplasm)))
-        colnames(t)[3] = "nb_sl"
-        
         d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_start")]
         d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_end")]
         d_vertex = d_vertex[,-which(colnames(d_vertex) == "year")]
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
-        d_vertex = join(d_vertex, t, by = "location")
         d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
         d_vertex = unique(d_vertex)
         
@@ -412,7 +407,15 @@ format_data_PPBstats.data_network = function(
         
         d_vertex$relation_type = "diffusion"
         
-        relation = unique(dg[,c("location_parent", "location_child")]) 
+        dtmp = dg[,c("location_parent", "location_child")]
+        du = unique(dtmp)
+        du$nb_diff = NA
+        for(i in 1:nrow(du)){
+          w = which(dtmp$location_parent == du[i, "location_parent"] & dtmp$location_child == du[i, "location_child"])
+          du[i, "nb_diff"] = length(w)
+        }
+        
+        relation = du
         
         out = list(d_vertex, relation); names(out) = c("d_vertex", "relation")
         OUT = c(OUT, list(out))
@@ -459,16 +462,11 @@ format_data_PPBstats.data_network = function(
         
         d_vertex = cbind.data.frame(d_vertex, d_vertex_bis)
         
-        t = as.data.frame(with(d_vertex, table(location, relation_year_start)))
-        colnames(t)[3] = "nb_sl"
-        
         d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_start")]
         d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_end")]
         d_vertex = d_vertex[,-which(colnames(d_vertex) == "year")]
         d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
-        d_vertex = join(d_vertex, t, by = "location")
         d_vertex = unique(d_vertex)
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_start")]
         
         dup = which(duplicated(d_vertex$year))
         if( length(dup) > 0 ){
@@ -482,7 +480,15 @@ format_data_PPBstats.data_network = function(
         
         d_vertex$relation_type = "diffusion"
         
-        relation = unique(dy[,c("location_parent", "location_child")]) 
+        dtmp = dy[,c("location_parent", "location_child")]
+        du = unique(dtmp)
+        du$nb_diff = NA
+        for(i in 1:nrow(du)){
+          w = which(dtmp$location_parent == du[i, "location_parent"] & dtmp$location_child == du[i, "location_child"])
+          du[i, "nb_diff"] = length(w)
+        }
+        
+        relation = du
         
         out = list(d_vertex, relation); names(out) = c("d_vertex", "relation")
         OUT = c(OUT, list(out))

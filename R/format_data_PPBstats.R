@@ -121,11 +121,9 @@
 #'    \item for network_split = "germplasm", 
 #'   it returns a list with as many elements as germplam in the data
 #'   as well as all germplasms merged in the first element of the list.
-#'   An atttribute with the number of seed_lots (nb_sl) for each location are added.
 #'    \item for network_split = "relation_year_start", 
 #'   it returns a list with as many elements as year in the data
 #'   as well as all years merged in the first element of the list.
-#'   An atttribute with the number of seed_lots (nb_sl) for each location are added.
 #'   }
 #'   \item for bipart network, it returns a list with as many elements as year in the data 
 #'   as well as all years merged in the first element of the list.
@@ -142,8 +140,9 @@ format_data_PPBstats = function(
   type = "data_agro",
   code,
   threshold,
-  network_part,
-  vertex_type
+  network_part = c("unipart", "bipart"), 
+  network_split = c("germplasm", "relation_year_start"),
+  vertex_type = NULL
   )
   {
   # 0. Error messages ----------
@@ -154,7 +153,7 @@ format_data_PPBstats = function(
   
   # 1.Network ----------
   if(type == "data_network"){
-    d = format_data_PPBstats.data_network(data, network_part)
+    d = format_data_PPBstats.data_network(data, network_part, network_split, vertex_type)
   }
   
   # 2.Agro ----------
