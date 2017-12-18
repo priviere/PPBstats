@@ -7,7 +7,7 @@ The different representations are done with the `plot` function.
 For network representation, set `plot_type = "network"` diffusion event are displayed with a curve.
 `in_col` can be settled to customize color of vertex.
 
-```{r}
+```{r, message=FALSE}
 p_net = plot(net_unipart_sl, plot_type = "network", in_col = "location")
 p_net
 ```
@@ -21,7 +21,7 @@ p_net_org = plot(net_unipart_sl, plot_type = "network", in_col = "location",
 p_net_org
 ```
 
-To have information on the seed lots taht are represented, `plot_type = "barplot"` can be used.
+To have information on the seed lots that are represented, `plot_type = "barplot"` can be used.
 Choose what to represent on the x axis and in color as well as the number of parameter per plot.
 
 ```{r}
@@ -36,7 +36,7 @@ p_bar[[1]]$barplot$`germplasm-1|location-1` # first element of the plot
 
 For network representation, set `plot_type = "network"` diffusion event are display with curve.
 `in_col` can be settle to customize color of vertex.
-The number of seed lots on each location are represented.
+
 
 ```{r}
 p_net = plot(net_unipart_location_g, plot_type = "network", 

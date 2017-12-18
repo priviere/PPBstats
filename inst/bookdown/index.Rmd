@@ -14,13 +14,12 @@ description: "Tutorial on how to use the R package PPBstats."
 
 # Preface {-}
 
-This book introduces the R package `PPBstats`.
 `PPBstats` is an R package that performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
 
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
 knitr::include_graphics("figures/warning.png")
 ```
-Be aware that this package is under development and test: do not 100\% trust the functions!!! 
+Be aware that this package is under development and test: do not 100% trust the functions!!! 
 You're welcome to contribute: see section \@ref(contributions).
 
 ```{r , out.width='90%', fig.align='center', echo=FALSE, fig.cap="Wheat trials on farm within our participatory plant breeding programme, summer 2012, Auvergne, France. CC-BY-NC-SA. Pierre Rivière."}
@@ -38,7 +37,7 @@ Pierre Rivière: pierre@semencespaysannes.org
 
 **Olivier David^3^** wrote the `JAGS` code and reviewed the R code and the book regarding sections \@ref(model-1), \@ref(model-2), \@ref(model-1) and \@ref(variance-intra).
 
-**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve contribution section.
+**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section \@ref(contributions) regarding contributions.
 
 **Isabelle Goldringer^2^** reviewed and improved all the text of the book
 
@@ -48,7 +47,7 @@ Pierre Rivière: pierre@semencespaysannes.org
 knitr::include_graphics("figures/Logo-RSP.png")
 ```
 Le Réseau Semences Paysannes (the French Farmers' Seeds Network (RSP)), created in 2003, brings together a great diversity of collectives and people who preserve farmers' seeds in fields, orchards, vineyards and gardens. They are involved in supporting the consolidation of local initiatives to maintain and renew cultivated biodiversity through Community Seeds Systems. Over 90 organizations have come together to promote and develop farmers' seeds, and to protect farmers' rights over their seeds.
-www.semencespaysannes.org
+http://www.semencespaysannes.org
 
 
 ^2^ INRA, UMR 0320, Génétique Quantitative et Evolution, Ferme du Moulon F-91190 Gif sur Yvette, France

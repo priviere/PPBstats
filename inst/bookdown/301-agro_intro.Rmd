@@ -282,7 +282,7 @@ knitr::include_graphics("figures/PPBstats-main-functions-agro.png")
 Table: (\#tab:function-descriptions-workflow) Function description.
 
 
-### Data format {#data-format-agro}
+### Data format {#data-agro}
 
 For `data-agro`, there are two format supported : `data-agro` and `data-agro-version`.
 

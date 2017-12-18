@@ -1,5 +1,8 @@
 # Philosophy of PPBstats {#philo}
 
+This chapter describes what is participatory plant breeding, the objectives of `PPBstats`, the analysis according to the objectives and how to install `PPBstats`.
+
+
 ## What is Participatory Plant Bredding ?
 
 - **decentralize the selection**
@@ -69,14 +72,13 @@ Each of these objective is explained throught exemple for each analyse in its co
 To be analyzed by `PPBstats`, the data must have a certain format.
 Up to now, there are two formats supported:
 
-- `data-network`
-- `data-agro`
+- `data-network` (section \@ref(data-network))
+- `data-agro` (section \@ref(data-agro))
 
 To check and give the right format, you must use the `format_data_PPBstats()` function.
-Each format are detailed in their corresponding section.
 
 
-## Let's go!
+## Let's go: install `PPBstats` !
 
 To continue, load the current development version of the package [here](https://github.com/priviere/PPBstats/archive/v0.22.zip)
 
