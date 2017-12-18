@@ -4,8 +4,9 @@
 \alias{format_data_PPBstats}
 \title{Check and format the data to be used by PPBstats functions}
 \usage{
-format_data_PPBstats(data, type = "data_agro", code, threshold, network_part,
-  vertex_type)
+format_data_PPBstats(data, type = "data_agro", code, threshold,
+  network_part = c("unipart", "bipart"), network_split = c("germplasm",
+  "relation_year_start"), vertex_type = NULL)
 }
 \arguments{
 \item{data}{The data frame. See details.}
@@ -26,14 +27,14 @@ See details.}
 
 \item{network_part}{For type = "data_network", element of the network, it can be "unipart" or "bipart"}
 
+\item{network_split}{For type = "data_network" and network_part = "unipart" and 
+vertex_type = "location", split of the data that can be "germplasm" or "relation_year_start"}
+
 \item{vertex_type}{For type = "data_network",
 \itemize{
  \item for unipart network : "seed_lots" or "location"
  \item for bipart network : c("germplasm", "location")
  }}
-
-\item{network_split}{For type = "data_network" and network_part = "unipart" and 
-vertex_type = "location", split of the data that can be "germplasm" or "relation_year_start"}
 }
 \value{
 The function returns the data with the right format (i.e. class)
@@ -48,11 +49,9 @@ The function returns the data with the right format (i.e. class)
    \item for network_split = "germplasm", 
   it returns a list with as many elements as germplam in the data
   as well as all germplasms merged in the first element of the list.
-  An atttribute with the number of seed_lots (nb_sl) for each location are added.
    \item for network_split = "relation_year_start", 
   it returns a list with as many elements as year in the data
   as well as all years merged in the first element of the list.
-  An atttribute with the number of seed_lots (nb_sl) for each location are added.
   }
   \item for bipart network, it returns a list with as many elements as year in the data 
   as well as all years merged in the first element of the list.

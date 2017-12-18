@@ -3,7 +3,7 @@
 \name{common_functions}
 \alias{common_functions}
 \alias{check_data_vec_variables}
-\title{Some functions used in several functions of PPBstats}
+\title{Some functions used in one or several functions of PPBstats}
 \usage{
 check_data_vec_variables(data, vec_variables)
 }
