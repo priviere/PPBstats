@@ -29,10 +29,15 @@ format_data_PPBstats.data_network = function(
   if( network_part == "bipart" & vertex_type[1] == "person"){ stop(mess) }
   
   
-  mess = "network_part must be either \"germplasm\" or \"relation_year_start\" and 
+  mess = "network_split must be either \"germplasm\" or \"relation_year_start\" and 
          can be used only with network_part = \"unipart\" and vertex_type = \"location\"."
   
+  if( vertex_type[1] == "location" & is.null(network_split) ) { 
+    stop("With vertex_type = \"location\", network_split can not be NULL", mess) 
+    }
+    
   if(!is.element(network_split[1], c("germplasm", "relation_year_start"))) { stop(mess) }
+
 
   # Functions used in this function ----------
   # Check data format ----------
@@ -333,9 +338,11 @@ format_data_PPBstats.data_network = function(
         It can have in option : \"year\", \"germplasm\" and \n
         \"alt\", \"long\", \"lat\" to get map representation "
         ) 
-      }
+    }
     if( !is.null(d1) & is.null(d2) ) { d = unipart_sl_data_to_unipart_location_data(d) }
     if( is.null(d1) & !is.null(d2) ) { d = check_unipart_person_data(d) }
+    if( !is.null(d1) & !is.null(d2) ) { d = unipart_sl_data_to_unipart_location_data(d) }
+
     
     if( !is.element("germplasm_parent", colnames(d)) ){ 
       d$germplasm_parent = d$germplasm_child = "unknown_germplasm" 
@@ -482,7 +489,6 @@ format_data_PPBstats.data_network = function(
       }
       names(OUT) = vec_year
     }
-    
     
   }
   
