@@ -101,8 +101,7 @@ plot.data_network = function(
     p = p + theme_blank()
     
     if( labels_on ){ 
-      p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size, 
-                                   segment.color = "black") 
+      p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size) 
     }
     
     return(p)
@@ -215,15 +214,22 @@ plot.data_network = function(
     nd = n[which(n$relation_type == "diffusion"),]
     
     p = ggplot(n, aes(x = x, y = y, xend = xend, yend = yend))
-    if(is.element("nb_sl", colnames(n))){
-      p = p + geom_nodes(aes(size = nb_sl))
-      p = p + geom_edges(data = nd, aes(linetype = relation_type), curvature = 0.2)
+    if(is.element("nb_diff", colnames(n))){
+      p = p + geom_nodes()
+      p = p + geom_edges(data = nd, aes(linetype = relation_type, colour = nb_diff), 
+                         arrow = arrow(length = unit(4, "pt"), type = "closed"), 
+                         curvature = 0.2)
+      p = p + scale_colour_gradient(low = "blue", high = "red")
+      p = p + coord_cartesian(xlim = range(c(n$x, n$xend)*1.1), ylim = range(c(n$y, n$yend)*1.1))
     } else { 
       p = p + geom_nodes(aes(color = in_col)) 
-      p = p + geom_edges(data = nr, aes(linetype = relation_type), arrow = arrow(length = unit(4, "pt"), type = "closed"))
-      p = p + geom_edges(data = nd, aes(linetype = relation_type), arrow = arrow(length = unit(4, "pt"), type = "closed"), curvature = 0.2)
+      p = p + geom_edges(data = nr, aes(linetype = relation_type), 
+                         arrow = arrow(length = unit(4, "pt"), type = "closed"))
+      p = p + geom_edges(data = nd, aes(linetype = relation_type), 
+                         arrow = arrow(length = unit(4, "pt"), type = "closed"), curvature = 0.2)
     }    
     p$labels$colour = in_col
+
     
     scale_ex = c("solid", "dotted", "longdash", "dashed", "twodash", "dotdash")
     p = p + scale_linetype_manual(values = scale_ex[1:length(na.omit(unique(n$relation_type)))] )
@@ -307,7 +313,7 @@ plot.data_network = function(
         }
         
         # if( is.null(in_col) ) { in_col = "location" }
-        if( organize_sl){ in_col = "germplasm"} 
+        if( organize_sl ){ in_col = "germplasm"} 
         colnames(n)[which(colnames(n) == in_col)] = "in_col" 
         
         if( organize_sl){ 
@@ -317,8 +323,7 @@ plot.data_network = function(
         }
         
         if( labels_on ){ 
-          p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size, 
-                                       segment.color = "black") 
+          p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size) 
         }
         
         out = list("network" = p)
