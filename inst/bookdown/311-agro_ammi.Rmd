@@ -70,11 +70,11 @@ This PCA allows to detect
 
 For AMMI analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
 
-- Format the data with `format_data_PPBstats`
-- Run the model with `GxE` and `gxe_analysis = "AMMI"`
-- Check model outputs with graphs to know if you can continue the analysis with `check_model`
-- Get mean comparisons for each factor with `mean_comparisons` and vizualise it with `plot`
-- Get groups of each parameters with `parameters_groups` and visualise it with `plot`
+- Format the data with `format_data_PPBstats()`
+- Run the model with `GxE()` and `gxe_analysis = "AMMI"`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+- Get groups of each parameters with `parameters_groups()` and visualise it with `plot()`
 
 #### Format the data
 
@@ -136,7 +136,7 @@ out_ammi$PCA
 ##### Check the model
 
 Once the model is run, it is necessary to check if the outputs can be taken with confidence.
-This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from `check_model`).
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from `check_model()`).
 
 ```{r}
 out_check_ammi = check_model(out_ammi)

@@ -1,7 +1,7 @@
 ## Describe the data {#describe-data-agro}
 
 Once the data have been collected, a first step is to describe them with `describe_data`.
-Five types of plot, throught the `plot_type` argument are possible:
+Seven types of plot, throught the `plot_type` argument are possible:
 
 - presence abscence matrix that represent the combinaison of germplasm $\times$ location
 - histogramm
@@ -12,7 +12,7 @@ Five types of plot, throught the `plot_type` argument are possible:
 - radar
 
 Then you must choose which factor to represent on the x axis (`x_axis` argument),
-the factor to display in color (`in_col` argument), and of course the variable to describe (`vec_variables` argument).
+the factor to display in color (`in_col` argument), and of course the variables to describe (`vec_variables` argument).
 
 It is possible to tune the number of factor displayed (`nb_parameters_per_plot_x_axis` and `nb_parameters_per_plot_in_col` arguments) and the size of the labels regarding biplot and radar (`labels_on` and `labels_size` arguments).
 
@@ -52,9 +52,9 @@ p = plot(
 p$y1
 ```
 
-Here there are lots of 0 meaning that a lot of germplasm are no in at least two farms.
-A score of 1 is for a given germplasm in a given environment.
-A score of 2 is for a given germplasm replicated twice in a given environement.
+Here there are lots of 0 meaning that a lot of germplasm are no in at least two locations.
+A score of 1 is for a given germplasm in a given location.
+A score of 2 is for a given germplasm replicated twice in a given location.
 
 
 ### histogramm

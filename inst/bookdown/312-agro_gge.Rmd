@@ -41,11 +41,11 @@ With,
 For GGE analysis, everything is exactly the same than for AMMI analysis except you should settle `gxe_analysis = "GGE"` in `GxE`.
 You can follow these steps (Figure \@ref(fig:main-workflow)):
 
-- Format the data with `format_data_PPBstats`
-- Run the model with `GxE` and `gxe_analysis = "GGE"`
-- Check model outputs with graphs to know if you can continue the analysis with `check_model`
-- Get mean comparisons for each factor with `mean_comparisons` and vizualise it with `plot`
-- Get groups of each parameters with `parameters_groups` and visualise it with `plot`
+- Format the data with `format_data_PPBstats()`
+- Run the model with `GxE()` and `gxe_analysis = "GGE"`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+- Get groups of each parameters with `parameters_groups()` and visualise it with `plot()`
 
 We will not details everything as it the same than AMMI in the code.
 Of course the calculation is different on the interaction matrix so you'll get different results.

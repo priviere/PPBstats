@@ -4,8 +4,8 @@
 
 For variance intra analysis, you can follow these steps (Figure \@ref(fig:main-workflow)) :
 
-- Format the data with `format_data_PPBstats`
-- Run the analysis with `multivariate`
+- Format the data with `format_data_PPBstats()`
+- Run the analysis with `multivariate()`
 - Check outputs and results with functions from `factoextra`^[https://github.com/kassambara/factoextra]
 
 #### Format the data

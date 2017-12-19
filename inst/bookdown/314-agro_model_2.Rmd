@@ -73,13 +73,13 @@ But keep in mind it has been corrected.
 
 For model_2, you can follow these steps (Figure \@ref(fig:main-workflow)):
 
-- Format the data with `format_data_PPBstats`
-- Run the model with `model_2`
-- Check model outputs with graphs to know if you can continue the analysis with `check_model`
-- Perform cross validation studies with `cross_validation_model_2` in order to assess the quality of the model
-- Get mean comparisons for each factor with `mean_comparisons` and vizualise it with `plot`
-- Get groups of parameters for $\alpha$, $\beta$ and $\theta$ with `parameters_groups` and visualise it with `plot`
-- Predict the past with `predict_the_past_model_2` and vizualise it with `plot`
+- Format the data with `format_data_PPBstats()`
+- Run the model with `model_2()`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Perform cross validation studies with `cross_validation_model_2()` in order to assess the quality of the model
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+- Get groups of parameters for $\alpha$, $\beta$ and $\theta$ with `parameters_groups()` and visualise it with `plot()`
+- Predict the past with `predict_the_past_model_2()` and vizualise it with `plot()`
 
 #### Format the data
 The values for $\alpha_i$, $\beta_i$, $\theta_j$ are the real value taken to create the dataset for y1.
@@ -93,7 +93,7 @@ head(data_model_2)
 
 #### Run the model
 
-To run `model_2` on the dataset, use the function `model_2`.
+To run model_2 on the dataset, use the function `model_2()`.
 You can run it on one variable.
 Here it is on thousand kernel weight (tkw)
 
@@ -159,7 +159,7 @@ out_model_2$germplasm.not.used
 ##### Check the model
 
 Once the model is run, it is necessary to check if the outputs can be taken with confidence. 
-This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from `check_model`!).
+This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from `check_model()`!).
 
 
 ```{r}
@@ -257,7 +257,7 @@ p + stat_smooth(method = "lm") + geom_point()
 This step is useful to assess the quality of the model.
 This step is higly computing consuming as model_2 is run as many time as there is value of $Y_{ij}$ (i.e. number of rows of the data set).
 
-The complete cross validation is done with `cross_validation_model_2`: 
+The complete cross validation is done with `cross_validation_model_2()`: 
 each Value of $Y_{ij}$ is estimated by the entire data set without this value.
 
 The convergence is not check for each validation. 
