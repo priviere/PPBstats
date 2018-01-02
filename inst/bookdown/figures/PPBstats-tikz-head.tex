@@ -8,8 +8,11 @@
 \definecolor{sp}{RGB}{255,153,153}
 \definecolor{vi}{RGB}{255,204,153}
 \definecolor{ma}{RGB}{204,255,153}
+\definecolor{hedo}{RGB}{153,153,255}
+\definecolor{nap}{RGB}{153,255,153}
 
 \usetikzlibrary{
+  mindmap,
   decorations.pathreplacing,    % paths with shoapes of curly braces
   positioning,     % positions like above of node
   fit              % legend bounding box fitting all nodes
@@ -38,6 +41,8 @@
   vi/.append style = {fill = vi},
   ma/.append style = {fill = ma},
   aux/.append style = {fill = none},
+  hedo/.append style = {fill = hedo},
+  nap/.append style = {fill = nap},
   legendkey/.append style = {minimum width=3ex},
   legendtext/.append style = {draw=none, fill = black!10},
   ->,        % arrows for all
