@@ -1,13 +1,13 @@
 ## Introduction
 
-Network of seed circulation are interesting to have insight on how exchanges are structured within a PPB programme or a Community Seed House (we prefere the term instead of Community Seed Banks).
+Network of seed circulation are interesting to have insight on how exchanges are structured within a PPB programme or a Community Seed House (we prefere the term instead of Community Seed Banks[@bioversity_csb_2015]).
 It can be done at several scale, for example local, regional and national.
 
 Two types of network are handle within `PPBstats` :
 
 - unipart network where a vertex can be
-    - seed lot (i.e. a combinaison of a germplasm in a given location a given year) where edges are relation such as diffusion, mixture, reproduction, crosses or selection for example.
-    - location where edges are diffusion between location
+    - a seed lot (i.e. a combinaison of a germplasm in a given location a given year) where edges are relation such as diffusion, mixture, reproduction, crosses or selection for example.
+    - a location where edges are diffusion between location
 
 - bipart network where a vertex can be a location or a germplasm
 
@@ -37,7 +37,7 @@ Table: (\#tab:function-descriptions-workflow-network) Main function descriptions
 
 Three formats are possible:
 
-1. unipart network for seed lots which represents relation between between seed lots: a data frame with the followin compulsory columns:
+1. unipart network for seed lots which represents relation between seed lots: a data frame with the followin compulsory columns:
     - `"seed_lot_parent"` : name of the seed lot parent in the relation
     - `"seed_lot_child"` ; name of the seed lots child in the relation
     - `"relation_type"` : the type of relation between the seed lots
@@ -69,19 +69,18 @@ When bipart network come from unipart network for seed lots, relation reproducti
 |unipart for seed lots format | X | X | X |
 |unipart for location format | | X | |
 |bipart for germplasm and location format | | | X |
-Table: (\#tab:network-format-analysis) Possible analysis (in row) regarding network format (in column).
+Table: (\#tab:network-format-analysis) Possible analysis (in column) regarding network format (in row).
 
 The format of the data are checked by the function `format_data_PPBstats()`. 
-The function returns list of `igraph` object coming from `igraph::graph_from_data_frame()`.
 
 The following argument can be used :
 
-- `type` : `data_network`
+- `type` : `"data_network"`
 - `network_part` : `"unipart"` or `"bipart"`
 - `vertex_type` :
     - for unipart network : `"seed_lots"` or `"location"`
     - for bipart network : `c("germplasm", "location")`
-- `network_split` : for `network_part = "unipart"` and `vertex_type = "location"`, split of the data that can be "germplasm" or "relation_year_start"
+- `network_split` : for `network_part = "unipart"` and `vertex_type = "location"`, split of the data that can be `"germplasm"` or `"relation_year_start"`.
 
 
 Possible values of argument regarding network format are displayed in Table \@ref(tab:network-format-arg).
@@ -94,7 +93,8 @@ Possible values of argument regarding network format are displayed in Table \@re
 Table: (\#tab:network-format-arg) Possible values of argument (in colum) regarding network format (in row).
 
 The following sections give exemples for each network format.
-It returns a list with `igraph` object coming from `igraph::graph_from_data_frame()`.
+The function returns list of `igraph` object^[http://igraph.org/r/] coming from `igraph::graph_from_data_frame()`.
+
 
 #### unipart for seed lots data
 ```{r}
@@ -125,7 +125,6 @@ net_unipart_location_g = format_data_PPBstats(
 
 For `network_split = "germplasm"`, it returns a list with as many elements as germplam in the data
 as well as all germplasms merged in the first element of the list.
-An atttribute with the number of seed lots (`nb_sl`) for each location are added.
 ```{r}
 names(net_unipart_location_g)
 ```
@@ -141,7 +140,6 @@ net_unipart_location_y = format_data_PPBstats(
 
 For `network_split = "relation_year_start"`, it returns a list with as many elements as year in the data
 as well as all years merged in the first element of the list.
-An atttribute with the number of seed lots (`nb_sl`) for each location are added.
 ```{r}
 names(net_unipart_location_y)
 ```
@@ -182,7 +180,6 @@ net_unipart_location_g = format_data_PPBstats(
 
 For `network_split = "germplasm"`, it returns a list with as many elements as germplam in the data
 as well as all germplasms merged in the first element of the list.
-An atttribute with the number of seed lots (`nb_sl`) for each location are added.
 ```{r}
 names(net_unipart_location_g)
 ```
@@ -198,7 +195,6 @@ net_unipart_location_y = format_data_PPBstats(
 
 For `network_split = "relation_year_start"`, it returns a list with as many elements as year in the data
 as well as all years merged in the first element of the list.
-An atttribute with the number of seed lots (`nb_sl`) for each location are added.
 ```{r}
 names(net_unipart_location_y)
 ```

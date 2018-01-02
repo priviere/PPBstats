@@ -12,7 +12,7 @@ p_net = plot(net_unipart_sl, plot_type = "network", in_col = "location")
 p_net
 ```
 
-In order to get the network organized in a chronolical order and by farm, set `organize_sl = TRUE`.
+In order to get the network organized in a chronolical order and by location, set `organize_sl = TRUE`.
 This representation is possible if the seed lots are under the following format : `GERMPLASM_LOCATION_YEAR_DIGIT`.
 
 ```{r}
@@ -36,6 +36,7 @@ p_bar[[1]]$barplot$`germplasm-1|location-1` # first element of the plot
 
 For network representation, set `plot_type = "network"` diffusion event are display with curve.
 `in_col` can be settle to customize color of vertex.
+The curve between location represent the diffusion, the number of diffusion is displayed on a color scale.
 
 
 ```{r}
