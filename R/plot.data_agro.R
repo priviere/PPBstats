@@ -17,8 +17,9 @@
 #'  \item "raster"
 #' }
 #' 
-#' @param x_axis factor displayed on the x.axis of a plot
-#' 
+#' @param x_axis factor displayed on the x.axis of a plot. 
+#' "date_julian" can be choosen: it will  display julian day for a given variable automatically calculated from format_data_PPBstats(). 
+#' This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "interaction".
 #' @param in_col factor displayed in color of a plot
 #' 
 #' @param vec_variables vector of variables to describe
@@ -75,7 +76,17 @@ plot.data_agro = function(
     } 
   }
   
-  if(!is.null(x_axis)){ check_arg(x_axis, colnames(data)) }
+  if(!is.null(x_axis)){ 
+    if( x_axis != "date_julian") { 
+      check_arg(x_axis, colnames(data)) 
+    } else { 
+      warning("x_axis = \"date_julian\" is a special feature that will display julian day for a given variable automatically calculated from format_data_PPBstats().") 
+      if(!is.element(plot_type, c("histogramm", "barplot", "boxplot", "interaction"))){ 
+        stop("x_axis = \"date_julian\" is possible only for plot_type = \"histogramm\", \"barplot\", \"boxplot\" and \"interaction\".") 
+        }
+      }
+  }
+  
   if(!is.null(in_col)){ check_arg(in_col, colnames(data)) }
   check_arg(vec_variables, colnames(data))
   if(!is.null(labels_on)){ check_arg(labels_on, colnames(data)) }
@@ -156,7 +167,7 @@ plot.data_agro = function(
   
   # 2.2. Function to run histogramm, barplot, boxplot, interaction ----------
   fun_hbbi_1 = function(d, x_axis, in_col, plot_type, variable, ylim){
-    
+
     d$variable = d[,variable]
     
     # histogramm
@@ -225,11 +236,14 @@ plot.data_agro = function(
                           in_col, nb_parameters_per_plot_in_col,
                           plot_type){
                    
+                   if( x_axis == "date_julian") { x_axis = paste(variable, "$date_julian", sep = "") }
+                   
                    d = reshape_data_split_x_axis_in_col(d, variable, labels_on,
                                     x_axis, nb_parameters_per_plot_x_axis,
                                     in_col, nb_parameters_per_plot_in_col
                    )
                    ylim = range(unlist(lapply(d, function(x){ range(x[,variable], na.omit = TRUE) } )))
+                   
                    out = lapply(d, fun_hbbi_1, x_axis, in_col, plot_type, variable, ylim)
                    return(out)
                  },

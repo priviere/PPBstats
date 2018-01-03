@@ -151,6 +151,20 @@ names(p$y1)
 p$y1$`germplasm-1|location-1`
 ```
 
+It is also possible to have on the `x_axis` the date in julian day that have been automatically calculated from `format_data_PPBstats()`. 
+Note that this is possible only for `plot_type = "histogramm"`, `"barplot"`, `"boxplot"` and `"interaction"`.
+
+```{r}
+p = plot.data_agro(
+  data_GxE, plot_type = "interaction",
+  vec_variables = c("y1", "y2"),
+  x_axis = "date_julian",
+  in_col = "location"
+)
+p$y1$`y1$date_julian-1|location-1`
+```
+
+
 
 ### biplot
 

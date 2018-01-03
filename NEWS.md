@@ -18,8 +18,9 @@
 - use plot methods for describe_data cf #79
 - plot.[...].R
     - change arg ggplot.type to plot_type cf #69
-- plot.data_agro.R
-    - debug radar + simplify ggradar function to get simple appearance, cf #68
+- plot.data_agro.R, cf #68
+    - debug radar + simplify ggradar function to get simple appearance
+    - create plot with dynamic in time coming from $data_julian from format_data_PPBstats
 
 
 ### add new functions
