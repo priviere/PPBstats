@@ -10,6 +10,7 @@ Seven types of plot, throught the `plot_type` argument are possible:
 - interaction
 - biplot
 - radar
+- raster
 
 Then you must choose which factor to represent on the x axis (`x_axis` argument),
 the factor to display in color (`in_col` argument), and of course the variables to describe (`vec_variables` argument).
@@ -194,3 +195,19 @@ p = plot(
   )
 p
 ```
+
+### raster
+
+Raster plot can be done for factor variables.
+Note than when there are no single value for a given `x_axis`, colums `block`, `X` and `Y` are added in order to have single value.
+
+```{r}
+p = plot(
+  data_GxE, 
+  plot_type = "raster", 
+  vec_variables = c("desease", "vigor"), 
+  x_axis = "germplasm"
+)
+p$`germplasm-block-X-Y-9|-NA`
+```
+

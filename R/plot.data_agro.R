@@ -360,10 +360,33 @@ plot.data_agro = function(
   
   fun_raster = function(d, vec_variables,
                         x_axis, nb_parameters_per_plot_x_axis){ 
+    
+    vv = vm = vx = NULL
+    for(v in vec_variables) { 
+      vv = c(vv, as.character(rep(v, nrow(d))))
+      vm = c(vm, as.character(d[,v]))
+      vx = c(vx, as.character(d[,x_axis]))
+    }
+    
+    dtmp = cbind.data.frame(
+      variable = as.factor(vv),
+      value = as.factor(vm),
+      x_axis = as.factor(vx)
+    )
+    
+    test = table(dtmp$x_axis)
+    if( sum(test) != length(test) ) { 
+      warning("There are no single value for each x_axis, therefore block, X and Y colums have been added in order to have single value.") 
+      d$new_x_axis = paste(d[,x_axis], d$block, d$X, d$Y, sep = "-")
+    } else { d$new_x_axis = d[,x_axis] }
+    d = d[,-which(colnames(d) == x_axis)]
+    x_axis = paste(x_axis, "block", "X", "Y", sep = "-")
+    colnames(d)[which(colnames(d) == "new_x_axis")] = x_axis
+    
     d = reshape_data_split_x_axis_in_col(d, vec_variables, labels_on = NULL,
                      x_axis, nb_parameters_per_plot_x_axis,
                      in_col = NULL, nb_parameters_per_plot_in_col = NULL
-    )
+                     )
     out = lapply(d, fun_raster_1, vec_variable)
     return(out)
   }

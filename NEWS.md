@@ -21,7 +21,7 @@
 - plot.data_agro.R, cf #68
     - debug radar + simplify ggradar function to get simple appearance
     - create plot with dynamic in time coming from $data_julian from format_data_PPBstats
-
+    - add raster arg + update data_GxE
 
 ### add new functions
 - napping.R, cf #72
