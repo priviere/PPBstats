@@ -78,15 +78,15 @@ NULL
 #' Simulated data set for three variables to test GxE model
 #'
 #' @description
-#' A dataset containing three variables (y1, y2 and y3) 
-#' with their respective dates (y1$date, y2$date and y3$date)
+#' A dataset containing five variables (y1, y2, y3, desease, vigor) 
+#' with their respective dates for the first three (y1$date, y2$date and y3$date)
 #' and values for the following factors: location, year, germplasm, block, X and Y. 
 #'
 #' @usage
 #' data(data_GxE)
 #'
 #' @format
-#' A data frame with 180 rows and 12 columns
+#' A data frame with 180 rows and 14 columns
 #' 
 #' @author Pierre Rivière
 "data_GxE"
