@@ -111,7 +111,7 @@ check_model.fit_model_1 <- function(
 
   # 3. Return results ----------
   data_env_with_no_controls = x$data_env_with_no_controls
-  if( !is.null(data_env_with_no_controls) ){
+  if( !is.null(data_env_with_no_controls) & nrow(data_env_with_no_controls)>0 ){
     data_env_with_no_controls$parameter = paste("mu", data_env_with_no_controls$parameter, sep = "")
     data_env_with_no_controls = plyr::rename(data_env_with_no_controls, replace = c("variable" = "median"))
   }
