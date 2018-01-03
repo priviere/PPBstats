@@ -236,7 +236,9 @@ plot.data_agro = function(
                           in_col, nb_parameters_per_plot_in_col,
                           plot_type){
                    
-                   if( x_axis == "date_julian") { x_axis = paste(variable, "$date_julian", sep = "") }
+                   if(!is.null(x_axis)){ 
+                     if( x_axis == "date_julian") { x_axis = paste(variable, "$date_julian", sep = "") }
+                     }
                    
                    d = reshape_data_split_x_axis_in_col(d, variable, labels_on,
                                     x_axis, nb_parameters_per_plot_x_axis,
