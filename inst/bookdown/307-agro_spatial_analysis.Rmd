@@ -4,7 +4,8 @@ Note that this section is still under development : cf https://github.com/privie
 
 #### Theory of the model
 
-The following model is used to take into account environmental variation within a block with few control replicated in rows and columns.
+The following model is based on frequentist statistics (section \@ref(section-freq)).
+The model is used to take into account environmental variation within a block with few control replicated in rows and columns.
 
 It is based on a SpATS (Spatial Analysis of Field Trials with Splines) model proposed by @rodriguez_spatial_2016 :
 
@@ -96,7 +97,10 @@ head(out_spatial$info$data)
 
 #### Check and visualize model outputs
 
+The tests to check the model are explained in section \@ref(check-model-freq).
+
 ##### Check the model
+
 ```{r}
 out_check_spatial = check_model(out_spatial)
 ```
@@ -139,6 +143,8 @@ p_out_check_spatial$variability_repartition
 ```
 
 #### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
 
 #### Get mean comparisons
 

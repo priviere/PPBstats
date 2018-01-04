@@ -5,6 +5,7 @@ Hence, model_2 was implemented.
 
 For model_2, it gave nice results with 75 environments and 120 germplasms present in at least two environments (95\% of missing $G \times E$ combinations) [@riviere_hierarchical_2016].
 
+The model is based on bayesian statistics (section \@ref(section-bayes)).
 
 #### Theory of the model
 The model is describe in @riviere_hierarchical_2016.
@@ -155,6 +156,8 @@ out_model_2$germplasm.not.used
 ```
 
 #### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-bayes).
 
 ##### Check the model
 
@@ -316,6 +319,8 @@ p_out_cv$regression
 ```
 
 #### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-bayes).
 
 ##### Get mean comparisons
 

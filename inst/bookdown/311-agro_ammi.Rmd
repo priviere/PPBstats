@@ -2,6 +2,7 @@
 
 #### Theory of the model
 
+The model is based on frequentist statistics (section \@ref(section-freq)).
 The Additive Main effects and Multiplicative Interaction (AMMI) model is based on two analyses [@gauch_statistical_2006] : 
 
 
@@ -133,6 +134,8 @@ out_ammi$PCA
 
 #### Check and visualize model outputs
 
+The tests to check the model are explained in section \@ref(check-model-freq).
+
 ##### Check the model
 
 Once the model is run, it is necessary to check if the outputs can be taken with confidence.
@@ -180,11 +183,11 @@ p_out_check_ammi$variability_repartition
 ```
 
 - `variance_intra_germplasm` : repartition of the residuals for each germplasm (see Details for more information)
-
+With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
 This has to been seen with caution:
     - If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
     - If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
-  With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+
 
 ```{r}
 p_out_check_ammi$variance_intra_germplasm
@@ -197,6 +200,8 @@ p_out_check_ammi$pca_composante_variance
 
 
 #### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
 
 ##### Get mean comparisons
 

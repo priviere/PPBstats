@@ -2,3 +2,8 @@
 
 !!! TO DO !!!
 
+
+
+The model is based on bayesian statistics (section \@ref(section-bayes)).
+The tests to check the model are explained in section \@ref(check-model-bayes).
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-bayes).

@@ -82,14 +82,41 @@ Table: (\#tab:summary-analysis) Analyses carried out in `PPBstats`. X: effects t
 
 Analysis used in PPB programmes are mentionned in decision tree in Section \@ref(decision-tree).
 
-#### Frequentist statistics
-
-!!! TO DO !!!
+#### Frequentist statistics {#section-freq}
 
 ##### Theory
 
+##### Check model {#check-model-freq}
 
-##### Mean comparisons
+Regarding frequentist analysis, there are several ways to check if the model went well.
+
+- Residuals distribution. If it looks normal then the hypothesis seems fullfiled.
+
+- Skewness test which is an indicator used in distribution analysis as a sign of asymmetry and deviation from a normal distribution. 
+    - Skewness > 0 - Right skewed distribution - most values are concentrated on left of the mean, with extreme values to the right.
+    - Skewness < 0 - Left skewed distribution - most values are concentrated on the right of the mean, with extreme values to the left.
+    - Skewness = 0 - mean = median, the distribution is symmetrical around the mean.
+- Kurtosis test which is an indicator used in distribution analysis as a sign of flattening or "peakedness" of a distribution. 
+    - Kurtosis > 3 - Leptokurtic distribution, sharper than a normal distribution, with values concentrated around the mean and thicker tails. This means high probability for extreme values.
+    Kurtosis < 3 - Platykurtic distribution, flatter than a normal distribution with a wider peak. The probability for extreme values is less than for a normal distribution, and the values are wider spread around the mean.
+    - Kurtosis = 3 - Mesokurtic distribution - normal distribution for example.
+  
+- Standardized residuals vs theoretical quantiles (qqplot).
+If the residuals come from a normal distribution the plot should resemble a straight line.
+A straight line connecting the 1st and 3rd quartiles is added to the plot to aid in visual assessment.
+
+- Repartition of variability among factors whici is a pie with repartition of SumSq for each factor.
+This allows to better understand how the variability is separated between each factor.
+
+- Variance intra germplasm whici is the repartition of the residuals for each germplasm.
+With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+This has to been seen with caution:
+    - If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+    - If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+
+
+
+##### Mean comparisons {#mean-comp-check-freq}
 
 
 #### Bayesian statistics {#section-bayes}
@@ -129,8 +156,10 @@ Here the burn-in has 1000 iterations, then 100 000 iterations are done by defaul
 ^[There are `nb_iterations/10` values for each chain. This can be changed with the `thin` argument of the functions.]
 The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
 
+##### Check model {#check-model-bayes}
 
-##### Mean comparisons {#mean-comp}
+
+##### Mean comparisons {#mean-comp-bayes}
 
 In this part, the mean of each entry is compared to the mean of each other entry.
 Let $H_{0}$ and $H_{1}$ denote the hypotheses:

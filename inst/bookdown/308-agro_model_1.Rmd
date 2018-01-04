@@ -3,6 +3,7 @@
 At the farm level, the residual has few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
 Model_1 was implemented to improve efficiency of mean comparisons.
 Model_1 is working well with more than 20 environment (i.e. location $\times$ year) [@riviere_hierarchical_2015].
+The model is based on bayesian statistics (section \@ref(section-bayes)).
 
 #### Theory of the model
 
@@ -141,6 +142,8 @@ load("./data_PPBstats/out_model_1_bis.RData") # To save time
 ```
 
 #### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-bayes).
 
 ##### Check the model
 
@@ -285,6 +288,8 @@ p + stat_smooth(method = "lm") + geom_point()
 
 
 #### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-bayes).
 
 ##### Get mean comparisons
 

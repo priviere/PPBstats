@@ -6,7 +6,9 @@
     - format data for data_network, cf #65
         - add code regarding network_split arg
         - better differentiate year, relation_year_start and relation_year_end : cf Rd
-    - describe_data.data_agro.R : add raster arg for plot_type, cf #68
+    - describe_data.data_agro.R : 
+        - add raster arg for plot_type, cf #68
+        - replace by plot.data_agro.R
     - debugs several functions regarding tests
     - data_agro_version done
 - plot.mean_comparisons_model_1.R
@@ -39,6 +41,7 @@
 ### vignette
 - update text (cf #76, #65, #67)
 - translate Rnw files to Rmd files, format to bookdown, put all files in inst/bookdown (cf #36)
+- explain Skewness and Kurtosis test as well as other output from check model for frequentist analysis (cf #36)
 - text improved by Isabelle
   
 ### add new RData

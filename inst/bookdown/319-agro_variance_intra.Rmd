@@ -1,6 +1,7 @@
 ### Variance intra : to estimate variance within germplasm {#variance-intra}
 
 #### Theory of the model
+The model is based on bayesian statistics (section \@ref(section-bayes)).
 
 The phenotypic value $Y_{ijkl}$ for a given variable $Y$, germplasm $i$, environment $j$, plot $k$ and individual $l$ is modeled as :
 
@@ -45,6 +46,8 @@ You can run it on one variable.
 
 #### Check and visualize model outputs
 
+The tests to check the model are explained in section \@ref(check-model-bayes).
+
 ##### Check the model
 
 Once the model is run, it is necessary to check if the outputs can be taken with confidence.
@@ -63,6 +66,8 @@ Once the computation is done, you can visualize the results with `plot`
 ```
 
 #### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-bayes).
 
 ##### Get mean comparisons
 

@@ -2,7 +2,8 @@
 
 #### Theory of the model
 
-The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the location: germplasm and interaction effects are merged ^[Note than in `PPBstats`, as for AMMI, the PCA is done on germplasm and interaction effects + residuals.].
+The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the location: germplasm and interaction effects are merged ^[Note than in `PPBstats`, as for AMMI, the PCA is done on germplasm and interaction effects + residuals.]. 
+The model is based on frequentist statistics (section \@ref(section-freq)).
 
 The GGE model can be written as followed:
 
@@ -67,6 +68,8 @@ out_gge = GxE(data_GxE, variable = "y1", gxe_analysis = "GGE")
 
 #### Check and visualize model outputs
 
+The tests to check the model are explained in section \@ref(check-model-freq).
+
 ##### Check the model
 ```{r}
 out_check_gge = check_model(out_gge)
@@ -78,6 +81,8 @@ p_out_check_gge = plot(out_check_gge)
 ```
 
 #### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
 
 ##### Get mean comparisons
 ```{r}
