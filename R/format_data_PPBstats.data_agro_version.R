@@ -16,13 +16,6 @@ format_data_PPBstats.data_agro_version = function(data){
   if(!is.factor(d$group)) { stop(mess) }
   if(!is.factor(d$version)) { stop(mess) }
   
-  vec_group = unique(d$group)
-  for(gp in vec_group){
-    dg = droplevels(filter(d, group == gp))
-    if( nlevels(dg$version) != nrow(dg) ) { stop("In group ", gp, " there must be ", nrow(dg), " versions") }    
-    if( nlevels(dg$germplasm) != nrow(dg) ) { stop("In group ", gp, " there must be ", nrow(dg), " germplasms") }    
-  }
-  
   class(d) <- c("PPBstats", "data_agro_version", "data.frame")
   message(substitute(data), " has been formated for PPBstats functions.")
   return(d)
