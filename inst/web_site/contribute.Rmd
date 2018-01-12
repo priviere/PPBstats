@@ -1,0 +1,10 @@
+You can contribute to `PPBstats` in three ways:
+
+- improve the code
+- improve the book
+- translate
+
+More information are available [here]()
+
+Anyhow, send me an email if you wish to participate in order to coordinate our efforts: pierre@semencespaysannes.org
+

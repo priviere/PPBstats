@@ -1,0 +1,21 @@
+name: "PPBstats"
+navbar:
+  title: "PPBstats"
+  left:
+    - text: "Download"
+      href: download.html
+    - text: "Book"
+      href: book.html
+    - text: "Code"
+      href: code.html
+    - text: "Contribute"
+      href: contribute.html
+    - text: "Licence"
+      href: licence.html
+    - text: "News"
+      href: NEWS.html
+    - text: "Contact"
+      href: contact.html
+    - text: "Aknowledgement"
+      href: aknowledgement.html
+output_dir: "docs"

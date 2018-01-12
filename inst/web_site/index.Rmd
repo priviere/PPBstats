@@ -1,0 +1,31 @@
+# Analysis of Participatory Plant Breeding programme with the R package `PPBstats`
+
+`PPBstats` is an R package dedicated to perform analysis found within PPB programmes regarding
+
+- network of seeds circulation
+- agronomic trials
+- organoleptic tests and
+- molecular experiments
+
+
+It is developed on Github by severals persons:
+
+**Pierre Rivière^1^** maintains and coordinates the package development, writes the R functions and the book
+
+**Gaelle Van Frank^2^** tested the package and updated the code regarding some functions
+
+**Olivier David^3^** wrote the `JAGS` code and reviewed the R code and the book regarding some functions
+
+**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section of the book regarding contributions.
+
+**Isabelle Goldringer^2^** reviewed and improved all the text of the book
+
+^1^ Réseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France
+
+^2^ INRA, UMR 0320, Génétique Quantitative et Evolution, Ferme du Moulon F-91190 Gif sur Yvette, France
+
+^3^ INRA, UR 1404 Unité Mathématiques et Informatique Appliquées du Génome à l'Environnement, F-78352 Jouy-en-Josas, France
+
+^4^ INRA, Centre Val de Loire, Unité Amélioration, Génétique et Physiologie Forestières, F-45075 Orléans, France
+
+

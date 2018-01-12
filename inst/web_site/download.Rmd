@@ -1,0 +1,25 @@
+You can load the current development version of the package [here](https://github.com/priviere/PPBstats/archive/v0.23.zip)
+
+unzip the folder and then run 
+
+```{r, eval=FALSE}
+devtools::install("PPBstats-0.23")
+```
+
+Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
+
+
+You can also load the development version:
+
+```{r, eval=FALSE}
+devtools::install_github("priviere/PPBstats")
+```
+
+
+Then you can load the package :
+
+```{r,warning=FALSE,message=FALSE}
+library(PPBstats)
+```
+
+

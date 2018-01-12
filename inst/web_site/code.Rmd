@@ -1,0 +1,4 @@
+The code of `PPBstats` is on github : https://github.com/priviere/PPBstats
+
+The code of the book is on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
+
