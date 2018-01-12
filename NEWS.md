@@ -48,6 +48,8 @@
 - data_network_unipart_sl.RData
 - data_network_unipart_location.RData
 - data_network_bipart.RData
+- data_version_SR 
+- data_version_MR
 
   
 # **PPBstats 0.22**

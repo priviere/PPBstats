@@ -61,16 +61,54 @@ NULL
 #'
 #' @description
 #' A dataset containing values for the following factors: year, location, germplasm, group and version. 
-#' There are twi versions per group.
+#' There are two versions per group.
 #'
 #' @usage
 #' data(data_version)
 #'
 #' @format
-#' A data frame with 1574 rows and 5 columns
+#' A data frame with 12 rows and 5 columns
 #' 
 #' @author Pierre Rivière
 "data_version"
+NULL
+
+
+# data_version_SR ----------
+#' Data to study response to selection based on data_version format
+#'
+#' @description
+#' A dataset containing values for the following factors: year, location, germplasm, group and version.
+#' group represents differential selection (S) or reponse to selection (R)
+#' version represents bouquet or vrac.
+#'
+#' @usage
+#' data(data_version_SR)
+#'
+#' @format
+#' A data frame with 20 rows and 5 columns
+#' 
+#' @author Pierre Rivière
+"data_version_SR"
+NULL
+
+
+# data_version_MR ----------
+#' Data to study migrant and residant
+#'
+#' @description
+#' A dataset containing values for the following factors: year, location, germplasm, group and version.
+#' group represents migrant or residant
+#' version represents the location where come the germplasm from.
+#'
+#' @usage
+#' data(data_version_MR)
+#'
+#' @format
+#' A data frame with 25 rows and 5 columns
+#' 
+#' @author Pierre Rivière
+"data_version_MR"
 NULL
 
 

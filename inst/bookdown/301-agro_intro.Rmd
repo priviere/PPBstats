@@ -355,5 +355,18 @@ Here, in location `env1-1`, `tem-1` and `tem-2` are two versions belonging to th
 For exemple, this format can be used :
 
 - to study response to selection
+```{r}
+data(data_version_SR)
+data_version = format_data_PPBstats(data_version_SR, type = "data_agro_version")
+head(data_version_SR)
+```
+Where `group` represents differential selection (S) or reponse to selection (R) and `version` represents bouquet or vrac.
+
 - to study migrant residant
+```{r}
+data(data_version_MR)
+data_version = format_data_PPBstats(data_version_MR, type = "data_agro_version")
+head(data_version_MR)
+```
+Where `group` represents migrant or residant and `version` represents the location where come the germplasm from.
 
