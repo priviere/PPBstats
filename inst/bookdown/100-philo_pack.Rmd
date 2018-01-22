@@ -25,6 +25,7 @@ When facing a wide diversity of agroecological environment and practices, decent
 - network of seeds circulation (section \@ref(network))
 
 - agronomic trials (section \@ref(agronomic)) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
+Nutritional data are also dealt here as it is the same data structure as agronomic data.
 The statistical procedures are based on frequentist and bayesian approaches.
 
 - organoleptic tests (section \@ref(organoleptic))
@@ -36,11 +37,14 @@ Please, feel free to contribute to other aspects of analysis, see section \@ref(
 
 ## Analysis according to the objectives
 
+Note that nutritional analysis are under the agronomic analysis as it is the same type of experimental design and data.
+
 Five main objectives dealing with PPB programmes can be :
 
 - **Study network of seed circulation** to have insight on how exchanges are structured through network analysis (section \@ref(network)).
 
 - **Improve the prediction of a target variable for selection**: this refers to non parametric and multivariate analysis, regression, classificationand regression trees, random forest.
+It can be done on agronomic or nutritional data.
 Only multivariate analyses are proposed in `PPBstats` in section \@ref(multivariate-analysis).
 
 - **Compare different germplasms on each location for selection**.
@@ -50,33 +54,32 @@ This can be done through
          - spatial model (section \@ref(spatial-analysis))
          - bayesian hierarchical model (section \@ref(model-1))
      - organoleptic analysis (section \@ref(organoleptic))
+Based on these analysis, specific objective including response to selection analysis can also be done.
 
-- **Study response to selection of germplasm over several locations for selection**.
+- **Study response of germplasm over several locations for selection**.
 This can be done through agronomic analysis within family 2 of analysis (section \@ref(family-2)):
     - incomplete block design (section \@ref(ibd))
     - AMMI (section \@ref(ammi))
     - GGE (section \@ref(gge))
-    - migrant-residant (section) \@ref(migrant-residant))
     - bayesian model (section \@ref(model-2))
+    - migrant-residant (section) \@ref(migrant-residant))
+For the latest, it corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
 
 - **Study diversity structure and identify complementary or similar parents for cross**.
 This can be done through 
-    - agronomic:
+    - agronomic :
         - multivariate analysis and clustering mentionned in section \@ref(multivariate-analysis)
     - molecular analysis (section \@ref(molecular))
 
+For each objective and analysis, different experimental design are possible based on number of plots per location, the number of location, the replication of germplasm within and between locations (section \@ref(doe)).
 Each of these objective is explained throught exemple for each analyse in its corresponding section.
 
-## Data formating 
+Figure \@ref(fig:tree-all-analysis) presents a decision tree with all objectives and analysis carry out in `PPBstats`.
+Each branch is explained throught exemple for each experimental design and analyse in its corresponding section.
 
-To be analyzed by `PPBstats`, the data must have a certain format.
-Up to now, there are two formats supported:
-
-- `data-network` (section \@ref(data-network))
-- `data-agro` (section \@ref(data-agro))
-
-To check and give the right format, you must use the `format_data_PPBstats()` function.
-
+```{r tree-all-analysis, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with all objectives and analysis carry out in `PPBstats`."}
+knitr::include_graphics("figures/decision-tree-all-analysis-in-PPBstats.png")
+```
 
 ## Let's go: install `PPBstats` !
 

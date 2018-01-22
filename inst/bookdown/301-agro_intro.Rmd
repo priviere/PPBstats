@@ -12,15 +12,18 @@ This can be done through family 1 of analysis (section \@ref(family-1))
     - classic anova (section \@ref(classic-anova))
     - spatial model (section \@ref(spatial-analysis))
     - bayesian hierarchical model (section \@ref(model-1))
-It an be completed by organoleptic analysis (section \@ref(organoleptic)).
+It can be completed by organoleptic analysis (section \@ref(organoleptic)).
+Based on these analysis, specific objective including response to selection analysis can also be done.
 
-- **Study response to selection of germplasm over several locations for selection**.
+- **Study response of germplasm over several locations for selection**.
 This can be done through family 2 of analysis (section \@ref(family-2)):
     - incomplete block design (section \@ref(ibd))
     - AMMI (section \@ref(ammi))
     - GGE (section \@ref(gge))
-    - migrant-residant (section) \@ref(migrant-residant))
     - bayesian model (section \@ref(model-2))
+    - migrant-residant (section) \@ref(migrant-residant))
+For the latest, it corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
+
 
 - **Study diversity structure and identify complementary or similar parents for cross**.
 This can be done through multivariate analysis and clustering mentionned in section \@ref(multivariate-analysis).
@@ -41,13 +44,14 @@ The various effects that can be estimated are:
 - **entry**: the occurence of a germplasm in a given environment or location
 - **interaction**: interaction between germplasm and location or germplasm and environment
 - **year**
-- **migrant-resident**: migrant in a location refers to a germplasm that has not been grown or selected in a given location; resident in a location refers to germplasm that has been grown or selected in a given location.
+- **migrant-residant**: migrant in a location refers to a germplasm that has not been grown or selected in a given location; resident in a location refers to a germplasm that has been grown or selected in a given location.
 - **version**: version within a germplasm, for example selected vs non-selected
 
 The analyses are divided into five families:
 
 - **Family 1** (section \@ref(family-1)) gathers analyses that estimate entry effects.
 It allows to compare different entries on each location and test for selection.
+Specific analysis including response to selection can also be done.
 
 - **Family 2** (section \@ref(family-2)) gathers analyses that estimate germplasm and location and interaction effects. 
 This is to analyse the response over a network of locations. 
@@ -58,26 +62,24 @@ It allows to study the response of germplasm over several location or environmen
 - **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses. 
 This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.
 
-- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions and objectives. 
-This is for analysis on one location or more.
+- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions and objectives such as study intra germplasm variation.
 
 - **Family 5** (section \@ref(family-5)) refers to multivariate analysis
 
 The different models in Family 1 and 2 correspond to experimental designs that are mentionned in the next section \@ref(expe-design) and in the decision tree \@ref(decision-tree).
 
-| Family | Name | Section | entry effects | germpasm effects | location effects | environments effects | interaction effects | year effects | migrant-resident effects | version effects | variance intra population effects |
-|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
-|1 | Anova | \@ref(classic-anova) | X | | | | | | | |
-|  | Spatial analysis | \@ref(spatial-analysis) | X | | | | | | | | |
-|  | Bayesian model 1 | \@ref(model-1) | X | | | | | | | | |
-|2 | IBD | \@ref(ibd) | | X | | | | | | | |
-|  | AMMI | \@ref(ammi) | | X | X | (X) | X | (X) | | | |
-|  | GGE | \@ref(gge) | | X | X | (X) | X | (X) | | | |
-|  | Migrant-residant | \@ref(migrant-residant) | X | X | (X) | (X) | (X) | (X) | X | | |
-|  | Bayesian model 2 | \@ref(model-2) | | X | X | (X) | X | | | | |
-|3 | Bayesian model 3 | \@ref(model-3) | X | X | X | | X | X | | | |
-|4 | Version | \@ref(version) | X | (X) | (X) | (X) | (X) | (X) | | X | |
-|  | Variance intra | \@ref(variance-intra) | | | | | | | | | X |
+| Family | Name | Section | entry effects | germpasm effects | location effects | environments effects | interaction effects | year effects | migrant-resident effects | version effects | variance intra germplasm effects |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+| 1 | Anova | \@ref(classic-anova) | X | | | | | | | |
+|   | Spatial analysis | \@ref(spatial-analysis) | X | | | | | | | | |
+|   | Bayesian model 1 | \@ref(model-1) | X | | | | | | | | |
+| 2 | IBD | \@ref(ibd) | | X | | | | | | | |
+|   | AMMI | \@ref(ammi) | | X | X | (X) | X | (X) | | | |
+|   | GGE | \@ref(gge) | | X | X | (X) | X | (X) | | | |
+|   | Migrant-residant | \@ref(migrant-residant) | X | X | (X) | (X) | (X) | (X) | X | | |
+|   | Bayesian model 2 | \@ref(model-2) | | X | X | (X) | X | | | | |
+| 3 | Bayesian model 3 | \@ref(model-3) | X | X | X | | X | X | | | |
+| 4 | Variance intra | \@ref(variance-intra) | | | | | | | | | X |
 Table: (\#tab:summary-analysis) Analyses carried out in `PPBstats`. X: effects that are estimated. (X): effects that can be estimated.
 
 Analysis used in PPB programmes are mentionned in decision tree in Section \@ref(decision-tree).
@@ -313,7 +315,8 @@ Table: (\#tab:function-descriptions-workflow) Function description.
 
 ### Data format {#data-agro}
 
-For `data-agro`, there are two format supported : `data-agro` and `data-agro-version`.
+For agronomic analysis data must have a specific format.
+There are two format supported : `data-agro` and `data-agro-version`.
 
 #### `data-agro`
 
@@ -354,7 +357,7 @@ Here, in location `env1-1`, `tem-1` and `tem-2` are two versions belonging to th
 
 For exemple, this format can be used :
 
-- to study response to selection
+- to study response to selection based on **Family 1** analysis (section \@ref(family-1))
 
 For a given trait, selection differential corresponds to the difference between mean of the selected spikes and
 mean of the bulk (i.e. spikes that have not been selected). 
@@ -373,9 +376,9 @@ data_version = format_data_PPBstats(data_version_SR, type = "data_agro_version")
 head(data_version_SR)
 ```
 Where `group` represents differential selection (S) or reponse to selection (R) and `version` represents bouquet or vrac.
+Several examples are shown in **Family 1** analysis in section \@ref(family-1).
 
-
-- to study migrant residant (section \@ref(migrant-residant))
+- to study migrant residant based on **Family 2** analysis (section \@ref(migrant-residant))
 ```{r}
 data(data_version_MR)
 data_version = format_data_PPBstats(data_version_MR, type = "data_agro_version")

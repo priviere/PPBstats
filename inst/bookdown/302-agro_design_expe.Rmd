@@ -222,15 +222,18 @@ If there are less than 2 blocks, an error message is returned.
 
 ### Incomplete Block Design
 
-Entries are not replicated. Some entries are shared by some locations.
-There is one block per location.
+Entries are not replicated. 
+Some entries are shared by some locations.
+Each block is an independent unit and can be allocated to different location.
+It is also possible that some farms welcome several blocks.
+Therefore, the experiment can be handle by several locations that can not welcome an high number of plots.
 
 ```{r}
 p_ibd = design_experiment(
   year = "2016",
   expe.type = "IBD",
   germplasm = paste("germ", c(1:10), sep = ":"),
-  nb.blocks = 8, # i.e. number of location
+  nb.blocks = 8, # i.e. number of location if each location has one block
   nb.cols = 4)
 ```
 
