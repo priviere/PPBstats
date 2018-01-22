@@ -12,7 +12,7 @@ p_net = plot(net_unipart_sl, plot_type = "network", in_col = "location")
 p_net
 ```
 
-In order to get the network organized in a chronolical order and by location, set `organize_sl = TRUE`.
+In order to get the network organized in a chronologiical order and by location, set `organize_sl = TRUE`.
 This representation is possible if the seed lots are under the following format : `GERMPLASM_LOCATION_YEAR_DIGIT`.
 
 ```{r}

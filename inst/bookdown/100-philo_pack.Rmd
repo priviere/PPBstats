@@ -61,14 +61,14 @@ This can be done through agronomic analysis within family 2 of analysis (section
     - incomplete block design (section \@ref(ibd))
     - AMMI (section \@ref(ammi))
     - GGE (section \@ref(gge))
-    - bayesian model (section \@ref(model-2))
+    - bayesian hierarchical model (section \@ref(model-2))
     - migrant-residant (section) \@ref(migrant-residant))
 For the latest, it corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
 
 - **Study diversity structure and identify complementary or similar parents for cross**.
 This can be done through 
     - agronomic :
-        - multivariate analysis and clustering mentionned in section \@ref(multivariate-analysis)
+        - multivariate and clustering analysis mentionned in section \@ref(multivariate-analysis) as well as outputs from other models where germplasm effects are estimated and used in a post-hoc analysis (AMMI (section \@ref(ammi)), GGE (section \@ref(gge)) and bayesian model (section \@ref(model-2))).
     - molecular analysis (section \@ref(molecular))
 
 For each objective and analysis, different experimental design are possible based on number of plots per location, the number of location, the replication of germplasm within and between locations (section \@ref(doe)).

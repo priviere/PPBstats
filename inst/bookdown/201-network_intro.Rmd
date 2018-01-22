@@ -1,6 +1,6 @@
 ## Introduction
 
-Network of seed circulation are interesting to have insight on how exchanges are structured within a PPB programme or a Community Seed House (we prefere the term instead of Community Seed Banks[@bioversity_csb_2015]).
+Network of seed circulation are interesting to have insight on how exchanges are structured within a PPB programme or a Community Seed House (we prefere the term instead of Community Seed Banks) [@bioversity_csb_2015][@pautasso_seed_2013].
 It can be done at several scale, for example local, regional and national.
 
 Two types of network are handle within `PPBstats` :

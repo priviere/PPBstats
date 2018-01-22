@@ -3,4 +3,5 @@
 **Family 2** gathers analysis that estimate germplasm or location or interaction effects.
 This is for analysis in a network of farms. 
 Estimation of environment and year effects are in option depending of the model.
+It copes with the objectives to study response of germplasm over several locations for selection.
 Decision tree regarding Family 2 is displayed in Figure \@ref(fig:tree-f2).

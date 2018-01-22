@@ -27,7 +27,7 @@ For the latest, it corresponds to a specific objective : study migrant and resid
 
 - **Study diversity structure and identify complementary or similar parents for cross**.
 This can be done through multivariate analysis and clustering mentionned in section \@ref(multivariate-analysis).
-It an be completed by molecular analysis (section \@ref(molecular)).
+It can be completed by molecular analysis (section \@ref(molecular)).
 
 
 
@@ -52,12 +52,14 @@ The analyses are divided into five families:
 - **Family 1** (section \@ref(family-1)) gathers analyses that estimate entry effects.
 It allows to compare different entries on each location and test for selection.
 Specific analysis including response to selection can also be done.
+It copes with the objective to compare different germplasms on each location for selection.
 
 - **Family 2** (section \@ref(family-2)) gathers analyses that estimate germplasm and location and interaction effects. 
 This is to analyse the response over a network of locations. 
 Estimation of environment and year effects are in option depending of the model. 
 Specific analysis including migrant and residant can also be done.
 It allows to study the response of germplasm over several location or environments.
+It copes with the objectives to study response of germplasm over several locations for selection.
 
 - **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses. 
 This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.

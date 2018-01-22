@@ -1,5 +1,7 @@
 ## Design the experiment {#doe}
 
+The experimental design are based on number of plots per location, the number of location, the replication of germplasm within and between locations.
+
 Function `design_experiment` sets the experimental design based on :
 
 - the number of entries
@@ -16,6 +18,8 @@ A description of the algorithm is describe in the help of the function: `?design
 
 
 ### Fully-replicated {#fully-replicated}
+
+In fully replicated design, all entries are replicated into different blocks.
 
 The decision tree where fully-replicated designs are used is displayed in Figure \@ref(fig:tree-fully-replicated).
 
@@ -66,6 +70,8 @@ p_fr$"fully-replicated"$design
 
 
 ### Row-column {#row-column}
+
+In Row-column design, a control is replicated in row and columns to catch as much as possible of the variation.
 
 The decision tree where row-column design are used is displayed in Figure \@ref(fig:tree-row-column).
 
@@ -222,7 +228,7 @@ If there are less than 2 blocks, an error message is returned.
 
 ### Incomplete Block Design
 
-Entries are not replicated. 
+Entries are not replicated on a location. 
 Some entries are shared by some locations.
 Each block is an independent unit and can be allocated to different location.
 It is also possible that some farms welcome several blocks.

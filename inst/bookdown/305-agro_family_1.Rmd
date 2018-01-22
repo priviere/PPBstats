@@ -1,4 +1,5 @@
 ## Family of analysis 1 : entry effects on one farm {#family-1}
 
 **Family 1** gathers analysis that estimate entry effects.
+It copes with the objective to compare different germplasms on each location for selection.
 Decision tree regarding Family 1 is displayed in Figure \@ref(fig:tree-f1).
