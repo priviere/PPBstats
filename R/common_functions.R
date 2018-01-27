@@ -235,18 +235,23 @@ reshape_data_split_x_axis_in_col = function(
   if(!is.null(labels_on)){ d$labels_text = d[,labels_on] } else { d$labels_text = NA }
   d_head = d[,c("labels_text", "x_axis", "in_col")]
   
-  d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
+  if( length(vec_variables) == 1) {
+    d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
+  }
   
   # get rid off rows with only NA
   tokeep = apply(d_var, 1, function(x){length(which(is.na(x))) != length(x)})
   t = length(which(!tokeep))
   if( t > 0 ) { warning(t, " rows have been deleted for ", paste(vec_variables, collapse = ", "), " because of only NA on the row for these variables.") }
-  d_var = d_var[tokeep,]
-  d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
+
+  if( length(vec_variables) == 1) {
+    d_var = as.data.frame(as.matrix(d_var[tokeep,], ncol = 1))
+  } else {
+    d_var = d_var[tokeep,]
+  }
   colnames(d_var) = vec_variables
   
   d_head = d_head[tokeep,]
-  
   d = droplevels(cbind.data.frame(d_head, d_var))
   
   # split for x_axis
@@ -554,3 +559,66 @@ ggradar <- function(plot.data,
   
 }
 
+# check_freq_anova
+check_freq_anova = function(model){
+  anova_model = anova(model)
+  # 1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
+  r = residuals(model)
+  
+  # 1.1. Normality ----------
+  data_ggplot_normality = data.frame(r)
+  data_ggplot_skewness_test = skewness(r)
+  data_ggplot_kurtosis_test = kurtosis(r)
+  
+  # 1.2. Standardized residuals vs theoretical quantiles ----------
+  s = sqrt(deviance(model)/df.residual(model))
+  rs = r/s
+  data_ggplot_qqplot = data.frame(x = qnorm(ppoints(rs)), y = sort(rs))
+  
+  # Test for homogeneity of variances
+  #ft = fligner.test(variable ~ interaction(germplasm,location), data=data)
+  #print(ft)
+  
+  # 2. repartition of variability among factors ----------
+  total_Sum_Sq = sum(anova_model$"Sum Sq")
+  Sum_sq = anova_model$"Sum Sq"
+  pvalue = anova_model$"Pr(>F)"
+  percentage_Sum_sq = Sum_sq/total_Sum_Sq*100
+  factor = rownames(anova_model)
+  data_ggplot_variability_repartition_pie = cbind.data.frame(factor, pvalue, Sum_sq, percentage_Sum_sq)
+  
+  # 3. variance intra germplasm
+  var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
+  data_ggplot_var_intra = data.frame(x = model$model$germplasm, y = model$residuals)
+  
+  out = list(
+    "data_ggplot" = list(
+      "data_ggplot_residuals" = list(
+        "data_ggplot_normality" = data_ggplot_normality,
+        "data_ggplot_skewness_test" = data_ggplot_skewness_test,
+        "data_ggplot_kurtosis_test" = data_ggplot_kurtosis_test,
+        "data_ggplot_qqplot" = data_ggplot_qqplot
+      ),
+      "data_ggplot_variability_repartition_pie" = data_ggplot_variability_repartition_pie,
+      "data_ggplot_var_intra" = data_ggplot_var_intra
+    )
+  )
+  
+  return(out)
+}
+
+# plot check_freq_anova
+plot_check_freq_anova = function(){
+  
+}
+
+
+# mean comparisons for frequentist analysis
+mean_comparisons_freq_anova = function(){
+  
+}
+
+# plot mean comparisons for frequentist analysis
+plot_mean_comparisons_freq_anova = function(){
+  
+}

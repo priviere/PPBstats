@@ -24,6 +24,8 @@
     - debug radar + simplify ggradar function to get simple appearance
     - create plot with dynamic in time coming from $data_julian from format_data_PPBstats
     - add raster arg + update data_GxE
+- reshape_data_split_x_axis_in_col.R in common_function
+    - debug when NA in row
 
 ### add new functions
 - napping.R, cf #72
