@@ -6,18 +6,18 @@
     - format data for data_network, cf #65
         - add code regarding network_split arg
         - better differentiate year, relation_year_start and relation_year_end : cf Rd
-    - describe_data.data_agro.R : 
-        - add raster arg for plot_type, cf #68
-        - replace by plot.data_agro.R
-    - debugs several functions regarding tests
     - data_agro_version done
+- describe_data.data_agro.R -> plot.data_agro.R : 
+    - add raster arg for plot_type, cf #68
+    - replace by plot.data_agro.R
+    - use plot methods for describe_data cf #79
+- debugs several functions regarding tests
 - plot.mean_comparisons_model_1.R
     - improve display of score : cf #61
 - plot.parameter_groups.R:
     - model 2 ACP cluster : put in blod or color a given ind, cf #76
 - design_experiment.R
     - no location in title for IBD and in the data frame, cf #39
-- use plot methods for describe_data cf #79
 - plot.[...].R
     - change arg ggplot.type to plot_type cf #69
 - plot.data_agro.R, cf #68
@@ -40,7 +40,7 @@
 - format_data_PPBstats.format_organo_hedonic.R, cf #65
 - plot.data_network.R, cf #67
 
-### vignette
+### vignette -> inst/bookdown
 - update text (cf #76, #65, #67)
 - translate Rnw files to Rmd files, format to bookdown, put all files in inst/bookdown (cf #36)
 - explain Skewness and Kurtosis test as well as other output from check model for frequentist analysis (cf #36)
@@ -52,6 +52,9 @@
 - data_network_bipart.RData
 - data_version_SR 
 - data_version_MR
+
+### web site
+- add files in inst/web_site, cf #83
 
   
 # **PPBstats 0.22**
