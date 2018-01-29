@@ -208,7 +208,7 @@ The method to compute mean comparison are explained in section \@ref(mean-comp-c
 Get mean comparisons with `mean_comparisons`.
 
 ```{r}
-#out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni")
+out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni")
 ```
 
 `out_mean_comparisons_ammi` is a list of three elements:
@@ -221,7 +221,7 @@ Get mean comparisons with `mean_comparisons`.
 ##### Visualize mean comparisons
 
 ```{r}
-# p_out_mean_comparisons_ammi = plot(out_mean_comparisons_ammi)
+p_out_mean_comparisons_ammi = plot(out_mean_comparisons_ammi)
 ```
 
 `p_out_mean_comparisons_ammi` is a list of three elements with barplots :
@@ -232,22 +232,22 @@ The error I (alpha) and the alpha correction are displayed in the title.
 
 - `germplasm` : mean comparison for germplasm
 ```{r}
-#pg = p_out_mean_comparisons_ammi$germplasm
-#names(pg)
-#pg$`1`
+pg = p_out_mean_comparisons_ammi$germplasm
+names(pg)
+pg$`1`
 ```
 
 - `location` : mean comparison for location
 ```{r}
-#pl = p_out_mean_comparisons_ammi$location
-#names(pl)
-#pl$`1`
+pl = p_out_mean_comparisons_ammi$location
+names(pl)
+pl$`1`
 ```
 
 - `year` : mean comparison for year
 Here there are no more than 2 years in the data set so it is `NULL`
 ```{r}
-#p_out_mean_comparisons_ammi$year
+p_out_mean_comparisons_ammi$year
 ```
 
 #### Get and visualize biplot

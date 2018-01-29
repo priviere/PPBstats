@@ -151,7 +151,7 @@ The method to compute mean comparison are explained in section \@ref(mean-comp-c
 Get mean comparisons with `mean_comparisons`.
 
 ```{r}
-# out_mean_comparisons_spatial = mean_comparisons(out_check_spatial, p.adj = "bonferroni")
+out_mean_comparisons_spatial = mean_comparisons(out_check_spatial, p.adj = "bonferroni")
 ```
 
 `out_mean_comparisons_spatial` is a list of two elements:
@@ -161,7 +161,7 @@ Get mean comparisons with `mean_comparisons`.
 
 #### Visualize mean comparisons
 ```{r}
-#p_out_mean_comparisons_spatial = plot(out_mean_comparisons_spatial)
+p_out_mean_comparisons_spatial = plot(out_mean_comparisons_spatial)
 ```
 
 `p_out_mean_comparisons_spatial` is a list of one elements with barplots :
