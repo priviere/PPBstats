@@ -1,9 +1,17 @@
 **Pierre Rivière**
 
+pierre@semencespaysannes.org
+
+```{r, out.width='20%', fig.align='left', echo=FALSE}
+knitr::include_graphics("../bookdown/figures/Logo-RSP.png")
+```
+
 Réseau Semences Paysannes
 
 3 avenue de la gare
 
 47190 Aiguillon
 
-pierre@semencespaysannes.org
+[www.semencespaysannes.org](http://www.semencespaysannes.org)
+
+

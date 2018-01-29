@@ -8,6 +8,14 @@
 - molecular experiments
 
 
+```{r, out.width='10%', fig.align='left', echo=FALSE}
+knitr::include_graphics("../bookdown/figures/warning.png")
+```
+**Be aware that this package is under development and test: do not 100% trust the functions!!!**
+**You're welcome to contribute: see [here]() for more informations.**
+
+
+
 It is developed on Github by severals persons:
 
 **Pierre Rivière^1^** maintains and coordinates the package development, writes the R functions and the book
@@ -18,7 +26,7 @@ It is developed on Github by severals persons:
 
 **Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section of the book regarding contributions.
 
-**Isabelle Goldringer^2^** reviewed and improved all the text of the book
+**Isabelle Goldringer^2^** reviewed and improved all the text of the book regarding agronomic sections
 
 ^1^ Réseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France
 
@@ -27,5 +35,4 @@ It is developed on Github by severals persons:
 ^3^ INRA, UR 1404 Unité Mathématiques et Informatique Appliquées du Génome à l'Environnement, F-78352 Jouy-en-Josas, France
 
 ^4^ INRA, Centre Val de Loire, Unité Amélioration, Génétique et Physiologie Forestières, F-45075 Orléans, France
-
 

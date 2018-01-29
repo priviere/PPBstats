@@ -1,4 +1,4 @@
-You can load the current development version of the package [here](https://github.com/priviere/PPBstats/archive/v0.23.zip)
+You can load the current development version of the package: [download v0.23](https://github.com/priviere/PPBstats/archive/v0.23.zip)
 
 unzip the folder and then run 
 
@@ -15,6 +15,7 @@ You can also load the development version:
 devtools::install_github("priviere/PPBstats")
 ```
 
+The evolution of the code regarding the development version are [here](https://github.com/priviere/PPBstats/blob/master/NEWS.md).
 
 Then you can load the package :
 
