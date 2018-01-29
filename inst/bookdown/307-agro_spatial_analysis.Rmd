@@ -172,9 +172,9 @@ The error I (alpha) and the alpha correction are displayed in the title.
 
 `germplasm` : mean comparison for germplasm
 ```{r}
-# pg = p_out_mean_comparisons_spatial$germplasm
-# names(pg)
-# pg$`1`
+pg = p_out_mean_comparisons_spatial$germplasm
+names(pg)
+pg$`1`
 ```
 
 #### Apply the workflow to several variables

@@ -39,7 +39,7 @@ Pierre Rivière: pierre@semencespaysannes.org
 
 **Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section \@ref(contributions) regarding contributions.
 
-**Isabelle Goldringer^2^** reviewed and improved all the text of the book
+**Isabelle Goldringer^2^** reviewed and improved all the text of the book regarding agronomic sections
 
 
 ^1^ Réseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France
