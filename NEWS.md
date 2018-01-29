@@ -26,6 +26,8 @@
     - add raster arg + update data_GxE
 - reshape_data_split_x_axis_in_col.R in common_function
     - debug when NA in row
+- mean_comparisons.check_model_GxE.R & mean_comparisons.check_model_spatial.R
+    - update code regarding changes in agricolae package
 
 ### add new functions
 - napping.R, cf #72
