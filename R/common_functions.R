@@ -237,7 +237,9 @@ reshape_data_split_x_axis_in_col = function(
   
   if( length(vec_variables) == 1) {
     d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
-  }
+  } else { 
+    d_var = d[,vec_variables]
+    }
   
   # get rid off rows with only NA
   tokeep = apply(d_var, 1, function(x){length(which(is.na(x))) != length(x)})
