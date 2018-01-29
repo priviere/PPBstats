@@ -6,8 +6,6 @@ navbar:
       href: download.html
     - text: "Book"
       href: book.html
-    - text: "Code"
-      href: code.html
     - text: "Contribute"
       href: contribute.html
     - text: "Licence"
