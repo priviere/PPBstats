@@ -10,9 +10,9 @@ mean_comparisons.check_model_GxE <- function(
   data_ggplot_LSDbarplot = function(model, fac, p.adj, alpha){
     lsd = LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
     
-    parameter = factor(lsd$groups$trt, levels = lsd$groups$trt)
-    means = lsd$groups$means
-    groups = lsd$groups$M
+    parameter = factor(rownames(lsd$groups), levels = rownames(lsd$groups))
+    means = lsd$groups[,1]
+    groups = lsd$groups[,2]
     alpha = rep(alpha, length(parameter))
     alpha.correction = rep(p.adj, length(parameter))
     

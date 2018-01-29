@@ -18,9 +18,9 @@ mean_comparisons.check_model_spatial <- function(
     p.adj = p.adj
     )
   
-  parameter = factor(lsd$groups$trt, levels = lsd$groups$trt)
-  means = lsd$groups$means
-  groups = lsd$groups$M
+  parameter = factor(rownames(lsd$groups), levels = rownames(lsd$groups))
+  means = lsd$groups[,1]
+  groups = lsd$groups[,2]
   alpha = rep(alpha, length(parameter))
   alpha.correction = rep(p.adj, length(parameter))
     
