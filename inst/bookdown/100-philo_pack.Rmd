@@ -5,17 +5,35 @@ This chapter describes what is participatory plant breeding, the objectives of `
 
 ## What is Participatory Plant Bredding ?
 
-- **decentralize the selection**
+### Decentralize the selection
 
-When decentralizing the selection in target environment [@desclaux_changes_2008], the phenotypic trait is the sum of genetic ($G$), environmental ($E$) and interaction between the two ($G \times E$) : $P = G + E + G \times E$.
-Broad sens heritability of a given trait is then: 
+The following is adapted from @bernardo_breeding_2002 and @gallais_theorie_1990.
 
-$h^2_{sl} = \frac{var(G)}{var(G) + var(E) + var(G\times E)}$
+When considering multiple environments for evaluation and selection, the phenotypic value of a trait of any individual in a given environment can be written as the sum of its random genetic effect (or overall genetic potential, $G$ ), the random environmental effect ($E$) and the random interaction ($G \times E$), i.e. : $P = G + E + G \times E + e$ with $e$ the random residual effect within each environment following a normal distribution $N(0, \sigma^2)$. 
 
-Heritability taking into account the network is therefore inferior or equal to heritability on a given site because $var(G\times E) > 0$.
-When facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted varieties to local agro-systems.
+In classical centralized breeding, the objective is to predict the overall genetic potential ($G$) of the candidates for selection to detect the highest values assuming that this potential would express in all farmers’ fields. 
+These genetic potentials are predicted based on the average phenotypic values over all testing environments (usually experimental stations) and therefore the broad sense heritability for prediction is :
 
-- **involve all actors in the breeding decision process**: farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors  [@sperling_framework_2001].
+$h^2_{sl} = \frac{var(G)}{var(G) + 1 n E (var(E) + var(G \times E)) + 1 n E n R var(e)}$
+
+with $n E (resp. nR)$ the number of environments (resp. the number of replicates in each environment). 
+As environmental effect and $G \times E$ interactions limit prediction accuracy, the option is to increase the number of environments and to use environments that are homogeneous and similar and that minimize $G \times E$ interactions.
+
+On the contrary, in decentralized on farm breeding, it has been shown that the environments are very contrasted due to diverse pedo-climatic conditions associated to various agroecological farming practices, and that $G \times E$ interactions can be strong [@desclaux_changes_2008]. 
+Therefore, the prediction of the overall genotypic value ($G$) is not interesting and the objective is rather to predict the «loca » genetic value which also includes the interaction with the local environment, i.e.: $Gloc_{ij} = G_i + (G \times E)_{ij}$
+
+Then, the genetic variance in each local environment can be written as: $var(Gloc) = var(G) + var(G \times E)$ and the heritability to predict the local genetic value based on the phenotypic value observed in the local environment is:
+
+$h^2_{sl} = \frac{var(Gloc)}{var(Gloc) + 1 n R var(e)} = \frac{var(G) + var(G \times E)}{var(G) + var(G \times E) + 1 n R var(e)}$
+
+It can be noted that the $G \times E$ interactions contribute to both denominator and numerator therefore leading to no limiting effect on prediction accuracy.
+Hence, when facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted varieties to local agro-systems.
+
+
+
+### Involve all actors in the breeding decision process
+
+All actors are part of the breeding programme : farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors  [@sperling_framework_2001].
 
 
 ## Objectives of `PPBstats`
@@ -35,47 +53,44 @@ The statistical procedures are based on frequentist and bayesian approaches.
 Please, feel free to contribute to other aspects of analysis, see section \@ref(contributions) for more information.
 
 
-## Analysis according to the objectives
+## Design and statistical methods according to the objectives
 
-Note that nutritional analysis are under the agronomic analysis as it is the same type of experimental design and data.
+The analyses of data from PPB programmes aim to address five main objectives  :
 
-Five main objectives dealing with PPB programmes can be :
+- **To study networks of seed circulation** by describing seed network topologies (section \@ref(network)).
 
-- **Study network of seed circulation** to have insight on how exchanges are structured through network analysis (section \@ref(network)).
-
-- **Improve the prediction of a target variable for selection**: this refers to non parametric and multivariate analysis, regression, classificationand regression trees, random forest.
-It can be done on agronomic or nutritional data.
+- **To improve the prediction of a target variable for selection**: this refers to non parametric and multivariate analysis, regression, classificationand regression trees, random forest.
+It can be done on agronomic traits or products quality data.
 Only multivariate analyses are proposed in `PPBstats` in section \@ref(multivariate-analysis).
 
-- **Compare different germplasms on each location for selection**.
-This can be done through 
-     - agronomic analysis within family 1 of analysis (section \@ref(family-1))
+- **To compare different varieties or populations (hereafter called germplasms) evaluated for selection in different locations**.
+This can be done for 
+     - agronomic (and nutritional) data within family 1 of analysis (section \@ref(family-1))
          - classic anova (section \@ref(classic-anova))
-         - spatial model (section \@ref(spatial-analysis))
-         - bayesian hierarchical model (section \@ref(model-1))
-     - organoleptic analysis (section \@ref(organoleptic))
-Based on these analysis, specific objective including response to selection analysis can also be done.
+         - spatial models (section \@ref(spatial-analysis))
+         - bayesian hierarchical models (section \@ref(model-1))
+     - organoleptic analyses (section \@ref(organoleptic))
+Based on these analyses, specific objective such as assessing the response to selection can also be reached.
 
-- **Study response of germplasm over several locations for selection**.
-This can be done through agronomic analysis within family 2 of analysis (section \@ref(family-2)):
-    - incomplete block design (section \@ref(ibd))
+- **To study the response of germplasms under selection over several environments**.
+This can be done through analysing agronomic traits within family 2 of analysis (section \@ref(family-2)):
+    - incomplete block designs (section \@ref(ibd))
     - AMMI (section \@ref(ammi))
     - GGE (section \@ref(gge))
-    - bayesian hierarchical model (section \@ref(model-2))
+    - bayesian hierarchical models (section \@ref(model-2))
     - migrant-residant (section) \@ref(migrant-residant))
 For the latest, it corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
 
-- **Study diversity structure and identify complementary or similar parents for cross**.
-This can be done through 
-    - agronomic :
-        - multivariate and clustering analysis mentionned in section \@ref(multivariate-analysis) as well as outputs from other models where germplasm effects are estimated and used in a post-hoc analysis (AMMI (section \@ref(ammi)), GGE (section \@ref(gge)) and bayesian model (section \@ref(model-2))).
-    - molecular analysis (section \@ref(molecular))
+- **To study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits**.
+This can be done using 
+    - multivariate and clustering of agronomic data mentionned in section \@ref(multivariate-analysis) as well as outputs from other models where germplasm effects are estimated and used in a post-hoc analysis (AMMI (section \@ref(ammi)), GGE (section \@ref(gge)) and bayesian model (section \@ref(model-2))).
+    - analysis of molecular data (section \@ref(molecular))
 
-For each objective and analysis, different experimental design are possible based on number of plots per location, the number of location, the replication of germplasm within and between locations (section \@ref(doe)).
-Each of these objective is explained throught exemple for each analyse in its corresponding section.
+For each objective and analysis method, different experimental designs are possible based on number of plots per location, the number of locations, the number of replicated germplasms within and between locations (section \@ref(doe)).
+Each of these objectives is explained using exemples of each analysis in the corresponding section.
 
-Figure \@ref(fig:tree-all-analysis) presents a decision tree with all objectives and analysis carry out in `PPBstats`.
-Each branch is explained throught exemple for each experimental design and analyse in its corresponding section.
+Figure \@ref(fig:tree-all-analysis) presents a decision tree with all objectives, experimental constraints, designs and methods of analysis carry out in `PPBstats`.
+Each branch is explained throught an example for each experimental design and analysis in the corresponding section.
 
 ```{r tree-all-analysis, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with all objectives and analysis carry out in `PPBstats`."}
 knitr::include_graphics("figures/decision-tree-all-analysis-in-PPBstats.png")
