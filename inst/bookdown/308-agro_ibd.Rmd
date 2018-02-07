@@ -1,4 +1,4 @@
-### Incomplete Block Design {#ibd}
+### Mixted model for incomplete block design {#ibd-model}
 
 !!! TO DO !!!
 

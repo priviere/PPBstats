@@ -1,0 +1,46 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}[grow cyclic, align=flush center,
+every node/.style=concept, concept color=teal!40, font=\huge, text width=5cm,
+every node/.append style={scale=1},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=11cm, sibling angle=72, concept color=level-1, font=\huge, text width=7cm},
+    level 2/.style={level distance=11cm, sibling angle=70, concept color=level-2, font=\huge, text width=4cm},
+    level 3/.style={level distance=10cm, sibling angle=50, concept color=level-3, font=\huge, text width=4cm},
+    level 4/.style={level distance=10cm, sibling angle=40, concept color=level-4, font=\huge, text width=4cm},
+    level 5/.style={level distance=12cm, sibling angle=40, concept color=level-5, font=\huge, text width=6cm},
+    level 6/.style={level distance=12cm, sibling angle=40, concept color=level-6, font=\huge, text width=7cm},
+    level 7/.style={level distance=12cm, sibling angle=40, concept color=level-7, font=\huge, text width=5cm},
+    ]
+\node{\textbf{Experimental designs and statistical methods for PPB}}
+child{ node {\textbf{Compare different varieties evaluated for selection in different locations}}
+  child{ node {Analysis of agronomic traits}
+  }
+  child{ node {Sensory analysis}
+  }
+}
+child { node {\textbf{Improve the prediction of a target variable for selection}}
+  child { node {Analysis of agronomic traits}
+  }
+}
+child { node {\textbf{Study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits}}
+  child { node {Analysis of agronomic traits}
+    }
+  child { node {Analysis of molecular data}
+  }
+}
+child { node {\textbf{Study network of seed circulation}}
+  child{ node {Analysis of network topology}
+  }
+}
+child{ node {\textbf{Study the response of varieties under selection over several environments}}
+  child{ node {Analysis of agronomic traits}
+  }
+}
+\end{tikzpicture}
+\end{document}
+
+

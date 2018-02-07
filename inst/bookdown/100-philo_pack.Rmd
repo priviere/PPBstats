@@ -55,46 +55,31 @@ Please, feel free to contribute to other aspects of analysis, see section \@ref(
 
 ## Design and statistical methods according to the objectives
 
-The analyses of data from PPB programmes aim to address five main objectives  :
+The analyses of data from PPB programmes aim to address five main objectives:
 
-- **To study networks of seed circulation** by describing seed network topologies (section \@ref(network)).
+- **To study networks of seed circulation** throught analysis of network topology (section \@ref(network)).
 
-- **To improve the prediction of a target variable for selection**: this refers to non parametric and multivariate analysis, regression, classificationand regression trees, random forest.
-It can be done on agronomic traits or products quality data.
-Only multivariate analyses are proposed in `PPBstats` in section \@ref(multivariate-analysis).
+- **To improve the prediction of a target variable for selection** throught analysis of agronomic and nutritional traits (section \@ref(agronomic)).
 
-- **To compare different varieties or populations (hereafter called germplasms) evaluated for selection in different locations**.
-This can be done for 
-     - agronomic (and nutritional) data within family 1 of analysis (section \@ref(family-1))
-         - classic anova (section \@ref(classic-anova))
-         - spatial models (section \@ref(spatial-analysis))
-         - bayesian hierarchical models (section \@ref(model-1))
-     - organoleptic analyses (section \@ref(organoleptic))
-Based on these analyses, specific objective such as assessing the response to selection can also be reached.
+- **To compare different varieties or populations (hereafter called germplasms) evaluated for selection in different locations** throught analysis of agronomic and nutritional traits (section \@ref(agronomic)) and sensory analysis (section \@ref(organoleptic)).
 
-- **To study the response of germplasms under selection over several environments**.
-This can be done through analysing agronomic traits within family 2 of analysis (section \@ref(family-2)):
-    - incomplete block designs (section \@ref(ibd))
-    - AMMI (section \@ref(ammi))
-    - GGE (section \@ref(gge))
-    - bayesian hierarchical models (section \@ref(model-2))
-    - migrant-residant (section) \@ref(migrant-residant))
-For the latest, it corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
+- **To study the response of germplasms under selection over several environments** throught analysis of agronomic traits (section \@ref(agronomic)).
 
-- **To study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits**.
-This can be done using 
-    - multivariate and clustering of agronomic data mentionned in section \@ref(multivariate-analysis) as well as outputs from other models where germplasm effects are estimated and used in a post-hoc analysis (AMMI (section \@ref(ammi)), GGE (section \@ref(gge)) and bayesian model (section \@ref(model-2))).
-    - analysis of molecular data (section \@ref(molecular))
+- **To study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits** throught analysis of agronomic traits (section \@ref(agronomic)) and molecular data (section \@ref(molecular)).
 
-For each objective and analysis method, different experimental designs are possible based on number of plots per location, the number of locations, the number of replicated germplasms within and between locations (section \@ref(doe)).
-Each of these objectives is explained using exemples of each analysis in the corresponding section.
+For each objective, there are severals method based on different experimental designs based on number of plots per location, the number of locations, the number of replicated germplasms within and between locations (section \@ref(doe)).
 
-Figure \@ref(fig:tree-all-analysis) presents a decision tree with all objectives, experimental constraints, designs and methods of analysis carry out in `PPBstats`.
+Figure \@ref(fig:decision-tree-all-head) and \@ref(fig:decision-tree-all) present a decision tree with all objectives, experimental constraints, designs (**D**) and methods (**M**) of analysis carry out in `PPBstats`.
 Each branch is explained throught an example for each experimental design and analysis in the corresponding section.
 
-```{r tree-all-analysis, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with all objectives and analysis carry out in `PPBstats`."}
-knitr::include_graphics("figures/decision-tree-all-analysis-in-PPBstats.png")
+```{r decision-tree-all-head, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with objectives and type of analysis carry out in `PPBstats`."}
+knitr::include_graphics("figures/decision-tree_all-head.png")
 ```
+
+```{r decision-tree-all, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with objectives, experimental constraints, designs and methods of analysis carry out in `PPBstats`. **D** refers to designs and **M** to methods."}
+knitr::include_graphics("figures/decision-tree_all.png")
+```
+
 
 ## Let's go: install `PPBstats` !
 

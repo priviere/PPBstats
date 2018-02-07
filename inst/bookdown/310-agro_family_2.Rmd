@@ -1,0 +1,20 @@
+## Family 2 of analysis : Study the response of varieties under selection over several environments {#family-2}
+
+**Family 2** gathers analyses that estimate germplasm and location and interaction effects. 
+This is to analyse the response over a network of locations. 
+Estimation of environment and year effects is possible depending of the model. 
+Specific analysis including migrant and residant can also be done.
+It allows to study the response of germplasm over several location or environments.
+The objectives is to study response of germplasm over several locations for selection.
+
+This can be done through (Figure \@ref(fig:decision-tree-Study-the-response-of-varieties-under-selection-over-several-environments)) :
+
+- AMMI and GGE (**M6**, sections \@ref(ammi) and \@ref(gge)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
+- bayesian hierarchical model $G \times E$ (**M7b**, section \@ref(model-2)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)),
+
+It can be completed by specific analysis such as migrant-residant (section \@ref(migrant-residant)) which corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
+
+```{r decision-tree-Study-the-response-of-varieties-under-selection-over-several-environments, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with experimental constraints, designs and methods of agronomic analysis carry out in `PPBstats` regarding the objective :Study the response of varieties under selection over several environments. **D** refers to designs and **M** to methods."}
+knitr::include_graphics("figures/decision-tree_Study-the-response-of-varieties-under-selection-over-several-environments.png")
+```
+

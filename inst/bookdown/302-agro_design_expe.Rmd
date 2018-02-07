@@ -16,15 +16,21 @@ The function returns a list with
 
 A description of the algorithm is describe in the help of the function: `?design_experiment`.
 
+The four experimental designs are 
+
+- D1 - fully-repicated
+- D2 - incomplete block design
+- D3 - row-colum
+- D4 - satellite-farm and regional-farm
 
 ### Fully-replicated {#fully-replicated}
 
 In fully replicated design, all entries are replicated into different blocks.
 
-The decision tree where fully-replicated designs are used is displayed in Figure \@ref(fig:tree-fully-replicated).
+The decision tree where fully-replicated designs are used is displayed in Figure \@ref(fig:decision-tree-agro-fully-replicated-design).
 
-```{r tree-fully-replicated, out.width='70%', fig.align='center', echo=FALSE, fig.cap="The decision tree where fully-replicated designs are used."}
-knitr::include_graphics("figures/decision-tree-where-fully-replicated-design-are-used.png")
+```{r decision-tree-agro-fully-replicated-design, out.width='100%', fig.align='center', echo=FALSE, fig.cap="The decision tree where fully-replicated designs are used."}
+knitr::include_graphics("figures/decision-tree_agro-fully-replicated-design.png")
 ```
 
 The R code to implement is the following :
@@ -68,16 +74,47 @@ p_fr$"fully-replicated"$design
 ```
 
 
+### Incomplete Block Design {#ibd}
+
+The decision tree where incomplete block designs are used is displayed in Figure \@ref(fig:decision-tree-agro-ibd-design).
+
+```{r decision-tree-agro-ibd-design, out.width='100%', fig.align='center', echo=FALSE, fig.cap="The decision tree where incomplete block designs are used."}
+knitr::include_graphics("figures/decision-tree_agro-ibd-design.png")
+```
+
+Entries are not replicated on a location. 
+Some entries are shared by some locations.
+Each block is an independent unit and can be allocated to different location.
+It is also possible that some farms welcome several blocks.
+Therefore, the experiment can be handle by several locations that can not welcome an high number of plots.
+
+```{r}
+p_ibd = design_experiment(
+  year = "2016",
+  expe.type = "IBD",
+  germplasm = paste("germ", c(1:10), sep = ":"),
+  nb.blocks = 8, # i.e. number of location if each location has one block
+  nb.cols = 4)
+```
+
+```{r}
+head(p_ibd$`IBD`$data.frame)
+```
+
+
+```{r}
+p_ibd$`IBD`$design
+```
 
 ### Row-column {#row-column}
 
 In Row-column design, a control is replicated in row and columns to catch as much as possible of the variation.
 
-The decision tree where row-column design are used is displayed in Figure \@ref(fig:tree-row-column).
+The decision tree where row-column design are used is displayed in Figure \@ref(fig:decision-tree-agro-row-column-design).
 
 
-```{r tree-row-column, out.width='20%', fig.align='center', echo=FALSE, fig.cap="The decision tree where row-column designs are used."}
-knitr::include_graphics("figures/decision-tree-where-row-column-design-are-used.png")
+```{r decision-tree-agro-row-column-design, out.width='100%', fig.align='center', echo=FALSE, fig.cap="The decision tree where row-column designs are used."}
+knitr::include_graphics("figures/decision-tree_agro-row-column-design.png")
 ```
 
 
@@ -115,11 +152,11 @@ Farmers choose all entries that are not replicated.
 The number of entries may vary between farms.
 Note that at least 25 environments (location $\times$ year) are need in order to get confident analysis.
 
-The decision tree where regional and satellite farms designs are used is displayed in Figure \@ref(fig:tree-rf-sf).
+The decision tree where regional and satellite farms designs are used is displayed in Figure \@ref(fig:decision-tree-agro-regional-and-satellite-design).
 
 
-```{r tree-rf-sf, out.width='70%', fig.align='center', echo=FALSE, fig.cap="The decision tree where regional and satellite farms designs are used."}
-knitr::include_graphics("figures/decision-tree-where-regional-and-satellite-farms-design-are-used.png")
+```{r decision-tree-agro-regional-and-satellite-design, out.width='100%', fig.align='center', echo=FALSE, fig.cap="The decision tree where regional and satellite farms designs are used."}
+knitr::include_graphics("figures/decision-tree_agro-regional-and-satellite-design.png")
 ```
 
 
@@ -226,28 +263,3 @@ For `expe.type = "regional-farm"`, there is a warning message if controls are mi
 It is better to catch as much as possible of the trial variation.
 If there are less than 2 blocks, an error message is returned.
 
-### Incomplete Block Design
-
-Entries are not replicated on a location. 
-Some entries are shared by some locations.
-Each block is an independent unit and can be allocated to different location.
-It is also possible that some farms welcome several blocks.
-Therefore, the experiment can be handle by several locations that can not welcome an high number of plots.
-
-```{r}
-p_ibd = design_experiment(
-  year = "2016",
-  expe.type = "IBD",
-  germplasm = paste("germ", c(1:10), sep = ":"),
-  nb.blocks = 8, # i.e. number of location if each location has one block
-  nb.cols = 4)
-```
-
-```{r}
-head(p_ibd$`IBD`$data.frame)
-```
-
-
-```{r}
-p_ibd$`IBD`$design
-```

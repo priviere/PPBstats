@@ -1,1 +1,1 @@
-# Network analysis {#network}
+# Analysis of network seed circulation {#network}

@@ -5,30 +5,28 @@ Finally see how to implement it based on the workflow and function relations (\@
 
 ### Analysis according to the objectives {#objective-agro}
 
-Three main objectives dealing with PPB programmes agronomic analyses can be :
+The three main objectives in PPB are to :
 
-- **Compare different germplasms on each location for selection**.
-This can be done through family 1 of analysis (section \@ref(family-1))
-    - classic anova (section \@ref(classic-anova))
-    - spatial model (section \@ref(spatial-analysis))
-    - bayesian hierarchical model (section \@ref(model-1))
+- **Compare different varieties evaluated for selection in different locations**.
+This can be done through family 1 of analyses (section \@ref(family-1))
+    - classic anova (**M4a**, section \@ref(classic-anova)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
+    - spatial analysis (**M4b**, section \@ref(spatial-analysis)) based on row-column designs (**D3**, section \@ref(row-column)),
+    - mixed models (**M5**, section\@ref(ibd-model)) for incomplete blocks designs (**D2**, section \@ref(ibd)),
+    - bayesian hierarchical model intra-location (**M7a**, section \@ref(model-1)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)). 
 It can be completed by organoleptic analysis (section \@ref(organoleptic)).
 Based on these analysis, specific objective including response to selection analysis can also be done.
 
-- **Study response of germplasm over several locations for selection**.
-This can be done through family 2 of analysis (section \@ref(family-2)):
-    - incomplete block design (section \@ref(ibd))
-    - AMMI (section \@ref(ammi))
-    - GGE (section \@ref(gge))
-    - bayesian model (section \@ref(model-2))
-    - migrant-residant (section) \@ref(migrant-residant))
-For the latest, it corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
+
+- **Study the response of varieties under selection over several environments**.
+This can be done through family 2 of analyses (section \@ref(family-2)):
+    - AMMI and GGE (**M6**, sections \@ref(ammi) and \@ref(gge)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
+    - bayesian hierarchical model $G \times E$ (**M7b**, section \@ref(model-2)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)),
+It can be completed by specific analysis such as migrant-residant (section \@ref(migrant-residant)) which corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
 
 
-- **Study diversity structure and identify complementary or similar parents for cross**.
-This can be done through multivariate analysis and clustering mentionned in section \@ref(multivariate-analysis).
-It can be completed by molecular analysis (section \@ref(molecular)).
-
+- **Study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits**.
+This can be done through multivariate analysis and clustering (**M2**, section \@ref(multivariate-analysis).
+It can be completed by analysis of molecular data and genetic distance trees (**M3**, section \@ref(molecular)).
 
 
 ### Family of analyses {#family-analysis-agro}
@@ -50,16 +48,16 @@ The various effects that can be estimated are:
 The analyses are divided into five families:
 
 - **Family 1** (section \@ref(family-1)) gathers analyses that estimate entry effects.
-It allows to compare different entries on each location and test for selection.
+It allows to compare different entries on each location and test for significant differences among entries.
 Specific analysis including response to selection can also be done.
-It copes with the objective to compare different germplasms on each location for selection.
+The objective to compare different germplasms on each location for selection.
 
 - **Family 2** (section \@ref(family-2)) gathers analyses that estimate germplasm and location and interaction effects. 
 This is to analyse the response over a network of locations. 
-Estimation of environment and year effects are in option depending of the model. 
+Estimation of environment and year effects is possible depending of the model. 
 Specific analysis including migrant and residant can also be done.
 It allows to study the response of germplasm over several location or environments.
-It copes with the objectives to study response of germplasm over several locations for selection.
+The objectives is to study response of germplasm over several locations for selection.
 
 - **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses. 
 This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.
@@ -74,12 +72,13 @@ The different models in Family 1 and 2 correspond to experimental designs that a
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
 | 1 | Anova | \@ref(classic-anova) | X | | | | | | | |
 |   | Spatial analysis | \@ref(spatial-analysis) | X | | | | | | | | |
-|   | Bayesian model 1 | \@ref(model-1) | X | | | | | | | | |
+|   | IBD | \@ref(ibd) | | X | | | | | | | |
+|   | Bayesian hierarchical model intra-location | \@ref(model-1) | X | | | | | | | | |
 | 2 | IBD | \@ref(ibd) | | X | | | | | | | |
 |   | AMMI | \@ref(ammi) | | X | X | (X) | X | (X) | | | |
 |   | GGE | \@ref(gge) | | X | X | (X) | X | (X) | | | |
 |   | Migrant-residant | \@ref(migrant-residant) | X | X | (X) | (X) | (X) | (X) | X | | |
-|   | Bayesian model 2 | \@ref(model-2) | | X | X | (X) | X | | | | |
+|   | Bayesian hierarchical model $G \times E$ | \@ref(model-2) | | X | X | (X) | X | | | | |
 | 3 | Bayesian model 3 | \@ref(model-3) | X | X | X | | X | X | | | |
 | 4 | Variance intra | \@ref(variance-intra) | | | | | | | | | X |
 Table: (\#tab:summary-analysis) Analyses carried out in `PPBstats`. X: effects that are estimated. (X): effects that can be estimated.
@@ -246,30 +245,7 @@ Several designs used in PPB programmes are mentionned in decision tree in sectio
 
 ### Decision tree {#decision-tree}
 
-For each family of analysis, a decision tree divided in five levels is proposed (Figure \@ref(fig:tree)):
-
-- Family of analysis
-- Number of plots per location
-- Number of locations and years
-- Relevant experimental design
-- Statistical analysis
-
-The corresponding decision trees are displayed in section \@ref(doe) regarding design of experiments. 
-Decision tree for Family 1 is displayed in Figure \@ref(fig:tree-f1).
-Decision tree for Family 2 is displayed in Figure \@ref(fig:tree-f2).
-
-```{r tree, out.width='20%', fig.align='center', echo=FALSE, fig.cap="Levels in the decision tree for analysis in `PPBstats`."}
-knitr::include_graphics("figures/decision-tree-for-analysis-in-PPBstats.png")
-```
-
-```{r tree-f1, out.width='80%', fig.align='center', echo=FALSE, fig.cap="Decision tree regarding Family 1."}
-knitr::include_graphics("figures/decision-tree-regarding-Family-1.png")
-```
-
-```{r tree-f2, out.width='80%', fig.align='center', echo=FALSE, fig.cap="Decision tree regarding Family 2."}
-knitr::include_graphics("figures/decision-tree-regarding-Family-2.png")
-```
-
+For each family of analysis, a decision tree is displayed in the corresponding section.
 Once you have chosen your objective, analysis and experimental design, you can sow, measure and harvest ... (section \@ref(sow)).
 
 
@@ -290,7 +266,7 @@ Table \@ref(tab:function-descriptions-workflow) describes each of the main funct
 You can have more information for each function by typing `?function_name` in your R session.
 
 ```{r main-workflow, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
-knitr::include_graphics("figures/PPBstats-main-functions-agro.png")
+knitr::include_graphics("figures/main-functions-agro.png")
 ```
 
 

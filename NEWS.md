@@ -46,7 +46,7 @@
 - update text (cf #76, #65, #67)
 - translate Rnw files to Rmd files, format to bookdown, put all files in inst/bookdown (cf #36)
 - explain Skewness and Kurtosis test as well as other output from check model for frequentist analysis (cf #36)
-- text improved by Isabelle
+- text and decision tree improved by Pierre and Isabelle
   
 ### add new RData
 - data_network_unipart_sl.RData

@@ -1,0 +1,137 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}[grow cyclic, align=flush center,
+every node/.style=concept, concept color=teal!40, font=\huge, text width=5cm,
+every node/.append style={scale=1},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=11cm, sibling angle=72, concept color=level-1, font=\huge, text width=7cm},
+    level 2/.style={level distance=11cm, sibling angle=70, concept color=level-2, font=\huge, text width=4cm},
+    level 3/.style={level distance=10cm, sibling angle=50, concept color=level-3, font=\huge, text width=4cm},
+    level 4/.style={level distance=10cm, sibling angle=40, concept color=level-4, font=\huge, text width=4cm},
+    level 5/.style={level distance=12cm, sibling angle=40, concept color=level-5, font=\huge, text width=6cm},
+    level 6/.style={level distance=12cm, sibling angle=40, concept color=level-6, font=\huge, text width=7cm},
+    level 7/.style={level distance=12cm, sibling angle=40, concept color=level-7, font=\huge, text width=5cm},
+    ]
+\node{\textbf{Experimental designs and statistical methods for PPB}}
+child{ node {\textbf{Compare different varieties evaluated for selection in different locations}}
+  child{ node {Analysis of agronomic traits}
+    child { node {Quantitative traits, single-trait approach}
+      child { node {Number of plots per location: large}
+        child { node {One or several locations and one or several years}
+          child { node {All entries are replicated at least twice \\ \textbf{D1 - fully-repicated} }
+            child { node { \textbf{M4a - Anova} } }
+ 		      }
+     	    child { node {Full or incomplete replications; one control is replicated in rows and columns \\ \textbf{D3 - row-colum} }
+     	  	child { node {\textbf{M4b - Spatial analysis} } }
+       		}
+        }
+      }
+      child { node {Number of plots per location: low}
+        child { node {At least 25 environnements (i.e. number location $\times$ number year $\geq$~25)}
+          child { node { All locations share a one replicated control or more; entries are not replicated within and among locations \\ \textbf{D4 - satellite-farm \& regional-farm} }
+            child { node {\textbf{M7a - Bayesian hierarchical model intra-location} } }
+          }
+        }
+        child { node{At least one environment (i.e. number location $\times$ nulber of year $\geq$ 1}
+          child { node{ Entries are distributed among environments \\ \textbf{D2 - incomplete block design} }
+            child { node{\textbf{M5- Mixed models for incomplete block designs}} }
+          }
+        }
+      }
+    }
+  }
+  child{ node {Sensory analysis}
+    child { node {Characterize products sensory properties (Napping test)}
+      child { node {Number of product $<$  12; Number of tasters $>$ 10}
+        child { node {\textbf{M9a - Multiple Factors Analyses; Projection Word Frequency}}
+        }
+      }
+    }
+    child { node {Understand and check consumers preferences (Hedonic test)}
+      child { node {Number of product  $<$ 7; Number of tasters $>$ 60}
+        child { node {\textbf{M9b - ANOVA; Hierarchical Cluster Analysis; Correspondance Analysis on additionnal sensory descriptors}}
+        }
+      }
+    }
+    child { node {Rank product according to few sensory descriptors (Ranking test)}
+      child { node {Number of product $<$ 6; Number of tasters $>$ 12}
+        child { node {\textbf{M9c - Non parametric Test on Rank Sums; Friedman's Test}}
+        }
+      }
+    }
+  }
+}
+child { node {\textbf{Improve the prediction of a target variable for selection}}
+  child { node {Analysis of agronomic traits}
+    child { node {Quantitative or quantitative traits, multiple-trait approach}
+      child { node {Number of plots per location: large} % Many germplasm or lines
+        child { node {At least one environment (i.e. number location $\times$ nulber of year $\geq$ 1} % One environment or more
+          child { node {Same entries in all locations; all entries are replicated at least twice in each location \\ \textbf{D1 - fully-repicated} } % Complete block design
+            child { node {\textbf{M1 - Non parametric; multivariate regression; classification \& regression trees; random forest}}
+            }
+          }
+        }
+      }
+    }
+  }
+}
+child { node {\textbf{Study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits}}
+  child { node {Analysis of agronomic traits}
+    child { node {Quantitative or quantitative traits, multiple-trait approach}
+      child { node {Number of plots per location: large} % Many germplasm or lines
+        child { node {At least one environment (i.e. number location $\times$ nulber of year $\geq$ 1} % One environment or more
+          child { node {Same entries in all locations; all entries are replicated at least twice in each location \\ \textbf{D1 - fully-repicated} } % Complete block design
+            child { node {\textbf{M2 - Multivariate analyses (PCA, clustering, discriminant analysis)}}
+            }
+          }
+        }
+      }
+    }
+  }
+  child { node {Analysis of molecular data}
+    child { node {Individual genetic data}
+      child { node {\textbf{M3 - Genetic distances; trees}}
+      }
+    }
+  }
+}
+child { node {\textbf{Study network of seed circulation}}
+  child{ node {Analysis of network topology}
+    child { node {unipart network for seed lots} 
+    	child { node {\textbf{M8 - Network analysis}} }
+    }
+    child { node {unipart network for location} 
+    	child { node {\textbf{M8 - Network analysis}} }
+    }
+    child { node {bipart network for germplasm and location} 
+    	child { node {\textbf{M8 - Network analysis}} }
+    }
+  }
+}
+child{ node {\textbf{Study the response of varieties under selection over several environments}}
+  child{ node {Analysis of agronomic traits}
+    child { node {Quantitative traits, single-trait approach}
+      child { node {Number of plots per location: large}
+        child { node {At least two locations and one year or more}
+          child { node {Same entries in all locations; all entries are replicated at least twice in each location \\ \textbf{D1 - fully-repicated} }
+            child { node {\textbf{M6 - AMMI, GGE} }}
+          }
+        }
+      }
+      child { node {Number of plots per farm: low}
+        child { node {At least 25 environnements (i.e. number location $\times$ number year $\geq$~25)}
+          child { node { All locations share a one replicated control or more; entries are not replicated within and among locations \\ \textbf{D4 - satellite-farm \& regional-farm} }
+            child { node {\textbf{M7b - Bayesian hierarchical model GxE} }}
+          }
+        }
+      }
+    }
+  }
+}
+\end{tikzpicture}
+\end{document}
+
+

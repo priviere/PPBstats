@@ -1,20 +1,24 @@
 ## Introduction
 
-Network of seed circulation are interesting to have insight on how exchanges are structured within a PPB programme or a Community Seed House (we prefere the term instead of Community Seed Banks) [@bioversity_csb_2015][@pautasso_seed_2013].
-It can be done at several scale, for example local, regional and national.
+Describing the topology of networks of seed circulation is interesting since it gives insight on how exchanges are organized within a PPB programme or a Community Seed Bank[@bioversity_csb_2015][@pautasso_seed_2013]. 
+Analysis can be done at several geographical or organizing scales, for example local, regional or national.
 
 Two types of network are handle within `PPBstats` :
 
-- unipart network where a vertex can be
-    - a seed lot (i.e. a combinaison of a germplasm in a given location a given year) where edges are relation such as diffusion, mixture, reproduction, crosses or selection for example.
-    - a location where edges are diffusion between location
+- unipart networks where a node can be
+    - a seed lot (i.e. a combinaison of a germplasm in a given location a given year) and edges are relationships such as diffusion, mixture, reproduction, crosses or selection for example.
+    - a location and edges are diffusion events between location
 
-- bipart network where a vertex can be a location or a germplasm
+- bipart network where a node can be a location or a germplasm
 
 
 ### Workflow and function relations in `PPBstats` regarding network analysis
 
-The workflow is very simple as only descriptive analysis can be done.
+The workflow is very simple as only descriptive analysis can be done based on network format (Figure \@ref(fig:decision-tree-Study-network-of-seed-circulation)).
+
+```{r decision-tree-Study-network-of-seed-circulation, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with objectives and analysis carry out in `PPBstats` regarding network analysis. **M** refers to methods."}
+knitr::include_graphics("figures/decision-tree_Study-network-of-seed-circulation.png")
+```
 
 Figure \@ref(fig:main-workflow-network) displays the functions and their relationships.
 Table \@ref(tab:function-descriptions-workflow-network) describes each of the functions.
@@ -22,7 +26,7 @@ Table \@ref(tab:function-descriptions-workflow-network) describes each of the fu
 You can have more information for each function by typing `?function_name` in your R session.
 
 ```{r main-workflow-network, out.width='80%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
-knitr::include_graphics("figures/PPBstats-main-functions-network.png")
+knitr::include_graphics("figures/main-functions-network.png")
 ```
 
 
@@ -37,28 +41,27 @@ Table: (\#tab:function-descriptions-workflow-network) Main function descriptions
 
 Three formats are possible:
 
-1. unipart network for seed lots which represents relation between seed lots: a data frame with the followin compulsory columns:
-    - `"seed_lot_parent"` : name of the seed lot parent in the relation
-    - `"seed_lot_child"` ; name of the seed lots child in the relation
-    - `"relation_type"` : the type of relation between the seed lots
-    - `"relation_year_start"` : the year when the relation starts
-    - `"relation_year_end"` : the year when the relation stops
-    - `"germplasm_parent"` : the germplasm associated to the seed lot father
-    - `"location_parent"` : the location associated to the seed lot father
-    - `"year_parent"` : represents the year of the last relation event of the seed lot father
-    - `"germplasm_child"` : the germplasm associated to the seed lot child
-    - `"location_child"` : the location associated to the seed lot child
-    - `"year_child"` : represents the year of the last relation event of the seed lot child
+1. unipart network that represent the relationships between seed lots: a data frame with the following compulsory columns:
+    - `"seed_lot_parent"` : name of the parent seed lot in the relationship
+    - `"seed_lot_child"` ; name of the child seed lots in the relationship
+    - `"relation_type"` : the type of relationship between the seed lots
+    - `"relation_year_start"` : the year when the relationship starts
+    - `"relation_year_end"` : the year when the relationship stops
+    - `"germplasm_parent"` : the germplasm associated to the parent seed lot
+    - `"location_parent"` : the location associated to the parent seed lot
+    - `"year_parent"` : the year of the last relationship of the parent seed lot
+    - `"germplasm_child"` : the germplasm associated to the child seed lot
+    - `"location_child"` : the location associated to the child seed lot
+    - `"year_child"` : represents the year of the last relation event of the child seed lot
 
-It can have in option : `"alt_parent"`, `"long_parent"`, `"lat_parent"`, `"alt_child"`, `"long_child"`, `"lat_child"` to get map representation.
-It can have supplementary variables with tags `"_parent"`, `"_child"` or `"_relation"`.
+Possible options are : `"alt_parent"`, `"long_parent"`, `"lat_parent"`, `"alt_child"`, `"long_child"`, `"lat_child"` to get map representation, supplementary variables with tags: `"_parent"`, `"_child"` or `"_relation"`.
 
-2. unipart network for location which represents relation of germplasm diffusion between location: a data frame with the followin compulsory columns (explained above): `"location_parent"`, `"location_child"`, `"relation_year_start"`, `"relation_year_end"`.
-It can have in option : `"germplasm_parent"`, `"year_parent"`, `"germplasm_child"`, `"year_child"`.
-It can have in option : `"alt_parent"`, `"long_parent"`, `"lat_parent"`, `"alt_child"`, `"long_child"`, `"lat_child"` to get map representation.
+2. unipart networks that represent relationship of germplasm diffusion between locations: a data frame with the followin compulsory columns (same as above): `"location_parent"`, `"location_child"`, `"relation_year_start"`, `"relation_year_end"`.
+Possible options are : `"germplasm_parent"`, `"year_parent"`, `"germplasm_child"`, `"year_child"`.
+Other possibles option are : `"alt_parent"`, `"long_parent"`, `"lat_parent"`, `"alt_child"`, `"long_child"`, `"lat_child"` to get map representation.
 
-3. bipart network for germplasm and location which represent "which location has which germplasm which year": a data frame with the followin compulsory columns: `"germplasm"`, `"location"`, `"year"`.
-It can have in option : `"alt"`, `"long"`, `"lat"` to get map representation
+3. bipart networks represent "which location has which germplasm which year": a data frame with the followin compulsory columns: `"germplasm"`, `"location"`, `"year"`.
+Possible options are : `"alt"`, `"long"`, `"lat"` to get map representation
 
 
 Note that format 1. can be convert to format 2. and 3. as summarized in Table \@ref(tab:network-format-analysis).

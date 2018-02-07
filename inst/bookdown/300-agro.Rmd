@@ -1,4 +1,4 @@
-# Agronomic analysis {#agronomic}
+# Analysis of agronomic traits {#agronomic}
 
 In section \@ref(intro-agro), you will chose your objective, the analyses and the experimental design based on a decision tree and see how to implement it based on the workflow and function relations from formated data.
 

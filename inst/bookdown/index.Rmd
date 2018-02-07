@@ -20,14 +20,29 @@ description: "Tutorial on how to use the R package PPBstats."
 knitr::include_graphics("figures/warning.png")
 ```
 Be aware that this package is under development and test: do not 100% trust the functions!!! 
-You're welcome to contribute: see section \@ref(contributions).
+You're welcome to contribute: see [here]() for more informations.
 
 ```{r , out.width='90%', fig.align='center', echo=FALSE, fig.cap="Wheat trials on farm within our participatory plant breeding programme, summer 2012, Auvergne, France. CC-BY-NC-SA. Pierre Rivière. [@JSG_2012_1]"}
 knitr::include_graphics("figures/wheat.JPG")
 ```
 
 ## Contact {-}
-Pierre Rivière: pierre@semencespaysannes.org
+**Pierre Rivière**
+
+pierre@semencespaysannes.org
+
+```{r, out.width='20%', fig.align='left', echo=FALSE}
+knitr::include_graphics("../bookdown/figures/Logo-RSP.png")
+```
+
+Réseau Semences Paysannes
+
+3 avenue de la gare
+
+47190 Aiguillon
+
+[www.semencespaysannes.org](http://www.semencespaysannes.org)
+
 
 ## Authors of `PPBstats` and the book, affiliation and contribution {-}
 

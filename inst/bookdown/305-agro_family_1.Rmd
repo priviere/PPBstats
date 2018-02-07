@@ -1,5 +1,20 @@
-## Family of analysis 1 : entry effects on one farm {#family-1}
+## Family 1 of analysis : Compare different varieties evaluated for selection in different locations. {#family-1}
 
-**Family 1** gathers analysis that estimate entry effects.
-It copes with the objective to compare different germplasms on each location for selection.
-Decision tree regarding Family 1 is displayed in Figure \@ref(fig:tree-f1).
+**Family 1** gathers analyses that estimate entry effects.
+It allows to compare different entries on each location and test for significant differences among entries.
+Specific analysis including response to selection can also be done.
+The objective to compare different germplasms on each location for selection.
+
+This can be done through (Figure \@ref(fig:decision-tree-Compare-different-varieties-evaluated-for-selection-in-different-locations-agro)) :
+
+- classic anova (**M4a**, section \@ref(classic-anova)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
+- spatial analysis (**M4b**, section \@ref(spatial-analysis)) based on row-column designs (**D3**, section \@ref(row-column)),
+- mixed models (**M5**, section\@ref(ibd-model)) for incomplete blocks designs (**D2**, section \@ref(ibd)),
+- bayesian hierarchical model intra-location (**M7a**, section \@ref(model-1)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)). 
+
+It can be completed by organoleptic analysis (section \@ref(organoleptic)).
+Based on these analysis, specific objective including response to selection analysis can also be done.
+
+```{r decision-tree-Compare-different-varieties-evaluated-for-selection-in-different-locations-agro, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with experimental constraints, designs and methods of agronomic analysis carry out in `PPBstats` regarding the objective : Compare different varieties evaluated for selection in different locations. **D** refers to designs and **M** to methods."}
+knitr::include_graphics("figures/decision-tree_Compare-different-varieties-evaluated-for-selection-in-different-locations_agro.png")
+```
