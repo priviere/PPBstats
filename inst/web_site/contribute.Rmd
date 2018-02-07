@@ -21,11 +21,15 @@ Anyhow, send me an email if you wish to participate in order to coordinate our e
 
 ## Test and report bugs
 
-First, load the development version:
+First, load the current development version of the package: [download v0.23](https://github.com/priviere/PPBstats/archive/v0.23.zip)
+
+unzip the folder and then run 
 
 ```{r, eval=FALSE}
-devtools::install_github("priviere/PPBstats")
+devtools::install("PPBstats-0.23")
 ```
+
+Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
 
 The easiest way to start is to [look at the book]() to know how the package works.
 
