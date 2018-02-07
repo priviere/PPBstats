@@ -1,19 +1,20 @@
 # Analysis of Participatory Plant Breeding programme with the R package `PPBstats`
 
-`PPBstats` is an R package dedicated to perform analysis found within PPB programmes regarding
-
-- network of seeds circulation
-- agronomic trials
-- organoleptic tests and
-- molecular experiments
-
-
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
 knitr::include_graphics("../bookdown/figures/warning.png")
 ```
 **Be aware that this package is under development and test do not 100% trust the functions!!!**
 **You're welcome to contribute: see [here]() for more informations.**
 
+Participatory plant breeding is based on the decentralization of the selection in the farms and the gardens.
+It involves all actors in the breeding decision process : farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors.
+
+`PPBstats` aims to perform analysis found within PPB programmes at four levels:
+
+- network of seeds circulation
+- agronomic trials
+- organoleptic tests
+- molecular experiments
 
 
 It is developed on Github by severals persons:
