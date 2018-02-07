@@ -9,8 +9,9 @@ output:
 
 # Contribute to `PPBstats` {#contributions}
 
-You can contribute to `PPBstats` in three ways:
+You can contribute to `PPBstats` in four ways:
 
+- test and report bugs
 - improve the code
 - improve the book
 - translate
@@ -18,12 +19,7 @@ You can contribute to `PPBstats` in three ways:
 
 Anyhow, send me an email if you wish to participate in order to coordinate our efforts: pierre@semencespaysannes.org
 
-
-## Improve the code
-
-The code of PPBstats is on github : https://github.com/priviere/PPBstats
-
-### Test and report bugs
+## Test and report bugs
 
 First, load the development version:
 
@@ -31,7 +27,7 @@ First, load the development version:
 devtools::install_github("priviere/PPBstats")
 ```
 
-The easiest way to start is to look at the present book to know how the package works.
+The easiest way to start is to [look at the book]() to know how the package works.
 
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) if
 
@@ -39,6 +35,10 @@ Do not hesitate to let a message [in the issues](https://github.com/priviere/PPB
 - you find bugs with your data (If so, you can send it to me so that I can see
 where could be the problems)
 
+
+## Improve the code
+
+The code of PPBstats is on github : https://github.com/priviere/PPBstats
 
 
 ### Resolve open issues
@@ -111,18 +111,13 @@ plot.mean_comparisons_my_model <- function(x, y, ...){
 
 ### Internal function structure
 
-The internal function used in `PPBstats` are presented in Figure \@ref(fig:workflow-2-1) and  \@ref(fig:workflow-2-2) and Table \@ref(tab:function-descriptions-workflow-2). 
+The internal function used in `PPBstats` are presented in Figure and Table below. 
 Note that one additional funtion is also defined in the package: `common_functions` which gather some functions used in several functions of `PPBstats`.
 
 
-```{r workflow-2-1, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Internal functions used within main functions (1/2)"}
-knitr::include_graphics("../bookdown/figures/PPBstats-secondary-functions-1.png")
+```{r secondary-functions, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Internal functions used within main functions."}
+knitr::include_graphics("../bookdown/figures/secondary-functions.png")
 ```
-
-```{r workflow-2-2, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Internal functions used within main functions (2/2)"}
-knitr::include_graphics("../bookdown/figures/PPBstats-secondary-functions-2.png")
-```
-
 
 | function name | description |
 | --- | --- |
@@ -162,8 +157,7 @@ knitr::include_graphics("../bookdown/figures/PPBstats-secondary-functions-2.png"
 | `ggplot_discrimitiveness_vs_representativeness` | Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix |
 | `ggplot_mean_vs_stability` | Get "mean vs stability" ggplot from PCA on interaction matrix |
 | `ggplot_which_won_where` | Get "which won where" ggplot from PCA on interaction matrix |
-Table: (\#tab:function-descriptions-workflow-2) Name and description of internal functions.
-
+Table: Name and description of internal functions.
 
 
 ## Improve the book
@@ -178,10 +172,9 @@ Every contributions to other languages are welcome!
 More information on R package translation [here](http://developer.r-project.org/Translations30.html).
 
 
-## How to contribute
+## Procedure to contribute to the code
 
 - If you want to interact with us, please file an [issue](https://github.com/priviere/PPBstats/issues) or send me an email : pierre@semencespaysannes.org
-
 - Fork the git repository
 - Include your contributions in your fork (preferably in a specific branch)
 - Update the documentation if necessary (help files, `inst/bookdown` file)
