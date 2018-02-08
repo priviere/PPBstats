@@ -20,7 +20,7 @@ description: "Tutorial on how to use the R package PPBstats."
 knitr::include_graphics("figures/warning.png")
 ```
 Be aware that this package is under development and test: do not 100% trust the functions!!! 
-You're welcome to contribute: see [here]() for more informations.
+You're welcome to contribute: see [here](https://priviere.github.io/PPBstats_web_site/contribute.html) for more informations.
 
 ```{r , out.width='90%', fig.align='center', echo=FALSE, fig.cap="Wheat trials on farm within our participatory plant breeding programme, summer 2012, Auvergne, France. CC-BY-NC-SA. Pierre Rivière. [@JSG_2012_1]"}
 knitr::include_graphics("figures/wheat.JPG")

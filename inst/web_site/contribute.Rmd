@@ -31,7 +31,7 @@ devtools::install("PPBstats-0.23")
 
 Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
 
-The easiest way to start is to [look at the book]() to know how the package works.
+The easiest way to start is to [look at the book](https://priviere.github.io/PPBstats_book/) to know how the package works.
 
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) if
 
@@ -47,7 +47,7 @@ The code of PPBstats is on github : https://github.com/priviere/PPBstats
 
 ### Resolve open issues
 
-Do not hesitate to contribute to open [in the issues](https://github.com/priviere/PPBstats/issues).
+Do not hesitate to contribute to open [issues](https://github.com/priviere/PPBstats/issues).
 
 ### Add new functions
 
