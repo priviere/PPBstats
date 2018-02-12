@@ -39,7 +39,11 @@ format_data_PPBstats.data_agro = function(data){
       # format date
       v = format(as.Date(d[, vec_date[i]]), format = "%Y/%m/%d")
       vjd = sapply(v, function(x) {
-        julian(as.Date(x), origin = as.Date(paste(unlist(strsplit(x, "/"))[1], "/01/01", sep = "")))
+        if(is.na(x)){
+          x
+        } else {
+          julian(as.Date(x), origin = as.Date(paste(unlist(strsplit(x, "/"))[1], "/01/01", sep = "")))
+        }
       })
       d = cbind.data.frame(d, vjd)
       colnames(d)[ncol(d)] = paste(vec_date[i], "_julian", sep = "")
