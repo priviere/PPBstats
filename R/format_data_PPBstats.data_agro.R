@@ -22,18 +22,20 @@ format_data_PPBstats.data_agro = function(data){
   vec_date = colnames(d)[grep("\\$date", colnames(d))]
   if( length(vec_date) == 0 ) { vec_date = NULL }
   if(!is.null(vec_date)){
-    vec_date = colnames(d)[grep("\\$date", colnames(d))]
+    vec_date = grep("\\$date", colnames(d))
     
     for(i in 1:length(vec_date)){
       # check date
-      v = d[, vec_date[i]]
-      for(j in 1:length(v)){
-        t = try(format(as.Date(as.character(v[j])), format = "%Y-%m-%d", origin = "1900-01-01"), silent = TRUE)
-        if( class(t) == "try-error" || is.na(t) ) stop( 
-          "Date must be at format year-month-day for row ", j, " for ", vec_date[i], "."
-        )
+      v = na.omit(d[, vec_date[i]])
+      if( length(v) > 0 ){
+        for(j in 1:length(v)){
+          t = try(format(as.Date(as.character(v[j])), format = "%Y-%m-%d", origin = "1900-01-01"), silent = TRUE)
+          if( class(t) == "try-error" || is.na(t) ) stop( 
+            "Date must be at format year-month-day for row for column", i, "."
+          )
+        }
       }
-      
+    }
       # format date
       v = format(as.Date(d[, vec_date[i]]), format = "%Y/%m/%d")
       vjd = sapply(v, function(x) {
