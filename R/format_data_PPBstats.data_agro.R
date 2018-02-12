@@ -46,7 +46,7 @@ format_data_PPBstats.data_agro = function(data){
         }
       })
       d = cbind.data.frame(d, vjd)
-      colnames(d)[ncol(d)] = paste(vec_date[i], "_julian", sep = "")
+      colnames(d)[ncol(d)] = paste(colnames(d)[i], "_julian", sep = "")
     }
   }
   
