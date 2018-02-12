@@ -19,11 +19,11 @@ format_data_PPBstats.data_agro = function(data){
   if(!is.factor(d$Y)) { stop(mess) }
   
   # check and format date
-  vec_date = colnames(d)[grep("\\$date", colnames(d))]
+  vec_date = grep("\\$date", colnames(d))
   if( length(vec_date) == 0 ) { vec_date = NULL }
+  
   if(!is.null(vec_date)){
-    vec_date = grep("\\$date", colnames(d))
-    
+
     for(i in 1:length(vec_date)){
       # check date
       v = na.omit(d[, vec_date[i]])
@@ -46,7 +46,7 @@ format_data_PPBstats.data_agro = function(data){
         }
       })
       d = cbind.data.frame(d, vjd)
-      colnames(d)[ncol(d)] = paste(colnames(d)[i], "_julian", sep = "")
+      colnames(d)[ncol(d)] = paste(colnames(d)[vec_date[i]], "_julian", sep = "")
     }
   }
   
