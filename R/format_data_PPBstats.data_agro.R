@@ -35,7 +35,7 @@ format_data_PPBstats.data_agro = function(data){
           )
         }
       }
-    }
+      
       # format date
       v = format(as.Date(d[, vec_date[i]]), format = "%Y/%m/%d")
       vjd = sapply(v, function(x) {
