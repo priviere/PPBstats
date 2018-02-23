@@ -4,8 +4,9 @@ Note that this section is still under development : cf https://github.com/privie
 
 #### Theory of the model
 
+The experimental design used is the row-column design (**D3**).
 The following model is based on frequentist statistics (section \@ref(section-freq)).
-The model is used to take into account environmental variation within a block with few control replicated in rows and columns.
+The model allows taking into account environmental variation within a block with few control replicated in rows and columns.
 
 It is based on a SpATS (Spatial Analysis of Field Trials with Splines) model proposed by @rodriguez_spatial_2016 :
 
@@ -14,22 +15,22 @@ $Y_{ijk} = \alpha_{i} + r_{j} + c_{k} + f(u,v) + \varepsilon_{ijk}; \quad \varep
 With,
 
 - $Y_{ijk}$ the phenotypic value for germplasm $i$, row $j$ and column $k$
-- $\alpha_{i}$ the germplasm $i$ effect
-- $r_{j}$ row $j$ effect
-- $c_{k}$ col $k$ effect
-- $f(u,v)$ the smooth bivariate function that simultaneously accounts for the spatial trend across both directions of the filed (i.e. row and column)
+- $\alpha_{i}$ the effect of germplasm $i$
+- $r_{j}$ the effect of row $j$ 
+- $c_{k}$ the effect of col $k$ 
+- $f(u,v)$ the smooth bivariate function that simultaneously accounts for the spatial trend across both directions of the fiel (i.e. rows and columns)
 - $\varepsilon_{ijk}$ the residuals
 
 
 Note that $f(u,v)$ is divided into 8 components excluding the intercept [@rodriguez_spatial_2016]:
 
-- the linear effects for the rows (row),
-- the linear effects for the columns (col), 
+- the linear effect of the rows (row),
+- the linear effect of the columns (col), 
 - the linear interaction of rows and columns (row:col),
 - the main row effect (f(row)),
 - the main column effect (f(col)),
-- the smooth varying coefficient terms regarding rows (f(col):row),
-- the smooth varying coefficient terms regarding columns (row:f(col))),
+- the smooth varying coefficient term regarding rows (f(col):row),
+- the smooth varying coefficient term regarding columns (row:f(col))),
 - the smooth-by-smooth interaction component (f(col):f(row))
 
 Much more information regarding the model as well as example of R package `SpATS` can be found in @rodriguez_spatial_2016.

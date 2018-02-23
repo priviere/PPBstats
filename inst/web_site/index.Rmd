@@ -1,5 +1,7 @@
 # Analysis of Participatory Plant Breeding programme with the R package `PPBstats`
 
+## Version 0.23
+
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
 knitr::include_graphics("../bookdown/figures/warning.png")
 ```
@@ -27,6 +29,8 @@ It is developed on Github by severals persons:
 
 **Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section of the book regarding contributions.
 
+**Camille Vindras^5^** wrote text to present method description in sensory analysis
+
 **Isabelle Goldringer^2^** reviewed and improved all the text of the book regarding agronomic sections
 
 ^1^ Réseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France
@@ -37,3 +41,4 @@ It is developed on Github by severals persons:
 
 ^4^ INRA, Centre Val de Loire, Unité Amélioration, Génétique et Physiologie Forestières, F-45075 Orléans, France
 
+^5^ ITAB, Ferme Expérimentale, 2485 Route des Pécolets, F-26800 Etoile-sur-Rhône, France

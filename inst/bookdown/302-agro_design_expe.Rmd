@@ -1,6 +1,6 @@
 ## Design the experiment {#doe}
 
-The experimental design are based on number of plots per location, the number of location, the replication of germplasm within and between locations.
+The experimental design is described by the number of plots per location, the number of locations, the number of replications of the different germplasms within and between locations.
 
 Function `design_experiment` sets the experimental design based on :
 
@@ -25,7 +25,7 @@ The four experimental designs are
 
 ### Fully-replicated {#fully-replicated}
 
-In fully replicated design, all entries are replicated into different blocks.
+In fully replicated design, all entries are replicated with randomly choosen order into different blocks.
 
 The decision tree where fully-replicated designs are used is displayed in Figure \@ref(fig:decision-tree-agro-fully-replicated-design).
 
@@ -69,7 +69,7 @@ head(p_fr$"fully-replicated"$data.frame)
 ```
 
 
-```{r}
+```{r, fig.cap="Fully replicated design where all germplasms are replicated three time in bocks"}
 p_fr$"fully-replicated"$design
 ```
 
@@ -83,10 +83,10 @@ knitr::include_graphics("figures/decision-tree_agro-ibd-design.png")
 ```
 
 Entries are not replicated on a location. 
-Some entries are shared by some locations.
-Each block is an independent unit and can be allocated to different location.
-It is also possible that some farms welcome several blocks.
-Therefore, the experiment can be handle by several locations that can not welcome an high number of plots.
+Some entries are common to some locations.
+Each block is an independent unit and can be allocated to any location.
+Each farmer has to choose one or several pre-designed blocks.
+Therefore, the experiment can be handled by several locations that can not receive a high number of plots.
 
 ```{r}
 p_ibd = design_experiment(
@@ -146,11 +146,11 @@ The controls must catch as much as possible of the trial variation.
 
 ### Regional and satellite farms {#rf-sf}
 
-Regional farms must have several entries (i.e. a germplasm in an environment) in two or more blocks with some entries (i.e. controls) replicated in each block.
-Satellite farms has no block and only one entry is replicated twice.
+Regional farms receive several entries (i.e. a germplasm in an environment) in two or more blocks with some entries (i.e. controls) replicated in each block.
+Satellite farms have a single block and only one entry (i.e. the control) is replicated twice.
 Farmers choose all entries that are not replicated.
 The number of entries may vary between farms.
-Note that at least 25 environments (location $\times$ year) are need in order to get confident analysis.
+Note that at least 25 environments (location $\times$ year) are need in order to get robust results.
 
 The decision tree where regional and satellite farms designs are used is displayed in Figure \@ref(fig:decision-tree-agro-regional-and-satellite-design).
 
@@ -235,7 +235,8 @@ p_case3_rf2
 ```
 
 If you have enought space and lots of seeds, you can adapt the satellite farm design with only one column.
-Each row beeing a sower width.
+Each row beeing a sower width. 
+Then you must be careful to have several sample for a given row to be as representative as possible.
 
 ```{r}
 p_case3_sf4 = design_experiment(

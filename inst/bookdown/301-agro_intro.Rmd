@@ -13,6 +13,7 @@ This can be done through family 1 of analyses (section \@ref(family-1))
     - spatial analysis (**M4b**, section \@ref(spatial-analysis)) based on row-column designs (**D3**, section \@ref(row-column)),
     - mixed models (**M5**, section\@ref(ibd-model)) for incomplete blocks designs (**D2**, section \@ref(ibd)),
     - bayesian hierarchical model intra-location (**M7a**, section \@ref(model-1)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)). 
+
 It can be completed by organoleptic analysis (section \@ref(organoleptic)).
 Based on these analysis, specific objective including response to selection analysis can also be done.
 
@@ -57,7 +58,7 @@ This is to analyse the response over a network of locations.
 Estimation of environment and year effects is possible depending of the model. 
 Specific analysis including migrant and residant can also be done.
 It allows to study the response of germplasm over several location or environments.
-The objectives is to study response of germplasm over several locations for selection.
+The objectives is to study response of different germplasms over several locations for selection.
 
 - **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses. 
 This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.

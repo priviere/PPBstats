@@ -1,8 +1,8 @@
 ### GGE {#gge}
 
 #### Theory of the model
-
-The GGE model is the same than the AMMI model except that the PCA is done on a matrix centered on the location: germplasm and interaction effects are merged ^[Note than in `PPBstats`, as for AMMI, the PCA is done on germplasm and interaction effects + residuals.]. 
+The experimental design used is fully replicated (**D1**).
+The GGE model is the same as the AMMI model except that the PCA is done on a matrix centered on the locations: germplasm and interaction effects are merged ^[Note than in `PPBstats`, as for AMMI, the PCA is done on germplasm and interaction effects + residuals.] [@gauch_statistical_2006][@gauch_statistical_2008][@yan_gge_2007]. 
 The model is based on frequentist statistics (section \@ref(section-freq)).
 
 The GGE model can be written as followed:
@@ -14,11 +14,11 @@ with,
 - $Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and location $j$,
 - $\mu$ the general mean,
 - $\theta_{j}$ the effect of location $j$,
-- $rep_{k}(\theta_{j})$ effect of replication $k$ nested in location,
+- $rep_{k}(\theta_{j})$ the effect of replication $k$ nested in location,
 - $N$ the number of dimension (PCA componant) which has as maximum value the number of location,
 - $\lambda_{n}$ the eigen value for componant $n$,
-- $\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
-- $\omega_{jn}$ eigen vector for  location $j$  for componant $n$.
+- $\gamma_{in}$ the eigen vector for germplasm $i$ for componant $n$,
+- $\omega_{jn}$ the eigen vector for  location $j$  for componant $n$.
 - $\varepsilon_{ijk}$ the residuals.
 
 or, if there is year effect:
@@ -28,14 +28,12 @@ $Y_{ijkl} = \mu + \theta_{j} + rep_{k}(\theta_{j}\beta_{l}) +\sum_{n}^{N} \lambd
 With,
 
 - $Y_{ijkl}$ the phenotypic value for replication $k$, germplasm $i$, location $j$ and year $l$,
-- $\mu$ the general mean,
-- $\theta_{j}$ location $j$ effect,
-- $rep_{k}(\theta_{j}\beta_{l})$ the replication $k$ nested in location and year effect,
-- $\eta_{i}\nu_{j}$ the germplasm $\times$ location effect,
 - $\beta_{l}$ the year $l$ effect,
 - $\beta_{l}\alpha_{i}$ the year $\times$ germplasm interaction effect,
 - $\beta_{l}\theta_{j}$ the year $\times$ location interaction effect,
-- $\varepsilon_{ijk}$ the residuals.
+- $\varepsilon_{ijk}$ the residuals,
+- and all other effects are the same as in the previous model.
+
 
 #### Steps with `PPBstats`
 

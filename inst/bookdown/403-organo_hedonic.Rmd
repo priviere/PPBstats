@@ -1,4 +1,27 @@
 ## Hedonic analysis {#hedonic}
 
+### Method description
+
+The hedonic evaluation test involves asking consumers to rate their preference from 1 (I dislike extremely) to 9 (I like very much) for 3 to 4 sensory attributes specific to the test product. 
+The overall preference is ascertained at the beginning of the questionnaire in order not to influence the consumer and be closer to typical conditions of consumption. 
+Additional information concerning sex, age and organic consumption frequency are asked at the end of the test in order to characterise the population sample. 
+Additional sensory descriptors to describe products are asked after evaluationed of each product. 
+One of the main objectives of hedonic tests is to determine differences of appreciation for a given attribute between a set of samples.
+The data distribution determines the type of tests that should be used to analyze the data set. 
+
+- If the distribution is Normal, one-way analysis of variance (ANOVA) can be performed, the source of variance being the sample, followed by multiple comparison of mean data values from each assessor. 
+The aim is to obtain a final ranking based on consumers’ preferences. 
+- If the data set doesn’t follow a Normal distribution, a Friedman test on the rank should be used to indicate if the varieties are perceived differently by assessors.
+
+Finally a Hierarchical Cluster Analysis can be implement to identify groups of preferences. 
+
+### Steps with `PPBstats`
+
+
+### Format the data
+
+
+### Run the model
+
 
 

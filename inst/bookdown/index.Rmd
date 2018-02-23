@@ -54,6 +54,8 @@ Réseau Semences Paysannes
 
 **Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section \@ref(contributions) regarding contributions.
 
+**Camille Vindras^5^** wrote text to present method description in sensory analysis in section \@ref{organoleptic}
+
 **Isabelle Goldringer^2^** reviewed and improved all the text of the book regarding agronomic sections
 
 
@@ -89,6 +91,8 @@ http://maiage.jouy.inra.fr/?q=en/home
 
 
 ^4^ INRA, Centre Val de Loire, Unité Amélioration, Génétique et Physiologie Forestières, F-45075 Orléans, France
+
+^5^ ITAB, Ferme Expérimentale, 2485 Route des Pécolets, F-26800 Etoile-sur-Rhône, France
 
 
 ## Copyright and Licence {-}

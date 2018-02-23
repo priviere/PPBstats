@@ -1,4 +1,47 @@
 ## Napping analysis {#napping}
 
 
+### Method description
+
+The Napping allows you to look for **sensory differences between products**. 
+Differences are on global sensory characteristics and should be complemented with a verbalisation task to ease the understanding of the differences. 
+It offers greater flexibility, as no trained panel is needed.
+
+Two tasks are done in a Napping:
+
+- The **sorting task**: each taster is asked to position the whole set of products on a sheet of blank paper (a tablecloth) according to their similarities/dissimilarities. Thus, two products are close if they are perceived as similar or, on the contrary,  distant from each other if they are perceived as different. Each taster uses his/her own criteria.
+- The **verbalisation task**: After performing the napping task, the panellists are asked to describe the products by writing one or two sensory descriptors that characterize each group of products on the map.
+
+Panels should be composed from 12 to 25 tasters according to the judge’s experience with the product and to the objective of the experiment. 
+For example ten farmers-bakers should be enough to have reliable results as they are used to eat and taste bread. 
+In case of consumers, a panel of twenty could be more adapted. 
+
+No more than ten products should be evaluate simultaneously. 
+A random, three-digit code should be assigned to each sample. 
+Samples are presented simultaneously and the assessors can taste as much as they need.
+Napping data lead to a quantitative table. 
+The rows are the products. 
+This table presents the number of panellists ($i$) sets (one set for each panellist) of two columns corresponding to the horizontal and vertical coordinate ($X$, $Y$). 
+Two columns correspond to each subject (i.e. person that taste) $j$: the X-coordinate ($X_j$) and the Y-coordinate ($Y_j$) for each product.
+
+Sensory descriptors are coded through a “products x words” frequency table.
+First a contingency table counting the number that each descriptor has been used to describe each product is created. 
+Then this contingency table is transformed in frequencies so that the “word frequency” is a qualitative variables with the number of words cited as modalities. 
+
+To analyse this kind of data, a Multiple Factor Analysis (MFA) should be performed. 
+Each subject constitute a group of two un-standardised variables. 
+The MFA led to a synthesis of the panellist’s tablecloth. Two products are close if all judges consider them close on the napping. 
+The more the two first components of MFA explain the original variability, the more the judges are in agreement.
+
+The frequency table crossing products and word frequency is considered as a set of supplementary variables: they do not intervene in the axes construction but their correlation with the factors of MFA are calculated and represented as in usual PCA. 
+
+
+### Steps with `PPBstats`
+
+
+### Format the data
+
+
+### Run the model
+
 

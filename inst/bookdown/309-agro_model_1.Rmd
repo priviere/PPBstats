@@ -2,13 +2,13 @@
 
 At the farm level, the residual has few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
 Model_1 was implemented to improve efficiency of mean comparisons.
-Model_1 is working well with more than 20 environment (i.e. location $\times$ year) [@riviere_hierarchical_2015].
+It is efficient with more than 20 environment (i.e. location $\times$ year) [@riviere_hierarchical_2015].
 The model is based on bayesian statistics (section \@ref(section-bayes)).
 
 #### Theory of the model
-
+The experimental design used is satellite and regional farms (**D4**). 
 The model is described in @riviere_hierarchical_2015.
-We restricted ourselves to analysing values at the plot level.
+We restricted ourselves to analysing values at the plot level (the values may result from the average of individual plants measures).
 The phenotypic value $Y_{ijk}$ for variable $Y$, germplasm $i$, environment $j$ and block $k$ is modelled as :
 
 $Y_{ijk} = \mu_{ij} + \beta_{jk} + \varepsilon_{ijk} ; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2_{j})$,
@@ -16,34 +16,34 @@ $Y_{ijk} = \mu_{ij} + \beta_{jk} + \varepsilon_{ijk} ; \quad \varepsilon_{ijk} \
 where
 
 - $\mu_{ij}$ is the mean of germplasm $i$ in environment $j$ (note that this parameter, which corresponds to an entry, confounds the population effect and the population $\times$ environment effect);
-- $\beta_{jk}$ is the effect of block $k$ in environment $j$ satisfying the constraint^[Note that it is quite different from @riviere_hierarchical_2015 where the model was done only for two blocks. Here there is no restriction on the number of blocks.] $\sum\limits_{k=1}^K \beta_{jk} = 1$ ;
+- $\beta_{jk}$ is the effect of block $k$ in environment $j$ satisfying the constraint^[Note that it is quite different from @riviere_hierarchical_2015 where the model was written only for two blocks. Here there is no restriction on the number of blocks.] $\sum\limits_{k=1}^K \beta_{jk} = 1$ ;
 - $\varepsilon_{ijk}$ is the residual error;
-- $\mathcal{N} (0,\sigma^2_{j})$ denoted normal distribution centred on 0 with variance $\sigma^2_{j}$, which is specific to environment $j$.
+- $\mathcal{N} (0,\sigma^2_{j})$ denotes normal distribution centred on 0 with variance $\sigma^2_{j}$, which is specific to environment $j$.
 
-We took advantage of the similar structure of the trials in each environment of the network to assume that trial residual variances come from a common distribution :
+We take advantage of the similar structure of the trials in each environment of the network to assume that trial residual variances come from a common distribution :
 
 $\sigma^2_{j} \sim \frac{1}{Gamma(\nu,\rho)}$,
 
 where $\nu$ and $\rho$ are unknown parameters.
-Because of the low number of residual degrees of freedom for each farm, we used a hierarchical approach in order to assess mean differences on farm.
-For that, we placed vague prior distributions on the hyperparameters $\nu$ and $\rho$ :
+Because of the low number of residual degrees of freedom for each farm, we use a hierarchical approach in order to assess mean differences on farm.
+For that, we place vague prior distributions on the hyperparameters $\nu$ and $\rho$ :
 
 $\nu \sim Uniform(\nu_{min},\nu_{max}) ; \quad \rho \sim Gamma(10^{-6},10^{-6})$.
 
-In other words, the residual variance of a trial in a given environment was estimated using all the informations available on the network rather than using the data from that particular trial only.
+In other words, the residual variance of a trial in a given environment is estimated using all the informations available on the network rather than using the data from that particular trial only.
 
-The parameters $\mu_{ij}$ and $\beta_{jk}$ were assumed to follow vague prior distributions~:
+The parameters $\mu_{ij}$ and $\beta_{jk}$ are assumed to follow vague prior distributions too:
 
 $\mu_{ij} \sim \mathcal{N}(\mu_{.j},10^{6}); \quad \beta_{jk} \sim \mathcal{N}(0,10^{6})$.
 
 
 The inverse gamma distribution has a minimum value of 0 (consistent with the definition of a variance) and may have various shapes including asymmetric distributions.
-From an agronomical point of view, the assumption that trial variances are heterogeneous is consistent with organic farming: there are as many environments as farmers leading to a high heterogeneity.
-Environment was here considered in a broad sense: practices (sowing date, sowing density, tilling, etc.), pedo climatic conditions, biotic and abiotic stress, ... [@desclaux_changes_2008].
+From an agronomical point of view, the assumption that trial variances are heterogeneous is consistent with organic farming: there are as many environments as farms and farmers leading to a high heterogeneity.
+Environment is here considered in a broad sense: practices (sowing date, sowing density, tilling, etc.), pedo climatic conditions, biotic and abiotic stress, ... [@desclaux_changes_2008].
 Moreover, the inverse gamma distribution has conjugate properties that facilitate MCMC convergence.
-This model was therefore a good choice based on both agronomic and statistical criteria.
+This model is therefore a good choice based on both agronomic and statistical criteria.
 
-The residual variance estimated from the controls was assumed to be representative of the residual variance of the other entries.
+The residual variance estimated from the controls is assumed to be representative of the residual variance of the other entries.
 Blocks are included in the model only if the trial has blocks.
 
 #### Steps with \pack

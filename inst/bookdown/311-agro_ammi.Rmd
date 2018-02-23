@@ -2,8 +2,9 @@
 
 #### Theory of the model
 
-The model is based on frequentist statistics (section \@ref(section-freq)).
-The Additive Main effects and Multiplicative Interaction (AMMI) model is based on two analyses [@gauch_statistical_2006] : 
+The experimental design used is fully replicated (**D1**).
+The Additive Main effects and Multiplicative Interaction (AMMI) model is based on frequentist statistics (section \@ref(section-freq)). 
+The analysis can be broken down in two steps [@gauch_statistical_2006][@gauch_statistical_2008][@yan_gge_2007] : 
 
 
 1. an **ANOVA** with the following model :
@@ -14,10 +15,10 @@ With,
 
 - $Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and location $j$,
 - $\mu$ the general mean,
-- $\alpha_{i}$ the germplasm $i$ effect,
-- $\theta_{j}$ location $j$ effect,
-- $rep_{k}(\theta_{j})$ the replication $k$ nested in location effect,
-- $\eta_{i}\nu_{j}$ the germplasm $\times$ location effect,
+- $\alpha_{i}$ the effect of germplasm $i$,
+- $\theta_{j}$ the effect of location $j$,
+- $rep_{k}(\theta_{j})$ the effect of the replication $k$ nested in location,
+- $\eta_{i}\nu_{j}$ the interaction effect of germplasm $\times$ location,
 - $\varepsilon_{ijk}$ the residuals.
 
 
@@ -28,18 +29,14 @@ $Y_{ijkl} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}\beta_{l}) + \eta_
 With,
 
 - $Y_{ijkl}$ the phenotypic value for replication $k$, germplasm $i$, location $j$ and year $l$,
-- $\mu$ the general mean,
-- $\alpha_{i}$ the germplasm $i$ effect,
-- $\theta_{j}$ location $j$ effect,
-- $rep_{k}(\theta_{j}\beta_{l})$ the replication $k$ nested in location and year effect,
-- $\eta_{i}\nu_{j}$ the germplasm $\times$ location effect,
 - $\beta_{l}$ the year $l$ effect,
 - $\beta_{l}\alpha_{i}$ the year $\times$ germplasm interaction effect,
 - $\beta_{l}\theta_{j}$ the year $\times$ location interaction effect,
-- $\varepsilon_{ijk}$ the residuals.
+- $\varepsilon_{ijk}$ the residuals,  
+- and all other effects are the same as in the previous model. 
 
 
-2. a **PCA** which analyse deeper the germplasm $\times$ location interaction : 
+2. a **PCA** that focus on the germplasm $\times$ location interaction : 
 
 $\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}$ ^[Note than in `PPBstats`, the PCA is done on $\eta_{i}\nu_{j} + \varepsilon_{ijk}$. The residuals is in the last dimension of the PCA]
 
@@ -50,21 +47,21 @@ $\eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_
 
 With,
 
-- $\eta_{i}\nu_{j}$ interaction of germplasm $i$ with location $j$,
-- $N$ the number of dimension (PCA componant) which has as maximum value the number of location,
+- $\eta_{i}\nu_{j}$ the interaction between germplasm $i$ and location $j$,
+- $N$ the number of dimensions (PCA componants) which has as maximum value the number of location,
 - $\lambda_{n}$ the eigen value for componant $n$,
-- $\gamma_{in}$ eigen vector for germplasm $i$ for componant $n$,
-- $\omega_{jn}$ eigen vector for  location $j$  for componant $n$.
+- $\gamma_{in}$ the eigen vector for germplasm $i$ and componant $n$,
+- $\omega_{jn}$ the eigen vector for  location $j$  and componant $n$.
 
 The data are double centered on location and germplasm.
-The PCA study the structure of the interaction matrix.
-The location are the variable and the germplasm are the individuals.
+The PCA studies the structure of the interaction matrix.
+The locations are the variables and the germplasms are the individuals.
 
 This PCA allows to detect
 
-- germplasm that are stable (i.e. contribute less to interaction)
-- which germplasm interact the most with which location
-- which location have the same profile regarding interaction
+- germplasm that are stable (i.e. contribute less to the interaction)
+- the germplasm that interact the most and with which location
+- the location that have the same profile regarding interaction
 
 
 #### Steps with `PPBstats`
