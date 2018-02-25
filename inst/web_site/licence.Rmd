@@ -14,3 +14,25 @@ The book is under [licence creative commons BY-NC-SA 4.0](http://creativecommons
 ```{r , out.width='20%', fig.align='center', echo=FALSE}
 knitr::include_graphics("../bookdown/figures/cc-by-nc-sa.png")
 ```
+
+
+To cite the package :
+
+```{r}
+citation("PPBstats")
+```
+
+To cite the book :
+
+```
+bibtex entry
+
+@book{ppbstats_book_2018,
+  title = "{Analysis of Participatory Plant Breeding programme with the R package PPBstats.}",
+	author = "{Rivière, P. and Goldringer, I. and Vindras C.}",
+	year = "2018",
+	version = "0.23",
+	licence = "CC BY NC SA",
+	url = "https://priviere.github.io/PPBstats_book/"
+}
+```

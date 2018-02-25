@@ -6,7 +6,7 @@
 knitr::include_graphics("../bookdown/figures/warning.png")
 ```
 **Be aware that this package is under development and test do not 100% trust the functions!!!**
-**You're welcome to contribute: see [here]() for more informations.**
+**You're welcome to contribute: see [here](https://priviere.github.io/PPBstats_web_site/contribute.html) for more informations.**
 
 Participatory plant breeding is based on the decentralization of the selection in the farms and the gardens.
 It involves all actors in the breeding decision process : farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors.

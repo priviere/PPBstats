@@ -1,4 +1,4 @@
-## Rank analysis {#rank}
+## Rank analysis (**M9c**) {#rank}
 
 ### Method description
 

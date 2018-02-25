@@ -7,23 +7,33 @@
 
   %% Model 1
   \node [m1] (GEI) {get.env.info};
-  \node [m1, right=of GEI] (m1) {model\_1};
+  \node [m1, right=of GEI] (m1) {model\_bh\_intra\_location};
   \draw (GEI) to (m1);
 
 
   %% GxE
   \node [gxe, below=of GEI.east, left, yshift=-4ex] (GEBIM) {GxE\_build\_interaction\_matrix};
-  \node [gxe, right=of GEBIM] (GxE) {GxE};
+  \node [gxe, right=of GEBIM] (GxE) {model\_GxE};
   \draw (GEBIM) to (GxE);
 
 
-  %% check_model
+  %% format data
+  \node [aux, below=of GEBIM.east, left, yshift=-4ex] (fda) {format\_data\_PPBstats.data\_agro};
+  \node [aux, below=of fda.east, left] (fdav) {format\_data\_PPBstats.data\_agro\_version};
+  \node [aux, below=of fdav.east, left] (fdn) {format\_data\_PPBstats.data\_network};
 
-  \node [m1, below=of GEBIM.east, left, yshift=-4ex] (cmm1) {check\_model.fit\_model\_1};
-  \node [m2, below=of cmm1.east, left] (cmm2) {check\_model.fit\_model\_2};
+  \draw [-, decorate,decoration=brace] (fda.north east) -- (fdn.south east)
+    node [midway, virtual, xshift=-4pt] (X0) {};
+  \node [several-all, right=of X0] (fd) {format\_data\_PPBstats};
+  \draw (X0) to (fd);
+  
+
+  %% check_model
+  \node [m1, below=of fdn.east, left, yshift=-4ex] (cmm1) {check\_model.fit\_model\_bh\_intra\_location};
+  \node [m2, below=of cmm1.east, left] (cmm2) {check\_model.fit\_model\_bh\_GxE};
   \node [gxe, below=of cmm2.east, left] (cmgxe) {check\_model.fit\_model\_GxE};
   \node [sp, below=of cmgxe.east, left] (cmsp) {check\_model.fit\_model\_spatial};
-  \node [vi, below=of cmsp.east, left] (cmvi) {check\_model.fit\_model\_variance\_intra};
+  \node [vi, below=of cmsp.east, left] (cmvi) {check\_model.fit\_model\_bh\_variance\_intra};
 
   \draw [-, decorate,decoration=brace] (cmm1.north east) -- (cmvi.south east)
     node [midway, virtual, xshift=-4pt] (X1) {};
@@ -32,8 +42,8 @@
 
 
   %% parameter_groups
-  \node [gxe, below=of cmsp.east, left, yshift=-4ex] (pggxe) {parameter\_groups\_GxE};
-  \node [m2, below=of pggxe.east, left] (pgm2) {parameter\_groups\_model\_2};
+  \node [gxe, below=of cmvi.east, left, yshift=-4ex] (pggxe) {parameter\_groups\_GxE};
+  \node [m2, below=of pggxe.east, left] (pgm2) {parameter\_groups\_model\_bh\_GxE};
 
   \draw [-, decorate,decoration=brace] (pggxe.north east) -- (pgm2.south east)
     node [midway, virtual, xshift=-4pt] (X2) {};
@@ -47,20 +57,21 @@
   \node [aux, below=of cp.east, left] (gsg) {get.significant.groups};
   \node [aux, below=of gsg.east, left] (galXg) {get.at.least.X.groups};
 
-  \node [m1, right=of galXg, yshift=2ex] (MCM1) {mean\_comparisons.check\_model\_1};
-  \node [m2, above=of MCM1.east, left] (MCM2) {mean\_comparisons.check\_model\_2};
+  \node [m1, right=of galXg, yshift=2ex] (MCM1) {mean\_comparisons.check\_model\_bh\_intra\_location};
+  \node [m2, above=of MCM1.east, left] (MCM2) {mean\_comparisons.check\_model\_bh\_GxE};
   \node [gxe, above=of MCM2.east, left, yshift=2ex] (MCGxE) {mean\_comparisons.check\_model\_GxE};
-  \node [m2, below=of MCM1.east, left, yshift=-2ex] (MCPPM2) {mean\_comparisons.check\_predict\_the\_past\_model\_2};
-  \node [sp, below=of MCPPM2.east, left, yshift=-2ex] (MCSP) {mean\_comparisons.check\_model\_spatial};
-  \node [vi, below=of MCSP.east, left, yshift=-2ex] (MCVI) {mean\_comparisons.check\_model\_variance\_intra};
+  \node [m2, below=of MCM1.east, left, yshift=-2ex] (MCPPM2) {mean\_comparisons.check\_predict\_the\_past\_model\_bh\_GxE};
+  \node [sp, below=of MCPPM2.east, left] (MCSP) {mean\_comparisons.check\_model\_spatial};
+  \node [vi, below=of MCSP.east, left] (MCVI) {mean\_comparisons.check\_model\_bh\_variance\_intra};
 
   \node [virtual, above=of MCM1.west, yshift=-4ex, xshift=4pt] (X3) {};
+  \node [virtual, above=of MCM1.west, yshift=2ex] (X3bis) {};
 
   \draw [bend right=45] (gsg.west) to (galXg.west);
   \draw (MCM1) to (MCPPM2);
 
   % braces
-  \draw [-, decorate,decoration=brace] (MCM1.south west) -- (MCM2.north west);
+  \draw [-, decorate,decoration=brace] (MCM1.south west) -- (X3bis);
   \draw [bend right] (cp.east) to (X3);
   \draw (gsg) to (X3);
   \draw [bend left] (galXg.east) to (X3);
@@ -71,24 +82,6 @@
   \node [several-all, right=of X4] (MC) {mean\_comparisons};
   \draw (X4) to (MC);
 
-  %% legend
-  \node[several-all,legendkey]  (LS)  [right=of m1, xshift=6em] {};
-  \node[right,legendtext] (LStext) at (LS.east) {Functions in main workflow};
-
-  \node[m1,legendkey]  (LM1)  [below=of LS,yshift=3ex] {};
-  \node[right,legendtext] at (LM1.east) {Model 1 functions};
-
-  \node[m2,legendkey]  (LM2)  [below=of LM1,yshift=3ex] {};
-  \node[right,legendtext] at (LM2.east) {Model 2 functions};
-
-  \node[gxe,legendkey]  (LGxE)  [below=of LM2,yshift=3ex] {};
-  \node[right,legendtext] at (LGxE.east) {GxE functions};
-
-  \node[sp,legendkey]  (LSP)  [below=of LGxE,yshift=3ex] {};
-  \node[right,legendtext] at (LSP.east) {Spatial functions};
-
-  \node[vi,legendkey]  (LVI)  [below=of LSP,yshift=3ex] {};
-  \node[right,legendtext] at (LVI.east) {Variance intra functions};
 
   %% plot
   \node [, below=of MCVI.east, left, yshift=-8ex] (PDA) {plot.data\_agro};
@@ -96,19 +89,19 @@
 
   \node [aux, below=of PDN.east, left] (GPG) {plot.parameter\_groups};
   \node [gxe, below=of GPG.east, left] (GCMGxE) {plot.check\_model\_GxE};
-  \node [m1, below=of GCMGxE.east, left] (GCMM1) {plot.check\_model\_model\_1};
-  \node [m2, below=of GCMM1.east, left] (GCMM2) {plot.check\_model\_model\_2};
+  \node [m1, below=of GCMGxE.east, left] (GCMM1) {plot.check\_model\_model\_bh\_intra\_location};
+  \node [m2, below=of GCMM1.east, left] (GCMM2) {plot.check\_model\_model\_bh\_GxE};
   \node [sp, below=of GCMM2.east, left] (GCMSP) {plot.check\_model\_spatial};
-  \node [vi, below=of GCMSP.east, left] (GCMVI) {plot.check\_model\_variance\_intra};
+  \node [vi, below=of GCMSP.east, left] (GCMVI) {plot.check\_model\_bh\_variance\_intra};
 
-  \node [m2, below=of GCMVI.east, left] (GCVM2) {plot.cross\_validation\_model\_2};
+  \node [m2, below=of GCMVI.east, left] (GCVM2) {plot.cross\_validation\_model\_bh\_GxE};
 
   \node [gxe, below=of GCVM2.east, left] (GMCGxE) {plot.mean\_comparisons\_GxE};
-  \node [m1, below=of GMCGxE.east, left] (GMCM1) {plot.mean\_comparisons\_model\_1};
-  \node [m2, below=of GMCM1.east, left] (GMCM2) {plot.mean\_comparisons\_model\_2};
-  \node [m2, below=of GMCM2.east, left] (GMCPPM2) {plot.mean\_comparisons\_predict\_the\_past\_model\_2};
+  \node [m1, below=of GMCGxE.east, left] (GMCM1) {plot.mean\_comparisons\_model\_bh\_intra\_location};
+  \node [m2, below=of GMCM1.east, left] (GMCM2) {plot.mean\_comparisons\_model\_bh\_GxE};
+  \node [m2, below=of GMCM2.east, left] (GMCPPM2) {plot.mean\_comparisons\_predict\_the\_past\_model\_bh\_GxE};
   \node [sp, below=of GMCPPM2.east, left] (GMCSP) {plot.mean\_comparisons\_model\_spatial};
-  \node [vi, below=of GMCSP.east, left] (GMCVI) {plot.mean\_comparisons\_model\_variance\_intra};
+  \node [vi, below=of GMCSP.east, left] (GMCVI) {plot.mean\_comparisons\_model\_bh\_variance\_intra};
 -
   \node [gxe, below=of GMCVI.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
   \node [gxe, left=of GBGxE] (GMS) {ggplot\_mean\_vs\_stability};
@@ -124,12 +117,31 @@
   \node [several-all, right=of X6] (P) {plot};
   \draw (X6) to (P);
 
+  %% legend
+  \node[several-all,legendkey]  (LS)  [right=of m1, xshift=6em] {};
+  \node[right,legendtext] (LStext) at (LS.east) {Functions in main workflow};
+
+  \node[m1,legendkey]  (LM1)  [below=of LS,yshift=3ex] {};
+  \node[right,legendtext] (LM1text) at (LM1.east) {Hierarchical Bayesian intra\_location model functions};
+
+  \node[m2,legendkey]  (LM2)  [below=of LM1,yshift=3ex] {};
+  \node[right,legendtext] at (LM2.east) {Hierarchical Bayesian GxE model functions};
+
+  \node[gxe,legendkey]  (LGxE)  [below=of LM2,yshift=3ex] {};
+  \node[right,legendtext] at (LGxE.east) {GxE model functions};
+
+  \node[sp,legendkey]  (LSP)  [below=of LGxE,yshift=3ex] {};
+  \node[right,legendtext] at (LSP.east) {Spatial model functions};
+
+  \node[vi,legendkey]  (LVI)  [below=of LSP,yshift=3ex] {};
+  \node[right,legendtext] at (LVI.east) {Hierarchical Bayesian variance\_intra model functions};
+
   %% legend bounding box
   \begin{pgfonlayer}{background}
     \node[
       fill=black!10,
       rounded corners,
-      fit = (LS) (LVI) (LStext)
+      fit = (LS) (LVI) (LM1text)
     ] {};
   \end{pgfonlayer}
 

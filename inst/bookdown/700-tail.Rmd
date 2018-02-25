@@ -22,6 +22,7 @@ knitr::include_graphics("figures/Logo-FdF.jpg")
 
 Thanks to Hadley Wickham for his web site http://r-pkgs.had.co.nz/ that help us a lot in the creation of this package.
 Thanks to Jonathan Locqueville and Maxime Garnault that work during their internship on a first version of the AMMI code.
+Thanks to Mathieu Thomas for useful comment regarding network part.
 Thanks to Salvatore Ceccarelli for its useful comments and references on data analysis and software.
 Thanks to Jérôme Dury for spelling corrections of the vignette.
 

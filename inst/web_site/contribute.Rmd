@@ -127,35 +127,38 @@ knitr::include_graphics("../bookdown/figures/secondary-functions.png")
 | --- | --- |
 | `get.env.info` | Get regional farms data and satellite farms data |
 | `GxE_build_interaction_matrix` | Compute interaction matrix |
-| `check_model.fit_model_1` | Check if the `model_1` model went well  |
-| `check_model.fit_model_2` | Check if the `model_2` model went well |
+| `format_data_PPBstats.data_agro` | Format data for agro |
+| `format_data_PPBstats.data_agro_version` | Format data for agro version  |
+| `format_data_PPBstats.data_network` | Format data for network |
+| `check_model.fit_model_bh_intra-location` | Check if the `model_bh_intra-location` model went well  |
+| `check_model.fit_model_bh_GxE` | Check if the `model_bh_GxE` model went well |
 | `check_model.fit_model_GxE` | Check if the `GxE` model went well |
 | `check_model.fit_model_spatial` | Check if the `spatial` model went well |
 | `check_model.fit_model_variance_intra` | Check if the `model_variance_intra` model went well |
 | `parameter_groups_GxE` | Get matrix with variables in column and effects in row from `check_modelfit_model_GxE` |
-| `parameter_groups_model_2` | Get matrix with variables in column and effect in row from `check_model.fit_model_2` |
+| `parameter_groups_model_bh_GxE` | Get matrix with variables in column and effect in row from `check_model.fit_model_bh_GxE` |
 | `comp.parameters` | Get parameter comparisons two by two or to a given threshold based on MCMC outputs |
 | `get.significant.groups` | Get significant groups of means that are significantly different from each others for a set of parameters based on MCMC outputs |
 | `get.at.least.X.groups` | Get the value of type one error needed to have X groups |
 | `mean_comparisons.check_model_GxE` | Get mean comparisons from `check_model.fit_model_GxE` |
-| `mean_comparisons.check_model_1` | Get mean comparisons from `check_model.fit_model_1` |
-| `mean_comparisons.check_model_2` |Get mean comparisons from `check_model.fit_model_2`  |
+| `mean_comparisons.check_model_bh_GxE` |Get mean comparisons from `check_model.fit_model_bh_GxE`  |
+| `mean_comparisons.check_model_bh_intra-location` | Get mean comparisons from `check_model.fit_model_bh_intra-location` |
+| `mean_comparisons.check_predict_the_past_model_bh_GxE` | Get mean comparisons from `predict_the_past_model\_2` |
 | `mean_comparisons.check_model_spatial` | Get mean comparisons from `check_model.fit_model_spatial`  |
-| `mean_comparisons.check_predict_the_past_model_2` | Get mean comparisons from `predict_the_past_model\_2` |
 | `mean_comparisons.check_model_variance_intra` | Get mean comparisons from `check_model.fit_model_variance_intra` |
 | `plot.data_agro` | Plot agro object from `format_data_PPBstats()` |
 | `plot.data_network` | Plot network object `from format_data_PPBstats()` |
 | `plot.parameter_groups` | Get ggplot from `parameter_groups` |
 | `plot.check_model_GxE` | Get ggplot from `check_model.fit_model_GxE` |
-| `plot.check_model_model_1` | Get ggplot from `check_model.fit_model_1` |
-| `plot.check_model_model_2` | Get ggplot from `check_model.fit_model_2` |
+| `plot.check_model_model_bh_intra-location` | Get ggplot from `check_model.fit_model_bh_intra-location` |
+| `plot.check_model_model_bh_GxE` | Get ggplot from `check_model.fit_model_bh_GxE` |
 | `plot.check_model_model_spatial` | Get ggplot from `check_model.fit_model_spatial` |
 | `plot.check_model_variance_intra` | Get ggplot from `check_model.fit_model_variance_intra` |
-| `plot.cross_validation_model_2` | Get ggplot from `cross_validation_model_2` |
+| `plot.cross_validation_model_bh_GxE` | Get ggplot from `cross_validation_model_bh_GxE` |
 | `plot.mean_comparisons_GxE` | Get ggplot from `mean_comparisons.check_model_GxE` |
-| `plot.mean_comparisons_model_1` | Get ggplot from `mean_comparisons.check_model_1` |
-| `plot.mean_comparisons_model_2` | Get ggplot from `mean_comparisons.check_model_2` |
-| `plot.mean_comparisons_predict_the_past_model_2` | Get ggplot from `mean_comparisons.predict_the_past_model_2` |
+| `plot.mean_comparisons_model_bh_intra-location` | Get ggplot from `mean_comparisons.check_model_bh_intra-location` |
+| `plot.mean_comparisons_model_bh_GxE` | Get ggplot from `mean_comparisons.check_model_bh_GxE` |
+| `plot.mean_comparisons_predict_the_past_model_bh_GxE` | Get ggplot from `mean_comparisons.predict_the_past_model_bh_GxE` |
 | `plot.mean_comparisons_model_variance_intra` | Get ggplot from `mean_comparisons.check_model_variance_intra` |
 | `plot.biplot_GxE` | Get ggplot from `biplot_GxE` |
 | `ggplot_discrimitiveness_vs_representativeness` | Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix |
@@ -165,9 +168,15 @@ Table: Name and description of internal functions.
 
 
 ## Improve the book
+
+The book thanks to [`bookdown`](https://bookdown.org/yihui/bookdown/).
+
 If you wish to improve the book, to add new sections on PPB, etc please file an [issue](https://github.com/priviere/PPBstats/issues) or send me an email : pierre@semencespaysannes.org 
 
 The code of the book is on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
+
+If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.23/PPBstats_vignette_docx.zip).
+Do not pay attention to strange words such as _#_, _[@blablabla]_, _\@ref_ ... that are `bookdown` specific.
 
 ## Translate
 

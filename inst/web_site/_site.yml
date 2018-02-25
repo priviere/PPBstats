@@ -8,7 +8,7 @@ navbar:
       href: book.html
     - text: "Contribute"
       href: contribute.html
-    - text: "Licence"
+    - text: "Licence and citation"
       href: licence.html
     - text: "News"
       href: NEWS.html

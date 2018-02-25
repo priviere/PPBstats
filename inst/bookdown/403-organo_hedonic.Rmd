@@ -1,4 +1,4 @@
-## Hedonic analysis {#hedonic}
+## Hedonic analysis (**M9b**) {#hedonic}
 
 ### Method description
 
