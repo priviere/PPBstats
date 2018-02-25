@@ -2,7 +2,7 @@
 
 `PPBstats` is an R package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
 
-A website dedicated to `PPBstats` and a exhaustive tutorial to collaborate and use the package can be found here : https://priviere.github.io/`PPBstats`_web_site.
+A website dedicated to `PPBstats` and a exhaustive tutorial to collaborate and use the package can be found here : https://priviere.github.io/PPBstats_web_site.
 
 The R code is under licence GPL-3.
 
