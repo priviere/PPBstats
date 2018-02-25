@@ -3,7 +3,7 @@
 pierre@semencespaysannes.org
 
 ```{r, out.width='20%', fig.align='left', echo=FALSE}
-knitr::include_graphics("../bookdown/figures/Logo-RSP.png")
+knitr::include_graphics("figures/Logo-RSP.png")
 ```
 
 Réseau Semences Paysannes

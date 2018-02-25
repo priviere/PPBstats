@@ -120,7 +120,7 @@ Note that one additional funtion is also defined in the package: `common_functio
 
 
 ```{r secondary-functions, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Internal functions used within main functions."}
-knitr::include_graphics("../bookdown/figures/secondary-functions.png")
+knitr::include_graphics("figures/secondary-functions.png")
 ```
 
 | function name | description |

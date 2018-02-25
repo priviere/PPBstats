@@ -3,7 +3,7 @@
 ## Version 0.23
 
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
-knitr::include_graphics("../bookdown/figures/warning.png")
+knitr::include_graphics("figures/warning.png")
 ```
 **Be aware that this package is under development and test do not 100% trust the functions!!!**
 **You're welcome to contribute: see [here](https://priviere.github.io/PPBstats_web_site/contribute.html) for more informations.**

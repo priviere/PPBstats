@@ -7,5 +7,5 @@ A full tutorial of `PPBstats` is available [here](https://priviere.github.io/PPB
 
 
 ```{r , out.width='60%', fig.align='center', echo=FALSE, fig.cap="Wheat trials on farm within our participatory plant breeding programme, summer 2012, Auvergne, France. CC-BY-NC-SA. Pierre Rivière. [@JSG_2012_1]"}
-knitr::include_graphics("../bookdown/figures/wheat.JPG")
+knitr::include_graphics("figures/wheat.JPG")
 ```
