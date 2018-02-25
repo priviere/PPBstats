@@ -1,4 +1,4 @@
-### AMMI {#ammi}
+### AMMI (**M6a**) {#ammi}
 
 #### Theory of the model
 
@@ -69,7 +69,7 @@ This PCA allows to detect
 For AMMI analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
 
 - Format the data with `format_data_PPBstats()`
-- Run the model with `GxE()` and `gxe_analysis = "AMMI"`
+- Run the model with `model_GxE()` and `gxe_analysis = "AMMI"`
 - Check model outputs with graphs to know if you can continue the analysis with `check_model()`
 - Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
 - Get groups of each parameters with `parameters_groups()` and visualise it with `plot()`
@@ -77,18 +77,18 @@ For AMMI analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
 #### Format the data
 
 ```{r}
-data(data_GxE)
-data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
-head(data_GxE)
+data(data_model_GxE)
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
+head(data_model_GxE)
 ```
 
 
 #### Run the model
-To run model GxE on the dataset, used the function `GxE`.
+To run model GxE on the dataset, used the function `model_GxE`.
 You can run it on one variable.
 
 ```{r}
-out_ammi = GxE(data_GxE, variable = "y1", gxe_analysis = "AMMI")
+out_ammi = model_GxE(data_model_GxE, variable = "y1", gxe_analysis = "AMMI")
 ```
 
 `out_ammi` is a list containing three elements :
@@ -317,8 +317,8 @@ Lets' have an example with three variables.
 
 First run the models
 ```{r}
-out_ammi_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "AMMI")
-out_ammi_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "AMMI")
+out_ammi_2 = model_GxE(data_model_GxE, variable = "y2", gxe_analysis = "AMMI")
+out_ammi_3 = model_GxE(data_model_GxE, variable = "y3", gxe_analysis = "AMMI")
 ```
 
 Then check the models
@@ -390,7 +390,7 @@ If you wish to apply the AMMI workflow to several variables, you can use `lapply
 
 ```{r}
 workflow_gxe = function(x, gxe){
-  out_gxe = GxE(data_GxE, variable = x, gxe_analysis = gxe)
+  out_gxe = model_GxE(data_model_GxE, variable = x, gxe_analysis = gxe)
   
   out_check_gxe = check_model(out_gxe)
   p_out_check_gxe = plot(out_check_gxe)

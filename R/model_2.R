@@ -1,7 +1,7 @@
-#' Run model 2 
+#' Run Hierarchical Bayesian GxE model
 #'
 #' @description
-#' \code{model_2} runs model 2 known as the Finlay Wilkinson Hierarchical model to get main germplasm, environment and sensitivity effects over the network
+#' \code{model_bh_GxE} runs Hierarchical Bayesian GxE modelto get main germplasm, environment and sensitivity effects over the network
 #' 
 #' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
@@ -60,12 +60,12 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}
-#' \item \code{\link{check_model_model_2}}
-#' \item \code{\link{cross_validation_model_2}}, 
-#' \item \code{\link{predict_the_past_model_2}}
+#' \item \code{\link{check_model_model_bh_GxE}}
+#' \item \code{\link{cross_validation_model_bh_GxE}}, 
+#' \item \code{\link{predict_the_past_model_bh_GxE}}
 #' }
 #' 
-model_2 = function(
+model_bh_GxE = function(
   data,
   variable,
   nb_iterations = 100000,
@@ -153,7 +153,7 @@ model_2 = function(
   d <- list(y = y, germplasm = germplasm, nb_germplasm = nb_germplasm, environment = environment, nb_environment = nb_environment, nu = nu)
   
   # 4. Write and run the additive model to get initial value for mu (mean of alpha_i), sigma_alpha and sigma_theta of the FWH model ----------
-  message("Run additive model ...")
+  message("Run additive Bayesian model ...")
   
   model_add_jags ="
   model
@@ -211,7 +211,7 @@ model_2 = function(
   sigma_theta.init = median(mcmc_add_tmp[,grep("sigma_theta", colnames(mcmc_add_tmp))], na.rm = TRUE)
   
   # 5. Write and run the Finlay Wilkinson Hierarchical (FWH) model ----------
-  message("Run FWH model ...")
+  message("Run Hierarchical Bayesian GxE model ...")
   
   model_FWH_jags ="
   model
@@ -343,6 +343,6 @@ model_2 = function(
     "DIC" = DIC_FW
   )
   
-  class(OUT) <- c("PPBstats", "fit_model_2")
+  class(OUT) <- c("PPBstats", "fit_model_bh_GxE")
   return(OUT)
 }

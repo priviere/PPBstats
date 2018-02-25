@@ -1,4 +1,4 @@
-mean_comparisons.check_model_2 <- function(
+mean_comparisons.check_model_bh_GxE <- function(
   x, 
   parameter,
   alpha = 0.05,
@@ -25,6 +25,6 @@ mean_comparisons.check_model_2 <- function(
                   p.adj, precision, get.at.least.X.groups)
 
   # return results
-  class(out) <- c("PPBstats", "mean_comparisons_model_2")
+  class(out) <- c("PPBstats", "mean_comparisons_model_bh_GxE")
   return(out)
 }

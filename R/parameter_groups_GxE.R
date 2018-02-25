@@ -1,7 +1,7 @@
 #' Get matrix with variables in column and effects in row from check_model_GxE
 #'
 #' @description
-#' \code{parameter_groups_GxE} gets matrix with variables in column and effects in row
+#' \code{parameter_groups_model_GxE} gets matrix with variables in column and effects in row
 #'
 #' @param list_out_check_model_GxE A list whose elements are output from \code{\link{check_model_GxE}}
 #'  
@@ -14,7 +14,7 @@
 #' 
 #' @seealso \code{\link{parameter_groups}}
 #'
-parameter_groups_GxE = function(
+parameter_groups_model_GxE = function(
   list_out_check_model_GxE,
   parameter
   ){
@@ -56,6 +56,6 @@ parameter_groups_GxE = function(
   if(parameter == "location") { out = df_E }
   
   # 3. Return results
-  attributes(out)$PPBstats.object = "parameter_groups_GxE"
+  attributes(out)$PPBstats.object = "parameter_groups_model_GxE"
   return(out)
 }

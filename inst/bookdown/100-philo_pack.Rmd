@@ -1,7 +1,6 @@
 # Philosophy of PPBstats {#philo}
 
-This chapter describes what is participatory plant breeding, the objectives of `PPBstats`, the analysis according to the objectives and how to install `PPBstats`.
-
+This chapter describes what is participatory plant breeding, the objectives of `PPBstats`, the design and statistical methods according to the objectives and how to install `PPBstats`.
 
 ## What is Participatory Plant Bredding ?
 
@@ -50,16 +49,16 @@ The statistical procedures are based on frequentist and bayesian approaches.
 
 - molecular experiments (section \@ref(molecular))
 
-Please, feel free to contribute to other aspects of analysis, see section \@ref(contributions) for more information.
+Please, feel free to contribute to other aspects of analysis, see [here](https://priviere.github.io/PPBstats_web_site/contribute.html) for more information.
 
 
 ## Design and statistical methods according to the objectives
 
-The analyses of data from PPB programmes aim to address five main objectives:
+The analyses of data from PPB programmes aim to address the following main objectives:
 
 - **To study networks of seed circulation** throught analysis of network topology (section \@ref(network)).
 
-- **To improve the prediction of a target variable for selection** throught analysis of agronomic and nutritional traits (section \@ref(agronomic)).
+- **To improve the prediction of a target variable for selection** throught analysis of agronomic and nutritional traits but this is not done in `PPBstats`.
 
 - **To compare different varieties or populations (hereafter called germplasms) evaluated for selection in different locations** throught analysis of agronomic and nutritional traits (section \@ref(agronomic)) and sensory analysis (section \@ref(organoleptic)).
 
@@ -99,7 +98,7 @@ Then you can load the package :
 library(PPBstats)
 ```
 
-and download from internet the data used in this tutorial (this is useful to earn lots of time!) [here](https://github.com/priviere/PPBstats/releases/download/v0.20/data_PPBstats.zip).
+and download the data used in this tutorial (this is useful to earn lots of time!) [here](https://github.com/priviere/PPBstats/releases/download/v0.23/data_PPBstats.zip).
 
 The following examples have been performed with the following R version :
 ```{r}

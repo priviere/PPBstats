@@ -4,11 +4,11 @@
 #' \code{check_model} computes tests to assess if the model went well. 
 #' It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
 #' 
-#' @param x outputs from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}, \code{\link{spatial}}, \code{\link{model_variance_intra}}
+#' @param x outputs from \code{\link{model_GxE}}, \code{\link{model_bh_intra-location}}, \code{\link{model_bh_GxE}}, \code{\link{model_spatial}}, \code{\link{model_bh_variance-intra}}
 #' 
 #' @details
 #' 
-#' For \code{\link{model_1}}, \code{\link{model_2}} and \code{\link{model_variance_intra}}, the test used for convergence is the Gelman-Rubin test.
+#' For \code{\link{model_bh_intra-location}}, \code{\link{model_bh_GxE}} and \code{\link{model_bh_variance-intra}}, the test used for convergence is the Gelman-Rubin test.
 #' It may take some time to run.
 #' More details with ?\code{gelman.diag} from the \code{coda} package.
 #' Note that for \code{gelman.diag}, the argument \code{multivariate = FALSE} is used.
@@ -18,13 +18,13 @@
 #' This object can be used for further analysis. 
 #' There are as many columns as parameters and as many rows as iterations/10 (10 being the thin value by default in the models). 
 #' The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done). 
-#' For \code{\link{model_1}}, all environments where at least one parameter do not converge are not taken into account in the MCMC outputs.
+#' For \code{\link{model_bh_intra-location}}, all environments where at least one parameter do not converge are not taken into account in the MCMC outputs.
 #' 
 #' The outputs of the function is used in 
 #' \itemize{
-#'  \item \code{\link{mean_comparisons}} for \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}} and \code{\link{model_variance_intra}}
-#'  \item \code{\link{parameter_groups}} for \code{\link{GxE}} and \code{\link{model_2}}
-#'  \item \code{\link{predict_the_past_model_2}} for \code{\link{model_2}}
+#'  \item \code{\link{mean_comparisons}} for \code{\link{model_GxE}}, \code{\link{model_bh_intra-location}}, \code{\link{model_bh_GxE}} and \code{\link{model_bh_variance-intra}}
+#'  \item \code{\link{parameter_groups}} for \code{\link{model_GxE}} and \code{\link{model_bh_GxE}}
+#'  \item \code{\link{predict_the_past_model_bh_GxE}} for \code{\link{model_bh_GxE}}
 #' }
 #' 
 #' 
@@ -32,9 +32,9 @@
 #' 
 #' \itemize{
 #' 
-#' \item GxE
+#' \item model_GxE
 #' \itemize{
-#'  \item GxE the output from the model
+#'  \item model_GxE the output from the model
 #'  \item data_ggplot a list containing information for ggplot:
 #'  \itemize{
 #'   \item data_ggplot_residuals a list containing :
@@ -50,7 +50,7 @@
 #' }
 #'
 #' 
-#' \item model_1
+#' \item model_bh_intra-location
 #' \itemize{
 #'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter (See details for more information).
 #'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
@@ -67,7 +67,7 @@
 #' }
 #' 
 #' 
-#' \item model_2
+#' \item model_bh_GxE
 #' \itemize{
 #'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. (See details for more information).
 #'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
@@ -81,9 +81,9 @@
 #'  }
 #' }
 #' 
-#' \item spatial
+#' \item model_spatial
 #' \itemize{
-#'  \item spatial : the output from the model
+#'  \item model_spatial : the output from the model
 #'  \item data_ggplot a list containing information for ggplot:
 #'  \itemize{
 #'   \item data_ggplot_residuals a list containing :
@@ -97,7 +97,7 @@
 #'   }
 #' }
 #' 
-#' \item model_variance_intra
+#' \item model_bh_variance-intra
 #' \itemize{
 #'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. (See details for more information).
 #'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
@@ -116,10 +116,10 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{GxE}}, 
-#' \item \code{\link{spatial}}, 
-#' \item \code{\link{model_1}}, 
-#' \item \code{\link{model_2}}, 
+#' \item \code{\link{model_GxE}}, 
+#' \item \code{\link{model_spatial}}, 
+#' \item \code{\link{model_bh_intra-location}}, 
+#' \item \code{\link{model_bh_GxE}}, 
 #' \item \code{\link{mean_comparisons}}
 #' }
 #' 

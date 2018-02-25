@@ -1,4 +1,4 @@
-check_model.fit_model_2 <- function(
+check_model.fit_model_bh_GxE <- function(
   x
 ) {
   # Default settings
@@ -49,26 +49,26 @@ check_model.fit_model_2 <- function(
   
   # 2.1. alpha_i caterpillar plot distribution ----------
   if ( length(grep("alpha\\[", rownames(sq_MCMC))) > 0  ) {      
-    data_ggplot_model_2_alpha = droplevels(sq_MCMC[grep("alpha\\[", rownames(sq_MCMC)),]) 
-  } else { data_ggplot_model_2_alpha = NULL }
+    data_ggplot_model_bh_GxE_alpha = droplevels(sq_MCMC[grep("alpha\\[", rownames(sq_MCMC)),]) 
+  } else { data_ggplot_model_bh_GxE_alpha = NULL }
   
   # 2.2. beta_i caterpillar plot distribution ----------
   if ( length(grep("beta\\[", rownames(sq_MCMC))) > 0  ) {
-    data_ggplot_model_2_beta = droplevels(sq_MCMC[grep("beta\\[", rownames(sq_MCMC)),])    
-  } else { data_ggplot_model_2_beta = NULL }
+    data_ggplot_model_bh_GxE_beta = droplevels(sq_MCMC[grep("beta\\[", rownames(sq_MCMC)),])    
+  } else { data_ggplot_model_bh_GxE_beta = NULL }
   
   # 2.3. theta_j caterpillar plot distribution ----------
   if ( length(grep("theta\\[", rownames(sq_MCMC))) > 0  ) {
-    data_ggplot_model_2_theta = droplevels(sq_MCMC[grep("theta\\[", rownames(sq_MCMC)),])    
-  } else { data_ggplot_model_2_theta = NULL }
+    data_ggplot_model_bh_GxE_theta = droplevels(sq_MCMC[grep("theta\\[", rownames(sq_MCMC)),])    
+  } else { data_ggplot_model_bh_GxE_theta = NULL }
   
   # 2.4. standardized epsilon_ijk distribution ----------
   if ( !is.null(x$epsilon)  ) {      
     epsilon_ijk = x$epsilon     
     sigma_epsilon = sq_MCMC[grep("sigma_epsilon", sq_MCMC$parameter), "q3"]
     std_res = epsilon_ijk / sigma_epsilon
-    data_ggplot_model_2_epsilon = cbind.data.frame(x = c(1:length(epsilon_ijk)), std_res)
-  } else { data_ggplot_model_2_epsilon = NULL }
+    data_ggplot_model_bh_GxE_epsilon = cbind.data.frame(x = c(1:length(epsilon_ijk)), std_res)
+  } else { data_ggplot_model_bh_GxE_epsilon = NULL }
   
   
   
@@ -78,14 +78,14 @@ check_model.fit_model_2 <- function(
     "MCMC_conv_not_ok" = mcmc_to_delete,
     "model2.presence.absence.matrix" = model2.presence.absence.matrix,
     "data_ggplot" = list(
-      "alpha" = data_ggplot_model_2_alpha,
-      "beta" = data_ggplot_model_2_beta,
-      "theta" = data_ggplot_model_2_theta,
-      "epsilon" = data_ggplot_model_2_epsilon
+      "alpha" = data_ggplot_model_bh_GxE_alpha,
+      "beta" = data_ggplot_model_bh_GxE_beta,
+      "theta" = data_ggplot_model_bh_GxE_theta,
+      "epsilon" = data_ggplot_model_bh_GxE_epsilon
     )
   )
   
-  class(out) <- c("PPBstats", "check_model_2")
+  class(out) <- c("PPBstats", "check_model_bh_GxE")
   
   return(out)
 }

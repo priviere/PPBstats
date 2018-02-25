@@ -1,4 +1,4 @@
-mean_comparisons.predict_the_past_model_2 <- function(
+mean_comparisons.predict_the_past_model_bh_GxE <- function(
   x,
   alpha = 0.05,
   type = 1,
@@ -8,7 +8,7 @@ mean_comparisons.predict_the_past_model_2 <- function(
   p.adj = "soft.bonf"
 ){
 
-  out <- mean_comparisons.check_model_1(
+  out <- mean_comparisons.check_model_bh_intra_location(
     x, parameter = "mu", alpha = alpha, type = type, threshold = threshold,
     p.adj = p.adj, get.at.least.X.groups = get.at.least.X.groups,
     precision = precision)
@@ -20,7 +20,7 @@ mean_comparisons.predict_the_past_model_2 <- function(
   
   out$data_mean_comparisons[[1]]$mean.comparisons <- d
   
-  class(out) <- c("PPBstats", "mean_comparisons_predict_the_past_model_2")
+  class(out) <- c("PPBstats", "mean_comparisons_predict_the_past_model_bh_GxE")
   
   return(out)
 }

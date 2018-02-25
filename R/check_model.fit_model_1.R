@@ -1,10 +1,10 @@
-check_model.fit_model_1 <- function(
+check_model.fit_model_bh_intra_location <- function(
   x
 )
   {
   
   # 1. Convergence, update MCMC and data frame with environments where some parameters did not converge ----------
-  out.conv = check_convergence(x, model_name = "model_1")
+  out.conv = check_convergence(x, model_name = "model_bh_intra_location")
   MCMC = out.conv$MCMC
   sq_MCMC = out.conv$sq_MCMC
   conv_not_ok = out.conv$conv_not_ok
@@ -80,23 +80,23 @@ check_model.fit_model_1 <- function(
     names(sigma) = sq_MCMC$parameter[grep("sigma", sq_MCMC$parameter)]
     sigma = sort(sigma)
     d_sigma = cbind.data.frame(sigma = as.factor(names(sigma)), value = sigma)
-    data_ggplot_model_1_sigma_j = list(d_sigma_distribution = d_sigma_distribution, d_sigma = d_sigma)
-  } else { data_ggplot_model_1_sigma_j = NULL }
+    data_ggplot_model_bh_intra_location_sigma_j = list(d_sigma_distribution = d_sigma_distribution, d_sigma = d_sigma)
+  } else { data_ggplot_model_bh_intra_location_sigma_j = NULL }
   
   # 2.2. mu_ij caterpillar plot ----------
   if ( length(grep("mu", rownames(sq_MCMC))) > 0  ) {
-    data_ggplot_model_1_mu_ij = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
-  } else { data_ggplot_model_1_mu_ij = NULL }
+    data_ggplot_model_bh_intra_location_mu_ij = droplevels(sq_MCMC[grep("mu", rownames(sq_MCMC)),])
+  } else { data_ggplot_model_bh_intra_location_mu_ij = NULL }
   
   # 2.3. beta_jk caterpillar plot ----------
   if ( length(grep("beta", rownames(sq_MCMC))) > 0  ) {
-    data_ggplot_model_1_beta_jk = droplevels(sq_MCMC[grep("beta", rownames(sq_MCMC)),])   
-  } else { data_ggplot_model_1_beta_jk = NULL }
+    data_ggplot_model_bh_intra_location_beta_jk = droplevels(sq_MCMC[grep("beta", rownames(sq_MCMC)),])   
+  } else { data_ggplot_model_bh_intra_location_beta_jk = NULL }
   
   # 2.4. sigma_j caterpillar plot ----------
   if ( length(grep("sigma", rownames(sq_MCMC))) > 0  ) {
-    data_ggplot_model_1_sigma_j_2 = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])
-  } else { data_ggplot_model_1_sigma_j_2 = NULL }
+    data_ggplot_model_bh_intra_location_sigma_j_2 = droplevels(sq_MCMC[grep("sigma", rownames(sq_MCMC)),])
+  } else { data_ggplot_model_bh_intra_location_sigma_j_2 = NULL }
   
   # 2.5. standardized epsilon_ijk distribution ----------
   if ( !is.null(x$epsilon)  ) {
@@ -105,8 +105,8 @@ check_model.fit_model_1 <- function(
     names(sigma_j) = sq_MCMC$parameter[grep("sigma", sq_MCMC$parameter)]
     env = sub("\\]", "", sapply(names(epsilon_ijk), function(x) { sub("epsilon\\[", "", sapply(x, function(x){unlist(strsplit(as.character(x), ","))[2]})) }))
     sigma_j = sigma_j[paste("sigma[", env, "]", sep="")]
-    data_ggplot_model_1_epsilon_ijk = cbind.data.frame(x = c(1:length(sigma_j)), std_res = epsilon_ijk / sigma_j)
-  } else { data_ggplot_model_1_epsilon_ijk = NULL }
+    data_ggplot_model_bh_intra_location_epsilon_ijk = cbind.data.frame(x = c(1:length(sigma_j)), std_res = epsilon_ijk / sigma_j)
+  } else { data_ggplot_model_bh_intra_location_epsilon_ijk = NULL }
   
 
   # 3. Return results ----------
@@ -123,15 +123,15 @@ check_model.fit_model_1 <- function(
     "data_env_with_no_controls" = data_env_with_no_controls,
     "data_env_whose_param_did_not_converge" = data_env_whose_param_did_not_converge,
     "data_ggplot" = list(
-      "sigma_j" = data_ggplot_model_1_sigma_j,
-      "mu_ij" = data_ggplot_model_1_mu_ij,
-      "beta_jk" = data_ggplot_model_1_beta_jk,
-      "sigma_j_2" = data_ggplot_model_1_sigma_j_2,
-      "epsilon_ijk" = data_ggplot_model_1_epsilon_ijk
+      "sigma_j" = data_ggplot_model_bh_intra_location_sigma_j,
+      "mu_ij" = data_ggplot_model_bh_intra_location_mu_ij,
+      "beta_jk" = data_ggplot_model_bh_intra_location_beta_jk,
+      "sigma_j_2" = data_ggplot_model_bh_intra_location_sigma_j_2,
+      "epsilon_ijk" = data_ggplot_model_bh_intra_location_epsilon_ijk
     )
   )
   
-  class(out) <- c("PPBstats", "check_model_1")
+  class(out) <- c("PPBstats", "check_model_bh_intra_location")
   
   return(out)
 }

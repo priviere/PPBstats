@@ -25,23 +25,23 @@ No specific experimental design is needed as long as there are several individua
 For variance intra analysis, you can follow these steps (Figure \ref(fig:main-workflow)) :
 
 - Format the data with `format_data_PPBstats`
-- Run the model with `model_variance_intra` 
+- Run the model with `model_bh_intra_location` 
 - Check model outputs with graphs to know if you can continue the analysis with `check_model`
 - Get mean comparisons for each factor with `mean_comparisons` and vizualise it with `plot`
 
 #### Format the data
 
 ```{r}
-data(data_model_variance_intra)
-data_model_variance_intra = format_data_PPBstats(data_model_variance_intra, type = "data_agro")
+data(data_model_bh_variance_intra)
+data_model_bh_variance_intra = format_data_PPBstats(data_model_bh_variance_intra, type = "data_agro")
 ```
 
 #### Run the model
-To run the model , used the function `model_variance_intra`.
+To run the model , used the function `model_bh_intra_location`.
 You can run it on one variable.
 
 ```{r}
-#out_vi = model_variance_intra(data_model_variance_intra, variable = "spike_weight", nb_iterations = 100)
+#out_vi = model_bh_intra_location(data_model_bh_variance_intra, variable = "spike_weight", nb_iterations = 100)
 ```
 
 #### Check and visualize model outputs
@@ -92,7 +92,7 @@ If you wish to apply the variance\_intra workflow to several variables, you can 
 
 ```{r}
 workflow_model_variance_intra = function(x){
-  out_vi = model_variance_intra(data_variance_intra, variable = x)
+  out_vi = model_bh_intra_location(data_variance_intra, variable = x)
   
   out_check_vi = check_model(out_vi)
   p_out_check_vi = plot(out_check_vi)

@@ -8,7 +8,7 @@
 #' @author Pierre Riviere
 #' 
 
-# Function use in describe_data.R, GxE.R, model_1.R, model_2.R ----------
+# Function use in describe_data.R, model_GxE.R, model_bh_intra_location.R, model_bh_GxE.R ----------
 check_data_vec_variables = function(data, vec_variables){
   for(variable in vec_variables) { if(!is.element(variable, colnames(data))) { stop(variable," is not in data") } }
   for(variable in vec_variables) { 
@@ -70,7 +70,7 @@ get_perpendicular_segment = function(x1, y1, x2, y2, x3, y3, longer = FALSE){
 }
 
 
-# Function use in check_model_model_1.R, check_model_model_2.R ----------
+# Function use in check_model_model_bh_intra_location.R, check_model_model_bh_GxE.R ----------
 check_analysis_argument = function(analysis){
   if(!is.null(analysis)) { 
     if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }  
@@ -103,7 +103,7 @@ check_convergence = function(out.model, model_name = "model1"){
   return(OUT)
 }
 
-# Function use in ggplot_check_model_model_1.R, ggplot_check_model_model_2.R ----------
+# Function use in ggplot_check_model_model_bh_intra_location.R, ggplot_check_model_model_bh_GxE.R ----------
 
 get.caterpillar.plot = function(x, xmin, xmax){ # cf ggmcmc:ggs_caterpillar
   p = ggplot(x, aes(x = q3, y = reorder(parameter, q3))) 
@@ -141,7 +141,7 @@ get_mcmc_traceplot_density = function(MCMC){
 
   
 
-# Function used in mean_comparisons_model_1.R and mean_comparisons_model_2.R ----------
+# Function used in mean_comparisons_model_bh_intra_location.R and mean_comparisons_model_bh_GxE.R ----------
 
 get_mean_comparisons_and_Mpvalue = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
   
@@ -191,7 +191,7 @@ get_mean_comparisons_and_Mpvalue = function(MCMC, parameter, type, threshold, al
   return(out)
 }
 
-# Function use in check_model_model_1.R, check_model_model_2.R ----------
+# Function use in check_model_model_bh_intra_location.R, check_model_model_bh_GxE.R ----------
 add_split_col = function(x, each){ rep(c(1:nrow(x)), each = each)[1:nrow(x)] } 
 
 # Function use in ggplot_which_won_where.R, ggplot_mean_vs_stability.R ----------

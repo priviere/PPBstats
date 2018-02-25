@@ -1,4 +1,4 @@
-plot.check_model_1 <- function(
+plot.check_model_bh_intra_location <- function(
   x,
   nb_parameters_per_plot = 8
 ){

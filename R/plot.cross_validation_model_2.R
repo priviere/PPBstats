@@ -1,4 +1,4 @@
-plot.cross_validation_model_2 <- function(
+plot.cross_validation_model_bh_GxE <- function(
   x
 ){
   

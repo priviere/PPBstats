@@ -1,7 +1,7 @@
 #' Run spatial row and column model
 #'
 #' @description
-#' \code{spatial} runs spatial row and column model based on the SpATS package
+#' \code{model_spatial} runs spatial row and column model based on the SpATS package
 #' 
 #' @param data The data frame on which the model is run. 
 #' It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
@@ -35,7 +35,7 @@
 #' \item \code{\link{check_model}}
 #' }
 #' 
-spatial = function(data, variable, genotype.as.random = TRUE){
+model_spatial = function(data, variable, genotype.as.random = TRUE){
 
   # 1. Error messages, update arg ----------
   if(!is(data, "data_agro")){ stop(substitute(data), " must be formated, see PPBstats::format_data_PPBstats().") }

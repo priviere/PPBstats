@@ -1,10 +1,10 @@
-#' Predict values of germplasms in environments where they have not been grown based on model 2
+#' Predict values of germplasms in environments where they have not been grown based on Hierarchical Bayesian GxE model
 #'
 #' @description
-#' \code{predict_the_past_model_2} predicts values of germplasms in environments where 
-#' they have not been grown based on model 2.
+#' \code{predict_the_past_model_bh_GxE} predicts values of germplasms in environments where 
+#' they have not been grown based on Hierarchical Bayesian GxE model.
 #' 
-#' @param out_check_model_model_2 object from \code{\link{check_model}} from \code{\link{model_2}}
+#' @param out_check_model_model_bh_GxE object from \code{\link{check_model}} from \code{\link{model_bh_GxE}}
 #' 
 #' @param env name of the environment where the germplasm effect are predicted
 #' 
@@ -15,39 +15,39 @@
 #' The estimations of the values are based on the MCMC outputs.
 #' More informations can be found in the vignette.
 #' 
-#' It is like mu_ij effect that are estimated (as for model 1), i.e. the effect of a germplasm in an environment.
+#' It is like mu_ij effect that are estimated (as for Hierarchical Bayesian intra-location model), i.e. the effect of a germplasm in an environment.
 #' 
 #' Due to memory issues, it is better to run the function for only one environment instead of all by default.
-#' This allows the same ggplot as for model 1.
+#' This allows the same ggplot as for Hierarchical Bayesian intra-location model.
 #' 
 #' @author Pierre Riviere
 #' 
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}, 
-#' \item \code{\link{check_model_model_2}}, 
+#' \item \code{\link{check_model_model_bh_GxE}}, 
 #' \item \code{\link{mean_comparisons}}, 
-#' \item \code{\link{mean_comparisons_predict_the_past_model_2}}
+#' \item \code{\link{mean_comparisons_predict_the_past_model_bh_GxE}}
 #' }
 #' 
 #' 
-predict_the_past_model_2 = function(
-  out_check_model_model_2,
+predict_the_past_model_bh_GxE = function(
+  out_check_model_model_bh_GxE,
   env = NULL
 ) {
   ## TODO: Ideally, there should be a generic predict_the_past()
-  ## which only has a method for a "check_model_2" object.
+  ## which only has a method for a "check_model_bh_GxE" object.
   ## This way is extensible to a future situation where there might be more
   ## models to which the past can be "predicted" with other methods.
   ## For the moment, I leave it as it to preserve back-compatibility.
   
   # 1. Error message ----------  
-  if( !inherits(out_check_model_model_2, "check_model_2") ) {
-    stop("out_check_model_model_2 must come from check_model and model_2.")
+  if( !inherits(out_check_model_model_bh_GxE, "check_model_bh_GxE") ) {
+    stop("out_check_model_model_bh_GxE must come from check_model and model_bh_GxE.")
   }
   
-  w = out_check_model_model_2$model2.presence.absence.matrix
-  MCMC = out_check_model_model_2$MCMC
+  w = out_check_model_model_bh_GxE$model2.presence.absence.matrix
+  MCMC = out_check_model_model_bh_GxE$MCMC
   
   if( is.null(env) ){ stop("env can not be NULL") }
   if( !is.element(env, colnames(w)) ){ stop("env ", env," does not exist.")  }
@@ -96,6 +96,6 @@ predict_the_past_model_2 = function(
     "MCMC" = OUT_MCMC,
     "parameter_statuts" = parameter_statuts
     )
-  class(out) <- c("PPBstats", "predict_the_past_model_2")
+  class(out) <- c("PPBstats", "predict_the_past_model_bh_GxE")
   return(out)
 }

@@ -1,7 +1,7 @@
-#' Run model variance_intra
+#' Run Hierarchical Bayesian variance-intra model
 #'
 #' @description
-#' \code{model_variance_intra} runs model to get intra-population variance on each environment of the network. See details for more information.
+#' \code{model_bh_variance_intra} runs Hierarchical Bayesian variance-intra model to get intra-population variance on each environment of the network. See details for more information.
 #'
 #' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
@@ -32,7 +32,7 @@
 #' @return The function returns a list with 
 #' 
 #' \itemize{
-#' \item "data.model_variance_intra": the dataframe used to run mode variance_intra
+#' \item "data.model_bh_variance_intra": the dataframe used to run mode variance_intra
 #' \item "MCMC": a list with the two MCMC chains (mcmc object)
 #' \item "DIC": the DIC value of the model
 #' }
@@ -42,10 +42,10 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}
-#' \item \code{\link{check_model.model_variance_intra}}
+#' \item \code{\link{check_model.model_bh_variance_intra}}
 #' }
 #' 
-model_variance_intra <- function(
+model_bh_variance_intra <- function(
   data,
   variable,
   nb_iterations = 100000,
@@ -217,12 +217,12 @@ model_variance_intra <- function(
   } else {epsilon = NULL}
 
   OUT = list(
-    "data.model_variance_intra" = data,
+    "data.model_bh_variance_intra" = data,
     "MCMC" = mcmc,
     "epsilon" = epsilon,
     "DIC"= DIC
   )
   
-  class(OUT) <- c("PPBstats", "fit_model_variance_intra")
+  class(OUT) <- c("PPBstats", "fit_model_bh_variance_intra")
   return(OUT)
 }

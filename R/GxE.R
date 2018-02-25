@@ -1,7 +1,7 @@
 #' Run AMMI or GGE model
 #'
 #' @description
-#' \code{GxE} runs AMMI or GGE model
+#' \code{model_GxE} runs AMMI or GGE model
 #' 
 #' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #' 
@@ -42,7 +42,7 @@
 #' \item \code{\link{check_model_model_1}}
 #' }
 #' 
-GxE = function(
+model_GxE = function(
   data, 
   variable,
   gxe_analysis = NULL

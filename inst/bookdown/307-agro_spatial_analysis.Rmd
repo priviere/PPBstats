@@ -1,4 +1,4 @@
-### Spatial analysis {#spatial-analysis}
+### Spatial analysis (**M4b**) {#spatial-analysis}
 
 Note that this section is still under development : cf https://github.com/priviere/PPBstats/issues/20
 
@@ -39,7 +39,7 @@ Much more information regarding the model as well as example of R package `SpATS
 #### Steps with `PPBstats`
 
 - Format the data with `format_data_PPBstats()`
-- Run the model with `spatial()`
+- Run the model with `model_spatial()`
 - Check model outputs with graphs to know if you can continue the analysis with `check_model()` and vizualise it with `plot()`
 - Get mean comparisons for germplasms with `mean_comparisons()` and vizualise it with `plot()`
 
@@ -67,7 +67,7 @@ d = format_data_PPBstats(d, type = "data_agro")
 By default, germplasm are settled as random (`genotype.as.random = TRUE`).
 
 ```{r}
-out_spatial = spatial(data = d, variable = "variable")
+out_spatial = model_spatial(data = d, variable = "variable")
 ```
 
 `out_spatial` is a list containing two elements :
@@ -184,7 +184,7 @@ If you wish to apply the spatial workflow to several variables, you can use `lap
 
 ```{r}
 workflow_spatial = function(x){
-  out_spatial = spatial(data = d, variable = "variable")
+  out_spatial = model_spatial(data = d, variable = "variable")
   
   out_check_spatial = check_model(out_spatial)
   p_out_check_spatial = plot(out_check_spatial)

@@ -1,7 +1,7 @@
-### model_1 to perform mean comparisons with each farm {#model-1}
+### model_bh_intra_location to perform mean comparisons with each farm (**M7a**) {#model-1}
 
 At the farm level, the residual has few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
-Model_1 was implemented to improve efficiency of mean comparisons.
+model_bh_intra_location was implemented to improve efficiency of mean comparisons.
 It is efficient with more than 20 environment (i.e. location $\times$ year) [@riviere_hierarchical_2015].
 The model is based on bayesian statistics (section \@ref(section-bayes)).
 
@@ -48,10 +48,10 @@ Blocks are included in the model only if the trial has blocks.
 
 #### Steps with \pack
 
-To run model_1, follow these steps (Figure \@ref(fig:main-workflow)):
+To run model_bh_intra_location, follow these steps (Figure \@ref(fig:main-workflow)):
 
 - Format the data with `format_data_PPBstats()`
-- Run the model with `model_1()`
+- Run the model with `model_bh_intra_location()`
 - Check model outputs with graphs using `check_model()`to know if you can continue the analysis
 - Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
 
@@ -60,17 +60,17 @@ The values for $\mu_{ij}$, $\beta_{jk}$, $\epsilon_{ijk}$ and $\sigma_j$ are the
 This dataset is representative of data obtain in a PPB programme.
 
 ```{r}
-data(data_model_1)
-data_model_1 = format_data_PPBstats(data_model_1, type = "data_agro")
-head(data_model_1) # first rows of the data
+data(data_model_bh_intra_location)
+data_model_bh_intra_location = format_data_PPBstats(data_model_bh_intra_location, type = "data_agro")
+head(data_model_bh_intra_location) # first rows of the data
 ```
 
 #### Run the model
 
-To run model model_1 on the dataset, used the function `model_1()`.
+To run model model_bh_intra_location on the dataset, used the function `model_bh_intra_location()`.
 Here it is run on thousand kernel weight (tkw).
 
-By default, `model_1` returns posteriors for 
+By default, `model_bh_intra_location` returns posteriors for 
 $\mu_{ij}$ (`return.mu = TRUE`), 
 $\beta_{jk}$ (`return.beta = TRUE`), 
 $\sigma_j$ (`return.sigma = TRUE`), 
@@ -83,7 +83,7 @@ The smaller the DIC value, the better the model [@plummer_penalized_2008].
 By default, DIC is not displayed, you can ask for this value to compare to other model (`DIC = TRUE`).
 
 ```{r}
-# out_model_1 = model_1(data = data_model_1, variable = "tkw", return.epsilon = TRUE)
+# out_model_bh_intra_location = model_bh_intra_location(data = data_model_bh_intra_location, variable = "tkw", return.epsilon = TRUE)
 
 # Compiling model graph
 # Resolving undeclared variables
@@ -100,26 +100,26 @@ By default, DIC is not displayed, you can ask for this value to compare to other
 # |**************************************************| 100%
 # |**************************************************| 100%
 
-load("./data_PPBstats/out_model_1.RData") # To save time
+load("./data_PPBstats/out_model_bh_intra_location.RData") # To save time
 ```
 
 You can get information on the environments in the dataset :
 
 ```{r}
-out_model_1$vec_env_with_no_data
+out_model_bh_intra_location$vec_env_with_no_data
  
-out_model_1$vec_env_with_no_controls
+out_model_bh_intra_location$vec_env_with_no_controls
  
-out_model_1$vec_env_with_controls
+out_model_bh_intra_location$vec_env_with_controls
  
-out_model_1$vec_env_RF
+out_model_bh_intra_location$vec_env_RF
  
-out_model_1$vec_env_SF
+out_model_bh_intra_location$vec_env_SF
 ```
 
 Below is an example with low `nb_iterations` (see section \@ref(section-bayes) about the number of iterations):
 ```{r}
-# out_model_1_bis = model_1(data = data_model_1, variable = "tkw", nb_iteration = 5000)
+# out_model_bh_intra_location_bis = model_bh_intra_location(data = data_model_bh_intra_location, variable = "tkw", nb_iteration = 5000)
 
 # Compiling model graph
 # Resolving undeclared variables
@@ -135,10 +135,10 @@ Below is an example with low `nb_iterations` (see section \@ref(section-bayes) a
 # |**************************************************| 100%
 # |**************************************************| 100%
 # Warning message:
-#   In model_1(data = data_model_1, variable = "tkw", nb_iteration = 5000) :
+#   In model_bh_intra_location(data = data_model_bh_intra_location, variable = "tkw", nb_iteration = 5000) :
 #   nb_iterations is below 20 000, which seems small to get convergence in the MCMC.
 
-load("./data_PPBstats/out_model_1_bis.RData") # To save time
+load("./data_PPBstats/out_model_bh_intra_location_bis.RData") # To save time
 ```
 
 #### Check and visualize model outputs
@@ -151,19 +151,19 @@ Once the model has been run, it is necessary to check if the outputs can be take
 This step is needed before going ahead in the analysis (in fact the object used in the next functions must come from `check_model`).
 
 ```{r}
-# out_check_model_1 = check_model(out_model_1)
+# out_check_model_bh_intra_location = check_model(out_model_bh_intra_location)
 
 # The Gelman-Rubin test is running for each parameter ...
 # The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
 
-load("./data_PPBstats/out_check_model_1.RData") # To save time
+load("./data_PPBstats/out_check_model_bh_intra_location.RData") # To save time
 ```
 
-`out_check_model_1` is a list containing:
+`out_check_model_bh_intra_location` is a list containing:
 
 - `MCMC` : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns as parameters and as many rows as `iterations/thin` (the `thin` value is 10 by default in the models).
 ```{r}
-dim(out_check_model_1$MCMC)
+dim(out_check_model_bh_intra_location$MCMC)
 ```
 
 - `MCMC_conv_not_ok`: a data fame resulting from the concatenation of the two MCMC for each parameter for environments where  some parameters did not converge for mu and beta
@@ -179,16 +179,16 @@ dim(out_check_model_1$MCMC)
     - `sigma_j_2`
     - `epsilon_ijk`
 
-When considering `out_model_1_bis`:
+When considering `out_model_bh_intra_location_bis`:
 ```{r}
-# out_check_model_1_bis = check_model(out_model_1_bis)
+# out_check_model_bh_intra_location_bis = check_model(out_model_bh_intra_location_bis)
 
 # The Gelman-Rubin test is running for each parameter ...
 # The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : nu, rho, sigma[env2-2:2010]. Therefore, they are not present in MCMC output.
 # MCMC are updated, the following environment were deleted : env2-2:2010
 # data_env_whose_param_did_not_converge contains the raw data for these environments.
 
-load("./data_PPBstats/out_check_model_1_bis.RData") # To save time
+load("./data_PPBstats/out_check_model_bh_intra_location_bis.RData") # To save time
 ```
 
 
@@ -196,78 +196,78 @@ load("./data_PPBstats/out_check_model_1_bis.RData") # To save time
 
 Once the computation is finished, you can visualize the results with \texttt{plot}
 ```{r}
-p_out_check_model_1 = plot(out_check_model_1)
+p_out_check_model_bh_intra_location = plot(out_check_model_bh_intra_location)
 ```
 
-`p_out_check_model_1` is a list with:
+`p_out_check_model_bh_intra_location` is a list with:
 
 - `sigma_j_gamma` : mean of each `sigma_j` displayed on the Inverse Gamma distribution. The first graph represents all the `sigma_j`, the other graph represent the same information divided into several graphs (based on argument `nb_parameters_per_plot`).
 ```{r}
-p_out_check_model_1$sigma_j_gamma[[1]]
-p_out_check_model_1$sigma_j_gamma[[2]]
+p_out_check_model_bh_intra_location$sigma_j_gamma[[1]]
+p_out_check_model_bh_intra_location$sigma_j_gamma[[2]]
 ```
 
 - `mu_ij` : distribution of each `mu_ij` in a list with as many elements as environment. For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` `mu_ij` per graph.
 ```{r}
-names(p_out_check_model_1$mu_ij)
+names(p_out_check_model_bh_intra_location$mu_ij)
 
-names(p_out_check_model_1$mu_ij$`env1-1:2010`)
+names(p_out_check_model_bh_intra_location$mu_ij$`env1-1:2010`)
 
-p_out_check_model_1$mu_ij$`env1-1:2010`$`1`
+p_out_check_model_bh_intra_location$mu_ij$`env1-1:2010`$`1`
 ```
 
 - `beta_jk` : distribution of each `beta_jk` in a list with as many elements as environment. For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` `beta_jk` per graph.
 ```{r}
-names(p_out_check_model_1$beta_jk)
+names(p_out_check_model_bh_intra_location$beta_jk)
 
-names(p_out_check_model_1$beta_jk$`env1-1:2010`)
+names(p_out_check_model_bh_intra_location$beta_jk$`env1-1:2010`)
 
-p_out_check_model_1$beta_jk$`env1-1:2010`$`1`
+p_out_check_model_bh_intra_location$beta_jk$`env1-1:2010`$`1`
 ```
 
 
 - `sigma_j` : distribution of each `sigma_j`. There are as many graph as needed with `nb_parameters_per_plot` `sigma_j` per graph.
 ```{r}
-names(p_out_check_model_1$sigma_j)
+names(p_out_check_model_bh_intra_location$sigma_j)
 
-p_out_check_model_1$sigma_j[[1]]
+p_out_check_model_bh_intra_location$sigma_j[[1]]
 ```
 
 
 - `epsilon_ijk` : standardised residuals distribution.
 If the model went well it should be between -2 and 2.
 ```{r}
-p_out_check_model_1$epsilon_ijk
+p_out_check_model_bh_intra_location$epsilon_ijk
 ```
 
 - `mcmc_not_converge_traceplot_density` : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging detected by the Gelman-Rubin test. 
 If all the chains converge, it is NULL
 ```{r}
-p_out_check_model_1$mcmc_not_converge_traceplot_density
+p_out_check_model_bh_intra_location$mcmc_not_converge_traceplot_density
 ```
 Here all the parameters converged.
 
 
-When considering `p_out_check_model_1_bis`, there is no convergence because the MCMC are too small.
+When considering `p_out_check_model_bh_intra_location_bis`, there is no convergence because the MCMC are too small.
 
 ```{r}
-p_out_check_model_1_bis = plot(out_check_model_1_bis)
+p_out_check_model_bh_intra_location_bis = plot(out_check_model_bh_intra_location_bis)
 
-p_out_check_model_1_bis$mcmc_not_converge_traceplot_density$`sigma\\[env2-2:2010`
+p_out_check_model_bh_intra_location_bis$mcmc_not_converge_traceplot_density$`sigma\\[env2-2:2010`
 ```
 
 
 Just for fun, you can compare the posterior medians and the arithmetic means for the `mu_ij`.
 
 ```{r}
-MCMC = out_check_model_1$MCMC
+MCMC = out_check_model_bh_intra_location$MCMC
 effects = apply(MCMC, 2, median)
 mu_ij_estimated = effects[grep("mu",names(effects))]
 names(mu_ij_estimated) = sapply(names(mu_ij_estimated), 
                                 function(x){  sub("\\]", "", sub("mu\\[", "", x)) } 
                                 )
 
-d = filter(data_model_1, location != "env4")
+d = filter(data_model_bh_intra_location, location != "env4")
 d = filter(d, location != "env5")
 d = droplevels(d)
 environment = paste(as.character(d$location), as.character(d$year), sep = ":")
@@ -299,7 +299,7 @@ The theory behind mean comparisons has been explained in section \@ref(mean-comp
 Below is an example for $\mu$, the same can be done for $\beta$.
 
 ```{r}
-# out_mean_comparisons_model_1_mu = mean_comparisons(out_check_model_1, parameter = "mu")
+# out_mean_comparisons_model_bh_intra_location_mu = mean_comparisons(out_check_model_bh_intra_location, parameter = "mu")
 
 # Get at least X groups for env2-1:2011. It may take some time ...
 # Get at least X groups for env2-1:2011 is done.
@@ -310,48 +310,48 @@ Below is an example for $\mu$, the same can be done for $\beta$.
 # Get at least X groups for env2-9:2010. It may take some time ...
 # Get at least X groups for env2-9:2010 is done.
 
-load("./data_PPBstats/out_mean_comparisons_model_1_mu.RData") # To save time
+load("./data_PPBstats/out_mean_comparisons_model_bh_intra_location_mu.RData") # To save time
 ```
 
-`out_mean_comparisons_model_1_mu` is a list of three elements:
+`out_mean_comparisons_model_bh_intra_location_mu` is a list of three elements:
 
 - `data_mean_comparisons` a list with as many elements as environment.
 ```{r}
-head(names(out_mean_comparisons_model_1_mu$data_mean_comparisons))
+head(names(out_mean_comparisons_model_bh_intra_location_mu$data_mean_comparisons))
 ```
 
 Each element of the list is composed of two elements:
 
     - `mean.comparisons`
     ```{r}
-    head(out_mean_comparisons_model_1_mu$data_mean_comparisons$`env1-1:2010`$mean.comparisons)
+    head(out_mean_comparisons_model_bh_intra_location_mu$data_mean_comparisons$`env1-1:2010`$mean.comparisons)
     ```
 
     - `Mpvalue` : a square matrix with pvalue computed for each pair of parameter.
     ```{r}
-    out_mean_comparisons_model_1_mu$data_mean_comparisons$`env1-1:2010`$Mpvalue[1:3, 1:3]
+    out_mean_comparisons_model_bh_intra_location_mu$data_mean_comparisons$`env1-1:2010`$Mpvalue[1:3, 1:3]
     ```
 
 - `data_env_with_no_controls` a list with as many elements as environment.
 ```{r}
-names(out_mean_comparisons_model_1_mu$data_env_with_no_controls)
+names(out_mean_comparisons_model_bh_intra_location_mu$data_env_with_no_controls)
 ```
 
 Each list contains mean.comparisons. 
 Note there are no groups displayed. Inded, there were no controls on the environment so no model was run.
 ```{r}
-head(out_mean_comparisons_model_1_mu$data_env_with_no_controls$`env5:2010`$mean.comparisons)
+head(out_mean_comparisons_model_bh_intra_location_mu$data_env_with_no_controls$`env5:2010`$mean.comparisons)
 ```
 
 - `data_env_whose_param_did_not_converge` a list with as many elements as environment.
 ```{r}
-names(out_mean_comparisons_model_1_mu$data_env_whose_param_did_not_converge)
+names(out_mean_comparisons_model_bh_intra_location_mu$data_env_whose_param_did_not_converge)
 ```
 Here it is NULL as all parameters converge. 
 Otherwise in each list it is mean.comparisons.
 Note there are no groups displayed. Inded, the model did not well so no mean comparisons were done.
 ```{r}
-head(out_mean_comparisons_model_1_mu$data_env_with_no_controls$`env5:2010`$mean.comparisons)
+head(out_mean_comparisons_model_bh_intra_location_mu$data_env_with_no_controls$`env5:2010`$mean.comparisons)
 ```
 
 
@@ -369,7 +369,7 @@ For each element of the list, there are as many graphs as needed with `nb_parame
 ###### barplot
 
 ```{r}
-p_barplot_mu = plot(out_mean_comparisons_model_1_mu, plot_type = "barplot")
+p_barplot_mu = plot(out_mean_comparisons_model_bh_intra_location_mu, plot_type = "barplot")
 names(p_barplot_mu)
 ```
 
@@ -423,7 +423,7 @@ Here, in location `env1-1`, `tem-1` and `tem-2` are two version belonging to the
 Lets' make the plots:
 ```{r, warning=FALSE}
 p_barplot_mu_version = plot(
-  out_mean_comparisons_model_1_mu,
+  out_mean_comparisons_model_bh_intra_location_mu,
   data_version = data_version,
   plot_type = "barplot"
 )
@@ -467,7 +467,7 @@ For each element of the list, there are as many graph as needed with `nb_paramet
 
 
 ```{r}
-p_interaction = plot(out_mean_comparisons_model_1_mu, plot_type = "interaction")
+p_interaction = plot(out_mean_comparisons_model_bh_intra_location_mu, plot_type = "interaction")
 
 head(names(p_interaction$data_mean_comparisons))
 
@@ -490,7 +490,7 @@ In the legend, the score goes from 1 (first group) to the number of groups of si
 This plot is useful to look at year effects.
 
 ```{r}
-p_score = plot(out_mean_comparisons_model_1_mu, plot_type = "score")
+p_score = plot(out_mean_comparisons_model_bh_intra_location_mu, plot_type = "score")
 
 head(names(p_score))
 
@@ -506,25 +506,25 @@ p_env$`4`
 
 #### Apply the workflow to several variables
 
-If you wish to apply the model_1 workflow to several variables, you can use `lapply` with the following code :
+If you wish to apply the model_bh_intra_location workflow to several variables, you can use `lapply` with the following code :
 
 ```{r}
-workflow_model_1 = function(x){
-  out_model_1 = model_1(data = data_model_1, variable = x, return.epsilon = TRUE)
+workflow_model_bh_intra_location = function(x){
+  out_model_bh_intra_location = model_bh_intra_location(data = data_model_bh_intra_location, variable = x, return.epsilon = TRUE)
   
-  out_check_model_1 = check_model(out_model_1)
-  p_out_check_model_1 = plot(out_check_model_1)
+  out_check_model_bh_intra_location = check_model(out_model_bh_intra_location)
+  p_out_check_model_bh_intra_location = plot(out_check_model_bh_intra_location)
   
-  out_mean_comparisons_model_1_mu = mean_comparisons(out_check_model_1, parameter = "mu")
-  p_barplot_mu = plot(out_mean_comparisons_model_1_mu, plot_type = "barplot")
-  p_interaction = plot(out_mean_comparisons_model_1_mu, plot_type = "interaction")
-  p_score = plot(out_mean_comparisons_model_1_mu, plot_type = "score")
+  out_mean_comparisons_model_bh_intra_location_mu = mean_comparisons(out_check_model_bh_intra_location, parameter = "mu")
+  p_barplot_mu = plot(out_mean_comparisons_model_bh_intra_location_mu, plot_type = "barplot")
+  p_interaction = plot(out_mean_comparisons_model_bh_intra_location_mu, plot_type = "interaction")
+  p_score = plot(out_mean_comparisons_model_bh_intra_location_mu, plot_type = "score")
   
   out = list(
-    "out_model_1" = out_model_1,
-    "out_check_model_1" = out_check_model_1,
-    "p_out_check_model_1" = p_out_check_model_1,
-    "out_mean_comparisons_model_1_mu" = out_mean_comparisons_model_1_mu,
+    "out_model_bh_intra_location" = out_model_bh_intra_location,
+    "out_check_model_bh_intra_location" = out_check_model_bh_intra_location,
+    "p_out_check_model_bh_intra_location" = p_out_check_model_bh_intra_location,
+    "out_mean_comparisons_model_bh_intra_location_mu" = out_mean_comparisons_model_bh_intra_location_mu,
     "p_barplot_mu" = p_barplot_mu,
     "p_interaction" = p_interaction,
     "p_score" = p_score
@@ -535,7 +535,7 @@ workflow_model_1 = function(x){
 ## Not run because of memory and time issues !
 # vec_variables = c("y1", "y2", "y3")
 #
-# out = lapply(vec_variables, workflow_model_1)
+# out = lapply(vec_variables, workflow_model_bh_intra_location)
 # names(out) = vec_variables
 
 ```

@@ -21,11 +21,11 @@ It is possible to tune the number of factor displayed (`nb_parameters_per_plot_x
 
 Get two data set to look at some examples
 ```{r}
-data("data_GxE")
-data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
+data("data_model_GxE")
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
 
-data("data_model_2")
-data_model_2 = format_data_PPBstats(data_model_2, type = "data_agro")
+data("data_model_bh_GxE")
+data_model_bh_GxE = format_data_PPBstats(data_model_bh_GxE, type = "data_agro")
 ```
 
 
@@ -36,7 +36,7 @@ The plot represents the presence/absence matrix of G $\times$ E combinations.
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "pam",
+  data_model_GxE, plot_type = "pam",
   vec_variables = c("y1", "y2")
   )
 names(p)
@@ -47,7 +47,7 @@ A score of 3 is for a given germplasm replicated three times in a given environe
 
 ```{r}
 p = plot(
-  data_model_2, plot_type = "pam",
+  data_model_bh_GxE, plot_type = "pam",
   vec_variables = c("y1", "y2")
   )
 p$y1
@@ -62,7 +62,7 @@ A score of 2 is for a given germplasm replicated twice in a given location.
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "histogramm",
+  data_model_GxE, plot_type = "histogramm",
   vec_variables = c("y1", "y2")
   )
 p$y1
@@ -73,7 +73,7 @@ p$y1
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "barplot",
+  data_model_GxE, plot_type = "barplot",
   vec_variables = c("y1", "y2"),
   x_axis = "germplasm"
   )
@@ -88,7 +88,7 @@ p$y1$`germplasm-1|-NA`
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "barplot",
+  data_model_GxE, plot_type = "barplot",
   vec_variables = c("y1", "y2"),
   x_axis = "germplasm",
   in_col = "location"
@@ -106,7 +106,7 @@ p$y1$`germplasm-1|location-1`
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "boxplot",
+  data_model_GxE, plot_type = "boxplot",
   vec_variables = c("y1", "y2"),
   x_axis = "germplasm"
   )
@@ -121,7 +121,7 @@ p$y1$`germplasm-1|-NA`
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "boxplot",
+  data_model_GxE, plot_type = "boxplot",
   vec_variables = c("y1", "y2"),
   x_axis = "germplasm",
   in_col = "location"
@@ -139,7 +139,7 @@ p$y1$`germplasm-1|location-1`
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "interaction",
+  data_model_GxE, plot_type = "interaction",
   vec_variables = c("y1", "y2"),
   x_axis = "germplasm",
   in_col = "location"
@@ -157,7 +157,7 @@ Note that this is possible only for `plot_type = "histogramm"`, `"barplot"`, `"b
 
 ```{r}
 p = plot.data_agro(
-  data_GxE, plot_type = "interaction",
+  data_model_GxE, plot_type = "interaction",
   vec_variables = c("y1", "y2"),
   x_axis = "date_julian",
   in_col = "location"
@@ -171,7 +171,7 @@ p$y1$`y1$date_julian-1|location-1`
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "biplot",
+  data_model_GxE, plot_type = "biplot",
   vec_variables = c("y1", "y2", "y3"),
   in_col = "germplasm", labels_on = "germplasm"
   )
@@ -189,7 +189,7 @@ p$`y1 - y2`$`-NA|germplasm-1`
 
 ```{r}
 p = plot(
-  data_GxE, plot_type = "radar",
+  data_model_GxE, plot_type = "radar",
   vec_variables = c("y1", "y2", "y3"),
   in_col = "location"
   )
@@ -203,7 +203,7 @@ Note than when there are no single value for a given `x_axis`, colums `block`, `
 
 ```{r}
 p = plot(
-  data_GxE, 
+  data_model_GxE, 
   plot_type = "raster", 
   vec_variables = c("desease", "vigor"), 
   x_axis = "germplasm"

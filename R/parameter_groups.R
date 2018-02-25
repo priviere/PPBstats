@@ -29,7 +29,7 @@
 #' \itemize{
 #'  \item \code{\link{check_model}},
 #'  \item \code{\link{parameter_groups_GxE}},
-#'  \item \code{\link{parameter_groups_model_2}},
+#'  \item \code{\link{parameter_groups_model_bh_GxE}},
 #'  \item \code{\link{plot.PPBstats}}
 #' }
 #'
@@ -38,7 +38,7 @@ parameter_groups = function(
   parameter
 )
 {
-  valid_models <- c("check_model_2", "check_model_GxE")
+  valid_models <- c("check_model_bh_GxE", "check_model_GxE")
   # 1. Error message ----------
   if( length(list_out_check_model) <= 1 ) { stop("list_out_check_model must have at least two elements (i.e. two variables).") }
   if( is.null(names(list_out_check_model)) ){ stop("Each element of list_out_check_model must have a name") }
@@ -48,12 +48,12 @@ parameter_groups = function(
     idx <- vapply(list_out_check_model, inherits, TRUE, valid_models)
   )) {
     ## some (idx) elements of the list are either not a check_model or not
-    ## a model_2 nor GxE. Pinpoint all of them.
+    ## a model_bh_GxE nor model_GxE. Pinpoint all of them.
     mess <- paste(
       "Element(s)",
       paste(names(list_out_check_model)[which(idx)], collapse = ", "),
       "in", substitute(list_out_check_model), "must come from check_model()",
-      "from etiher a model_2() of GxE()."
+      "from either a model_bh_GxE() of model_GxE()."
     )
     stop(mess)
   }
@@ -82,7 +82,7 @@ parameter_groups = function(
   # 2. Get matrix
   ## function look-up (in the order of valid_models)
   get_matrix <- 
-    c(parameter_groups_model_2, parameter_groups_GxE)[[which(all_by_model)]]
+    c(parameter_groups_model_bh_GxE, parameter_groups_model_GxE)[[which(all_by_model)]]
   mat <- get_matrix(list_out_check_model, parameter)
 
   # 3. Run the PCA ----------

@@ -14,8 +14,8 @@
 NULL
 
 
-# data_model_1 ----------
-#' Simulated data set for thousand kernel weight (tkw) of bread wheat to test model_1 model
+# data_model_bh_intra_location ----------
+#' Simulated data set for thousand kernel weight (tkw) of bread wheat to test model_bh_intra_location model
 #'
 #' @description
 #' A dataset containing one variable (tkw) and its date (tkw$date) 
@@ -23,7 +23,7 @@ NULL
 #' The different values of the parameters to create the dataset are also in columns: mu_ij, beta_jk, epsilon_ijk and sigma_j
 #'
 #' @usage
-#' data(data_model_1)
+#' data(data_model_bh_intra_location)
 #'
 #' @format
 #' A data frame with 1574 rows and 12 columns
@@ -32,12 +32,12 @@ NULL
 #' tkw is in grams
 #' 
 #' @author Pierre Rivière
-"data_model_1"
+"data_model_bh_intra_location"
 NULL
 
 
-# data_model_2 ----------
-#' Simulated data set for three variables to test model_2 model
+# data_model_bh_GxE ----------
+#' Simulated data set for three variables to test model_bh_GxE model
 #'
 #' @description
 #' A dataset containing three variables (y1, y2 and y3) 
@@ -46,13 +46,13 @@ NULL
 #' The different values of the parameters to create y1 are also in columns: alpha_i-1, beta_i-1, and theta_j-1.
 #' 
 #' @usage
-#' data(data_model_2)
+#' data(data_model_bh_GxE)
 #'
 #' @format
 #' A data frame with 2430 rows and 15 columns
 #' 
 #' @author Pierre Rivière
-"data_model_2"
+"data_model_bh_GxE"
 NULL
 
 
@@ -112,7 +112,7 @@ NULL
 NULL
 
 
-# data_GxE ----------
+# data_model_GxE ----------
 #' Simulated data set for three variables to test GxE model
 #'
 #' @description
@@ -121,17 +121,17 @@ NULL
 #' and values for the following factors: location, year, germplasm, block, X and Y. 
 #'
 #' @usage
-#' data(data_GxE)
+#' data(data_model_GxE)
 #'
 #' @format
 #' A data frame with 180 rows and 14 columns
 #' 
 #' @author Pierre Rivière
-"data_GxE"
+"data_model_GxE"
 NULL
 
 
-# data_model_variance_intra ----------
+# data_model_bh_variance_intra ----------
 #' Simulated data set for spike weight of bread wheat to test model_variance_intra
 #'
 #' @description
@@ -140,7 +140,7 @@ NULL
 #' The different values of the parameters to create the dataset are also in columns: mu_ijk, sigma_ij and epsilon_ijkl
 #'
 #' @usage
-#' data(data_model_variance_intra)
+#' data(data_model_bh_variance_intra)
 #'
 #' @format
 #' A data frame with 1182 rows and 10 columns
@@ -149,7 +149,7 @@ NULL
 #' spike weight is in grams
 #' 
 #' @author Gaelle Van Frank
-"data_model_variance_intra"
+"data_model_bh_variance_intra"
 NULL
 
 

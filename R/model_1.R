@@ -1,7 +1,7 @@
-#' Run model 1
+#' Run Hierarchical Bayesian intra-location model
 #'
 #' @description
-#' \code{model_1} runs model 1 to get mean comparisons on each environment of the network. See details for more information.
+#' \code{model_bh_intra_location} runs Hierarchical Bayesian intra-location model to get mean comparisons on each environment of the network. See details for more information.
 #'
 #' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
@@ -62,10 +62,10 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}
-#' \item \code{\link{check_model.model_1}}
+#' \item \code{\link{check_model.model_bh_intra_location}}
 #' }
 #' 
-model_1 = function(
+model_bh_intra_location = function(
   data,
   variable,
   nb_iterations = 100000,
@@ -364,7 +364,7 @@ model_1 = function(
     "DIC"= DIC
   )
   
-  class(OUT) <- c("PPBstats", "fit_model_1")
+  class(OUT) <- c("PPBstats", "fit_model_bh_intra_location")
   return(OUT)
 }
 

@@ -1,4 +1,4 @@
-mean_comparisons.check_model_variance_intra = function(
+mean_comparisons.check_model_bh_variance_intra = function(
   x,
   parameter,
   alpha = 0.05,
@@ -43,7 +43,7 @@ mean_comparisons.check_model_variance_intra = function(
     "data_mean_comparisons" = data_mean_comparisons
   )
   
-  class(out) <- c("PPBstats", "mean_comparisons_model_variance_intra")
+  class(out) <- c("PPBstats", "mean_comparisons_model_bh_variance_intra")
   
   return(out)
 }

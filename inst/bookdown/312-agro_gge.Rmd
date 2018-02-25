@@ -1,4 +1,4 @@
-### GGE {#gge}
+### GGE (**M6b**) {#gge}
 
 #### Theory of the model
 The experimental design used is fully replicated (**D1**).
@@ -37,11 +37,11 @@ With,
 
 #### Steps with `PPBstats`
 
-For GGE analysis, everything is exactly the same than for AMMI analysis except you should settle `gxe_analysis = "GGE"` in `GxE`.
+For GGE analysis, everything is exactly the same than for AMMI analysis except you should settle `gxe_analysis = "GGE"` in `model_GxE`.
 You can follow these steps (Figure \@ref(fig:main-workflow)):
 
 - Format the data with `format_data_PPBstats()`
-- Run the model with `GxE()` and `gxe_analysis = "GGE"`
+- Run the model with `model_GxE()` and `gxe_analysis = "GGE"`
 - Check model outputs with graphs to know if you can continue the analysis with `check_model()`
 - Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
 - Get groups of each parameters with `parameters_groups()` and visualise it with `plot()`
@@ -54,14 +54,14 @@ The workflow is therefore :
 #### Format the data
 
 ```{r}
-data(data_GxE)
-data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
-head(data_GxE)
+data(data_model_GxE)
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
+head(data_model_GxE)
 ```
 
 #### Run the model
 ```{r}
-out_gge = GxE(data_GxE, variable = "y1", gxe_analysis = "GGE")
+out_gge = model_GxE(data_model_GxE, variable = "y1", gxe_analysis = "GGE")
 ```
 
 #### Check and visualize model outputs
@@ -183,8 +183,8 @@ biplot$discrimitiveness_vs_representativeness$discrimitiveness_vs_representative
 
 ```{r}
 # First run the models
-gge_2 = GxE(data_GxE, variable = "y2", gxe_analysis = "GGE")
-gge_3 = GxE(data_GxE, variable = "y3", gxe_analysis = "GGE")
+gge_2 = model_GxE(data_model_GxE, variable = "y2", gxe_analysis = "GGE")
+gge_3 = model_GxE(data_model_GxE, variable = "y3", gxe_analysis = "GGE")
 
 # Then check the models
 out_check_gge_2 = check_model(gge_2)

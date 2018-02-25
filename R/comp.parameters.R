@@ -24,8 +24,8 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{mean_comparisons_model_1}}
-#' \item \code{\link{mean_comparisons_model_2}}
+#' \item \code{\link{mean_comparisons_model_bh_intra-location}}
+#' \item \code{\link{mean_comparisons_model_bh_GxE}}
 #' }
 #' 
 comp.parameters = function(

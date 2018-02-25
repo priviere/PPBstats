@@ -20,7 +20,7 @@ Based on these analysis, specific objective including response to selection anal
 
 - **Study the response of varieties under selection over several environments**.
 This can be done through family 2 of analyses (section \@ref(family-2)):
-    - AMMI and GGE (**M6**, sections \@ref(ammi) and \@ref(gge)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
+    - AMMI (**M6a**, section \@ref(ammi) and GGE (**M6b**, sections \@ref(gge)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
     - bayesian hierarchical model $G \times E$ (**M7b**, section \@ref(model-2)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)),
 It can be completed by specific analysis such as migrant-residant (section \@ref(migrant-residant)) which corresponds to a specific objective : study migrant and residant effect, where migrant in a location refers to a germplasm that has not been grown or selected in a given location and resident in a location refers to a germplasm that has been grown or selected in a given location.
 
@@ -259,7 +259,7 @@ After designing the experiment and describing the data, each family of analysis 
 - Check the model and visualize outputs
 - Compare means and visualize outputs
 
-Note that for model 2 and GGE other analyses are possible : predict the past and cross validation regarding model 2 and biplot regarding GGE.
+Note that for Hierarchical Bayesian GxE model and GGE other analyses are possible : predict the past and cross validation regarding Hierarchical Bayesian GxE model and biplot regarding GGE.
 
 Figure \@ref(fig:main-workflow) displays the functions and their relationships.
 Table \@ref(tab:function-descriptions-workflow) describes each of the main functions.
@@ -276,17 +276,17 @@ knitr::include_graphics("figures/main-functions-agro.png")
 | `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
 | `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
 | `describe_data` | Describe the data set in order to choose the appropriate analysis to carry out |
-| `model_1` | Run model 1 |
-| `model_2` | Run model 2 |
-| `GxE` | Run AMMI or GGE model |
-| `spatial` | Run spatial row and column model |
-| `model_variance_intra` | Run model variance intra |
+| `model_bh_intra-location` | Run Hierarchical Bayesian intra-location model |
+| `model_bh_GxE` | Run Hierarchical Bayesian GxE model |
+| `model_GxE` | Run AMMI or GGE model |
+| `model_spatial` | Run spatial row and column model |
+| `model_bh_variance-intra` | Run Hierarchical Bayesian variance-intra model |
 | `multivariate` | Run multivariate analysis with function from `FactoMineR` |
 | `check_model` |  Check if the model went well |
 | `mean_comparisons` |  Get mean comparisons |
 | `parameter_groups` | Get groups of parameters based on multivariate analysis |
-| `cross_validation_model_2` | Run complete cross validation with model 2 |
-| `predict_the_past_model_2` | predict values of germplasms in environments where they have not been grown based on model 2 |
+| `cross_validation_model_bh_GxE` | Run complete cross validation with Hierarchical Bayesian GxE model |
+| `predict_the_past_model_bh_GxE` | predict values of germplasms in environments where they have not been grown based on Hierarchical Bayesian GxE model |
 | `biplot_GxE` | Compute ecovalence and format PCA results |
 | `plot` | Build ggplot objects to visualize output |
 Table: (\#tab:function-descriptions-workflow) Function description.
@@ -305,15 +305,15 @@ The dates are associated to their corresponding variable by `$`.
 For example the date associated to variable `y1` is `y1$date`.
 
 ```{r}
-data("data_GxE")
-data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
-head(data_GxE)
+data("data_model_GxE")
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
+head(data_model_GxE)
 ```
 
 Note that a column with julian date is added.
 
 ```{r}
-class(data_GxE)
+class(data_model_GxE)
 ```
 
 

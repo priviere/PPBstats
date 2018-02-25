@@ -1,4 +1,4 @@
-plot.mean_comparisons_predict_the_past_model_2 <- function(
+plot.mean_comparisons_predict_the_past_model_bh_GxE <- function(
   x,
   data_version = NULL,
   plot_type = "interaction",
@@ -11,7 +11,7 @@ plot.mean_comparisons_predict_the_past_model_2 <- function(
     "data_env_whose_param_did_not_converge" = NULL
   )
   
-  attributes(x)$PPBstats.object = "mean_comparisons_model_1"
+  attributes(x)$PPBstats.object = "mean_comparisons_model_bh_intra_location"
   
   if( !is.null(data_version) ) { stop("data_version must be NULL with data plot from predict_the_past()") }
   
@@ -25,7 +25,7 @@ plot.mean_comparisons_predict_the_past_model_2 <- function(
     x$data_mean_comparisons[[1]]$mean.comparisons$entry = ylab
   }
   
-  out = plot.mean_comparisons_model_1(x, data_version, plot_type, nb_parameters_per_plot)
+  out = plot.mean_comparisons_model_bh_intra_location(x, data_version, plot_type, nb_parameters_per_plot)
   
   if(plot_type == "barplot") {
     p1 = lapply(out$data_mean_comparisons[[1]], function(x){ x + geom_bar(aes(fill = parameter_statuts), stat = "identity") } )

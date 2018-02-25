@@ -1,4 +1,4 @@
-mean_comparisons.check_model_1 <- function(
+mean_comparisons.check_model_bh_intra_location <- function(
   x,
   parameter,
   alpha = 0.05,
@@ -65,7 +65,7 @@ mean_comparisons.check_model_1 <- function(
     "data_env_whose_param_did_not_converge" = data_env_whose_param_did_not_converge
   )
 
-  class(out) <- c("PPBstats", "mean_comparisons_model_1")
+  class(out) <- c("PPBstats", "mean_comparisons_model_bh_intra_location")
   
   return(out)
 }

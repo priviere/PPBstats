@@ -1,4 +1,4 @@
-plot.mean_comparisons_model_1 <- function(
+plot.mean_comparisons_model_bh_intra_location <- function(
   x,
   data_version = NULL,
   plot_type = c("interaction", "barplot", "score"),

@@ -1,4 +1,4 @@
-plot.mean_comparisons_model_2 <- function(
+plot.mean_comparisons_model_bh_GxE <- function(
   x,
   y = NULL,
   plot_type = c("biplot-alpha-beta", "barplot"),
@@ -12,8 +12,8 @@ plot.mean_comparisons_model_2 <- function(
     stop("With plot_type = \"biplot-alpha-beta\", y can not be NULL.")
   }
   
-  if (!is.null(y) && !inherits(y, "mean_comparisons_model_2")) {
-    stop(substitute(y), "must come from PPBstats::check_model from model_2.")
+  if (!is.null(y) && !inherits(y, "mean_comparisons_model_bh_GxE")) {
+    stop(substitute(y), "must come from PPBstats::check_model from model_bh_GxE.")
   }
   
   data_Mpvalue = x$Mpvalue

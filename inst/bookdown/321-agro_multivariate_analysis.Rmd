@@ -1,4 +1,4 @@
-### Multivariate analysis {#multivariate-analysis}
+### Multivariate analysis (**M2**) {#multivariate-analysis}
 
 #### Steps with `PPBstats`
 
@@ -11,15 +11,15 @@ For variance intra analysis, you can follow these steps (Figure \@ref(fig:main-w
 #### Format the data
 
 ```{r}
-data("data_GxE")
-data_GxE = format_data_PPBstats(data_GxE, type = "data_agro")
+data("data_model_GxE")
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
 ```
 
 #### Run the analysis
 
 ```{r}
 vec_variables = c("y1", "y2", "y3")
-res.pca = mutlivariate(data_GxE, vec_variables, PCA)
+res.pca = mutlivariate(data_model_GxE, vec_variables, PCA)
 ```
 
 #### Check outputs and results

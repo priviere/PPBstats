@@ -1,7 +1,7 @@
-#' Run complete cross validation with model 2
+#' Run complete cross validation with Hierarchical Bayesian GxE model
 #'
 #' @description
-#' \code{cross_validation_model_2} runs complete cross validation with model 2
+#' \code{cross_validation_model_bh_GxE} runs complete cross validation with Hierarchical Bayesian GxE model
 #' 
 #' @param data The data frame on which the model will be run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  
@@ -26,20 +26,20 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{model_2}},
+#' \item \code{\link{model_bh_GxE}},
 #' \item \code{\link{check_model}}, 
-#' \item \code{\link{check_model_model_2}}
+#' \item \code{\link{check_model_model_bh_GxE}}
 #' }
 #' 
 #'
-cross_validation_model_2 = function(
+cross_validation_model_bh_GxE = function(
   data, 
   variable, 
   nb_iterations = 100000,
   mc.cores = 1)
 {
   ## TODO: Ideally, there should be a generic cross_validation()
-  ## which only has a method for a "check_model_2" object.
+  ## which only has a method for a "check_model_bh_GxE" object.
   ## This way is extensible to a future situation where there might be more
   ## models that can be "cross-validated" with other methods.
   ## For the moment, I leave it as it to preserve back-compatibility.
@@ -47,7 +47,7 @@ cross_validation_model_2 = function(
   # 1. Error message ----------
   check_data_vec_variables(data, variable)
   
-  # The other error messages are done with the used of the function model_2
+  # The other error messages are done with the used of the function model_bh_GxE
   
   # 2. Data formating ----------
   
@@ -98,8 +98,8 @@ cross_validation_model_2 = function(
             ------------------------------------------------------------\n
             ------------------------------------------------------------\n
             ")
-    
-    out = model_2(  data = x$data,
+    d = format_data_PPBstats(x$data, type = "data_agro")
+    out = model_bh_GxE(  data = d,
                 variable = "variable",
                 nb_iterations = x$nb_iterations,
                 return.alpha = TRUE,
@@ -132,7 +132,7 @@ cross_validation_model_2 = function(
   
   out = cbind.data.frame(observed.value, estimated.value)
   
-  class(out) <- c("PPBstats", "cross_validation_model_2", "data.frame")
+  class(out) <- c("PPBstats", "cross_validation_model_bh_GxE", "data.frame")
   
   return(out)
 }
