@@ -31,7 +31,7 @@ It is developed on Github by severals persons:
 
 **Camille Vindras^5^** wrote text to present method description in sensory analysis
 
-**Isabelle Goldringer^2^** reviewed and improved all the text of the book regarding agronomic sections
+**Isabelle Goldringer^2^** reviewed and improved all the text of the book
 
 ^1^ Réseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France
 
