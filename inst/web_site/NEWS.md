@@ -1,4 +1,4 @@
-# **PPBstats 0.23 under process**
+# **PPBstats 0.23**
 ### update fonctions
 - format_data_PPBstats.R : 
     - when date, add a column with julian day, cf #65
@@ -28,7 +28,14 @@
     - debug when NA in row
 - mean_comparisons.check_model_GxE.R & mean_comparisons.check_model_spatial.R
     - update code regarding changes in agricolae package
+- rename functions related to model (cf #54)
+    - model_1 -> model_bh_intra_location
+    - model_2 -> model_bh_GxE
+    - GxE -> model_GxE
+    - spatial -> model_spatial
+    - model_variance_intra -> model_bh_variance_intra
 
+    
 ### add new functions
 - napping.R, cf #72
 - hedonic.R, cf #72
@@ -46,8 +53,17 @@
 - update text (cf #76, #65, #67)
 - translate Rnw files to Rmd files, format to bookdown, put all files in inst/bookdown (cf #36)
 - explain Skewness and Kurtosis test as well as other output from check model for frequentist analysis (cf #36)
-- text and decision tree improved by Pierre and Isabelle
+- text and decision tree improved by Pierre, Isabelle and Camille
   
+### rename and reformat RData
+following change of model name:
+
+- data_GxE -> data_model_GxE
+- data_model_1 -> data_model_bh_intra_location
+- data_model_2 -> data_model_bh_GxE
+- data_variance_intra -> data_model_bh_variance_intra
+
+
 ### add new RData
 - data_network_unipart_sl.RData
 - data_network_unipart_location.RData

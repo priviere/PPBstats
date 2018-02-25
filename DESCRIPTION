@@ -3,7 +3,7 @@ Type: Package
 Title: An R package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments
 Version: 0.23
 Encoding: UTF-8
-Date: 2017-08-07
+Date: 2018-02-25
 Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
     person("Gaelle", "Van Frank", role = "ctb"),
     person("Olivier", "David", role = "ctb"),
