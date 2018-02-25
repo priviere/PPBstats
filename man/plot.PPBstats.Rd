@@ -12,28 +12,28 @@
 \item{data_version}{data set with the following columns: "year", "germplasm", "location", "group", "version". The group refers to an id that contains two different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
 This argument is used only for \code{\link{mean_comparisons}} from 
 \itemize{
- \item \code{\link{check_model}} from \code{\link{model_1}}
- \item \code{\link{check_model}} from \code{\link{predict_the_past_model_2}}
+ \item \code{\link{check_model}} from \code{\link{model_bh_intra-location}}
+ \item \code{\link{check_model}} from \code{\link{predict_the_past_model_bh_GxE}}
 }}
 
 \item{plot_type}{The type of plot you wish.
 \itemize{
  \item "barplot" for \code{\link{mean_comparisons}} from 
  \itemize{
-  \item \code{\link{check_model}} from \code{\link{GxE}}, \code{\link{model_1}}, \code{\link{model_2}}
-  \item \code{\link{predict_the_past_model_2}}
+  \item \code{\link{check_model}} from \code{\link{model_GxE}}, \code{\link{model_bh_intra-location}}, \code{\link{model_bh_GxE}}
+  \item \code{\link{predict_the_past_model_bh_GxE}}
   }
  \item "interaction.plot" for \code{\link{mean_comparisons}} from
  \itemize{
-  \item \code{\link{check_model}} from \code{\link{model_1}}
-  \item \code{\link{predict_the_past_model_2}}
+  \item \code{\link{check_model}} from \code{\link{model_bh_intra-location}}
+  \item \code{\link{predict_the_past_model_bh_GxE}}
   }
  \item "score" for \code{\link{mean_comparisons}} from
  \itemize{
-  \item \code{\link{check_model}} from \code{\link{model_1}}
-  \item \code{\link{predict_the_past_model_2}}
+  \item \code{\link{check_model}} from \code{\link{model_bh_intra-location}}
+  \item \code{\link{predict_the_past_model_bh_GxE}}
   }
- \item "biplot-alpha-beta" for \code{\link{mean_comparisons}} from \code{\link{check_model}} from \code{\link{model_2}}
+ \item "biplot-alpha-beta" for \code{\link{mean_comparisons}} from \code{\link{check_model}} from \code{\link{model_bh_GxE}}
  }
 
 There are automatic plots generated for several functions:
@@ -41,7 +41,7 @@ There are automatic plots generated for several functions:
  \item \code{\link{biplot_GxE}}
  \item \code{\link{check_model}}
  \item \code{\link{parameter_groups}}
- \item \code{\link{cross_validation_model_2}}
+ \item \code{\link{cross_validation_model_bh_GxE}}
  }
 See details for more information.}
 
@@ -51,11 +51,11 @@ See details for more information.}
  \item \code{\link{mean_comparisons}} or
  \item \code{\link{parameter_groups}} or
  \item \code{\link{biplot_GxE}} or
- \item \code{\link{cross_validation_model_2}}
+ \item \code{\link{cross_validation_model_bh_GxE}}
 }}
 
-\item{data_2}{Outputs from \code{\link{mean_comparisons}} from \code{\link{check_model}} from \code{\link{model_2}}.
-This argument is used only when argument data comes from \code{\link{mean_comparisons}} from \code{\link{check_model}} from \code{\link{model_2}}.}
+\item{data_2}{Outputs from \code{\link{mean_comparisons}} from \code{\link{check_model}} from \code{\link{model_bh_GxE}}.
+This argument is used only when argument data comes from \code{\link{mean_comparisons}} from \code{\link{check_model}} from \code{\link{model_bh_GxE}}.}
 
 \item{nb_parameters_per_plot}{The number of parameters per plot to facilitate the visualization}
 
@@ -68,7 +68,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
  \item \code{\link{check_model}}
   \itemize{
   
-   \item from \code{\link{GxE}} :
+   \item from \code{\link{model_GxE}} :
     \itemize{
      \item residuals
       \itemize{
@@ -80,7 +80,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
      \item pca_composante_variance : variance caught by each dimension of the PCA run on the interaction matrix
     }
     
-   \item from \code{\link{spatial}} :
+   \item from \code{\link{model_spatial}} :
     \itemize{
      \item residuals
       \itemize{
@@ -90,7 +90,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
      \item variability_repartition : pie with repartition of variance for each factor
     }
     
-   \item from \code{\link{model_1}} :
+   \item from \code{\link{model_bh_intra-location}} :
     \itemize{
      \item sigma_j_gamma : mean of each sigma_j displayed on the inverse Gamma distribution. 
      The first graph represent all the sigma_j, the other graph represent \code{nb_parameters_per_plot} sigma_j per graph.
@@ -106,7 +106,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
      If all the chains converge, it is NULL.
     }
    
-   \item from \code{\link{model_2}} :
+   \item from \code{\link{model_bh_GxE}} :
     \itemize{
      \item alpha_i : distribution of each alpha_i. 
      There are as many graph as needed with \code{nb_parameters_per_plot} alpha_i per graph.
@@ -125,7 +125,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
  \item \code{\link{mean_comparisons}}
   \itemize{
   
-   \item from \code{\link{GxE}}, a list with barplot.
+   \item from \code{\link{model_GxE}}, a list with barplot.
    For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
    Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
    The error I (alpha) and the alpha correction are displayed in the title. 
@@ -135,7 +135,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
      \item year : mean comparison for year
     }
    
-   \item from \code{\link{spatial}}, a list with barplot.
+   \item from \code{\link{model_spatial}}, a list with barplot.
    For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
    Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
    The error I (alpha) and the alpha correction are displayed in the title. 
@@ -143,7 +143,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
      \item germplasm : mean comparison for germplasm
     }
    
-   \item from \code{\link{model_1}}, a list with ggplot object depending on plot_type.
+   \item from \code{\link{model_bh_intra-location}}, a list with ggplot object depending on plot_type.
    For each plot_type, it is a list of three elements being lists with as many elements as environment. 
        For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
     \itemize{
@@ -177,7 +177,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
     }
    
    
-   \item from \code{\link{model_2}}, a list with ggplot object depending on plot_type.
+   \item from \code{\link{model_bh_GxE}}, a list with ggplot object depending on plot_type.
    There are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
     \itemize{
      \item barplot : 
@@ -189,8 +189,8 @@ This argument is used only when argument data comes from \code{\link{mean_compar
     }
    
    
-   \item \code{\link{predict_the_past_model_2}}, a list with ggplot object depending on plot_type. 
-   It is the same outputs than for model_1
+   \item \code{\link{predict_the_past_model_bh_GxE}}, a list with ggplot object depending on plot_type. 
+   It is the same outputs than for model_bh_intra-location
     
   }
  
@@ -215,13 +215,13 @@ This argument is used only when argument data comes from \code{\link{mean_compar
    \item biplot, a list of four elements :
     \itemize{
      \item simple_biplot : the biplot of location and germplasm
-     \item which_won_where : plot to assess which germplasm win in which location (see Details for more information). Done only if gxe_analysis is GGE in \code{\link{GxE}}.
-     \item mean_vs_stability : a list of two elements. Done only if gxe_analysis is GGE in \code{\link{GxE}}.
+     \item which_won_where : plot to assess which germplasm win in which location (see Details for more information). Done only if gxe_analysis is GGE in \code{\link{model_GxE}}.
+     \item mean_vs_stability : a list of two elements. Done only if gxe_analysis is GGE in \code{\link{model_GxE}}.
       \itemize{
        \item mean : assess mean of each germplasm (see Details for more information).
        \item stability : assess stability of each germplasm (see Details for more information).
       }
-     \item discrimitiveness_vs_representativeness : a list of two elements. Done only if gxe_analysis is GGE in \code{\link{GxE}}.
+     \item discrimitiveness_vs_representativeness : a list of two elements. Done only if gxe_analysis is GGE in \code{\link{model_GxE}}.
       \itemize{
        \item discrimitiveness : assess discrimitiveness of each location (see Details for more information).
        \item representativeness : assess representativeness of each location (see Details for more information).
@@ -231,7 +231,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
   }
   
   
- \item \code{\link{cross_validation_model_2}}
+ \item \code{\link{cross_validation_model_bh_GxE}}
   \itemize{
    \item plot : plot estimated.value = f(observed.value). 
    The probability mean = 0 is display (see Details for more information).
@@ -247,7 +247,7 @@ This argument is used only when argument data comes from \code{\link{mean_compar
 Below are some details on the construction of the plots :
 
 \itemize{
- \item \code{\link{check_model}} from \code{\link{GxE}} :
+ \item \code{\link{check_model}} from \code{\link{model_GxE}} :
   \itemize{
    \item variance_intra_germplasm represents the repartition of the residuals for each germplasm.
    This has to been seen with caution:
@@ -258,7 +258,7 @@ Below are some details on the construction of the plots :
    }
  }
  
- \item \code{\link{check_model}} from \code{\link{model_1}} and \code{\link{model_2}}
+ \item \code{\link{check_model}} from \code{\link{model_bh_intra-location}} and \code{\link{model_bh_GxE}}
  \itemize{
   \item mcmc_not_converge_traceplot_density : If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out_model$MCMC)}. 
   But be careful with the size of your MCMC output which are often too big to be performed in R.
@@ -317,7 +317,7 @@ Below are some details on the construction of the plots :
     } 
    }
   
- \item \code{\link{cross_validation_model_2}}
+ \item \code{\link{cross_validation_model_bh_GxE}}
   \itemize{
    \item plot : plot estimated.value = f(observed.value). 
    The probability mean = 0 is coming from a \code{t.test} performed with the null hypothesis H0: the bias of estimated values in relation to real values = 0.
@@ -331,7 +331,7 @@ Below are some details on the construction of the plots :
  \item \code{mean_comparisons}
  \item \code{parameter_groups}
  \item \code{biplot_GxE}
- \item \code{cross_validation_model_2}
+ \item \code{cross_validation_model_bh_GxE}
 }
 }
 \author{

@@ -4,13 +4,13 @@
 \name{data_version}
 \alias{data_version}
 \title{Data with group of entry separeted in different versions}
-\format{A data frame with 1574 rows and 5 columns}
+\format{A data frame with 12 rows and 5 columns}
 \usage{
 data(data_version)
 }
 \description{
 A dataset containing values for the following factors: year, location, germplasm, group and version. 
-There are twi versions per group.
+There are two versions per group.
 }
 \author{
 Pierre Rivière

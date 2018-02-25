@@ -24,7 +24,9 @@
  \item "raster"
 }}
 
-\item{x_axis}{factor displayed on the x.axis of a plot}
+\item{x_axis}{factor displayed on the x.axis of a plot. 
+"date_julian" can be choosen: it will  display julian day for a given variable automatically calculated from format_data_PPBstats(). 
+This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "interaction".}
 
 \item{in_col}{factor displayed in color of a plot}
 

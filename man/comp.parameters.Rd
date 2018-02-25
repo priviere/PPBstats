@@ -30,8 +30,8 @@ The comparisons is based on the probability of having a common distribution for 
 }
 \seealso{
 \itemize{
-\item \code{\link{mean_comparisons_model_1}}
-\item \code{\link{mean_comparisons_model_2}}
+\item \code{\link{mean_comparisons_model_bh_intra-location}}
+\item \code{\link{mean_comparisons_model_bh_GxE}}
 }
 }
 \author{

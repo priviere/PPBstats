@@ -123,14 +123,12 @@ The function returns the data with the right format (i.e. class)
  It should have the following columns: c("year", "germplasm", "location", "group", "version").
  The group refers to an id that contains two different versions.
  For example for group 1, there are version 1 and 2.
- Within each group, there must have different version and different germplasm 
- (i.e. each version must have different germplasms.).
  
  \item For type = "data_organo_napping"
  \itemize{
   \item data is a data frame with the following columns: sample, juges, X, Y, descriptors. 
   The descriptors must be separated by ";"
-  \item code is data frame with the following columns germplasm, location, code.
+  \item code is a data frame with the following columns: germplasm, location, code.
   The function merge data and code to join the information.
  }
 
