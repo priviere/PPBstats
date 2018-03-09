@@ -18,8 +18,17 @@ It involves all actors in the breeding decision process : farmers, technicians, 
 - organoleptic tests
 - molecular experiments
 
+On this website you can
 
-It is developed on Github by severals persons:
+- [download and install the `PPBstats`](https://priviere.github.io/PPBstats_web_site/download.html)
+- [follow a full tutorial of `PPBstats`](https://priviere.github.io/PPBstats_web_site/book.html)
+- [see how to contrbute](https://priviere.github.io/PPBstats_web_site/contribute.html)
+- [know about licence and citation of the package](https://priviere.github.io/PPBstats_web_site/licence.html)
+- [follow news on development](https://priviere.github.io/PPBstats_web_site/NEWS.html)
+- [find useful contat ](https://priviere.github.io/PPBstats_web_site/contact.html)
+
+
+`PPBstats` is developed on Github by severals persons:
 
 **Pierre Rivière^1^** maintains and coordinates the package development, writes the R functions and the book
 

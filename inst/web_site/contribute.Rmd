@@ -169,7 +169,7 @@ Table: Name and description of internal functions.
 
 ## Improve the book
 
-The book thanks to [`bookdown`](https://bookdown.org/yihui/bookdown/).
+The book has been generated thanks to [`bookdown`](https://bookdown.org/yihui/bookdown/).
 
 If you wish to improve the book, to add new sections on PPB, etc please file an [issue](https://github.com/priviere/PPBstats/issues) or send me an email : pierre@semencespaysannes.org 
 
