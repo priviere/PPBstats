@@ -7,7 +7,7 @@ format_data_PPBstats.data_network = function(
   d = data
   
   # 1.1. Error message ----------
-  if( !is.element(network_part, c("unipart", "bipart")) ) { stop("network_part must be either \"unipart\" or \"bipart\".") }
+  if( !is.element(network_part[1], c("unipart", "bipart")) ) { stop("network_part must be either \"unipart\" or \"bipart\".") }
   
   mess = "
   You must settle appropriate vertex_type arg.\n
