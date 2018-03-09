@@ -4,9 +4,9 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">PPBstats book</a></li>
+        <li><a href="https://priviere.github.io/PPBstats_web_site/index.html" >PPBstats website</a></li>
       after: |
-        <li><a href="https://github.com/priviere/PPBstats/tree/master/inst/bookdown" target="_blank">See code source of the book</a></li>
+        <li><a href="https://priviere.github.io/PPBstats_web_site/index.html" target="_blank">PPBstats website</a></li>
     edit: https://github.com/priviere/PPBstats/edit/master/%s
     download: ["pdf", "epub"]
     sharing:
