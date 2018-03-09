@@ -1,24 +1,29 @@
-You can load the current development version of the package: [download v0.23](https://github.com/priviere/PPBstats/archive/v0.23.zip)
 
-unzip the folder and then run 
+Here are the following step to install `PPBstats`:
 
+1. **install the R package `devtools`**
+```{r, eval=FALSE}
+install.packages("devtools")
+```
+
+2. **install `JAGS` software** on your computer. 
+See http://mcmc-jags.sourceforge.net/ for more details.
+
+3. **download the current version of the package**: [download v0.23](https://github.com/priviere/PPBstats/archive/v0.23.zip)
+
+4. **unzip the folder** on your local directory 
+
+5. **install the package** thanks to the `install` funtion from the `devtool` package 
 ```{r, eval=FALSE}
 devtools::install("PPBstats-0.23")
 ```
-
-Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
-
-
-You can also load the development version:
-
+Note that you can also load the development version:
 ```{r, eval=FALSE}
 devtools::install_github("priviere/PPBstats")
 ```
-
 The evolution of the code regarding the development version are [here](https://github.com/priviere/PPBstats/blob/master/NEWS.md).
 
-Then you can load the package :
-
+6. **load the package** :
 ```{r,warning=FALSE,message=FALSE}
 library(PPBstats)
 ```

@@ -2,7 +2,7 @@ name: "PPBstats"
 navbar:
   title: "PPBstats"
   left:
-    - text: "Download"
+    - text: "Download and install"
       href: download.html
     - text: "Book"
       href: book.html
