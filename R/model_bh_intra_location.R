@@ -28,7 +28,7 @@
 #' @param nu.max Set the nu.max. It is 10 by default
 #' @details
 #' 
-#' Model 1 estimates entry effects (mu_ij), block effects (beta_jk), residuals (epsilon_ijk) and within-environment variance (sigma_j) on each environment. 
+#' This model estimates entry effects (mu_ij), block effects (beta_jk), residuals (epsilon_ijk) and within-environment variance (sigma_j) on each environment. 
 #' An environment is a combinaison of a location and a year.
 #' 
 #' The variance are taken in an inverse Gamma distribution of parameters nu and rho. 
@@ -133,12 +133,16 @@ model_bh_intra_location = function(
   vec_env_with_no_data = out$vec_env_with_no_data
 
   vec_env_with_no_controls = out$vec_env_with_no_controls
-  data_env_with_no_controls = droplevels(filter(DD, environment %in% vec_env_with_no_controls))
-  data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
-  data_env_with_no_controls$location = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
-  data_env_with_no_controls$year = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
-  data_env_with_no_controls = data_env_with_no_controls[,-which(colnames(data_env_with_no_controls) == "ID")]
   
+  if( length(vec_env_with_no_controls) > 0 ){
+    data_env_with_no_controls = droplevels(filter(DD, environment %in% vec_env_with_no_controls))
+    data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
+    data_env_with_no_controls$location = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
+    data_env_with_no_controls$year = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
+    data_env_with_no_controls = data_env_with_no_controls[,-which(colnames(data_env_with_no_controls) == "ID")]
+  } else {
+    data_env_with_no_controls = NULL
+  }
   
   attributes(data_env_with_no_controls)$PPBstats.object = "data_env_with_no_controls.model1"
   
