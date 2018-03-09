@@ -1,3 +1,10 @@
+# **PPBstats 0.24** under process
+
+### update fonctions
+- model_bh_intra_location
+    - deal with vec_env_with_no_controls empty
+
+
 # **PPBstats 0.23**
 ### update fonctions
 - format_data_PPBstats.R : 
