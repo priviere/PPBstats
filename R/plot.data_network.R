@@ -7,7 +7,8 @@
 #' 
 #' @param plot_type "network" or "barplot"
 #' 
-#' @param in_col factor in color that fill the barplot or the vertex of the network
+#' @param in_col factor in color that fill the barplot or the vertex of the network.
+#' It can be germplasm, location or year
 #' 
 #' @param labels_on for plot_type = "network", labels to display on network
 #' 
@@ -17,6 +18,7 @@
 #' in the chronological order on the x axis, location separated on the y axis
 #' 
 #' @param x_axis for plot_type = "barplot" and unipart seed lots network, factor on the x axis
+#' It can be germplasm, location or year
 #' 
 #' @param nb_parameters_per_plot_x_axis for plot_type = "barplot" and unipart seed lots network, number of parameter on the x_axis
 #' 
@@ -30,7 +32,7 @@
 #' @return 
 #' A list with ggplot object.
 #' For plot_type = "network", a list with as many elements as net with the network representation in ggplot format
-#' For plot_type = "barplot"and bipart network, it represents the number of edges per vertex for each germplasm 
+#' For plot_type = "barplot" and bipart network, it represents the number of edges per vertex for each germplasm 
 #' and each location.
 #' 
 #' @author Pierre Riviere
@@ -40,8 +42,8 @@
 #' 
 plot.data_network = function(
   net,
-  plot_type = c("network", "barplot"),
-  in_col = NULL,
+  plot_type = "network",
+  in_col = "location",
   labels_on = FALSE,
   labels_size = 4,
   organize_sl = FALSE,
@@ -49,6 +51,12 @@ plot.data_network = function(
   nb_parameters_per_plot_x_axis = 5,
   nb_parameters_per_plot_in_col = 5
   ){
+  
+  # check arguments
+  match.arg(plot_type,  c("network", "barplot"), several.ok = FALSE)
+  match.arg(in_col,  c("germplasm", "location", "year"), several.ok = FALSE)
+  match.arg(labels_on,  c(TRUE, FALSE), several.ok = FALSE)
+  match.arg(x_axis,  c("germplasm", "location", "year"), several.ok = FALSE)
   
   # functions used afterward
   plot_network_bipart = function(net, labels_on, labels_size){
@@ -289,6 +297,7 @@ plot.data_network = function(
     return(out)
   }
   
+  # run functions
   run_fun = function(  net,
                        plot_type,
                        in_col,
@@ -311,13 +320,11 @@ plot.data_network = function(
         } else { 
           n = ggnetwork(net, arrow.gap = 0.005) 
         }
-        
-        # if( is.null(in_col) ) { in_col = "location" }
-        if( organize_sl ){ in_col = "germplasm"} 
         colnames(n)[which(colnames(n) == in_col)] = "in_col" 
         
         if( organize_sl){ 
-          p = plot_network_organize_sl_unipart(n, person_limit, in_col) 
+          warning("with organize_sl = TRUE, in_col is automaticaly set to in_col = \"germplasm\".")
+          p = plot_network_organize_sl_unipart(n, person_limit, in_col = "germplasm") 
         } else { 
           p = plot_network_unipart(n, in_col) + theme_blank() 
         }
