@@ -7,7 +7,8 @@ format_data_PPBstats.data_network = function(
   d = data
   
   # 1.1. Error message ----------
-  if( !is.element(network_part[1], c("unipart", "bipart")) ) { stop("network_part must be either \"unipart\" or \"bipart\".") }
+  if( length(network_part) > 1 ) { stop("network_part must be either \"unipart\" or \"bipart\".") }
+  if( !is.element(network_part, c("unipart", "bipart")) ) { stop("network_part must be either \"unipart\" or \"bipart\".") }
   
   mess = "
   You must settle appropriate vertex_type arg.\n
@@ -32,13 +33,14 @@ format_data_PPBstats.data_network = function(
   mess = "network_split must be either \"germplasm\" or \"relation_year_start\" and 
          can be used only with network_part = \"unipart\" and vertex_type = \"location\"."
   
-  if( vertex_type[1] == "location" & is.null(network_split) ) { 
+  if( vertex_type == "location" & is.null(network_split) ) { 
     stop("With vertex_type = \"location\", network_split can not be NULL", mess) 
     }
     
-  if(!is.element(network_split[1], c("germplasm", "relation_year_start"))) { stop(mess) }
-
-
+  if( length(network_split) > 1 ) { network_split = network_split[1] }
+  if(!is.element(network_split, c("germplasm", "relation_year_start"))) { stop(mess) }
+  
+  
   # Functions used in this function ----------
   # Check data format ----------
   check_unipart_sl_data = function(d, display_mess = TRUE){
