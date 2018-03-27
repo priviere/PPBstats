@@ -33,7 +33,7 @@ format_data_PPBstats.data_network = function(
   mess = "network_split must be either \"germplasm\" or \"relation_year_start\" and 
          can be used only with network_part = \"unipart\" and vertex_type = \"location\"."
   
-  if( vertex_type == "location" & is.null(network_split) ) { 
+  if( vertex_type[1] == "location" & is.null(network_split) ) { 
     stop("With vertex_type = \"location\", network_split can not be NULL", mess) 
     }
     
