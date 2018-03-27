@@ -575,7 +575,7 @@ format_data_PPBstats.data_network = function(
     i = igraph::graph_from_data_frame(d = out$relation, directed = TRUE, vertices = out$d_vertex) 
     return(i)
     })
-  
+  names(d) = paste("data_network-", c(1:length(d)), sep = "")
   class(d) <- c("PPBstats", "data_network")
   message(substitute(data), " has been formated for PPBstats functions.")
   return(d)
