@@ -239,7 +239,7 @@ format_data_PPBstats.data_network = function(
     
     if( !test ){ 
       stop("There are no reproduction or diffusion event in the column relation_type in data. 
-           Transform data for network_part = \"bipart\" is not possible.") 
+           Format data for network_part = \"bipart\" is not possible.") 
     }
     
     d = droplevels(filter(d, relation_type == "reproduction" | relation_type == "diffusion"))
@@ -527,10 +527,7 @@ format_data_PPBstats.data_network = function(
     if( !is.null(d1) & is.null(d2) ) { d = unipart_sl_data_to_bipart_data(d) }
     if( is.null(d1) & !is.null(d2) ) { d = check_bipart_data(d) }
     
-    if( !is.element("year", colnames(d)) ){ 
-      d$year = "unknown_year" 
-    }
-    
+    if( !is.element("year", colnames(d)) ){ d$year = "unknown_year" }
     vec_year = sort(unique(c(as.character(d$year))))
     d_all_year = d
     d_all_year$year = paste(vec_year, collapse = "-")
@@ -545,9 +542,11 @@ format_data_PPBstats.data_network = function(
       d_vertex = data.frame(
         c(as.character(dy[,"germplasm"]), as.character(dy[,"location"])),
         c(as.character(dy[,"year"]), as.character(dy[,"year"])),
-        c(rep("germplasm", nrow(dy)), rep("location", nrow(dy)))
+        c(rep("germplasm", nrow(dy)), rep("location", nrow(dy))),
+        c(rep(NA, nrow(dy)), as.character(dy$lat)),
+        c(rep(NA, nrow(dy)), as.character(dy$long))
       )
-      colnames(d_vertex) = c("vertex", "year", "type")
+      colnames(d_vertex) = c("vertex", "year", "type", "lat", "long")
       d_vertex = unique(d_vertex)
       
       dup = which(duplicated(d_vertex$vertex))
