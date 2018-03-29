@@ -16,6 +16,11 @@
 ### update vignette (inst/bookdown)
 - regarding change with plot.data_network
 
+
+### update webiste (inst/web_site)
+- improve download
+- add email list
+
     
 # **PPBstats 0.23**
 ### update fonctions

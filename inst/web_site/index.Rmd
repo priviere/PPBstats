@@ -36,7 +36,7 @@ On this website you can
 
 **Olivier David^3^** wrote the `JAGS` code and reviewed the R code and the book regarding some functions
 
-**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section of the book regarding contributions.
+**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section regarding contributions.
 
 **Camille Vindras^5^** wrote text to present method description in sensory analysis
 

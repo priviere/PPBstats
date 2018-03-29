@@ -6,7 +6,7 @@ Here are the following step to install `PPBstats`:
 install.packages("devtools")
 ```
 
-2. **install `JAGS` software** on your computer. 
+2. **install `JAGS` software** on your computer in order to do bayesian analysis. 
 See http://mcmc-jags.sourceforge.net/ for more details.
 
 3. **download the current version of the package**: [download v0.23](https://github.com/priviere/PPBstats/archive/v0.23.zip)

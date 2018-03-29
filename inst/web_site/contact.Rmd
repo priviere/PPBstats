@@ -1,3 +1,5 @@
+# Contact
+
 **Pierre Rivière**
 
 pierre@semencespaysannes.org
@@ -13,5 +15,15 @@ Réseau Semences Paysannes
 47190 Aiguillon
 
 [www.semencespaysannes.org](http://www.semencespaysannes.org)
+
+# Mailing list `ppbstats@framalistes.org`
+
+Exchange information about the R package PPBstats
+
+You can subscribe to mailing list to have news on the R package `PPBstats` and share questions and remarks
+
+Subscribe : https://framalistes.org/sympa/subscribe/ppbstats
+
+Unsubscribe : https://framalistes.org/sympa/sigrequest/ppbstats
 
 
