@@ -6,6 +6,14 @@
 - format_data_PPBstats.data_network : 
     - clean check at the beginning
     - add long and lat for bipart network
+    - add format in vertex data for further use with plot.data_network
+- plot.data_network, cf #67 :
+    - implement map with ggmap
+    - add pie on map and network
+
+### update vignette (inst/bookdown)
+- regarding change with plot.data_network
+
     
 # **PPBstats 0.23**
 ### update fonctions

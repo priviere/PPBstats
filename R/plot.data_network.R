@@ -5,12 +5,18 @@
 #' 
 #' @param net output from format_data_PPBstats with data_type = "network"
 #' 
-#' @param plot_type "network" or "barplot"
+#' @param data_to_pie output from format_data_PPBstats with data_type = "agro"
+#' 
+#' @param variable when data_to_pie is not NULL, variable to plot in a pie
+#'
+#' @param pie_size when data_to_pie is not NULL, size of the pie 
+#'   
+#' @param plot_type "network", "barplot" or "map
 #' 
 #' @param in_col factor in color that fill the barplot or the vertex of the network.
 #' It can be germplasm, location or year
 #' 
-#' @param labels_on for plot_type = "network", labels to display on network
+#' @param labels_on for plot_type = "network", labels to display on network for each vertex or locaiton for map
 #' 
 #' @param labels_size for plot_type = "network", size of the labels
 #' 
@@ -29,6 +35,8 @@
 #' For organize_sl, The representation is possible if the seed_lots are under the following format : 
 #' GERMPLASM_LOCATION_YEAR_DIGIT.
 #' 
+#' The id column from data_to_pie must refer to the id of the network.
+#' 
 #' @return 
 #' A list with ggplot object.
 #' For plot_type = "network", a list with as many elements as net with the network representation in ggplot format
@@ -42,6 +50,9 @@
 #' 
 plot.data_network = function(
   net,
+  data_to_pie = NULL,
+  variable = NULL,
+  pie_size = 0.2,
   plot_type = "network",
   in_col = "location",
   labels_on = FALSE,
@@ -53,10 +64,38 @@ plot.data_network = function(
   ){
   
   # check arguments
-  match.arg(plot_type,  c("network", "barplot"), several.ok = FALSE)
+  match.arg(plot_type,  c("network", "barplot", "map"), several.ok = FALSE)
   match.arg(in_col,  c("germplasm", "location", "year"), several.ok = FALSE)
-  match.arg(labels_on,  c(TRUE, FALSE), several.ok = FALSE)
   match.arg(x_axis,  c("germplasm", "location", "year"), several.ok = FALSE)
+  
+  # error and warning messages
+  if( !is.list(net[1]) ){ 
+    stop("net must be a list. I.e. with net coming from format_data_PPBstats, use net[1] is ok and not net$`blabla`") 
+    }
+  
+  if( !is.null(data_to_pie) ){
+    if( !is.element(plot_type, c("network", "map")) ) { stop("data_to_pie can be used only with plot_type = network or map") }
+    if( is.null(variable) ) { stop("with data_to_pie, variable must not be NULL") }
+    if( !is.element(variable, colnames(data_to_pie) ) ) { stop(variable, " is not present in data_to_pie") }
+  } else {
+    if( !is.null(variable) ) { stop(variable, " can be used only is data_to_pie is not NULL") }
+  }
+  
+  format = ggnetwork(net[[1]])[1, "format"]
+  
+  if( format == "bipart" & plot_type == "network" & !is.null(data_to_pie) ) { 
+    stop("With bipart network, pies on network are not possible.") 
+  }
+  if( format == "unipart_location" & plot_type == "network" & !is.null(data_to_pie) ) { 
+    stop("With unipart network on location, pies on network are not possible.") 
+  }
+  
+  if( format == "unipart_location" & organize_sl ) { 
+    stop("With unipart network on location, organize_sl can not be used.") 
+  }
+  if( format == "bipart" & organize_sl ) { 
+    stop("With bipart network, organize_sl can not be used.") 
+  }
   
   # functions used afterward
   plot_network_bipart = function(net, labels_on, labels_size){
@@ -142,7 +181,7 @@ plot.data_network = function(
     
     lapply(a$names, function(x){
       if(length(unlist(strsplit(as.character(x), "_")))!=4){
-        stop("Seed_lots must be under the following format : GERMPLASM_LOCATION_YEAR_DIGIT")
+        stop("Id of vertex must be seed_lots under the following format : GERMPLASM_LOCATION_YEAR_DIGIT")
       }
     }
     )
@@ -218,6 +257,8 @@ plot.data_network = function(
   }
   
   plot_network_unipart = function(n, in_col){
+    
+    colnames(n)[which(colnames(n) == in_col)] = "in_col"
     nr = n[which(n$relation_type != "diffusion"),]
     nd = n[which(n$relation_type == "diffusion"),]
     
@@ -237,7 +278,6 @@ plot.data_network = function(
                          arrow = arrow(length = unit(4, "pt"), type = "closed"), curvature = 0.2)
     }    
     p$labels$colour = in_col
-
     
     scale_ex = c("solid", "dotted", "longdash", "dashed", "twodash", "dotdash")
     p = p + scale_linetype_manual(values = scale_ex[1:length(na.omit(unique(n$relation_type)))] )
@@ -245,6 +285,7 @@ plot.data_network = function(
   }
   
   plot_network_organize_sl_unipart = function(n, person_limit, in_col){
+    colnames(n)[which(colnames(n) == in_col)] = "in_col"
     p = plot_network_unipart(n, in_col)
     r = range(as.numeric(as.character(n$x)))
     m = max(as.numeric(as.character(n$x)))
@@ -297,8 +338,194 @@ plot.data_network = function(
     return(out)
   }
   
+  pmap = function(net, format, labels_on, labels_size){
+    # As it is not possible to use annotation_custom with polar coordinates (i.e. output from ggmap) in order to add pies on map,
+    # I decided to transfer ggmap output to a png that is inserted in a background of a plot with cartesian coordinates
+    # Note there is a change in the look of the map because of coordinates change ...
+    n = ggnetwork(net, arrow.gap = 0)
+    
+    if( format == "bipart" ) {
+      n = n[which(n$type == "location"), c("lat", "long", "vertex.names")]
+      colnames(n)[ncol(n)] = "location"
+    } 
+    if( format == "unipart_location" ){
+      n = n[c("lat", "long", "vertex.names")]
+      colnames(n)[ncol(n)] = "location"
+    }
+    
+    n = unique(n[, c("lat", "long", "location")]) 
+    n$lat = as.numeric(as.character(n$lat))
+    n$long = as.numeric(as.character(n$long))
+    n = na.omit(n)
+    center_location = c(mean(n$long), mean(n$lat))
+    map = get_map(location = center_location, source = "google", zoom = 6)
+    m = ggmap(map, extent = "device")
+    ggsave("tmp_map.png", m, width = 1, height = 1) # get a perfect square
+    p = ggplot(mtcars, aes(wt, mpg)) + geom_point(size = -10) # support for the map background
+    p = p + coord_cartesian(xlim = range(m$data$lon), ylim = range(m$data$lat), expand = FALSE)
+    img = readPNG("tmp_map.png")
+    pmap = p + annotation_custom(rasterGrob(img, width = unit(1,"npc"), height = unit(1,"npc")), 
+                                 -Inf, Inf, -Inf, Inf) # change in the look of the map because of coordinates changes
+    pmap = pmap + xlab("long") + ylab("lat")
+    file.remove("tmp_map.png")
+    if( labels_on ){ 
+      pmap = pmap + geom_nodelabel_repel(data = n, aes(x = long, y = lat, label = location), size = labels_size, inherit.aes = FALSE) 
+    }
+    return(pmap)
+  }
+  
+  add_pies = function(p, n, format, ptype, data_to_pie, variable, pie_size){
+    # script adapted from 
+    # Pies On A Map, Demonstration script, By QDR : 
+    #   https://qdrsite.wordpress.com/2016/06/26/pies-on-a-map/
+    # Guangchuang YU code :
+    #   https://cran.r-project.org/web/packages/ggimage/vignettes/ggimage.html#geom_subview
+    #   https://github.com/GuangchuangYu/ggimage/blob/master/R/geom_subview.R
+    
+    # p : network or map
+    # n : network object from igraph
+    # other arg : cf Rd on the top
+    
+    # add a invisible point with variable value to get the legend of pies + set the legend
+    colnames(data_to_pie)[which(colnames(data_to_pie) == variable)] = "variable"
+    
+    col_low = "red" # "#132B43"
+    col_high = "green" # "#56B1F7"
+    
+    if( is.numeric(data_to_pie$variable) ) {  
+      p = p + geom_point(data = data_to_pie, x = 0, y = 0, size = -10, aes(fill = variable), inherit.aes = FALSE)
+      p = p + scale_fill_continuous(low = col_low, high = col_high)
+      scale_ok = scales::seq_gradient_pal(low = col_low, high = col_high)(seq(0, 1, length.out = nrow(data_to_pie)))
+      s = seq(min(data_to_pie$variable, na.rm = TRUE), max(data_to_pie$variable, na.rm = TRUE), length.out = nrow(data_to_pie))
+      data_to_pie$scale_col = sapply(data_to_pie$variable, function(x){scale_ok[which(s >= x)[1]]})
+    }
+    
+    if( is.factor(data_to_pie$variable) ) {  
+      p = p + geom_point(data = data_to_pie, x = -10, y = 10, aes(shape = variable, fill = variable), inherit.aes = FALSE) 
+      p = p + scale_shape_manual(values = rep(22, nlevels(data_to_pie$variable)))
+      scale_ok = scales::seq_gradient_pal(low = col_low, high = col_high)(seq(0, 1, length.out = nlevels(data_to_pie$variable)))
+      p = p + scale_fill_manual(values = scale_ok)
+      s = seq(1, nlevels(data_to_pie$variable))
+      data_to_pie$scale_col = sapply(as.numeric(data_to_pie$variable), function(x){scale_ok[which(s >= x)[1]]})
+    }
+    
+    
+    # Set colnames for next step according to plot type and get range for x and y
+    if( ptype == "map" ) { 
+      colnames(data_to_pie)[which(colnames(data_to_pie) == "location")] = "id_ok" 
+      xmin = min(p$coordinates$limits$x); xmax = max(p$coordinates$limits$x)
+      ymin = min(p$coordinates$limits$y); ymax = max(p$coordinates$limits$y)
+    }
+    
+    if( ptype == "network" ){ 
+        colnames(data_to_pie)[which(colnames(data_to_pie) == "id")] = "id_ok" 
+        xmin = min(p$data$x); xmax = max(p$data$x)
+        ymin = min(p$data$y); ymax = max(p$data$y)
+    }
+    
+    # Create a list of ggplot objects. Each one is the pie chart for each site with all labels removed.
+    pies <- dlply(data_to_pie, .(id_ok), function(z){
+      z = arrange(z, variable)
+      s_col = z$scale_col; names(s_col) = z$variable
+      s_col = s_col[unique(names(s_col))]
+      ggplot(z, aes(x = factor(1), fill = factor(variable))) +
+        geom_bar(width = 1) +
+        coord_polar(theta = "y") +
+        scale_fill_manual(values = s_col) +
+        theme(axis.line=element_blank(),
+              axis.text.x=element_blank(),
+              axis.text.y=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title.x=element_blank(),
+              axis.title.y=element_blank(),
+              legend.position="none",
+              panel.background=element_blank(),
+              panel.border=element_blank(),
+              panel.grid.major=element_blank(),
+              panel.grid.minor=element_blank(),
+              plot.background=element_blank()) 
+    }
+    )
+    
+    # Get coordinates of each pie and select pies
+    d = ggnetwork(n, arrow.gap = 0)
+    v_id = c(unique(as.character(data_to_pie$id_ok)))
+    
+    if( plot_type == "map" & format == "bipart" ){
+      d = droplevels(d[which(d$type == "location"),])
+      v_ok = v_id[which(is.element(v_id, as.character(d$vertex.names) ))]
+      v_not_ok = v_id[which(!is.element(v_id, as.character(d$vertex.names) ))]
+    } 
+    if( plot_type == "map" & format == "unipart_location" ){
+      v_ok = v_id[which(is.element(v_id, as.character(d$vertex.names) ))]
+      v_not_ok = v_id[which(!is.element(v_id, as.character(d$vertex.names) ))]
+    } 
+    if( plot_type == "map" & format == "unipart_sl" ){
+      v_ok = v_id[which(is.element(v_id, as.character(d$location) ))]
+      v_not_ok = v_id[which(!is.element(v_id, as.character(d$location) ))]
+    }    
+
+    if( plot_type == "network" & format == "unipart_sl" ){
+      v_ok = v_id[which(is.element(v_id, as.character(d$vertex.names) ))]
+      v_not_ok = v_id[which(!is.element(v_id, as.character(d$vertex.names) ))]
+    } 
+    
+    pies = pies[v_ok]
+    
+    if( length(v_ok) == 0) { 
+      warning("In data_to_pie, no id exist in the network object and therefore no pies are displayed") 
+    }
+    if( length(v_ok) < length(v_id) ){ 
+      warning("In data_to_pie, the following id does not exist in the network objet: ", paste(v_not_ok, collapse = ",")) 
+    }
+    
+    if( ptype == "map" ){ 
+      if( length(v_ok) > 0 ) {
+        d = ggnetwork(n, arrow.gap = 0)
+        if( format == "bipart" ) {
+          d = d[which(d$type == "location"), c("lat", "long", "vertex.names")]
+          colnames(d)[ncol(d)] = "location"
+        } 
+        if( format == "unipart_location" ){
+          d = d[c("lat", "long", "vertex.names")]
+          colnames(d)[ncol(d)] = "location"
+        }
+        d = unique(d[, c("lat", "long", "location")])
+        
+        piecoords = lapply(names(pies), function(x){
+          c(x = as.numeric(as.character(d[which(d$location == x), "long"])), 
+            y = as.numeric(as.character(d[which(d$location == x), "lat"]))
+          )
+          } 
+      )
+      }
+    }
+    
+    
+    if( ptype == "network" ){ 
+      if( length(v_ok) > 0 ) {
+        piecoords = lapply(names(pies), function(x){
+          c(x = unique(p$data[which(p$data$vertex.names == x), "x"]), y = unique(p$data[which(p$data$vertex.names == x), "y"]))
+        }
+        )
+      }
+    }
+    
+    # add pies on plot
+    if( length(v_ok) > 0 ) {
+      for(i in 1:length(pies)){
+        p = p + geom_subview(x = piecoords[[i]]["x"], y = piecoords[[i]]["y"], 
+                             subview = pies[[i]], 
+                             width = (xmax-xmin)*pie_size, height = (ymax-ymin)*pie_size)
+      }
+    }
+
+    return(p)
+  }
+  
   # run functions
   run_fun = function(  net,
+                       format,
                        plot_type,
                        in_col,
                        labels_on,
@@ -309,7 +536,7 @@ plot.data_network = function(
                        nb_parameters_per_plot_in_col
   ){
     if( plot_type == "network" ) {
-      if( is_bipartite(net) ) { 
+      if( format == "bipart" ) { 
         out = list("network" = plot_network_bipart(net, labels_on, labels_size))
       } else {
         
@@ -320,7 +547,6 @@ plot.data_network = function(
         } else { 
           n = ggnetwork(net, arrow.gap = 0.005) 
         }
-        colnames(n)[which(colnames(n) == in_col)] = "in_col" 
         
         if( organize_sl){ 
           warning("with organize_sl = TRUE, in_col is automaticaly set to in_col = \"germplasm\".")
@@ -338,24 +564,43 @@ plot.data_network = function(
     }
     
     if( plot_type == "barplot" ) {
-      if( is_bipartite(net) ) { 
+      if( format == "bipart" ) { 
         out = list("barplot" = plot_barplot_bipart(net))
       } else {
         out = list("barplot" = plot_barplot_unipart(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
                                                     nb_parameters_per_plot_in_col))
       }
     }
-    return(out)
+    
+    if( plot_type == "map" ){
+      out = list("map" = pmap(net, format, labels_on, labels_size) )
+    }
+    
+    out_all = list("net" = net, "out" = out)
+    
+    return(out_all)
   }
   
-  test = which(unlist(lapply(net, function(x){ length(E(x)) == 1 })))
-  if( length(test) > 0 ){ 
-    warning("The following element are not taken into account because they have only one edge: ", paste(names(net)[test], collapse = " ,"), ". igraph objet with only one edge are not handle by ggnetwork. See https://github.com/briatte/ggnetwork/pull/18")
-    net = net[-test]
+  if( plot_type == "network" ){
+    test = which(unlist(lapply(net, function(x){ length(E(x)) == 1 })))
+    if( length(test) > 0 ){ 
+      warning("The following element are not taken into account because they have only one edge: ", paste(names(net)[test], collapse = " ,"), ". igraph objet with only one edge are not handle by ggnetwork. See https://github.com/briatte/ggnetwork/pull/18")
+      net = net[-test]
     }
-
-  out = lapply(net, run_fun, plot_type, in_col, labels_on, labels_size, organize_sl, x_axis, 
+  }
+  
+  out_all = lapply(net, run_fun, format, plot_type, in_col, labels_on, labels_size, organize_sl, x_axis, 
                nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col)
+  
+  # add pies
+  if( !is.null(data_to_pie) ) {
+    out = lapply(out_all, function(x) { 
+      p = list(add_pies(x$out[[1]], x$net, format, plot_type, data_to_pie, variable, pie_size))
+      names(p) = paste(plot_type, "_with_pies", sep = "")
+      return(p)
+      }
+    )
+  } else { out = lapply(out_all, function(x){x$out}) }
   
   return(out)
 }

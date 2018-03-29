@@ -16,8 +16,7 @@ In order to get the network organized in a chronologiical order and by location,
 This representation is possible if the seed lots are under the following format : `GERMPLASM_LOCATION_YEAR_DIGIT`.
 
 ```{r}
-p_net_org = plot(net_unipart_sl, plot_type = "network", in_col = "location", 
-                              organize_sl = TRUE)
+p_net_org = plot(net_unipart_sl, plot_type = "network", organize_sl = TRUE)
 p_net_org
 ```
 
@@ -32,6 +31,60 @@ p_bar[[1]]$barplot$`germplasm-1|location-1` # first element of the plot
 ```
 
 
+Location present on the network can be displayed on a map with `plot_type = "map"`
+
+```{r,warning=FALSE,message=FALSE}
+p_map = plot(net_unipart_sl, plot_type = "map", labels_on = TRUE)
+p_map
+```
+
+It can be interesting to plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `variable`:
+
+```{r, warning=FALSE}
+nb_values = 30
+data_to_pie = data.frame( # = data_agro : ajouter id_seed_lot dans les format agro
+  id = rep(c("C4_JSG_2014_0001", "C1_JSG_2014_0001", "C5_JFB_2013_0001", "C4_JFB_2014_0001", "C5_OLR_2013_0001", "C1_OLR_2012_0001"), each = nb_values),
+  location = rep(c("JSG", "JSG", "JFB", "JFB", "OLR", "OLR"), each = nb_values),
+  year = rep(c("2014", "2014", "2013", "2014", "2013", "2012"), each = nb_values),
+  germplasm = rep(c("C4", "C1", "C5", "C4", "C5", "C1"), each = nb_values),
+  block = 1,
+  X = 1,
+  Y = 1,
+  y1 = rnorm(nb_values*6, 10, 2), # quanti
+  y2 = rep(c("cat1", "cat1", "cat2", "cat3", "cat3", "cat4"), each = nb_values)  # quali
+)
+
+```
+
+
+```{r,warning=FALSE,message=FALSE}
+# y1 is a quantitative variable
+p_map_pies_y1 = plot(net_unipart_sl, data_to_pie, plot_type = "map", variable = "y1")
+p_map_pies_y1
+```
+
+
+```{r,warning=FALSE,message=FALSE}
+# y2 is a qualitative variable
+p_map_pies_y2 = plot(net_unipart_sl, data_to_pie, plot_type = "map", variable = "y2")
+p_map_pies_y2
+```
+
+or on the network with a pie with `plot_type = "network"` and by setting arguments `data_to_pie` and `variable`:
+
+```{r, warning=FALSE}
+# y1 is a quantitative variable
+p_net_pies_y1 = plot(net_unipart_sl, data_to_pie, plot_type = "network", variable = "y1")
+p_net_pies_y1
+```
+
+```{r}
+# y2 is a qualitative variable
+p_net_pies_y2 = plot(net_unipart_sl, data_to_pie, plot_type = "network", variable = "y2")
+p_net_pies_y2
+```
+
+
 ### unipart network on location
 
 For network representation, set `plot_type = "network"` diffusion event are display with curve.
@@ -39,14 +92,14 @@ For network representation, set `plot_type = "network"` diffusion event are disp
 The curve between location represent the diffusion, the number of diffusion is displayed on a color scale.
 
 
-```{r}
+```{r,warning=FALSE}
 p_net = plot(net_unipart_location_g, plot_type = "network", 
                           labels_on = TRUE, labels_size = 4)
 names(p_net) # one element per germplasm, the first element with all the data
 p_net$C1
 ```
 
-```{r}
+```{r,warning=FALSE}
 p_net = plot(net_unipart_location_y, plot_type = "network", 
                           labels_on = TRUE, labels_size = 4)
 names(p_net) # one element per year, the first element with all the data
@@ -54,9 +107,36 @@ p_net$`2012-2013-2014`
 ```
 
 
+Location present on the network can be displayed on a map with `plot_type = "map"`.
+
+```{r,warning=FALSE,message=FALSE}
+p_map = plot(net_unipart_location_y, plot_type = "map", labels_on = TRUE)
+# Note if you want to do it only on one element of the list, you should use 
+# plot.data.network(net_unipart_location_y, plot_type = "map", labels_on = TRUE)
+p_map$`2012-2013-2014`
+```
+
+As well as plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `variable`:
+
+```{r,warning=FALSE,message=FALSE}
+# y1 is a quantitative variable
+p_map_pies_y1 = plot(net_unipart_location_y, data_to_pie, plot_type = "map", variable = "y1")
+p_map_pies_y1$`2012-2013-2014`
+```
+
+```{r,warning=FALSE,message=FALSE}
+# y2 is a qualitative variable
+p_map_pies_y2 = plot(net_unipart_location_y, data_to_pie, plot_type = "map", variable = "y2")
+p_map_pies_y2$`2012-2013-2014`
+```
+
+Note that it is not possible to display plot with `plot_type = "network"`.
+
+
+
 ### bipart network on germplasm and location
 
-```{r}
+```{r,warning=FALSE}
 p_net = plot(net_bipart, plot_type = "network", 
                           labels_on = TRUE, labels_size = 4)
 names(p_net) # one element per year, the first element with all the data
@@ -72,4 +152,29 @@ p_bar = p_bar$`2010-2011-2012-2013-2014`$barplot
 p_bar$germplasm
 p_bar$location
 ```
+
+
+Location present on the network can be displayed on a map with `plot_type = "map"`.
+
+```{r,warning=FALSE,message=FALSE}
+p_map = plot(net_bipart, plot_type = "map", labels_on = TRUE)
+p_map$`2010-2011-2012-2013-2014`
+```
+
+As well as plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `variable`:
+
+```{r,warning=FALSE,message=FALSE}
+# y1 is a quantitative variable
+p_map_pies_y1 = plot(net_bipart, data_to_pie, plot_type = "map", variable = "y1")
+p_map_pies_y1$`2010-2011-2012-2013-2014`
+```
+
+```{r,warning=FALSE,message=FALSE}
+# y2 is a qualitative variable
+p_map_pies_y2 = plot(net_bipart, data_to_pie, plot_type = "map", variable = "y2")
+p_map_pies_y2$`2010-2011-2012-2013-2014`
+```
+
+Note that it is not possible to display plot with `plot_type = "network"`.
+
 

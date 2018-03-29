@@ -332,7 +332,7 @@ plot.PPBstats <- function(
   x, y = NULL,
   data_version = NULL,
   plot_type = c("interaction", "barplot", "biplot-alpha-beta", "score", 
-                "network", "pam", "histogramm", "boxplot","biplot", "radar", "raster"),
+                "network", "map", "pam", "histogramm", "boxplot","biplot", "radar", "raster"),
   ...
 ) {
   ## common tasks

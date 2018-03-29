@@ -34,7 +34,10 @@ Depends:
     ggrepel,
     igraph,
     ggnetwork,
-    intergraph
+    intergraph,
+    grid,
+    ggmap,
+    png
 Suggests:
     ggmcmc,
     GGEBiplotGUI,
