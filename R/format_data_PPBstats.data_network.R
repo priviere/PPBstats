@@ -310,6 +310,7 @@ format_data_PPBstats.data_network = function(
               )
       d_vertex = d_vertex[!duplicated(d_vertex$seed_lot),]
     }
+    d_vertex$format = "unipart_sl"
     
     relation = unique(d[,c("seed_lot_parent", "seed_lot_child", "relation_type")])
     
@@ -408,6 +409,7 @@ format_data_PPBstats.data_network = function(
         }
         
         d_vertex$relation_type = "diffusion"
+        d_vertex$format = "unipart_location"
         
         dtmp = dg[,c("location_parent", "location_child")]
         du = unique(dtmp)
@@ -481,6 +483,7 @@ format_data_PPBstats.data_network = function(
         }
         
         d_vertex$relation_type = "diffusion"
+        d_vertex$format = "unipart_location"
         
         dtmp = dy[,c("location_parent", "location_child")]
         du = unique(dtmp)
@@ -558,6 +561,7 @@ format_data_PPBstats.data_network = function(
                )
        d_vertex = d_vertex[!duplicated(d_vertex$location),]
        }
+      d_vertex$format = "bipart"
       
       relation = unique(dy[,c("germplasm", "location")]) 
       
