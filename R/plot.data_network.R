@@ -173,6 +173,24 @@ plot.data_network = function(
     return(out)
   }
   
+  plot_barplot_unipart_location = function(net){
+    s_r = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])])) 
+    s_g = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
+    
+    d_r = data.frame(location = names(s_r), nb_diffusion = s_r)
+    pr = ggplot(d_r, aes(x = reorder(location, -nb_diffusion), y = nb_diffusion)) + geom_bar(stat="identity")
+    pr = pr + xlab("location") + ylab("nb of sl received")
+    pr = pr + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    
+    d_g = data.frame(location = names(s_g), nb_diffusion = s_g)
+    pg = ggplot(d_g, aes(x = reorder(location, -nb_diffusion), y = nb_diffusion)) + geom_bar(stat="identity")
+    pg = pg + xlab("location") + ylab("nb of sl given")
+    pg = pg + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    
+    out = list("received" = pr, "given" = pg)
+    return(out)
+  }
+  
   organize_sl_unipart = function(net){
     n = ggnetwork(net, arrow.gap = 0)
     
@@ -566,7 +584,11 @@ plot.data_network = function(
     if( plot_type == "barplot" ) {
       if( format == "bipart" ) { 
         out = list("barplot" = plot_barplot_bipart(net))
-      } else {
+      }
+      if( format == "unipart_location" ) { 
+        out = list("barplot" = plot_barplot_unipart_location(net))
+      }
+      if( format == "unipart_sl" ) { 
         out = list("barplot" = plot_barplot_unipart(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
                                                     nb_parameters_per_plot_in_col))
       }

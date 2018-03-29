@@ -10,6 +10,8 @@
 - plot.data_network, cf #67 :
     - implement map with ggmap
     - add pie on map and network
+    - add barplot for unipart network on location
+
 
 ### update vignette (inst/bookdown)
 - regarding change with plot.data_network
