@@ -11,6 +11,7 @@ Seven types of plot, throught the `plot_type` argument are possible:
 - biplot
 - radar
 - raster
+- map
 
 Then you must choose which factor to represent on the x axis (`x_axis` argument),
 the factor to display in color (`in_col` argument), and of course the variables to describe (`vec_variables` argument).
@@ -209,5 +210,34 @@ p = plot(
   x_axis = "germplasm"
 )
 p$`germplasm-block-X-Y-9|-NA`
+```
+
+### map
+You can display map with location if you have data with latitude and longitude for each location.
+
+```{r}
+data("data_network_unipart_sl")
+data_to_map = droplevels(unique(data_network_unipart_sl[,c("location_parent", "long_parent", "lat_parent")]))
+colnames(data_to_map) = c("location", "long", "lat")
+```
+
+
+
+```{r,warning=FALSE,message=FALSE}
+p = plot.data_agro(
+  data_model_GxE, data_to_map,
+  plot_type = "map", labels_on = "location"
+)
+p$map
+```
+
+and add pies for a given variables
+```{r,warning=FALSE,message=FALSE}
+p = plot.data_agro(
+  data_model_GxE, data_to_map, vec_variables = c("y1", "desease"),
+  plot_type = "map"
+)
+p$pies_on_map_y1
+p$pies_on_map_desease
 ```
 

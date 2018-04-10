@@ -11,10 +11,12 @@
     - implement map with ggmap
     - add pie on map and network
     - add barplot for unipart network on location
-
+- plot.data_network, cf #68 :
+    - add plot_type = "map"
 
 ### update vignette (inst/bookdown)
 - regarding change with plot.data_network
+- regarding change with plot.data_agro
 
 
 ### update webiste (inst/web_site)

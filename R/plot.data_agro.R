@@ -5,6 +5,8 @@
 #' 
 #' @param data The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #' 
+#' @param data_to_map data frame with the following information to display map : "location", "long", "lat"
+#' 
 #' @param plot_type the type of plot you wish. It can be :
 #' \itemize{
 #'  \item "pam" for presence abscence matrix that represent the combinaison of germplasm x location
@@ -15,6 +17,7 @@
 #'  \item "biplot"
 #'  \item "radar"
 #'  \item "raster"
+#'  \item "map"
 #' }
 #' 
 #' @param x_axis factor displayed on the x.axis of a plot. 
@@ -31,6 +34,8 @@
 #' @param labels_on factor to display for plot_type = "biplot"
 #' 
 #' @param labels_size size of the label for plot_type = "biplot" and "radar"
+#' 
+#' @param pie_size when plot_type = "map" and vec_variables is not NULL, size of the pie 
 #' 
 #' @return 
 #' \itemize{
@@ -50,23 +55,25 @@
 #' 
 plot.data_agro = function(
   data,
-  plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster"),
+  data_to_map = NULL,
+  plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"),
   x_axis = NULL,
   in_col = NULL,
   vec_variables = NULL,
   nb_parameters_per_plot_x_axis = 5,
   nb_parameters_per_plot_in_col = 5,
   labels_on = NULL,
-  labels_size = 4
+  labels_size = 4,
+  pie_size = 0.2
 ){
   # 1. Error message ----------  
-  mess = "plot_type must be \"pam\", \"histogramm\", \"barplot\", \"boxplot\", \"interaction\", \"biplot\", \"radar\" or \"raster\"."
+  mess = "plot_type must be \"pam\", \"histogramm\", \"barplot\", \"boxplot\", \"interaction\", \"biplot\", \"radar\", \"raster\" or \"map\"."
   if(length(plot_type) != 1) { stop(mess) }
-  if(!is.element(plot_type, c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster"))) { 
+  if(!is.element(plot_type, c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"))) { 
     stop(mess) 
   }
   
-  if(is.null(vec_variables)){ stop("You must settle vec_variables") }
+  if(is.null(vec_variables) & plot_type != "map"){ stop("You must settle vec_variables") }
   
   check_arg = function(x, vec_x) { 
     for(i in x) { 
@@ -393,6 +400,22 @@ plot.data_agro = function(
     return(out)
   }
   
+  # 2.6. Functions to run map
+  fun_pies_on_map = function(variable, p, data_to_map, data, pie_size){
+    p = add_pies(p, data_to_map, format = "data_agro", plot_type = "map", data, variable, pie_size)
+    return(p) 
+  }
+  
+  fun_map = function(data, data_to_map, vec_variables, labels_on, labels_size, pie_size){
+    p = pmap(data_to_map, format = NULL, labels_on, labels_size) 
+    if( !is.null(vec_variables) ){
+      out = lapply(vec_variables, fun_pies_on_map, p, data_to_map, data, pie_size)
+      names(out) = paste("pies_on_map", vec_variables, sep="_")
+    } else { out = list(p); names(out) = "map" }
+    return(out)
+  }
+  
+  
   # 3. Run code ----------
   # 3.1. Presence absence for each germplasm, location and year
   if(plot_type == "pam"){ 
@@ -424,6 +447,11 @@ plot.data_agro = function(
     p_out = fun_raster(data, vec_variables, x_axis, nb_parameters_per_plot_x_axis)
   } 
    
+  # 3.6. map ------------
+  if(plot_type == "map"){
+    p_out = fun_map(data, data_to_map, vec_variables, labels_on, labels_size, pie_size)
+  }  
+  
   # 4. Return results ----------
   return(p_out)
 }
