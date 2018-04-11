@@ -332,36 +332,6 @@ data_version = format_data_PPBstats(data_version, type = "data_agro_version")
 head(data_version)
 ```
 
-Here, in location `env1-1`, `tem-1` and `tem-2` are two versions belonging to the same groupe.
+Here, in location `loc-1`, `germ-25` and `germ-26` on one hand and `germ-1` and `germ-12` on the other hand are two version belonging to the same groupe.
 
-For exemple, this format can be used :
-
-- to study response to selection based on **Family 1** analysis (section \@ref(family-1))
-
-For a given trait, selection differential corresponds to the difference between mean of the selected spikes and
-mean of the bulk (i.e. spikes that have not been selected). 
-Response to selection correponds to the difference between mean of spikes coming from the selected spikes and the spikes coming from the bulk (Figure \@ref(fig:SR)).
-Selection differential ($S$) and response to selection ($R$) are linked with the realized heritability ($h^2_r$):
-$R = h^2_r \times S$.
-
-```{r SR, out.width='80%', fig.align='center', echo=FALSE, fig.cap="Seletion differential (S) in 2014-2015 and response to selection (R) in 2015-2016. Circles and arrows in gray represent the seed-lots that have been sown in 2015 after harvest in 2015.[@SandR_EN]"}
-knitr::include_graphics("figures/SandR_EN.png")
-```
-
-
-```{r}
-data(data_version_SR)
-data_version = format_data_PPBstats(data_version_SR, type = "data_agro_version")
-head(data_version_SR)
-```
-Where `group` represents differential selection (S) or reponse to selection (R) and `version` represents bouquet or vrac.
-Several examples are shown in **Family 1** analysis in section \@ref(family-1).
-
-- to study migrant residant based on **Family 2** analysis (section \@ref(migrant-residant))
-```{r}
-data(data_version_MR)
-data_version = format_data_PPBstats(data_version_MR, type = "data_agro_version")
-head(data_version_MR)
-```
-Where `group` represents migrant or residant and `version` represents the location where come the germplasm from.
-
+Exemple regarding analysis of version are presented in section \@ref(family-4).

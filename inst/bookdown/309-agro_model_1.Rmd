@@ -408,50 +408,6 @@ p_barplot_mu$data_env_whose_param_did_not_converge
 ```
 
 
-Regarding pairs of entries in a given environment, 
-it is possible to get comparison of paris of entries in a given location.
-This is useful if you want to compare two versions within a group.
-For exemple:
-```{r}
-data(data_version)
-data_version = format_data_PPBstats(data_version, type = "data_agro_version")
-head(data_version)
-```
-
-Here, in location `loc-1`, `germ-25` and `germ-26` on one hand and `germ-1` and `germ-12` on the other hand are two version belonging to the same groupe.
-
-Lets' make the plots:
-```{r, warning=FALSE}
-p_barplot_mu_version = plot(
-  out_mean_comparisons_model_bh_intra_location_mu,
-  data_version = data_version,
-  plot_type = "barplot"
-)
-p_barplot_mu_version$data_mean_comparisons$`loc-1:2005`
-```
-
-The stars corresponds to the pvalue:
-
-| pvalue | stars |
-| --- | --- |
-| $< 0.001$ | *** |
-| $[0.001 , 0.05]$ | ** |
-| $[0.05 , 0.01]$ | * |
-| $> 0.01$ | . |
-
-
-The pvalue is computed as describe in Section \@ref(mean-comp) if the parameters have been estimated with the model.
-
-For environments where MCMC did not converge or without environments, it is a \@ref(t.test) which is perform.
-
-```{r}
-p_barplot_mu_version$data_env_with_no_controls
-```
-
-```{r}
-p_barplot_mu_version$data_env_whose_param_did_not_converge
-```
-
 ###### interaction
 
 With `plot_type = "interaction"`, you can display the year effect as well as detect groups.

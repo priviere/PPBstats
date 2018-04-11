@@ -18,6 +18,9 @@ the factor to display in color (`in_col` argument), and of course the variables 
 
 It is possible to tune the number of factor displayed (`nb_parameters_per_plot_x_axis` and `nb_parameters_per_plot_in_col` arguments) and the size of the labels regarding biplot and radar (`labels_on` and `labels_size` arguments).
 
+Note that descriptive plots can be done based on version within the data set.
+See section \@ref(family-4) formore details.
+
 ### Format the data
 
 Get two data set to look at some examples
