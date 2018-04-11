@@ -1,4 +1,4 @@
-### model_bh_GxE to analyse $G \times E$ interaction in the network of farms (**M7b**) {#model-2}
+### Hierarchical Bayesian $G \times E$ model to analyse $G \times E$ interaction in the network of farms (**M7b**) {#model-2}
 
 At the **network level**, there is a large number of germplasm $\times$ environment combinations that are missing, leading to a poor estimation of germplasm, environment and interaction effects.
 Hence, model_bh_GxE should be implemented.
@@ -275,7 +275,7 @@ Here it is bad as only 10 iterations for the 5 first $Y_{ij}$ have been done to 
 
 ```{r}
 # out_cross_validation_model_bh_GxE = cross_validation_model_bh_GxE(data_model_bh_GxE, "y1", nb_iterations = 10)
-
+# Note that to save time it has been done on only 10 dataset and with nb_iterations = 10
 load("./data_PPBstats/out_cross_validation_model_bh_GxE.RData") # to save lots of time
 
 head(out_cross_validation_model_bh_GxE)
@@ -488,7 +488,7 @@ In order to choose a new germplasm to test on his farm, a farmer may choose a ge
 
 For example for `"loc-6:year-5"`
 ```{r}
-ptp = predict_the_past_model_bh_GxE(out_check_model_bh_GxE, env = "loc-6:year-5")
+ptp = predict_the_past_model_bh_GxE(out_check_model_bh_GxE, env = "loc-1:2005")
 ```
 
 `ptp` can be handle exacly as `out_model_1` for mean comparisons
@@ -501,17 +501,17 @@ and visualize the output, for `plot_type = "barplot"`, there is two colors regar
 
 ```{r}
 p = plot(m_ptp, plot_type = "barplot")
-p$data_mean_comparisons$`loc-6:year-5`$`1`
+p$data_mean_comparisons$`loc-1:2005`$`1`
 ```
 
 For `plot_type = "score"` and `plot_type = "interaction"`, predicted and estimated are mention between brakets after germplasm name.
 
 ```{r}
 p = plot(m_ptp, plot_type = "score")
-p$`loc-6`$`1`
+p$`loc-1`$`1`
 
 p = plot(m_ptp, plot_type = "interaction")
-p$data_mean_comparisons$`loc-6`$`1`
+p$data_mean_comparisons$`loc-1`$`1`
 ```
 
 

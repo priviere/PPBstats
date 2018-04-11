@@ -1,4 +1,4 @@
-### model_bh_intra_location to perform mean comparisons with each farm (**M7a**) {#model-1}
+### Hierarchical Bayesian intra-location model to perform mean comparisons with each farm (**M7a**) {#model-1}
 
 At the farm level, the residual has few degrees of freedom, leading to a poor estimation of the residual variance and to a lack of power for comparing populations.
 model_bh_intra_location was implemented to improve efficiency of mean comparisons.
@@ -184,8 +184,8 @@ When considering `out_model_bh_intra_location_bis`:
 # out_check_model_bh_intra_location_bis = check_model(out_model_bh_intra_location_bis)
 
 # The Gelman-Rubin test is running for each parameter ...
-# The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : nu, rho, sigma[env2-2:2010]. Therefore, they are not present in MCMC output.
-# MCMC are updated, the following environment were deleted : env2-2:2010
+# The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : # mu[germ-20,loc-15:2006], nu, rho, sigma[loc-15:2006]. Therefore, they are not present in MCMC output.
+# MCMC are updated, the following environment were deleted : loc-15:2006
 # data_env_whose_param_did_not_converge contains the raw data for these environments.
 
 load("./data_PPBstats/out_check_model_bh_intra_location_bis.RData") # To save time
@@ -211,18 +211,18 @@ p_out_check_model_bh_intra_location$sigma_j_gamma[[2]]
 ```{r}
 names(p_out_check_model_bh_intra_location$mu_ij)
 
-names(p_out_check_model_bh_intra_location$mu_ij$`env1-1:2010`)
+names(p_out_check_model_bh_intra_location$mu_ij$`loc-10:2005`)
 
-p_out_check_model_bh_intra_location$mu_ij$`env1-1:2010`$`1`
+p_out_check_model_bh_intra_location$mu_ij$`loc-10:2005`$`1`
 ```
 
 - `beta_jk` : distribution of each `beta_jk` in a list with as many elements as environment. For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` `beta_jk` per graph.
 ```{r}
 names(p_out_check_model_bh_intra_location$beta_jk)
 
-names(p_out_check_model_bh_intra_location$beta_jk$`env1-1:2010`)
+names(p_out_check_model_bh_intra_location$beta_jk$`loc-1:2005`)
 
-p_out_check_model_bh_intra_location$beta_jk$`env1-1:2010`$`1`
+p_out_check_model_bh_intra_location$beta_jk$`loc-1:2005`$`1`
 ```
 
 
@@ -253,7 +253,7 @@ When considering `p_out_check_model_bh_intra_location_bis`, there is no converge
 ```{r}
 p_out_check_model_bh_intra_location_bis = plot(out_check_model_bh_intra_location_bis)
 
-p_out_check_model_bh_intra_location_bis$mcmc_not_converge_traceplot_density$`sigma\\[env2-2:2010`
+p_out_check_model_bh_intra_location_bis$mcmc_not_converge_traceplot_density$`sigma\\[loc-15:2006`
 ```
 
 
@@ -267,8 +267,8 @@ names(mu_ij_estimated) = sapply(names(mu_ij_estimated),
                                 function(x){  sub("\\]", "", sub("mu\\[", "", x)) } 
                                 )
 
-d = filter(data_model_bh_intra_location, location != "env4")
-d = filter(d, location != "env5")
+d = filter(data_model_bh_intra_location, location != "loc-24")
+d = filter(d, location != "loc-25")
 d = droplevels(d)
 environment = paste(as.character(d$location), as.character(d$year), sep = ":")
 d$entry = as.factor(paste(as.character(d$germplasm), environment, sep = ","))
@@ -301,14 +301,14 @@ Below is an example for $\mu$, the same can be done for $\beta$.
 ```{r}
 # out_mean_comparisons_model_bh_intra_location_mu = mean_comparisons(out_check_model_bh_intra_location, parameter = "mu")
 
-# Get at least X groups for env2-1:2011. It may take some time ...
-# Get at least X groups for env2-1:2011 is done.
-# Get at least X groups for env2-13:2011. It may take some time ...
-# Get at least X groups for env2-13:2011 is done.
-# Get at least X groups for env2-3:2012. It may take some time ...
-# Get at least X groups for env2-3:2012 is done.
-# Get at least X groups for env2-9:2010. It may take some time ...
-# Get at least X groups for env2-9:2010 is done.
+# Get at least X groups for loc-11:2007. It may take some time ...
+# Get at least X groups for loc-11:2007 is done.
+# Get at least X groups for loc-17:2005. It may take some time ...
+# Get at least X groups for loc-17:2005 is done.
+# Get at least X groups for loc-21:2006. It may take some time ...
+# Get at least X groups for loc-21:2006 is done.
+# Get at least X groups for loc-9:2006. It may take some time ...
+# Get at least X groups for loc-9:2006 is done.
 
 load("./data_PPBstats/out_mean_comparisons_model_bh_intra_location_mu.RData") # To save time
 ```
@@ -324,12 +324,12 @@ Each element of the list is composed of two elements:
 
     - `mean.comparisons`
     ```{r}
-    head(out_mean_comparisons_model_bh_intra_location_mu$data_mean_comparisons$`env1-1:2010`$mean.comparisons)
+    head(out_mean_comparisons_model_bh_intra_location_mu$data_mean_comparisons$`loc-1:2005`$mean.comparisons)
     ```
 
     - `Mpvalue` : a square matrix with pvalue computed for each pair of parameter.
     ```{r}
-    out_mean_comparisons_model_bh_intra_location_mu$data_mean_comparisons$`env1-1:2010`$Mpvalue[1:3, 1:3]
+    out_mean_comparisons_model_bh_intra_location_mu$data_mean_comparisons$`loc-1:2005`$Mpvalue[1:3, 1:3]
     ```
 
 - `data_env_with_no_controls` a list with as many elements as environment.
@@ -340,7 +340,7 @@ names(out_mean_comparisons_model_bh_intra_location_mu$data_env_with_no_controls)
 Each list contains mean.comparisons. 
 Note there are no groups displayed. Inded, there were no controls on the environment so no model was run.
 ```{r}
-head(out_mean_comparisons_model_bh_intra_location_mu$data_env_with_no_controls$`env5:2010`$mean.comparisons)
+head(out_mean_comparisons_model_bh_intra_location_mu$data_env_with_no_controls$`loc-25:2005`$mean.comparisons)
 ```
 
 - `data_env_whose_param_did_not_converge` a list with as many elements as environment.
@@ -351,7 +351,7 @@ Here it is NULL as all parameters converge.
 Otherwise in each list it is mean.comparisons.
 Note there are no groups displayed. Inded, the model did not well so no mean comparisons were done.
 ```{r}
-head(out_mean_comparisons_model_bh_intra_location_mu$data_env_with_no_controls$`env5:2010`$mean.comparisons)
+head(out_mean_comparisons_model_bh_intra_location_mu$data_env_with_no_controls$`loc-5:2005`$mean.comparisons)
 ```
 
 
@@ -385,7 +385,7 @@ p = p_barplot_mu$data_mean_comparisons
 
 head(names(p))
 
-p_env = p$`env1-1:2010`
+p_env = p$`loc-1:2005`
 names(p_env)
 
 p_env$`1`
@@ -418,7 +418,7 @@ data_version = format_data_PPBstats(data_version, type = "data_agro_version")
 head(data_version)
 ```
 
-Here, in location `env1-1`, `tem-1` and `tem-2` are two version belonging to the same groupe.
+Here, in location `loc-1`, `germ-25` and `germ-26` on one hand and `germ-1` and `germ-12` on the other hand are two version belonging to the same groupe.
 
 Lets' make the plots:
 ```{r, warning=FALSE}
@@ -427,7 +427,7 @@ p_barplot_mu_version = plot(
   data_version = data_version,
   plot_type = "barplot"
 )
-p_barplot_mu_version$data_mean_comparisons$`env1-1:2010`
+p_barplot_mu_version$data_mean_comparisons$`loc-1:2005`
 ```
 
 The stars corresponds to the pvalue:
@@ -471,7 +471,7 @@ p_interaction = plot(out_mean_comparisons_model_bh_intra_location_mu, plot_type 
 
 head(names(p_interaction$data_mean_comparisons))
 
-p_env = p_interaction$data_mean_comparisons$`env1-1`
+p_env = p_interaction$data_mean_comparisons$`loc-1`
 names(p_env)
 
 p_env$`1`
@@ -494,7 +494,7 @@ p_score = plot(out_mean_comparisons_model_bh_intra_location_mu, plot_type = "sco
 
 head(names(p_score))
 
-p_env = p_score$`env1-1`
+p_env = p_score$`loc-1`
 names(p_env)
 
 p_env$`1`
@@ -539,5 +539,4 @@ workflow_model_bh_intra_location = function(x){
 # names(out) = vec_variables
 
 ```
-
 

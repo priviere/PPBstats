@@ -23,6 +23,8 @@
 - improve download
 - add email list
 
+### update RData
+- standardize RData, cf #85
     
 # **PPBstats 0.23**
 ### update fonctions
