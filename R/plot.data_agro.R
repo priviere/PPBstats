@@ -311,6 +311,10 @@ plot.data_agro = function(
           p = p + coord_cartesian(xlim = NULL, ylim = ylim)
           p = p + stat_smooth(method = "lm", se = FALSE)
           p = p  + xlab(var1) + ylab(var2) + theme(axis.text.x = element_text(angle=90, hjust=1), legend.title = element_blank()) 
+          
+          m <- lm(var2 ~ var1, dtmp)
+          eq = paste("y = ", format(coef(m)[1], digits = 2), " x +", format(coef(m)[2], digits = 2), "; r2 = ", format(summary(m)$r.squared, digits = 3), sep = "")
+          p = p + ggtitle(eq) + theme(plot.title = element_text(hjust = 0.5))
         }
         return(p)
       }
