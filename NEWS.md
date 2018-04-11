@@ -15,6 +15,9 @@
     - add plot_type = "map"
     - add r2 on biplot, cf #84
 
+- format_data_PPBstats.data_agro_version
+    - add specific class for data_version_SR and data_version_MR
+
 
 ### update vignette (inst/bookdown)
 - regarding change with plot.data_network
