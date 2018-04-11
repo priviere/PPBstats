@@ -14,6 +14,7 @@
 - plot.data_agro, cf #68 :
     - add plot_type = "map"
     - add r2 on biplot, cf #84
+    - add argument data_version
 
 - format_data_PPBstats.data_agro_version
     - add specific class for data_version_SR and data_version_MR

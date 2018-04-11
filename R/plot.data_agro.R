@@ -7,6 +7,9 @@
 #' 
 #' @param data_to_map data frame with the following information to display map : "location", "long", "lat"
 #' 
+#' @param data_version data frame with the following column : c("year", "germplasm", "location", "group", "version").
+#' See \link{\code{format_data_PPBstats}} for more details.
+#' 
 #' @param plot_type the type of plot you wish. It can be :
 #' \itemize{
 #'  \item "pam" for presence abscence matrix that represent the combinaison of germplasm x location
@@ -56,6 +59,7 @@
 plot.data_agro = function(
   data,
   data_to_map = NULL,
+  data_version = NULL,
   plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"),
   x_axis = NULL,
   in_col = NULL,
@@ -104,10 +108,10 @@ plot.data_agro = function(
   if( plot_type == "histogramm" & !is.null(x_axis) ){ 
     warning("Note than with plot_type == histogramm, x_axis can not be NULL.")
   }
-  if( plot_type == "barplot" & is.null(x_axis) ){ 
+  if( plot_type == "barplot" & is.null(x_axis) & is.null(data_version) ){ 
     stop("With plot_type == barplot, x_axis can not be NULL.")
   }
-  if( plot_type == "boxplot" & is.null(x_axis) ){ 
+  if( plot_type == "boxplot" & is.null(x_axis)  & is.null(data_version) ){ 
     stop("With plot_type == boxplot, x_axis can not be NULL.")
   }
   if( plot_type == "interaction" & (is.null(x_axis) | is.null(in_col)) ){ 
@@ -140,6 +144,10 @@ plot.data_agro = function(
   }
   if( plot_type == "raster" & !is.null(labels_on) ){ 
     warning("Note that with plot_type == raster, labels_on is not used.")
+  }
+  
+  if( !is.null(data_version) ){
+    if( !is.element(plot_type, c("barplot", "boxplot")) ){ stop("With data_version, only plot_type \"barplot\" and \"boxplot\" are possible.") }
   }
   
   # 2. Functions used in the newt steps ----------
@@ -404,7 +412,7 @@ plot.data_agro = function(
     return(out)
   }
   
-  # 2.6. Functions to run map
+  # 2.6. Functions to run map ----------
   fun_pies_on_map = function(variable, p, data_to_map, data, pie_size){
     p = add_pies(p, data_to_map, format = "data_agro", plot_type = "map", data, variable, pie_size)
     return(p) 
@@ -416,6 +424,50 @@ plot.data_agro = function(
       out = lapply(vec_variables, fun_pies_on_map, p, data_to_map, data, pie_size)
       names(out) = paste("pies_on_map", vec_variables, sep="_")
     } else { out = list(p); names(out) = "map" }
+    return(out)
+  }
+  
+  # 2.7. Function to run data_version ----------
+  fun_data_version_1 = function(variable, data, data_version, plot_type){
+    
+    data_version_class = class(data_version)[2]
+    
+    factor_to_split = "location" # default value
+    
+    if( data_version_class == "data_agro_version_SR" ){
+      data_version$lg = paste(data_version$location, data_version$germplasm, sep = ":")
+      factor_to_split = "lg"
+    }
+    
+    if( data_version_class == "data_agro_version_MR" ){
+      data_version$group = paste(data_version$germplasm, "from", data_version$group)
+      factor_to_split = "location"
+    }
+    
+    colnames(data)[which(colnames(data) == variable)] = "variable"
+    data$id_azerty = paste(data$location, data$year, data$germplasm, sep = "-")
+    data_version$id_azerty = paste(data_version$location, data_version$year, data_version$germplasm, sep = "-")
+    d = join(data_version, data, by = "id_azerty")
+    colnames(d)[which(colnames(d) == factor_to_split)] = "factor_to_split"
+    d = plyr:::splitter_d(d, .(factor_to_split))
+    out = lapply(d, function(x){
+      p = ggplot(x, aes(x = group, y = variable))
+      p = p + ggtitle(x[1, "factor_to_split"]) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+      p = p + xlab("")
+      if( plot_type == "barplot"){
+        p = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge")      
+      }
+      if( plot_type == "boxplot"){
+        p = p + geom_boxplot(aes(fill = version), position = "dodge")      
+      }
+      return(p)  
+    })
+    return(out)
+  }
+
+  fun_data_version = function(vec_variables, data, data_version, plot_type){
+    out = lapply(vec_variables, fun_data_version_1, data, data_version, plot_type)
+    names(out) = vec_variables
     return(out)
   }
   
@@ -455,6 +507,12 @@ plot.data_agro = function(
   if(plot_type == "map"){
     p_out = fun_map(data, data_to_map, vec_variables, labels_on, labels_size, pie_size)
   }  
+  
+  # 3.7. data_version ----------
+  if( !is.null(data_version) ){
+    p_out = fun_data_version(vec_variables, data, data_version, plot_type)
+  }  
+  
   
   # 4. Return results ----------
   return(p_out)
