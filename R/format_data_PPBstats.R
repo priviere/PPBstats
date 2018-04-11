@@ -10,6 +10,8 @@
 #'  \item data_network
 #'  \item data_agro
 #'  \item data_agro_version
+#'  \item data_agro_version_SR
+#'  \item data_agro_version_MR
 #'  \item data_organo_napping
 #'  \item data_organo_hedonic
 #'  }
@@ -94,6 +96,14 @@
 #'  The group refers to an id that contains two different versions.
 #'  For example for group 1, there are version 1 and 2.
 #'  
+#'  \item For type = "data_agro_version_SR" :
+#'  In group there are either S or R.
+#'  In version there are either bouquet or vrac
+#'   
+#'  \item For type = "data_agro_version_MR" :
+#'  In group there are same type of value than in column location.
+#'  In version there are either migrant or residant
+#'  
 #'  \item For type = "data_organo_napping"
 #'  \itemize{
 #'   \item data is a data frame with the following columns: sample, juges, X, Y, descriptors. 
@@ -135,7 +145,7 @@
 #' 
 format_data_PPBstats = function(
   data, 
-  type = "data_agro",
+  type,
   code,
   threshold,
   network_part = c("unipart", "bipart"), 
