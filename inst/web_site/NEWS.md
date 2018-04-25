@@ -1,3 +1,27 @@
+# **PPBstats 0.24** under process
+
+### update fonctions
+- model_bh_intra_location
+    - deal with vec_env_with_no_controls empty
+- format_data_PPBstats.data_network : 
+    - clean check at the beginning
+    - add long and lat for bipart network
+    - add format in vertex data for further use with plot.data_network
+- plot.data_network, cf #67 :
+    - implement map with ggmap
+    - add pie on map and network
+    - add barplot for unipart network on location
+
+
+### update vignette (inst/bookdown)
+- regarding change with plot.data_network
+
+
+### update webiste (inst/web_site)
+- improve download
+- add email list
+
+    
 # **PPBstats 0.23**
 ### update fonctions
 - format_data_PPBstats.R : 

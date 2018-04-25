@@ -30,6 +30,18 @@ p_bar = plot(net_unipart_sl, plot_type = "barplot", in_col = "location",
 p_bar[[1]]$barplot$`germplasm-1|location-1` # first element of the plot
 ```
 
+Barplot can also be use to study the relation within the network.
+The name of the relation must be put in the argument `vec_variables`.
+The results is a list of two elements for each variable:
+
+- nb_received: number of seed lots that end the relation
+- nb_given: number of seed lots that start the relation
+
+```{r}
+p_bar = plot(net_unipart_sl, plot_type = "barplot", vec_variables = "diffusion",
+                  nb_parameters_per_plot_x_axis = 100, x_axis = "location", in_col = "year")
+p_bar
+```
 
 Location present on the network can be displayed on a map with `plot_type = "map"`
 
@@ -58,28 +70,28 @@ data_to_pie = data.frame( # = data_agro : ajouter id_seed_lot dans les format ag
 
 ```{r,warning=FALSE,message=FALSE}
 # y1 is a quantitative variable
-p_map_pies_y1 = plot(net_unipart_sl, data_to_pie, plot_type = "map", variable = "y1")
+p_map_pies_y1 = plot(net_unipart_sl, data_to_pie, plot_type = "map", vec_variables = "y1")
 p_map_pies_y1
 ```
 
 
 ```{r,warning=FALSE,message=FALSE}
 # y2 is a qualitative variable
-p_map_pies_y2 = plot(net_unipart_sl, data_to_pie, plot_type = "map", variable = "y2")
+p_map_pies_y2 = plot(net_unipart_sl, data_to_pie, plot_type = "map", vec_variables = "y2")
 p_map_pies_y2
 ```
 
-or on the network with a pie with `plot_type = "network"` and by setting arguments `data_to_pie` and `variable`:
+or on the network with a pie with `plot_type = "network"` and by setting arguments `data_to_pie` and `vec_variables`:
 
 ```{r, warning=FALSE}
 # y1 is a quantitative variable
-p_net_pies_y1 = plot(net_unipart_sl, data_to_pie, plot_type = "network", variable = "y1")
+p_net_pies_y1 = plot(net_unipart_sl, data_to_pie, plot_type = "network", vec_variables = "y1")
 p_net_pies_y1
 ```
 
 ```{r}
 # y2 is a qualitative variable
-p_net_pies_y2 = plot(net_unipart_sl, data_to_pie, plot_type = "network", variable = "y2")
+p_net_pies_y2 = plot(net_unipart_sl, data_to_pie, plot_type = "network", vec_variables = "y2")
 p_net_pies_y2
 ```
 
@@ -117,23 +129,25 @@ p_bar$barplot$given
 Location present on the network can be displayed on a map with `plot_type = "map"`.
 
 ```{r,warning=FALSE,message=FALSE}
-p_map = plot(net_unipart_location_y, plot_type = "map", labels_on = "location")
-# Note if you want to do it only on one element of the list, you should use 
-# plot.data.network(net_unipart_location_y, plot_type = "map", labels_on = TRUE)
+p_map = plot.data_network(net_unipart_location_y[1], plot_type = "map", labels_on = TRUE)
+# Note if you want to do it on all element of the list, you should use 
+# plot(net_unipart_location_y, plot_type = "map", labels_on = "location")
+# Here we use plot.data_network only not to ask to often the map server that may bug if there
+# are too many query
 p_map$`2007-2008-2009`
 ```
 
-As well as plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `variable`:
+As well as plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `vec_variables`:
 
 ```{r,warning=FALSE,message=FALSE}
 # y1 is a quantitative variable
-p_map_pies_y1 = plot(net_unipart_location_y, data_to_pie, plot_type = "map", variable = "y1")
+p_map_pies_y1 = plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y1")
 p_map_pies_y1$`2007-2008-2009`
 ```
 
 ```{r,warning=FALSE,message=FALSE}
 # y2 is a qualitative variable
-p_map_pies_y2 = plot(net_unipart_location_y, data_to_pie, plot_type = "map", variable = "y2")
+p_map_pies_y2 = plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y2")
 p_map_pies_y2$`2007-2008-2009`
 ```
 
@@ -164,21 +178,21 @@ p_bar$location
 Location present on the network can be displayed on a map with `plot_type = "map"`.
 
 ```{r,warning=FALSE,message=FALSE}
-p_map = plot(net_bipart, plot_type = "map", labels_on = "location")
+p_map = plot.data_network(net_bipart[1], plot_type = "map", labels_on = "location")
 p_map$`2005-2006-2007-2008-2009`
 ```
 
-As well as plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `variable`:
+As well as plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `vec_variables`:
 
 ```{r,warning=FALSE,message=FALSE}
 # y1 is a quantitative variable
-p_map_pies_y1 = plot(net_bipart, data_to_pie, plot_type = "map", variable = "y1")
+p_map_pies_y1 = plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y1")
 p_map_pies_y1$`2005-2006-2007-2008-2009`
 ```
 
 ```{r,warning=FALSE,message=FALSE}
 # y2 is a qualitative variable
-p_map_pies_y2 = plot(net_bipart, data_to_pie, plot_type = "map", variable = "y2")
+p_map_pies_y2 = plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y2")
 p_map_pies_y2$`2005-2006-2007-2008-2009`
 ```
 

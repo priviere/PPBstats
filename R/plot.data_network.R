@@ -29,18 +29,27 @@
 #' @param nb_parameters_per_plot_x_axis for plot_type = "barplot" and unipart seed lots network, number of parameter on the x_axis
 #' 
 #' @param nb_parameters_per_plot_in_col for plot_type = "barplot" and unipart seed lots network, number of paramter by color that fill
-#' 
+#'
+#' @param vec_variables for plot_type = "barplot" and unipart seed lots network, name of a relation type to display
+#'
 #' @details
 #' For network diffusion are represented by a curve.
 #' For organize_sl, The representation is possible if the seed_lots are under the following format : 
 #' GERMPLASM_LOCATION_YEAR_DIGIT.
 #' 
 #' The id column from data_to_pie must refer to the id of the network.
+#' The results is a list of two elements for each variable:
+#' \itemize{
+#'  \item nb_received: number of seed lots that end the relation
+#'  \item nb_given: number of seed lots that start the relation
+#' }
 #' 
 #' @return 
 #' A list with ggplot object.
 #' For plot_type = "network", a list with as many elements as net with the network representation in ggplot format
 #' For plot_type = "barplot" and bipart network, it represents the number of edges per vertex for each germplasm 
+#' and each location.
+#' For plot_type = "barplot" and unipart network on seed lots, it represents the number of edges per vertex for each germplasm 
 #' and each location.
 #' 
 #' @author Pierre Riviere
@@ -58,9 +67,10 @@ plot.data_network = function(
   labels_on = FALSE,
   labels_size = 4,
   organize_sl = FALSE,
-  x_axis = NULL,
+  x_axis = "germplasm",
   nb_parameters_per_plot_x_axis = 5,
-  nb_parameters_per_plot_in_col = 5
+  nb_parameters_per_plot_in_col = 5,
+  vec_variables = NULL
   ){
   
   # check arguments
@@ -73,12 +83,21 @@ plot.data_network = function(
     stop("net must be a list. I.e. with net coming from format_data_PPBstats, use net[1] is ok and not net$`blabla`") 
     }
   
+  
   if( !is.null(data_to_pie) ){
     if( !is.element(plot_type, c("network", "map")) ) { stop("data_to_pie can be used only with plot_type = network or map") }
-    if( is.null(variable) ) { stop("with data_to_pie, variable must not be NULL") }
-    if( !is.element(variable, colnames(data_to_pie) ) ) { stop(variable, " is not present in data_to_pie") }
+    if( is.null(vec_variables[1]) ) { stop("with data_to_pie, variable must not be NULL") }
+    for(v in vec_variables){
+      if( !is.element(v, colnames(data_to_pie) ) ) { stop(v, " is not present in data_to_pie") }
+    }
   } else {
-    if( !is.null(variable) ) { stop(variable, " can be used only is data_to_pie is not NULL") }
+    vec_relation_type = unlist(lapply(net, function(x){ unique(na.omit(ggnetwork(x)$relation_type)) }))
+    mess = paste(variable, " can be used only is data_to_pie is not NULL or 
+                 must  be a type of relation used in the network: ", paste(vec_relation_type, collapse = ", "), sep = "")
+    # Only if data_to_pie is NULL to avoid conflict if same name in edge and data_to_pie
+    for(v in vec_variables){
+      if( !is.element(v, vec_relation_type ) ) { stop(mess) }
+    }
   }
   
   format = ggnetwork(net[[1]])[1, "format"]
@@ -179,15 +198,69 @@ plot.data_network = function(
     
     d_r = data.frame(location = names(s_r), nb_diffusion = s_r)
     pr = ggplot(d_r, aes(x = reorder(location, -nb_diffusion), y = nb_diffusion)) + geom_bar(stat="identity")
-    pr = pr + xlab("location") + ylab("nb of sl received")
+    pr = pr + xlab("location") + ylab("nb of seed-lots received")
     pr = pr + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     
     d_g = data.frame(location = names(s_g), nb_diffusion = s_g)
     pg = ggplot(d_g, aes(x = reorder(location, -nb_diffusion), y = nb_diffusion)) + geom_bar(stat="identity")
-    pg = pg + xlab("location") + ylab("nb of sl given")
+    pg = pg + xlab("location") + ylab("nb of seed-lots given")
     pg = pg + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     
     out = list("received" = pr, "given" = pg)
+    return(out)
+  }
+  
+  plot_barplot_unipart_relation_type = function(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
+                                                nb_parameters_per_plot_in_col){
+
+    s_r = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])])) 
+    d_r = data.frame(
+      germplasm = vertex_attr(net)$germplasm, 
+      location = vertex_attr(net)$location, 
+      year = vertex_attr(net)$year,
+      nb_received = s_r)
+    d_r = droplevels(d_r[-which(d_r$nb_received == 0),])
+    dall_r = reshape_data_split_x_axis_in_col(d_r, 
+                                            vec_variables = "nb_received", 
+                                            labels_on = NULL,
+                                            x_axis = x_axis, 
+                                            nb_parameters_per_plot_x_axis = nb_parameters_per_plot_x_axis, 
+                                            in_col = in_col, 
+                                            nb_parameters_per_plot_in_col = nb_parameters_per_plot_in_col
+    )
+
+    s_g = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
+    d_g = data.frame(
+      germplasm = vertex_attr(net)$germplasm, 
+      location = vertex_attr(net)$location, 
+      year = vertex_attr(net)$year,
+      nb_given = s_g)
+    d_g = droplevels(d_g[-which(d_g$nb_given == 0),])
+    dall_g = reshape_data_split_x_axis_in_col(d_g, 
+                                              vec_variables = "nb_given", 
+                                              labels_on = NULL,
+                                              x_axis = x_axis, 
+                                              nb_parameters_per_plot_x_axis = nb_parameters_per_plot_x_axis, 
+                                              in_col = in_col, 
+                                              nb_parameters_per_plot_in_col = nb_parameters_per_plot_in_col
+    )
+    
+    fun_bar = function(d, in_col){
+      variable =  colnames(d)[4]
+      colnames(d)[4] = "variable"
+      if(!is.null(in_col)) {
+        p = ggplot(d, aes(x = x_axis, y = variable, fill = in_col)) + geom_bar(stat = "identity")
+      } else {
+        p = ggplot(d, aes(x = x_axis, y = variable)) + geom_bar(stat = "identity") + xlab(x_axis) + ylab("")
+      }
+      p = p + xlab(x_axis) + ylab(variable) + theme(legend.title=element_blank())
+      p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    }
+    
+    out_r = lapply(dall_r, fun_bar, in_col)
+    out_g = lapply(dall_g, fun_bar, in_col)
+    
+    out = list("received" = out_r, "given" = out_g)
     return(out)
   }
   
@@ -327,8 +400,8 @@ plot.data_network = function(
     return(p)
   }
   
-  plot_barplot_unipart = function(net, x_axis, in_col, 
-                                  nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col){
+  plot_barplot_unipart_sl = function(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
+                                  nb_parameters_per_plot_in_col){
     n = ggnetwork(net, arrow.gap = 0)
     n$count = 1
     dall = reshape_data_split_x_axis_in_col(n, 
@@ -343,16 +416,15 @@ plot.data_network = function(
     fun_bar = function(d, in_col){
       if(!is.null(in_col)) {	
         p = ggplot(d, aes(x = x_axis, fill = in_col)) + geom_bar()
-        p = p + xlab(x_axis) + ylab("") + theme(legend.title=element_blank())
-        p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       } else {
         p = ggplot(d, aes(x = x_axis)) + geom_bar() + xlab(x_axis) + ylab("")
-        p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       }
+      p = p + xlab(x_axis) + ylab("") + theme(legend.title=element_blank())
+      p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     }
     
     out = lapply(dall, fun_bar, in_col)
-
+    
     return(out)
   }
   
@@ -367,7 +439,8 @@ plot.data_network = function(
                        organize_sl,
                        x_axis,
                        nb_parameters_per_plot_x_axis,
-                       nb_parameters_per_plot_in_col
+                       nb_parameters_per_plot_in_col,
+                       vec_variables
   ){
     if( plot_type == "network" ) {
       if( format == "bipart" ) { 
@@ -404,9 +477,19 @@ plot.data_network = function(
       if( format == "unipart_location" ) { 
         out = list("barplot" = plot_barplot_unipart_location(net))
       }
-      if( format == "unipart_sl" ) { 
-        out = list("barplot" = plot_barplot_unipart(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
+      if( format == "unipart_sl" & is.null(vec_variables[1]) ) { 
+        out = list("barplot" = plot_barplot_unipart_sl(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
                                                     nb_parameters_per_plot_in_col))
+      }
+      if( format == "unipart_sl" & !is.null(vec_variables[1]) ) { 
+        out = list()
+        for(v in vec_variables){
+          net_tmp = delete_edges(net, edges = which(!is.element(edge_attr(net)$relation_type, v)))
+          out_p = plot_barplot_unipart_relation_type(net_tmp, x_axis, in_col, nb_parameters_per_plot_x_axis, 
+                                                          nb_parameters_per_plot_in_col)
+          out = c(out, list(out_p))
+        }
+        names(out) = vec_variables
       }
     }
     
@@ -428,17 +511,24 @@ plot.data_network = function(
   }
   
   out_all = lapply(net, run_fun, format, plot_type, in_col, labels_on, labels_size, organize_sl, x_axis, 
-               nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col)
+               nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col, vec_variables)
   
   # add pies
   if( !is.null(data_to_pie) ) {
-    out = lapply(out_all, function(x) { 
-      p = list(add_pies(x$out[[1]], x$net, format, plot_type, data_to_pie, variable, pie_size))
-      names(p) = paste(plot_type, "_with_pies", sep = "")
-      return(p)
+    fun_pies = function(x, format, plot_type, data_to_pie, vec_variables, pie_size){
+      out_p = list()
+      for(v in vec_variables){
+        p = list(add_pies(x$out[[1]], x$net, format, plot_type, data_to_pie, variable = v, pie_size))
+        names(p) = paste(plot_type, "_with_pies", sep = "")
+        out_p = c(out_p, p)
       }
-    )
-  } else { out = lapply(out_all, function(x){x$out}) }
+      return(out_p)
+    }
+    out = lapply(out_all, fun_pies, format, plot_type, data_to_pie, vec_variables, pie_size)
+  } else { 
+    out = lapply(out_all, function(x){x$out}) 
+  }
+  names(out) = plot_type
   
   return(out)
 }
