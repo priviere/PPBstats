@@ -5,8 +5,6 @@
 #' 
 #' @param data The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #' 
-#' @param data_to_map data frame with the following information to display map : "location", "long", "lat"
-#' 
 #' @param data_version data frame with the following column : c("year", "germplasm", "location", "group", "version").
 #' See \link{\code{format_data_PPBstats}} for more details.
 #' 
@@ -58,7 +56,6 @@
 #' 
 plot.data_agro = function(
   data,
-  data_to_map = NULL,
   data_version = NULL,
   plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"),
   x_axis = NULL,
@@ -144,6 +141,11 @@ plot.data_agro = function(
   }
   if( plot_type == "raster" & !is.null(labels_on) ){ 
     warning("Note that with plot_type == raster, labels_on is not used.")
+  }
+  
+  if( plot_type == "map" ){
+    test = unique(is.element(c("lat", "long"), colnames(data)))
+    if( length(test) == 2 | !test[1] ){ stop("To display map, you must have columns \"lat\" and \"long\" in your data.") }
   }
   
   if( !is.null(data_version) ){
@@ -413,15 +415,17 @@ plot.data_agro = function(
   }
   
   # 2.6. Functions to run map ----------
-  fun_pies_on_map = function(variable, p, data_to_map, data, pie_size){
+  fun_pies_on_map = function(variable, p, data, pie_size){
+    data_to_map = droplevels(unique(data[c("location", "long", "lat")]))
     p = add_pies(p, data_to_map, format = "data_agro", plot_type = "map", data, variable, pie_size)
     return(p) 
   }
   
-  fun_map = function(data, data_to_map, vec_variables, labels_on, labels_size, pie_size){
+  fun_map = function(data, vec_variables, labels_on, labels_size, pie_size){
+    data_to_map = droplevels(unique(data[c("location", "long", "lat")]))
     p = pmap(data_to_map, format = NULL, labels_on, labels_size) 
     if( !is.null(vec_variables) ){
-      out = lapply(vec_variables, fun_pies_on_map, p, data_to_map, data, pie_size)
+      out = lapply(vec_variables, fun_pies_on_map, p, data, pie_size)
       names(out) = paste("pies_on_map", vec_variables, sep="_")
     } else { out = list(p); names(out) = "map" }
     return(out)
@@ -505,7 +509,7 @@ plot.data_agro = function(
    
   # 3.6. map ------------
   if(plot_type == "map"){
-    p_out = fun_map(data, data_to_map, vec_variables, labels_on, labels_size, pie_size)
+    p_out = fun_map(data, vec_variables, labels_on, labels_size, pie_size)
   }  
   
   # 3.7. data_version ----------

@@ -8,6 +8,8 @@
     - add long and lat for bipart network
     - add format in vertex data for further use with plot.data_network
     - delete optional column alt as it is not needed for map
+- format_data_PPBstats.data_agro : 
+    - add long and lat in option
 - plot.data_network, cf #67 :
     - implement map with ggmap
     - add pie on map and network

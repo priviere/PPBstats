@@ -3,6 +3,7 @@ format_data_PPBstats.data_agro = function(data){
   
   mess = "The following column are compulsory : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
   # check columns
+  # Factors compulsory
   if(!is.element("location", colnames(d))) { stop(mess) }
   if(!is.element("year", colnames(d))) { stop(mess) }
   if(!is.element("germplasm", colnames(d))) { stop(mess) }
@@ -17,6 +18,15 @@ format_data_PPBstats.data_agro = function(data){
   if(!is.factor(d$block)) { stop(mess) }
   if(!is.factor(d$X)) { stop(mess) }
   if(!is.factor(d$Y)) { stop(mess) }
+  
+  # Variable in option to get map
+  vec_variables = c("long", "lat"
+  )
+  for(i in vec_variables) {
+    if(!is.element(i, colnames(d))) { 
+      warning("Column \"", i, "\" is needed to get map and not present in data.") 
+    }
+  }
   
   # check and format date
   vec_date = grep("\\$date", colnames(d))

@@ -218,18 +218,10 @@ p$`germplasm-block-X-Y-9|-NA`
 ### map
 You can display map with location if you have data with latitude and longitude for each location.
 
-```{r}
-data("data_network_unipart_sl")
-data_to_map = droplevels(unique(data_network_unipart_sl[,c("location_parent", "long_parent", "lat_parent")]))
-colnames(data_to_map) = c("location", "long", "lat")
-```
-
-
 
 ```{r,warning=FALSE,message=FALSE}
 p = plot.data_agro(
-  data_model_GxE, data_to_map,
-  plot_type = "map", labels_on = "location"
+  data_model_GxE, plot_type = "map", labels_on = "location"
 )
 p$map
 ```
@@ -237,7 +229,7 @@ p$map
 and add pies for a given variables
 ```{r,warning=FALSE,message=FALSE}
 p = plot.data_agro(
-  data_model_GxE, data_to_map, vec_variables = c("y1", "desease"),
+  data_model_GxE, vec_variables = c("y1", "desease"),
   plot_type = "map"
 )
 p$pies_on_map_y1

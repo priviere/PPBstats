@@ -303,6 +303,7 @@ There are two format supported : `data-agro` and `data-agro-version`.
 The data have always the following columns : `location`, `year`, `germplasm`, `block`, `X`, `Y` as factors followed by the variables and their corresponding dates.
 The dates are associated to their corresponding variable by `$`.
 For example the date associated to variable `y1` is `y1$date`.
+In addition, to get map, columns `lat` and `long` can be added.
 
 ```{r}
 data("data_model_GxE")

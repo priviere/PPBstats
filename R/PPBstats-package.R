@@ -119,12 +119,13 @@ NULL
 #' A dataset containing five variables (y1, y2, y3, desease, vigor) 
 #' with their respective dates for the first three (y1$date, y2$date and y3$date)
 #' and values for the following factors: location, year, germplasm, block, X and Y. 
+#' As well as vlues of lat and long in order to get map.
 #'
 #' @usage
 #' data(data_model_GxE)
 #'
 #' @format
-#' A data frame with 180 rows and 14 columns
+#' A data frame with 180 rows and 16 columns
 #' 
 #' @author Pierre Rivière
 "data_model_GxE"
