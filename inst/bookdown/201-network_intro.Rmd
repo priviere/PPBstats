@@ -54,14 +54,14 @@ Three formats are possible:
     - `"location_child"` : the location associated to the child seed lot
     - `"year_child"` : represents the year of the last relation event of the child seed lot
 
-Possible options are : `"alt_parent"`, `"long_parent"`, `"lat_parent"`, `"alt_child"`, `"long_child"`, `"lat_child"` to get map representation, supplementary variables with tags: `"_parent"`, `"_child"` or `"_relation"`.
+Possible options are : `"long_parent"`, `"lat_parent"`, `"long_child"`, `"lat_child"` to get map representation, supplementary variables with tags: `"_parent"`, `"_child"` or `"_relation"`.
 
 2. unipart networks that represent relationship of germplasm diffusion between locations: a data frame with the followin compulsory columns (same as above): `"location_parent"`, `"location_child"`, `"relation_year_start"`, `"relation_year_end"`.
 Possible options are : `"germplasm_parent"`, `"year_parent"`, `"germplasm_child"`, `"year_child"`.
-Other possibles option are : `"alt_parent"`, `"long_parent"`, `"lat_parent"`, `"alt_child"`, `"long_child"`, `"lat_child"` to get map representation.
+Other possibles option are : `"long_parent"`, `"lat_parent"`, `"long_child"`, `"lat_child"` to get map representation.
 
 3. bipart networks represent "which location has which germplasm which year": a data frame with the followin compulsory columns: `"germplasm"`, `"location"`, `"year"`.
-Possible options are : `"alt"`, `"long"`, `"lat"` to get map representation
+Possible options are : `"long"`, `"lat"` to get map representation
 
 
 Note that format 1. can be convert to format 2. and 3. as summarized in Table \@ref(tab:network-format-analysis).

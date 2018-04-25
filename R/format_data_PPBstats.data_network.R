@@ -61,8 +61,7 @@ format_data_PPBstats.data_network = function(
     }
     
     # Variable in option to get map
-    vec_variables = c("alt_parent", "long_parent", "lat_parent", 
-                      "alt_child", "long_child", "lat_child"
+    vec_variables = c("long_parent", "lat_parent", "long_child", "lat_child"
     )
     for(i in vec_variables) {
       if(!is.element(i, colnames(d))) { 
@@ -148,8 +147,7 @@ format_data_PPBstats.data_network = function(
     }
     
     # Variable in option to get map
-    vec_variables = c("alt_parent", "long_parent", "lat_parent", 
-                      "alt_child", "long_child", "lat_child"
+    vec_variables = c("long_parent", "lat_parent", "long_child", "lat_child"
     )
     for(i in vec_variables) {
       if(!is.element(i, colnames(d))) { 
@@ -198,7 +196,7 @@ format_data_PPBstats.data_network = function(
       }
     
     # Variable in option to get map
-    vec_variables = c("alt", "long", "lat")
+    vec_variables = c("long", "lat")
     for(i in vec_variables) {
       if(!is.element(i, colnames(d))) { 
         if(display_mess){ warning("Column \"", i, "\" is needed to get map and not present in data.") }
@@ -223,9 +221,9 @@ format_data_PPBstats.data_network = function(
       "location_parent", "location_child", 
       "relation_year_start", "relation_year_end",
       "germplasm_parent", "year_parent", 
-      "alt_parent", "long_parent", "lat_parent",
+      "long_parent", "lat_parent",
       "germplasm_child", "year_child",
-      "alt_child", "long_child", "lat_child"
+      "long_child", "lat_child"
     )]
     
     return(d_person)
@@ -249,14 +247,6 @@ format_data_PPBstats.data_network = function(
       c(as.character(d[,"year_parent"]), as.character(d[,"year_child"]))
     )
     colnames(d_bipart) = c("germplasm", "location", "year")
-    
-    if( is.element("alt_parent", colnames(d)) ){
-      d_bipart = cbind.data.frame(
-        d_bipart, 
-        c(as.character(d[,"alt_parent"]), as.character(d[,"alt_child"]))
-        )
-      colnames(d_bipart)[ncol(d_bipart)] = "alt"
-    }
     
     if( is.element("long_parent", colnames(d)) ){
       d_bipart = cbind.data.frame(
@@ -331,15 +321,15 @@ format_data_PPBstats.data_network = function(
         \"relation_type\", \"relation_year_start\", \"relation_year_end\",\n
         \"germplasm_parent\", \"location_parent\", \"year_parent\",\n
         \"germplasm_child\", \"location_child\", \"year_child\". \n
-        It can have in option : \"alt_parent\", \"long_parent\", \"lat_parent\",\n
-        \"alt_child\", \"long_child\", \"lat_child\" to get map representation \n
+        It can have in option : \"long_parent\", \"lat_parent\",\n
+        \"long_child\", \"lat_child\" to get map representation \n
         It can have supplementary variables with tags \"_parent\", \"_child\" or \"_relation\". \n
         \n OR \n
         2. the data must have the following colums :\n
         \"location_parent\", \"location_child\", \n
         \"relation_type\", \"relation_year_start\", \"relation_year_end\",\n
         It can have in option : \"year\", \"germplasm\" and \n
-        \"alt\", \"long\", \"lat\" to get map representation "
+        \"long\", \"lat\" to get map representation "
         ) 
     }
     if( !is.null(d1) & is.null(d2) ) { d = unipart_sl_data_to_unipart_location_data(d) }
@@ -517,14 +507,14 @@ format_data_PPBstats.data_network = function(
         \"relation_type\", \"relation_year_start\", \"relation_year_end\",\n
         \"germplasm_parent\", \"location_parent\", \"year_parent\",\n
         \"germplasm_child\", \"location_child\", \"year_child\". \n
-        It can have in option : \"alt_parent\", \"long_parent\", \"lat_parent\",\n
-        \"alt_child\", \"long_child\", \"lat_child\" to get map representation \n
+        It can have in option : \"long_parent\", \"lat_parent\",\n
+        \"long_child\", \"lat_child\" to get map representation \n
         It can have supplementary variables with tags \"_parent\", \"_child\" or \"_relation\". \n
         \n OR \n
         2. the data must have the following colums :\n
         \"germplasm\", \"location\", \n
         It can have in option : \"year\" and \n
-        \"alt\", \"long\", \"lat\" to get map representation "
+        \"long\", \"lat\" to get map representation "
       ) 
     }
     if( !is.null(d1) & is.null(d2) ) { d = unipart_sl_data_to_bipart_data(d) }
