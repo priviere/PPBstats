@@ -83,6 +83,14 @@ plot.data_network = function(
     stop("net must be a list. I.e. with net coming from format_data_PPBstats, use net[1] is ok and not net$`blabla`") 
     }
   
+  if( plot_type == "network" ){
+    test = which(unlist(lapply(net, function(x){ length(E(x)) == 1 })))
+    if( length(test) > 0 ){ 
+      warning("The following element are not taken into account because they have only one edge: ", paste(names(net)[test], collapse = " ,"), ". igraph objet with only one edge are not handle by ggnetwork. See https://github.com/briatte/ggnetwork/pull/18")
+      net = net[-test]
+    }
+    if( length(net) == 0 ){ stop("There are no more network to display as there were only one edge per network.") }
+  }
   
   if( !is.null(data_to_pie) ){
     if( !is.element(plot_type, c("network", "map")) ) { stop("data_to_pie can be used only with plot_type = network or map") }
@@ -348,7 +356,6 @@ plot.data_network = function(
   }
   
   plot_network_unipart = function(n, in_col){
-    
     colnames(n)[which(colnames(n) == in_col)] = "in_col"
     nr = n[which(n$relation_type != "diffusion"),]
     nd = n[which(n$relation_type == "diffusion"),]
@@ -500,14 +507,6 @@ plot.data_network = function(
     out_all = list("net" = net, "out" = out)
     
     return(out_all)
-  }
-  
-  if( plot_type == "network" ){
-    test = which(unlist(lapply(net, function(x){ length(E(x)) == 1 })))
-    if( length(test) > 0 ){ 
-      warning("The following element are not taken into account because they have only one edge: ", paste(names(net)[test], collapse = " ,"), ". igraph objet with only one edge are not handle by ggnetwork. See https://github.com/briatte/ggnetwork/pull/18")
-      net = net[-test]
-    }
   }
   
   out_all = lapply(net, run_fun, format, plot_type, in_col, labels_on, labels_size, organize_sl, x_axis, 
