@@ -37,7 +37,7 @@ The results is a list of two elements for each variable:
 - nb_received: number of seed lots that end the relation
 - nb_given: number of seed lots that start the relation
 
-```{r}
+```{r,warning=FALSE}
 p_bar = plot(net_unipart_sl, plot_type = "barplot", vec_variables = "diffusion",
                   nb_parameters_per_plot_x_axis = 100, x_axis = "location", in_col = "year")
 p_bar
@@ -89,12 +89,20 @@ p_net_pies_y1 = plot(net_unipart_sl, data_to_pie, plot_type = "network", vec_var
 p_net_pies_y1
 ```
 
-```{r}
+```{r,warning=FALSE}
 # y2 is a qualitative variable
 p_net_pies_y2 = plot(net_unipart_sl, data_to_pie, plot_type = "network", vec_variables = "y2")
 p_net_pies_y2
 ```
 
+The same can be done regarding relation type of the network on map but not on network.
+
+```{r,warning=FALSE,message=FALSE}
+p_map_pies_diff = plot.data_network(net_unipart_sl, plot_type = "map", vec_variables = "diffusion")
+p_map_pies_diff
+```
+
+Here the pies represent the repartition of the number of seed lots.
 
 ### unipart network on location
 
@@ -119,7 +127,7 @@ p_net$`2007-2008-2009`
 
 With barplots, it represents the number of germplasm received or given.
 ```{r}
-p_bar = plot(net_unipart_location_y, plot_type = "barplot")
+p_bar = plot(net_unipart_location_y, plot_type = "barplot", x_axis = "location", in_col = "germplasm")
 names(p_bar) # one element per year, the first element with all the data
 p_bar = p_bar$`2007-2008-2009`
 p_bar$barplot$received
@@ -129,7 +137,7 @@ p_bar$barplot$given
 Location present on the network can be displayed on a map with `plot_type = "map"`.
 
 ```{r,warning=FALSE,message=FALSE}
-p_map = plot.data_network(net_unipart_location_y[1], plot_type = "map", labels_on = TRUE)
+p_map = plot.data_network(net_unipart_location_y[1], plot_type = "map", labels_on = "location")
 # Note if you want to do it on all element of the list, you should use 
 # plot(net_unipart_location_y, plot_type = "map", labels_on = "location")
 # Here we use plot.data_network only not to ask to often the map server that may bug if there
@@ -166,7 +174,7 @@ p_net$`2009`
 
 
 With barplots, it represents the number of edges per vertex for each germplasm and each location.
-```{r}
+```{r,warning=FALSE}
 p_bar = plot(net_bipart, plot_type = "barplot")
 names(p_bar) # one element per year, the first element with all the data
 p_bar = p_bar$`2005-2006-2007-2008-2009`$barplot

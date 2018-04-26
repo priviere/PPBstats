@@ -936,6 +936,8 @@ add_pies = function(p, n, format, plot_type, data_to_pie, variable, pie_size){
       p = p + geom_subview(x = piecoords[[i]]["x"], y = piecoords[[i]]["y"], 
                            subview = pies[[i]], 
                            width = (xmax-xmin)*pie_size, height = (ymax-ymin)*pie_size)
+      # p = p + labs(fill = variable) # not good with factor variables ...
+      p = p + ggtitle(variable)
     }
   }
   

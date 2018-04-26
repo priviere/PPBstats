@@ -92,19 +92,25 @@ plot.data_network = function(
     if( length(net) == 0 ){ stop("There are no more network to display as there were only one edge per network.") }
   }
   
+  pie_on_map = FALSE
   if( !is.null(data_to_pie) ){
     if( !is.element(plot_type, c("network", "map")) ) { stop("data_to_pie can be used only with plot_type = network or map") }
     if( is.null(vec_variables[1]) ) { stop("with data_to_pie, variable must not be NULL") }
     for(v in vec_variables){
       if( !is.element(v, colnames(data_to_pie) ) ) { stop(v, " is not present in data_to_pie") }
     }
+    pie_on_map = TRUE
   } else {
-    vec_relation_type = unlist(lapply(net, function(x){ unique(na.omit(ggnetwork(x)$relation_type)) }))
-    mess = paste(variable, " can be used only is data_to_pie is not NULL or 
+    if( !is.null(vec_variables[1]) ){
+      vec_relation_type = unlist(lapply(net, function(x){ unique(na.omit(ggnetwork(x)$relation_type)) }))
+      mess = paste(variable, " can be used only is data_to_pie is not NULL or 
                  must  be a type of relation used in the network: ", paste(vec_relation_type, collapse = ", "), sep = "")
-    # Only if data_to_pie is NULL to avoid conflict if same name in edge and data_to_pie
-    for(v in vec_variables){
-      if( !is.element(v, vec_relation_type ) ) { stop(mess) }
+      # Only if data_to_pie is NULL to avoid conflict if same name in edge and data_to_pie
+      for(v in vec_variables){
+        if( !is.element(v, vec_relation_type ) ) { stop(mess) }
+      }
+      if( !is.element(plot_type, c("barplot", "map")) ) { stop("relation of a network can be used only with plot_type = barplot or map") }
+      if( plot_type == "map" ) { pie_on_map = TRUE }
     }
   }
   
@@ -218,17 +224,31 @@ plot.data_network = function(
     return(out)
   }
   
+  data_unipart_relation_type = function(net){
+    
+    s_r = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])])) 
+    s_g = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
+    
+    d = data.frame(
+      id = vertex_attr(net)$name,
+      location = vertex_attr(net)$location, 
+      year = vertex_attr(net)$year,
+      germplasm = vertex_attr(net)$germplasm, 
+      block = NA,
+      X = NA,
+      Y = NA,
+      nb_received = s_r,
+      nb_given = s_g)
+    
+    return(d)
+  }
+  
   plot_barplot_unipart_relation_type = function(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
                                                 nb_parameters_per_plot_in_col){
 
-    s_r = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])])) 
-    d_r = data.frame(
-      germplasm = vertex_attr(net)$germplasm, 
-      location = vertex_attr(net)$location, 
-      year = vertex_attr(net)$year,
-      nb_received = s_r)
-    d_r = droplevels(d_r[-which(d_r$nb_received == 0),])
-    dall_r = reshape_data_split_x_axis_in_col(d_r, 
+    d = data_unipart_relation_type(net)
+
+    d_all_r = reshape_data_split_x_axis_in_col(d, 
                                             vec_variables = "nb_received", 
                                             labels_on = NULL,
                                             x_axis = x_axis, 
@@ -236,21 +256,13 @@ plot.data_network = function(
                                             in_col = in_col, 
                                             nb_parameters_per_plot_in_col = nb_parameters_per_plot_in_col
     )
-
-    s_g = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
-    d_g = data.frame(
-      germplasm = vertex_attr(net)$germplasm, 
-      location = vertex_attr(net)$location, 
-      year = vertex_attr(net)$year,
-      nb_given = s_g)
-    d_g = droplevels(d_g[-which(d_g$nb_given == 0),])
-    dall_g = reshape_data_split_x_axis_in_col(d_g, 
-                                              vec_variables = "nb_given", 
-                                              labels_on = NULL,
-                                              x_axis = x_axis, 
-                                              nb_parameters_per_plot_x_axis = nb_parameters_per_plot_x_axis, 
-                                              in_col = in_col, 
-                                              nb_parameters_per_plot_in_col = nb_parameters_per_plot_in_col
+    d_all_g = reshape_data_split_x_axis_in_col(d, 
+                                             vec_variables = "nb_given", 
+                                             labels_on = NULL,
+                                             x_axis = x_axis, 
+                                             nb_parameters_per_plot_x_axis = nb_parameters_per_plot_x_axis, 
+                                             in_col = in_col, 
+                                             nb_parameters_per_plot_in_col = nb_parameters_per_plot_in_col
     )
     
     fun_bar = function(d, in_col){
@@ -265,10 +277,10 @@ plot.data_network = function(
       p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     }
     
-    out_r = lapply(dall_r, fun_bar, in_col)
-    out_g = lapply(dall_g, fun_bar, in_col)
-    
-    out = list("received" = out_r, "given" = out_g)
+
+    out_r = lapply(d_all_r, fun_bar, in_col)
+    out_g = lapply(d_all_g, fun_bar, in_col)
+    out = list("nb_received" = out_r, "nb_given" = out_g)
     return(out)
   }
   
@@ -447,7 +459,8 @@ plot.data_network = function(
                        x_axis,
                        nb_parameters_per_plot_x_axis,
                        nb_parameters_per_plot_in_col,
-                       vec_variables
+                       vec_variables,
+                       data_to_pie
   ){
     if( plot_type == "network" ) {
       if( format == "bipart" ) { 
@@ -473,7 +486,7 @@ plot.data_network = function(
           p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size) 
         }
         
-        out = list("network" = p)
+        out = list("network" = p, "data_to_pie" = data_to_pie, "vec_variables" = vec_variables)
       }
     }
     
@@ -501,7 +514,13 @@ plot.data_network = function(
     }
     
     if( plot_type == "map" ){
-      out = list("map" = pmap(net, format, labels_on, labels_size) )
+      out_m = pmap(net, format, labels_on, labels_size)
+      out_data_to_pie = data_to_pie
+      if( is.null(data_to_pie) & !is.null(vec_variables[1]) ) {
+        out_data_to_pie = data_unipart_relation_type(net)
+        vec_variables = colnames(out_data_to_pie)[8:9]
+      }
+      out = list("map" =  out_m, "data_to_pie" = out_data_to_pie, "vec_variables" = vec_variables)
     }
     
     out_all = list("net" = net, "out" = out)
@@ -510,24 +529,25 @@ plot.data_network = function(
   }
   
   out_all = lapply(net, run_fun, format, plot_type, in_col, labels_on, labels_size, organize_sl, x_axis, 
-               nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col, vec_variables)
+               nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col, vec_variables, data_to_pie)
+  
   
   # add pies
-  if( !is.null(data_to_pie) ) {
-    fun_pies = function(x, format, plot_type, data_to_pie, vec_variables, pie_size){
+  if( pie_on_map ) {
+    fun_pies = function(x, format, plot_type, pie_size){
       out_p = list()
+      vec_variables = x$out$vec_variables
       for(v in vec_variables){
-        p = list(add_pies(x$out[[1]], x$net, format, plot_type, data_to_pie, variable = v, pie_size))
-        names(p) = paste(plot_type, "_with_pies", sep = "")
+        p = list(add_pies(x$out[[1]], x$net, format, plot_type, data_to_pie = x$out$data_to_pie, variable = v, pie_size))
+        names(p) = paste(v, "_", plot_type, "_with_pies", sep = "")
         out_p = c(out_p, p)
       }
       return(out_p)
     }
-    out = lapply(out_all, fun_pies, format, plot_type, data_to_pie, vec_variables, pie_size)
+    out = lapply(out_all, fun_pies, format, plot_type, pie_size)
   } else { 
-    out = lapply(out_all, function(x){x$out}) 
+    out = lapply(out_all, function(x){x$out[1]}) 
   }
-  names(out) = plot_type
-  
+
   return(out)
 }

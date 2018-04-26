@@ -15,6 +15,7 @@
     - add pie on map and network
     - add barplot for unipart network on location
     - display in variable edges of the network for unipart sl on barplot
+    - display in variable edges of the network for unipart sl on map with pies 
 - plot.data_agro, cf #68 :
     - add plot_type = "map"
     - add r2 on biplot, cf #84
