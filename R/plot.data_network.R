@@ -78,12 +78,14 @@ plot.data_network = function(
   match.arg(in_col,  c("germplasm", "location", "year"), several.ok = FALSE)
   match.arg(x_axis,  c("germplasm", "location", "year"), several.ok = FALSE)
   
+  format = ggnetwork(net[[1]])[1, "format"]
+  
   # error and warning messages
   if( !is.list(net[1]) ){ 
     stop("net must be a list. I.e. with net coming from format_data_PPBstats, use net[1] is ok and not net$`blabla`") 
     }
   
-  if( plot_type == "network" ){
+  if( plot_type == "network" | ( plot_type == "map" & format == "unipart_location") ){
     test = which(unlist(lapply(net, function(x){ length(E(x)) == 1 })))
     if( length(test) > 0 ){ 
       warning("The following element are not taken into account because they have only one edge: ", paste(names(net)[test], collapse = " ,"), ". igraph objet with only one edge are not handle by ggnetwork. See https://github.com/briatte/ggnetwork/pull/18")
@@ -113,8 +115,6 @@ plot.data_network = function(
       if( plot_type == "map" ) { pie_on_map = TRUE }
     }
   }
-  
-  format = ggnetwork(net[[1]])[1, "format"]
   
   if( format == "bipart" & plot_type == "network" & !is.null(data_to_pie) ) { 
     stop("With bipart network, pies on network are not possible.") 
@@ -240,6 +240,8 @@ plot.data_network = function(
       nb_received = s_r,
       nb_given = s_g)
     
+    n = unique(edge_attr(net)$relation_type)
+    colnames(d)[8:9] = paste(n, colnames(d)[8:9], sep = "_")
     return(d)
   }
   
@@ -247,9 +249,10 @@ plot.data_network = function(
                                                 nb_parameters_per_plot_in_col){
 
     d = data_unipart_relation_type(net)
+    vec_variables = colnames(d)[8:9]
 
     d_all_r = reshape_data_split_x_axis_in_col(d, 
-                                            vec_variables = "nb_received", 
+                                            vec_variables = vec_variables[1], 
                                             labels_on = NULL,
                                             x_axis = x_axis, 
                                             nb_parameters_per_plot_x_axis = nb_parameters_per_plot_x_axis, 
@@ -257,7 +260,7 @@ plot.data_network = function(
                                             nb_parameters_per_plot_in_col = nb_parameters_per_plot_in_col
     )
     d_all_g = reshape_data_split_x_axis_in_col(d, 
-                                             vec_variables = "nb_given", 
+                                             vec_variables = vec_variables[2], 
                                              labels_on = NULL,
                                              x_axis = x_axis, 
                                              nb_parameters_per_plot_x_axis = nb_parameters_per_plot_x_axis, 
@@ -276,7 +279,6 @@ plot.data_network = function(
       p = p + xlab(x_axis) + ylab(variable) + theme(legend.title=element_blank())
       p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     }
-    
 
     out_r = lapply(d_all_r, fun_bar, in_col)
     out_g = lapply(d_all_g, fun_bar, in_col)
@@ -367,26 +369,51 @@ plot.data_network = function(
     return(out)
   }
   
-  plot_network_unipart = function(n, in_col){
-    colnames(n)[which(colnames(n) == in_col)] = "in_col"
-    nr = n[which(n$relation_type != "diffusion"),]
-    nd = n[which(n$relation_type == "diffusion"),]
+  plot_network_unipart = function(net = NULL, n = NULL, plot_type, in_col, pmap = "NULL"){
     
-    p = ggplot(n, aes(x = x, y = y, xend = xend, yend = yend))
-    if(is.element("nb_diff", colnames(n))){
-      p = p + geom_nodes()
-      p = p + geom_edges(data = nd, aes(linetype = relation_type, colour = nb_diff), 
+    if( plot_type == "map" ){ # only use fo format = unipart_location
+      if(is.null(n)) { n = ggnetwork(net, arrow.gap = 0) }
+      nd = n[which(n$relation_type == "diffusion"),]
+      
+      vec_x = as.vector(nd[is.na(nd$na.y), "long"])
+      names(vec_x) = nd[is.na(nd$na.y), "x"]
+      vec_y = as.vector(nd[is.na(nd$na.y), "lat"])
+      names(vec_y) = nd[is.na(nd$na.y), "y"]
+      
+      nd[,"x"] = as.numeric(vec_x[as.vector(as.character(nd$x))])
+      nd[,"xend"] = as.numeric(vec_x[as.vector(as.character(nd$xend))])
+      nd[,"y"] = as.numeric(vec_y[as.vector(as.character(nd$y))])
+      nd[,"yend"] = as.numeric(vec_y[as.vector(as.character(nd$yend))])
+      
+      p = pmap
+      p = p + geom_nodes(data = nd, aes(x = x, y = y))
+      p = p + geom_edges(data = nd, aes(x = x, y = y, xend = xend, yend = yend,
+                                         linetype = relation_type, colour = nb_diff), 
                          arrow = arrow(length = unit(4, "pt"), type = "closed"), 
                          curvature = 0.2)
       p = p + scale_colour_gradient(low = "blue", high = "red")
-      p = p + coord_cartesian(xlim = range(c(n$x, n$xend)*1.1), ylim = range(c(n$y, n$yend)*1.1))
-    } else { 
-      p = p + geom_nodes(aes(color = in_col)) 
-      p = p + geom_edges(data = nr, aes(linetype = relation_type), 
-                         arrow = arrow(length = unit(4, "pt"), type = "closed"))
-      p = p + geom_edges(data = nd, aes(linetype = relation_type), 
-                         arrow = arrow(length = unit(4, "pt"), type = "closed"), curvature = 0.2)
-    }    
+    } else {
+      if(is.null(n)) { n = ggnetwork(net, arrow.gap = 0.005) }
+      colnames(n)[which(colnames(n) == in_col)] = "in_col"
+      
+      nr = n[which(n$relation_type != "diffusion"),]
+      nd = n[which(n$relation_type == "diffusion"),]
+      p = ggplot(n, aes(x = x, y = y, xend = xend, yend = yend)) 
+      if(is.element("nb_diff", colnames(n))){
+        p = p + geom_nodes()
+        p = p + geom_edges(data = nd, aes(linetype = relation_type, colour = nb_diff), 
+                           arrow = arrow(length = unit(4, "pt"), type = "closed"), 
+                           curvature = 0.2)
+        p = p + scale_colour_gradient(low = "blue", high = "red")
+        p = p + coord_cartesian(xlim = range(c(n$x, n$xend)*1.1), ylim = range(c(n$y, n$yend)*1.1))
+      } else { 
+        p = p + geom_nodes(aes(color = in_col)) 
+        p = p + geom_edges(data = nr, aes(linetype = relation_type), 
+                           arrow = arrow(length = unit(4, "pt"), type = "closed"))
+        p = p + geom_edges(data = nd, aes(linetype = relation_type), 
+                           arrow = arrow(length = unit(4, "pt"), type = "closed"), curvature = 0.2)
+      }    
+    }
     p$labels$colour = in_col
     
     scale_ex = c("solid", "dotted", "longdash", "dashed", "twodash", "dotdash")
@@ -396,7 +423,7 @@ plot.data_network = function(
   
   plot_network_organize_sl_unipart = function(n, person_limit, in_col){
     colnames(n)[which(colnames(n) == in_col)] = "in_col"
-    p = plot_network_unipart(n, in_col)
+    p = plot_network_unipart(net = NULL, n, plot_type = "network", in_col)
     r = range(as.numeric(as.character(n$x)))
     m = max(as.numeric(as.character(n$x)))
     m = m + (r[2]-r[1]) /length(r[1]:r[2])
@@ -464,30 +491,30 @@ plot.data_network = function(
   ){
     if( plot_type == "network" ) {
       if( format == "bipart" ) { 
-        out = list("network" = plot_network_bipart(net, labels_on, labels_size))
-      } else {
-        
-        if( organize_sl){ 
+        p = plot_network_bipart(net, labels_on, labels_size)
+      } 
+      
+      if( format == "unipart_sl" ) { 
+        if( organize_sl ){ 
           out = organize_sl_unipart(net) 
           person_limit = out$person_limit
           n = out$n
-        } else { 
-          n = ggnetwork(net, arrow.gap = 0.005) 
-        }
-        
-        if( organize_sl){ 
           warning("with organize_sl = TRUE, in_col is automaticaly set to in_col = \"germplasm\".")
           p = plot_network_organize_sl_unipart(n, person_limit, in_col = "germplasm") 
-        } else { 
-          p = plot_network_unipart(n, in_col) + theme_blank() 
+        } else {
+          p = plot_network_unipart(net, n = NULL, plot_type, in_col) + theme_blank()
         }
-        
-        if( labels_on == "location" | labels_on == "seed_lots" ){ 
-          p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size) 
-        }
-        
-        out = list("network" = p, "data_to_pie" = data_to_pie, "vec_variables" = vec_variables)
+      } 
+
+      if( format == "unipart_location" ) { 
+        p = plot_network_unipart(net, n = NULL, plot_type, in_col) + theme_blank() 
+      } 
+      
+      if( labels_on == "location" | labels_on == "seed_lots" ){ 
+        p = p + geom_nodelabel_repel(aes(label = vertex.names), size = labels_size) 
       }
+        
+      out = list("network" = p, "data_to_pie" = data_to_pie, "vec_variables" = vec_variables)
     }
     
     if( plot_type == "barplot" ) {
@@ -514,13 +541,21 @@ plot.data_network = function(
     }
     
     if( plot_type == "map" ){
-      out_m = pmap(net, format, labels_on, labels_size)
-      out_data_to_pie = data_to_pie
-      if( is.null(data_to_pie) & !is.null(vec_variables[1]) ) {
-        out_data_to_pie = data_unipart_relation_type(net)
-        vec_variables = colnames(out_data_to_pie)[8:9]
+      if( format == "unipart_location" ){
+        out_m = pmap(net, format, labels_on, labels_size)
+        out_pm = plot_network_unipart(net, n = NULL, plot_type, in_col, out_m) + theme_blank() 
+        out = list("map" =  out_pm)
       }
-      out = list("map" =  out_m, "data_to_pie" = out_data_to_pie, "vec_variables" = vec_variables)
+      if( format == "unipart_sl" | format == "bipart" ){
+        out_m = pmap(net, format, labels_on, labels_size)
+        out_data_to_pie = data_to_pie
+        if( is.null(data_to_pie) & !is.null(vec_variables[1]) ) {
+          net = delete_edges(net, edges = which(!is.element(edge_attr(net)$relation_type, v)))
+          out_data_to_pie = data_unipart_relation_type(net)
+          vec_variables = colnames(out_data_to_pie)[8:9]
+        }
+        out = list("map" =  out_m, "data_to_pie" = out_data_to_pie, "vec_variables" = vec_variables)
+      }
     }
     
     out_all = list("net" = net, "out" = out)
