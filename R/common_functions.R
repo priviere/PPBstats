@@ -681,7 +681,8 @@ ggradar <- function(plot.data,
   
 }
 
-# check_freq_anova
+
+# check_freq_anova ----------
 check_freq_anova = function(model){
   anova_model = anova(model)
   # 1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
@@ -713,8 +714,7 @@ check_freq_anova = function(model){
   var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
   data_ggplot_var_intra = data.frame(x = model$model$germplasm, y = model$residuals)
   
-  out = list(
-    "data_ggplot" = list(
+  data_ggplot = list(
       "data_ggplot_residuals" = list(
         "data_ggplot_normality" = data_ggplot_normality,
         "data_ggplot_skewness_test" = data_ggplot_skewness_test,
@@ -724,25 +724,167 @@ check_freq_anova = function(model){
       "data_ggplot_variability_repartition_pie" = data_ggplot_variability_repartition_pie,
       "data_ggplot_var_intra" = data_ggplot_var_intra
     )
+  
+  return(data_ggplot)
+}
+
+# plot check_freq_anova ----------
+plot_check_freq_anova = function(x){
+  variable = x$GxE$info$variable
+  data_ggplot = x$data_ggplot
+  
+  data_ggplot_normality = data_ggplot$data_ggplot_residuals$data_ggplot_normality
+  data_ggplot_skewness_test = data_ggplot$data_ggplot_residuals$data_ggplot_skewness_test
+  data_ggplot_kurtosis_test = data_ggplot$data_ggplot_residuals$data_ggplot_kurtosis_test
+  data_ggplot_qqplot = data_ggplot$data_ggplot_residuals$data_ggplot_qqplot
+  data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
+  data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
+  
+  data_ggplot_pca = x$GxE$PCA
+  
+  # 1. Normality ----------
+  # 1.1. Histogram ----------
+  p = ggplot(data_ggplot_normality, aes(x = r), binwidth = 2)
+  p = p + geom_histogram() + geom_vline(xintercept = 0)
+  p = p + ggtitle("Test for normality", paste("Skewness:", signif(data_ggplot_skewness_test, 3), "; Kurtosis:", signif(data_ggplot_kurtosis_test, 3)))
+  p1.1 = p + theme(plot.title=element_text(hjust=0.5))
+  
+  # 1.2. Standardized residuals vs theoretical quantiles ----------
+  p = ggplot(data_ggplot_qqplot, aes(x = x, y = y)) + geom_point() + geom_line() 
+  p = p + geom_abline(slope = 1, intercept = 0, color = "red")
+  p = p + xlab("Theoretical Quantiles") + ylab("Standardized residuals")
+  p1.2 = p + ggtitle("QQplot") + theme(plot.title=element_text(hjust=0.5))
+  
+  # 2. repartition of variability among factors ----------
+  p = ggplot(data_ggplot_variability_repartition_pie, 
+             aes(x = "", y = percentage_Sum_sq, fill = factor, 
+                 label = paste(round(percentage_Sum_sq, 1), "%", sep = "")
+                 )
+  )
+  p = p + ggtitle(paste("Total variance distribution for", variable))
+  p = p + geom_bar(width = 1, stat = "identity") + coord_polar("y", start = 0)
+  p = p + geom_text(position = position_stack(vjust = 0.5))
+  p2 = p + ylab("") + xlab("") + theme(plot.title=element_text(hjust=0.5))
+  
+  
+  # 3. variance intra germplasm
+  p = ggplot(data_ggplot_var_intra, aes(x = x, y = y))  + geom_boxplot(aes(color=x))
+  p = p + ggtitle("Distribution of residuals") + xlab("germplasm") + ylab(variable)
+  p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90), plot.title=element_text(hjust=0.5))
+  p3 = p 
+  
+  # 4. pca composante variance ----------
+  p4 = fviz_eig(data_ggplot_pca) + ggtitle("")
+  
+  # 5. return results
+  
+  out = list(
+    "residuals" = list(
+      "histogram" = p1.1,
+      "qqplot" = p1.2),
+    "variability_repartition" = p2,
+    "variance_intra_germplasm" = p3,
+    "pca_composante_variance" = p4
   )
   
   return(out)
 }
 
-# plot check_freq_anova
-plot_check_freq_anova = function(){
+
+# mean comparisons for frequentist analysis ----------
+mean_comparisons_freq_anova = function(x, alpha = 0.05, p.adj = "none"){
+  model = x$GxE$ANOVA$model
+  variable = x$GxE$info$variable
   
+  data_ggplot_LSDbarplot = function(model, fac, p.adj, alpha){
+    lsd = LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
+    
+    parameter = factor(rownames(lsd$groups), levels = rownames(lsd$groups))
+    means = lsd$groups[,1]
+    groups = lsd$groups[,2]
+    alpha = rep(alpha, length(parameter))
+    alpha.correction = rep(p.adj, length(parameter))
+    
+    out_LSD = data.frame(parameter, means, groups, alpha, alpha.correction)
+    if( nrow(out_LSD) == 0 ) { out_LSD = NULL }
+    return(out_LSD)
+  }
+  
+  # Germplasm
+  data_ggplot_LSDbarplot_germplasm = data_ggplot_LSDbarplot(model, fac = "germplasm", p.adj, alpha)
+  
+  # Location
+  data_ggplot_LSDbarplot_location = data_ggplot_LSDbarplot(model, fac = "location", p.adj, alpha)
+  
+  # Year
+  data_ggplot_LSDbarplot_year = data_ggplot_LSDbarplot(model, fac = "year", p.adj, alpha)
+  
+  # Return results
+  out <- list(
+    "info" = x$info,
+    "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm,
+    "data_ggplot_LSDbarplot_location" = data_ggplot_LSDbarplot_location,
+    "data_ggplot_LSDbarplot_year" = data_ggplot_LSDbarplot_year
+  )
+  
+  return(out)
 }
 
-
-# mean comparisons for frequentist analysis
-mean_comparisons_freq_anova = function(){
+# plot mean comparisons for frequentist analysis ----------
+plot_mean_comparisons_freq_anova = function(x, nb_parameters_per_plot = 8){
+  variable = x$info$variable
   
-}
-
-# plot mean comparisons for frequentist analysis
-plot_mean_comparisons_freq_anova = function(){
+  data_ggplot_LSDbarplot_germplasm = x$data_ggplot_LSDbarplot_germplasm
+  data_ggplot_LSDbarplot_location = x$data_ggplot_LSDbarplot_location
+  data_ggplot_LSDbarplot_year = x$data_ggplot_LSDbarplot_year
   
+  ggplot_LSDbarplot = function(d_LSD, fac, variable, nb_parameters_per_plot){
+    
+    d_LSD = arrange(d_LSD, means) 
+    d_LSD$max = max(d_LSD$means, na.rm = TRUE)
+    d_LSD$split = add_split_col(d_LSD, nb_parameters_per_plot)
+    d_LSD_split = plyr:::splitter_d(d_LSD, .(split))  
+    
+    out = lapply(d_LSD_split, function(dx){
+      p = ggplot(dx, aes(x = reorder(parameter, means), y = means)) + geom_bar(stat = "identity")
+      p = p + geom_text(aes(x = reorder(parameter, means), y = means/2, label = groups), angle = 90, color = "white")
+      p = p + ggtitle(paste(fac, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
+      p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + coord_cartesian(ylim = c(0, dx[1,"max"])) + ylab(variable)
+      return(p)
+    })
+    
+    return(out)
+  }
+  
+  # Germplasm
+  if( !is.null(data_ggplot_LSDbarplot_germplasm) ){ 
+    ggplot_LSDbarplot_germplasm = ggplot_LSDbarplot(data_ggplot_LSDbarplot_germplasm, "germplasm", variable, nb_parameters_per_plot) 
+  } else {
+    ggplot_LSDbarplot_germplasm = NULL
+  }
+  
+  # Location
+  if( !is.null(data_ggplot_LSDbarplot_location) ){ 
+    ggplot_LSDbarplot_location = ggplot_LSDbarplot(data_ggplot_LSDbarplot_location, "location", variable, nb_parameters_per_plot) 
+  } else {
+    ggplot_LSDbarplot_location = NULL
+  }
+  
+  # Year
+  if( !is.null(data_ggplot_LSDbarplot_year) ){ 
+    ggplot_LSDbarplot_year = ggplot_LSDbarplot(data_ggplot_LSDbarplot_year, "year", variable, nb_parameters_per_plot) 
+  } else {
+    ggplot_LSDbarplot_year = NULL
+  }
+  
+  # Return results
+  out = list(
+    "germplasm" = ggplot_LSDbarplot_germplasm, 
+    "location" = ggplot_LSDbarplot_location, 
+    "year" = ggplot_LSDbarplot_year
+  )
+  
+  return(out) 
 }
 
 # map background for plot.data_agro, plot.data_network -----

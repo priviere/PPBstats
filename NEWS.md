@@ -21,9 +21,11 @@
     - add plot_type = "map"
     - add r2 on biplot, cf #84
     - add argument data_version
-
+    - ggplot_check_model_GxE : add table with % next to pie plot, cf #38
 - format_data_PPBstats.data_agro_version
     - add specific class for data_version_SR and data_version_MR
+- common_functions
+    - common function for check model regarding frequentist analysis, cf #71
 
 
 ### update vignette (inst/bookdown)
