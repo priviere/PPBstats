@@ -307,6 +307,12 @@
 #'     }
 #'   }
 #'   
+#'  \item \code{\link{biplot_data}} : output from MFA analysis
+#'   \itemize{
+#'    \item ind
+#'    \item var
+#'    \item axes
+#'   }
 #'   
 #'  \item \code{\link{cross_validation_model_bh_GxE}}
 #'   \itemize{
@@ -325,6 +331,7 @@
 #'  \item \code{mean_comparisons}
 #'  \item \code{parameter_groups}
 #'  \item \code{biplot_GxE}
+#'  \item \code{biplot_data}
 #'  \item \code{cross_validation_model_bh_GxE}
 #' }
 #' 

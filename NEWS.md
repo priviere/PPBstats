@@ -10,6 +10,8 @@
     - delete optional column alt as it is not needed for map
 - format_data_PPBstats.data_agro : 
     - add long and lat in option
+- format_data_PPBstats.data_napping :
+    - delete code arg
 - plot.data_network, cf #67 :
     - implement map with ggmap
     - add pie on map and network
@@ -26,7 +28,12 @@
     - add specific class for data_version_SR and data_version_MR
 - common_functions
     - common function for check model regarding frequentist analysis, cf #71
-
+- create workflow for napping, cf #72
+    - check_model.fit_model_napping
+    - plot.check_model_napping
+    - biplot_data
+    - plot.biplot_napping
+    
 
 ### update vignette (inst/bookdown)
 - regarding change with plot.data_network

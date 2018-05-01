@@ -1,21 +1,21 @@
-format_data_PPBstats.data_organo_napping = function(data, code, threshold){
-  d = data
+format_data_PPBstats.data_organo_napping = function(data, threshold){
   
-  mess = "In data, the following column are compulsory : \"sample\", \"juges\", \"X\", \"Y\", \"descriptors\"."
-  if(!is.element("sample", colnames(data))) { stop(mess) }
+  mess = "In data, the following column are compulsory : \"juges\", \"X\", \"Y\", \"descriptors\", \"germplasm\", \"location\"."
   if(!is.element("juges", colnames(data))) { stop(mess) }
   if(!is.element("X", colnames(data))) { stop(mess) }
   if(!is.element("Y", colnames(data))) { stop(mess) }
   if(!is.element("descriptors", colnames(data))) { stop(mess) }
+  if(!is.element("germplasm", colnames(data))) { stop(mess) }
+  if(!is.element("location", colnames(data))) { stop(mess) }
   
-  mess = "In code, the following column are compulsory : \"germplasm\", \"location\", \"code\"."
-  if(!is.element("germplasm", colnames(code))) { stop(mess) }
-  if(!is.element("location", colnames(code))) { stop(mess) }
-  if(!is.element("code", colnames(code))) { stop(mess) }
+  if( !is.factor(data$juges) ) { stop("juge must be a factor") }
+  if( !is.numeric(data$X) ) { stop("X must be a numeric") }
+  if( !is.numeric(data$Y) ) { stop("Y must be a numeric") }
+  if( !is.factor(data$descriptors) ) { stop("descriptors must be a factor") }
+  if( !is.factor(data$germplasm) ) { stop("germplasm must be a factor") }
+  if( !is.factor(data$location) ) { stop("location must be a factor") }
   
-  colnames(code)[3] = "sample"
-  
-  N = format_organo(data, code, threshold)
+  N = format_organo(data, threshold)
   N = N[,c(6, 1, 2, 3, c(7:ncol(N)))]
   
   # Get table with, for each judge, the X and Y for each sample tasted ----------

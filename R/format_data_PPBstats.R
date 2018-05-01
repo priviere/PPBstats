@@ -106,10 +106,8 @@
 #'  
 #'  \item For type = "data_organo_napping"
 #'  \itemize{
-#'   \item data is a data frame with the following columns: sample, juges, X, Y, descriptors. 
+#'   \item data is a data frame with the following columns: sample, juges, X, Y, descriptors, germplasm, location. 
 #'   The descriptors must be separated by ";"
-#'   \item code is a data frame with the following columns: germplasm, location, code.
-#'   The function merge data and code to join the information.
 #'  }
 #' 
 #'  \item For type = "data_organo_hedonic"
@@ -174,75 +172,12 @@ format_data_PPBstats = function(
   }
   
   # 3.Organo ----------
-  format_organo = function(data, code, threshold){
-    # 1. Merge and create data frame ----------
-    N = join(data, code, by = "sample")
-    N = N[,-1]
-    N$sample = factor(paste(N$location, N$germplasm, sep = ":"))
-    
-    N$juges<-as.factor(as.character(N$juges))
-    N$sample<-as.factor(N$sample)
-    
-    # 2. Add the occurence of the different descriptors ----------
-    descriptors = as.vector(as.character(N$descriptors))
-    vec_adj = unlist(strsplit(descriptors, ";"))
-    vec_adj = sort(unique(vec_adj))
-    if( length(which(vec_adj == "")) > 0 ) { vec_adj = vec_adj[-which(vec_adj == "")] }
-    
-    df = matrix(0, ncol = length(vec_adj), nrow = nrow(N))
-    df = as.data.frame(df)
-    colnames(df) = vec_adj
-    out = cbind.data.frame(N, df)
-    
-    for (i in 1:nrow(out)){
-      v_adj = out[i, "descriptors"]
-      v_adj = unlist(strsplit(as.character(v_adj), ";"))
-      if( length(which(v_adj == "")) > 0 ) { v_adj = v_adj[-which(v_adj == "")] }
-      
-      for (j in 1:length(v_adj)) {
-        e = v_adj[j]
-        if (length(e)>0) {
-          if (!is.na(e)) { out[i, e] = 1 }
-        }
-      }
-    }
-    
-    N = out[,-which(colnames(out) == "descriptors")]
-    
-    # 3. Apply the threshold to keep certain descriptors ----------
-    if( !is.null(threshold) ) {
-      test = apply(N[, vec_adj], 2, sum)
-      to_delete = which(test <= threshold)
-      to_keep = which(test > threshold)
-      if( length(to_delete) > 0 ) { 
-        adj_to_delete = vec_adj[to_delete] 
-        N = N[,-which(colnames(N) %in% adj_to_delete)]
-        message("The following descriptors have been remove because there were less or equal to ", threshold, " occurences : ", paste(adj_to_delete, collapse = ", "))
-        if( ncol(N) == 4 ){ stop("There are no more descriptors with threshold = ", threshold, 
-                                 ". You must set another value.") }
-      }
-      vec_adj = vec_adj[to_keep]
-    }
-    
-    
-    # 4. Get frequency for each descriptor ----------
-    N_freq = N_raw = N
-    for (ad in vec_adj) { 
-      if( sum(N_raw[, ad], na.rm = TRUE) != 0 ) { 
-        N_freq[, ad] = N_raw[, ad] / sum(N_raw[, ad], na.rm = TRUE) 
-      }  
-    }
-    
-    return(N_freq)
-  }
-  
-  
   if(type == "data_organo_napping"){
-    d = format_data_PPBstats.data_organo_napping(data, code, threshold)
+    d = format_data_PPBstats.data_organo_napping(data, threshold)
   }
   
   if(type == "data_organo_hedonic"){
-    d = format_data_PPBstats.data_organo_hedonic(data, code, threshold)
+    d = format_data_PPBstats.data_organo_hedonic(data, threshold)
   }
   
   # 4.Return results ----------

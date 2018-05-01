@@ -11,12 +11,7 @@
 #' The Multiple Factor Analysis is run with FactoMineR::MFA on d_freq
 #' 
 #' @return 
-#' A list of ? elements being the MFA and obecjt and its graph :
-#' \itemize{
-#'  \item out_MFA
-#'  \item 
-#'  \item 
-#' }
+#' The MFA object
 #' 
 #' @author Pierre Riviere and Camille Vindras
 #' 
@@ -31,7 +26,6 @@ napping = function(
     }
   
   # 1.Format data ----------
-  
   j = as.character(colnames(data)[grep("-juge-", colnames(data))])
   j = unlist(strsplit(j, "-juge-"))
   juges = unique(j[seq(2, length(j), 2)])
@@ -44,13 +38,13 @@ napping = function(
   name.group = c(paste("J-", juges, sep=""),"descriptors")
   num.group.sup = NULL #c(1, length(juges)*2)
 
-  out_MFA = MFA(data, group = group, type = type, ind.sup = NULL, ncp = 5, axes = c(1, 2), name.group  = name.group, num.group.sup = num.group.sup)
+  out = MFA(data, group = group, type = type, 
+            ind.sup = NULL, ncp = 5, axes = c(1, 2), 
+            name.group  = name.group, num.group.sup = num.group.sup,
+            graph = FALSE)
   
   # Return results ----------
-  out = list(
-    "out_MFA" = out_MFA
-  )
-  
+  class(out) <- c("PPBstats", "fit_model_napping", "MFA")
   return(out)
 }
 
