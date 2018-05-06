@@ -114,6 +114,23 @@
 #'  \item variances of dimensions
 #' }
 #' 
+#' \item model_hedonic
+#' \itemize{
+#'  \item model_hedonic the output from the model
+#'  \item data_ggplot a list containing information for ggplot:
+#'  \itemize{
+#'   \item data_ggplot_residuals a list containing :
+#'    \itemize{
+#'     \item data_ggplot_normality
+#'     \item data_ggplot_skewness_test
+#'     \item data_ggplot_kurtosis_test
+#'     \item data_ggplot_qqplot
+#'     }
+#'   \item data_ggplot_variability_repartition_pie
+#'   \item data_ggplot_var_intra
+#'  }
+#' }
+#' 
 #' }
 #'
 #' 

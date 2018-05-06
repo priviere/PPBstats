@@ -111,6 +111,10 @@
 #'  }
 #' 
 #'  \item For type = "data_organo_hedonic"
+#'  \itemize{
+#'   \item data is a data frame with the following columns: sample, juges, note, descriptors, germplasm, location. 
+#'   The descriptors must be separated by ";". Any other column can be added as supplementary variables.
+#'  }
 #'  
 #' }
 #' 

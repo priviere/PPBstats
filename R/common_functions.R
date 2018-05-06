@@ -729,8 +729,7 @@ check_freq_anova = function(model){
 }
 
 # plot check_freq_anova ----------
-plot_check_freq_anova = function(x){
-  variable = x$GxE$info$variable
+plot_check_freq_anova = function(x, variable){
   data_ggplot = x$data_ggplot
   
   data_ggplot_normality = data_ggplot$data_ggplot_residuals$data_ggplot_normality
@@ -785,9 +784,7 @@ plot_check_freq_anova = function(x){
 
 
 # mean comparisons for frequentist analysis ----------
-mean_comparisons_freq_anova = function(x, alpha = 0.05, p.adj = "none"){
-  model = x$GxE$ANOVA$model
-  variable = x$GxE$info$variable
+mean_comparisons_freq_anova = function(model, variable, alpha = 0.05, p.adj = "none", info = NULL){
   
   data_ggplot_LSDbarplot = function(model, fac, p.adj, alpha){
     lsd = LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
@@ -814,7 +811,7 @@ mean_comparisons_freq_anova = function(x, alpha = 0.05, p.adj = "none"){
   
   # Return results
   out <- list(
-    "info" = x$info,
+    "info" = info,
     "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm,
     "data_ggplot_LSDbarplot_location" = data_ggplot_LSDbarplot_location,
     "data_ggplot_LSDbarplot_year" = data_ggplot_LSDbarplot_year
@@ -824,8 +821,7 @@ mean_comparisons_freq_anova = function(x, alpha = 0.05, p.adj = "none"){
 }
 
 # plot mean comparisons for frequentist analysis ----------
-plot_mean_comparisons_freq_anova = function(x, nb_parameters_per_plot = 8){
-  variable = x$info$variable
+plot_mean_comparisons_freq_anova = function(x, variable, nb_parameters_per_plot = 8){
   
   data_ggplot_LSDbarplot_germplasm = x$data_ggplot_LSDbarplot_germplasm
   data_ggplot_LSDbarplot_location = x$data_ggplot_LSDbarplot_location

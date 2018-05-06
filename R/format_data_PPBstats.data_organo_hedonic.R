@@ -1,20 +1,27 @@
-format_data_PPBstats.data_organo_hedonic = function(data,code, threshold){
-  d = data
-  
-  mess = "In data, the following column are compulsory : \"sample\", \"juges\", \"note\", \"descriptors\"."
+format_data_PPBstats.data_organo_hedonic = function(data, threshold){
+
+  mess = "In data, the following column are compulsory : \"sample\", \"germplasm\", \"location\", \"juges\", \"note\", \"descriptors\"."
   if(!is.element("sample", colnames(data))) { stop(mess) }
+  if(!is.element("germplasm", colnames(data))) { stop(mess) }
+  if(!is.element("location", colnames(data))) { stop(mess) }
   if(!is.element("juges", colnames(data))) { stop(mess) }
   if(!is.element("note", colnames(data))) { stop(mess) }
   if(!is.element("descriptors", colnames(data))) { stop(mess) }
   
-  mess = "In code, the following column are compulsory : \"germplasm\", \"location\", \"code\"."
-  if(!is.element("germplasm", colnames(code))) { stop(mess) }
-  if(!is.element("location", colnames(code))) { stop(mess) }
-  if(!is.element("code", colnames(code))) { stop(mess) }
+  if(!is.factor(data$sample)) { stop("sample must be factor") }
+  if(!is.factor(data$germplasm)) { stop("germplasm must be factor") }
+  if(!is.factor(data$location)) { stop("location must be factor") }
+  if(!is.factor(data$juges)) { stop("juges must be factor") }
+  if(!is.numeric(data$note)) { stop("note must be numeric") }
+  if(!is.factor(data$descriptors)) { stop("descriptors must be factor") }
   
-  colnames(code)[3] = "sample"
+  remove_row_with_no_descriptors = which(data$descriptors == "")
+  if( length(remove_row_with_no_descriptors) > 0 ) { 
+    d_ok = data[-remove_row_with_no_descriptors,]
+    warning("The following row in data have been remove because there are no descriptors :", paste(remove_row_with_no_descriptors, collapse = ", "))
+  } else { d_ok = data}
   
-  d = format_organo(data, code, threshold)
+  d = list("data" = format_organo(data, threshold), "var_sup" = colnames(data)[-which( colnames(data) == "descriptors")])
   
   class(d) <- c("PPBstats", "data_organo_hedonic", "data.frame")
   message(substitute(data), " has been formated for PPBstats functions.")

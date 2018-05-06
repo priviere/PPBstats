@@ -1,14 +1,14 @@
 #' Run napping analysis
 #'
 #' @description
-#' \code{napping} runs napping analysis
+#' \code{model_napping} runs napping analysis
 #'
 #' @param data data frame coming from format_data_PPBstats().
-#' It has the following columns: sample, juges, X, Y, descriptors. 
+#' It has the following columns: sample, juges, X, Y, descriptors, germplasm, location. 
 #' The descriptors must be separated by ";"
 #' 
 #' @details
-#' The Multiple Factor Analysis is run with FactoMineR::MFA on d_freq
+#' The Multiple Factor Analysis is run with FactoMineR::MFA
 #' 
 #' @return 
 #' The MFA object
@@ -16,7 +16,7 @@
 #' @author Pierre Riviere and Camille Vindras
 #' 
 #' 
-napping = function(
+model_napping = function(
   data
   )
 {

@@ -226,3 +226,42 @@ NULL
 NULL
 
 
+# data_hedonic ----------
+#' data coming from tomatoes hedonic test:
+#'
+#' @description
+#' A dataset containing 1 location and 3 germplasms.
+#' The data set contain the following variables: sample, juges, note, descriptors, Age, Sexe, 
+#' Bio.Non.Bio, Circuit, Departement, germplasm, location
+#'
+#' @usage
+#' data(data_hedonic)
+#'
+#' @format
+#' A data frame with 244 rows and 11 columns
+#'  
+#' @author Pierre Rivière
+"data_hedonic"
+NULL
+
+
+# data_napping ----------
+#' data coming from tomatoes hedonic test:
+#'
+#' @description
+#' A dataset containing 1 location and 9 germplasms.
+#' The data set contain the following variables: juges, X, Y, descriptors, germplasm, location
+#'
+#' @usage
+#' data(data_napping)
+#'
+#' @format
+#' A data frame with 63 rows and 6 columns
+#'  
+#' @author Pierre Rivière
+"data_napping"
+NULL
+
+
+
+
