@@ -2,7 +2,7 @@ plot.check_model_GxE <- function(
   x
 ){
   # anova  
-  out = plot_check_freq_anova(x)
+  out = plot_check_freq_anova(x, variable = x$GxE$info$variable)
 
   # pca composante variance
   data_ggplot_pca = x$GxE$PCA
