@@ -17,6 +17,7 @@ format_data_PPBstats.data_organo_napping = function(data, threshold){
   
   N = format_organo(data, threshold)
   N = N[,c(6, 1, 2, 3, c(7:ncol(N)))]
+  descriptors = colnames(N)[c(7:ncol(N))]
   
   # Get table with, for each judge, the X and Y for each sample tasted ----------
   juges = levels(N$juges)
@@ -69,7 +70,13 @@ format_data_PPBstats.data_organo_napping = function(data, threshold){
   row.names(d_MFA) <- d_MFA[, 1]
   d = d_MFA[,2:ncol(d_MFA)]
   
-  class(d) <- c("PPBstats", "data_organo_napping", "data.frame")
+  d$sample = factor(rownames(d))
+  
+  d = list("data" = d, 
+           "descriptors" = descriptors
+           )
+  
+  class(d) <- c("PPBstats", "data_organo_napping")
   message(substitute(data), " has been formated for PPBstats functions.")
   return(d)
 }

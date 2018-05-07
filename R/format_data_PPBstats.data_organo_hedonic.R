@@ -21,9 +21,16 @@ format_data_PPBstats.data_organo_hedonic = function(data, threshold){
     warning("The following row in data have been remove because there are no descriptors :", paste(remove_row_with_no_descriptors, collapse = ", "))
   } else { d_ok = data}
   
-  d = list("data" = format_organo(data, threshold), "var_sup" = colnames(data)[-which( colnames(data) == "descriptors")])
+  var_sup = colnames(data)[-which(colnames(data) == "descriptors")]
+  d = format_organo(d_ok, threshold)
+  descriptors = colnames(d)[!is.element(colnames(d), var_sup)]
   
-  class(d) <- c("PPBstats", "data_organo_hedonic", "data.frame")
+  d = list("data" = d, 
+           "var_sup" = var_sup,
+           "descriptors" = descriptors
+           )
+  
+  class(d) <- c("PPBstats", "data_organo_hedonic")
   message(substitute(data), " has been formated for PPBstats functions.")
   return(d)
 }
