@@ -26,6 +26,8 @@ model_napping = function(
     }
   
   # 1.Format data ----------
+  data = data$data
+  data = data[,-which(colnames(data) == "sample")] # delete sample column
   j = as.character(colnames(data)[grep("-juge-", colnames(data))])
   j = unlist(strsplit(j, "-juge-"))
   juges = unique(j[seq(2, length(j), 2)])
