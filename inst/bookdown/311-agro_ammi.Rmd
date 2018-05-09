@@ -257,7 +257,7 @@ If the total variation is high enought, then the biplot is useful if the two fir
 ##### Get biplot
 
 ```{r}
-out_biplot_ammi = biplot_GxE(out_check_ammi)
+out_biplot_ammi = biplot_data(out_check_ammi)
 ```
 
 ##### Visualize biplot
@@ -398,7 +398,7 @@ workflow_gxe = function(x, gxe){
   out_mean_comparisons_gxe = mean_comparisons(out_check_gxe, p.adj = "bonferroni")
   p_out_mean_comparisons_gxe = plot(out_mean_comparisons_gxe)
   
-  out_biplot_gxe = biplot_GxE(out_check_gxe)
+  out_biplot_gxe = biplot_data(out_check_gxe)
   p_out_biplot_gxe = plot(out_biplot_gxe)
 
   out = list(

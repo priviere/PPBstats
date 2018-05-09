@@ -46,7 +46,11 @@
     - plot.biplot_hedonic
     - mean_comparisons.check_model_hedonic 
     - plot.mean_comparisons_model_hedonic
-    
+- biplot_data, cf #93
+    - biplot_data.check_model_GxE
+    - biplot_data.check_model_hedonic
+    - biplot_data.check_model_napping
+
 ### update vignette (inst/bookdown)
 - regarding change with plot.data_network
 - regarding change with plot.data_agro

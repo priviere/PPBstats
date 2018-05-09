@@ -96,7 +96,7 @@ p_out_mean_comparisons_gge = plot(out_mean_comparisons_gge)
 
 ##### Get biplot
 ```{r}
-out_biplot_gge = biplot_GxE(out_check_gge)
+out_biplot_gge = biplot_data(out_check_gge)
 ```
 
 ##### Visualize biplot

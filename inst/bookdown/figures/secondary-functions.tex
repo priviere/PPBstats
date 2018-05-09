@@ -34,15 +34,28 @@
   \node [gxe, below=of cmm2.east, left] (cmgxe) {check\_model.fit\_model\_GxE};
   \node [sp, below=of cmgxe.east, left] (cmsp) {check\_model.fit\_model\_spatial};
   \node [vi, below=of cmsp.east, left] (cmvi) {check\_model.fit\_model\_bh\_variance\_intra};
+  \node [hedo, below=of cmvi.east, left] (cmh) {check\_model.fit\_model\_hedonic};
+  \node [nap, below=of cmh.east, left] (cmn) {check\_model.fit\_model\_napping};
 
-  \draw [-, decorate,decoration=brace] (cmm1.north east) -- (cmvi.south east)
+  \draw [-, decorate,decoration=brace] (cmm1.north east) -- (cmn.south east)
     node [midway, virtual, xshift=-4pt] (X1) {};
   \node [several-all, right=of X1] (cm) {check\_model};
   \draw (X1) to (cm);
 
 
+  %% biplot_data
+  \node [gxe, below=of cmn.east, left, yshift=-4ex] (bdgxe) {biplot\_data.check\_model\_GxE};
+  \node [hedo, below=of bdgxe.east, left] (bdh) {biplot\_data.check\_model\_hedonic};
+  \node [nap, below=of bdh.east, left] (bdn) {biplot\_data.check\_model\_napping};
+  
+  \draw [-, decorate,decoration=brace] (bdgxe.north east) -- (bdn.south east)
+    node [midway, virtual, xshift=-4pt] (X1bis) {};
+  \node [several-all, right=of X1bis] (bd) {biplot\_data};
+  \draw (X1bis) to (bd);
+
+
   %% parameter_groups
-  \node [gxe, below=of cmvi.east, left, yshift=-4ex] (pggxe) {parameter\_groups\_GxE};
+  \node [gxe, below=of bdn.east, left, yshift=-4ex] (pggxe) {parameter\_groups\_GxE};
   \node [m2, below=of pggxe.east, left] (pgm2) {parameter\_groups\_model\_bh\_GxE};
 
   \draw [-, decorate,decoration=brace] (pggxe.north east) -- (pgm2.south east)
@@ -63,6 +76,7 @@
   \node [m2, below=of MCM1.east, left, yshift=-2ex] (MCPPM2) {mean\_comparisons.check\_predict\_the\_past\_model\_bh\_GxE};
   \node [sp, below=of MCPPM2.east, left] (MCSP) {mean\_comparisons.check\_model\_spatial};
   \node [vi, below=of MCSP.east, left] (MCVI) {mean\_comparisons.check\_model\_bh\_variance\_intra};
+  \node [hedo, below=of MCVI.east, left] (MCH) {mean\_comparisons.check\_model\_hedonic};
 
   \node [virtual, above=of MCM1.west, yshift=-4ex, xshift=4pt] (X3) {};
   \node [virtual, above=of MCM1.west, yshift=2ex] (X3bis) {};
@@ -77,7 +91,7 @@
   \draw [bend left] (galXg.east) to (X3);
 
 
-  \draw [-, decorate,decoration=brace] (MCGxE.north east) -- (MCVI.south east)
+  \draw [-, decorate,decoration=brace] (MCGxE.north east) -- (MCH.south east)
     node [midway, virtual, xshift=-4pt] (X4) {};
   \node [several-all, right=of X4] (MC) {mean\_comparisons};
   \draw (X4) to (MC);
@@ -86,15 +100,19 @@
   %% plot
   \node [, below=of MCVI.east, left, yshift=-8ex] (PDA) {plot.data\_agro};
   \node [, below=of PDA.east, left] (PDN) {plot.data\_network};
+  \node [hedo, below=of PDN.east, left] (PDH) {plot.data\_organo\_hedonic};
+  \node [nap, below=of PDH.east, left] (PDNA) {plot.data\_organo\_napping};
 
-  \node [aux, below=of PDN.east, left] (GPG) {plot.parameter\_groups};
+  \node [aux, below=of PDNA.east, left] (GPG) {plot.parameter\_groups};
   \node [gxe, below=of GPG.east, left] (GCMGxE) {plot.check\_model\_GxE};
   \node [m1, below=of GCMGxE.east, left] (GCMM1) {plot.check\_model\_model\_bh\_intra\_location};
   \node [m2, below=of GCMM1.east, left] (GCMM2) {plot.check\_model\_model\_bh\_GxE};
   \node [sp, below=of GCMM2.east, left] (GCMSP) {plot.check\_model\_spatial};
   \node [vi, below=of GCMSP.east, left] (GCMVI) {plot.check\_model\_bh\_variance\_intra};
+  \node [hedo, below=of GCMVI.east, left] (GCMH) {plot.check\_model\_hedonic};
+  \node [nap, below=of GCMH.east, left] (GCMN) {plot.check\_model\_napping};
 
-  \node [m2, below=of GCMVI.east, left] (GCVM2) {plot.cross\_validation\_model\_bh\_GxE};
+  \node [m2, below=of GCMN.east, left] (GCVM2) {plot.cross\_validation\_model\_bh\_GxE};
 
   \node [gxe, below=of GCVM2.east, left] (GMCGxE) {plot.mean\_comparisons\_GxE};
   \node [m1, below=of GMCGxE.east, left] (GMCM1) {plot.mean\_comparisons\_model\_bh\_intra\_location};
@@ -102,17 +120,20 @@
   \node [m2, below=of GMCM2.east, left] (GMCPPM2) {plot.mean\_comparisons\_predict\_the\_past\_model\_bh\_GxE};
   \node [sp, below=of GMCPPM2.east, left] (GMCSP) {plot.mean\_comparisons\_model\_spatial};
   \node [vi, below=of GMCSP.east, left] (GMCVI) {plot.mean\_comparisons\_model\_bh\_variance\_intra};
--
-  \node [gxe, below=of GMCVI.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
+  \node [hedo, below=of GMCVI.east, left] (GMCH) {plot.mean\_comparisons\_model\_hedonic};
+
+  \node [gxe, below=of GMCH.east, left, yshift=-6ex] (GBGxE) {plot.biplot\_GxE};
   \node [gxe, left=of GBGxE] (GMS) {ggplot\_mean\_vs\_stability};
   \node [gxe, above=of GMS.east, left] (GDR) {ggplot\_discrimitiveness\_vs\_representativeness};
   \node [gxe, below=of GMS.east, left] (GWWW) {ggplot\_which\_won\_where};
-
   \draw [-, decorate,decoration=brace] (GDR.north east) -- (GWWW.south east)
   node [midway, virtual, xshift=-4pt] (X5) {};
   \draw (X5) to (GBGxE);
+  
+  \node [hedo, below=of GBGxE.east, left, yshift=-6ex] (PBH) {plot.biplot\_hedonic};
+  \node [nap, below=of PBH.east, left] (PBN) {plot.biplot\_napping};
 
-  \draw [-, decorate,decoration=brace] (PDA.north east) -- (GBGxE.south east)
+  \draw [-, decorate,decoration=brace] (PDA.north east) -- (PBN.south east)
   node [midway, virtual, xshift=-4pt] (X6) {};
   \node [several-all, right=of X6] (P) {plot};
   \draw (X6) to (P);
@@ -136,12 +157,18 @@
   \node[vi,legendkey]  (LVI)  [below=of LSP,yshift=3ex] {};
   \node[right,legendtext] at (LVI.east) {Hierarchical Bayesian variance\_intra model functions};
 
+  \node[hedo,legendkey]  (LH)  [below=of LVI,yshift=3ex] {};
+  \node[right,legendtext] at (LH.east) {Hedonic model functions};
+
+  \node[nap,legendkey]  (LN)  [below=of LH,yshift=3ex] {};
+  \node[right,legendtext] at (LN.east) {Napping model functions};
+
   %% legend bounding box
   \begin{pgfonlayer}{background}
     \node[
       fill=black!10,
       rounded corners,
-      fit = (LS) (LVI) (LM1text)
+      fit = (LS) (LN) (LM1text)
     ] {};
   \end{pgfonlayer}
 

@@ -287,7 +287,7 @@ knitr::include_graphics("figures/main-functions-agro.png")
 | `parameter_groups` | Get groups of parameters based on multivariate analysis |
 | `cross_validation_model_bh_GxE` | Run complete cross validation with Hierarchical Bayesian GxE model |
 | `predict_the_past_model_bh_GxE` | predict values of germplasms in environments where they have not been grown based on Hierarchical Bayesian GxE model |
-| `biplot_GxE` | Compute ecovalence and format PCA results |
+| `biplot_data` | Compute ecovalence and format PCA results regarding $G \times E$ models |
 | `plot` | Build ggplot objects to visualize output |
 Table: (\#tab:function-descriptions-workflow) Function description.
 

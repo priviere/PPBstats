@@ -135,6 +135,11 @@ knitr::include_graphics("figures/secondary-functions.png")
 | `check_model.fit_model_GxE` | Check if the `GxE` model went well |
 | `check_model.fit_model_spatial` | Check if the `spatial` model went well |
 | `check_model.fit_model_variance_intra` | Check if the `model_variance_intra` model went well |
+| `check_model.fit_model_hedonic` | Check if the `model_hedonic` model went well |
+| `check_model.fit_model_napping` | Check if the `model_napping` model went well |
+| `biplot_data.check_model_GxE` | Format data for biplot |
+| `biplot_data.check_model_hedonic` |  Format data for biplot |
+| `biplot_data.check_model_napping` |  Format data for biplot |
 | `parameter_groups_GxE` | Get matrix with variables in column and effects in row from `check_modelfit_model_GxE` |
 | `parameter_groups_model_bh_GxE` | Get matrix with variables in column and effect in row from `check_model.fit_model_bh_GxE` |
 | `comp.parameters` | Get parameter comparisons two by two or to a given threshold based on MCMC outputs |
@@ -146,24 +151,32 @@ knitr::include_graphics("figures/secondary-functions.png")
 | `mean_comparisons.check_predict_the_past_model_bh_GxE` | Get mean comparisons from `predict_the_past_model\_2` |
 | `mean_comparisons.check_model_spatial` | Get mean comparisons from `check_model.fit_model_spatial`  |
 | `mean_comparisons.check_model_variance_intra` | Get mean comparisons from `check_model.fit_model_variance_intra` |
+| `mean_comparisons.check_model_hedonic` | Get mean comparisons from `check_model.fit_model_hedonic` |
 | `plot.data_agro` | Plot agro object from `format_data_PPBstats()` |
 | `plot.data_network` | Plot network object `from format_data_PPBstats()` |
+| `plot.data_organo_hedonic` | Plot organo hedonic object `from format_data_PPBstats()` |
+| `plot.data_organo_napping` | Plot organo napping object `from format_data_PPBstats()` |
 | `plot.parameter_groups` | Get ggplot from `parameter_groups` |
 | `plot.check_model_GxE` | Get ggplot from `check_model.fit_model_GxE` |
 | `plot.check_model_model_bh_intra-location` | Get ggplot from `check_model.fit_model_bh_intra-location` |
 | `plot.check_model_model_bh_GxE` | Get ggplot from `check_model.fit_model_bh_GxE` |
 | `plot.check_model_model_spatial` | Get ggplot from `check_model.fit_model_spatial` |
 | `plot.check_model_variance_intra` | Get ggplot from `check_model.fit_model_variance_intra` |
+| `plot.check_model_hedonic` | Get ggplot from `check_model.fit_model_hedonic` |
+| `plot.check_model_napping` | Get ggplot from `check_model.fit_model_napping` |
 | `plot.cross_validation_model_bh_GxE` | Get ggplot from `cross_validation_model_bh_GxE` |
 | `plot.mean_comparisons_GxE` | Get ggplot from `mean_comparisons.check_model_GxE` |
 | `plot.mean_comparisons_model_bh_intra-location` | Get ggplot from `mean_comparisons.check_model_bh_intra-location` |
 | `plot.mean_comparisons_model_bh_GxE` | Get ggplot from `mean_comparisons.check_model_bh_GxE` |
 | `plot.mean_comparisons_predict_the_past_model_bh_GxE` | Get ggplot from `mean_comparisons.predict_the_past_model_bh_GxE` |
 | `plot.mean_comparisons_model_variance_intra` | Get ggplot from `mean_comparisons.check_model_variance_intra` |
-| `plot.biplot_GxE` | Get ggplot from `biplot_GxE` |
+| `plot.mean_comparisons_model_hedonic` | Get ggplot from `mean_comparisons.check_model_hedonic` |
+| `plot.biplot_GxE` | Get ggplot from `biplot_data` |
 | `ggplot_discrimitiveness_vs_representativeness` | Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix |
 | `ggplot_mean_vs_stability` | Get "mean vs stability" ggplot from PCA on interaction matrix |
 | `ggplot_which_won_where` | Get "which won where" ggplot from PCA on interaction matrix |
+| `plot.biplot_hedonic` | Get ggplot from `biplot_data` |
+| `plot.biplot_napping` | Get ggplot from `biplot_data` |
 Table: Name and description of internal functions.
 
 

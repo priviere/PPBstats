@@ -1,9 +1,9 @@
-#' Compute ecovalence and format PCA results
+#' Compute ecovalence and format PCA results for biplot
 #'
 #' @description
-#' \code{biplot_GxE} computes ecovalence and format PCA results from \code{\link{check_model}} with \code{\link{GxE}}
+#' \code{biplot_data.check_model_GxE} computes ecovalence and format PCA results from \code{\link{check_model}} with \code{\link{GxE}}
 #' 
-#' @param out_check_model_GxE Output from \code{\link{check_model}} with \code{\link{GxE}}
+#' @param x Output from \code{\link{check_model}} with \code{\link{model_GxE}}
 #' 
 #' @details
 #' The ecovalence is the interaction matrix squared.
@@ -22,15 +22,11 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{check_model}}, 
-#' \item \code{\link{check_model_GxE}}, 
-#' \item \code{\link{get_ggplot}},
-#' \item \code{\link{ggplot_biplot_GxE}}
+#' \item \code{\link{check_model.fit_model_GxE}}, 
+#' \item \code{\link{plot.biplot_GxE}}
 #' }
 #'  
-#' 
-#' 
-biplot_GxE = function(out_check_model_GxE){
+biplot_data.check_model_GxE = function(x){
   
   ## TODO: Ideally, there should be a generic biplot()
   ## which only has a method for a "model_GxE" object.
@@ -39,11 +35,11 @@ biplot_GxE = function(out_check_model_GxE){
   ## For the moment, I leave it as it to preserve back-compatibility.
   
   # 1. Error message ----------
-  if( !inherits(out_check_model_GxE, "check_model_GxE") ) {
+  if( !inherits(x, "check_model_GxE") ) {
     stop("data must come from PPBstats::check_model with GxE.")
   }
   
-  data_interaction = out_check_model_GxE$GxE$ANOVA$interaction_matrix
+  data_interaction = x$GxE$ANOVA$interaction_matrix
   
   # 2. Ecovalence ----------
   m_eco = data_interaction^2
@@ -70,10 +66,10 @@ biplot_GxE = function(out_check_model_GxE){
   
   # 3. Return results ----------
   out = list(
-    "info" = out_check_model_GxE$GxE$info,
+    "info" = x$GxE$info,
     "data_ecovalence" = data_ecovalence,
     "data_interaction" = data_inter,
-    "pca" = out_check_model_GxE$GxE$PCA
+    "pca" = x$GxE$PCA
   )
   
   class(out) <- c("PPBstats", "biplot_GxE")
