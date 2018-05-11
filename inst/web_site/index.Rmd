@@ -18,6 +18,12 @@ It involves all actors in the breeding decision process : farmers, technicians, 
 - organoleptic tests
 - molecular experiments
 
+The objectives of `PPBstats` are
+
+- to have in a single package all kind of analysis found within PPB programmes with an exhaustive documentation
+- to create a community working on PPB programmes in order to improve the package and exchange on how to deal with data coming from PPB programmes.
+
+
 On this website you can
 
 - [download and install the `PPBstats`](https://priviere.github.io/PPBstats_web_site/download.html)
@@ -25,7 +31,7 @@ On this website you can
 - [see how to contrbute](https://priviere.github.io/PPBstats_web_site/contribute.html)
 - [know about licence and citation of the package](https://priviere.github.io/PPBstats_web_site/licence.html)
 - [follow news on development](https://priviere.github.io/PPBstats_web_site/NEWS.html)
-- [find useful contat ](https://priviere.github.io/PPBstats_web_site/contact.html)
+- [find contact and mailing list ](https://priviere.github.io/PPBstats_web_site/contact.html)
 
 
 `PPBstats` is developed on Github by severals persons:

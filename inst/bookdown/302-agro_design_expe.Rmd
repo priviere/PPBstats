@@ -23,7 +23,7 @@ The four experimental designs are
 - D3 - row-colum
 - D4 - satellite-farm and regional-farm
 
-### Fully-replicated {#fully-replicated}
+### Fully-replicated  (**D1**) {#fully-replicated}
 
 In fully replicated design, all entries are replicated with randomly choosen order into different blocks.
 
@@ -51,7 +51,7 @@ head(p_fr$"fully-replicated"$data.frame)
 ```
 
 
-You can set the format to a `SHiNeMaS`^[Seeds History and Network Management System, see http://moulon.inra.fr/index.php/en/tranverse-team/atelier-de-bioinformatique/projects/181 for more details] reproduction template file:
+You can set the format to a `SHiNeMaS`^[Seeds History and Network Management System, see (here)[http://moulon.inra.fr/index.php/en/tranverse-team/atelier-de-bioinformatique/projects/181] for more details and a presentation in french (here)[http://moulon.inra.fr/index.php/fr/actualite/387-shinemas-la-base-de-donnees-concue-pour-le-reseau-semences-paysannes]] reproduction template file:
 
 ```{r}
 p_fr = design_experiment(
@@ -74,7 +74,7 @@ p_fr$"fully-replicated"$design
 ```
 
 
-### Incomplete Block Design {#ibd}
+### Incomplete Block Design (**D2**) {#ibd}
 
 The decision tree where incomplete block designs are used is displayed in Figure \@ref(fig:decision-tree-agro-ibd-design).
 
@@ -102,11 +102,11 @@ head(p_ibd$`IBD`$data.frame)
 ```
 
 
-```{r}
+```{r, fig.cap="Example of incomplete block design where different germplasms are replicated over some blocks."}
 p_ibd$`IBD`$design
 ```
 
-### Row-column {#row-column}
+### Row-column (**D3**) {#row-column}
 
 In Row-column design, a control is replicated in row and columns to catch as much as possible of the variation.
 
@@ -136,7 +136,7 @@ p_case2 = design_experiment(
 head(p_case2$"row-column"$data.frame)
 ```
 
-```{r}
+```{r, fig.cap="Row column design where a control (toto) is replicated in rows and columns."}
 p_case2$"row-column"$design
 ```
 
@@ -144,7 +144,7 @@ Note that if controls are missing in rows or columns, the function will return a
 The controls must catch as much as possible of the trial variation.
 
 
-### Regional and satellite farms {#rf-sf}
+### Regional and satellite farms (**D4**) {#rf-sf}
 
 Regional farms receive several entries (i.e. a germplasm in an environment) in two or more blocks with some entries (i.e. controls) replicated in each block.
 Satellite farms have a single block and only one entry (i.e. the control) is replicated twice.
@@ -162,9 +162,9 @@ knitr::include_graphics("figures/decision-tree_agro-regional-and-satellite-desig
 
 The R code to implement is the following :
 
-As an exemple here, six designs are generated: four for satellite farms and two for regional farms.
+As an example here, six designs are generated: four for satellite farms and two for regional farms.
 
-```{r}
+```{r,fig.cap="Example of a satellite farm design."}
 p_case3_sf1 = design_experiment(
   location = "Location-4",
   year = "2016",
@@ -178,7 +178,7 @@ p_case3_sf1 = p_case3_sf1$`satellite-farms`$design
 p_case3_sf1
 ```
 
-```{r}
+```{r,fig.cap="Example of a satellite farm design."}
 p_case3_sf2 = design_experiment(
   location = "Location-5",
   year = "2016",
@@ -192,7 +192,7 @@ p_case3_sf2 = p_case3_sf2$`satellite-farms`$design
 p_case3_sf2
 ```
 
-```{r}
+```{r,fig.cap="Example of a satellite farm design."}
 p_case3_sf3 = design_experiment(
   location = "Location-6",
   year = "2016",
@@ -206,7 +206,7 @@ p_case3_sf3 = p_case3_sf3$`satellite-farms`$design
 p_case3_sf3
 ```
 
-```{r}
+```{r,fig.cap="Example of a regional farm design."}
 p_case3_rf1 = design_experiment(
   location = "Location-7",
   year = "2016",
@@ -220,7 +220,7 @@ p_case3_rf1 = p_case3_rf1$`regional-farms`$design
 p_case3_rf1
 ```
 
-```{r}
+```{r,fig.cap="Example of a regional farm design."}
 p_case3_rf2 = design_experiment(
   location = "Location-8",
   year = "2016",
@@ -238,7 +238,7 @@ If you have enought space and lots of seeds, you can adapt the satellite farm de
 Each row beeing a sower width. 
 Then you must be careful to have several sample for a given row to be as representative as possible.
 
-```{r}
+```{r,fig.cap="Example of a satellite farm design."}
 p_case3_sf4 = design_experiment(
   location = "Location-9",
   year = "2016",

@@ -1,7 +1,7 @@
 ## Describe the data {#describe-data-agro}
 
 Once the data have been collected, a first step is to describe them with `plot()`.
-Seven types of plot, throught the `plot_type` argument are possible:
+Seven types of plot, through the `plot_type` argument are possible:
 
 - presence abscence matrix that represent the combinaison of germplasm $\times$ location
 - histogramm

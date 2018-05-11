@@ -20,10 +20,7 @@ Réseau Semences Paysannes
 
 Exchange information about the R package PPBstats
 
-You can subscribe to mailing list to have news on the R package `PPBstats` and share questions and remarks
+You can subscribe to this mailing list to have news on the R package `PPBstats` and share questions and remarks
 
 Subscribe : https://framalistes.org/sympa/subscribe/ppbstats
-
-Unsubscribe : https://framalistes.org/sympa/sigrequest/ppbstats
-
 
