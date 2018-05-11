@@ -9,7 +9,7 @@ The analysis can be broken down in two steps [@gauch_statistical_2006][@gauch_st
 
 1. an **ANOVA** with the following model :
 
-$Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + \eta_{i}\nu_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
+$Y_{ijk} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}) + (\alpha\theta)_{ij} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
 
 With,
 
@@ -18,36 +18,37 @@ With,
 - $\alpha_{i}$ the effect of germplasm $i$,
 - $\theta_{j}$ the effect of location $j$,
 - $rep_{k}(\theta_{j})$ the effect of the replication $k$ nested in location,
-- $\eta_{i}\nu_{j}$ the interaction effect of germplasm $\times$ location,
+- $(\alpha\theta)_{ij}$ the interaction effect of germplasm $\times$ location,
 - $\varepsilon_{ijk}$ the residuals.
 
 
 Or, if there are several years in the data set:
 
-$Y_{ijkl} = \mu + \alpha_{i} + \theta_{j} + rep_{k}(\theta_{j}\beta_{l}) + \eta_{i}\nu_{j} + \beta_{l} + \beta_{l}\alpha_{i} + \beta_{l}\theta_{j} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
+$Y_{ijkl} = \mu + \alpha_{i} + \theta_{j} + \beta_{l} + (\alpha\theta)_{ij} + (\alpha\beta)_{il} + (\theta\beta)_{jl} + rep_{k}((\theta\beta)_{jl}) + \varepsilon_{ijkl}; \quad \varepsilon_{ijkl} \sim \mathcal{N} (0,\sigma^2)$
 
 With,
 
 - $Y_{ijkl}$ the phenotypic value for replication $k$, germplasm $i$, location $j$ and year $l$,
 - $\beta_{l}$ the year $l$ effect,
-- $\beta_{l}\alpha_{i}$ the year $\times$ germplasm interaction effect,
-- $\beta_{l}\theta_{j}$ the year $\times$ location interaction effect,
-- $\varepsilon_{ijk}$ the residuals,  
+- $(\alpha\beta)_{il}$ the germplasm $\times$ year interaction effect,
+- $(\theta\beta)_{jl}$ the location $\times$ year interaction effect,
+- $rep_{k}((\theta\beta)_{jl})$ the effect of the replication $k$ nested in location $\times$ year,
+- $\varepsilon_{ijkl}$ the residuals,  
 - and all other effects are the same as in the previous model. 
 
 
 2. a **PCA** that focus on the germplasm $\times$ location interaction : 
 
-$\eta_{i}\nu_{j} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}$ ^[Note than in `PPBstats`, the PCA is done on $\eta_{i}\nu_{j} + \varepsilon_{ijk}$. The residuals is in the last dimension of the PCA]
+$(\alpha\theta)_{ij} = \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn}$ ^[Note than in `PPBstats`, the PCA is done on $\alpha\theta_{ij} + \varepsilon_{ijkl}$. The residuals is in the last dimension of the PCA]
 
 
 which can also be written :
 
-$\eta_{i}\nu_{j} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})$
+$(\alpha\theta)_{ij} = \sum_{n}^{N} (\sqrt{\lambda_{n}} \gamma_{in}) (\sqrt{\lambda_{n}} \omega_{jn})$
 
 With,
 
-- $\eta_{i}\nu_{j}$ the interaction between germplasm $i$ and location $j$,
+- $(\alpha\theta)_{ij}$ the interaction between germplasm $i$ and location $j$,
 - $N$ the number of dimensions (PCA componants) which has as maximum value the number of location,
 - $\lambda_{n}$ the eigen value for componant $n$,
 - $\gamma_{in}$ the eigen vector for germplasm $i$ and componant $n$,
