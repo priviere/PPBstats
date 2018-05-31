@@ -36,7 +36,7 @@ After designing the experiment and describing the data, each family of analysis 
 - Format the data
 - Run the model
 - Check the model and visualize outputs
-- Compare means and visualize outputs
+- Compare means, format data for biplot and visualize outputs
 
 Figure \@ref(fig:main-workflow-organo) displays the functions and their relationships.
 Table \@ref(tab:function-descriptions-workflow-organo) describes each of the main functions.
@@ -66,30 +66,5 @@ Table: (\#tab:function-descriptions-workflow-organo) Function description.
 ### Data format {#data-organo}
 
 For organoleptic analysis data must have a specific format.
-There are two format supported : `data-organo-hedonic` and `data-organo-napping`.
-
-#### `data-organo-hedonic`
-
-`data-organo-hedonic` format corresponds to 
-
-```{r}
-#data("data_hedonic")
-#data_hedonic = format_data_PPBstats(data_hedonic, type = "data_organo_hedonic")
-#head(data_hedonic)
-```
-
-```{r}
-#class(data_hedonic)
-```
-
-
-#### `data-organo-napping`
-
-`data-organo-napping` format corresponds to
-
-```{r}
-#data(data_napping)
-#data_napping = format_data_PPBstats(data_napping, type = "data_organo_napping")
-#head(data_napping)
-```
+Each format is displayed in the corresponding analysis section.
 

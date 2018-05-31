@@ -9,19 +9,223 @@ Additional sensory descriptors to describe products are asked after evaluationed
 One of the main objectives of hedonic tests is to determine differences of appreciation for a given attribute between a set of samples.
 The data distribution determines the type of tests that should be used to analyze the data set. 
 
-- If the distribution is Normal, one-way analysis of variance (ANOVA) can be performed, the source of variance being the sample, followed by multiple comparison of mean data values from each assessor. 
+- If the distribution is Normal, one-way analysis of variance (ANOVA) can be performed:
+
+$Y_{ij} = \alpha_i + \beta_j + \varepsilon_{ij}; \quad \varepsilon_{ijkl} \sim \mathcal{N} (0,\sigma^2)$
+
+with
+$Y_{ij}$ the note from 1 to 9 given by a person to a sample 
+$\alpha_i$ the person (i.e. assessor) that taste the sample,
+$\beta_j$ the germplasm tasted,
+$\varepsilon_{ijkl}$ the residuals.
+
+Then, multiple comparison of mean on germplasm are performed.
 The aim is to obtain a final ranking based on consumers’ preferences. 
+
 - If the data set doesn’t follow a Normal distribution, a Friedman test on the rank should be used to indicate if the varieties are perceived differently by assessors.
 
 Finally a Hierarchical Cluster Analysis can be implement to identify groups of preferences. 
 
 ### Steps with `PPBstats`
 
+For hedonic analysis, you can follow these steps (Figure \@ref(fig:main-workflow-organo)):
+
+- Format the data with `format_data_PPBstats()`
+- Describe the data with `plot()`
+- Run the model with `model_hedonic()`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+- Format data for multivariate analysis with `biplot_data` and visualise it with `plot()`
+
 
 ### Format the data
 
+```{r}
+data(data_hedonic)
+head(data_hedonic)
+```
+
+The data frame has the following columns: sample, juges, note, descriptors, germplasm, location. 
+The descriptors must be separated by ";". 
+Any other column can be added as supplementary variables.
+
+
+Then, you must format your data with `format_data_PPBstats()` and type = `"data_organo_hedonic"`.
+Argument `threshold` can be set in order to keep only descriptors that have been cited several time.
+For exemple with `threshold = 2`, on ly descriptors cited at least twice are kept.
+
+
+```{r}
+data_hedonic = format_data_PPBstats(data_hedonic, type = "data_organo_hedonic", threshold = 2)
+names(data_hedonic)
+```
+
+`data_hedonic` is a list of three elements : 
+- `data` the data formated to run the anova and the multivariate analysis
+```{r}
+head(data_hedonic$data)
+```
+- `var_sup` the supplementary variables used in the multivariate analysis
+```{r}
+data_hedonic$var_sup
+```
+- `descriptors` the vector of descriptors cited knowing the threhold applyed when formated the data.
+```{r}
+data_hedonic$descriptors
+```
+
+
+### Describe the data
+First, you can describe the data regarding the note given 
+
+```{r}
+p_note = plot(data_hedonic, plot_type = "boxplot", x_axis = "germplasm",
+               in_col = "location", vec_variables = "note"
+               )
+p_note
+```
+
+As well as the descriptors for each germplasm for example:
+
+```{r}
+descriptors = data_hedonic$descriptors
+
+p_des = plot(data_hedonic, plot_type = "radar", in_col = "germplasm", 
+                         vec_variables = descriptors
+                         )
+p_des
+```
+
 
 ### Run the model
+To run the model on the dataset, used the function `model_hedonic`.
+
+```{r}
+out_hedonic = model_hedonic(data_hedonic)
+```
+
+`out_hedonic` is a list with two elements:
+- `model` : the result of the anova run on note
+- `CA` : the result of the correspondane analysis run on the data set with the supplementary variables with `FactoMineR::CA`
 
 
+### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-freq).
+
+#### Check the model
+```{r}
+out_check_hedonic = check_model(out_hedonic)
+```
+
+`out_check_hedonic` is list with two elements:
+
+- `hedonic` which it the same objet as `out_hedonic`
+- `data_ggplot` a list containing information for ggplot:
+    - `data_ggplot_residuals` a list containing :
+        - `data_ggplot_normality`
+        - `data_ggplot_skewness_test`
+        - `data_ggplot_kurtosis_test`
+        - `data_ggplot_qqplot`
+    - `data_ggplot_variability_repartition_pie`
+    - `data_ggplot_var_intra`
+
+#### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot`
+
+
+```{r}
+p_out_check_hedonic = plot(out_check_hedonic)
+```
+
+`p_out_check_hedonic` is a list with:
+
+- `residuals`
+    - `histogram` : histogram with the distribution of the residuals
+    ```{r}
+    p_out_check_hedonic$residuals$histogram
+    ```
+    - `qqplot`
+    ```{r}
+    p_out_check_hedonic$residuals$qqplot
+    ```
+
+- `variability_repartition` : pie with repartition of SumSq for each factor
+```{r}
+p_out_check_hedonic$variability_repartition
+```
+
+- `variance_intra_germplasm` : repartition of the residuals for each germplasm which represent the person assessor variation plus the intra-germplasm variance.
+
+
+```{r}
+p_out_check_hedonic$variance_intra_germplasm
+```
+
+- `pca_composante_variance` : variance caught by each dimension of the CA
+```{r}
+p_out_check_hedonic$pca_composante_variance
+```
+
+
+### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+
+#### Get mean comparisons
+
+Get mean comparisons with `mean_comparisons`.
+
+```{r}
+out_mean_comparisons_hedonic = mean_comparisons(out_check_hedonic)
+```
+
+`out_mean_comparisons_hedonic` is a list of one element for futher ggplot : `data_ggplot_LSDbarplot_germplasm`
+
+
+#### Visualize mean comparisons
+
+```{r}
+p_out_mean_comparisons_hedonic = plot(out_mean_comparisons_hedonic)
+```
+
+`p_out_mean_comparisons_hedonic` is a list of on elements with barplots :
+
+For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+Letters are displayed on each bar. 
+Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+The error I (alpha) and the alpha correction are displayed in the title. 
+
+- `germplasm` : mean comparison for germplasm
+```{r}
+pg = p_out_mean_comparisons_hedonic$germplasm
+names(pg)
+pg$`1`
+```
+
+
+### Get and visualize biplot
+
+The biplot represents information about the percentages of total variation explained by the two axes.
+It has to be linked to the total variation caught by the interaction.
+If the total variation is small, then the biplot is useless.
+If the total variation is high enought, then the biplot is useful if the two first dimension represented catch enought variation (the more the better).
+
+#### Get biplot
+```{r}
+out_biplot_hedonic = biplot_data(out_check_hedonic)
+```
+
+
+#### Visualize biplot
+```{r}
+p_out_biplot_hedonic = plot(out_biplot_hedonic)
+```
+
+`p_out_biplot_hedonic` is a list of one element with the `CA` biplot
+
+```{r}
+p_out_biplot_hedonic$ca_biplot
+```
 

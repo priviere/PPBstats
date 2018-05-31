@@ -9,7 +9,9 @@ It offers greater flexibility, as no trained panel is needed.
 
 Two tasks are done in a Napping:
 
-- The **sorting task**: each taster is asked to position the whole set of products on a sheet of blank paper (a tablecloth) according to their similarities/dissimilarities. Thus, two products are close if they are perceived as similar or, on the contrary,  distant from each other if they are perceived as different. Each taster uses his/her own criteria.
+- The **sorting task**: each taster is asked to position the whole set of products on a sheet of blank paper (a tablecloth) according to their similarities/dissimilarities. 
+Thus, two products are close if they are perceived as similar or, on the contrary, distant from each other if they are perceived as different. 
+Each taster uses his/her own criteria.
 - The **verbalisation task**: After performing the napping task, the panellists are asked to describe the products by writing one or two sensory descriptors that characterize each group of products on the map.
 
 Panels should be composed from 12 to 25 tasters according to the judge’s experience with the product and to the objective of the experiment. 
@@ -38,10 +40,127 @@ The frequency table crossing products and word frequency is considered as a set 
 
 ### Steps with `PPBstats`
 
+For hedonic analysis, you can follow these steps (Figure \@ref(fig:main-workflow-organo)):
+
+- Format the data with `format_data_PPBstats()`
+- Describe the data with `plot()`
+- Run the model with `model_napping()`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Format data for multivariate analysis with `biplot_data` and visualise it with `plot()`
+
 
 ### Format the data
+```{r}
+data(data_napping)
+head(data_napping)
+```
+
+The data frame has the following columns: juges, X, Y, descriptors, germplasm, location. 
+The descriptors must be separated by ";". 
+Any other column can be added as supplementary variables.
+
+Then, you must format your data with `format_data_PPBstats()` and type = `"data_organo_napping"`.
+Argument `threshold` can be set in order to keep only descriptors that have been cited several time.
+For exemple with `threshold = 2`, on ly descriptors cited at least twice are kept.
+
+
+```{r}
+data_napping = format_data_PPBstats(data_napping, type = "data_organo_napping", threshold = 2)
+names(data_napping)
+```
+
+`data_napping` is a list of three elements : 
+- `data` the data formated to run the anova and the multivariate analysis
+```{r}
+head(data_napping$data)
+```
+- `descriptors` the vector of descriptors cited knowing the threhold applyed when formated the data.
+```{r}
+data_napping$descriptors
+```
+
+
+### Describe the data
+First, you can describe the data regarding the descriptors for each germplasm for example.
+
+```{r}
+descriptors = data_napping$descriptors
+
+p_des = plot(data_napping, plot_type = "radar", vec_variables = descriptors, in_col = "sample")
+p_des
+```
 
 
 ### Run the model
 
+To run the model on the dataset, used the function `model_napping`.
+
+```{r}
+out_napping = model_napping(data_napping)
+```
+
+`out_napping` is an object coming from `FactoMineR::MFA`
+
+
+### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-freq).
+
+#### Check the model
+```{r}
+out_check_napping = check_model(out_napping)
+```
+
+`out_check_napping`is the same objet as `out_napping`
+
+#### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot`
+
+```{r}
+p_out_check_napping = plot(out_check_napping)
+```
+`p_out_check_napping` is a plot representing the variance caught by each dimension of the MFA
+
+```{r}
+p_out_check_napping
+```
+
+
+### Get and visualize biplot
+
+The biplot represents information about the percentages of total variation explained by the two axes.
+It has to be linked to the total variation caught by the interaction.
+If the total variation is small, then the biplot is useless.
+If the total variation is high enought, then the biplot is useful if the two first dimension represented catch enought variation (the more the better).
+
+#### Get biplot
+```{r}
+out_biplot_napping = biplot_data(out_check_napping)
+```
+
+
+#### Visualize biplot
+
+`out_biplot_napping` is the same objet as `out_check_napping`
+
+
+```{r}
+p_out_biplot_napping = plot(out_biplot_napping)
+```
+
+`p_out_biplot_napping` is a list of three elements:
+
+- partial_axes
+```{r}
+p_out_biplot_napping$partial_axes
+```
+- ind
+```{r}
+p_out_biplot_napping$ind
+```
+- var
+```{r}
+p_out_biplot_napping$var
+```
 
