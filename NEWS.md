@@ -54,6 +54,7 @@
 ### update vignette (inst/bookdown)
 - regarding change with plot.data_network
 - regarding change with plot.data_agro
+- regarding workflow in organoleptic analysis
 
 
 ### update webiste (inst/web_site)
