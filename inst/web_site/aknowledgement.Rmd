@@ -1,6 +1,6 @@
 
-This worked has been first funded by the European Community’s Seventh Framework Programme (FP7/9 2007–2013) under the grant agreement n245058-Solibam (Strategies for Organic and Low-input Integrated Breeding and Management).
-It has been completed by funding from European Union’s Horizon 2020 research and innovation programme under grant agreement No 633571 (DIVERSIFOOD project) and Fondation de France.
+This work has been first funded by the European Community’s Seventh Framework Programme (FP7/9 2007–2013) under the grant agreement n245058-Solibam (Strategies for Organic and Low-input Integrated Breeding and Management). 
+It has been completed by funding from European Union’s Horizon 2020 research and innovation programme under grant agreement No 633571 (DIVERSIFOOD project), by INRA (AgriBio4) and Fondation de France.
 
 ```{r, out.width='15%', fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/Logo-Diversifood.jpg")
@@ -18,7 +18,12 @@ knitr::include_graphics("figures/Logo-EU.jpg")
 knitr::include_graphics("figures/Logo-FdF.jpg")
 ```
 
+```{r, out.width='15%', fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/Logo-INRA.jpg")
+```
+
+
 Thanks to Hadley Wickham for his web site http://r-pkgs.had.co.nz/ that help us a lot in the creation of this package.
 Thanks to Jonathan Locqueville and Maxime Garnault that work during their internship on a first version of the AMMI code.
-Thanks to Salvatore Ceccarelli for its useful comments and references on data analysis and software.
+Thanks to Salvatore Ceccarelli, Carlota Vaz Patto, Pedro Mendes Moreira, João Mendes Moreira for their useful comments and references on data analysis and software.
 

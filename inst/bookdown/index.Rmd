@@ -1,5 +1,5 @@
 --- 
-title: "Analysis of Participatory Plant Breeding programme with the R package `PPBstats`"
+title: "`PPBstats` : An `R` package for Participatory Plant Breeding statisticial analyses"
 author: "Pierre Rivière"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -15,6 +15,8 @@ description: "Tutorial on how to use the R package PPBstats."
 # Preface {-}
 
 `PPBstats` is an R package that performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
+
+`PPBstats` is now at version 0.24.
 
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
 knitr::include_graphics("figures/warning.png")
@@ -44,7 +46,7 @@ Réseau Semences Paysannes
 [www.semencespaysannes.org](http://www.semencespaysannes.org)
 
 
-## Authors of `PPBstats` and the book, affiliation and contribution {-}
+## Authors and contributors of `PPBstats` and the book {-}
 
 **Pierre Rivière^1^** coordinated the package development, wrote the R functions and the present book
 
@@ -54,7 +56,9 @@ Réseau Semences Paysannes
 
 **Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section regarding [contributions](https://priviere.github.io/PPBstats_web_site/contribute.html).
 
-**Camille Vindras^5^** wrote text to present method description in sensory analysis in section \@ref{organoleptic}
+**Camille Vindras^5^** wrote text to present method description in sensory analysis in section \@ref(organoleptic).
+
+**Mathieu Thomas^6,7^** proposed the data format as well as the descriptive analysis regarding network section \@ref(network).
 
 **Isabelle Goldringer^2^** reviewed and improved all the text of the book
 
@@ -94,6 +98,9 @@ http://maiage.jouy.inra.fr/?q=en/home
 
 ^5^ ITAB, Ferme Expérimentale, 2485 Route des Pécolets, F-26800 Etoile-sur-Rhône, France
 
+^6^ CIRAD, UMR AGAP, F-34398 Montpellier, France
+
+^7^ AGAP, Univ Montpellier, CIRAD, INRA, Montpellier SupAgro, Montpellier, France
 
 ## Copyright, Licence, citation {-}
 
@@ -124,10 +131,10 @@ To cite the book :
 bibtex entry
 
 @book{ppbstats_book_2018,
-  title = "{Analysis of Participatory Plant Breeding programme with the R package PPBstats.}",
+  title = "{PPBstats : An R package for Participatory Plant Breeding statisticial analyses.}",
 	author = "{Rivière, P. and Goldringer, I. and Vindras C.}",
 	year = "2018",
-	version = "0.23",
+	version = "0.24",
 	licence = "CC BY NC SA",
 	url = "https://priviere.github.io/PPBstats_book/"
 }

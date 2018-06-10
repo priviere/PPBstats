@@ -32,24 +32,36 @@ Hence, when facing a wide diversity of agroecological environment and practices,
 
 ### Involve all actors in the breeding decision process
 
-All actors are part of the breeding programme : farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and may better answer the real needs of actors  [@sperling_framework_2001].
+All actors are part of the breeding programme : farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and may better answer the real needs of actors [@sperling_framework_2001].
 
 
 ## Objectives of `PPBstats`
 
-`PPBstats` aims to perform analysis found within PPB programmes at four levels:
+`PPBstats` is a freely available package based on the R software [R_Core_Team] that performs analyses on the data collected during PPB programs at four levels: 
 
-- network of seeds circulation (section \@ref(network))
-
+- network of seed management (section \@ref(network)), 
 - agronomic trials (section \@ref(agronomic)) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
 Nutritional data are also dealt here as it is the same data structure as agronomic data.
 The statistical procedures are based on frequentist and bayesian approaches.
-
 - organoleptic tests (section \@ref(organoleptic))
-
 - molecular experiments (section \@ref(molecular))
 
-Please, feel free to contribute to other aspects of analysis, see [here](https://priviere.github.io/PPBstats_web_site/contribute.html) for more information.
+**The objectives of `PPBstats` are**
+
+1. to have a single package capable of performing all analyses required for PPB programmes with comprehensive documentation, and 
+2. to create a community working on PPB programmes in order to improve the package, exchange on how to process data from PPB programmes and develop good practices. 
+
+
+## Contribute
+Contributions to `PPBstats` are very welcome and can be made in four different ways: 
+
+1. testing the package and reporting bugs, 
+2. improving the code, 
+3. improving the documentation and 
+4. translating
+
+More information can be found [here](https://priviere.github.io/PPBstats_web_site/contribute.html).
+
 
 
 ## Design and statistical methods according to the objectives
@@ -82,12 +94,12 @@ knitr::include_graphics("figures/decision-tree_all.png")
 
 ## Let's go: install `PPBstats` !
 
-To continue, load the current development version of the package [here](https://github.com/priviere/PPBstats/archive/v0.23.zip)
+To continue, load the current development version of the package [here](https://github.com/priviere/PPBstats/archive/v0.24.zip)
 
 unzip the folder and then run 
 
 ```{r, eval=FALSE}
-devtools::install("PPBstats-0.23")
+devtools::install("PPBstats-0.24")
 ```
 
 Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
@@ -98,7 +110,7 @@ Then you can load the package :
 library(PPBstats)
 ```
 
-and download the data used in this tutorial (this is useful to earn lots of time!) [here](https://github.com/priviere/PPBstats/releases/download/v0.23/data_PPBstats.zip).
+and download the data used in this tutorial (this is useful to earn lots of time!) [here](https://github.com/priviere/PPBstats/releases/download/v0.24/data_PPBstats.zip).
 
 The following examples have been performed with the following R version :
 ```{r}

@@ -1,9 +1,9 @@
 Package: PPBstats
 Type: Package
 Title: An R package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments
-Version: 0.23
+Version: 0.24
 Encoding: UTF-8
-Date: 2018-02-25
+Date: 2018-06-10
 Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
     person("Gaelle", "Van Frank", role = "ctb"),
     person("Olivier", "David", role = "ctb"),

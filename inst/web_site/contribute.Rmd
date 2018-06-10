@@ -9,24 +9,24 @@ output:
 
 # Contribute to `PPBstats` {#contributions}
 
-You can contribute to `PPBstats` in four ways:
+Contributions to `PPBstats` are very welcome and can be made in four different ways: 
 
-- test and report bugs
-- improve the code
-- improve the book
-- translate
+1. testing the package and reporting bugs, 
+2. improving the code, 
+3. improving the documentation and 
+4. translating
 
 
 Anyhow, send me an email if you wish to participate in order to coordinate our efforts: pierre@semencespaysannes.org
 
 ## Test and report bugs
 
-First, load the current development version of the package: [download v0.23](https://github.com/priviere/PPBstats/archive/v0.23.zip)
+First, load the current development version of the package: [download v0.24](https://github.com/priviere/PPBstats/archive/v0.24.zip)
 
 unzip the folder and then run 
 
 ```{r, eval=FALSE}
-devtools::install("PPBstats-0.23")
+devtools::install("PPBstats-0.24")
 ```
 
 Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
@@ -180,7 +180,7 @@ knitr::include_graphics("figures/secondary-functions.png")
 Table: Name and description of internal functions.
 
 
-## Improve the book
+## Improve the documentation
 
 The book has been generated thanks to [`bookdown`](https://bookdown.org/yihui/bookdown/).
 
@@ -188,7 +188,7 @@ If you wish to improve the book, to add new sections on PPB, etc please file an 
 
 The code of the book is on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
 
-If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.23/PPBstats_vignette_docx.zip).
+If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.24/PPBstats_vignette_docx.zip).
 Do not pay attention to strange words such as _#_, _[@blablabla]_, _\@ref_ ... that are `bookdown` specific.
 
 ## Translate

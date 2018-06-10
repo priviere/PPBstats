@@ -1,4 +1,4 @@
-# **PPBstats 0.24** under process
+# **PPBstats 0.24**
 
 ### update fonctions
 - model_bh_intra_location
@@ -7,20 +7,64 @@
     - clean check at the beginning
     - add long and lat for bipart network
     - add format in vertex data for further use with plot.data_network
+    - delete optional column alt as it is not needed for map
+- format_data_PPBstats.data_agro : 
+    - add long and lat in option
+- format_data_PPBstats.data_napping :
+    - delete code arg
 - plot.data_network, cf #67 :
     - implement map with ggmap
     - add pie on map and network
     - add barplot for unipart network on location
-
+    - display in variable edges of the network for unipart sl on barplot
+    - display in variable edges of the network for unipart sl on map with pies 
+    - display output from unipart location on a map
+- plot.data_agro, cf #68 :
+    - add plot_type = "map"
+    - add r2 on biplot, cf #84
+    - add argument data_version
+- ggplot_check_model_GxE : add table with % next to pie plot, cf #38
+- format_data_PPBstats.data_agro_version
+    - add specific class for data_version_SR and data_version_MR
+- common_functions
+    - common function for check model regarding frequentist analysis, cf #71
+    
+### add new functions
+- create workflow for napping, cf #72
+    - plot.data_organo_napping
+    - model_napping
+    - check_model.fit_model_napping
+    - plot.check_model_napping
+    - biplot_data
+    - plot.biplot_napping
+- create workflow for hedonic, cf #72
+    - plot.data_organo_hedonic
+    - model_hedonic
+    - check_model.fit_model_hedonic
+    - plot.check_model_hedonic
+    - biplot_data
+    - plot.biplot_hedonic
+    - mean_comparisons.check_model_hedonic 
+    - plot.mean_comparisons_model_hedonic
+- biplot_data, cf #93
+    - biplot_data.check_model_GxE
+    - biplot_data.check_model_hedonic
+    - biplot_data.check_model_napping
 
 ### update vignette (inst/bookdown)
 - regarding change with plot.data_network
+- regarding change with plot.data_agro
+- regarding workflow in organoleptic analysis
+- improve text
 
 
 ### update webiste (inst/web_site)
 - improve download
 - add email list
+- improve text
 
+### update RData
+- standardize RData, cf #85
     
 # **PPBstats 0.23**
 ### update fonctions

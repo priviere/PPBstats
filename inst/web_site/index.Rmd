@@ -1,6 +1,17 @@
-# Analysis of Participatory Plant Breeding programme with the R package `PPBstats`
+---
+title: "`PPBstats` : An `R` package for Participatory Plant Breeding statisticial analyses"
+author: "Pierre Rivière"
+date: "`r Sys.Date()`"
+bibliography: ../bookdown/biblio.bib
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: 
+      collapsed: false
+---
 
-## Version 0.23
+# Version 0.24
 
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
 knitr::include_graphics("figures/warning.png")
@@ -8,33 +19,8 @@ knitr::include_graphics("figures/warning.png")
 **Be aware that this package is under development and test do not 100% trust the functions!!!**
 **You're welcome to contribute: see [here](https://priviere.github.io/PPBstats_web_site/contribute.html) for more informations.**
 
-Participatory plant breeding is based on the decentralization of the selection in the farms and the gardens.
-It involves all actors in the breeding decision process : farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and answer the real needs of actors.
 
-`PPBstats` aims to perform analysis found within PPB programmes at four levels:
-
-- network of seeds circulation
-- agronomic trials
-- organoleptic tests
-- molecular experiments
-
-The objectives of `PPBstats` are
-
-- to have in a single package all kind of analysis found within PPB programmes with an exhaustive documentation
-- to create a community working on PPB programmes in order to improve the package and exchange on how to deal with data coming from PPB programmes.
-
-
-On this website you can
-
-- [download and install the `PPBstats`](https://priviere.github.io/PPBstats_web_site/download.html)
-- [follow a full tutorial of `PPBstats`](https://priviere.github.io/PPBstats_web_site/book.html)
-- [see how to contrbute](https://priviere.github.io/PPBstats_web_site/contribute.html)
-- [know about licence and citation of the package](https://priviere.github.io/PPBstats_web_site/licence.html)
-- [follow news on development](https://priviere.github.io/PPBstats_web_site/NEWS.html)
-- [find contact and mailing list ](https://priviere.github.io/PPBstats_web_site/contact.html)
-
-
-`PPBstats` is developed on Github by severals persons:
+# Authors and contributors
 
 **Pierre Rivière^1^** maintains and coordinates the package development, writes the R functions and the book
 
@@ -45,6 +31,8 @@ On this website you can
 **Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section regarding contributions.
 
 **Camille Vindras^5^** wrote text to present method description in sensory analysis
+
+**Mathieu Thomas^6,7^** proposed the data format as well as the descriptive analysis regarding network section
 
 **Isabelle Goldringer^2^** reviewed and improved all the text of the book
 
@@ -57,3 +45,68 @@ On this website you can
 ^4^ INRA, Centre Val de Loire, Unité Amélioration, Génétique et Physiologie Forestières, F-45075 Orléans, France
 
 ^5^ ITAB, Ferme Expérimentale, 2485 Route des Pécolets, F-26800 Etoile-sur-Rhône, France
+
+^6^ CIRAD, UMR AGAP, F-34398 Montpellier, France
+
+^7^ AGAP, Univ Montpellier, CIRAD, INRA, Montpellier SupAgro, Montpellier, France
+
+
+# Key words
+`R` package, Participatory Plant Breeding, statistical analysis
+
+# Background
+Participatory Plant Breeding (PPB) is based on the decentralization of evaluation and selection in the fields of farmers and gardeners [@desclaux_changes_2008]. 
+All actors such as farmers, technicians, researchers, facilitators, consumers, ... are involved in the decision-making process at all stages of the PPB programme. 
+Such kind of involvement empowers all actors and responds to their needs [@sperling_framework_2001]. 
+During PPB programmes, experiments are carried out and different types of data are produced and must be analysed in order to support farmers in their selection. 
+These data covers the history of seed management (circulation, mixture, reproduction, selection, etc), agronomic trials, organoleptic tests and molecular data. 
+Several programmes exist to analyze these different types of data but they are not always freely available and often scattered in different softwares.
+
+# Objectives of `PPBstats`
+`PPBstats` is a freely available package based on the R software [@R_Core_Team] that performs analyses on the data collected during PPB programs at four levels: 
+
+- network of seed management, 
+- agronomic trials, 
+- organoleptic tests and 
+- molecular analyses. 
+
+**The objectives of `PPBstats` are**
+
+1. to have a single package capable of performing all analyses required for PPB programmes with comprehensive documentation, and 
+2. to create a community working on PPB programmes in order to improve the package, exchange on how to process data from PPB programmes and develop good practices. 
+
+# Examples of analysis performed by PPBstats
+
+After a step of  data formatting a workflow of analysis is carried out. 
+For network analysis, only descriptive methods are provided, and graphical representations are available.  
+For agronomic analyses, decision trees are available in order to perform the most appropriate analysis depending to the objective and the experimental constraints such as number of plots or seed available. 
+Descriptive analyses such as barplot, radar, boxplot, interaction plot, maps can be done. 
+Several models such as spatial analysis, mixed model, bayesian hierarchical models, AMMI and GGE are implemented. 
+For organoleptic data, hedonic and napping analyses can be performed. 
+For each model, a function checks if the model went well and mean comparisons as well as biplots can be visualized. 
+For molecular data, only descriptive plots on the markers are implemented.
+
+
+# Contribute
+Contributions to `PPBstats` are very welcome and can be made in four different ways: 
+
+1. testing the package and reporting bugs, 
+2. improving the code, 
+3. improving the documentation and 
+4. translating
+
+More information can be found [here](https://priviere.github.io/PPBstats_web_site/contribute.html).
+
+
+# Web site architecture
+On this website you can
+
+- [download and install the `PPBstats`](https://priviere.github.io/PPBstats_web_site/download.html)
+- [follow a full tutorial of `PPBstats`](https://priviere.github.io/PPBstats_web_site/book.html)
+- [see how to contrbute](https://priviere.github.io/PPBstats_web_site/contribute.html)
+- [know about licence and citation of the package](https://priviere.github.io/PPBstats_web_site/licence.html)
+- [follow news on development](https://priviere.github.io/PPBstats_web_site/NEWS.html)
+- [find contact and mailing list ](https://priviere.github.io/PPBstats_web_site/contact.html)
+
+
+# References

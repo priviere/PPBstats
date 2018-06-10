@@ -4,16 +4,16 @@ citEntry(
   entry = 'manual',
   title = 'PPBstats: An R package to perform analysis found within PPB programmes
   regarding network of seeds circulation, agronomic trials, organoleptic tests and
-  molecular experiments. Version 0.23',
+  molecular experiments. Version 0.24',
   author = '{Pierre Riviere, Gaelle Van Franck and Olivier David and Facundo Muñoz}',
   organisation = '{Reseau Semences Paysannes}, {INRA}',
   year = '2018',
-  url = 'https://github.com/priviere/PPBstats',
+  url = 'https://github.com/priviere/PPBstats_web_site',
   note = 'R code is under licence GPL-3. 
           Vignette is under licence creative commons BY-NC-SA 4.0.',
   textVersion =   'Pierre Riviere and al, 2018, 
                   PPBstats: An R package to perform analysis found within PPB programmes                      regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
-                  Version 0.23,
-                  URL: https://github.com/priviere/PPBstats'
+                  Version 0.24,
+                  URL: https://github.com/priviere/PPBstats_web_site'
 )
 

@@ -13,13 +13,13 @@ install.packages("devtools")
 3. **install `JAGS` software** on your computer in order to do bayesian analysis. 
 See http://mcmc-jags.sourceforge.net/ for more details.
 
-4. **download the current version of the package**: [download v0.23](https://github.com/priviere/PPBstats/archive/v0.23.zip)
+4. **download the current version of the package**: [download v0.24](https://github.com/priviere/PPBstats/archive/v0.24.zip)
 
 5. **unzip the folder** on your local directory 
 
 6. **install the package** thanks to the `install` funtion from the `devtool` package 
 ```{r, eval=FALSE}
-devtools::install("PPBstats-0.23")
+devtools::install("PPBstats-0.24")
 ```
 Note that you can also load the development version:
 ```{r, eval=FALSE}

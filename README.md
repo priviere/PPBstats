@@ -1,4 +1,4 @@
-# PPBstats v0.23
+# PPBstats v0.24
 
 `PPBstats` is an R package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
 

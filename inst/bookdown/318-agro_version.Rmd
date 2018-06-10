@@ -88,7 +88,7 @@ p_barplot_mu_version$data_env_whose_param_did_not_converge
 ```
 
 
-#### Home away
+#### Migrant residant {#migrant-residant} (Home away)
 
 ##### Format data
 
@@ -104,4 +104,13 @@ Where `group` represents migrant or residant and `version` represents the locati
 p = plot(data_model_GxE, vec_variables = "y1", data_version = data_version_MR, plot_type = "barplot")
 p$y1$`loc-1`
 ```
+
+##### Model 
+
+!!! TO DO !!!
+
+The model is based on frequentist statistics (section \@ref(section-freq)).
+The tests to check the model are explained in section \@ref(check-model-freq).
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+
 

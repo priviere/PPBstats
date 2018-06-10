@@ -1,4 +1,4 @@
-# **PPBstats 0.24** under process
+# **PPBstats 0.24**
 
 ### update fonctions
 - model_bh_intra_location
@@ -55,11 +55,13 @@
 - regarding change with plot.data_network
 - regarding change with plot.data_agro
 - regarding workflow in organoleptic analysis
+- improve text
 
 
 ### update webiste (inst/web_site)
 - improve download
 - add email list
+- improve text
 
 ### update RData
 - standardize RData, cf #85
