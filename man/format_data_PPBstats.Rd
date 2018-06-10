@@ -4,9 +4,9 @@
 \alias{format_data_PPBstats}
 \title{Check and format the data to be used by PPBstats functions}
 \usage{
-format_data_PPBstats(data, type = "data_agro", code, threshold,
-  network_part = c("unipart", "bipart"), network_split = c("germplasm",
-  "relation_year_start"), vertex_type = NULL)
+format_data_PPBstats(data, type, code, threshold, network_part = c("unipart",
+  "bipart"), network_split = c("germplasm", "relation_year_start"),
+  vertex_type = NULL)
 }
 \arguments{
 \item{data}{The data frame. See details.}
@@ -16,6 +16,8 @@ format_data_PPBstats(data, type = "data_agro", code, threshold,
  \item data_network
  \item data_agro
  \item data_agro_version
+ \item data_agro_version_SR
+ \item data_agro_version_MR
  \item data_organo_napping
  \item data_organo_hedonic
  }
@@ -124,15 +126,25 @@ The function returns the data with the right format (i.e. class)
  The group refers to an id that contains two different versions.
  For example for group 1, there are version 1 and 2.
  
+ \item For type = "data_agro_version_SR" :
+ In group there are either S or R.
+ In version there are either bouquet or vrac
+  
+ \item For type = "data_agro_version_MR" :
+ In group there are same type of value than in column location.
+ In version there are either migrant or residant
+ 
  \item For type = "data_organo_napping"
  \itemize{
-  \item data is a data frame with the following columns: sample, juges, X, Y, descriptors. 
+  \item data is a data frame with the following columns: sample, juges, X, Y, descriptors, germplasm, location. 
   The descriptors must be separated by ";"
-  \item code is a data frame with the following columns: germplasm, location, code.
-  The function merge data and code to join the information.
  }
 
  \item For type = "data_organo_hedonic"
+ \itemize{
+  \item data is a data frame with the following columns: sample, juges, note, descriptors, germplasm, location. 
+  The descriptors must be separated by ";". Any other column can be added as supplementary variables.
+ }
  
 }
 }

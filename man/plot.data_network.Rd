@@ -4,35 +4,48 @@
 \alias{plot.data_network}
 \title{Plot network object from format_data_PPBstats()}
 \usage{
-\method{plot}{data_network}(net, plot_type = c("network", "barplot"),
-  in_col = NULL, labels_on = FALSE, labels_size = 4,
-  organize_sl = FALSE, x_axis = NULL, nb_parameters_per_plot_x_axis = 5,
-  nb_parameters_per_plot_in_col = 5)
+\method{plot}{data_network}(net, data_to_pie = NULL, variable = NULL,
+  pie_size = 0.2, plot_type = "network", in_col = "location",
+  labels_on = FALSE, labels_size = 4, organize_sl = FALSE,
+  x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5,
+  nb_parameters_per_plot_in_col = 5, vec_variables = NULL)
 }
 \arguments{
 \item{net}{output from format_data_PPBstats with data_type = "network"}
 
-\item{plot_type}{"network" or "barplot"}
+\item{data_to_pie}{output from format_data_PPBstats with data_type = "agro"}
 
-\item{in_col}{factor in color that fill the barplot or the vertex of the network}
+\item{variable}{when data_to_pie is not NULL, variable to plot in a pie}
 
-\item{labels_on}{for plot_type = "network", labels to display on network}
+\item{pie_size}{when data_to_pie is not NULL, size of the pie}
+
+\item{plot_type}{"network", "barplot" or "map}
+
+\item{in_col}{factor in color that fill the barplot or the vertex of the network.
+It can be germplasm, location or year}
+
+\item{labels_on}{for plot_type = "network", labels to display on network for each vertex or location for map}
 
 \item{labels_size}{for plot_type = "network", size of the labels}
 
 \item{organize_sl}{for plot_type = "network", if TRUE, organize the network for unipart seed lots format with year 
 in the chronological order on the x axis, location separated on the y axis}
 
-\item{x_axis}{for plot_type = "barplot" and unipart seed lots network, factor on the x axis}
+\item{x_axis}{for plot_type = "barplot" and unipart seed lots network, factor on the x axis
+It can be germplasm, location or year}
 
 \item{nb_parameters_per_plot_x_axis}{for plot_type = "barplot" and unipart seed lots network, number of parameter on the x_axis}
 
 \item{nb_parameters_per_plot_in_col}{for plot_type = "barplot" and unipart seed lots network, number of paramter by color that fill}
+
+\item{vec_variables}{for plot_type = "barplot" and unipart seed lots network, name of a relation type to display}
 }
 \value{
 A list with ggplot object.
 For plot_type = "network", a list with as many elements as net with the network representation in ggplot format
-For plot_type = "barplot"and bipart network, it represents the number of edges per vertex for each germplasm 
+For plot_type = "barplot" and bipart network, it represents the number of edges per vertex for each germplasm 
+and each location.
+For plot_type = "barplot" and unipart network on seed lots, it represents the number of edges per vertex for each germplasm 
 and each location.
 }
 \description{
@@ -42,6 +55,13 @@ and each location.
 For network diffusion are represented by a curve.
 For organize_sl, The representation is possible if the seed_lots are under the following format : 
 GERMPLASM_LOCATION_YEAR_DIGIT.
+
+The id column from data_to_pie must refer to the id of the network.
+The results is a list of two elements for each variable:
+\itemize{
+ \item nb_received: number of seed lots that end the relation
+ \item nb_given: number of seed lots that start the relation
+}
 }
 \seealso{
 \code{format_data_PPBstats}

@@ -6,7 +6,8 @@
 \usage{
 \method{plot}{PPBstats}(x, y = NULL, data_version = NULL,
   plot_type = c("interaction", "barplot", "biplot-alpha-beta", "score",
-  "network", "pam", "histogramm", "boxplot", "biplot", "radar", "raster"), ...)
+  "network", "map", "pam", "histogramm", "boxplot", "biplot", "radar",
+  "raster"), ...)
 }
 \arguments{
 \item{data_version}{data set with the following columns: "year", "germplasm", "location", "group", "version". The group refers to an id that contains two different versions. For example for group 1, there is version 1 and 2. See data(data_version) for an example.
@@ -230,6 +231,12 @@ This argument is used only when argument data comes from \code{\link{mean_compar
     }
   }
   
+ \item \code{\link{biplot_data}} : output from MFA analysis
+  \itemize{
+   \item ind
+   \item var
+   \item axes
+  }
   
  \item \code{\link{cross_validation_model_bh_GxE}}
   \itemize{
@@ -331,6 +338,7 @@ Below are some details on the construction of the plots :
  \item \code{mean_comparisons}
  \item \code{parameter_groups}
  \item \code{biplot_GxE}
+ \item \code{biplot_data}
  \item \code{cross_validation_model_bh_GxE}
 }
 }

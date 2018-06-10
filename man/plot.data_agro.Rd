@@ -4,13 +4,17 @@
 \alias{plot.data_agro}
 \title{Plot agro object from format_data_PPBstats()}
 \usage{
-\method{plot}{data_agro}(data, plot_type = c("pam", "histogramm", "barplot",
-  "boxplot", "interaction", "biplot", "radar", "raster"), x_axis = NULL,
-  in_col = NULL, vec_variables = NULL, nb_parameters_per_plot_x_axis = 5,
-  nb_parameters_per_plot_in_col = 5, labels_on = NULL, labels_size = 4)
+\method{plot}{data_agro}(data, data_version = NULL, plot_type = c("pam",
+  "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar",
+  "raster", "map"), x_axis = NULL, in_col = NULL, vec_variables = NULL,
+  nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5,
+  labels_on = NULL, labels_size = 4, pie_size = 0.2)
 }
 \arguments{
 \item{data}{The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+
+\item{data_version}{data frame with the following column : c("year", "germplasm", "location", "group", "version").
+See \link{\code{format_data_PPBstats}} for more details.}
 
 \item{plot_type}{the type of plot you wish. It can be :
 \itemize{
@@ -22,6 +26,7 @@
  \item "biplot"
  \item "radar"
  \item "raster"
+ \item "map"
 }}
 
 \item{x_axis}{factor displayed on the x.axis of a plot. 
@@ -39,6 +44,8 @@ This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "in
 \item{labels_on}{factor to display for plot_type = "biplot"}
 
 \item{labels_size}{size of the label for plot_type = "biplot" and "radar"}
+
+\item{pie_size}{when plot_type = "map" and vec_variables is not NULL, size of the pie}
 }
 \value{
 \itemize{

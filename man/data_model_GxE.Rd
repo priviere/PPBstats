@@ -4,14 +4,15 @@
 \name{data_model_GxE}
 \alias{data_model_GxE}
 \title{Simulated data set for three variables to test GxE model}
-\format{A data frame with 180 rows and 14 columns}
+\format{A data frame with 180 rows and 16 columns}
 \usage{
 data(data_model_GxE)
 }
 \description{
 A dataset containing five variables (y1, y2, y3, desease, vigor) 
 with their respective dates for the first three (y1$date, y2$date and y3$date)
-and values for the following factors: location, year, germplasm, block, X and Y.
+and values for the following factors: location, year, germplasm, block, X and Y. 
+As well as vlues of lat and long in order to get map.
 }
 \author{
 Pierre Rivière

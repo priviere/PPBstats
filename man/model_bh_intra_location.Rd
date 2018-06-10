@@ -55,7 +55,7 @@ The function returns a list with
 \code{model_bh_intra_location} runs Hierarchical Bayesian intra-location model to get mean comparisons on each environment of the network. See details for more information.
 }
 \details{
-Model 1 estimates entry effects (mu_ij), block effects (beta_jk), residuals (epsilon_ijk) and within-environment variance (sigma_j) on each environment. 
+This model estimates entry effects (mu_ij), block effects (beta_jk), residuals (epsilon_ijk) and within-environment variance (sigma_j) on each environment. 
 An environment is a combinaison of a location and a year.
 
 The variance are taken in an inverse Gamma distribution of parameters nu and rho. 
