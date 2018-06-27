@@ -14,7 +14,7 @@
 \item{data}{The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
 
 \item{data_version}{data frame with the following column : c("year", "germplasm", "location", "group", "version").
-See \link{\code{format_data_PPBstats}} for more details.}
+See \code{\link{format_data_PPBstats}} for more details.}
 
 \item{plot_type}{the type of plot you wish. It can be :
 \itemize{
