@@ -1,7 +1,52 @@
+#' Get ggplot to visualize output from \code{\link{check_model.fit_model_bh_GxE}}
+#'
+#' @description
+#' \code{plot.check_model_bh_GxE} returns ggplot to visualize outputs from \code{\link{check_model.fit_model_bh_GxE}}
+#'
+#' @param x Output from \code{\link{check_model.fit_model_bh_GxE}}
+#' 
+#' @param nb_parameters_per_plot number of parameter per plot to display
+#' 
+#' @param ... further arguments passed to or from other methods
+#'
+#' @details
+#' S3 method.
+#' 
+#' For mcmc_not_converge_traceplot_density : If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out_model$MCMC)}. 
+#' But be careful with the size of your MCMC output which are often too big to be performed in R.
+#' 
+#' See example in the book: https://priviere.github.io/PPBstats_book/family-2.html#model-2
+#' 
+#' @return 
+#' 
+#' \itemize{
+#'  \item alpha_i : distribution of each alpha_i. 
+#'  There are as many graph as needed with \code{nb_parameters_per_plot} alpha_i per graph.
+#'  \item beta_i : distribution of each beta_i. 
+#'  There are as many graph as needed with \code{nb_parameters_per_plot} beta_i per graph.
+#'  \item theta_j : distribution of each theta_j. 
+#'  There are as many graph as needed with \code{nb_parameters_per_plot} theta_j per graph.
+#'  \item epsilon_ij : standardised residuals distribution.  
+#'  If the model went well it should be between -2 and 2.
+#'  \item mcmc_not_converge_traceplot_density : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
+#'  If all the chains converge, it is NULL.
+#'  }
+#'   
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{check_model.fit_model_bh_GxE}}
+#' 
+#' @export
+#' 
+#' @import plyr
+#' @import ggplot2
+#' 
 plot.check_model_bh_GxE <- function(
   x,
-  nb_parameters_per_plot = 8
+  nb_parameters_per_plot = 8, ...
 ){
+  std_res  = NULL  # to avoid no visible binding for global variable
+  
   # Get data ----------
   
   data_ggplot = x$data_ggplot

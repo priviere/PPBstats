@@ -1,9 +1,9 @@
-#' Get matrix with variables in column and effect in row from check_model_model_bh_GxE
+#' Get matrix with variables in column and effect in row from \code{\link{check_model.fit_model_bh_GxE}}
 #'
 #' @description
 #' \code{parameter_groups_model_bh_GxE} gets matrix with variables in column and effect in row
 #'
-#' @param list_out_check_model_model_bh_GxE A list whose elements are output from \code{\link{check_model_model_bh_GxE}}
+#' @param list_out_check_model_model_bh_GxE A list whose elements are output from \code{\link{check_model.fit_model_bh_GxE}}
 #'  
 #' @param parameter parameter on which to get the matrix
 #' 
@@ -13,6 +13,8 @@
 #' @author Pierre Riviere
 #' 
 #' @seealso \code{\link{parameter_groups}}
+#'
+#' @export
 #'
 parameter_groups_model_bh_GxE = function(
   list_out_check_model_model_bh_GxE,

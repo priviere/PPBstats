@@ -3,7 +3,7 @@
 #' @description
 #' \code{plot.data_network} returns ggplot to visualize outputs from format_data_PPBstats()
 #' 
-#' @param net output from format_data_PPBstats with data_type = "network"
+#' @param x output from \code{\link{format_data_PPBstats.data_network}}
 #' 
 #' @param data_to_pie output from format_data_PPBstats with data_type = "agro"
 #' 
@@ -11,7 +11,7 @@
 #'
 #' @param pie_size when data_to_pie is not NULL, size of the pie 
 #'   
-#' @param plot_type "network", "barplot" or "map
+#' @param plot_type "network", "barplot" or "map"
 #' 
 #' @param in_col factor in color that fill the barplot or the vertex of the network.
 #' It can be germplasm, location or year
@@ -31,6 +31,10 @@
 #' @param nb_parameters_per_plot_in_col for plot_type = "barplot" and unipart seed lots network, number of paramter by color that fill
 #'
 #' @param vec_variables for plot_type = "barplot" and unipart seed lots network, name of a relation type to display
+#' 
+#' @param zoom zoom of the map, see ?get_map for more details
+#' 
+#' @param ... further arguments passed to or from other methods
 #'
 #' @details
 #' For network diffusion are represented by a curve.
@@ -54,11 +58,22 @@
 #' 
 #' @author Pierre Riviere
 #' 
+#' @details 
+#' S3 method.
+#' See the book for more details : https://priviere.github.io/PPBstats_book/describe-data-network.html
+#' 
 #' @seealso
-#' \code{format_data_PPBstats}
+#' \code{\link{format_data_PPBstats.data_network}}
+#' 
+#' @export
+#' 
+#' @import ggnetwork
+#' @import intergraph
+#' @import ggplot2
+#' @import igraph
 #' 
 plot.data_network = function(
-  net,
+  x,
   data_to_pie = NULL,
   variable = NULL,
   pie_size = 0.2,
@@ -70,15 +85,18 @@ plot.data_network = function(
   x_axis = "germplasm",
   nb_parameters_per_plot_x_axis = 5,
   nb_parameters_per_plot_in_col = 5,
-  vec_variables = NULL
+  vec_variables = NULL,
+  zoom = 6, ...
   ){
+  
+  net = x
   
   # check arguments
   match.arg(plot_type,  c("network", "barplot", "map"), several.ok = FALSE)
   match.arg(in_col,  c("germplasm", "location", "year"), several.ok = FALSE)
   match.arg(x_axis,  c("germplasm", "location", "year"), several.ok = FALSE)
   
-  format = ggnetwork(net[[1]])[1, "format"]
+  format = ggnetwork::ggnetwork(net[[1]])[1, "format"]
   
   # error and warning messages
   if( !is.list(net[1]) ){ 
@@ -104,7 +122,7 @@ plot.data_network = function(
     pie_on_map = TRUE
   } else {
     if( !is.null(vec_variables[1]) ){
-      vec_relation_type = unlist(lapply(net, function(x){ unique(na.omit(ggnetwork(x)$relation_type)) }))
+      vec_relation_type = unlist(lapply(net, function(x){ unique(na.omit(ggnetwork::ggnetwork(x)$relation_type)) }))
       mess = paste(variable, " can be used only is data_to_pie is not NULL or 
                  must  be a type of relation used in the network: ", paste(vec_relation_type, collapse = ", "), sep = "")
       # Only if data_to_pie is NULL to avoid conflict if same name in edge and data_to_pie
@@ -132,7 +150,9 @@ plot.data_network = function(
   
   # functions used afterward
   plot_network_bipart = function(net, labels_on, labels_size){
-    n = ggnetwork(net, arrow.gap = 0)
+    x = y = xend = yend = type = vertex.names = NULL  # to avoid no visible binding for global variable
+    
+    n = ggnetwork::ggnetwork(net, arrow.gap = 0)
     ntmp = n
     
     vt1 = which(n$type == "germplasm")
@@ -188,15 +208,16 @@ plot.data_network = function(
   }
   
   plot_barplot_bipart = function(net){
-    s = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
-    s = s[which(vertex.attributes(net)$type == "germplasm")]
+    from = to = germplasm = nb_location = nb_germplasm = NULL  # to avoid no visible binding for global variable
+    s = sapply(igraph::V(net)$name, function(x) length(igraph::E(net)[from(igraph::V(net)[x])]))
+    s = s[which(igraph::vertex.attributes(net)$type == "germplasm")]
     d = data.frame(germplasm = names(s), nb_location = s)
     pg = ggplot(d, aes(x = reorder(germplasm, -nb_location), y = nb_location)) + geom_bar(stat="identity")
     pg = pg + xlab("germplasm") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     pg = pg + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     
-    s = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])]))
-    s = s[which(vertex.attributes(net)$type == "location")]
+    s = sapply(igraph::V(net)$name, function(x) length(igraph::E(net)[to(igraph::V(net)[x])]))
+    s = s[which(igraph::vertex.attributes(net)$type == "location")]
     d = data.frame(location = names(s), nb_germplasm = s)
     pl = ggplot(d, aes(x = reorder(location, -nb_germplasm), y = nb_germplasm)) + geom_bar(stat="identity")
     pl = pl + xlab("location") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -207,8 +228,10 @@ plot.data_network = function(
   }
   
   plot_barplot_unipart_location = function(net){
-    s_r = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])])) 
-    s_g = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
+    from = to = nb_diffusion = NULL # to avoid no visible binding for global variable 
+    
+    s_r = sapply(igraph::V(net)$name, function(x) length(igraph::E(net)[to(igraph::V(net)[x])])) 
+    s_g = sapply(igraph::V(net)$name, function(x) length(igraph::E(net)[from(igraph::V(net)[x])]))
     
     d_r = data.frame(location = names(s_r), nb_diffusion = s_r)
     pr = ggplot(d_r, aes(x = reorder(location, -nb_diffusion), y = nb_diffusion)) + geom_bar(stat="identity")
@@ -225,22 +248,23 @@ plot.data_network = function(
   }
   
   data_unipart_relation_type = function(net){
+    from = to = NULL # to avoid no visible binding for global variable 
     
-    s_r = sapply(V(net)$name, function(x) length(E(net)[to(V(net)[x])])) 
-    s_g = sapply(V(net)$name, function(x) length(E(net)[from(V(net)[x])]))
+    s_r = sapply(igraph::V(net)$name, function(x) length(igraph::E(net)[to(igraph::V(net)[x])])) 
+    s_g = sapply(igraph::V(net)$name, function(x) length(igraph::E(net)[from(igraph::V(net)[x])]))
     
     d = data.frame(
-      id = vertex_attr(net)$name,
-      location = vertex_attr(net)$location, 
-      year = vertex_attr(net)$year,
-      germplasm = vertex_attr(net)$germplasm, 
+      id = igraph::vertex_attr(net)$name,
+      location = igraph::vertex_attr(net)$location, 
+      year = igraph::vertex_attr(net)$year,
+      germplasm = igraph::vertex_attr(net)$germplasm, 
       block = NA,
       X = NA,
       Y = NA,
       nb_received = s_r,
       nb_given = s_g)
     
-    n = unique(edge_attr(net)$relation_type)
+    n = unique(igraph::edge_attr(net)$relation_type)
     colnames(d)[8:9] = paste(n, colnames(d)[8:9], sep = "_")
     return(d)
   }
@@ -287,7 +311,7 @@ plot.data_network = function(
   }
   
   organize_sl_unipart = function(net){
-    n = ggnetwork(net, arrow.gap = 0)
+    n = ggnetwork::ggnetwork(net, arrow.gap = 0)
     
     a = n
     a$names = n$vertex.names
@@ -370,9 +394,10 @@ plot.data_network = function(
   }
   
   plot_network_unipart = function(net = NULL, n = NULL, plot_type, in_col, pmap = "NULL"){
+    x = y = xend = yend = relation_type = nb_diff = NULL  # to avoid no visible binding for global variable
     
     if( plot_type == "map" ){ # only use fo format = unipart_location
-      if(is.null(n)) { n = ggnetwork(net, arrow.gap = 0) }
+      if(is.null(n)) { n = ggnetwork::ggnetwork(net, arrow.gap = 0) }
       nd = n[which(n$relation_type == "diffusion"),]
       
       vec_x = as.vector(nd[is.na(nd$na.y), "long"])
@@ -393,7 +418,7 @@ plot.data_network = function(
                          curvature = 0.2)
       p = p + scale_colour_gradient(low = "blue", high = "red")
     } else {
-      if(is.null(n)) { n = ggnetwork(net, arrow.gap = 0.005) }
+      if(is.null(n)) { n = ggnetwork::ggnetwork(net, arrow.gap = 0.005) }
       colnames(n)[which(colnames(n) == in_col)] = "in_col"
       
       nr = n[which(n$relation_type != "diffusion"),]
@@ -422,6 +447,8 @@ plot.data_network = function(
   }
   
   plot_network_organize_sl_unipart = function(n, person_limit, in_col){
+    x = y = NULL  # to avoid no visible binding for global variable
+    
     colnames(n)[which(colnames(n) == in_col)] = "in_col"
     p = plot_network_unipart(net = NULL, n, plot_type = "network", in_col)
     r = range(as.numeric(as.character(n$x)))
@@ -448,7 +475,7 @@ plot.data_network = function(
   
   plot_barplot_unipart_sl = function(net, x_axis, in_col, nb_parameters_per_plot_x_axis, 
                                   nb_parameters_per_plot_in_col){
-    n = ggnetwork(net, arrow.gap = 0)
+    n = ggnetwork::ggnetwork(net, arrow.gap = 0)
     n$count = 1
     dall = reshape_data_split_x_axis_in_col(n, 
                                             vec_variables = "count", 
@@ -489,6 +516,8 @@ plot.data_network = function(
                        vec_variables,
                        data_to_pie
   ){
+    vertex.names = NULL  # to avoid no visible binding for global variable
+    
     if( plot_type == "network" ) {
       if( format == "bipart" ) { 
         p = plot_network_bipart(net, labels_on, labels_size)
@@ -531,7 +560,7 @@ plot.data_network = function(
       if( format == "unipart_sl" & !is.null(vec_variables[1]) ) { 
         out = list()
         for(v in vec_variables){
-          net_tmp = delete_edges(net, edges = which(!is.element(edge_attr(net)$relation_type, v)))
+          net_tmp = igraph::delete_edges(net, edges = which(!is.element(edge_attr(net)$relation_type, v)))
           out_p = plot_barplot_unipart_relation_type(net_tmp, x_axis, in_col, nb_parameters_per_plot_x_axis, 
                                                           nb_parameters_per_plot_in_col)
           out = c(out, list(out_p))
@@ -542,15 +571,15 @@ plot.data_network = function(
     
     if( plot_type == "map" ){
       if( format == "unipart_location" ){
-        out_m = pmap(net, format, labels_on, labels_size)
+        out_m = pmap(net, format, labels_on, labels_size, zoom)
         out_pm = plot_network_unipart(net, n = NULL, plot_type, in_col, out_m) + theme_blank() 
         out = list("map" =  out_pm)
       }
       if( format == "unipart_sl" | format == "bipart" ){
-        out_m = pmap(net, format, labels_on, labels_size)
+        out_m = pmap(net, format, labels_on, labels_size, zoom)
         out_data_to_pie = data_to_pie
         if( is.null(data_to_pie) & !is.null(vec_variables[1]) ) {
-          net = delete_edges(net, edges = which(!is.element(edge_attr(net)$relation_type, v)))
+          net = igraph::delete_edges(net, edges = which(!is.element(edge_attr(net)$relation_type, v)))
           out_data_to_pie = data_unipart_relation_type(net)
           vec_variables = colnames(out_data_to_pie)[8:9]
         }

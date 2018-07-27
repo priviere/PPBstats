@@ -4,7 +4,7 @@
 #' \code{model_spatial} runs spatial row and column model based on the SpATS package
 #' 
 #' @param data The data frame on which the model is run. 
-#' It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
+#' It should come from \code{\link{format_data_PPBstats.data_agro}}
 #' 
 #' @param variable variable to analyse
 #' 
@@ -13,6 +13,8 @@
 #' @details 
 #' The model is run with the SpATS function of package SpATS. 
 #' See ?SpATS for more information.
+#' 
+#' More information can be found in the book : https://priviere.github.io/PPBstats_book/family-1.html#spatial-analysis
 #' 
 #' @return 
 #' The function returns a list with two elements :
@@ -33,12 +35,19 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}
+#' \item \code{\link{check_model.fit_model_spatial}}
 #' }
+#' 
+#' @importFrom SpATS SpATS
+#' @importFrom SpATS summary.SpATS
+#' @importFrom methods is
+#' 
+#' @export
 #' 
 model_spatial = function(data, variable, genotype.as.random = TRUE){
 
   # 1. Error messages, update arg ----------
-  if(!is(data, "data_agro")){ stop(substitute(data), " must be formated, see PPBstats::format_data_PPBstats().") }
+  if(!is(data, "data_agro")){ stop(substitute(data), " must be formated with type = \"data_agro\", see PPBstats::format_data_PPBstats().") }
   check_data_vec_variables(data, variable)
   data_tmp = data
   colnames(data_tmp)[which(colnames(data_tmp) == variable)] = "variable"
@@ -51,7 +60,7 @@ model_spatial = function(data, variable, genotype.as.random = TRUE){
   
   # 3. Run the model ----------
   m = suppressMessages(
-    SpATS(
+    SpATS::SpATS(
     response = "variable", 
     genotype = "germplasm", 
     genotype.as.random = genotype.as.random,
@@ -66,7 +75,7 @@ model_spatial = function(data, variable, genotype.as.random = TRUE){
   g_effect = sort(g_effect + intercept)
   
   # 5. Residuals variance ----------
-  s = summary(m, which = "variances")
+  s = summary.SpATS(m, which = "variances")
   var_res = s$psi[1]
   
   # 6. Return results ----------
@@ -84,6 +93,4 @@ model_spatial = function(data, variable, genotype.as.random = TRUE){
   class(out) <- c("PPBstats", "fit_model_spatial")
   return(out)
 }
-
-
 

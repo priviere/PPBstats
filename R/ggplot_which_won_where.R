@@ -1,4 +1,33 @@
+#' Return a "which won where" ggplot based on PCA object
+#' 
+#' @description
+#' \code{ggplot_which_won_where} returns a "which won where" ggplot based on PCA object
+#' 
+#' @param res.pca output from \code{\link{biplot_data.check_model_GxE}}
+#'
+#' @details
+#' The plot to assess which germplasm win in which location.
+#' A polygon is drawn connecting germplasm which are located furthest away from the biplot origin such that all other entries are contained within the polygon;
+#' Perpendicular lines are drawn to each side of the polygon and start from biplot origin.
+#' A sector is the triangle area formed by two perpendicular lines.
+#' The germplasms which have the largest value in a sector "win" in the location present in that sector.
+#' The information is summarized in the legend of the plot.
+#' 
+#' @return 
+#' A ggplot object.
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso
+#' \code{\link{plot.PPBstats}}
+#' \code{\link{plot.biplot_GxE}}
+#'
+#' @import ggplot2
+#' 
+#' @export
+#'
 ggplot_which_won_where = function(res.pca){
+  chull = Dim.1 = Dim.2 = sector = x = y  = NULL  # to avoid no visible binding for global variable
   
   p = get_biplot(res.pca)
 
@@ -61,7 +90,7 @@ ggplot_which_won_where = function(res.pca){
   ind = get_sector(res.pca$ind$coord, per_line); ind$germplasm = rownames(ind)
   
   # get info only where there are variables
-  ind = droplevels(filter(ind, sector %in% unique(var$sector)))
+  ind = droplevels(dplyr::filter(ind, sector %in% unique(var$sector)))
 
   # entry with the highest value in each sector, i.e. biggest segment from 0, i.e. biggest hypothenus
   ind$id = c(1:nrow(ind))
@@ -71,8 +100,8 @@ ggplot_which_won_where = function(res.pca){
   
   if( length(vec_s) > 0 ){
     for(s in vec_s){
-      sec_ind = droplevels(filter(ind, sector == s))
-      sec_var = droplevels(filter(var, sector == s))
+      sec_ind = droplevels(dplyr::filter(ind, sector == s))
+      sec_var = droplevels(dplyr::filter(var, sector == s))
       
       id_win = sec_ind[which(sec_ind$hypo == max(sec_ind$hypo)), "id"]
       xwin = as.numeric(as.character(ind[id_win, "Dim.1"]))

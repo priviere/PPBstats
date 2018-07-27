@@ -1,3 +1,46 @@
+#' Check if the Hierarchical Bayesian GxE model went well 
+#'
+#' @description
+#' \code{check_model.fit_model_bh_GxE} computes tests to assess if the model went well. 
+#' It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
+#' 
+#' @param x outputs from \code{\link{model_bh_GxE}}
+#' 
+#' @details
+#' S3 method.
+#' The different test apply to the model are explained in the book \href{https://priviere.github.io/PPBstats_book/intro-agro.html#section-bayes}{here}.
+#' 
+#' @return It returns a list with the following elements:
+#' 
+#' \itemize{
+#'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter. (See details for more information).
+#'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
+#'  \item model2.presence.absence.matrix : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
+#'  \item data_ggplot a list containing information for ggplot:
+#'  \itemize{
+#'   \item alpha
+#'   \item beta
+#'   \item theta
+#'   \item epsilon
+#'  }
+#' }
+#' 
+#' @author Pierre Riviere
+#'
+#' @seealso 
+#' \itemize{
+#'  \item \code{\link{check_model}}
+#'  \item \code{\link{plot.check_model_bh_GxE}}
+#'  \item \code{\link{mean_comparisons}}
+#'  \item \code{\link{mean_comparisons.check_model_bh_GxE}}
+#'  \item \code{\link{parameter_groups}}
+#'  \item \code{\link{predict_the_past_model_bh_GxE}}
+#'  \item \code{\link{cross_validation_model_bh_GxE}}
+#' }
+#'
+#' @export
+#'
+#'
 check_model.fit_model_bh_GxE <- function(
   x
 ) {

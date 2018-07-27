@@ -1,3 +1,22 @@
+#' Check and format the data to be used by PPBstats functions for hedonic analyses
+#'
+#' @description
+#' \code{format_data_PPBstats.data_organo_hedonic} checks and formats the data to be used by PPBstats functions for hedonic analyses
+#' 
+#' @param data The data frame with the following columns : sample, juges, note, descriptors, germplasm, location. 
+#' The descriptors must be separated by ";". Any other column can be added as supplementary variables.
+#' 
+#' @param threshold number of occurence of descriptors <= threshold are kept
+#' 
+#' @details
+#' See the book for more details \href{https://priviere.github.io/PPBstats_book/hedonic.html#format-the-data-8}{here}.
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{format_data_PPBstats}}
+#' 
+#' @export
+#' 
 format_data_PPBstats.data_organo_hedonic = function(data, threshold){
 
   mess = "In data, the following column are compulsory : \"sample\", \"germplasm\", \"location\", \"juges\", \"note\", \"descriptors\"."

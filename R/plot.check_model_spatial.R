@@ -1,7 +1,42 @@
+#' Get ggplot to visualize output from \code{\link{check_model.fit_model_spatial}}
+#'
+#' @description
+#' \code{plot.check_model_spatial} returns ggplot to visualize outputs from \code{\link{check_model.fit_model_spatial}}
+#'
+#' @param x Output from \code{\link{check_model.fit_model_spatial}}
+#' 
+#' @param nb_parameters_per_plot number of parameter per plot to display
+#'
+#' @param ... further arguments passed to or from other methods
+#'
+#' @details
+#' S3 method.
+#' See example in the book: https://priviere.github.io/PPBstats_book/family-1.html#spatial-analysis
+#' 
+#' @return 
+#' \itemize{
+#'  \item residuals
+#'  \itemize{
+#'   \item histogram : histogram with the distribution of the residuals
+#'   \item qqplot
+#'   }
+#'  \item variability_repartition : pie with repartition of SumSq for each factor
+#'  }
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{check_model.fit_model_spatial}}
+#' 
+#' @export
+#' 
+#' @import ggplot2
+#' 
 plot.check_model_spatial <- function(
   x,
-  nb_parameters_per_plot = 8
+  nb_parameters_per_plot = 8, ...
 ){
+  r = y = percentage_Sum_sq = NULL  # to avoid no visible binding for global variable
+  
   # Get data ----------
   
   variable = x$spatial$info$variable

@@ -3,16 +3,23 @@
 #' @description
 #' \code{biplot_data} formats data for biplot representation 
 #' 
-#' @param x outputs from \code{\link{model_GxE}}, \code{\link{model_hedonic}},  \code{\link{model_napping}}
+#' @param x outputs from 
+#' \itemize{
+#'  \item \code{\link{check_model.fit_model_GxE}}
+#'  \item \code{\link{check_model.fit_model_hedonic}}
+#'  \item \code{\link{check_model.fit_model_napping}}
+#'  }
 #' 
 #' @details
 #' S3 method.
 #' See for more details :
 #' \itemize{
-#'  \item biplot_data.check_model_GxE
-#'  \item biplot_data.check_model_hedonic
-#'  \item biplot_data.check_model_napping
+#'  \item \code{\link{biplot_data.check_model_GxE}} regarding \code{\link{model_GxE}}
+#'  \item \code{\link{biplot_data.check_model_hedonic}} regarding \code{\link{model_hedonic}}
+#'  \item \code{\link{biplot_data.check_model_napping}} regarding \code{\link{model_napping}}
 #' }
+#' 
+#' @export
 #' 
 biplot_data <- function(x) UseMethod("biplot_data")
 

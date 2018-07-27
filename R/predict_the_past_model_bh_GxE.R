@@ -4,16 +4,17 @@
 #' \code{predict_the_past_model_bh_GxE} predicts values of germplasms in environments where 
 #' they have not been grown based on Hierarchical Bayesian GxE model.
 #' 
-#' @param out_check_model_model_bh_GxE object from \code{\link{check_model}} from \code{\link{model_bh_GxE}}
+#' @param out_check_model_model_bh_GxE object from \code{\link{check_model.fit_model_bh_GxE}}
 #' 
 #' @param env name of the environment where the germplasm effect are predicted
 #' 
 #' @return The function returns a MCMC for the given environment. 
-#' This MCMC output can be used in the same way as the output from \code{\link{check_model}} from \code{\link{model_1}}.
+#' This MCMC output can be used in the same way as the output from \code{\link{check_model.fit_model_bh_intra_location}}.
 #' 
 #' @details
 #' The estimations of the values are based on the MCMC outputs.
-#' More informations can be found in the vignette.
+#' 
+#' More informations can be found in the book : https://priviere.github.io/PPBstats_book/family-2.html#model-2
 #' 
 #' It is like mu_ij effect that are estimated (as for Hierarchical Bayesian intra-location model), i.e. the effect of a germplasm in an environment.
 #' 
@@ -25,11 +26,12 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}, 
-#' \item \code{\link{check_model_model_bh_GxE}}, 
+#' \item \code{\link{check_model.fit_model_bh_GxE}}, 
 #' \item \code{\link{mean_comparisons}}, 
-#' \item \code{\link{mean_comparisons_predict_the_past_model_bh_GxE}}
+#' \item \code{\link{mean_comparisons.predict_the_past_model_bh_GxE}}
 #' }
 #' 
+#' @export
 #' 
 predict_the_past_model_bh_GxE = function(
   out_check_model_model_bh_GxE,

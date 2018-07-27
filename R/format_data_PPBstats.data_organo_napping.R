@@ -1,3 +1,22 @@
+#' Check and format the data to be used by PPBstats functions for napping analyses
+#'
+#' @description
+#' \code{format_data_PPBstats.data_organo_napping} checks and formats the data to be used by PPBstats functions for napping analyses
+#' 
+#' @param data The data frame with the following columns: sample, juges, X, Y, descriptors, germplasm, location.
+#' The descriptors must be separated by ";"
+#' 
+#' @param threshold number of occurence of descriptors <= threshold are kept
+#' 
+#' @details
+#' See the book for more details \href{https://priviere.github.io/PPBstats_book/napping.html#format-the-data-9}{here}.
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{format_data_PPBstats}}
+#' 
+#' @export
+#' 
 format_data_PPBstats.data_organo_napping = function(data, threshold){
   
   mess = "In data, the following column are compulsory : \"juges\", \"X\", \"Y\", \"descriptors\", \"germplasm\", \"location\"."
@@ -41,7 +60,7 @@ format_data_PPBstats.data_organo_napping = function(data, threshold){
                                 paste("X", nb[i], "-juge-", i, sep = ""), 
                                 paste("Y", nb[i], "-juge-", i, sep = "")
       )
-      d_juges = join(d_juges, d_juges_tmp, by = "sample")
+      d_juges = plyr::join(d_juges, d_juges_tmp, by = "sample")
     }
   }
   

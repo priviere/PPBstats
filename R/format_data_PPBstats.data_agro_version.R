@@ -1,3 +1,34 @@
+#' Check and format the data to be used by PPBstats functions for data version in agronomic analyses
+#'
+#' @description
+#' \code{format_data_PPBstats} checks and formats the data to be used by PPBstats functions for data version in agronomic analyses
+#' 
+#' @param data The data frame to format
+#'  It should have the following columns: c("year", "germplasm", "location", "group", "version").
+#'  The group refers to an id that contains two different versions.
+#'  For example for group 1, there are version 1 and 2.
+#' 
+#' @details 
+#' Regarding response to selection, data_agro_version must have the following format:
+#' \itemize{
+#'  \item In group there are either S or R.
+#'  \item In version there are either bouquet or vrac
+#' }
+#'  
+#' Regarding study "home away", data_agro_version must have the following format:
+#' \itemize{
+#'  \item In group there are same type of value than in column location.
+#'  \item In version there are either migrant or residant
+#' }
+#' 
+#' More details explaining these two particular cases can be found in the book \href{https://priviere.github.io/PPBstats_book/family-4.html}{here}.
+#'     
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{format_data_PPBstats}}
+#' 
+#' @export
+#' 
 format_data_PPBstats.data_agro_version = function(data){
   d = data
   

@@ -27,11 +27,16 @@
 #' 
 #' @seealso 
 #' \itemize{
-#'  \item \code{\link{check_model}},
-#'  \item \code{\link{parameter_groups_GxE}},
-#'  \item \code{\link{parameter_groups_model_bh_GxE}},
+#'  \item \code{\link{check_model}}
+#'  \item \code{\link{parameter_groups_model_GxE}}
+#'  \item \code{\link{parameter_groups_model_bh_GxE}}
 #'  \item \code{\link{plot.PPBstats}}
+#'  \item \code{\link{plot.parameter_groups}}
 #' }
+#'
+#' @import FactoMineR
+#' 
+#' @export
 #'
 parameter_groups = function(
   list_out_check_model,
@@ -86,11 +91,11 @@ parameter_groups = function(
   mat <- get_matrix(list_out_check_model, parameter)
 
   # 3. Run the PCA ----------
-  obj.pca = PCA(mat, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
+  obj.pca = FactoMineR::PCA(mat, scale.unit=TRUE, ncp=2, graph = FALSE) # We keep only two dimension inorder to do the HCPC (ncp=2), we assumed it is noise after
   
   # 4. Get the clusters ----------  
   # see method here: http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning
-  res.hcpc = HCPC(obj.pca, nb.clust = -1, consol = 0, min = 2, max = 5, graph = FALSE) # Be careful, if we put 2, it often returns 2! The package propose to put 3
+  res.hcpc = FactoMineR::HCPC(obj.pca, nb.clust = -1, consol = 0, min = 2, max = 5, graph = FALSE) # Be careful, if we put 2, it often returns 2! The package propose to put 3
   clust =  res.hcpc$data.clust
   clust$clust = paste("cluster", clust$clust)
   

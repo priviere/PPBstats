@@ -1,6 +1,45 @@
+#' Get ggplot to visualize output from \code{\link{check_model.fit_model_bh_variance_intra}}
+#'
+#' @description
+#' \code{plot.check_model_bh_variance_intra} returns ggplot to visualize outputs from \code{\link{check_model.fit_model_bh_variance_intra}}
+#'
+#' @param x Output from \code{\link{check_model.fit_model_bh_variance_intra}}
+#' 
+#' @param nb_parameters_per_plot number of parameter per plot to display
+#' 
+#' @param ... further arguments passed to or from other methods
+#'
+#' @details
+#' S3 method.
+#' 
+#' For mcmc_not_converge_traceplot_density : If you wish exhaustive information, look at \code{ggmcmc::ggmcmc} with \code{ggmcmc(out_model$MCMC)}. 
+#' But be careful with the size of your MCMC output which are often too big to be performed in R.
+#' 
+#' See example in the book: https://priviere.github.io/PPBstats_book/family-4.html#variance-intra
+#' 
+#' @return 
+#' 
+#' \itemize{
+#'  \item mu_ijk : distribution of each mu_ijk. 
+#'  There are as many graph as needed with \code{nb_parameters_per_plot} alpha_i per graph.
+#'  \item sigma_ij : distribution of each sigma_ij. 
+#'  There are as many graph as needed with \code{nb_parameters_per_plot} alpha_i per graph.
+#'  \item mcmc_not_converge_traceplot_density : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
+#'  If all the chains converge, it is NULL.
+#'  }
+#'   
+#' @author Gaelle Van Frank and Pierre Riviere
+#' 
+#' @seealso \code{\link{check_model.fit_model_bh_variance_intra}}
+#' 
+#' @export
+#' 
+#' @import plyr
+#' @import ggplot2
+#' 
 plot.check_model_bh_variance_intra = function(
   x,
-  nb_parameters_per_plot = 10
+  nb_parameters_per_plot = 10, ...
 ){
   # Get data ----------
   data_ggplot = x$data_ggplot

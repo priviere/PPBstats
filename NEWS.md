@@ -1,3 +1,9 @@
+# **PPBstats 0.25 under process**
+
+### update fonctions
+- check and format code and roxygen part for each function, DESCRIPTION and NAMESPACE cf #97
+
+
 # **PPBstats 0.24**
 
 ### update fonctions
@@ -57,7 +63,6 @@
 - regarding workflow in organoleptic analysis
 - improve text
 
-
 ### update webiste (inst/web_site)
 - improve download
 - add email list
@@ -66,6 +71,7 @@
 ### update RData
 - standardize RData, cf #85
     
+
 # **PPBstats 0.23**
 ### update fonctions
 - format_data_PPBstats.R : 

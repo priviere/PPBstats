@@ -1,7 +1,49 @@
+#' Get mean comparisons from \code{\link{check_model.fit_model_spatial}} object
+#'
+#' @description
+#' \code{mean_comparisons} performs mean comparisons from object coming from \code{\link{check_model.fit_model_spatial}}
+#'
+#' @param x outputs from \code{\link{check_model.fit_model_spatial}}
+#' 
+#' @param alpha level of type one error. 0.05 (5\%) by default
+#' 
+#' @param p.adj For all except type = 2. 
+#' NULL for no adjustement of the type one error. 
+#' p.adj can "holm", "hochberg", "bonferroni", "BH", "BY" or "fdr"
+#' p-adj = "none" is t-student.
+#' See p.adjust() for more details.
+#'
+#' @param ... further arguments passed to or from other methods#' 
+#'   
+#' @details
+#' S3 method.
+#' See in the book for more details : https://priviere.github.io/PPBstats_book/intro-agro.html#section-freq
+#' 
+#' @return 
+#'  A list of two elements : 
+#'   \itemize{
+#'    \item info : a list with variable and data
+#'    \item data_ggplot_LSDbarplot_germplasm
+#'   }
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso 
+#' \itemize{
+#'  \item \code{\link{mean_comparisons}}
+#'  \item \code{\link{plot.PPBstats}}
+#'  \item \code{\link{plot.mean_comparisons_model_spatial}}
+#' }
+#' 
+#' @export
+#' 
+#' @import agricolae
+#' 
 mean_comparisons.check_model_spatial <- function(
   x, 
   alpha = 0.05,
-  p.adj = "none"
+  p.adj = "none",
+  ...
 ){
   # 1. Get data ----------
   data = x$spatial$info$data
@@ -9,7 +51,7 @@ mean_comparisons.check_model_spatial <- function(
   summary_model = x$spatial$model$summary
   
   # 2. Mean comparison on germplasm ----------
-  lsd = LSD.test(
+  lsd = agricolae::LSD.test(
     y = data[,variable],
     trt = data$germplasm,
     DFerror = as.numeric(as.character(summary_model$p.table.dim["Residual", "Effective"])), 

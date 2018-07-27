@@ -1,3 +1,24 @@
+#' Check and format the data to be used by PPBstats functions for data version in agronomic analyses
+#'
+#' @description
+#' \code{format_data_PPBstats.data_agro} checks and formats the data to be used by PPBstats functions for data version in agronomic analyses
+#' 
+#' @param data The data frame to format.
+#'  It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
+#'  The variables can be linked to their corresponding dates. 
+#'  The dates are associated to their corresponding variable by $.
+#'  For example the date associated to variable y1 is y1$date.
+#'  The date must have format year-month-day, e.g. 2017-12-05
+#'  
+#' @author Pierre Riviere
+#' 
+#' @details 
+#' See the book for more details \href{https://priviere.github.io/PPBstats_book/intro-agro.html#data-agro}{here}.
+#' 
+#' @seealso \code{\link{format_data_PPBstats}}
+#' 
+#' @export
+#' 
 format_data_PPBstats.data_agro = function(data){
   d = data
   

@@ -24,9 +24,13 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{mean_comparisons_model_bh_intra-location}}
-#' \item \code{\link{mean_comparisons_model_bh_GxE}}
+#' \item \code{\link{mean_comparisons.check_model_bh_intra_location}}
+#' \item \code{\link{mean_comparisons.check_model_bh_GxE}}
 #' }
+#' 
+#' @export
+#' 
+#' @import combinat
 #' 
 comp.parameters = function(
   MCMC,

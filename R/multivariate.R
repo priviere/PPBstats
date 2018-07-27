@@ -3,19 +3,25 @@
 #' @description
 #' \code{mutlivariate} runs multivariate analysis with function from FactoMineR
 #' 
-#' @param data The data frame. See details.
+#' @param data The data frame. It should come from \code{\link{format_data_PPBstats.data_agro}}
 #' 
 #' @param vec_variables vector of variables to use in the analysis
 #' 
-#' @param FUN function to apply : PCA
+#' @param FUN function to apply coming from FactoMineR, for example PCA
 #' 
 #' @details 
 #' This function is useful to settle the right data set and quali.sup
+#' 
+#' More information can be found in the book : https://priviere.github.io/PPBstats_book/family-5.html#multivariate-analysis
 #' 
 #' @return 
 #' The function returns the FactoMineR object corresponding to FUN
 #' 
 #' @author Pierre Riviere
+#' 
+#' @importFrom methods is
+#' 
+#' @export
 #' 
 mutlivariate = function(
   data, 
@@ -23,7 +29,7 @@ mutlivariate = function(
   FUN){
   
   # 1. Error message and update arguments ----------
-  if(!is(data, "data_agro")){ stop(substitute(data), " must be formated, see PPBstats::format_data_PPBstats().") }
+  if(!is(data, "data_agro")){ stop(substitute(data), " must be formated with type = \"data_agro\", see PPBstats::format_data_PPBstats().") }
   check_data_vec_variables(data, vec_variables)
   
   if( !is.element(as.character(substitute(FUN)), c("PCA")) ) { stop("Fun can only be PCA") }

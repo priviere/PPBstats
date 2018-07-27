@@ -79,7 +79,14 @@
 #' the randomization is based on the ibd function in the ibd package. See \code{?ibd} for more information
 #' }
 #' 
+#' See exampels in the book : \href{https://priviere.github.io/PPBstats_book/doe.html}{here}.
+#' 
 #' @author Pierre Riviere
+#' 
+#' @import dplyr
+#' @import ibd
+#' 
+#' @export
 #' 
 design_experiment = function(
   expe.type,
@@ -93,6 +100,9 @@ design_experiment = function(
   return.format = "standard"
 )
   {
+  
+    block = X = NULL # to avoid no visible binding for global variable
+    
     # 1. Error message ----------  
     if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
     if(!is.element(return.format, c("standard", "shinemas"))) { stop("format.data must be either \"standard\" or \"shinemas\".") }
@@ -151,10 +161,11 @@ design_experiment = function(
     }
     
     place_controls = function(d, expe.type){
+      block = NULL # to avoid no visible binding for global variable
       dok = data.frame()
       vec_block = levels(d$block)
       for(b in vec_block){
-        dtmp = droplevels(filter(d, block == b))
+        dtmp = droplevels(dplyr::filter(d, block == b))
         c = grep("control", dtmp$germplasm)
         e = c(1:length(dtmp$germplasm))[-c]
         ent = c(as.character(dtmp$germplasm[c]), as.character(dtmp$germplasm[e]))
@@ -308,6 +319,8 @@ design_experiment = function(
     }
     
     get_ggplot_plan = function(d){
+      X = Y = xmin = xmax = ymin = ymax = block = NULL # to avoid no visible binding for global variable
+      
       color_till = rep("white", length(d$statut))
       color_till[grep("control", d$statut)] = "black"
       
@@ -339,6 +352,9 @@ design_experiment = function(
     }
     
     format_data = function(d, return.format){
+      
+      statut = NULL # to avoid no visible binding for global variable
+      
       if( return.format == "standard" ) { 
         d = dplyr::select(d,-statut)
       }
@@ -426,18 +442,18 @@ design_experiment = function(
 
       for(b in 2:length(vec_block)){
         
-        d1 = droplevels(filter(d, block %in% vec_block[1:(b-1)]))
+        d1 = droplevels(dplyr::filter(d, block %in% vec_block[1:(b-1)]))
         germplasm_tmp = unique(as.character(d1$germplasm))
         
-        d2 = droplevels(filter(d, block == vec_block[b]))
+        d2 = droplevels(dplyr::filter(d, block == vec_block[b]))
         
         E = NULL
         for(i in 1:nrow(d2)){
           e = d2[i, "germplasm"]
           x = d2[i, "X"]
           y = d2[i, "Y"]
-          test = is.element(e, filter(d1, X == x)$germplasm); ii = 0
-          while(test & ii < 100 ){ e = sample(germplasm_tmp, 1) ; test = is.element(e, filter(d1, X == x)$germplasm); ii = ii + 1 }
+          test = is.element(e, dplyr::filter(d1, X == x)$germplasm); ii = 0
+          while(test & ii < 100 ){ e = sample(germplasm_tmp, 1) ; test = is.element(e, dplyr::filter(d1, X == x)$germplasm); ii = ii + 1 }
           germplasm_tmp = germplasm_tmp[-which(germplasm_tmp == e)]
           E = c(E, e)
         }
@@ -455,7 +471,7 @@ design_experiment = function(
     
     # 3.5. expe.type == "IBD" ----------
     if( expe.type == "IBD" ) {
-      d = ibd(v = nb.germplasm, b = nb.blocks, k = nb.cols)$design
+      d = ibd::ibd(v = nb.germplasm, b = nb.blocks, k = nb.cols)$design
       if( is.null(nrow(d)) ){ stop("Design not found") }
       
       d = data.frame(

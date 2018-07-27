@@ -1,3 +1,40 @@
+#' Check if the Hierarchical Bayesian variance intra model went well 
+#'
+#' @description
+#' \code{check_model.fit_model_bh_variance_intra} computes tests to assess if the model went well. 
+#' It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
+#' 
+#' @param x outputs from \code{\link{model_bh_variance_intra}}
+#' 
+#' @details
+#' S3 method.
+#' The different test apply to the model are explained in the book \href{https://priviere.github.io/PPBstats_book/intro-agro.html#section-bayes}{here}.
+#' 
+#' @return It returns a list with the following elements:
+#' 
+#' \itemize{
+#'  \item MCMC : a data fame resulting from the concatenation of the two MCMC for each parameter
+#'  \item MCMC_conv_not_ok : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
+#'  \item data_ggplot a list containing information for ggplot:
+#'  \itemize{
+#'   \item mu
+#'   \item sigma
+#'   \item epsilon
+#'  }
+#' }
+#' 
+#' @author Gaelle Van Frank and Pierre Riviere
+#'
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{check_model}}
+#' \item \code{\link{plot.check_model_bh_variance_intra}}
+#' \item \code{\link{mean_comparisons}}
+#' \item \code{\link{mean_comparisons.check_model_bh_variance_intra}}
+#' }
+#'
+#' @export
+#'
 check_model.fit_model_bh_variance_intra = function(
   x
 )

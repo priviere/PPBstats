@@ -1,5 +1,43 @@
-plot.parameter_groups <- function(x, ind_to_highlight = NULL){
-
+#' Get ggplot to visualize output from \code{\link{parameter_groups}}
+#'
+#' @description
+#' \code{plot.parameter_groups} returns ggplot to visualize outputs from \code{\link{parameter_groups}}
+#'
+#' @param x Output from \code{\link{parameter_groups}}
+#'
+#' @param ind_to_highlight individual to higlight on the PCA plot
+#'
+#' @param ... further arguments passed to or from other methods
+#'
+#' @details
+#' S3 method.
+#' See examples for AMMI, GGE and hierarchical bayesian GxE model : https://priviere.github.io/PPBstats_book/family-2.html
+#' 
+#' @return 
+#' It returns list of ggplot object
+#'   \itemize{
+#'    \item pca : a list with three elements on the PCA on the group of parameters :
+#'     \itemize{
+#'      \item composante_variance : variance caught by each dimension of the PCA
+#'      \item ind : graph of individuals
+#'      \item var : graph of variables
+#'     }
+#'    \item clust : output from \code{factextra::fviz_nbclust()}. See \code{?factoextra::fviz_nbclust} for more details, 
+#'    a list of number of cluster + 1 element
+#'   }
+#'   
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{parameter_groups}}
+#' 
+#' @export
+#' 
+#' @import dplyr
+#' @import factoextra
+#' @import ggplot2
+#' 
+plot.parameter_groups <- function(x, ind_to_highlight = NULL, ...){
+  y = clust = NULL  # to avoid no visible binding for global variable
   
   pca = x$obj.pca
   res.hcpc = x$clust$res.hcpc
@@ -27,7 +65,7 @@ plot.parameter_groups <- function(x, ind_to_highlight = NULL){
   list_p_clust = list(p_all)
   for(c in 1:nb_clust){
     d = res
-    dX = filter(d$call$X, clust == c)
+    dX = dplyr::filter(d$call$X, clust == c)
     rownames(dX) = rownames(d$call$X)[which(d$call$X$clust == c)]
     d$call$X = dX
     levels(d$call$X$clust) = c(1:nb_clust)

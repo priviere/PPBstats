@@ -3,7 +3,7 @@
 #' @description
 #' \code{model_GxE} runs AMMI or GGE model
 #' 
-#' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
+#' @param data The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}
 #' 
 #' @param variable variable to analyse
 #' 
@@ -11,6 +11,12 @@
 #' 
 #' @details 
 #' scaling for interaction.matrix is not useful as the column mean is equal to 0 because of model constraints and all the values are regarding one variable, so it is possible to compare it into the PCA.
+#' 
+#' More information can be found in the book
+#' \itemize{
+#'  \item AMMI : https://priviere.github.io/PPBstats_book/family-2.html#ammi
+#'  \item GGE : https://priviere.github.io/PPBstats_book/family-2.html#gge
+#' }
 #' 
 #' @return 
 #' The function returns a list with three elements :
@@ -39,8 +45,14 @@
 #' \itemize{
 #' \item \code{\link{GxE_build_interaction_matrix}},
 #' \item \code{\link{check_model}},
-#' \item \code{\link{check_model_model_1}}
+#' \item \code{\link{check_model.fit_model_GxE}}
 #' }
+#' 
+#' @import stats
+#' @import FactoMineR
+#' @importFrom methods is
+#' 
+#' @export
 #' 
 model_GxE = function(
   data, 
@@ -58,19 +70,19 @@ model_GxE = function(
       colnames(data)[which(colnames(data) == variable)] = "variable"
       data = data[c("location", "germplasm", "year", "block", "variable")]
       data = droplevels(na.omit(data))
-
+      
     # 3. ANOVA ----------
     # options(contrasts = c("contr.treatment", "contr.poly")) default options
     options(contrasts = c("contr.sum", "contr.sum")) # to get sum of parameters = 0
     
     if(nlevels(data$year) > 1) { # depends on the years available in the data set
-      model = lm(variable ~ germplasm*location + block %in% year:location + year + year:germplasm + year:location , data = data)
+      model = stats::lm(variable ~ germplasm*location + block %in% year:location + year + year:germplasm + year:location , data = data)
     } else {
-      model = lm(variable ~ germplasm*location + block %in% location, data = data)
+      model = stats::lm(variable ~ germplasm*location + block %in% location, data = data)
     }
     options(contrasts = c("contr.treatment", "contr.poly")) # Come back to default options
-
-    anova_model = anova(model)
+    
+    anova_model = stats::anova(model)
     
     # 3.1. Get effects ----------
     
@@ -115,7 +127,7 @@ model_GxE = function(
     
     
     # 4. PCA on interaction matrix ----------
-    out_pca = PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
+    out_pca = FactoMineR::PCA(data_interaction, scale.unit = TRUE, graph = FALSE)
 
     # 5. Return results ----------
     out = list(

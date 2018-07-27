@@ -3,8 +3,8 @@
 #' @description
 #' \code{model_bh_intra_location} runs Hierarchical Bayesian intra-location model to get mean comparisons on each environment of the network. See details for more information.
 #'
-#' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
-#'  
+#' @param data The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}
+#' 
 #' @param variable The variable on which runs the model
 #' 
 #' @param nb_iterations Number of iterations of the MCMC
@@ -34,14 +34,15 @@
 #' The variance are taken in an inverse Gamma distribution of parameters nu and rho. 
 #' This model takes into acount all the information on the network in order to cope with 
 #' the high disequilibrium within each environment (i.e. low degree of freedom at the residual in each environment). 
-#' More information can be found in the vignette.
+#' 
+#' More information can be found in the book : https://priviere.github.io/PPBstats_book/family-1.html#model-1
 #' 
 #' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 #' 
 #' @return The function returns a list with 
 #' 
 #' \itemize{
-#' \item "data.model1": the dataframe used to run model 1
+#' \item "data.model1": the dataframe used to run  Hierarchical Bayesian intra-location model
 #' \item "presence.absence.matrix": a matrix entry x environment with the number of occurence
 #' \item "vec_env_with_no_data": a vector with the environments without data for the given variable
 #' \item "vec_env_with_no_controls": a vector with the environments with no controls
@@ -62,8 +63,14 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}
-#' \item \code{\link{check_model.model_bh_intra_location}}
+#' \item \code{\link{check_model.fit_model_bh_intra_location}}
 #' }
+#' 
+#' @import rjags
+#' @import stats
+#' @importFrom methods is
+#' 
+#' @export
 #' 
 model_bh_intra_location = function(
   data,
@@ -286,20 +293,20 @@ model_bh_intra_location = function(
   init <- list(init1, init2)
   
   # Model
-  model <- jags.model(file = textConnection(model_jags), data = d_model, inits = init, n.chains = 2)
+  model <- rjags::jags.model(file = textConnection(model_jags), data = d_model, inits = init, n.chains = 2)
   
   # DIC
   if(return.DIC) {
     message("Calculation of DIC ...")
-    DIC = dic.samples(model, n.iter = nb_iterations, thin = thin, type = "pD")
+    DIC = rjags::dic.samples(model, n.iter = nb_iterations, thin = thin, type = "pD")
   } else {DIC = NULL}
   
   
   if( !is.null(parameters) ){
-    update(model, 1000) # Burn-in
+    stats::update(model, 1000) # Burn-in
     
     # run the model
-    mcmc = coda.samples(model, parameters, n.iter = nb_iterations, thin = thin)
+    mcmc = rjags::coda.samples(model, parameters, n.iter = nb_iterations, thin = thin)
     
     # 5. Rename the parameters ----------
     # once again, the name of the parameters must be in the alphabetic order
@@ -340,7 +347,7 @@ model_bh_intra_location = function(
   
   # 6. For residuals, it is done alone otherwise the memory do not manage with too big MCMC data frame ----------
   if(return.epsilon) {
-    mcmc_res <- coda.samples(model, "epsilon", n.iter= nb_iterations, thin = thin)
+    mcmc_res <- rjags::coda.samples(model, "epsilon", n.iter= nb_iterations, thin = thin)
     
     mcmc1_res = mcmc_res[[1]]
     mcmc2_res = mcmc_res[[2]]

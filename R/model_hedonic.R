@@ -3,30 +3,43 @@
 #' @description
 #' \code{model_hedonic} runs hedonic analysis
 #' 
-#' @param data  data is a data frame with the following columns: sample, juges, note, descriptors, germplasm, location. 
-#' The descriptors must be separated by ";". Any other column can be added as supplementary variables.
+#' @param data  data is a data frame. It should come from \code{\link{format_data_PPBstats.data_organo_hedonic}}
 #' 
 #' @details
 #' An anova is run on "note".
 #' A Correspondence Analysis is run with FactoMineR::CA
 #' 
+#' More information can be found in the book : https://priviere.github.io/PPBstats_book/hedonic.html
+#' 
 #' @return 
 #' A list with the anova and the CA object
 #' 
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{check_model}}
+#' \item \code{\link{check_model.fit_model_hedonic}}
+#' }
+#'
+#' @import stats
+#' @import FactoMineR
+#' @importFrom methods is
+#' 
+#' @export
+#'
 model_hedonic = function(
   data
   )
 {
   # 0. Error message ----------
   if(!is(data, "data_organo_hedonic")){ 
-    stop(substitute(data), " must be formated, see PPBstats::format_data_PPBstats().") 
+    stop(substitute(data), " must be formated with type = \"data_organo_hedonic\", see PPBstats::format_data_PPBstats().") 
   }
   
   var_sup = data$var_sup
   data = data$data
   
   # ANOVA ----------
-  model = lm(note ~ juges + germplasm, data)
+  model = stats::lm(note ~ juges + germplasm, data)
   
   # CA ----------
   quanti.sup = quali.sup = NULL
@@ -48,7 +61,7 @@ model_hedonic = function(
     warning("Some rows have been removed because there are no descriptors.")
   } 
   
-  out_CA = CA(data, quanti.sup = quanti.sup, quali.sup  = quali.sup, graph = FALSE)
+  out_CA = FactoMineR::CA(data, quanti.sup = quanti.sup, quali.sup  = quali.sup, graph = FALSE)
   out = list("model" = model, "CA" = out_CA)
   class(out) <- c("PPBstats", "fit_model_hedonic")
   return(out)

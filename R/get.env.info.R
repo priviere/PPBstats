@@ -1,9 +1,9 @@
 #' Get regional farms data and satellite farms data
 #'
 #' @description
-#' \code{get.env.info} look at a data set and separate regional farms and satellite farms in two datasets. This function is used in \code{\link{model_1}}.
+#' \code{get.env.info} look at a data set and separate regional farms and satellite farms in two datasets. This function is used in \code{\link{model_bh_intra_location}}.
 #'
-#' @param D The data frame with its specific column names used in \code{\link{model_1}}
+#' @param D The data frame with its specific column names used in \code{\link{model_bh_intra_location}}
 #'  
 #' @param nb_ind The minimal number of individuals per variable
 #' 
@@ -20,15 +20,19 @@
 #' 
 #' @author Pierre Riviere
 #' 
-#' @seealso \code{\link{model_1}}
+#' @seealso \code{\link{model_bh_intra_location}}
 #' 
+#' @import dplyr
+#' 
+#' @export
 #' 
 get.env.info = function(
   D,
   nb_ind
   )
 {
-
+  block = entry = NULL # to avoid no visible binding for global variable
+  
   # 1. Get informations on environments ----------
   vec_env_all = levels(D$environment)
   Dna = droplevels(D[which(!is.na(D$variable)),]) # Get rid of NA, keep the farm only where there is data
@@ -69,7 +73,7 @@ get.env.info = function(
     vec_env_with_no_controls = vec_env_na[!is.element(vec_env_na, vec_env_with_controls)] 
     
     # Separate regional farms and satellite farms
-    Dc = droplevels(filter(Dna, environment %in% vec_env_with_controls))
+    Dc = droplevels(dplyr::filter(Dna, environment %in% vec_env_with_controls))
     
     w = with(Dc, table(environment, block))
     if( ncol(w) == 1 ) { w = cbind(w, matrix(0, ncol = 1, nrow = nrow(w) )) }
@@ -78,16 +82,16 @@ get.env.info = function(
     vec_RF = rownames(w)[which(w[, 2] != 0)]
 
     if( length(vec_RF) > 0 ) {
-      D_RF = droplevels(filter(Dc, environment %in% vec_RF))
-      D_RF = arrange(D_RF, environment, block, entry)
+      D_RF = droplevels(dplyr::filter(Dc, environment %in% vec_RF))
+      D_RF = dplyr::arrange(D_RF, environment, block, entry)
     } else { vec_RF = D_RF = NULL }
         
 
     # satellite farms : only one block
     vec_SF = rownames(w)[which(w[,2] == 0)]
     if( length(vec_SF) > 0 ) {
-      D_SF = droplevels(filter(Dc, environment %in% vec_SF))
-      D_SF = arrange(D_SF, environment, block, entry)
+      D_SF = droplevels(dplyr::filter(Dc, environment %in% vec_SF))
+      D_SF = dplyr::arrange(D_SF, environment, block, entry)
     } else { vec_SF = D_SF = NULL }
     
   } else { 

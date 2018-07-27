@@ -20,9 +20,11 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{mean_comparisons_model_1}}
-#' \item \code{\link{mean_comparisons_model_2}}
+#' \item \code{\link{mean_comparisons.check_model_bh_intra_location}}
+#' \item \code{\link{mean_comparisons.check_model_bh_GxE}}
 #' } 
+#' 
+#' @export
 #' 
 get.significant.groups = function(
   Mpvalue,

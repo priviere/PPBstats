@@ -1,9 +1,53 @@
+#' Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_bh_GxE}}
+#'
+#' @description
+#' \code{plot.mean_comparisons_model_bh_GxE} returns ggplot to visualize outputs from \code{\link{mean_comparisons.check_model_bh_GxE}}
+#'
+#' @param x Output from \code{\link{mean_comparisons.check_model_bh_GxE}} for a given parameter
+#' 
+#' @param y Output from \code{\link{mean_comparisons.check_model_bh_GxE}} for a given parameter
+#' 
+#' @param plot_type "biplot-alpha-beta" or "barplot"
+#' 
+#' @param nb_parameters_per_plot number of parameter per plot to display
+#' 
+#' @param ... further arguments passed to or from other methods
+#'
+#' @details
+#' S3 method.
+#' y can not be NULL for plot_type = "biplot-alpha-beta".
+#' See example in the book: https://priviere.github.io/PPBstats_book/family-2.html#model-2
+#' 
+#' @return 
+#' A list with ggplot object depending on plot_type.
+#' There are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
+#' \itemize{
+#'  \item barplot : 
+#'  Letters are displayed on each bar. 
+#'  Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+#'  The error I (alpha) and the alpha correction are displayed in the title. 
+#'  alpha = Imp means that no differences were possible to find.
+#'  \item biplot-alpha-beta : display the biplot with alpha_i on the x axis and beta_i on the y axis if 
+#'  x and y are coming respectively from \code{\link{mean_comparisons.check_model_bh_GxE}} for alpha and beta.
+#'  }
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{mean_comparisons.check_model_bh_GxE}}
+#' 
+#' @export
+#'    
+#' @import dplyr
+#' @import plyr
+#' @import ggplot2
+#'    
 plot.mean_comparisons_model_bh_GxE <- function(
   x,
   y = NULL,
   plot_type = c("biplot-alpha-beta", "barplot"),
-  nb_parameters_per_plot = 8
+  nb_parameters_per_plot = 8, ...
 ) {
+  parameter = alpha_i = beta_i = germplasm = NULL # to avoid no visible binding for global variable
   
   # 1. Error message
   plot_type <- match.arg(plot_type, several.ok = FALSE)
@@ -20,7 +64,7 @@ plot.mean_comparisons_model_bh_GxE <- function(
   data = x$mean.comparisons
   
   if(plot_type == "barplot") {  
-    data = arrange(data, median)  
+    data = dplyr::arrange(data, median)  
     data$max = max(data$median, na.rm = TRUE)
     data$split = add_split_col(data, nb_parameters_per_plot)
     data_split = plyr:::splitter_d(data, .(split))  
@@ -57,7 +101,7 @@ plot.mean_comparisons_model_bh_GxE <- function(
     colnames(b)[which(colnames(b) == "median")] = "beta_i"
     
     
-    ab = join(a, b, "germplasm")
+    ab = plyr::join(a, b, "germplasm")
     ab=ab[which(!is.na(ab$beta_i) & !is.na(ab$alpha_i)),]
     ab$germplasm = gsub("\\[", "", ab$germplasm)
     ab$germplasm = gsub("\\]", "", ab$germplasm)

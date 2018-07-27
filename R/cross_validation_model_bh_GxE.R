@@ -26,11 +26,15 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{model_bh_GxE}},
-#' \item \code{\link{check_model}}, 
-#' \item \code{\link{check_model_model_bh_GxE}}
+#' \item \code{\link{model_bh_GxE}}
+#' \item \code{\link{check_model}} 
+#' \item \code{\link{check_model.fit_model_bh_GxE}}
 #' }
 #' 
+#'
+#' @import parallel
+#' 
+#' @export
 #'
 cross_validation_model_bh_GxE = function(
   data, 
@@ -123,7 +127,7 @@ cross_validation_model_bh_GxE = function(
     return(out)
   }
   
-  OUT = mclapply(list_data, function(x) {fun(x)}, mc.cores = mc.cores)
+  OUT = parallel::mclapply(list_data, function(x) {fun(x)}, mc.cores = mc.cores)
   
   observed.value = unlist(OUT)[grep("observed.value", names(unlist(OUT)))]
   estimated.value = unlist(OUT)[grep("estimated.value", names(unlist(OUT)))]

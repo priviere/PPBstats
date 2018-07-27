@@ -3,18 +3,28 @@
 #' @description
 #' \code{model_napping} runs napping analysis
 #'
-#' @param data data frame coming from format_data_PPBstats().
-#' It has the following columns: sample, juges, X, Y, descriptors, germplasm, location. 
-#' The descriptors must be separated by ";"
+#' @param data data frame coming from \code{\link{format_data_PPBstats.data_organo_napping}}
 #' 
 #' @details
 #' The Multiple Factor Analysis is run with FactoMineR::MFA
+#' 
+#' More information can be found in the book : https://priviere.github.io/PPBstats_book/napping.html
 #' 
 #' @return 
 #' The MFA object
 #' 
 #' @author Pierre Riviere and Camille Vindras
 #' 
+#' @seealso 
+#' \itemize{
+#' \item \code{\link{check_model}}
+#' \item \code{\link{check_model.fit_model_napping}}
+#' }
+#' 
+#' @import FactoMineR
+#' @importFrom methods is
+#' 
+#' @export
 #' 
 model_napping = function(
   data
@@ -22,7 +32,7 @@ model_napping = function(
 {
   # 0. Error message ----------
   if(!is(data, "data_organo_napping")){ 
-    stop(substitute(data), " must be formated, see PPBstats::format_data_PPBstats().") 
+    stop(substitute(data), " must be formated with type = \"data_organo_napping\", see PPBstats::format_data_PPBstats().") 
     }
   
   # 1.Format data ----------
@@ -40,7 +50,7 @@ model_napping = function(
   name.group = c(paste("J-", juges, sep=""),"descriptors")
   num.group.sup = NULL #c(1, length(juges)*2)
 
-  out = MFA(data, group = group, type = type, 
+  out = FactoMineR::MFA(data, group = group, type = type, 
             ind.sup = NULL, ncp = 5, axes = c(1, 2), 
             name.group  = name.group, num.group.sup = num.group.sup,
             graph = FALSE)

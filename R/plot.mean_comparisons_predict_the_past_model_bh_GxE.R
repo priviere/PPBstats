@@ -1,10 +1,39 @@
+#' Get ggplot to visualize output from \code{\link{mean_comparisons.predict_the_past_model_bh_GxE}}
+#'
+#' @description
+#' \code{plot.mean_comparisons_predict_the_past_model_bh_GxE} returns ggplot to visualize outputs from \code{\link{mean_comparisons.predict_the_past_model_bh_GxE}}
+#'
+#' @param x Output from \code{\link{mean_comparisons.predict_the_past_model_bh_GxE}} 
+#' 
+#' @param data_version Output from \code{\link{format_data_PPBstats.data_agro_version}} 
+#' 
+#' @param plot_type "interaction", "barplot" or "score"
+#' 
+#' @param nb_parameters_per_plot number of parameter per plot to display
+#'
+#' @param ... further arguments passed to or from other methods
+#' 
+#' @details
+#' S3 method.
+#' See example in the book: https://priviere.github.io/PPBstats_book/family-2.html#model-2
+#' 
+#' @return 
+#' It is the same outputs than for \code{\link{plot.mean_comparisons_model_bh_intra_location}}
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{mean_comparisons.predict_the_past_model_bh_GxE}}
+#' 
+#' @export
+#' 
 plot.mean_comparisons_predict_the_past_model_bh_GxE <- function(
   x,
   data_version = NULL,
   plot_type = "interaction",
-  nb_parameters_per_plot = 8
+  nb_parameters_per_plot = 8, ...
 ){
-
+  parameter_statuts = NULL # to avoid no visible binding for global variable
+  
   x = list(
     "data_mean_comparisons" = x[[1]],
     "data_env_with_no_controls" = NULL,

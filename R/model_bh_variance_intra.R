@@ -3,7 +3,7 @@
 #' @description
 #' \code{model_bh_variance_intra} runs Hierarchical Bayesian variance-intra model to get intra-population variance on each environment of the network. See details for more information.
 #'
-#' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
+#' @param data The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}
 #'  
 #' @param variable The variable on which runs the model
 #' 
@@ -25,7 +25,8 @@
 #' An environment is a combinaison of a location and a year.
 #' 
 #' The variance are taken in an inverse Gamma distribution of parameters 10^-6. 
-#' More information can be found in the vignette.
+#' 
+#' More information can be found in the book : https://priviere.github.io/PPBstats_book/family-4.html#variance-intra
 #' 
 #' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 #' 
@@ -42,8 +43,14 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}
-#' \item \code{\link{check_model.model_bh_variance_intra}}
+#' \item \code{\link{check_model.fit_model_bh_variance_intra}}
 #' }
+#' 
+#' @import rjags
+#' @import stats
+#' @importFrom methods is
+#' 
+#' @export
 #' 
 model_bh_variance_intra <- function(
   data,
@@ -164,18 +171,18 @@ model_bh_variance_intra <- function(
   init <- list(init1, init2)
   
   # Model
-  model <- jags.model(file = textConnection(model_jags), data = d_model, inits = init, n.chains = 2)
+  model <- rjags::jags.model(file = textConnection(model_jags), data = d_model, inits = init, n.chains = 2)
   
   # DIC
   if(return.DIC) {
     message("Calculation of DIC ...")
-    DIC = dic.samples(model, n.iter = nb_iterations, thin = thin, type = "pD")
+    DIC = rjags::dic.samples(model, n.iter = nb_iterations, thin = thin, type = "pD")
   } else {DIC = NULL}
   
-  update(model, 1000) # Burn-in
+  stats::update(model, 1000) # Burn-in
   
   # run the model
-  mcmc = coda.samples(model, parameters, n.iter = nb_iterations, thin = thin)
+  mcmc = rjags::coda.samples(model, parameters, n.iter = nb_iterations, thin = thin)
   
   # 5. Rename the parameters ----------
   # once again, the name of the parameters must be in the alphabetic order
@@ -203,7 +210,7 @@ model_bh_variance_intra <- function(
   
   # 6. For residuals, it is done alone otherwise the memory do not manage with too big MCMC data frame ----------
   if(return.epsilon) {
-    mcmc_res <- coda.samples(model, "epsilon", n.iter= nb_iterations, thin = thin)
+    mcmc_res <- rjags::coda.samples(model, "epsilon", n.iter= nb_iterations, thin = thin)
     
     mcmc1_res = mcmc_res[[1]]
     mcmc2_res = mcmc_res[[2]]

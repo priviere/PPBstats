@@ -3,7 +3,7 @@
 #' @description
 #' \code{model_bh_GxE} runs Hierarchical Bayesian GxE modelto get main germplasm, environment and sensitivity effects over the network
 #' 
-#' @param data The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
+#' @param data The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}
 #'  
 #' @param variable The variable on which runs the model
 #' 
@@ -27,7 +27,7 @@
 #' 
 #' @details
 #' 
-#' Model 2 estimates germplasm (alpha_i), environment (theta_j) and sensitivity to interaction (beta_i) effects. 
+#' Hierarchical Bayesian GxE model estimates germplasm (alpha_i), environment (theta_j) and sensitivity to interaction (beta_i) effects. 
 #' An environment is a combinaison of a location and a year.
 #' 
 #' The different effects are taken in different distributions of respective variances sigma_alpha, sigma_theta and sigma_beta. 
@@ -37,7 +37,7 @@
 #' 
 #' The model is run on data set where germplasms are on at least two environments.
 #' 
-#' More information can be found in the vignette.
+#' More information can be found in the book: https://priviere.github.io/PPBstats_book/family-2.html#model-2
 #' 
 #' For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 #' 
@@ -60,10 +60,16 @@
 #' @seealso 
 #' \itemize{
 #' \item \code{\link{check_model}}
-#' \item \code{\link{check_model_model_bh_GxE}}
-#' \item \code{\link{cross_validation_model_bh_GxE}}, 
+#' \item \code{\link{check_model.fit_model_bh_GxE}}
+#' \item \code{\link{cross_validation_model_bh_GxE}}
 #' \item \code{\link{predict_the_past_model_bh_GxE}}
 #' }
+#' 
+#' @import rjags
+#' @import stats
+#' @importFrom methods is
+#' 
+#' @export
 #' 
 model_bh_GxE = function(
   data,
@@ -255,19 +261,19 @@ model_bh_GxE = function(
   init <- list(init1, init2)
   
   # Model
-  model <- jags.model(file = textConnection(model_FWH_jags), data = d, inits = init, n.chains = 2)
+  model <- rjags::jags.model(file = textConnection(model_FWH_jags), data = d, inits = init, n.chains = 2)
   
   # DIC for the FWH model
   if(return.DIC) {
     message("Calculation of DIC for FWH model ...")
-    DIC_FW = dic.samples(model, n.iter = nb_iterations, thin = 10, type = "pD")
+    DIC_FW = rjags::dic.samples(model, n.iter = nb_iterations, thin = 10, type = "pD")
   } else {DIC_FW = NULL}
   
   if( !is.null(parameters) ){
-    update(model,1000) # Burn-in
+    stats::update(model,1000) # Burn-in
     
     # Run the model
-    mcmc_fwh <- coda.samples(model, parameters, n.iter = nb_iterations, thin = thin)
+    mcmc_fwh <- rjags::coda.samples(model, parameters, n.iter = nb_iterations, thin = thin)
     
     # Rename the parameters
     # one again, the name of the parameters must be in the alphabetic order
@@ -327,7 +333,7 @@ model_bh_GxE = function(
   
   # 6. For epsilon, it is done alone otherwise the memory do not manage with too big MCMC data frame. It is also useful for the cross validation study  ----------  
   if(return.epsilon) { 
-    mcmc_epsilon <- coda.samples(model, "epsilon", n.iter= nb_iterations, thin = thin)
+    mcmc_epsilon <- rjags::coda.samples(model, "epsilon", n.iter= nb_iterations, thin = thin)
     MCMC_epsilon = rbind.data.frame(as.data.frame(mcmc_epsilon[[1]]), as.data.frame(mcmc_epsilon[[2]]))
     epsilon = apply(MCMC_epsilon, 2, median, na.rm = TRUE)
   } else {epsilon = NULL}
