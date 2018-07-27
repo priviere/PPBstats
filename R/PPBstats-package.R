@@ -97,22 +97,22 @@ NULL
 NULL
 
 
-# data_version_MR ----------
-#' Data to study migrant and residant
+# data_version_HA ----------
+#' Data to study home and away
 #'
 #' @description
 #' A dataset containing values for the following factors: year, location, germplasm, group and version.
-#' group represents migrant or residant
+#' group represents home or away
 #' version represents the location where come the germplasm from.
 #'
 #' @usage
-#' data(data_version_MR)
+#' data(data_version_HA)
 #'
 #' @format
 #' A data frame with 25 rows and 5 columns
 #' 
 #' @author Pierre Rivière
-"data_version_MR"
+"data_version_HA"
 NULL
 
 

@@ -18,7 +18,7 @@
 #' Regarding study "home away", data_agro_version must have the following format:
 #' \itemize{
 #'  \item In group there are same type of value than in column location.
-#'  \item In version there are either migrant or residant
+#'  \item In version there are either home or away
 #' }
 #' 
 #' More details explaining these two particular cases can be found in the book \href{https://priviere.github.io/PPBstats_book/family-4.html}{here}.
@@ -50,10 +50,10 @@ format_data_PPBstats.data_agro_version = function(data){
   test_1 = length(which(is.element(c("S", "R"), d$group)))
   test_2 = length(which(is.element(c("bouquet", "vrac"), d$version)))
   test_3 = length(which(is.element(d$location, d$group)))
-  test_4 = length(which(is.element(c("residant", "migrant"), d$version)))
+  test_4 = length(which(is.element(c("home", "away"), d$version)))
   
   if( test_1 > 0 & test_2 > 0) {   class(d) <- c("PPBstats", "data_agro_version_SR", "data.frame") }
-  if( test_3 > 0 & test_4 > 0) {   class(d) <- c("PPBstats", "data_agro_version_MR", "data.frame") }
+  if( test_3 > 0 & test_4 > 0) {   class(d) <- c("PPBstats", "data_agro_version_HA", "data.frame") }
   if( test_1 == 0 & test_2 == 0 & test_3 ==0 & test_4 == 0) { class(d) <- c("PPBstats", "data_agro_version", "data.frame") }
   
   message(substitute(data), " has been formated for PPBstats functions.")
