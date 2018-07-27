@@ -25,7 +25,7 @@ Regarding response to selection, data_agro_version must have the following forma
 Regarding study "home away", data_agro_version must have the following format:
 \itemize{
  \item In group there are same type of value than in column location.
- \item In version there are either migrant or residant
+ \item In version there are either home or away
 }
 
 More details explaining these two particular cases can be found in the book \href{https://priviere.github.io/PPBstats_book/family-4.html}{here}.
