@@ -2,7 +2,9 @@
 
 ### update fonctions
 - check and format code and roxygen part for each function, DESCRIPTION and NAMESPACE cf #97
-
+- add migrant residant model, cf #25
+    - format data with home away (HA) and local foreign (LF)
+    - update descriptive plot
 
 # **PPBstats 0.24**
 

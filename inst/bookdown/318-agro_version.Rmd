@@ -88,20 +88,30 @@ p_barplot_mu_version$data_env_whose_param_did_not_converge
 ```
 
 
-#### Migrant residant {#migrant-residant} (Home away)
+#### Home away {#home-away}
+
+Home away analysis allows to study local adaptation.
+Away in a location refers to a germplasm that has not been grown or selected in a given location.
+Home in a location refers to a germplasm that has been grown or selected in a given location.
+
+
+!!! TO DO !!!
+cf [@blanquart_practical_2013]
+
 
 ##### Format data
 
 ```{r}
-data("data_version_MR")
-data_version_MR = format_data_PPBstats(data_version_MR, type = "data_agro_version")
+data("data_version_HA")
+data_version_HA = format_data_PPBstats(data_version_HA, type = "data_agro_version")
+head(data_version_HA)
 ```
-Where `group` represents migrant or residant and `version` represents the location where come the germplasm from.
+Where `group` represents away or hom and `version` represents the location where come the germplasm from.
 
 ##### Describe the data
 
 ```{r}
-p = plot(data_model_GxE, vec_variables = "y1", data_version = data_version_MR, plot_type = "barplot")
+p = plot(data_model_GxE, vec_variables = "y1", data_version = data_version_HA, plot_type = "barplot")
 p$y1$`loc-1`
 ```
 
@@ -113,4 +123,20 @@ The model is based on frequentist statistics (section \@ref(section-freq)).
 The tests to check the model are explained in section \@ref(check-model-freq).
 The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
 
+#### Local foreign {#local-foreign}
+
+##### Format data
+The data are formated from the home away data set
+
+```{r}
+data_version_LF = HA_to_LF(data_version_HA)
+head(data_version_LF)
+```
+
+##### Describe the data
+
+```{r}
+p = plot(data_model_GxE, vec_variables = "y1", data_version = data_version_LF, plot_type = "barplot")
+p$y1$`germ-1`
+```
 

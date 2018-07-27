@@ -1664,7 +1664,7 @@ plot_descriptive_data = function(
   
   # 2.7. Function to run data_version ----------
   fun_data_version_1 = function(variable, data, data_version, plot_type){
-    group = NULL  # to avoid no visible binding for global variable
+    id_azerty = group = NULL  # to avoid no visible binding for global variable
     
     data_version_class = class(data_version)[2]
     
@@ -1675,18 +1675,33 @@ plot_descriptive_data = function(
       factor_to_split = "lg"
     }
     
-    if( data_version_class == "data_agro_version_MR" ){
-      data_version$group = paste(data_version$germplasm, "from", data_version$group)
+    if( data_version_class == "data_agro_version_HA" ){
+      data_version$group = paste(data_version$germplasm, "coming from", data_version$group)
       factor_to_split = "location"
+    }
+    
+    if( data_version_class == "data_agro_version_LF" ){
+      data_version$group = paste("sown at", data_version$location, ", coming from", data_version$group)
+      factor_to_split = "germplasm"
     }
     
     colnames(data)[which(colnames(data) == variable)] = "variable"
     data$id_azerty = paste(data$location, data$year, data$germplasm, sep = "-")
     data_version$id_azerty = paste(data_version$location, data_version$year, data_version$germplasm, sep = "-")
+    
+    t = is.element(data_version$id_azerty, data$id_azerty)
+    id_ok = data_version$id_azerty[t]
+    id_not_ok = data_version$id_azerty[!t]
+    if( length(id_not_ok) > 0 ) { 
+      warning("The following rows are not taken into account in data_version: ", paste(id_ok, collape = ", ")) 
+      }
+    if( length(id_not_ok) == length(t) ) { stop("There is not match between data_version and data. Not plot can be done.") }
+    data_version = dplyr::filter(data_version, id_azerty %in% id_ok)
+    
     d = plyr::join(data_version, data, by = "id_azerty")
     colnames(d)[which(colnames(d) == factor_to_split)] = "factor_to_split"
-    d = plyr:::splitter_d(d, .(factor_to_split))
-    out = lapply(d, function(x){
+    dd = plyr:::splitter_d(d, .(factor_to_split))
+    out = lapply(dd, function(x){
       p = ggplot(x, aes(x = group, y = variable))
       p = p + ggtitle(x[1, "factor_to_split"]) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       p = p + xlab("")
@@ -1754,5 +1769,24 @@ plot_descriptive_data = function(
   return(p_out)
 }
 
+# transform home away data to local foreign data
+#' transform home away data to local foreign data
+#' @param data_version_HA data home away
+#' @details change home to local and away to foreign
+#' @return a data frame of class data_version_LF
+#' @importFrom methods is
+#' @export
+#' 
+HA_to_LF = function(data_version_HA){
+  if(!is(data_version_HA, "data_agro_version_HA")){ stop(substitute(data_version_HA), " must be formated with type = \"data_agro_version\" with home away format, see PPBstats::format_data_PPBstats().") }
+  is(data_version_HA)
+  data_version_LF = data_version_HA
+  data_version_LF$version = as.character(data_version_LF$version)
+  data_version_LF$version[which(data_version_LF$version == "home")] = "local"
+  data_version_LF$version[which(data_version_LF$version == "away")] = "foreign"
+  data_version_LF$version = as.factor(data_version_LF$version)
+  class(data_version_LF) = c("PPBstats", "data_agro_version_LF", "data.frame")
+  return(data_version_LF)
+}
 
 
