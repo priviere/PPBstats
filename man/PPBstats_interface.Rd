@@ -13,7 +13,7 @@ PPBstats_interface(interface)
 The function returns a windows with the interface
 }
 \description{
-\code{PPBstats_interface} runs an interface ti use the package
+\code{PPBstats_interface} runs an interface to use the package
 }
 \details{
 The code was taken from Dean Attali's example

@@ -2,19 +2,18 @@
 % Please edit documentation in R/plot.data_agro.R
 \name{plot.data_agro}
 \alias{plot.data_agro}
-\title{Plot agro object from format_data_PPBstats()}
+\title{Plot agro object from format_data_PPBstats.data_agro()}
 \usage{
-\method{plot}{data_agro}(data, data_version = NULL, plot_type = c("pam",
+\method{plot}{data_agro}(x, data_version = NULL, plot_type = c("pam",
   "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar",
   "raster", "map"), x_axis = NULL, in_col = NULL, vec_variables = NULL,
   nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5,
-  labels_on = NULL, labels_size = 4, pie_size = 0.2)
+  labels_on = NULL, labels_size = 4, pie_size = 0.2, zoom = 6, ...)
 }
 \arguments{
-\item{data}{The data frame. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+\item{x}{The data frame. It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
-\item{data_version}{data frame with the following column : c("year", "germplasm", "location", "group", "version").
-See \code{\link{format_data_PPBstats}} for more details.}
+\item{data_version}{data frame coming from \code{\link{format_data_PPBstats.data_agro_version}}}
 
 \item{plot_type}{the type of plot you wish. It can be :
 \itemize{
@@ -35,7 +34,7 @@ This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "in
 
 \item{in_col}{factor displayed in color of a plot}
 
-\item{vec_variables}{vector of variables to describe}
+\item{vec_variables}{vector of variables to display}
 
 \item{nb_parameters_per_plot_x_axis}{the number of parameters per plot on x_axis arguments}
 
@@ -46,6 +45,10 @@ This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "in
 \item{labels_size}{size of the label for plot_type = "biplot" and "radar"}
 
 \item{pie_size}{when plot_type = "map" and vec_variables is not NULL, size of the pie}
+
+\item{zoom}{zoom of the map, see ?get_map for more details}
+
+\item{...}{further arguments passed to or from other methods}
 }
 \value{
 \itemize{
@@ -53,16 +56,27 @@ This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "in
  the function returns a list with ggplot objects for each variable of vec_variables.
  \item For plot_type "biplot",
  the function returns a list with ggplot objects for each pairs of variables of vec_variables. 
- \item For plot_type "radar",
+ \item For plot_type "radar" and "raster,
  the function returns a list with ggplot objects with all variables of vec_variables. 
- \item For plot_type "raster"
- the function returns a list with ggplot objects with all variables of vec_variables. 
+ \item For plot_type "map", it returns a map with location 
+ if vec_variables = NULL and labels_on = "location".
+ If vec_variables is not NULL, it displays pie on map.
 }
 Each list is divided in several lists according to values 
-of nb_parameters_per_plot_x_axis and nb_parameters_per_plot_in_col.
+of nb_parameters_per_plot_x_axis and nb_parameters_per_plot_in_col except for plot_type = "map".
 }
 \description{
 \code{plot.data_agro} gets ggplot to describe the data
+}
+\details{
+S3 method.
+See the book for more details \href{https://priviere.github.io/PPBstats_book/describe-data-agro.html}{here}.
+}
+\seealso{
+\itemize{
+ \item \code{\link{format_data_PPBstats.data_agro}}
+ \item \code{\link{format_data_PPBstats.data_agro_version}}
+}
 }
 \author{
 Pierre Riviere

@@ -86,6 +86,8 @@ In this function, the code is based on the following algorithms:
  \item "IBD"
 the randomization is based on the ibd function in the ibd package. See \code{?ibd} for more information
 }
+
+See exampels in the book : \href{https://priviere.github.io/PPBstats_book/doe.html}{here}.
 }
 \author{
 Pierre Riviere

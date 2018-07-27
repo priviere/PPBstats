@@ -7,17 +7,21 @@
 \method{biplot_data}{check_model_hedonic}(x)
 }
 \arguments{
-\item{x}{Output from \code{\link{check_model}} with \code{\link{model_hedonic}}}
+\item{x}{Output from \code{\link{check_model.fit_model_hedonic}}}
 }
 \value{
 The function return a CA object
 }
 \description{
-\code{biplot_data.check_model_hedonic} format data for CA plot from \code{\link{check_model}} with \code{\link{model_hedonic}}
+\code{biplot_data.check_model_hedonic} format data for CA plot from \code{\link{check_model.fit_model_hedonic}}
+}
+\details{
+S3 method.
 }
 \seealso{
 \itemize{
-\item \code{\link{check_model.fit_model_hedonic}}, 
+\item \code{\link{biplot_data}}
+\item \code{\link{check_model.fit_model_hedonic}}
 \item \code{\link{plot.biplot_hedonic}}
 }
 }

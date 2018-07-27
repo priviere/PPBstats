@@ -7,7 +7,7 @@
 model_GxE(data, variable, gxe_analysis = NULL)
 }
 \arguments{
-\item{data}{The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+\item{data}{The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
 \item{variable}{variable to analyse}
 
@@ -38,12 +38,18 @@ The function returns a list with three elements :
 }
 \details{
 scaling for interaction.matrix is not useful as the column mean is equal to 0 because of model constraints and all the values are regarding one variable, so it is possible to compare it into the PCA.
+
+More information can be found in the book
+\itemize{
+ \item AMMI : https://priviere.github.io/PPBstats_book/family-2.html#ammi
+ \item GGE : https://priviere.github.io/PPBstats_book/family-2.html#gge
+}
 }
 \seealso{
 \itemize{
 \item \code{\link{GxE_build_interaction_matrix}},
 \item \code{\link{check_model}},
-\item \code{\link{check_model_model_1}}
+\item \code{\link{check_model.fit_model_GxE}}
 }
 }
 \author{

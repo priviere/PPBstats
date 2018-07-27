@@ -2,22 +2,26 @@
 % Please edit documentation in R/biplot_data.check_model_napping.R
 \name{biplot_data.check_model_napping}
 \alias{biplot_data.check_model_napping}
-\title{Format data for MFA biplot}
+\title{Format data for MFA biplot for napping model}
 \usage{
 \method{biplot_data}{check_model_napping}(x)
 }
 \arguments{
-\item{x}{Output from \code{\link{check_model}} with \code{\link{model_napping}}}
+\item{x}{Output from \code{\link{check_model.fit_model_napping}}}
 }
 \value{
 The function return a MFA object
 }
 \description{
-\code{biplot_data.check_model_napping} format data for MFA plot from \code{\link{check_model}} with \code{\link{model_napping}}
+\code{biplot_data.check_model_napping} format data for MFA plot from \code{\link{check_model.fit_model_napping}}
+}
+\details{
+S3 method.
 }
 \seealso{
 \itemize{
-\item \code{\link{check_model.fit_model_napping}},
+\item \code{\link{biplot_data}}
+\item \code{\link{check_model.fit_model_napping}}
 \item \code{\link{plot.biplot_napping}}
 }
 }

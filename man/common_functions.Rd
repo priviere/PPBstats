@@ -7,9 +7,16 @@
 \usage{
 check_data_vec_variables(data, vec_variables)
 }
+\arguments{
+\item{data}{data frame}
+
+\item{vec_variables}{variables to check}
+}
 \description{
-This file group several functions used in several functions of PPBstats
+This file group functions used in several functions of PPBstats
 }
 \author{
 Pierre Riviere
+
+check if variable are part of the data
 }

@@ -8,7 +8,7 @@ model_spatial(data, variable, genotype.as.random = TRUE)
 }
 \arguments{
 \item{data}{The data frame on which the model is run. 
-It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
 \item{variable}{variable to analyse}
 
@@ -33,10 +33,13 @@ The function returns a list with two elements :
 \details{
 The model is run with the SpATS function of package SpATS. 
 See ?SpATS for more information.
+
+More information can be found in the book : https://priviere.github.io/PPBstats_book/family-1.html#spatial-analysis
 }
 \seealso{
 \itemize{
 \item \code{\link{check_model}}
+\item \code{\link{check_model.fit_model_spatial}}
 }
 }
 \author{

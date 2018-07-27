@@ -10,7 +10,7 @@ model_bh_intra_location(data, variable, nb_iterations = 1e+05, thin = 10,
   return.DIC = FALSE, nu.max = 10)
 }
 \arguments{
-\item{data}{The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+\item{data}{The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
 \item{variable}{The variable on which runs the model}
 
@@ -38,7 +38,7 @@ model_bh_intra_location(data, variable, nb_iterations = 1e+05, thin = 10,
 The function returns a list with 
 
 \itemize{
-\item "data.model1": the dataframe used to run model 1
+\item "data.model1": the dataframe used to run  Hierarchical Bayesian intra-location model
 \item "presence.absence.matrix": a matrix entry x environment with the number of occurence
 \item "vec_env_with_no_data": a vector with the environments without data for the given variable
 \item "vec_env_with_no_controls": a vector with the environments with no controls
@@ -61,7 +61,8 @@ An environment is a combinaison of a location and a year.
 The variance are taken in an inverse Gamma distribution of parameters nu and rho. 
 This model takes into acount all the information on the network in order to cope with 
 the high disequilibrium within each environment (i.e. low degree of freedom at the residual in each environment). 
-More information can be found in the vignette.
+
+More information can be found in the book : https://priviere.github.io/PPBstats_book/family-1.html#model-1
 
 For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 }
@@ -71,7 +72,7 @@ P. Riviere, J.C. Dawson, I. Goldringer, and O. David. Hierarchical Bayesian Mode
 \seealso{
 \itemize{
 \item \code{\link{check_model}}
-\item \code{\link{check_model.model_bh_intra_location}}
+\item \code{\link{check_model.fit_model_bh_intra_location}}
 }
 }
 \author{

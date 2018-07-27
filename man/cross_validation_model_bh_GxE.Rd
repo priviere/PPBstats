@@ -31,9 +31,9 @@ Parallelization is done with the function \code{parallel::mclapply}.
 }
 \seealso{
 \itemize{
-\item \code{\link{model_bh_GxE}},
-\item \code{\link{check_model}}, 
-\item \code{\link{check_model_model_bh_GxE}}
+\item \code{\link{model_bh_GxE}}
+\item \code{\link{check_model}} 
+\item \code{\link{check_model.fit_model_bh_GxE}}
 }
 }
 \author{

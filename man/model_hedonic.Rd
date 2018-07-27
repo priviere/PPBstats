@@ -7,8 +7,7 @@
 model_hedonic(data)
 }
 \arguments{
-\item{data}{data is a data frame with the following columns: sample, juges, note, descriptors, germplasm, location. 
-The descriptors must be separated by ";". Any other column can be added as supplementary variables.}
+\item{data}{data is a data frame. It should come from \code{\link{format_data_PPBstats.data_organo_hedonic}}}
 }
 \value{
 A list with the anova and the CA object
@@ -19,4 +18,12 @@ A list with the anova and the CA object
 \details{
 An anova is run on "note".
 A Correspondence Analysis is run with FactoMineR::CA
+
+More information can be found in the book : https://priviere.github.io/PPBstats_book/hedonic.html
+}
+\seealso{
+\itemize{
+\item \code{\link{check_model}}
+\item \code{\link{check_model.fit_model_hedonic}}
+}
 }

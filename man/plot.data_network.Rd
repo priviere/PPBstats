@@ -4,14 +4,14 @@
 \alias{plot.data_network}
 \title{Plot network object from format_data_PPBstats()}
 \usage{
-\method{plot}{data_network}(net, data_to_pie = NULL, variable = NULL,
+\method{plot}{data_network}(x, data_to_pie = NULL, variable = NULL,
   pie_size = 0.2, plot_type = "network", in_col = "location",
   labels_on = FALSE, labels_size = 4, organize_sl = FALSE,
   x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5,
-  nb_parameters_per_plot_in_col = 5, vec_variables = NULL)
+  nb_parameters_per_plot_in_col = 5, vec_variables = NULL, zoom = 6, ...)
 }
 \arguments{
-\item{net}{output from format_data_PPBstats with data_type = "network"}
+\item{x}{output from \code{\link{format_data_PPBstats.data_network}}}
 
 \item{data_to_pie}{output from format_data_PPBstats with data_type = "agro"}
 
@@ -19,7 +19,7 @@
 
 \item{pie_size}{when data_to_pie is not NULL, size of the pie}
 
-\item{plot_type}{"network", "barplot" or "map}
+\item{plot_type}{"network", "barplot" or "map"}
 
 \item{in_col}{factor in color that fill the barplot or the vertex of the network.
 It can be germplasm, location or year}
@@ -39,6 +39,10 @@ It can be germplasm, location or year}
 \item{nb_parameters_per_plot_in_col}{for plot_type = "barplot" and unipart seed lots network, number of paramter by color that fill}
 
 \item{vec_variables}{for plot_type = "barplot" and unipart seed lots network, name of a relation type to display}
+
+\item{zoom}{zoom of the map, see ?get_map for more details}
+
+\item{...}{further arguments passed to or from other methods}
 }
 \value{
 A list with ggplot object.
@@ -62,9 +66,12 @@ The results is a list of two elements for each variable:
  \item nb_received: number of seed lots that end the relation
  \item nb_given: number of seed lots that start the relation
 }
+
+S3 method.
+See the book for more details : https://priviere.github.io/PPBstats_book/describe-data-network.html
 }
 \seealso{
-\code{format_data_PPBstats}
+\code{\link{format_data_PPBstats.data_network}}
 }
 \author{
 Pierre Riviere

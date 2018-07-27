@@ -2,12 +2,12 @@
 % Please edit documentation in R/parameter_groups_model_bh_GxE.R
 \name{parameter_groups_model_bh_GxE}
 \alias{parameter_groups_model_bh_GxE}
-\title{Get matrix with variables in column and effect in row from check_model_model_bh_GxE}
+\title{Get matrix with variables in column and effect in row from \code{\link{check_model.fit_model_bh_GxE}}}
 \usage{
 parameter_groups_model_bh_GxE(list_out_check_model_model_bh_GxE, parameter)
 }
 \arguments{
-\item{list_out_check_model_model_bh_GxE}{A list whose elements are output from \code{\link{check_model_model_bh_GxE}}}
+\item{list_out_check_model_model_bh_GxE}{A list whose elements are output from \code{\link{check_model.fit_model_bh_GxE}}}
 
 \item{parameter}{parameter on which to get the matrix}
 }

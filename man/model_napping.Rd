@@ -7,9 +7,7 @@
 model_napping(data)
 }
 \arguments{
-\item{data}{data frame coming from format_data_PPBstats().
-It has the following columns: sample, juges, X, Y, descriptors, germplasm, location. 
-The descriptors must be separated by ";"}
+\item{data}{data frame coming from \code{\link{format_data_PPBstats.data_organo_napping}}}
 }
 \value{
 The MFA object
@@ -19,6 +17,14 @@ The MFA object
 }
 \details{
 The Multiple Factor Analysis is run with FactoMineR::MFA
+
+More information can be found in the book : https://priviere.github.io/PPBstats_book/napping.html
+}
+\seealso{
+\itemize{
+\item \code{\link{check_model}}
+\item \code{\link{check_model.fit_model_napping}}
+}
 }
 \author{
 Pierre Riviere and Camille Vindras

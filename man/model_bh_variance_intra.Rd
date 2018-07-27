@@ -9,7 +9,7 @@ model_bh_variance_intra(data, variable, nb_iterations = 1e+05, thin = 10,
   return.DIC = FALSE)
 }
 \arguments{
-\item{data}{The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+\item{data}{The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
 \item{variable}{The variable on which runs the model}
 
@@ -42,14 +42,15 @@ Model on intra-population variance estimates entry effects (mu_ijk) and within-p
 An environment is a combinaison of a location and a year.
 
 The variance are taken in an inverse Gamma distribution of parameters 10^-6. 
-More information can be found in the vignette.
+
+More information can be found in the book : https://priviere.github.io/PPBstats_book/family-4.html#variance-intra
 
 For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 }
 \seealso{
 \itemize{
 \item \code{\link{check_model}}
-\item \code{\link{check_model.model_bh_variance_intra}}
+\item \code{\link{check_model.fit_model_bh_variance_intra}}
 }
 }
 \author{

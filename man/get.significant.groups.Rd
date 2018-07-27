@@ -25,8 +25,8 @@ from each others for a set of parameters based on MCMC outputs
 }
 \seealso{
 \itemize{
-\item \code{\link{mean_comparisons_model_1}}
-\item \code{\link{mean_comparisons_model_2}}
+\item \code{\link{mean_comparisons.check_model_bh_intra_location}}
+\item \code{\link{mean_comparisons.check_model_bh_GxE}}
 }
 }
 \author{

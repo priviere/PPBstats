@@ -11,7 +11,7 @@ model_bh_GxE(data, variable, nb_iterations = 1e+05, thin = 10,
   return.sigma_epsilon = TRUE, return.DIC = FALSE)
 }
 \arguments{
-\item{data}{The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+\item{data}{The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
 \item{variable}{The variable on which runs the model}
 
@@ -53,7 +53,7 @@ The function returns a list with
 \code{model_bh_GxE} runs Hierarchical Bayesian GxE modelto get main germplasm, environment and sensitivity effects over the network
 }
 \details{
-Model 2 estimates germplasm (alpha_i), environment (theta_j) and sensitivity to interaction (beta_i) effects. 
+Hierarchical Bayesian GxE model estimates germplasm (alpha_i), environment (theta_j) and sensitivity to interaction (beta_i) effects. 
 An environment is a combinaison of a location and a year.
 
 The different effects are taken in different distributions of respective variances sigma_alpha, sigma_theta and sigma_beta. 
@@ -63,7 +63,7 @@ First, the additive model is done. This model gives intitial values of some para
 
 The model is run on data set where germplasms are on at least two environments.
 
-More information can be found in the vignette.
+More information can be found in the book: https://priviere.github.io/PPBstats_book/family-2.html#model-2
 
 For DIC value, see ?\code{dic.samples} from the \code{rjags} package for more information.
 }
@@ -73,8 +73,8 @@ P. Riviere, J.C. Dawson, I. Goldringer, and O. David. Hierarchical multiplicativ
 \seealso{
 \itemize{
 \item \code{\link{check_model}}
-\item \code{\link{check_model_model_bh_GxE}}
-\item \code{\link{cross_validation_model_bh_GxE}}, 
+\item \code{\link{check_model.fit_model_bh_GxE}}
+\item \code{\link{cross_validation_model_bh_GxE}}
 \item \code{\link{predict_the_past_model_bh_GxE}}
 }
 }
