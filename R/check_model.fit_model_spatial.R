@@ -48,7 +48,7 @@ check_model.fit_model_spatial <- function(
   summary_model = x$model$summary
   
   # 1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
-  r = residuals(model)
+  r = na.omit(residuals(model))
   
   # 1.1. Normality ----------
   data_ggplot_normality = data.frame(r)
