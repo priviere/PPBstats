@@ -14,7 +14,7 @@
 #' The model is run with the SpATS function of package SpATS. 
 #' See ?SpATS for more information.
 #' 
-#' More information can be found in the book : https://priviere.github.io/PPBstats_book/family-1.html#spatial-analysis
+#' More information can be found in the book \href{https://priviere.github.io/PPBstats_book/family-1.html#spatial-analysis}{here}.
 #' 
 #' @return 
 #' The function returns a list with two elements :
