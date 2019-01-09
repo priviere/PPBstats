@@ -13,11 +13,11 @@
 #' p-adj = "none" is t-student.
 #' See p.adjust() for more details.
 #' 
-#' @param ... further arguments passed to or from other methods#' 
+#' @param ... further arguments passed to or from other methods
 #' 
 #' @details
 #' S3 method.
-#' See in the book for more details : https://priviere.github.io/PPBstats_book/intro-agro.html#section-freq
+#' See in the book for more details \href{https://priviere.github.io/PPBstats_book/intro-agro.html#section-freq}{here}
 #' 
 #' @return 
 #'  A list of four elements : 
@@ -45,7 +45,8 @@ mean_comparisons.check_model_GxE <- function(
   p.adj = "none",
   ...
 ){
-  out = mean_comparisons_freq_anova(model = x$GxE$ANOVA$model, variable = x$GxE$info$variable, 
+  out = mean_comparisons_freq_anova(model = x$model_GxE$ANOVA$model, 
+                                    variable = x$model_GxE$info$variable, 
                                     alpha, p.adj, info = x$info)
   class(out) <- c("PPBstats", "mean_comparisons_model_GxE")
   return(out)

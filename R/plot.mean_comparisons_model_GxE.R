@@ -11,11 +11,9 @@
 #'
 #' @details
 #' S3 method.
-#' See example in the book: 
-#' \itemize{
-#'  \item for AMMI : https://priviere.github.io/PPBstats_book/family-2.html#ammi
-#'  \item for GGE : https://priviere.github.io/PPBstats_book/family-2.html#gge
-#' }
+#' See example in the book regarding 
+#' \href{https://priviere.github.io/PPBstats_book/family-2.html#ammi}{AMMI} and 
+#' \href{https://priviere.github.io/PPBstats_book/family-2.html#gge}{GGE}.
 #' 
 #' @return 
 #' A list with barplot.

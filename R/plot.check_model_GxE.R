@@ -18,11 +18,7 @@
 #'     With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
 #'    }
 #'    
-#' See example in the book: 
-#' \itemize{
-#'  \item for AMMI : https://priviere.github.io/PPBstats_book/family-2.html#ammi
-#'  \item for GGE : https://priviere.github.io/PPBstats_book/family-2.html#gge
-#' }
+#' See example in the book regarding \href{https://priviere.github.io/PPBstats_book/family-2.html#ammi}{AMMI} and \href{https://priviere.github.io/PPBstats_book/family-2.html#gge}{GGE}.
 #' 
 #' @return 
 #' \itemize{
@@ -48,10 +44,10 @@ plot.check_model_GxE <- function(
   x, ...
 ){
   # anova  
-  out = plot_check_freq_anova(x, variable = x$GxE$info$variable)
+  out = plot_check_freq_anova(x, variable = x$model_GxE$info$variable)
 
   # pca composante variance
-  data_ggplot_pca = x$GxE$PCA
+  data_ggplot_pca = x$model_GxE$PCA
   p = fviz_eig(data_ggplot_pca) + ggtitle("")
   
   # return results

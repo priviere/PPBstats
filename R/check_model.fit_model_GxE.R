@@ -35,7 +35,7 @@
 #' \item \code{\link{check_model}}
 #' \item \code{\link{plot.check_model_GxE}}
 #' \item \code{\link{mean_comparisons}}
-#' \item \code{\link{mean_comparisons.check_model_hedonic}}
+#' \item \code{\link{mean_comparisons.check_model_GxE}}
 #' \item \code{\link{biplot_data}}
 #' \item \code{\link{biplot_data.check_model_GxE}}
 #' \item \code{\link{parameter_groups}}
@@ -48,7 +48,7 @@ check_model.fit_model_GxE <- function(
 ){
   model = x$ANOVA$model
   
-  out = c(list("GxE" = x), "data_ggplot" = list(check_freq_anova(model)))
+  out = c(list("model_GxE" = x), "data_ggplot" = list(check_freq_anova(model)))
   
   class(out) <- c("PPBstats", "check_model_GxE")
   
