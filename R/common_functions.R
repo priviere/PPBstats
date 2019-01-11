@@ -808,7 +808,7 @@ plot_check_freq_anova = function(x, variable){
 #' @export
 #' @import agricolae
 mean_comparisons_freq_anova = function(model, variable, alpha = 0.05, p.adj = "none", info = NULL){
-  
+
   data_ggplot_LSDbarplot = function(model, fac, p.adj, alpha){
     lsd = agricolae::LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
     
@@ -822,6 +822,8 @@ mean_comparisons_freq_anova = function(model, variable, alpha = 0.05, p.adj = "n
     if( nrow(out_LSD) == 0 ) { out_LSD = NULL }
     return(out_LSD)
   }
+  
+  # vec_fac = attr(model$terms,"term.labels")
   
   # Germplasm
   data_ggplot_LSDbarplot_germplasm = data_ggplot_LSDbarplot(model, fac = "germplasm", p.adj, alpha)
@@ -1673,16 +1675,17 @@ plot_descriptive_data = function(
     if( data_version_class == "data_agro_version_SR" ){
       data_version$lg = paste(data_version$location, data_version$germplasm, sep = ":")
       factor_to_split = "lg"
+      data_version$group_bis = data_version$group
     }
     
     if( data_version_class == "data_agro_version_HA" ){
-      data_version$group = paste(data_version$germplasm, "coming from", data_version$group)
-      factor_to_split = "location"
+      data_version$group_bis = paste(data_version$germplasm, "coming from", data_version$group)
+      factor_to_split = "germplasm"
     }
     
     if( data_version_class == "data_agro_version_LF" ){
-      data_version$group = paste("sown at", data_version$location, ", coming from", data_version$group)
-      factor_to_split = "germplasm"
+      data_version$group_bis = paste("sown at", data_version$location, ", coming from", data_version$group)
+      factor_to_split = "location"
     }
     
     colnames(data)[which(colnames(data) == variable)] = "variable"
@@ -1697,12 +1700,37 @@ plot_descriptive_data = function(
       }
     if( length(id_not_ok) == length(t) ) { stop("There is not match between data_version and data. Not plot can be done.") }
     data_version = dplyr::filter(data_version, id_azerty %in% id_ok)
-    
     d = plyr::join(data_version, data, by = "id_azerty")
+    
+
+    if( data_version_class == "data_agro_version_HA" | data_version_class == "data_agro_version_LF" ){ 
+      # single plot with version for all germplasm/location merged
+      p = ggplot(d, aes(x = version, y = variable)) 
+      p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + xlab("")
+      if( plot_type == "barplot"){ p = p + geom_bar(stat = "identity", position = "dodge") }
+      if( plot_type == "boxplot"){ p = p + geom_boxplot(position = "dodge") }
+      p1 = p
+      
+      # single plot with version for each germplasm/location
+      if( data_version_class == "data_agro_version_HA" ){ p = ggplot(d, aes(x = germplasm, y = variable)) }
+      if( data_version_class == "data_agro_version_LF" ){ p = ggplot(d, aes(x = location, y = variable)) } 
+      p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + xlab("")
+      if( plot_type == "barplot"){
+        p = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge")      
+      }
+      if( plot_type == "boxplot"){
+        p = p + geom_boxplot(aes(fill = version), position = "dodge")      
+      }
+      p2 = p
+      
+      }
+    
+
+    # plot for each germplasm/location with all version separated
     colnames(d)[which(colnames(d) == factor_to_split)] = "factor_to_split"
     dd = plyr:::splitter_d(d, .(factor_to_split))
     out = lapply(dd, function(x){
-      p = ggplot(x, aes(x = group, y = variable))
+      p = ggplot(x, aes(x = group_bis, y = variable))
       p = p + ggtitle(x[1, "factor_to_split"]) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       p = p + xlab("")
       if( plot_type == "barplot"){
@@ -1713,6 +1741,24 @@ plot_descriptive_data = function(
       }
       return(p)  
     })
+    
+    if( data_version_class == "data_agro_version_SR" ){ 
+      out = out
+    } 
+    
+    if( data_version_class == "data_agro_version_HA" ){ 
+      out = list("home_away_merged" = p1, 
+                 "home_away_merged_per_germplasm" = p2, 
+                 "home_away_per_germplasm" = out)
+    }
+    
+    if( data_version_class == "data_agro_version_LF" ){ 
+      out = list("local_foreign_merged" = p1, 
+                 "local_foreign_merged_per_location" = p2, 
+                 "local_foreign_per_location" = out)
+    } 
+    
+    
     return(out)
   }
   
