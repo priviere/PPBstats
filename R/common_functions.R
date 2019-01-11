@@ -807,7 +807,10 @@ plot_check_freq_anova = function(x, variable){
 #' @param info info from mean_comparisons
 #' @export
 #' @import agricolae
-mean_comparisons_freq_anova = function(model, variable, alpha = 0.05, p.adj = "none", info = NULL){
+mean_comparisons_freq_anova = function(model, variable, alpha = 0.05, 
+                                       p.adj = "none", info = NULL,
+                                       vec_fac = c("germplasm", "location", "year")
+                                       ){
 
   data_ggplot_LSDbarplot = function(model, fac, p.adj, alpha){
     lsd = agricolae::LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
@@ -824,24 +827,15 @@ mean_comparisons_freq_anova = function(model, variable, alpha = 0.05, p.adj = "n
   }
   
   # vec_fac = attr(model$terms,"term.labels")
-  
-  # Germplasm
-  data_ggplot_LSDbarplot_germplasm = data_ggplot_LSDbarplot(model, fac = "germplasm", p.adj, alpha)
-  
-  # Location
-  data_ggplot_LSDbarplot_location = data_ggplot_LSDbarplot(model, fac = "location", p.adj, alpha)
-  
-  # Year
-  data_ggplot_LSDbarplot_year = data_ggplot_LSDbarplot(model, fac = "year", p.adj, alpha)
+  out = list()
+  for(fac in vec_fac){
+    out = c(out, list(data_ggplot_LSDbarplot(model, fac, p.adj, alpha)))
+  }
+  names(out) = paste("data_ggplot_LSDbarplot_", vec_fac, sep = "")
   
   # Return results
-  out <- list(
-    "info" = info,
-    "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm,
-    "data_ggplot_LSDbarplot_location" = data_ggplot_LSDbarplot_location,
-    "data_ggplot_LSDbarplot_year" = data_ggplot_LSDbarplot_year
-  )
-  
+  out <- c(list("info" = info), out)
+
   return(out)
 }
 
