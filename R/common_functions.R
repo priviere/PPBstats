@@ -1690,13 +1690,12 @@ plot_descriptive_data = function(
     id_ok = data_version$id_azerty[t]
     id_not_ok = data_version$id_azerty[!t]
     if( length(id_not_ok) > 0 ) { 
-      warning("The following rows are not taken into account in data_version: ", paste(id_ok, collape = ", ")) 
+      warning("The following rows are not taken into account in data_version: ", paste(id_not_ok, collape = ", ")) 
       }
     if( length(id_not_ok) == length(t) ) { stop("There is not match between data_version and data. Not plot can be done.") }
-    data_version = dplyr::filter(data_version, id_azerty %in% id_ok)
-    d = plyr::join(data_version, data, by = "id_azerty")
+    data_version = droplevels(dplyr::filter(data_version, id_azerty %in% id_ok))
+    d = droplevels(plyr::join(data_version, data, by = "id_azerty"))
     
-
     if( data_version_class == "data_agro_version_HA" | data_version_class == "data_agro_version_LF" ){ 
       # single plot with version for all germplasm/location merged
       p = ggplot(d, aes(x = version, y = variable)) 
