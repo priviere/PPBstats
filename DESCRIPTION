@@ -35,6 +35,7 @@ Depends:
     ibd,
     igraph,
     intergraph,
+    lsmeans,
     parallel,
     plyr,
     png,

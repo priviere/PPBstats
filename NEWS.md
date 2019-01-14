@@ -2,9 +2,26 @@
 
 ### update fonctions
 - check and format code and roxygen part for each function, DESCRIPTION and NAMESPACE cf #97
-- add migrant residant model, cf #25
-    - format data with home away (HA) and local foreign (LF)
-    - update descriptive plot
+- plot_descriptive_data in common_function regarding data_version_HA and data_version_LF
+
+
+### add new functions
+- HA_to_LF, cf #25
+- create workflow for home away model, cf #25
+    - model_home_away
+    - check_model.fit_model_home_away
+    - plot.check_model_home_away
+    - mean_comparisons.check_model_home_away
+    - plot.mean_comparisons_model_home_away
+
+
+### add RData
+- data_version_HA, cf #25
+
+
+### update vignette (inst/bookdown)
+- some typo here and there
+
 
 # **PPBstats 0.24**
 
