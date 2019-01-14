@@ -105,8 +105,16 @@ out_hedonic = model_hedonic(data_hedonic)
 ```
 
 `out_hedonic` is a list with two elements:
+
 - `model` : the result of the anova run on note
+```{r}
+out_hedonic$model
+anova(out_hedonic$model)
+```
 - `CA` : the result of the correspondane analysis run on the data set with the supplementary variables with `FactoMineR::CA`
+```{r}
+out_hedonic$CA
+```
 
 
 ### Check and visualize model outputs
@@ -163,9 +171,9 @@ p_out_check_hedonic$variability_repartition
 p_out_check_hedonic$variance_intra_germplasm
 ```
 
-- `pca_composante_variance` : variance caught by each dimension of the CA
+- `ca_composante_variance` : variance caught by each dimension of the CA
 ```{r}
-p_out_check_hedonic$pca_composante_variance
+p_out_check_hedonic$ca_composante_variance
 ```
 
 

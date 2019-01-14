@@ -160,7 +160,7 @@ It is also possible to have on the `x_axis` the date in julian day that have bee
 Note that this is possible only for `plot_type = "histogramm"`, `"barplot"`, `"boxplot"` and `"interaction"`.
 
 ```{r}
-p = plot.data_agro(
+p = plot(
   data_model_GxE, plot_type = "interaction",
   vec_variables = c("y1", "y2"),
   x_axis = "date_julian",
@@ -217,10 +217,10 @@ p$`germplasm-block-X-Y-9|-NA`
 
 ### map
 You can display map with location if you have data with latitude and longitude for each location.
-
+Note you can tune the zoom of the map with the argument `zoom`.
 
 ```{r,warning=FALSE,message=FALSE}
-p = plot.data_agro(
+p = plot(
   data_model_GxE, plot_type = "map", labels_on = "location"
 )
 p$map
@@ -228,7 +228,7 @@ p$map
 
 and add pies for a given variables
 ```{r,warning=FALSE,message=FALSE}
-p = plot.data_agro(
+p = plot(
   data_model_GxE, vec_variables = c("y1", "desease"),
   plot_type = "map"
 )

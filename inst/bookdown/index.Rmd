@@ -16,7 +16,7 @@ description: "Tutorial on how to use the R package PPBstats."
 
 `PPBstats` is an R package that performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
 
-`PPBstats` is now at version 0.24.
+`PPBstats` is now at version 0.25.
 
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
 knitr::include_graphics("figures/warning.png")
@@ -50,7 +50,7 @@ Réseau Semences Paysannes
 
 **Pierre Rivière^1^** coordinated the package development, wrote the R functions and the present book
 
-**Gaelle Van Frank^2^** tested the package and updated the code regarding sections \@ref(ammi), \@ref(gge), \@ref(model-1), \@ref(model-2) and \@ref(variance-intra)
+**Gaelle Van Frank^2^** tested the package and updated the code regarding sections \@ref(ammi), \@ref(gge), \@ref(model-1), \@ref(model-2), \@ref(home-away), \@ref(local-foreign) and \@ref(variance-intra)
 
 **Olivier David^3^** wrote the `JAGS` code and reviewed the R code and the book regarding sections \@ref(model-1), \@ref(model-2), \@ref(model-1) and \@ref(variance-intra).
 
@@ -134,7 +134,7 @@ bibtex entry
   title = "{PPBstats : An R package for Participatory Plant Breeding statisticial analyses.}",
 	author = "{Rivière, P. and Goldringer, I. and Vindras C.}",
 	year = "2018",
-	version = "0.24",
+	version = "0.25",
 	licence = "CC BY NC SA",
 	url = "https://priviere.github.io/PPBstats_book/"
 }

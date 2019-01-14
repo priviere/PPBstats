@@ -92,20 +92,11 @@ knitr::include_graphics("figures/decision-tree_all.png")
 ```
 
 
-## Let's go: install `PPBstats` !
+## Let's go: install `PPBstats` and the data used in the book!
 
-To continue, load the current development version of the package [here](https://github.com/priviere/PPBstats/archive/v0.24.zip)
+To install the package, follow the instructions [here](https://priviere.github.io/PPBstats_web_site/download.html).
 
-unzip the folder and then run 
-
-```{r, eval=FALSE}
-devtools::install("PPBstats-0.24")
-```
-
-Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
-
-Then you can load the package :
-
+Once it is install, load the package
 ```{r,warning=FALSE,message=FALSE}
 library(PPBstats)
 ```

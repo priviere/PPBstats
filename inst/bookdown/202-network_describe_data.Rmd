@@ -98,7 +98,7 @@ p_net_pies_y2
 The same can be done regarding relation type of the network on map but not on network.
 
 ```{r,warning=FALSE,message=FALSE}
-p_map_pies_diff = plot.data_network(net_unipart_sl, plot_type = "map", vec_variables = "diffusion")
+p_map_pies_diff = plot(net_unipart_sl, plot_type = "map", vec_variables = "diffusion")
 p_map_pies_diff
 ```
 
@@ -137,11 +137,11 @@ p_bar$barplot$given
 Location present on the network can be displayed on a map with `plot_type = "map"`.
 
 ```{r,warning=FALSE,message=FALSE}
-p_map = plot.data_network(net_unipart_location_y[1], plot_type = "map", labels_on = "location")
+p_map = PPBstats:::plot.data_network(net_unipart_location_y[1], plot_type = "map", labels_on = "location")
 # Note if you want to do it on all element of the list, you should use 
 # plot(net_unipart_location_y, plot_type = "map", labels_on = "location")
-# Here we use plot.data_network only not to ask to often the map server that may bug if there
-# are too many query
+# Here we use PPBstats:::plot.data_network only not to ask to often the map server that may bug if there are too many query
+# We use ::: because the function is not exported as it is an S3 method
 p_map$`2007-2008-2009`
 ```
 
@@ -149,13 +149,13 @@ As well as plot information regarding a variable on map with a pie with `plot_ty
 
 ```{r,warning=FALSE,message=FALSE}
 # y1 is a quantitative variable
-p_map_pies_y1 = plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y1")
+p_map_pies_y1 = PPBstats:::plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y1")
 p_map_pies_y1$`2007-2008-2009`
 ```
 
 ```{r,warning=FALSE,message=FALSE}
 # y2 is a qualitative variable
-p_map_pies_y2 = plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y2")
+p_map_pies_y2 = PPBstats:::plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y2")
 p_map_pies_y2$`2007-2008-2009`
 ```
 
@@ -186,7 +186,7 @@ p_bar$location
 Location present on the network can be displayed on a map with `plot_type = "map"`.
 
 ```{r,warning=FALSE,message=FALSE}
-p_map = plot.data_network(net_bipart[1], plot_type = "map", labels_on = "location")
+p_map = PPBstats:::plot.data_network(net_bipart[1], plot_type = "map", labels_on = "location")
 p_map$`2005-2006-2007-2008-2009`
 ```
 
@@ -194,13 +194,13 @@ As well as plot information regarding a variable on map with a pie with `plot_ty
 
 ```{r,warning=FALSE,message=FALSE}
 # y1 is a quantitative variable
-p_map_pies_y1 = plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y1")
+p_map_pies_y1 = PPBstats:::plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y1")
 p_map_pies_y1$`2005-2006-2007-2008-2009`
 ```
 
 ```{r,warning=FALSE,message=FALSE}
 # y2 is a qualitative variable
-p_map_pies_y2 = plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y2")
+p_map_pies_y2 = PPBstats:::plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y2")
 p_map_pies_y2$`2005-2006-2007-2008-2009`
 ```
 

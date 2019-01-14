@@ -71,8 +71,9 @@ For AMMI analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
 
 - Format the data with `format_data_PPBstats()`
 - Run the model with `model_GxE()` and `gxe_analysis = "AMMI"`
-- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Check model outputs to know if you can continue the analysis with `check_model()`  and vizualise it with `plot()`
 - Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+- Get and visualize biplot with `biplot_data()` and `plot()` 
 - Get groups of each parameters with `parameters_groups()` and visualise it with `plot()`
 
 #### Format the data
@@ -145,7 +146,7 @@ out_check_ammi = check_model(out_ammi)
 
 `out_check_ammi` is a list containing four elements :
 
-- `GxE` the output from the model
+- `model_GxE` the output from the model
 - `data_ggplot` a list containing information for ggplot:
     - `data_ggplot_residuals` a list containing :
         - `data_ggplot_normality`
@@ -157,7 +158,7 @@ out_check_ammi = check_model(out_ammi)
 
 ##### Visualize outputs
 
-Once the computation is done, you can visualize the results with `plot`
+Once the computation is done, you can visualize the results with `plot()`
 
 ```{r}
 p_out_check_ammi = plot(out_check_ammi)
@@ -203,7 +204,7 @@ The method to compute mean comparison are explained in section \@ref(mean-comp-c
 
 ##### Get mean comparisons
 
-Get mean comparisons with `mean_comparisons`.
+Get mean comparisons with `mean_comparisons()`.
 
 ```{r}
 out_mean_comparisons_ammi = mean_comparisons(out_check_ammi, p.adj = "bonferroni")
