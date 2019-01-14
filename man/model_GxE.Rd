@@ -39,11 +39,7 @@ The function returns a list with three elements :
 \details{
 scaling for interaction.matrix is not useful as the column mean is equal to 0 because of model constraints and all the values are regarding one variable, so it is possible to compare it into the PCA.
 
-More information can be found in the book
-\itemize{
- \item AMMI : https://priviere.github.io/PPBstats_book/family-2.html#ammi
- \item GGE : https://priviere.github.io/PPBstats_book/family-2.html#gge
-}
+More information can be found in the book regarding \href{https://priviere.github.io/PPBstats_book/family-2.html#ammi}{AMMI} and \href{https://priviere.github.io/PPBstats_book/family-2.html#gge}{GGE}.
 }
 \seealso{
 \itemize{

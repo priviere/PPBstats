@@ -7,9 +7,10 @@
 model_home_away(data, data_version, variable)
 }
 \arguments{
-\item{data}{The data frame on which the model is run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}
+\item{data}{The data frame on which the model is run. 
+It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
-\item{data_version}{}
+\item{data_version}{It should come from \code{\link{format_data_PPBstats.data_agro_version}} with home and away in version}
 
 \item{variable}{variable to analyse}
 }
@@ -17,23 +18,18 @@ model_home_away(data, data_version, variable)
 The function returns a list with three elements :
 \itemize{
  \item info : a list with variable
- \item ANOVA a list with five elements:
+ \item ANOVA a list with two elements:
   \itemize{
    \item model
    \item anova_model
-   \item germplasm_effects a list of two elements:
-    \itemize{
-     \item effects
-     \item intra_variance
-    }
-   \item location_effects
-   \item interaction_matrix
   }
- 
 }
 }
 \description{
 \code{model_home_away} runs home away model
+}
+\details{
+Find details in the book \href{https://priviere.github.io/PPBstats_book/family-4.html#family-4}{here}.
 }
 \seealso{
 \itemize{

@@ -18,7 +18,7 @@ p.adj can "holm", "hochberg", "bonferroni", "BH", "BY" or "fdr"
 p-adj = "none" is t-student.
 See p.adjust() for more details.}
 
-\item{...}{further arguments passed to or from other methods#'}
+\item{...}{further arguments passed to or from other methods}
 }
 \value{
 A list of four elements : 
@@ -34,7 +34,7 @@ A list of four elements :
 }
 \details{
 S3 method.
-See in the book for more details : https://priviere.github.io/PPBstats_book/intro-agro.html#section-freq
+See in the book for more details \href{https://priviere.github.io/PPBstats_book/intro-agro.html#section-freq}{here}
 }
 \seealso{
 \itemize{

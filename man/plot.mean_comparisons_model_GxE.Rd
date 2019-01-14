@@ -29,11 +29,9 @@ The error I (alpha) and the alpha correction are displayed in the title.
 }
 \details{
 S3 method.
-See example in the book: 
-\itemize{
- \item for AMMI : https://priviere.github.io/PPBstats_book/family-2.html#ammi
- \item for GGE : https://priviere.github.io/PPBstats_book/family-2.html#gge
-}
+See example in the book regarding 
+\href{https://priviere.github.io/PPBstats_book/family-2.html#ammi}{AMMI} and 
+\href{https://priviere.github.io/PPBstats_book/family-2.html#gge}{GGE}.
 }
 \seealso{
 \code{\link{mean_comparisons.check_model_GxE}}
