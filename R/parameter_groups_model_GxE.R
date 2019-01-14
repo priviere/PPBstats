@@ -24,9 +24,9 @@ parameter_groups_model_GxE = function(
   # 1. Prepare data set ----------
   n_G = n_E = n_varG = NULL
   for(i in 1:length(list_out_check_model_GxE)){
-    n_G = c(n_G, names(list_out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$effects))
-    n_varG = c(n_varG, names(list_out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$intra_variance))
-    n_E = c(n_E, names(list_out_check_model_GxE[[i]]$GxE$ANOVA$location_effects$effects))
+    n_G = c(n_G, names(list_out_check_model_GxE[[i]]$model_GxE$ANOVA$germplasm_effects$effects))
+    n_varG = c(n_varG, names(list_out_check_model_GxE[[i]]$model_GxE$ANOVA$germplasm_effects$intra_variance))
+    n_E = c(n_E, names(list_out_check_model_GxE[[i]]$model_GxE$ANOVA$location_effects$effects))
   }
   n_G = unique(n_G)
   n_E = unique(n_E)
@@ -45,11 +45,11 @@ parameter_groups_model_GxE = function(
   rownames(df_varG) = n_varG
   
   for(i in 1:length(list_out_check_model_GxE)){
-    g = list_out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$effects
+    g = list_out_check_model_GxE[[i]]$model_GxE$ANOVA$germplasm_effects$effects
     df_G[names(g),i] = g
-    vg = list_out_check_model_GxE[[i]]$GxE$ANOVA$germplasm_effects$intra_variance
+    vg = list_out_check_model_GxE[[i]]$model_GxE$ANOVA$germplasm_effects$intra_variance
     df_varG[names(vg),i] = vg
-    e = list_out_check_model_GxE[[i]]$GxE$ANOVA$location_effects$effects
+    e = list_out_check_model_GxE[[i]]$model_GxE$ANOVA$location_effects$effects
     df_E[names(e),i] = e
   }
   

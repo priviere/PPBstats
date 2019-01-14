@@ -36,7 +36,7 @@ biplot_data.check_model_GxE = function(x){
     stop("data must come from PPBstats::check_model() with output from PPBstats:model_GxE.")
   }
   
-  data_interaction = x$GxE$ANOVA$interaction_matrix
+  data_interaction = x$model_GxE$ANOVA$interaction_matrix
   
   # 2. Ecovalence ----------
   m_eco = data_interaction^2
@@ -63,10 +63,10 @@ biplot_data.check_model_GxE = function(x){
   
   # 3. Return results ----------
   out = list(
-    "info" = x$GxE$info,
+    "info" = x$model_GxE$info,
     "data_ecovalence" = data_ecovalence,
     "data_interaction" = data_inter,
-    "pca" = x$GxE$PCA
+    "pca" = x$model_GxE$PCA
   )
   
   class(out) <- c("PPBstats", "biplot_GxE")
