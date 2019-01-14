@@ -1669,11 +1669,11 @@ plot_descriptive_data = function(
     if( data_version_class == "data_agro_version_SR" ){
       data_version$lg = paste(data_version$location, data_version$germplasm, sep = ":")
       factor_to_split = "lg"
-      data_version$group_bis = data_version$group
+      data_version$group_bis = paste(data_version$germplasm, data_version$group, sep = "-")
     }
     
     if( data_version_class == "data_agro_version_HA" ){
-      data_version$group_bis = paste(data_version$germplasm, "coming from", data_version$group)
+      data_version$group_bis =  paste("sown at", data_version$location, ", coming from", data_version$group)
       factor_to_split = "germplasm"
     }
     
@@ -1685,16 +1685,32 @@ plot_descriptive_data = function(
     colnames(data)[which(colnames(data) == variable)] = "variable"
     data$id_azerty = paste(data$location, data$year, data$germplasm, sep = "-")
     data_version$id_azerty = paste(data_version$location, data_version$year, data_version$germplasm, sep = "-")
+
+    if( data_version_class == "data_agro_version_SR" ){ 
+      # get row where id is present in both data set
+      t1 = is.element(data_version$id_azerty, data$id_azerty)
+      id_ok = data_version$id_azerty[t1]
+      id_not_ok = data_version$id_azerty[!t1]
+    }
     
-    t = is.element(data_version$id_azerty, data$id_azerty)
-    id_ok = data_version$id_azerty[t]
-    id_not_ok = data_version$id_azerty[!t]
+    
+    if( data_version_class == "data_agro_version_HA" | data_version_class == "data_agro_version_LF" ){ 
+      # get row where id is present in both data set
+      t1 = is.element(data_version$id_azerty, data$id_azerty)
+      # get rid of row where group (location of origin) is not present in the data set
+      t2 = is.element(data_version[t1,]$group, data_version[t1,]$location)
+      id_ok = data_version[t1,]$id_azerty[t2]
+      id_not_ok = data_version[t2,]$id_azerty[!t2]
+    }
+      
+    
     if( length(id_not_ok) > 0 ) { 
       warning("The following rows are not taken into account in data_version: ", paste(id_not_ok, collape = ", ")) 
       }
     if( length(id_not_ok) == length(t) ) { stop("There is not match between data_version and data. Not plot can be done.") }
     data_version = droplevels(dplyr::filter(data_version, id_azerty %in% id_ok))
-    d = droplevels(plyr::join(data_version, data, by = "id_azerty"))
+    d = plyr::join(data_version, data, by = "id_azerty")
+    d = droplevels(na.omit(d))
     
     if( data_version_class == "data_agro_version_HA" | data_version_class == "data_agro_version_LF" ){ 
       # single plot with version for all germplasm/location merged
@@ -1715,10 +1731,8 @@ plot_descriptive_data = function(
         p = p + geom_boxplot(aes(fill = version), position = "dodge")      
       }
       p2 = p
-      
       }
     
-
     # plot for each germplasm/location with all version separated
     colnames(d)[which(colnames(d) == factor_to_split)] = "factor_to_split"
     dd = plyr:::splitter_d(d, .(factor_to_split))
