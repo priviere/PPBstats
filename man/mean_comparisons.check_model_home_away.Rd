@@ -32,7 +32,7 @@ A list of four elements :
 }
 \details{
 S3 method.
-Mean comparisons based on LSmeans.
+Mean comparisons based on LSmeans with the R package emmeans.
 See in the book for mo arere details \href{https://priviere.github.io/PPBstats_book/intro-agro.html#section-freq}{here}
 }
 \seealso{

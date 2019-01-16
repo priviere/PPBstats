@@ -15,7 +15,7 @@
 #' 
 #' @details
 #' S3 method.
-#' Mean comparisons based on LSmeans.
+#' Mean comparisons based on LSmeans with the R package emmeans.
 #' See in the book for mo arere details \href{https://priviere.github.io/PPBstats_book/intro-agro.html#section-freq}{here}
 #' 
 #' @return 
@@ -39,7 +39,7 @@
 #' 
 #' @export
 #' 
-#' @import lsmeans
+#' @import emmeans
 #' 
 mean_comparisons.check_model_home_away <- function(
   x, 
@@ -53,23 +53,23 @@ mean_comparisons.check_model_home_away <- function(
   
   # run LSmeans
   if(length(grep("year", attr(model$terms,"term.labels"))) == 0){
-    LSmeans = list("location" = lsmeans::lsmeans(model,"location"),
-                   "germplasm" = lsmeans::lsmeans(model,"germplasm"),
-                   "version" = lsmeans::lsmeans(model,"version"),
-                   # "block:location" = lsmeans::lsmeans(model, pairwise~block|location),
-                   "version:germplasm" = lsmeans::lsmeans(model, pairwise~version|germplasm)
+    LSmeans = list("location" = emmeans::emmeans(model,"location"),
+                   "germplasm" = emmeans::emmeans(model,"germplasm"),
+                   "version" = emmeans::emmeans(model,"version"),
+                   # "block:location" = emmeans::emmeans(model, pairwise~block|location),
+                   "version:germplasm" = emmeans::emmeans(model, pairwise~version|germplasm)
     )
     fac_single = c("location", "germplasm") 
     
   } else {
-    LSmeans = list("location" = lsmeans::lsmeans(model,"location"),
-                   "germplasm" = lsmeans::lsmeans(model,"germplasm"),
-                   "year" = lsmeans::lsmeans(model,"year"),
-                   "version" = lsmeans::lsmeans(model,"version"),
-                   # "block:location" = lsmeans::lsmeans(model, pairwise~block|location:year),
-                   "location:year" = lsmeans::lsmeans(model, pairwise~year|location),
-                   "version:germplasm" = lsmeans::lsmeans(model, pairwise~version|germplasm),
-                   "version:germplasm:year" = lsmeans::lsmeans(model, pairwise~version|year:germplasm)
+    LSmeans = list("location" = emmeans::emmeans(model,"location"),
+                   "germplasm" = emmeans::emmeans(model,"germplasm"),
+                   "year" = emmeans::emmeans(model,"year"),
+                   "version" = emmeans::emmeans(model,"version"),
+                   # "block:location" = emmeans::emmeans(model, pairwise~block|location:year),
+                   "location:year" = emmeans::emmeans(model, pairwise~year|location),
+                   "version:germplasm" = emmeans::emmeans(model, pairwise~version|germplasm),
+                   "version:germplasm:year" = emmeans::emmeans(model, pairwise~version|year:germplasm)
     )
     fac_single = c("location", "germplasm", "year")
   }
@@ -79,9 +79,7 @@ mean_comparisons.check_model_home_away <- function(
   fac_inter = "version:germplasm" # names(LSmeans)[ftg]
 
   out_fac_inter = lapply(LSmeans[fac_inter], function(x){
-    x = LSmeans[fac_inter][[1]]
-    out_pairs = pairs(x, alpha = alpha, Letters = letters, adjust = p.adj)
-    out_pairs = as.data.frame(summary(x$lsmeans))
+    out_pairs = as.data.frame(summary(x$emmeans))
     
     out_stars = as.data.frame(summary(x$contrasts))
     stars = sapply(out_stars$p.value, function(pvalue){
@@ -99,7 +97,7 @@ mean_comparisons.check_model_home_away <- function(
     
     out_pairs = data.frame("parameter" = out_pairs[,2], 
                            "version" = out_pairs[,1],
-                           "means" = out_pairs[,"lsmean"],
+                           "means" = out_pairs[,"emmean"],
                            "stars" = out_pairs[,"stars"],
                            "alpha" = alpha,
                            alpha.correction = p.adj)
@@ -110,7 +108,7 @@ mean_comparisons.check_model_home_away <- function(
   
   
   out_fac_single = lapply(LSmeans[fac_single], function(x, alpha, p.adj) {
-    out_cld = lsmeans::cld(x, alpha = alpha, Letters = letters, adjust = p.adj)
+    out_cld = emmeans::CLD(x, alpha = alpha, Letters = letters, adjust = p.adj)
     out_cld = data.frame("parameter" = out_cld[,1], 
                          "means" = out_cld[,2], 
                          "groups" = out_cld[,7],
