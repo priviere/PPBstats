@@ -33,6 +33,10 @@
 plot.biplot_hedonic = function(x, ...){
   # see http://www.sthda.com/english/rpkgs/factoextra/reference/fviz_ca.html
   
+  p = fviz_ca_biplot(x)
+  p$data$sample = x$call$Xtot$sample
+  p = p + geom_point(aes(color = sample))
+  
   out = list("ca_biplot" = fviz_ca_biplot(x))
   return(out)
 }
