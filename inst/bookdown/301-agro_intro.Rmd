@@ -12,7 +12,7 @@ This can be done through family 1 of analyses (section \@ref(family-1))
     - classic anova (**M4a**, section \@ref(classic-anova)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
     - spatial analysis (**M4b**, section \@ref(spatial-analysis)) based on row-column designs (**D3**, section \@ref(row-column)),
     - mixed models (**M5**, section\@ref(ibd-model)) for incomplete blocks designs (**D2**, section \@ref(ibd)),
-    - bayesian hierarchical model intra-location (**M7a**, section \@ref(model-1)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)). 
+    - bayesian hierarchical model intra-location (**M7a**, section \@ref(model-1)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)).
 
 It can be completed by organoleptic analysis (section \@ref(organoleptic)).
 Based on these analysis, specific objective including response to selection analysis can also be done.
@@ -22,7 +22,7 @@ Based on these analysis, specific objective including response to selection anal
 This can be done through family 2 of analyses (section \@ref(family-2)):
     - AMMI (**M6a**, section \@ref(ammi) and GGE (**M6b**, sections \@ref(gge)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
     - bayesian hierarchical model $G \times E$ (**M7b**, section \@ref(model-2)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)),
-It can be completed by specific analysis such as home-away (section \@ref(home-away)) which corresponds to a specific objective : study home and away effect, where away in a location refers to a germplasm that has not been grown or selected in a given location and home in a location refers to a germplasm that has been grown or selected in a given location.
+It can be completed by specific analysis such as local-foreign (section \@ref(local-foreign)) which corresponds to a specific objective : study local and foreign effect, where foreign in a location refers to a germplasm that has not been grown or selected in a given location and local in a location refers to a germplasm that has been grown or selected in a given location.
 
 
 - **Study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits**.
@@ -43,7 +43,7 @@ The various effects that can be estimated are:
 - **entry**: the occurence of a germplasm in a given environment or location
 - **interaction**: interaction between germplasm and location or germplasm and environment
 - **year**
-- **home-away**: away in a location refers to a germplasm that has not been grown or selected in a given location; home in a location refers to a germplasm that has been grown or selected in a given location.
+- **local-foreign**: foreign in a location refers to a germplasm that has not been grown or selected in a given location; local in a location refers to a germplasm that has been grown or selected in a given location.
 - **version**: version within a germplasm, for example selected vs non-selected
 
 The analyses are divided into five families:
@@ -53,23 +53,23 @@ It allows to compare different entries on each location and test for significant
 Specific analysis including response to selection can also be done.
 The objective to compare different germplasms on each location for selection.
 
-- **Family 2** (section \@ref(family-2)) gathers analyses that estimate germplasm and location and interaction effects. 
-This is to analyse the response over a network of locations. 
-Estimation of environment and year effects is possible depending of the model. 
+- **Family 2** (section \@ref(family-2)) gathers analyses that estimate germplasm and location and interaction effects.
+This is to analyse the response over a network of locations.
+Estimation of environment and year effects is possible depending of the model.
 It allows to study the response of germplasm over several location or environments.
 The objectives is to study response of different germplasms over several locations for selection.
 
-- **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses. 
+- **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses.
 This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.
 
-- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions and objectives such as study intra germplasm variation,  home away analysis and study differential and response to selection.
+- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions and objectives such as study intra germplasm variation,  local foreign analysis and study differential and response to selection.
 
 - **Family 5** (section \@ref(family-5)) refers to multivariate analysis
 
 The different models in Family 1 and 2 correspond to experimental designs that are mentionned in the next section \@ref(expe-design) and in the decision tree \@ref(decision-tree).
 
-| Family | Name | Section | entry effects | germpasm effects | location effects | environments effects | interaction effects | year effects | home-away effects | version effects | variance intra germplasm effects |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+| Family | Name | Section | entry effects | germpasm effects | location effects | environments effects | interaction effects | year effects | local-foreign effects | version effects | variance intra germplasm effects |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Anova | \@ref(classic-anova) | X | | | | | | | |
 |   | Spatial analysis | \@ref(spatial-analysis) | X | | | | | | | | |
 |   | IBD | \@ref(ibd) | | X | | | | | | | |
@@ -77,7 +77,7 @@ The different models in Family 1 and 2 correspond to experimental designs that a
 | 2 | IBD | \@ref(ibd) | | X | | | | | | | |
 |   | AMMI | \@ref(ammi) | | X | X | (X) | X | (X) | | | |
 |   | GGE | \@ref(gge) | | X | X | (X) | X | (X) | | | |
-|   | Home-away | \@ref(home-away) | X | X | (X) | (X) | (X) | (X) | X | | |
+|   | Local-foreign | \@ref(local-foreign) | X | X | (X) | (X) | (X) | (X) | X | | |
 |   | Bayesian hierarchical model $G \times E$ | \@ref(model-2) | | X | X | (X) | X | | | | |
 | 3 | Bayesian model 3 | \@ref(model-3) | X | X | X | | X | X | | | |
 | 4 | Variance intra | \@ref(variance-intra) | | | | | | | | | X |
@@ -95,15 +95,15 @@ Regarding frequentist analysis, there are several ways to check if the model wen
 
 - Residuals distribution. If it looks normal then the hypothesis seems fullfiled.
 
-- Skewness test which is an indicator used in distribution analysis as a sign of asymmetry and deviation from a normal distribution. 
+- Skewness test which is an indicator used in distribution analysis as a sign of asymmetry and deviation from a normal distribution.
     - Skewness > 0 - Right skewed distribution - most values are concentrated on left of the mean, with extreme values to the right.
     - Skewness < 0 - Left skewed distribution - most values are concentrated on the right of the mean, with extreme values to the left.
     - Skewness = 0 - mean = median, the distribution is symmetrical around the mean.
-- Kurtosis test which is an indicator used in distribution analysis as a sign of flattening or "peakedness" of a distribution. 
+- Kurtosis test which is an indicator used in distribution analysis as a sign of flattening or "peakedness" of a distribution.
     - Kurtosis > 3 - Leptokurtic distribution, sharper than a normal distribution, with values concentrated around the mean and thicker tails. This means high probability for extreme values.
     Kurtosis < 3 - Platykurtic distribution, flatter than a normal distribution with a wider peak. The probability for extreme values is less than for a normal distribution, and the values are wider spread around the mean.
     - Kurtosis = 3 - Mesokurtic distribution - normal distribution for example.
-  
+
 - Standardized residuals vs theoretical quantiles (qqplot).
 If the residuals come from a normal distribution the plot should resemble a straight line.
 A straight line connecting the 1st and 3rd quartiles is added to the plot to aid in visual assessment.
@@ -329,7 +329,7 @@ class(data_model_GxE)
 
 #### `data-agro-version`
 
-`data-agro-version` format corresponds to a specfic data set with pairs of entries in a given location. 
+`data-agro-version` format corresponds to a specfic data set with pairs of entries in a given location.
 It is then possible to compare pairs: this is useful if you want to compare several versions within a group.
 The data must have the following columns: `year`, `germplasm`, `location`, `group`, `version` as factors.
 The group refers to an id that contains different versions.
