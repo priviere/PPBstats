@@ -79,7 +79,7 @@ plot.data_organo_hedonic = function(  x,
                                       pie_size = 0.2, zoom = 6, ...){
 
   p_out = plot_descriptive_data(
-    x$data,
+    x$data$data_sample,
     data_version,
     plot_type,
     x_axis,

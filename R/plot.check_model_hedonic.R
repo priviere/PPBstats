@@ -24,7 +24,8 @@
 #'   }
 #'  \item variability_repartition : pie with repartition of SumSq for each factor
 #'  \item variance_intra_germplasm : repartition of the residuals for each germplasm (see Details for more information)
-#'  \item ca_composante_variance : variance caught by each dimension of the CA
+#'  \item CA_composante_variance : variance caught by each dimension of the CA
+#'  \item PCA_composante_variance : variance caught by each dimension of the PCA previous to the HCPC
 #'  }
 #' 
 #' @author Pierre Riviere
@@ -41,11 +42,15 @@ plot.check_model_hedonic <- function(
   # anova  
   out = plot_check_freq_anova(x, variable = "note")
   
-  # pca composante variance
-  data_ggplot_pca = x$hedonic$CA
-  p = fviz_eig(data_ggplot_pca) + ggtitle("")
+  # CA composante variance
+  data_ggplot_ca = x$hedonic$CA
+  p_ca = factoextra::fviz_eig(data_ggplot_ca) + ggtitle("")
+  
+  # PCA composante variance
+  data_ggplot_pca = x$hedonic$HCPC$res.pca
+  p_pca = factoextra::fviz_eig(data_ggplot_pca) + ggtitle("")
   
   # return results
-  out = c(out, list("ca_composante_variance" = p))
+  out = c(out, list("CA_composante_variance" = p_ca, "PCA_composante_variance" = p_pca))
   return(out)
 }

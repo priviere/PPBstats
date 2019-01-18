@@ -1139,10 +1139,12 @@ add_pies = function(p, n, format, plot_type, data_to_pie, variable, pie_size){
 #' format data for organoleptic analysis
 #' @param data data frame
 #' @param threshold threshold
+#' @param var_sup supplementary variables
 #' @details see \code{\link{format_data_PPBstats.data_organo_napping}} and 
 #' \code{\link{format_data_PPBstats.data_organo_hedonic}}
+#' @import dplyr
 #' @export
-format_organo = function(data, threshold){
+format_organo = function(data, threshold, var_sup){
   # 1. Merge and create data frame ----------
   N = data
   N$sample = factor(paste(N$location, N$germplasm, sep = ":"))
@@ -1197,7 +1199,33 @@ format_organo = function(data, threshold){
     }  
   }
   
-  return(N_freq)
+  # 5. format data for sample, i.e. one row per sample tasted
+  data_sample = N_freq
+  
+  # 6. format data for juges, i.e. one row per juges and add one column per sample with note
+  vec_juges = as.character(unique(data_sample$juges))
+  vec_samples = as.character(unique(data_sample$sample))
+  
+  df = matrix(0, ncol = (1 + length(vec_samples) + length(var_sup)), nrow = length(vec_juges))
+  df = as.data.frame(df)
+  colnames(df) = c("juges", vec_samples, var_sup)
+  df$juges = vec_juges
+  for(i in 1:nrow(df)){
+    j = df[i, "juges"]
+    for(s in vec_samples){
+      note = dplyr::filter(data_sample, juges == j & sample == s)$note
+      if( length(note) > 0 ) { df[i, s] = note } else { df[i, s] = NA }
+    }
+    for(v in var_sup){
+      vsup = dplyr::filter(data_sample, juges == j & sample == s)[,v]
+      if( length(vsup) > 0 ) { df[i, v] = vsup } else { df[i, v] = NA }
+    }
+  }
+  data_juges = df
+  
+  # 7. return results
+  out = list("data_sample" = data_sample, "data_juges" = data_juges)
+  return(out)
 }
 
 # plot descriptive data ----------

@@ -2,11 +2,22 @@
 
 ### Method description
 
-The hedonic evaluation test involves asking consumers to rate their preference from 1 (I dislike extremely) to 9 (I like very much) for 3 to 4 sensory attributes specific to the test product. 
+The hedonic evaluation test involves asking consumers to :
+
+1. to rate their preference from 1 (I dislike extremely) to 9 (I like very much) for three to four sensory attributes specific to the test product. 
 The overall preference is ascertained at the beginning of the questionnaire in order not to influence the consumer and be closer to typical conditions of consumption. 
-Additional information concerning sex, age and organic consumption frequency are asked at the end of the test in order to characterise the population sample. 
-Additional sensory descriptors to describe products are asked after evaluationed of each product. 
-One of the main objectives of hedonic tests is to determine differences of appreciation for a given attribute between a set of samples.
+2. give additional information such as sex, age and organic consumption frequency in order to characterise the population sample.
+3. give additional sensory descriptors to describe products are asked after evaluation of each product. 
+
+#### Determine differences of appreciation for each samples
+
+Regarding samples, the objectives of the hedonic tests are to 
+
+1. determine differences of appreciation for a given attribute between the set of samples bsed on the note given by the juges and
+2. determine appreciation of samples based on descriptors given by the juges 
+
+**Differences of sample regarding the note given by the juges.**
+
 The data distribution determines the type of tests that should be used to analyze the data set. 
 
 - If the distribution is Normal, one-way analysis of variance (ANOVA) can be performed:
@@ -14,7 +25,7 @@ The data distribution determines the type of tests that should be used to analyz
 $Y_{ij} = \alpha_i + \beta_j + \varepsilon_{ij}; \quad \varepsilon_{ijkl} \sim \mathcal{N} (0,\sigma^2)$
 
 with
-$Y_{ij}$ the note from 1 to 9 given by a person to a sample 
+$Y_{ij}$ the note from 1 to 9 given by a person to a sample, 
 $\alpha_i$ the person (i.e. assessor) that taste the sample,
 $\beta_j$ the germplasm tasted,
 $\varepsilon_{ijkl}$ the residuals.
@@ -24,7 +35,15 @@ The aim is to obtain a final ranking based on consumers’ preferences.
 
 - If the data set doesn’t follow a Normal distribution, a Friedman test on the rank should be used to indicate if the varieties are perceived differently by assessors.
 
-Finally a Hierarchical Cluster Analysis can be implement to identify groups of preferences. 
+**Appreciation of sample regarding the descriptors given by the juges.**
+
+To do so, Correspondance Analysis (CA) is done on the data with descriptors.
+
+
+#### Juges profiles
+Another objective of the analysis is to determine juges profiles based on the note given and the additional information such as sex, age and organic consumption frequency, etc.
+
+It is done with a Hierarchical Clustering on Principle Components (HCPC) that can be implement to identify groups of juges preferences after a Principal Component Analysis (PCA). 
 
 ### Steps with `PPBstats`
 
@@ -34,8 +53,8 @@ For hedonic analysis, you can follow these steps (Figure \@ref(fig:main-workflow
 - Describe the data with `plot()`
 - Run the model with `model_hedonic()`
 - Check model outputs with graphs to know if you can continue the analysis with `check_model()`
-- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
-- Format data for multivariate analysis with `biplot_data` and visualise it with `plot()`
+- Get mean comparisons on the note given by the juges for each factor with `mean_comparisons()` and vizualise it with `plot()`
+- Format data for CA and HCPC analysis with `biplot_data()` and visualise it with `plot()`
 
 
 ### Format the data
@@ -45,14 +64,13 @@ data(data_hedonic)
 head(data_hedonic)
 ```
 
-The data frame has the following columns: sample, juges, note, descriptors, germplasm, location. 
+The data frame has the following columns: sample, germplasm, location, juges, note, descriptors. 
 The descriptors must be separated by ";". 
 Any other column can be added as supplementary variables.
 
-
-Then, you must format your data with `format_data_PPBstats()` and type = `"data_organo_hedonic"`.
+Then, you must format your data with `format_data_PPBstats()` and  `type = "data_organo_hedonic"`.
 Argument `threshold` can be set in order to keep only descriptors that have been cited several time.
-For exemple with `threshold = 2`, on ly descriptors cited at least twice are kept.
+For exemple with `threshold = 2`, only descriptors cited at least twice are kept.
 
 
 ```{r}
@@ -60,16 +78,23 @@ data_hedonic = format_data_PPBstats(data_hedonic, type = "data_organo_hedonic", 
 names(data_hedonic)
 ```
 
-`data_hedonic` is a list of three elements : 
-- `data` the data formated to run the anova and the multivariate analysis
+`data_hedonic` is a list of four elements : 
+
+- `data` the data formated to run the anova and the multivariate analysis regarding
+    - samples
 ```{r}
-head(data_hedonic$data)
+head(data_hedonic$data$data_sample)
 ```
+    - juges
+```{r}
+head(data_hedonic$data$data_juges)
+```
+
 - `var_sup` the supplementary variables used in the multivariate analysis
 ```{r}
 data_hedonic$var_sup
 ```
-- `descriptors` the vector of descriptors cited knowing the threhold applyed when formated the data.
+- `descriptors` the vector of descriptors cited knowing the threshold applyed when formated the data.
 ```{r}
 data_hedonic$descriptors
 ```
@@ -104,18 +129,30 @@ To run the model on the dataset, used the function `model_hedonic`.
 out_hedonic = model_hedonic(data_hedonic)
 ```
 
-`out_hedonic` is a list with two elements:
+`out_hedonic` is a list with three elements:
 
 - `model` : the result of the anova run on note
 ```{r}
 out_hedonic$model
 anova(out_hedonic$model)
 ```
-- `CA` : the result of the correspondane analysis run on the data set with the supplementary variables with `FactoMineR::CA`
+- `CA` : the result of the correspondance analysis run on the data set with the supplementary variables with `FactoMineR::CA`
 ```{r}
 out_hedonic$CA
 ```
+- `HCPC` : the result of the correspondane analysis run on the data set with the supplementary variables with `FactoMineR::PCA` follow by `FactoMineR::HCPC`.
+It is a list of three elements:
+```{r}
+out_hedonic$HCPC$res.pca
+```
 
+```{r}
+out_hedonic$HCPC$res.hcpc
+```
+
+```{r}
+head(out_hedonic$HCPC$clust)
+```
 
 ### Check and visualize model outputs
 
@@ -140,7 +177,7 @@ out_check_hedonic = check_model(out_hedonic)
 
 #### Visualize outputs
 
-Once the computation is done, you can visualize the results with `plot`
+Once the computation is done, you can visualize the results with `plot()`
 
 
 ```{r}
@@ -149,8 +186,8 @@ p_out_check_hedonic = plot(out_check_hedonic)
 
 `p_out_check_hedonic` is a list with:
 
-- `residuals`
-    - `histogram` : histogram with the distribution of the residuals
+- `residuals` of the ANOVA model
+    - `histogram` : histogram with the distribution of the residuals 
     ```{r}
     p_out_check_hedonic$residuals$histogram
     ```
@@ -159,31 +196,35 @@ p_out_check_hedonic = plot(out_check_hedonic)
     p_out_check_hedonic$residuals$qqplot
     ```
 
-- `variability_repartition` : pie with repartition of SumSq for each factor
+- `variability_repartition` : pie with repartition of SumSq for each factor of the ANOVA model
 ```{r}
 p_out_check_hedonic$variability_repartition
 ```
 
-- `variance_intra_germplasm` : repartition of the residuals for each germplasm which represent the person assessor variation plus the intra-germplasm variance.
+- `variance_intra_germplasm` : repartition of the residuals for each germplasm which represent the person assessor variation plus the intra-germplasm variance of the ANOVA model.
 
 
 ```{r}
 p_out_check_hedonic$variance_intra_germplasm
 ```
 
-- `ca_composante_variance` : variance caught by each dimension of the CA
+- `CA_composante_variance` : variance caught by each dimension of the CA
 ```{r}
-p_out_check_hedonic$ca_composante_variance
+p_out_check_hedonic$CA_composante_variance
 ```
 
+- `HCPC_composante_variance` : variance caught by each dimension of the PCA previous to the HCPC
+```{r}
+p_out_check_hedonic$PCA_composante_variance
+```
 
-### Get and visualize mean comparisons
+### Get and visualize mean comparisons on note
 
 The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
 
-#### Get mean comparisons
+#### Get mean comparisons on note
 
-Get mean comparisons with `mean_comparisons`.
+Get mean comparisons with `mean_comparisons()`.
 
 ```{r}
 out_mean_comparisons_hedonic = mean_comparisons(out_check_hedonic)
@@ -192,7 +233,7 @@ out_mean_comparisons_hedonic = mean_comparisons(out_check_hedonic)
 `out_mean_comparisons_hedonic` is a list of one element for futher ggplot : `data_ggplot_LSDbarplot_germplasm`
 
 
-#### Visualize mean comparisons
+#### Visualize mean comparisons on note
 
 ```{r}
 p_out_mean_comparisons_hedonic = plot(out_mean_comparisons_hedonic)
@@ -213,7 +254,7 @@ pg$`1`
 ```
 
 
-### Get and visualize biplot
+### Get and visualize biplot regarding samples (CA) and juges (HCPC)
 
 The biplot represents information about the percentages of total variation explained by the two axes.
 It has to be linked to the total variation caught by the interaction.
@@ -221,6 +262,9 @@ If the total variation is small, then the biplot is useless.
 If the total variation is high enought, then the biplot is useful if the two first dimension represented catch enought variation (the more the better).
 
 #### Get biplot
+
+Get biplot regading samples (CA) and juges (HCPC)
+
 ```{r}
 out_biplot_hedonic = biplot_data(out_check_hedonic)
 ```
@@ -231,9 +275,15 @@ out_biplot_hedonic = biplot_data(out_check_hedonic)
 p_out_biplot_hedonic = plot(out_biplot_hedonic)
 ```
 
-`p_out_biplot_hedonic` is a list of one element with the `CA` biplot
+`p_out_biplot_hedonic` is a list of two elements with 
 
+- the `CA` biplot where descriptors are represented by a triangle in red and samples are represented by text in blue and point in color refering to the sample.
 ```{r}
 p_out_biplot_hedonic$ca_biplot
+```
+
+- the `HCPC` biplot is a list of two elements : one with the variable ans the additionnal variables and the other with the groups of juges detected by the `HCPC`.
+```{r}
+p_out_biplot_hedonic$hcpc_biplot
 ```
 

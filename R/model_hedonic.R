@@ -12,7 +12,18 @@
 #' More information can be found in the book : https://priviere.github.io/PPBstats_book/hedonic.html
 #' 
 #' @return 
-#' A list with the anova and the CA object
+#' It returns a list with three elements:
+#' \itemize{
+#'  \item model : the result of the anova run on note
+#'  \item CA the result of the correspondance analysis run on the data set with the supplementary variables with \code{FactoMineR::CA}.
+#'  \item HCPC the result of the correspondane analysis run on the data set with the supplementary variables with \code{FactoMineR::PCA} follow by \code{FactoMineR::HCPC}.
+#'  It is a list of three elements:
+#'  \itemize{
+#'   \item res.pca the results of the PCA
+#'   \item res.hcpc the results of the HCPC
+#'   \item clust the cluster found with the HCPC
+#'  }
+#' }
 #' 
 #' @seealso 
 #' \itemize{
@@ -36,33 +47,60 @@ model_hedonic = function(
   }
   
   var_sup = data$var_sup
-  data = data$data
+  descriptors = data$descriptors
+  data_sample = data$data$data_sample
+  data_juges = data$data$data_juges
+  
+  quanti.sup = quali.sup = NULL
+  for(v in var_sup){
+    if( is.numeric(data_sample[,v]) ) { quanti.sup = c(quanti.sup, v) }
+    if( is.factor(data_sample[,v]) ) { quali.sup = c(quali.sup, v) }
+  }
   
   # ANOVA ----------
-  model = stats::lm(note ~ juges + germplasm, data)
+  model = stats::lm(note ~ juges + germplasm, data_sample)
   
   # CA ----------
-  quanti.sup = quali.sup = NULL
-  for(v in 1:length(var_sup)){
-    if( is.numeric(data[,v]) ) { quanti.sup = c(quanti.sup, v)}
-    if( is.factor(data[,v]) ) { quali.sup = c(quali.sup, v) }
-  }
-  for(v in quanti.sup){ # CA does not work if NA on column
-    to_delete = which(is.na(data[,v]))
+  quanti.sup_ca = c("note", quanti.sup)
+  quali.sup_ca = c("sample", "juges", quali.sup)
+  
+  for(v in quanti.sup_ca){ # CA does not work if NA on column
+    to_delete = which(is.na(data_sample[,v]))
     if( length(to_delete) > 0 ){
-      data = data[-to_delete,]
-      warning("Rows in column \"", colnames(data)[v], "\" has been deleted because of NA.", sep = "")
+      data_sample = data_sample[-to_delete,]
+      warning("Rows in column \"", v, "\" has been deleted because of NA.", sep = "")
     }
   }
-
-  remove_row_with_no_descriptors = which(apply(data[,(length(var_sup)+1):ncol(data)], 1 , sum) == 0)
+  
+  remove_row_with_no_descriptors = which(apply(data_sample[,is.element(colnames(data_sample), descriptors)], 1 , sum) == 0)
   if( length(remove_row_with_no_descriptors) > 0 ) { 
-    data = data[-remove_row_with_no_descriptors,]
+    data_sample = data_sample[-remove_row_with_no_descriptors,]
     warning("Some rows have been removed because there are no descriptors.")
   } 
   
-  out_CA = FactoMineR::CA(data, quanti.sup = quanti.sup, quali.sup  = quali.sup, graph = FALSE)
-  out = list("model" = model, "CA" = out_CA)
+  out_CA = FactoMineR::CA(data_sample, 
+                          quanti.sup = which(is.element(colnames(data_sample), quanti.sup_ca)), 
+                          quali.sup  = which(is.element(colnames(data_sample), quali.sup_ca)), 
+                          graph = FALSE)
+  
+  # HCPC ----------
+  rownames(data_juges) = data_juges$juges
+  data_juges_hcpc = data_juges[,c(2:ncol(data_juges))]
+  id_quanti.sup = which(is.element(colnames(data_juges_hcpc), quanti.sup))
+  if( length(id_quanti.sup) == 0 ) { id_quanti.sup = NULL}
+  id_quali.sup = which(is.element(colnames(data_juges_hcpc), quali.sup))
+  if( length(id_quali.sup) == 0 ) { id_quali.sup = NULL}
+  
+  res.pca = PCA(data_juges_hcpc, 
+                quanti.sup = id_quanti.sup, 
+                quali.sup  = id_quali.sup, 
+                graph = FALSE)
+  res.hcpc = FactoMineR::HCPC(res.pca, cluster = -1, graph = FALSE, consol = 0)
+  clust =  res.hcpc$data.clust
+  clust$clust = paste("cluster", clust$clust)
+  out_HCPC = list("res.pca" = res.pca, "res.hcpc"= res.hcpc, "clust" = clust)
+  
+  out = list("model" = model, "CA" = out_CA, "HCPC" = out_HCPC)
   class(out) <- c("PPBstats", "fit_model_hedonic")
   return(out)
   }

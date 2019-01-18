@@ -3,7 +3,11 @@
 ### update fonctions
 - check and format code and roxygen part for each function, DESCRIPTION and NAMESPACE cf #97
 - plot_descriptive_data in common_function regarding data_version_HA and data_version_LF
-
+- hedonic workflow, cf #72
+    - add PCA + HCPC on juges
+        - format_data
+        - function in the workflow
+        - Rd + book
 
 ### add new functions
 - HA_to_LF, cf #25
