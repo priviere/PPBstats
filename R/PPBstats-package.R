@@ -234,9 +234,9 @@ NULL
 #' data coming from tomatoes hedonic test:
 #'
 #' @description
-#' A dataset containing 1 location and 3 germplasms.
-#' The data set contain the following variables: sample, juges, note, descriptors, Age, Sexe, 
-#' Bio.Non.Bio, Circuit, Departement, germplasm, location
+#' A dataset containing 1 location and 6 germplasms.
+#' The data set contain the following variables: sample, germplasm, location, juges, note, descriptors, Age, Sexe, 
+#' Bio.Non.Bio, Circuit, Departement
 #'
 #' @usage
 #' data(data_hedonic)
