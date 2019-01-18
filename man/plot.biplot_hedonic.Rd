@@ -12,11 +12,14 @@
 \item{...}{further arguments passed to or from other methods}
 }
 \value{
-It returns a list with 3 elements,  which are outputs from CA analysis:
+It returns a list with two elements:
   \itemize{
-   \item ind
-   \item var
-   \item axes
+   \item ca_biplot biplot regarding CA analysis
+   \item hcpc biplot biplot regarding PCA and HCPC analysis which is a list of two elements
+   \itemize{
+    \item variable of the PCA and supplementary variables
+    \item clusters of juges plot on the PCA
+   }
   }
 }
 \description{

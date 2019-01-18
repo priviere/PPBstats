@@ -10,7 +10,18 @@ model_hedonic(data)
 \item{data}{data is a data frame. It should come from \code{\link{format_data_PPBstats.data_organo_hedonic}}}
 }
 \value{
-A list with the anova and the CA object
+It returns a list with three elements:
+\itemize{
+ \item model : the result of the anova run on note
+ \item CA the result of the correspondance analysis run on the data set with the supplementary variables with \code{FactoMineR::CA}.
+ \item HCPC the result of the correspondane analysis run on the data set with the supplementary variables with \code{FactoMineR::PCA} follow by \code{FactoMineR::HCPC}.
+ It is a list of three elements:
+ \itemize{
+  \item res.pca the results of the PCA
+  \item res.hcpc the results of the HCPC
+  \item clust the cluster found with the HCPC
+ }
+}
 }
 \description{
 \code{model_hedonic} runs hedonic analysis

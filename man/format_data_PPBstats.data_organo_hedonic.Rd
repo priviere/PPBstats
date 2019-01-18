@@ -12,6 +12,18 @@ The descriptors must be separated by ";". Any other column can be added as suppl
 
 \item{threshold}{number of occurence of descriptors <= threshold are kept}
 }
+\value{
+It returns a list of four elements
+\itemize{
+ \item data the data formated to run the anova and the multivariate analysis regarding
+ \itemize{
+  \item sample
+  \item juges
+ }
+ \item var_sup the supplementary variables used in the multivariate analysis
+ \item descriptors the vector of descriptors cited knowing the threshold applyed when formated the data.
+}
+}
 \description{
 \code{format_data_PPBstats.data_organo_hedonic} checks and formats the data to be used by PPBstats functions for hedonic analyses
 }

@@ -10,7 +10,7 @@
 \item{x}{Output from \code{\link{check_model.fit_model_hedonic}}}
 }
 \value{
-The function return a CA object
+The function return a list with two object : CA and HCPC objects
 }
 \description{
 \code{biplot_data.check_model_hedonic} format data for CA plot from \code{\link{check_model.fit_model_hedonic}}

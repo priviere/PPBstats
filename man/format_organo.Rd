@@ -4,12 +4,14 @@
 \alias{format_organo}
 \title{format data for organoleptic analysis}
 \usage{
-format_organo(data, threshold)
+format_organo(data, threshold, var_sup)
 }
 \arguments{
 \item{data}{data frame}
 
 \item{threshold}{threshold}
+
+\item{var_sup}{supplementary variables}
 }
 \description{
 format data for organoleptic analysis

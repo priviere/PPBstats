@@ -20,7 +20,8 @@
   }
  \item variability_repartition : pie with repartition of SumSq for each factor
  \item variance_intra_germplasm : repartition of the residuals for each germplasm (see Details for more information)
- \item ca_composante_variance : variance caught by each dimension of the CA
+ \item CA_composante_variance : variance caught by each dimension of the CA
+ \item PCA_composante_variance : variance caught by each dimension of the PCA previous to the HCPC
  }
 }
 \description{
