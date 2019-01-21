@@ -25,10 +25,10 @@ A red line passes through the biplot origin and the average location (known as t
 \itemize{
  \item discrimitiveness : assess discrimitiveness of each location.
  The score represents the discrimination : the higher the vector, the more discriminating the location.
-     
+
  \item representativeness : assess representativeness of each location.
  The score represents the representativeness : the higher the score, the less representative the location.
-     
+
  \item discrimitiveness_vs_representativeness :  represent discrimitiveness versus representativeness.
  The location combining better score (i. e.discrimination and representativeness) are the ones that could be used to test germplasms as they are more representative of all the locations.
  This has to be done severals year to get robust results.

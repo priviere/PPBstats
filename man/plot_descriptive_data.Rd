@@ -28,8 +28,8 @@ plot_descriptive_data(x, data_version = NULL, plot_type = c("pam",
  \item "map"
 }}
 
-\item{x_axis}{factor displayed on the x.axis of a plot. 
-"date_julian" can be choosen: it will  display julian day for a given variable automatically calculated from format_data_PPBstats(). 
+\item{x_axis}{factor displayed on the x.axis of a plot.
+"date_julian" can be choosen: it will  display julian day for a given variable automatically calculated from format_data_PPBstats().
 This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "interaction".}
 
 \item{in_col}{factor displayed in color of a plot}
@@ -55,14 +55,14 @@ This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "in
  \item For plot_type "histogramm", "barplot", "boxplot" or "interaction",
  the function returns a list with ggplot objects for each variable of vec_variables.
  \item For plot_type "biplot",
- the function returns a list with ggplot objects for each pairs of variables of vec_variables. 
+ the function returns a list with ggplot objects for each pairs of variables of vec_variables.
  \item For plot_type "radar" and "raster,
- the function returns a list with ggplot objects with all variables of vec_variables. 
- \item For plot_type "map", it returns a map with location 
+ the function returns a list with ggplot objects with all variables of vec_variables.
+ \item For plot_type "map", it returns a map with location
  if vec_variables = NULL and labels_on = "location".
  If vec_variables is not NULL, it displays pie on map.
 }
-Each list is divided in several lists according to values 
+Each list is divided in several lists according to values
 of nb_parameters_per_plot_x_axis and nb_parameters_per_plot_in_col except for plot_type = "map".
 }
 \description{

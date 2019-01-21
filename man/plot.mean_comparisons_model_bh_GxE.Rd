@@ -23,12 +23,12 @@
 A list with ggplot object depending on plot_type.
 There are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
 \itemize{
- \item barplot : 
- Letters are displayed on each bar. 
- Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
- The error I (alpha) and the alpha correction are displayed in the title. 
+ \item barplot :
+ Letters are displayed on each bar.
+ Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction.
+ The error I (alpha) and the alpha correction are displayed in the title.
  alpha = Imp means that no differences were possible to find.
- \item biplot-alpha-beta : display the biplot with alpha_i on the x axis and beta_i on the y axis if 
+ \item biplot-alpha-beta : display the biplot with alpha_i on the x axis and beta_i on the y axis if
  x and y are coming respectively from \code{\link{mean_comparisons.check_model_bh_GxE}} for alpha and beta.
  }
 }

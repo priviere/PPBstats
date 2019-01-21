@@ -24,13 +24,13 @@ A red line is set perpendicular the ATA.
 Dashed perpendicular lines to the ATA are drawn and passed through each germplasm.
 
 \itemize{
- \item mean_performance : assess mean performance score of each germplasm. 
+ \item mean_performance : assess mean performance score of each germplasm.
  The mean performance score is the rank of germplasm along the ATA.
  The arrow points the greatest value according to their mean performance across all locations.
  An high score, represents an high mean performance.
  A low score reresents an low mean performance.
  Score are displayed into the legend.
-     
+
  \item stability_performance : assess stability performance score of each germplasm.
  The stability performance score of the germplasms are represented by the projection from the germplasm to the ATA.
  An high score, represents an high interaction and therfore lower stability.

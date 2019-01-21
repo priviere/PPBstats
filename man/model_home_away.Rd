@@ -7,7 +7,7 @@
 model_home_away(data, data_version, variable)
 }
 \arguments{
-\item{data}{The data frame on which the model is run. 
+\item{data}{The data frame on which the model is run.
 It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
 \item{data_version}{It should come from \code{\link{format_data_PPBstats.data_agro_version}} with home and away in version}
