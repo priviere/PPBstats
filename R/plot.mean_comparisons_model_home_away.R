@@ -1,9 +1,9 @@
-#' Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_local_foreign}}
+#' Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_home_away}}
 #'
 #' @description
-#' \code{plot.mean_comparisons_model_local_foreign} returns ggplot to visualize outputs from \code{\link{mean_comparisons.check_model_local_foreign}}
+#' \code{plot.mean_comparisons_model_home_away} returns ggplot to visualize outputs from \code{\link{mean_comparisons.check_model_home_away}}
 #'
-#' @param x Output from \code{\link{mean_comparisons.check_model_local_foreign}}
+#' @param x Output from \code{\link{mean_comparisons.check_model_home_away}}
 #'
 #' @param nb_parameters_per_plot number of parameter per plot to display
 #'
@@ -19,16 +19,16 @@
 #' Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction.
 #' The error I (alpha) and the alpha correction are displayed in the title.
 #' \itemize{
-#'  \item version:location : mean comparison for local foreign for each location and year
+#'  \item version:germplasm : mean comparison for home away for each germplasm and year
 #'  \item germplasm : mean comparison for germplasm
 #'  \item location : mean comparison for location
 #'  \item year : mean comparison for year
-#'  \item version : mean comparison for local and foreign
+#'  \item version : mean comparison for home and away
 #'  }
 #'
 #' @author Pierre Riviere
 #'
-#' @seealso \code{\link{mean_comparisons.check_model_local_foreign}}
+#' @seealso \code{\link{mean_comparisons.check_model_home_away}}
 #'
 #' @export
 #'
@@ -37,7 +37,7 @@ plot.mean_comparisons_model_local_foreign <- function(
                                                       nb_parameters_per_plot = 8, ...
                                                       ){
 
-    d = x[["data_ggplot_LSDbarplot_version:location"]]
+    d = x[["data_ggplot_LSDbarplot_version:germplasm"]]
     d = dplyr::arrange(d, means)
     d$max = max(d$means, na.rm = TRUE)
     d$split = add_split_col(d, nb_parameters_per_plot)
@@ -48,7 +48,7 @@ plot.mean_comparisons_model_local_foreign <- function(
     y = y + (max(y) * 0.2)
     STARS$means = y[STARS$parameter]
 
-    fac = "version:location"
+    fac = "version:germplasm"
     variable = x$info$variable
 
     out_fac_inter = lapply(d_split, function(dx, fac, STARS, variable){
