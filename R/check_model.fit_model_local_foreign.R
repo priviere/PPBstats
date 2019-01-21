@@ -41,9 +41,9 @@
 #' @export
 #'
 check_model.fit_model_local_foreign <- function(x){
-  model = x$ANOVA$model
+  model <- x$ANOVA$model
 
-  out = c(list("model_local_foreign" = x), "data_ggplot" = list(check_freq_anova(model)))
+  out <- c(list("model_local_foreign" <- x), "data_ggplot" <- list(check_freq_anova(model)))
 
   class(out) <- c("PPBstats", "check_model_local_foreign")
 
