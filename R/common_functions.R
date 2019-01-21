@@ -1842,3 +1842,24 @@ HA_to_LF = function(data_version_HA){
   class(data_version_LF) = c("PPBstats", "data_agro_version_LF", "data.frame")
   return(data_version_LF)
 }
+
+
+# transform local foreign data to home away data
+#' transform local foreign data to home away data
+#' @param data_version_LF data local foreign
+#' @details change local to home and foreign to away
+#' @return a data frame of class data_version_HA
+#' @importFrom methods is
+#' @export
+#'
+LF_to_HA <- function(data_version_LF){
+  if(!is(data_version_LF, "data_agro_version_LF")){ stop(substitute(data_version_LF), " must be formated with type = \"data_agro_version\" with local foreign format, see PPBstats::format_data_PPBstats().") }
+  is(data_version_LF)
+  data_version_HA = data_version_LF
+  data_version_HA$version = as.character(data_version_HA$version)
+  data_version_HA$version[which(data_version_HA$version == "local")] = "home"
+  data_version_HA$version[which(data_version_HA$version == "foreign")] = "away"
+  data_version_HA$version = as.factor(data_version_HA$version)
+  class(data_version_HA) = c("PPBstats", "data_agro_version_HA", "data.frame")
+  return(data_version_HA)
+}
