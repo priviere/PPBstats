@@ -25,8 +25,8 @@ add_pies(p, n, format, plot_type, data_to_pie, variable, pie_size)
 Add_pies on map or network for plot.data_agro, plot.data_network
 }
 \details{
-script adapted from 
-Pies On A Map, Demonstration script, By QDR : 
+script adapted from
+Pies On A Map, Demonstration script, By QDR :
 https://qdrsite.wordpress.com/2016/06/26/pies-on-a-map/
 
 Guangchuang YU code :

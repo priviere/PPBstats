@@ -51,5 +51,5 @@ Suggests:
 LazyLoad: yes
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 SystemRequirements: JAGS in order to do bayesian analysis. See http://mcmc-jags.sourceforge.net/ for more details.

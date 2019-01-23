@@ -15,6 +15,6 @@ format_organo(data, threshold)
 format data for organoleptic analysis
 }
 \details{
-see \code{\link{format_data_PPBstats.data_organo_napping}} and 
+see \code{\link{format_data_PPBstats.data_organo_napping}} and
 \code{\link{format_data_PPBstats.data_organo_hedonic}}
 }

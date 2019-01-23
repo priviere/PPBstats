@@ -5,8 +5,8 @@
 \title{Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_bh_intra_location}}}
 \usage{
 \method{plot}{mean_comparisons_model_bh_intra_location}(x,
-  data_version = NULL, plot_type = c("interaction", "barplot", "score"),
-  nb_parameters_per_plot = 8, ...)
+  data_version = NULL, plot_type = c("interaction", "barplot",
+  "score"), nb_parameters_per_plot = 8, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{mean_comparisons.check_model_bh_intra_location}}}
@@ -21,23 +21,23 @@
 }
 \value{
 A list with ggplot object depending on plot_type.
-For each plot_type, it is a list of three elements being lists with as many elements as environment. 
+For each plot_type, it is a list of three elements being lists with as many elements as environment.
 For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
 \itemize{
-\item barplot : 
+\item barplot :
  \itemize{
   \item data_mean_comparisons : only environments where all MCMC converge are represented.
-  Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
-  The error I (alpha) and the alpha correction are displayed in the title. 
+  Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction.
+  The error I (alpha) and the alpha correction are displayed in the title.
   alpha = Imp means that no differences were possible to find.
-       
+
   \item data_env_with_no_controls : only environments where there were no controls are represented.
   \item data_env_whose_param_did_not_converge : only environments where MCMC did not converge are represented.
   }
  Note that when using data_version, the pvalue is computed based on the MCMC.
  For data that did not converge or without environments, it is a \code{t.test} which is perform.
-      
- \item interaction : 
+
+ \item interaction :
  \itemize{
   \item data_mean_comparisons : only environments where all MCMC converge are represented.
   The error I (alpha) and the alpha correction are displayed in the x.axis under the form "alpha | alpha correction".
@@ -45,7 +45,7 @@ For each element of the list, there are as many graph as needed with \code{nb_pa
   \item data_env_with_no_controls : only environments where there were no controls are represented.
   \item data_env_whose_param_did_not_converge : only environments where MCMC did not converge are represented.
   }
- 
+
  \item score : The score is set according to which group the entry was allocated.
  An high score means that the entry was in a group with an high mean.
  A low score means that the entry was in a group with an low mean.

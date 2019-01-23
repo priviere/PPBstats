@@ -10,7 +10,7 @@
 \item{x}{outputs from \code{\link{model_home_away}}}
 }
 \value{
-It returns a list with the following elements:
+It returns a list with the following elements :
 
 \itemize{
  \item model_home_away the output from the model
@@ -29,8 +29,8 @@ It returns a list with the following elements:
 }
 }
 \description{
-\code{check_model.fit_model_home_away} computes tests to assess if the model went well. 
-It is important to run this step before going ahead with the analysis otherwise you may make mistakes in the interpretation of the results.
+\code{check_model.fit_model_home_away} computes tests to assess if the model went well.
+It is important to run this step before going ahead with the analyses otherwise you may make mistakes in the interpretation of the results.
 }
 \details{
 S3 method.

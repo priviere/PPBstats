@@ -55,7 +55,7 @@ Here, in location `loc-1`, `germ-25` and `germ-26` on one hand and `germ-1` and 
 
 Lets' make the plots:
 ```{r, warning=FALSE}
-load("./data_PPBstats/out_mean_comparisons_model_bh_intra_location_mu.RData")
+load("~/Documents/data_PPBstats/out_mean_comparisons_model_bh_intra_location_mu.RData")
 
 p_barplot_mu_version = plot(
   out_mean_comparisons_model_bh_intra_location_mu,
@@ -188,7 +188,8 @@ To run LOCAL FOREIGN model on the dataset, used the function `model_local_foreig
 You can run it on one variable.
 
 ```{r}
-out_ha = model_local_foreign(data_model_GxE, data_version_HA, "y1")
+data_version_LF <- HA_to_LF(data_version_HA)
+out_ha = model_local_foreign(data_model_GxE, data_version_LF, "y1")
 ```
 
 `out_ha` is a list containing three elements :

@@ -6,21 +6,23 @@
 \usage{
 ggradar(plot.data, font.radar = "Circular Air Light",
   values.radar = c("0\%", "50\%", "100\%"),
-  axis.labels = colnames(plot.data)[-1], grid.min = 0, grid.mid = 0.5,
-  grid.max = 1, centre.y = grid.min - ((1/9) * (grid.max - grid.min)),
-  plot.extent.x.sf = 1, plot.extent.y.sf = 1.2, x.centre.range = 0.02 *
-  (grid.max - centre.y), label.centre.y = FALSE, grid.line.width = 0.5,
-  gridline.min.linetype = "longdash", gridline.mid.linetype = "longdash",
+  axis.labels = colnames(plot.data)[-1], grid.min = 0,
+  grid.mid = 0.5, grid.max = 1, centre.y = grid.min - ((1/9) *
+  (grid.max - grid.min)), plot.extent.x.sf = 1, plot.extent.y.sf = 1.2,
+  x.centre.range = 0.02 * (grid.max - centre.y),
+  label.centre.y = FALSE, grid.line.width = 0.5,
+  gridline.min.linetype = "longdash",
+  gridline.mid.linetype = "longdash",
   gridline.max.linetype = "longdash", gridline.min.colour = "grey",
   gridline.mid.colour = "#007A87", gridline.max.colour = "grey",
-  grid.label.size = 7, gridline.label.offset = -0.1 * (grid.max - centre.y),
-  label.gridline.min = TRUE, axis.label.offset = 1.15,
-  axis.label.size = 8, axis.line.colour = "grey", group.line.width = 1.5,
-  group.point.size = 6, group.colours = NULL,
+  grid.label.size = 7, gridline.label.offset = -0.1 * (grid.max -
+  centre.y), label.gridline.min = TRUE, axis.label.offset = 1.15,
+  axis.label.size = 8, axis.line.colour = "grey",
+  group.line.width = 1.5, group.point.size = 6, group.colours = NULL,
   background.circle.colour = "#D7D6D1",
-  background.circle.transparency = 0.2, plot.legend = if (nrow(plot.data) >
-  1) TRUE else FALSE, legend.title = "", plot.title = "",
-  legend.text.size = grid.label.size)
+  background.circle.transparency = 0.2, plot.legend = if
+  (nrow(plot.data) > 1) TRUE else FALSE, legend.title = "",
+  plot.title = "", legend.text.size = grid.label.size)
 }
 \arguments{
 \item{plot.data}{arg}

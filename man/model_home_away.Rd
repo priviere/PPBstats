@@ -2,15 +2,15 @@
 % Please edit documentation in R/model_home_away.R
 \name{model_home_away}
 \alias{model_home_away}
-\title{Run Home away model}
+\title{Run Home Away model}
 \usage{
-model_home_away(data, data_version, variable)
+model_home_away()
 }
 \arguments{
-\item{data}{The data frame on which the model is run. 
+\item{data}{The data frame on which the odel is run.
 It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
-\item{data_version}{It should come from \code{\link{format_data_PPBstats.data_agro_version}} with home and away in version}
+\item{data_version}{It shoulf come from \code{\link{format_data_PPBstats.data_agro_version}} with home and away in version}
 
 \item{variable}{variable to analyse}
 }
@@ -18,7 +18,7 @@ It should come from \code{\link{format_data_PPBstats.data_agro}}}
 The function returns a list with three elements :
 \itemize{
  \item info : a list with variable
- \item ANOVA a list with two elements:
+ \item ANOVA a list with two elements :
   \itemize{
    \item model
    \item anova_model
@@ -33,10 +33,10 @@ Find details in the book \href{https://priviere.github.io/PPBstats_book/family-4
 }
 \seealso{
 \itemize{
-\item \code{\link{check_model}}
-\item \code{\link{check_model.fit_model_home_away}}
+ \item \code{\link{check_model}}
+ \item \code{\link{check_model.fit_model_home_away}}
 }
 }
 \author{
-Pierre Riviere and Gaelle Van Frank
+Pierre Riviere et Gaelle Van Franck
 }
