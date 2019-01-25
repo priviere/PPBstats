@@ -79,10 +79,10 @@ model_local_foreign <- function(data, data_version, variable){
 
                                         # 5. Return results ----------
     out <- list(
-        "info" <- list("variable" = variable),
-        "ANOVA" <- list(
-            "model" <- model,
-            "anova_model" <- anova_model
+        "info" = list("variable" = variable),
+        "ANOVA" = list(
+            "model" = model,
+            "anova_model" = anova_model
         )
     )
 

@@ -38,7 +38,7 @@
 #' @import dplyr
 #' @import stats
 #'
-model_home_away <- function(){
+model_home_away <- function(data, data_version, variable){
                                         # 1. Error messages ----------
     if(!is(data, "data_agro")){ stop(substitute(data), " must be formated with type = \"data_agro\", see PPBstats::format_data_PPBstats().") }
     if(!is(data_version, "data_agro_version_HA")){ stop(substitute(data_version), " must be formated with type = \"data_agro_version\" and home away in version, see PPBstats::format_data_PPBstats.data_agro_version") }
@@ -78,11 +78,17 @@ model_home_away <- function(){
     anova_model <- stats::anova(model)
 
                                         # 5. Return results ----------
+    ## print("vari")
+    ## print(variable)
+    ## print("model")
+    ## print(model)
+    ## print("anova")
+    ## print(anova_model)
     out <- list(
-        "info" <- list("variable" = variable),
-        "ANOVA" <- list(
-            "model" <- model,
-            "anova_model" <- anova_model
+        info = list("variable" = variable),
+        "ANOVA" = list(
+            "model" = model,
+            "anova_model" = anova_model
         )
     )
 
