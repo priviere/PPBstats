@@ -32,7 +32,7 @@
 #'
 #' @export
 #'
-plot.mean_comparisons_model_local_foreign <- function(
+plot.mean_comparisons_model_home_away <- function(
                                                       x,
                                                       nb_parameters_per_plot = 8, ...
                                                       ){

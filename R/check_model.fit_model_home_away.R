@@ -42,7 +42,7 @@
 check_model.fit_model_home_away <- function(x){
   model <- x$ANOVA$model
 
-  out <- c(list("model_home_away" <- x), "data_ggplot" <- list(check_freq_anova(model)))
+  out <- c(list("model_home_away" = x), "data_ggplot" = list(check_freq_anova(model)))
 
   class(out) <- c("PPBstats", "check_model_home_away")
 

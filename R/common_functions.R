@@ -754,6 +754,7 @@ plot_check_freq_anova = function(x, variable){
   data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
   data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
 
+  print(data_ggplot_skewness_test)
   # 1. Normality ----------
   # 1.1. Histogram ----------
   p = ggplot(data_ggplot_normality, aes(x = r), binwidth = 2)

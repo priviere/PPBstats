@@ -85,7 +85,7 @@ model_home_away <- function(data, data_version, variable){
     ## print("anova")
     ## print(anova_model)
     out <- list(
-        info = list("variable" = variable),
+        "info" = list("variable" = variable),
         "ANOVA" = list(
             "model" = model,
             "anova_model" = anova_model
