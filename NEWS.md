@@ -26,7 +26,7 @@
 
 ### update vignette (inst/bookdown)
 - some typo here and there
-
+- format section on network
 
 # **PPBstats 0.24**
 

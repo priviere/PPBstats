@@ -1,28 +1,27 @@
 ## Bipart network analysis
-This section deals with bipart network that represents "which location has which germplasm which year": a data frame with the followin compulsory columns: `"germplasm"`, `"location"`, `"year"`.
+This section deals with bipart network that represents "which location has which germplasm which year".
+
+### Steps with `PPBstats`
+
+- Format the data with `format_data_PPBstats()`
+- get descriptive plot with `plot()`
+
+### Format the data
+
+The format required is a data frame with the following compulsory columns as factor: `"germplasm"`, `"location"`, `"year"`.
 Possible options are : `"long"`, `"lat"` to get map representation
 
-The format of the data are checked by the function `format_data_PPBstats()`. 
+Note that data frame with unipart network for seed lots format can also be used.
 
-The following arguments can be used :
+The format of the data are checked by the function `format_data_PPBstats()` with the following arguments :
 
 - `type` : `"data_network"`
 - `network_part` : `"bipart"`
 - `vertex_type` : `c("germplasm", "location")`
 
-Possible values of arguments regarding network formats are displayed in Table \@ref(tab:network-format-arg).
 
-| | `network_part` | `vertex_type` | `network_split` | 
-| --- | --- | --- | --- | 
-| unipart for seed lots format |  `unipart` or  `bipart` |  `seed_lots` or `location` or  `c("germplasm", "location")` |  `NULL` or `germplasm` or `relation_year_start` | 
-| unipart for location format |  `unipart` |  `location` |  `germplasm` or `relation_year_start` |
-| bipart for germplasm and location format |  `bipart` |  `c("germplasm", "location")` |  `NULL` | 
-Table: (\#tab:network-format-arg) Possible values of argument (in colum) regarding network format (in row).
-
-The following sections give examples for each network format.
 The function returns list of `igraph` object^[http://igraph.org/r/] coming from `igraph::graph_from_data_frame()`.
 
-### Format data
 ```{r}
 data(data_network_unipart_sl)
 head(data_network_unipart_sl)
@@ -47,7 +46,7 @@ names(net_bipart)
 
 ### Describe the data
 
-The different representations are done with the `plot` function.
+The different representations are done with the `plot()` function.
 
 ```{r,warning=FALSE}
 p_net = plot(net_bipart, plot_type = "network", 
@@ -87,7 +86,4 @@ p_map_pies_y1$`2005-2006-2007-2008-2009`
 p_map_pies_y2 = PPBstats:::plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y2")
 p_map_pies_y2$`2005-2006-2007-2008-2009`
 ```
-
-Note that it is not possible to display plot with `plot_type = "network"`.
-
 

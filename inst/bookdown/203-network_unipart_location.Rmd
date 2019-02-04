@@ -1,36 +1,51 @@
 ## Unipart network for location analysis
 
-This section deals with unipart network that represent relationship of germplasm diffusion between locations: a data frame with the following compulsory columns (same as above): `"location_parent"`, `"location_child"`, `"relation_year_start"`, `"relation_year_end"`.
-Possible options are : `"germplasm_parent"`, `"year_parent"`, `"germplasm_child"`, `"year_child"`.
-Other possibles option are : `"long_parent"`, `"lat_parent"`, `"long_child"`, `"lat_child"` to get map representation.
+This section deals with unipart network that represent relationship of germplasm diffusion between locations.
+The representation can be done for each germplasm or for each year.
 
-The format of the data are checked by the function `format_data_PPBstats()`. 
+### Steps with `PPBstats`
 
-The following arguments can be used :
+- Format the data with `format_data_PPBstats()`
+- get descriptive plot with `plot()`
+
+### Format the data
+The format required is a data frame with the following compulsory columns as factor:
+
+- `"location_parent"` : the location associated to the parent seed lot
+- `"location_child"` : the location associated to the child seed lot
+- `"relation_year_start"` : the year when the relationship starts
+- `"relation_year_end"` : the year when the relationship stops
+
+Possible column options are : 
+
+- `"germplasm_parent"` : the germplasm associated to the parent seed lot
+- `"year_parent"` : the year of the last relationship of the parent seed lot
+- `"germplasm_child"` : the germplasm associated to the child seed lot
+- `"year_child"` : represents the year of the last relation event of the child seed lot
+
+Other possibles column option are : `"long_parent"`, `"lat_parent"`, `"long_child"`, `"lat_child"` to get map representation.
+
+Note that data frame with unipart network for seed lots format can also be used.
+
+The format of the data are checked by the function `format_data_PPBstats()` with the following arguments :
 
 - `type` : `"data_network"`
 - `network_part` : `"unipart"` 
 - `vertex_type` : `"location"`
 - `network_split` : `"germplasm"` or `"relation_year_start"`.
 
-
-Possible values of arguments regarding network formats are displayed in Table \@ref(tab:network-format-arg).
-
-| | `network_part` | `vertex_type` | `network_split` | 
-| --- | --- | --- | --- | 
-| unipart for seed lots format |  `unipart` or  `bipart` |  `seed_lots` or `location` or  `c("germplasm", "location")` |  `NULL` or `germplasm` or `relation_year_start` | 
-| unipart for location format |  `unipart` |  `location` |  `germplasm` or `relation_year_start` |
-| bipart for germplasm and location format |  `bipart` |  `c("germplasm", "location")` |  `NULL` | 
-Table: (\#tab:network-format-arg) Possible values of argument (in colum) regarding network format (in row).
-
-The following sections give examples for each network format.
 The function returns list of `igraph` object^[http://igraph.org/r/] coming from `igraph::graph_from_data_frame()`.
 
-### Format data
 ```{r}
 data(data_network_unipart_sl)
 head(data_network_unipart_sl)
 ```
+
+### Format and describe the data for each germplasm
+
+For `network_split = "germplasm"`, it returns a list with as many elements as germplam in the data
+as well as all germplasms merged in the first element of the list.
+
 ```{r}
 net_unipart_location_g = format_data_PPBstats(
   type = "data_network",
@@ -38,12 +53,29 @@ net_unipart_location_g = format_data_PPBstats(
   network_part = "unipart", 
   vertex_type =  "location",
   network_split = "germplasm")
-```
-For `network_split = "germplasm"`, it returns a list with as many elements as germplam in the data
-as well as all germplasms merged in the first element of the list.
-```{r}
+
 names(net_unipart_location_g)
 ```
+
+The different representations are done with the `plot()` function.
+
+For network representation, set `plot_type = "network"` diffusion event are display with curve.
+`in_col` can be settle to customize color of vertex.
+The curve between location represent the diffusion, the number of diffusion is displayed on a color scale.
+
+```{r,warning=FALSE}
+p_net = plot(net_unipart_location_g, plot_type = "network", 
+                          labels_on = "location", labels_size = 4)
+names(p_net) # one element per germplasm, the first element with all the data
+p_net$`germ-2`
+```
+
+
+
+### Format and describe the data for each year
+
+For `network_split = "relation_year_start"`, it returns a list with as many elements as year in the data
+as well as all years merged in the first element of the list.
 
 ```{r}
 net_unipart_location_y = format_data_PPBstats(
@@ -52,29 +84,16 @@ net_unipart_location_y = format_data_PPBstats(
   network_part = "unipart", 
   vertex_type =  "location",
   network_split = "relation_year_start")
-```
 
-For `network_split = "relation_year_start"`, it returns a list with as many elements as year in the data
-as well as all years merged in the first element of the list.
-```{r}
 names(net_unipart_location_y)
 ```
 
-### Describe the data
-
-The different representations are done with the `plot` function.
+The different representations are done with the `plot()` function.
 
 For network representation, set `plot_type = "network"` diffusion event are display with curve.
 `in_col` can be settle to customize color of vertex.
 The curve between location represent the diffusion, the number of diffusion is displayed on a color scale.
 
-
-```{r,warning=FALSE}
-p_net = plot(net_unipart_location_g, plot_type = "network", 
-                          labels_on = "location", labels_size = 4)
-names(p_net) # one element per germplasm, the first element with all the data
-p_net$`germ-2`
-```
 
 ```{r,warning=FALSE}
 p_net = plot(net_unipart_location_y, plot_type = "network", 
@@ -116,6 +135,4 @@ p_map_pies_y1$`2007-2008-2009`
 p_map_pies_y2 = PPBstats:::plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y2")
 p_map_pies_y2$`2007-2008-2009`
 ```
-
-Note that it is not possible to display plot with `plot_type = "network"`.
 
