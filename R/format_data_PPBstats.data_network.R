@@ -316,14 +316,13 @@ format_data_PPBstats.data_network = function(
     }
     
     d = dplyr::filter(d, relation_type == "diffusion")
-    d_person = d[,c(
-      "location_parent", "location_child", 
-      "relation_year_start", "relation_year_end",
-      "germplasm_parent", "year_parent", 
-      "long_parent", "lat_parent",
-      "germplasm_child", "year_child",
-      "long_child", "lat_child"
-    )]
+    col_to_get = is.element(colnames(d), c("location_parent", "location_child",
+                                           "relation_year_start", "relation_year_end",
+                                           "germplasm_parent", "year_parent", 
+                                           "long_parent", "lat_parent",
+                                           "germplasm_child", "year_child",
+                                           "long_child", "lat_child"))
+    d_person = d[,col_to_get]
     
     return(d_person)
   }
@@ -447,10 +446,10 @@ format_data_PPBstats.data_network = function(
     if( network_split == "germplasm" ){
       vec_germplasm = sort(unique(c(as.character(d$germplasm_parent), as.character(d$germplasm_child))))
       d_all_germplasm = d
-      d_all_germplasm$germplasm_parent = paste(vec_germplasm, collapse = "-")
-      d_all_germplasm$germplasm_child = paste(vec_germplasm, collapse = "-")
+      d_all_germplasm$germplasm_parent = paste(vec_germplasm, collapse = " / ")
+      d_all_germplasm$germplasm_child = paste(vec_germplasm, collapse = " / ")
       d = rbind.data.frame(d, d_all_germplasm)
-      vec_germplasm = c(paste(vec_germplasm, collapse = "-"), vec_germplasm)
+      vec_germplasm = c(paste(vec_germplasm, collapse = " / "), vec_germplasm)
       
       OUT = NULL
       
@@ -483,10 +482,11 @@ format_data_PPBstats.data_network = function(
         
         d_vertex = cbind.data.frame(d_vertex, d_vertex_bis)
         
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_start")]
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_end")]
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "year")]
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
+        d_vertex = d_vertex[,-which(is.element(colnames(d_vertex), c("relation_year_start", "relation_year_end", "year", "germplasm")))]
+        if( !is.data.frame(d_vertex) ){
+          d_vertex = as.data.frame((d_vertex))
+          colnames(d_vertex) = "location"
+        }
         d_vertex = unique(d_vertex)
         
         dup = which(duplicated(d_vertex$location))
@@ -557,20 +557,21 @@ format_data_PPBstats.data_network = function(
         
         d_vertex = cbind.data.frame(d_vertex, d_vertex_bis)
         
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_start")]
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "relation_year_end")]
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "year")]
-        d_vertex = d_vertex[,-which(colnames(d_vertex) == "germplasm")]
+        d_vertex = d_vertex[,-which(is.element(colnames(d_vertex), c("relation_year_start", "relation_year_end", "year", "germplasm")))]
+        if( !is.data.frame(d_vertex) ){
+          d_vertex = as.data.frame((d_vertex))
+          colnames(d_vertex) = "location"
+        }
         d_vertex = unique(d_vertex)
         
-        dup = which(duplicated(d_vertex$year))
+        dup = which(duplicated(d_vertex$location))
         if( length(dup) > 0 ){
-          warning(paste("The following year are duplicated : ",
-                        paste(as.character(d_vertex$year[dup]), collapse = ","),
-                        ". Only one information per year has been kept.", sep = ""
+          warning(paste("The following location are duplicated : ",
+                        paste(as.character(d_vertex$location[dup]), collapse = ","),
+                        ". Only one information per location has been kept.", sep = ""
           )
           )
-          d_vertex = d_vertex[!duplicated(d_vertex$year),]
+          d_vertex = d_vertex[!duplicated(d_vertex$location),]
         }
         
         d_vertex$relation_type = "diffusion"
