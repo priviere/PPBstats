@@ -15,8 +15,17 @@ pmap(net, format, labels_on, labels_size, zoom)
 
 \item{labels_size}{label size}
 
-\item{zoom}{zoom of the map}
+\item{zoom}{zoom of the text on the map. See ?get_stamenmap for more details.}
 }
 \description{
 map background for plot.data_agro, plot.data_network
+}
+\details{
+The box of the map is settle based on lat and long data and stamen map.
+See ?get_stamenmap for more details.
+Do not forget to cite credit:
+Map tiles by \href{http://stamen.com}{Stamen Design}, 
+under \href{http://creativecommons.org/licenses/by/3.0}{CC BY 3.0}. 
+Data by \href{http://openstreetmap.org}{OpenStreetMap}, 
+under \href{http://www.openstreetmap.org/copyright}{ODbL}.
 }

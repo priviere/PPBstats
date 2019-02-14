@@ -8,7 +8,8 @@
   pie_size = 0.2, plot_type = "network", in_col = "location",
   labels_on = FALSE, labels_size = 4, organize_sl = FALSE,
   x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5,
-  nb_parameters_per_plot_in_col = 5, vec_variables = NULL, zoom = 6, ...)
+  nb_parameters_per_plot_in_col = 5, vec_variables = NULL, zoom = 6,
+  ...)
 }
 \arguments{
 \item{x}{output from \code{\link{format_data_PPBstats.data_network}}}

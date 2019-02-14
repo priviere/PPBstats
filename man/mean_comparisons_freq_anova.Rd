@@ -4,8 +4,9 @@
 \alias{mean_comparisons_freq_anova}
 \title{mean comparisons for frequentist analysis}
 \usage{
-mean_comparisons_freq_anova(model, variable, alpha = 0.05, p.adj = "none",
-  info = NULL, vec_fac = c("germplasm", "location", "year"))
+mean_comparisons_freq_anova(model, variable, alpha = 0.05,
+  p.adj = "none", info = NULL, vec_fac = c("germplasm", "location",
+  "year"))
 }
 \arguments{
 \item{model}{anova model}

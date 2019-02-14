@@ -5,8 +5,8 @@
 \title{Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_bh_intra_location}}}
 \usage{
 \method{plot}{mean_comparisons_model_bh_intra_location}(x,
-  data_version = NULL, plot_type = c("interaction", "barplot", "score"),
-  nb_parameters_per_plot = 8, ...)
+  data_version = NULL, plot_type = c("interaction", "barplot",
+  "score"), nb_parameters_per_plot = 8, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{mean_comparisons.check_model_bh_intra_location}}}

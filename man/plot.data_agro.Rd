@@ -6,9 +6,10 @@
 \usage{
 \method{plot}{data_agro}(x, data_version = NULL, plot_type = c("pam",
   "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar",
-  "raster", "map"), x_axis = NULL, in_col = NULL, vec_variables = NULL,
-  nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5,
-  labels_on = NULL, labels_size = 4, pie_size = 0.2, zoom = 6, ...)
+  "raster", "map"), x_axis = NULL, in_col = NULL,
+  vec_variables = NULL, nb_parameters_per_plot_x_axis = 5,
+  nb_parameters_per_plot_in_col = 5, labels_on = NULL,
+  labels_size = 4, pie_size = 0.2, zoom = 6, ...)
 }
 \arguments{
 \item{x}{The data frame. It should come from \code{\link{format_data_PPBstats.data_agro}}}
@@ -46,7 +47,7 @@ This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "in
 
 \item{pie_size}{when plot_type = "map" and vec_variables is not NULL, size of the pie}
 
-\item{zoom}{zoom of the map, see ?get_map for more details}
+\item{zoom}{zoom of the text on the map, see ?PPBstats::pmap for more details.}
 
 \item{...}{further arguments passed to or from other methods}
 }

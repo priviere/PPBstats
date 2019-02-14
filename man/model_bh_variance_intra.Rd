@@ -4,9 +4,9 @@
 \alias{model_bh_variance_intra}
 \title{Run Hierarchical Bayesian variance-intra model}
 \usage{
-model_bh_variance_intra(data, variable, nb_iterations = 1e+05, thin = 10,
-  return.mu = TRUE, return.sigma = TRUE, return.epsilon = FALSE,
-  return.DIC = FALSE)
+model_bh_variance_intra(data, variable, nb_iterations = 1e+05,
+  thin = 10, return.mu = TRUE, return.sigma = TRUE,
+  return.epsilon = FALSE, return.DIC = FALSE)
 }
 \arguments{
 \item{data}{The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}}
