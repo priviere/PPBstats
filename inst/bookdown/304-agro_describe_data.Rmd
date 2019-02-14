@@ -217,7 +217,11 @@ p$`germplasm-block-X-Y-9|-NA`
 
 ### map
 You can display map with location if you have data with latitude and longitude for each location.
-Note you can tune the zoom of the map with the argument `zoom`.
+When using map, do not forget to use credit :
+Map tiles by [Stamen Design](http://stamen.com), 
+under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0). 
+Data by [OpenStreetMap](http://openstreetmap.org), 
+under [ODbL](http://www.openstreetmap.org/copyright).
 
 ```{r,warning=FALSE,message=FALSE}
 p = plot(

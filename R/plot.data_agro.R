@@ -37,7 +37,7 @@
 #' 
 #' @param pie_size when plot_type = "map" and vec_variables is not NULL, size of the pie 
 #' 
-#' @param zoom zoom of the map, see ?get_map for more details
+#' @param zoom zoom of the text on the map, see ?PPBstats::pmap for more details.
 #' 
 #' @param ... further arguments passed to or from other methods
 #' 

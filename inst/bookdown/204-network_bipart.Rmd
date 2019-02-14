@@ -67,6 +67,12 @@ p_bar$location
 
 
 Location present on the network can be displayed on a map with `plot_type = "map"`.
+When using map, do not forget to use credit :
+Map tiles by [Stamen Design](http://stamen.com), 
+under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0). 
+Data by [OpenStreetMap](http://openstreetmap.org), 
+under [ODbL](http://www.openstreetmap.org/copyright).
+
 
 ```{r,warning=FALSE,message=FALSE}
 p_map = PPBstats:::plot.data_network(net_bipart[1], plot_type = "map", labels_on = "location")

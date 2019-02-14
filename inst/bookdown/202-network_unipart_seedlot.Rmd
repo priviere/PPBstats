@@ -89,7 +89,12 @@ p_bar = plot(net_unipart_sl, plot_type = "barplot", vec_variables = "diffusion",
 p_bar
 ```
 
-Location present on the network can be displayed on a map with `plot_type = "map"`
+Location present on the network can be displayed on a map with `plot_type = "map"`.
+When using map, do not forget to use credit :
+Map tiles by [Stamen Design](http://stamen.com), 
+under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0). 
+Data by [OpenStreetMap](http://openstreetmap.org), 
+under [ODbL](http://www.openstreetmap.org/copyright).
 
 ```{r,warning=FALSE,message=FALSE}
 p_map = plot(net_unipart_sl, plot_type = "map", labels_on = "location")

@@ -9,6 +9,8 @@
         - function in the workflow
         - Rd + book
 - format_data_PPBstats.data_network: take into accuont when there are not lat and long columns
+- pmap in common_functions : use stamen instead of google on map, cf #90
+
 
 ### add new functions
 - HA_to_LF, cf #25

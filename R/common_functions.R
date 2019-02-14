@@ -910,8 +910,16 @@ plot_mean_comparisons_freq_anova = function(x, variable, nb_parameters_per_plot 
 #' @param format network format
 #' @param labels_on where display label
 #' @param labels_size label size
-#' @param zoom zoom of the map
+#' @param zoom zoom of the text on the map. See ?get_stamenmap for more details.
 #' @export
+#' @details The box of the map is settle based on lat and long data and stamen map.
+#' See ?get_stamenmap for more details.
+#' Do not forget to cite credit:
+#' Map tiles by \href{http://stamen.com}{Stamen Design}, 
+#' under \href{http://creativecommons.org/licenses/by/3.0}{CC BY 3.0}. 
+#' Data by \href{http://openstreetmap.org}{OpenStreetMap}, 
+#' under \href{http://www.openstreetmap.org/copyright}{ODbL}.
+#' 
 #' @import ggmap
 #' @import ggnetwork
 #' @import intergraph
@@ -923,7 +931,7 @@ pmap = function(net, format, labels_on, labels_size, zoom){
 
   # As it is not possible to use annotation_custom with polar coordinates (i.e. output from ggmap) in order to add pies on map,
   # I decided to transfer ggmap output to a png that is inserted in a background of a plot with cartesian coordinates
-  # Note there is a change in the look of the map because of coordinates change ...
+  # Note there is a change in the look of the map because of coordinates changes ...
   if( is_igraph(net) ){
     d = ggnetwork::ggnetwork(net, arrow.gap = 0)
 
@@ -941,9 +949,61 @@ pmap = function(net, format, labels_on, labels_size, zoom){
   n$lat = as.numeric(as.character(n$lat))
   n$long = as.numeric(as.character(n$long))
   n = na.omit(n)
-  center_location = c(mean(n$long), mean(n$lat))
-  map = ggmap::get_map(location = center_location, source = "google", zoom = zoom)
+  long_min = min(n$long) - 1
+  long_max = max(n$long) + 1
+  lat_min = min(n$lat) - 1
+  lat_max = max(n$lat) + 1
+  
+  # Calculates the geodesic distance between two points specified by radian latitude/longitude using the
+  # Haversine formula (hf)
+  # https://www.r-bloggers.com/great-circle-distance-calculations-in-r/
+  gcd.hf <- function(long1, lat1, long2, lat2) {
+    long1 = long1*pi/180
+    lat1 = lat1*pi/180
+    long2 = long2*pi/180
+    lat2 = lat2*pi/180
+    R <- 6371 # Earth mean radius [km]
+    delta.long <- (long2 - long1)
+    delta.lat <- (lat2 - lat1)
+    a <- sin(delta.lat/2)^2 + cos(lat1) * cos(lat2) * sin(delta.long/2)^2
+    c <- 2 * asin(min(1,sqrt(a)))
+    d = R * c
+    return(d) # Distance in km
+  }
+  
+  left_box = gcd.hf(long_min, lat_min, long_min, lat_max)
+  bottom_box = gcd.hf(long_min, lat_min, long_max, lat_min)
+  if( bottom_box < left_box ){ # increase long_max and decrease lat min
+      l = 0
+      longmax = long_max
+      longmin = long_min
+      while(l < left_box){ 
+        longmax = longmax + 0.01
+        longmin = longmin - 0.01
+        l = gcd.hf(longmin, lat_min, longmax, lat_min) 
+        }
+      long_max = longmax
+      long_min = longmin
+  }
+  if( left_box < bottom_box ){ # increase lat_max and decrease lat_min
+    l = 0
+    latmax = lat_max
+    latmin = lat_min
+    while(l < left_box){ 
+      latmax = lat_max + 0.01
+      latmin = lat_min + 0.01
+      l = gcd.hf(long_min, latmin, long_min, latmax)
+    }
+    lat_max = latmax
+    lat_min = latmin
+  }
+  
+  # update box
+  box = c(long_min, lat_min, long_max, lat_max)
+  map = ggmap::get_map(location = box, source = "stamen", zoom = zoom)
   m = ggmap::ggmap(map, extent = "device")
+  # m = m + geom_text(x = (long_min + long_max)/2 , y = lat_min + 0.2 , size = 2,
+  #              label = "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.")
   ggsave("tmp_map.png", m, width = 1, height = 1) # get a perfect square
   p = ggplot() # support for the map background
   p = p + coord_cartesian(xlim = range(m$data$lon), ylim = range(m$data$lat), expand = FALSE)
