@@ -43,7 +43,7 @@ biplot_data.check_model_GxE = function(x){
   data_ecovalence = data.frame(
     germplasm = rep(rownames(m_eco), times = ncol(m_eco)), 
     location = rep(colnames(m_eco), each = nrow(m_eco)),
-    variable = as.vector(m_eco)
+    variable = unlist(m_eco)
   )
   
   
