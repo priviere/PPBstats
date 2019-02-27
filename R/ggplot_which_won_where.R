@@ -31,8 +31,8 @@ ggplot_which_won_where = function(res.pca){
   
   p = get_biplot(res.pca)
 
-  xlim = ggplot_build(p)$layout$panel_ranges[[1]]$x.range
-  ylim = ggplot_build(p)$layout$panel_ranges[[1]]$y.range
+  xlim = range(p$data$x)*1.1
+  ylim = range(p$data$y)*1.1
   
   chull_obj = as.data.frame(res.pca$ind$coord)
   chull_obj = chull_obj[chull(x = chull_obj$Dim.1, y = chull_obj$Dim.2),]
