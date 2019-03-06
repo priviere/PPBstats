@@ -87,7 +87,7 @@ Note that the template calls two objects:
 - `params` which is list with parameter of the report
 - `res` which is a list with all results coming from the analysis
 
-The template used below can be download [here](https://github.com/priviere/PPBstats/tree/master/inst/return_folder_web_site/_example_1_template.Rmd).
+The template used below can be download [here](https://github.com/priviere/PPBstats/blob/master/inst/return_report_web_site/_example_1_template.Rmd).
 
 
 ```{r, eval=FALSE}
