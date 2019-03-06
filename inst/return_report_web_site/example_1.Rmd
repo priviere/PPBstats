@@ -1,0 +1,114 @@
+# Run the analysis
+
+```{r}
+library(PPBstats)
+```
+
+
+## Format data
+
+```{r}
+data("data_model_GxE")
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
+```
+
+
+## Descriptive plots for each location
+
+```{r}
+vec_locations = levels(data_model_GxE$location)
+list_hist_locations = lapply(
+  vec_locations, function(x){
+    p = plot(
+      data_model_GxE, plot_type = "histogramm",
+      vec_variables = c("y1")
+      )
+    p$y1
+    }
+  )
+names(list_hist_locations) = vec_locations
+```
+
+Note that it is important that each element of the list refers to data of a given location in order to catch the right information in the next step when generating the report.
+
+## GGE model for all locations
+
+The function `workflow_gxe()` is coming from the book [here](https://priviere.github.io/PPBstats_book/family-2.html#ammi).
+
+```{r}
+workflow_gxe = function(x, gxe){
+  out_gxe = model_GxE(data_model_GxE, variable = x, gxe_analysis = gxe)
+  
+  out_check_gxe = check_model(out_gxe)
+  p_out_check_gxe = plot(out_check_gxe)
+  
+  out_mean_comparisons_gxe = mean_comparisons(out_check_gxe, p.adj = "bonferroni")
+  p_out_mean_comparisons_gxe = plot(out_mean_comparisons_gxe)
+  
+  out_biplot_gxe = biplot_data(out_check_gxe)
+  p_out_biplot_gxe = plot(out_biplot_gxe)
+
+  out = list(
+    "out_gxe" = out_gxe,
+    "out_check_gxe" = out_check_gxe,
+    "p_out_check_gxe" = p_out_check_gxe,
+    "out_mean_comparisons_gxe" = out_mean_comparisons_gxe,
+    "p_out_mean_comparisons_gxe" = p_out_mean_comparisons_gxe,
+    "out_biplot_gxe" = out_biplot_gxe,
+    "p_out_biplot_gxe" = p_out_biplot_gxe
+  )
+  
+  return(out)
+}
+
+
+vec_variables = c("y1")
+res_gge = lapply(vec_variables, workflow_gxe, "GGE")
+names(res_gge) = vec_variables
+```
+
+## Create a list with all results
+
+```{r}
+res = list("hist_locations" = list_hist_locations, 
+           "res_gge" = res_gge
+           )
+```
+
+# Generate a report for each location
+
+To generate the report, you need the `R` package `rmarkdown` installed.
+In the following example, the output is `.html`. 
+You can choose `.pdf` or `.docx`.
+See `?rmarkdown::render` for more information.
+
+Note that the template calls two objects:
+
+- `params` which is list with parameter of the report
+- `res` which is a list with all results coming from the analysis
+
+The template used below can be download [here](https://github.com/priviere/PPBstats/tree/master/inst/return_folder_web_site/_example_1_template.Rmd).
+
+
+```{r, eval=FALSE}
+library(rmarkdown)
+
+vec_locations = names(res$hist_locations)
+for (location in vec_locations){ # For each location, render a report
+  params = list("title" = paste("Agronomic analyses for", location))
+  rmarkdown::render("_example_1_template.Rmd", 
+                    output_file =  paste("example_1_report_", location, ".html", sep = ""), 
+                    output_dir = "./"
+                    )
+  }
+
+```
+
+The report generated can be visualized for 
+[loc-1](example_1_report_loc-1.html), 
+[loc-2](example_1_report_loc-2.html) and 
+[loc-3](example_1_report_loc-3.html).
+
+
+
+

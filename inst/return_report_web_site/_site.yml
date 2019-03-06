@@ -1,0 +1,7 @@
+name: "PPBstats: Return report to farmers"
+navbar:
+  title: "PPBstats: Return report to farmers"
+  left:
+    - text: "Example 1"
+      href: example_1.html
+output_dir: "docs"

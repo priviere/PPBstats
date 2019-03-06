@@ -30,6 +30,10 @@
 - some typo here and there
 - format section on network
 - complete text and pictures, cf #36
+- add generation of report, cf #81
+
+### create return report web site (inst/return_report_web_site)
+- add generation of report, cf #81
 
 
 # **PPBstats 0.24**

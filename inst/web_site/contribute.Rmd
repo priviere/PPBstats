@@ -184,11 +184,16 @@ Table: Name and description of internal functions.
 
 The book has been generated thanks to [`bookdown`](https://bookdown.org/yihui/bookdown/).
 
-If you wish to improve the book, to add new sections on PPB, etc please file an [issue](https://github.com/priviere/PPBstats/issues) or send me an email : pierre@semencespaysannes.org 
+If you wish to improve the web site, the book, to add new sections on PPB, etc please file an [issue](https://github.com/priviere/PPBstats/issues) or send me an email : pierre@semencespaysannes.org 
+
+The code of the website is on github: https://github.com/priviere/PPBstats/tree/master/inst/web_site
 
 The code of the book is on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
 
-If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.24/PPBstats_vignette_docx.zip).
+The code regarding examples of report fo farmers is on github: 
+https://github.com/priviere/PPBstats/tree/master/inst/return_report_web_site
+
+Regarding the book, if you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.24/PPBstats_vignette_docx.zip).
 Do not pay attention to strange words such as _#_, _[@blablabla]_, _\@ref_ ... that are `bookdown` specific.
 
 ## Translate

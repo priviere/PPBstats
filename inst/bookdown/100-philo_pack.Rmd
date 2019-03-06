@@ -46,6 +46,11 @@ The statistical procedures are based on frequentist and bayesian approaches.
 - organoleptic tests (section \@ref(organoleptic))
 - molecular experiments (section \@ref(molecular))
 
+
+Within a PPB programme, it is important to give results back to the farmers in order to discuss results and accompagny them in their selection.
+This can be done through the creation of reports with results coming from the analysis (section \@ref(com)).
+
+
 **The objectives of `PPBstats` are**
 
 1. to have a single package capable of performing all analyses required for PPB programmes with comprehensive documentation, and 
