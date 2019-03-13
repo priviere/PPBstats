@@ -1,28 +1,42 @@
-### Multivariate analysis (**M2**) {#multivariate-analysis}
-
-#### Steps with `PPBstats`
+### Steps with `PPBstats`
 
 For variance intra analysis, you can follow these steps (Figure \@ref(fig:main-workflow)) :
 
 - Format the data with `format_data_PPBstats()`
+- Look at correlation between variables with `ggcorrplot::ggcorrplot()`^[http://www.sthda.com/english/wiki/ggcorrplot-visualization-of-a-correlation-matrix-using-ggplot2]
 - Run the analysis with `multivariate()`
 - Check outputs and results with functions from `factoextra`^[https://github.com/kassambara/factoextra]
 
-#### Format the data
+### Format the data
 
 ```{r}
 data("data_model_GxE")
 data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
 ```
 
-#### Run the analysis
+### Look at correlation
+
+```{r}
+library(ggcorrplot)
+vec_variables = c("y1", "y2", "y3")
+corr = round(cor(data_model_GxE[,vec_variables]), 1)
+p.mat = cor_pmat(data_model_GxE[,vec_variables])
+
+# Barring the no significant coefficient
+ggcorrplot(corr, hc.order = TRUE, type = "lower", p.mat = p.mat)
+
+```
+
+More details on the use of `ggcorrplot()` can be found [here](http://www.sthda.com/english/wiki/ggcorrplot-visualization-of-a-correlation-matrix-using-ggplot2).
+
+### Run the analysis
 
 ```{r}
 vec_variables = c("y1", "y2", "y3")
 res.pca = mutlivariate(data_model_GxE, vec_variables, PCA)
 ```
 
-#### Check outputs and results
+### Check outputs and results
 
 Look at the results thanks to the `factoextra` package:
 

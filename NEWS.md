@@ -31,6 +31,7 @@
 - format section on network
 - complete text and pictures, cf #36
 - add generation of report, cf #81
+- add correlation analysis in multivariate part, cf #114
 
 ### create return report web site (inst/return_report_web_site)
 - add generation of report, cf #81
