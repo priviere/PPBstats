@@ -95,6 +95,7 @@
 - regarding change with plot.data_agro
 - regarding workflow in organoleptic analysis
 - improve text
+- create one workflow per family of analysis for agro
 
 ### update webiste (inst/web_site)
 - improve download

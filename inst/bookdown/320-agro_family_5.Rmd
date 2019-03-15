@@ -1,7 +1,12 @@
 ## Family 5 of analysis : multivariate analysis {#family-5}
 
 Multivariate analysis can answer to multiple objective.
-On of then can be to study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits (Figure \@ref(fig:decision-tree-Study-diversity-structure-and-identify-complementary-or-similar-parents-for-cross)).
+On of then can be to study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits 
+
+### Decision tree
+
+
+To study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits, different scenario are possible (Figure \@ref(fig:decision-tree-Study-diversity-structure-and-identify-complementary-or-similar-parents-for-cross)).
 It can be completed by analysis of molecular data and genetic distance trees (**M3**, section \@ref(molecular)).
 
 
@@ -9,5 +14,25 @@ It can be completed by analysis of molecular data and genetic distance trees (**
 knitr::include_graphics("figures/decision-tree_Study-diversity-structure-and-identify-complementary-or-similar-parents-for-cross.png")
 ```
 
+
+### Workflow and function relations in `PPBstats` regarding family 2 of analysis
+
+Figure \@ref(fig:main-workflow-family-5) displays the functions and their relationships.
+Table \@ref(tab:function-descriptions-workflow-family-5) describes each of the main functions.
+
+You can have more information for each function by typing `?function_name` in your R session.
+
+```{r main-workflow-family-5, out.width='20%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow of family 5."}
+knitr::include_graphics("figures/main-functions-agro-family-5.png")
+```
+
+| function name | description |
+| --- | --- |
+| `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
+| `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
+| `ggcorrplot` | Visualize correlation with `ggcorrplot` fonction from package `ggcorrplot` |
+| `multivariate` | Run multivariate analysis with functions from `FactoMineR` |
+| `factoextra` |  Check outputs and results with the `factoextra` package |
+Table: (\#tab:function-descriptions-workflow-family-5) Function description.
 
 

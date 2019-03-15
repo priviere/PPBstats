@@ -8,93 +8,26 @@
   %% nodes
   \node[several-all] (DE)                   {design\_experiment};
 
-  \node[several-all] (FD) [below=3cm of DE]                {format\_data\_PPBstats};
+  \node[several-all] (FD) [below=1cm of DE]                {format\_data\_PPBstats};
 
-  \node[m2]   (M2)  [below=4cm of FD]        {model\_bh\_GxE};
-  \node[m1]   (M1)  [left=of M2]   {model\_bh\_intra\_location};
-  \node[gxe]  (GxE) [left=of M1]  {model\_GxE};
-  \node[sp]  (SP) [right=of M2]  {model\_spatial};
-  \node[vi]  (VI) [right=of SP]  {model\_bh\_variance\_intra};
-  \node[ma]  (MA) [right=of VI]  {multivariate};
+  \node[several-all]   (M)  [below=1cm of FD]        {model};
 
-  \node[several-all] (CM) [below=2cm of M2]     {check\_model};
+  \node[several-all] (CM) [below=1cm of M]     {check\_model};
 
-  \node[virtual] (belowCM) [below=of CM] {};
+  \node[several-all] (MC) [below=1cm of CM] {mean\_comparisons};
 
-  \node[m2] (PPM2)  [below left=of belowCM] {predict\_the\_past\_model\_bh\_GxE};
-
-  \node[m2]       (CVM2)  [below right=of CM] {cross\_validation\_model\_bh\_GxE};
-  \node[gxe]      (BGxE)  [below=of CVM2]     {biplot\_data};
-  \node[several-gxe-m2]  (PG)    [below=of BGxE]     {parameter\_groups};
-
-  \node[several-all] (MC) [below=of CM, yshift=-25ex] {mean\_comparisons};
-
-  \node[several-all] (P) [right=of BGxE, xshift=5em] {plot};
+  \node[several-all] (P) [right=of CM, xshift=1cm] {plot};
 
 
   %% arrows
   % \draw node[vertex] (Joint) at (1,0) {};
-  \draw (FD.east) to[out=0,in=20] (P.east);
-  \draw (FD) to (M1);
-  \draw (FD) to (M2);
-  \draw (FD) to (GxE);
-  \draw (FD) to (SP);
-  \draw (FD) to (VI);
-  \draw (FD) to (MA);
-
-  \draw (M1) to (CM);
-  \draw (M2) to (CM);
-  \draw (GxE) to (CM);
-  \draw (SP) to (CM);
-  \draw (VI) to (CM);
-
-  \draw (CM) to [bend right] (PPM2);
+  \draw (FD.east) to[out=0,in=20] [bend left] (P);
+  \draw (FD) to (M);
+  \draw (M) to (CM);
   \draw (CM) to (MC);
-  \draw (CM) to [bend right] (CVM2.west);
-  \draw (CM) to [bend right] (BGxE.west);
-  \draw (CM) to [bend right] (PG.west);
+  \draw (CM.east) to [left] (P);
 
-  \draw (PPM2) to [bend right] (MC);
-
-  \draw (CM.east) to [bend left] (P);
-  \draw (CVM2) to (P);
-  \draw (BGxE) to (P);
-  \draw (PG) to (P);
   \draw (MC.east) to [bend right] (P);
-
-  %% legend
-  \node[several-all,legendkey]  (LS)  [right=of DE, xshift=6em] {};
-  \node[right,legendtext] (LStext) at (LS.east) {Functions for all models};
-
-  \node[several-gxe-m2,legendkey]  (LS2)  [below=of LS, yshift=3ex] {};
-  \node[right,legendtext] (LS2text) at (LS2.east) {GxE models and Hierarchical Bayesian GxE model functions};
-
-  \node[m1,legendkey]  (LM1)  [below=of LS2,yshift=3ex] {};
-  \node[right,legendtext] (LM1text) at (LM1.east) {Hierarchical Bayesian intra\_location model functions};
-
-  \node[m2,legendkey]  (LM2)  [below=of LM1,yshift=3ex] {};
-  \node[right,legendtext] (LM2text) at (LM2.east) {Hierarchical Bayesian GxE model functions};
-
-  \node[gxe,legendkey]  (LGxE)  [below=of LM2,yshift=3ex] {};
-  \node[right,legendtext] (LGxEtext) at (LGxE.east) {GxE model functions};
-
-  \node[sp,legendkey]  (LSP)  [below=of LGxE,yshift=3ex] {};
-  \node[right,legendtext] (LSPtext) at (LSP.east) {Spatial model functions};
-
-  \node[vi,legendkey]  (LVI)  [below=of LSP,yshift=3ex] {};
-  \node[right,legendtext] (LVItext) at (LVI.east) {Hierarchical Bayesian variance\_intra model functions};
-
-  \node[ma,legendkey]  (LMA)  [below=of LVI,yshift=3ex] {};
-  \node[right,legendtext] (LMAtext) at (LMA.east) {Multivariate functions};
-
-  %% legend bounding box
-  \begin{pgfonlayer}{background}
-    \node[
-      fill=black!10,
-      rounded corners,
-      fit = (LS)(LMA)(LS2text)
-    ] {};
-  \end{pgfonlayer}
 
 
 \end{tikzpicture}

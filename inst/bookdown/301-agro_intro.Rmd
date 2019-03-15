@@ -268,37 +268,15 @@ After designing the experiment and describing the data, each family of analysis 
 - Check the model and visualize outputs
 - Compare means and visualize outputs
 
-Note that for Hierarchical Bayesian GxE model and GGE other analyses are possible : predict the past and cross validation regarding Hierarchical Bayesian GxE model and biplot regarding GGE.
+Note that for some functions for specific model maybe used.
+<!-- Hierarchical Bayesian GxE model and GGE other analyses are possible : predict the past and cross validation regarding Hierarchical Bayesian GxE model and biplot regarding GGE. -->
 
 Figure \@ref(fig:main-workflow) displays the functions and their relationships.
-Table \@ref(tab:function-descriptions-workflow) describes each of the main functions.
 
-You can have more information for each function by typing `?function_name` in your R session.
 
 ```{r main-workflow, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
 knitr::include_graphics("figures/main-functions-agro.png")
 ```
-
-
-| function name | description |
-| --- | --- |
-| `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
-| `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
-| `describe_data` | Describe the data set in order to choose the appropriate analysis to carry out |
-| `model_bh_intra-location` | Run Hierarchical Bayesian intra-location model |
-| `model_bh_GxE` | Run Hierarchical Bayesian GxE model |
-| `model_GxE` | Run AMMI or GGE model |
-| `model_spatial` | Run spatial row and column model |
-| `model_bh_variance-intra` | Run Hierarchical Bayesian variance-intra model |
-| `multivariate` | Run multivariate analysis with function from `FactoMineR` |
-| `check_model` |  Check if the model went well |
-| `mean_comparisons` |  Get mean comparisons |
-| `parameter_groups` | Get groups of parameters based on multivariate analysis |
-| `cross_validation_model_bh_GxE` | Run complete cross validation with Hierarchical Bayesian GxE model |
-| `predict_the_past_model_bh_GxE` | predict values of germplasms in environments where they have not been grown based on Hierarchical Bayesian GxE model |
-| `biplot_data` | Compute ecovalence and format PCA results regarding $G \times E$ models |
-| `plot` | Build ggplot objects to visualize output |
-Table: (\#tab:function-descriptions-workflow) Function description.
 
 
 ### Data format {#data-agro}
