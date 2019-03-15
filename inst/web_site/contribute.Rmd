@@ -186,15 +186,110 @@ The book has been generated thanks to [`bookdown`](https://bookdown.org/yihui/bo
 
 If you wish to improve the web site, the book, to add new sections on PPB, etc please file an [issue](https://github.com/priviere/PPBstats/issues) or send me an email : pierre@semencespaysannes.org 
 
-The code of the website is on github: https://github.com/priviere/PPBstats/tree/master/inst/web_site
+### Web site of `PPBstats`
+The code of the website is on github: https://github.com/priviere/PPBstats/tree/master/inst/web_site.
+To test any changes on the website:
+```{r,eval=FALSE}
+rmarkdown::render_site("inst/web_site/")
+```
 
+
+### Book
 The code of the book is on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
 
-The code regarding examples of report fo farmers is on github: 
-https://github.com/priviere/PPBstats/tree/master/inst/return_report_web_site
-
-Regarding the book, if you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.24/PPBstats_vignette_docx.zip).
+If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.24/PPBstats_vignette_docx.zip).
 Do not pay attention to strange words such as _#_, _[@blablabla]_, _\@ref_ ... that are `bookdown` specific.
+
+If your familiar with the code, to test any changes on the book:
+```{r,eval=FALSE}
+bookdown::serve_book(dir = "./inst/bookdown/")
+```
+
+Note that it may be useful not to run the book for all files, which is a bit long ...
+You can edit `_bookdown.yml` by adding `rmd_files` argument.
+Below is an exhautive list with all files. 
+
+```{yaml}
+book_filename: "PPBstats_book"
+output_dir: docs
+language:
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: true
+rmd_files: [
+  "index.Rmd",
+  "100-philo_pack.Rmd",
+  "200-network.Rmd",
+  "201-network_intro.Rmd",
+  "202-network_unipart_seedlot.Rmd",
+  "203-network_unipart_location.Rmd",
+  "204-network_bipart.Rmd",
+  "300-agro.Rmd",
+  "301-agro_intro.Rmd",
+  "302-agro_design_expe.Rmd",
+  "303-agro_sow.Rmd",
+  "304-agro_describe_data.Rmd",
+  "305-agro_family_1.Rmd",
+  "306-agro_classic_anova.Rmd",
+  "307-agro_spatial_analysis.Rmd",
+  "308-agro_ibd.Rmd",
+  "309-agro_model_1.Rmd",
+  "310-agro_family_2.Rmd",
+  "311-agro_ammi.Rmd",
+  "312-agro_gge.Rmd",
+  "314-agro_model_2.Rmd",
+  "315-agro_family_3.Rmd",
+  "316-agro_model_3.Rmd",
+  "317-agro_family_4.Rmd",
+  "318-agro_version.Rmd",
+  "319-agro_variance_intra.Rmd",
+  "320-agro_family_5.Rmd",
+  "321-agro_multivariate_analysis.Rmd",
+  "400-organo.Rmd",
+  "401-organo_intro.Rmd",
+  "402-organo_taste.Rmd",
+  "403-organo_hedonic.Rmd",
+  "404-organo_napping.Rmd",
+  "405-organo_rank.Rmd",
+  "500-molecular.Rmd",
+  "600-communicate.Rmd",
+  "700-tail.Rmd",
+  "800-references.Rmd"
+  ]
+
+```
+
+Just keep the file you want to test, for example only documentation regarding network:
+
+```{yaml}
+book_filename: "PPBstats_book"
+output_dir: docs
+language:
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: true
+rmd_files: [
+  "index.Rmd",
+  "100-philo_pack.Rmd",
+  "200-network.Rmd",
+  "201-network_intro.Rmd",
+  "202-network_unipart_seedlot.Rmd",
+  "203-network_unipart_location.Rmd",
+  "204-network_bipart.Rmd",
+  "800-references.Rmd"
+  ]
+```
+
+
+### Web site with examples of reports
+The code regarding examples of report fo farmers is on github: 
+https://github.com/priviere/PPBstats/tree/master/inst/return_report_web_site.
+
+To test any changes on the website:
+```{r,eval=FALSE}
+rmarkdown::render_site("./inst/return_report_web_site/")
+```
+
 
 ## Translate
 

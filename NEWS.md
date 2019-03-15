@@ -101,6 +101,7 @@
 - improve download
 - add email list
 - improve text
+- add in contribution how to run bookdown
 
 ### update RData
 - standardize RData, cf #85
