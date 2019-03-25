@@ -7,7 +7,7 @@ documentclass: book
 bibliography: biblio.bib
 biblio-style: apalike
 link-citations: yes
-github-repo: priviere/PPBstats_vignette
+github-repo: priviere/PPBstats
 description: "Tutorial on how to use the R package PPBstats."
 ---
 

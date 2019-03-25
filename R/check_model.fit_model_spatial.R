@@ -34,7 +34,7 @@
 #' \item \code{\link{check_model}}
 #' \item \code{\link{plot.check_model_spatial}}
 #' \item \code{\link{mean_comparisons}}
-#' \item \code{\link{mean_comparisons.check_model_hedonic}}
+#' \item \code{\link{mean_comparisons.check_model_spatial}}
 #' }
 #'  
 #' @export
