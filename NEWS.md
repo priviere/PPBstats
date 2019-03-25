@@ -32,9 +32,16 @@
 - complete text and pictures, cf #36
 - add generation of report, cf #81
 - add correlation analysis in multivariate part, cf #114
+- create one workflow per family of analysis for agro
+- run cross validation of model_bh_GxE, cf #26
+
 
 ### create return report web site (inst/return_report_web_site)
 - add generation of report, cf #81
+
+
+### update webiste (inst/web_site)
+- add in contribution how to run bookdown
 
 
 # **PPBstats 0.24**
@@ -95,13 +102,11 @@
 - regarding change with plot.data_agro
 - regarding workflow in organoleptic analysis
 - improve text
-- create one workflow per family of analysis for agro
 
 ### update webiste (inst/web_site)
 - improve download
 - add email list
 - improve text
-- add in contribution how to run bookdown
 
 ### update RData
 - standardize RData, cf #85
