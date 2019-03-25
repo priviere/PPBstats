@@ -22,7 +22,7 @@ The function returns the FactoMineR object corresponding to FUN
 \details{
 This function is useful to settle the right data set and quali.sup
 
-More information can be found in the book : https://priviere.github.io/PPBstats_book/family-5.html#multivariate-analysis
+More information can be found in the book : https://priviere.github.io/PPBstats_book/family-5.html
 }
 \author{
 Pierre Riviere
