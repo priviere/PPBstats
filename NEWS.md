@@ -20,6 +20,12 @@
     - plot.check_model_home_away
     - mean_comparisons.check_model_home_away
     - plot.mean_comparisons_model_home_away
+- add classic anova model, cf #45
+    - model_anova
+    - check_model.fit_anova
+    - plot.check_model_anova
+    - mean_comparisons.check_model_anova
+    - plot.mean_comparisons_model_anova
 
 
 ### add RData
@@ -34,6 +40,7 @@
 - add correlation analysis in multivariate part, cf #114
 - create one workflow per family of analysis for agro
 - run cross validation of model_bh_GxE, cf #26
+- add classic anova model, cf #45
 
 
 ### create return report web site (inst/return_report_web_site)

@@ -47,7 +47,8 @@ Depends:
 Suggests:
     ggmcmc,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggcorrplot
 LazyLoad: yes
 LazyData: true
 VignetteBuilder: knitr

@@ -872,17 +872,22 @@ plot_mean_comparisons_freq_anova = function(x, variable, nb_parameters_per_plot 
 
     return(out)
   }
-
+  
+  out = list()
+  
   # Germplasm
   if( !is.null(data_ggplot_LSDbarplot_germplasm) ){
     ggplot_LSDbarplot_germplasm = ggplot_LSDbarplot(data_ggplot_LSDbarplot_germplasm, "germplasm", variable, nb_parameters_per_plot)
+    out = c(out, list("germplasm" = ggplot_LSDbarplot_germplasm))
   } else {
     ggplot_LSDbarplot_germplasm = NULL
   }
 
+  
   # Location
   if( !is.null(data_ggplot_LSDbarplot_location) ){
     ggplot_LSDbarplot_location = ggplot_LSDbarplot(data_ggplot_LSDbarplot_location, "location", variable, nb_parameters_per_plot)
+    out = c(out, list("location" = ggplot_LSDbarplot_location))
   } else {
     ggplot_LSDbarplot_location = NULL
   }
@@ -890,17 +895,11 @@ plot_mean_comparisons_freq_anova = function(x, variable, nb_parameters_per_plot 
   # Year
   if( !is.null(data_ggplot_LSDbarplot_year) ){
     ggplot_LSDbarplot_year = ggplot_LSDbarplot(data_ggplot_LSDbarplot_year, "year", variable, nb_parameters_per_plot)
+    out = c(out, list("year" = ggplot_LSDbarplot_year))
   } else {
     ggplot_LSDbarplot_year = NULL
   }
-
-  # Return results
-  out = list(
-    "germplasm" = ggplot_LSDbarplot_germplasm,
-    "location" = ggplot_LSDbarplot_location,
-    "year" = ggplot_LSDbarplot_year
-  )
-
+  
   return(out)
 }
 
