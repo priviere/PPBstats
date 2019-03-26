@@ -38,6 +38,7 @@
 #' @export
 #'
 plot.check_model_home_away <- function(x){
+  print("ch mo ha")
   out = plot_check_freq_anova(x, variable = x$model_home_away$info$variable)
   return(out)
 }
