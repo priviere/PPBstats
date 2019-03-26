@@ -36,10 +36,7 @@ plot.mean_comparisons_model_home_away <- function(
                                                       x,
                                                       nb_parameters_per_plot = 8, ...
                                                   ){
-  print("mc ha debut")
-    file.create("lqsdhf", file = "~/Documents/testing5.txt")
-
-
+  
     d = x[["data_ggplot_LSDbarplot_version:germplasm"]]
     d = dplyr::arrange(d, means)
     d$max = max(d$means, na.rm = TRUE)
@@ -54,8 +51,6 @@ plot.mean_comparisons_model_home_away <- function(
     fac = "version:germplasm"
     variable = x$info$variable
 
-    print("hi")
-
     out_fac_inter = lapply(d_split, function(dx, fac, STARS, variable){
         p = ggplot(dx, aes(x = parameter, y = means))
         p = p + geom_bar(aes(fill = version), position = "dodge", stat = "identity")
@@ -66,9 +61,7 @@ plot.mean_comparisons_model_home_away <- function(
     }, fac, STARS, variable)
     names(out_fac_inter) = fac
 
-    file.create("lqsdhf", file = "~/Documents/testing.txt")
-
-    write()
+    
 
     out_fac_single = plot_mean_comparisons_freq_anova(x, variable = x$info$variable, nb_parameters_per_plot)
 

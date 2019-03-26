@@ -4,7 +4,7 @@
 \alias{model_home_away}
 \title{Run Home Away model}
 \usage{
-model_home_away()
+model_home_away(data, data_version, variable)
 }
 \arguments{
 \item{data}{The data frame on which the odel is run.

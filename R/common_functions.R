@@ -754,7 +754,6 @@ plot_check_freq_anova = function(x, variable){
   data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
   data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
 
-  print(data_ggplot_skewness_test)
   # 1. Normality ----------
   # 1.1. Histogram ----------
   p = ggplot(data_ggplot_normality, aes(x = r), binwidth = 2)
@@ -1425,7 +1424,6 @@ plot_descriptive_data = function(
     if(plot_type == "barplot") {
       if(is.null(in_col)) {
         mm2 = plyr::ddply(d, "x_axis", summarise, mean = mean(variable, na.rm = TRUE), sd = sd(variable, na.rm = TRUE))
-        print(mm2)
         p = ggplot(mm2, aes(x = x_axis, y = mean)) + geom_bar(stat = "identity")
         limits <- aes(ymax = mean + sd, ymin = mean - sd)
         p = p + geom_errorbar(limits, position = position_dodge(width=0.9), width=0.25)
