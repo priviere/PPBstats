@@ -1,5 +1,20 @@
 # **PPBstats 0.25 under process**
 
+### add home-away and local-foreign
+- correct home-away to local foreign cf #25
+    - model_local_foreign
+	- check_model.fit_model_local_foreign
+	- plot.check_model_local_foreign
+	- mean_comparisons.check_model_local_foreign
+	- plot.mean_comparisons_model_local_foreign
+- add home-away model cf #25
+    - model_home_away
+    - check_model.fit_model_home_away
+    - plot.check_model_home_away
+    - mean_comparisons.check_model_home_away
+    - plot.mean_comparisons_model_home_away
+- add LF_to_HA
+
 ### update fonctions
 - check and format code and roxygen part for each function, DESCRIPTION and NAMESPACE cf #97
 - plot_descriptive_data in common_function regarding data_version_HA and data_version_LF
@@ -28,12 +43,12 @@
 ### update fonctions
 - model_bh_intra_location
     - deal with vec_env_with_no_controls empty
-- format_data_PPBstats.data_network : 
+- format_data_PPBstats.data_network :
     - clean check at the beginning
     - add long and lat for bipart network
     - add format in vertex data for further use with plot.data_network
     - delete optional column alt as it is not needed for map
-- format_data_PPBstats.data_agro : 
+- format_data_PPBstats.data_agro :
     - add long and lat in option
 - format_data_PPBstats.data_napping :
     - delete code arg
@@ -42,7 +57,7 @@
     - add pie on map and network
     - add barplot for unipart network on location
     - display in variable edges of the network for unipart sl on barplot
-    - display in variable edges of the network for unipart sl on map with pies 
+    - display in variable edges of the network for unipart sl on map with pies
     - display output from unipart location on a map
 - plot.data_agro, cf #68 :
     - add plot_type = "map"
@@ -53,7 +68,7 @@
     - add specific class for data_version_SR and data_version_MR
 - common_functions
     - common function for check model regarding frequentist analysis, cf #71
-    
+
 ### add new functions
 - create workflow for napping, cf #72
     - plot.data_organo_napping
@@ -69,7 +84,7 @@
     - plot.check_model_hedonic
     - biplot_data
     - plot.biplot_hedonic
-    - mean_comparisons.check_model_hedonic 
+    - mean_comparisons.check_model_hedonic
     - plot.mean_comparisons_model_hedonic
 - biplot_data, cf #93
     - biplot_data.check_model_GxE
@@ -89,18 +104,18 @@
 
 ### update RData
 - standardize RData, cf #85
-    
+
 
 # **PPBstats 0.23**
 ### update fonctions
-- format_data_PPBstats.R : 
+- format_data_PPBstats.R :
     - when date, add a column with julian day, cf #65
     - add type data_organo_napping and data_organo_hedonic, cf #72
     - format data for data_network, cf #65
         - add code regarding network_split arg
         - better differentiate year, relation_year_start and relation_year_end : cf Rd
     - data_agro_version done
-- describe_data.data_agro.R -> plot.data_agro.R : 
+- describe_data.data_agro.R -> plot.data_agro.R :
     - add raster arg for plot_type, cf #68
     - replace by plot.data_agro.R
     - use plot methods for describe_data cf #79
@@ -128,7 +143,7 @@
     - spatial -> model_spatial
     - model_variance_intra -> model_bh_variance_intra
 
-    
+
 ### add new functions
 - napping.R, cf #72
 - hedonic.R, cf #72
@@ -147,7 +162,7 @@
 - translate Rnw files to Rmd files, format to bookdown, put all files in inst/bookdown (cf #36)
 - explain Skewness and Kurtosis test as well as other output from check model for frequentist analysis (cf #36)
 - text and decision tree improved by Pierre, Isabelle and Camille
-  
+
 ### rename and reformat RData
 following change of model name:
 
@@ -161,16 +176,16 @@ following change of model name:
 - data_network_unipart_sl.RData
 - data_network_unipart_location.RData
 - data_network_bipart.RData
-- data_version_SR 
+- data_version_SR
 - data_version_MR
 
 ### web site
 - add files in inst/web_site, cf #83
 
-  
+
 # **PPBstats 0.22**
 ### update functions
-- model_1.R : 
+- model_1.R :
      - correct bug model_1 (cf #60)
      - better plot for score regarding model 1 (cf #61)
 - workflow regarding spatial analysis : improve and debug
@@ -189,7 +204,7 @@ following change of model name:
 - add new section on variance_intra + update workflow figure, functions table, analysis families
 - update multivariate analysis section
 - update contributions
-  
+
 
 # **PPBstats 0.21**
 ### update functions
@@ -203,40 +218,40 @@ following change of model name:
 - Add the date in format of data #48
 
 - add new functions that implement spatial analysis (cf #20)
-    - spatial.R 
+    - spatial.R
     - check_model.fit_model_spatial.R
     - plot.check_model_spatial.R
     - mean_comparisons.check_model_spatial.R
     - plot.mean_comparisons_model_spatial.R
-  
+
 ### vignette
 - update text, fix typo, update fig (cf #20, #34, #49)
 - add section on spatial analysis
 - add Rmd regarding contributions
-  
 
-# **PPBstats 0.20** 
+
+# **PPBstats 0.20**
 - substitute get_ggplot() by plot() methods (#21)
 - update vignette and cached results
 
 
-# **PPBstats 0.19** 
+# **PPBstats 0.19**
 ### update functions
 - add add_stars_version() in ggplot_mean_comparisons_model_1.R (cf #35)
 - ok + update vignette (cf #51)
 
-  
-# **PPBstats 0.18** 
+
+# **PPBstats 0.18**
 ### update vignette
 - cf #36 : add decision tree + update
 - reorganise introduction of agro section
 
-# **PPBstats 0.17** 
+# **PPBstats 0.17**
 ### add new functions
 - model_variance_intra.R
 - check_model_model_variance_intra.R
 - ggplot_check_model_model_variance_intra.R
-- mean_comparisons_model_variance_intra.R 
+- mean_comparisons_model_variance_intra.R
 
 ### update function
 - check_model_model_1.R : add location and year for data_env_whose_param_did_not_converge
@@ -247,7 +262,7 @@ following change of model name:
 - changes in text and exemple regarding functions udaptes
 
 
-# **PPBstats 0.16** 
+# **PPBstats 0.16**
 ### update functions
 - predict_the_past_model_2.R : add estimated and predicted MCMC + parameter statuts
 - mean_comparisons_predict_the_past_model_2.R : add parameter statuts in mean comparisons outputs
@@ -257,20 +272,20 @@ following change of model name:
 - add R version
 - new sections : network, agronomic, organoleptic and molecular
 - add IBD analysis section
-  
 
-# **PPBstats 0.15** 
+
+# **PPBstats 0.15**
 ### update functions
 - biplot_GxE.R and ggplot_biplot_GxE.R : add interaction matrix
 - GxE.R and GxE_build_interaction_matrix.R : model writing
 
 ### update vignette
 - regarding changes in R code
-- spelling 
+- spelling
 - contributions and aknowledgement
 
 
-# **PPBstats 0.14** 
+# **PPBstats 0.14**
 Huge refactoring of the code in several functions for each steps of the analysis
 
 ### rename function
@@ -285,19 +300,19 @@ Huge refactoring of the code in several functions for each steps of the analysis
 
 ### add new functions
 - biplot_GxE.R
-  
+
 - check_model_model_1.R
 - check_model_model_2.R
 - check_model_GxE.R
-  
+
 - mean_comparisons_GxE.R
 - mean_comparisons_model_1.R
 - mean_comparisons_model_2.R
 - mean_comparisons_predict_the_past_model_2.R
-  
+
 - parameter_groups_GxE.R
 - parameter_groups_model_2.R
-  
+
 - ggplot_biplot_GxE.R
 - ggplot_check_model_model_1.R
 - ggplot_check_model_model_2.R
@@ -315,7 +330,7 @@ Huge refactoring of the code in several functions for each steps of the analysis
 - update regarding changes in R code
 
 
-# **PPBstats 0.13** 
+# **PPBstats 0.13**
 ### add new functions
 - describe_data.R
 - extra_functions.R
@@ -326,7 +341,7 @@ Huge refactoring of the code in several functions for each steps of the analysis
 
 ### rename function
 - AMMI.R becomes GxE.R
-  
+
 ### update functions
 - MC.R
 - get.ggplot.R: manage nb_parameters_per_plot for ggplot.type == "biplot-alpha-beta"
@@ -338,58 +353,58 @@ Huge refactoring of the code in several functions for each steps of the analysis
 - add new sections
 
 
-# **PPBstats 0.12** 
-- delete all the pdf in the file that are generated by Rnw 
+# **PPBstats 0.12**
+- delete all the pdf in the file that are generated by Rnw
 in order to earn space on github
 
 - change the nomenclature of the version
 
 
-# **PPBstats 0.11.1** 
+# **PPBstats 0.11.1**
 - update some little bugs regarding tests
 
 ### update functions
 - get.ggplot.R
      - debug data_version regarding real data set
-    
 
-# **PPBstats 0.11.0** 
+
+# **PPBstats 0.11.0**
 - update some little bugs regarding tests
 
 ### update the vignette
 - add example for data_version
 - add example for ggplot.type = "biplot-alpha-beta"
-  
 
-# **PPBstats 0.10.2** 
+
+# **PPBstats 0.10.2**
 ### update functions
 - get.ggplot.R
      - add data_2 argument
      - add ggplot.type = "biplot" which is possible for model 2
 
 
-# **PPBstats 0.10.1** 
+# **PPBstats 0.10.1**
 - update some little bugs regarding tests
 
 ### update functions
 - get.ggplot.R : add data_version argument
 - get.mean.comparisons.R
 - predict.the.past.R : take into account when there are no parameters in the MCMC
-  
+
 ### add new functions
 - AMMI.R
 - AMMI_called_functions.R
 
 ### add new data set
 - data_version.RData
-  
 
-# **PPBstats 0.10.0** 
+
+# **PPBstats 0.10.0**
 ### vignette
 - update the vignette following previous developments
 
 
-# **PPBstats 0.9.2** 
+# **PPBstats 0.9.2**
 - fix little bugs
 - add the presence.absence.matrix for the model in FWH, analyse.outputs and predict.the.past
 - add model1.data_env_whose_param_did_not_converge in analyse.outputs and get.ggplot
@@ -399,10 +414,10 @@ in order to earn space on github
 - fix huge bug in MC where the mean of the observation were not correctly done
 
 
-# **PBstats 0.9.1** 
+# **PBstats 0.9.1**
 - little changes in vignette and readme
 - little changes in the comments of some functions
 
 
-# **PPBstats 0.9** 
+# **PPBstats 0.9**
 - first version on Github
