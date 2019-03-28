@@ -3,10 +3,10 @@
 #' @description
 #' \code{model_home_away} runs home away model
 #'
-#' @param data The data frame on which the odel is run.
+#' @param data The data frame on which the model is run.
 #' It should come from \code{\link{format_data_PPBstats.data_agro}}
 #'
-#' @param data_version It shoulf come from \code{\link{format_data_PPBstats.data_agro_version}} with home and away in version
+#' @param data_version It should come from \code{\link{format_data_PPBstats.data_agro_version}} with home and away in version
 #'
 #' @param variable variable to analyse
 #'
@@ -24,7 +24,7 @@
 #' @details
 #' Find details in the book \href{https://priviere.github.io/PPBstats_book/family-4.html#family-4}{here}.
 #' @author
-#' Pierre Riviere et Gaelle Van Franck
+#' Pierre Riviere and Gaelle Van Frank
 #'
 #' @seealso
 #' \itemize{
