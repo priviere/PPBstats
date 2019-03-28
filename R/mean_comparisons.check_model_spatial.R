@@ -46,16 +46,17 @@ mean_comparisons.check_model_spatial <- function(
   ...
 ){
   # 1. Get data ----------
-  data = x$spatial$info$data
-  variable = x$spatial$info$variable
+  info = x$spatial$info
+  data = info$data
+  variable = info$variable
   summary_model = x$spatial$model$summary
   
   # 2. Mean comparison on germplasm ----------
   lsd = agricolae::LSD.test(
     y = data[,variable],
     trt = data$germplasm,
-    DFerror = as.numeric(as.character(summary_model$p.table.dim["Residual", "Effective"])), 
-    MSerror = x$spatial$model$var_res, 
+    DFerror = x$spatial$model$df_residual, 
+    MSerror = x$spatial$model$MSerror, 
     alpha = alpha, 
     p.adj = p.adj
     )
@@ -71,7 +72,7 @@ mean_comparisons.check_model_spatial <- function(
   
   # 3. return results
   out <- list(
-    "info" = x$info,
+    "info" = info,
     "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm
   )
   

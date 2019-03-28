@@ -8,7 +8,6 @@
 #' 
 #' @param variable variable to analyse
 #' 
-#' @param genotype.as.random TRUE of FALSE. TRUE by default.
 #' 
 #' @details 
 #' The model is run with the SpATS function of package SpATS. 
@@ -22,10 +21,10 @@
 #'  \item info : a list with variable
 #'  \item model : 
 #'   \itemize{
-#'    \item model : the output from SpATS function
-#'    \item summary : summary of the model
-#'    \item germplasm_effects : germplasm effects, BLUE or BLUP depending if it is fixed or random effect
-#'    \item var_res : variance of the residuals
+#'    \item model: the output from SpATS function
+#'    \item summary: summary of the model
+#'    \item df_residuals: effective degree of freedom of the residuals
+#'    \item MSerror: Mean Square error
 #'   }
 #' }
 #' 
@@ -44,7 +43,7 @@
 #' 
 #' @export
 #' 
-model_spatial = function(data, variable, genotype.as.random = TRUE){
+model_spatial = function(data, variable){
 
   # 1. Error messages, update arg ----------
   if(!is(data, "data_agro")){ stop(substitute(data), " must be formated with type = \"data_agro\", see PPBstats::format_data_PPBstats().") }
@@ -63,31 +62,27 @@ model_spatial = function(data, variable, genotype.as.random = TRUE){
     SpATS::SpATS(
     response = "variable", 
     genotype = "germplasm", 
-    genotype.as.random = genotype.as.random,
+    genotype.as.random = TRUE,
     spatial = ~ PSANOVA(col, row, nseg = c(nlevels(data_tmp$X), nlevels(data_tmp$Y))),
     random = ~ col_f + row_f, 
     data = data_tmp)
   )
   
-  # 4. Get effetcs ----------
-  intercept = mean(data$variable, na.rm = TRUE)
-  g_effect = m$coeff[is.element(names(m$coeff), levels(data$germplasm))]
-  g_effect = sort(g_effect + intercept)
+  # 4. MSerror for mean comparisons ----------
+  s = summary.SpATS(m, which = "dimensions")
+  deviance_model = deviance(m)
+  df_residual = as.numeric(s$p.table.dim["Residual", "Effective"])
+  MSerror = deviance_model / df_residual
   
-  # 5. Residuals variance ----------
-  s = summary.SpATS(m, which = "variances")
-  var_res = s$psi[1]
-  
-  # 6. Return results ----------
+  # 5. Return results ----------
   out = list(
     "info" = list("variable" = variable, "data" = data), 
     "model" = list(
       "model" = m,
       "summary" = summary(m),
-      "germplasm_effects" = g_effect,
-      "var_res" = var_res
+      "df_residual" = df_residual,
+      "MSerror" = MSerror
     )
-    
   )
   
   class(out) <- c("PPBstats", "fit_model_spatial")

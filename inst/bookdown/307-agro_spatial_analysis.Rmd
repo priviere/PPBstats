@@ -1,7 +1,5 @@
 ### Spatial analysis (**M4b**) {#spatial-analysis}
 
-Note that this section is still under development : cf https://github.com/priviere/PPBstats/issues/20
-
 #### Theory of the model
 
 The experimental design used is the row-column design (**D3**).
@@ -46,28 +44,17 @@ Much more information regarding the model as well as example of R package `SpATS
 #### Format the data
 
 ```{r}
-p_case2 = design_experiment(
-  location = "Location-3",
-  year = "2016",
-  expe.type = "row-column",
-  germplasm = paste("germ", c(1:20), sep = ":"),
-  controls = "germ:ctrl",
-  nb.controls.per.block = 7,
-  nb.blocks = 1,
-  nb.cols = 7)
-
-d = p_case2$`row-column`$data.frame
-d$variable = as.numeric(rnorm(nrow(d), 50, 10))
-d = format_data_PPBstats(d, type = "data_agro")
+data("data_model_spatial")
+data_model_spatial = format_data_PPBstats(data_model_spatial, type = "data_agro")
 ```
 
 
 #### Run the model
 
-By default, germplasm are settled as random (`genotype.as.random = TRUE`).
+By default, germplasm are settled as random.
 
 ```{r}
-out_spatial = model_spatial(data = d, variable = "variable")
+out_spatial = model_spatial(data = data_model_spatial, variable = "y1")
 ```
 
 `out_spatial` is a list containing two elements :
@@ -78,7 +65,7 @@ out_spatial$info$variable
 
 head(out_spatial$info$data)
 ```
-- `model` a list with five elements :
+- `model` a list with four elements :
     - `model`
     ```{r}
     out_spatial$model$model
@@ -87,11 +74,7 @@ head(out_spatial$info$data)
     ```{r}
     out_spatial$model$summary
     ```
-    - `germplasm_effects`
-    ```{r}  
-    out_spatial$model$germplasm_effects
-    ```
-    - `var_res` the variance of the residuals
+     - `var_res` the variance of the residuals
     ```{r}
     out_spatial$model$df_residual
     ```
@@ -178,7 +161,7 @@ The error I (alpha) and the alpha correction are displayed in the title.
 ```{r}
 pg = p_out_mean_comparisons_spatial$germplasm
 names(pg)
-pg$`1`
+pg$`23`
 ```
 
 #### Apply the workflow to several variables
@@ -186,8 +169,8 @@ pg$`1`
 If you wish to apply the spatial workflow to several variables, you can use `lapply` with the following code :
 
 ```{r}
-workflow_spatial = function(x){
-  out_spatial = model_spatial(data = d, variable = "variable")
+workflow_spatial = function(x, data){
+  out_spatial = model_spatial(data = data, variable = x)
   
   out_check_spatial = check_model(out_spatial)
   p_out_check_spatial = plot(out_check_spatial)
@@ -208,7 +191,7 @@ workflow_spatial = function(x){
 ## Not run 
 # vec_variables = c("y1", "y2", "y3")
 #
-# out = lapply(vec_variables, workflow_spatial)
+# out = lapply(vec_variables, workflow_spatial, data)
 # names(out) = vec_variables
 ```
 
