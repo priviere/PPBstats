@@ -10,7 +10,7 @@
         - Rd + book
 - format_data_PPBstats.data_network: take into accuont when there are not lat and long columns
 - pmap in common_functions : use stamen instead of google on map, cf #90
-
+- implement spatial analysis, cf #20 
 
 ### add new functions
 - HA_to_LF, cf #25
@@ -30,6 +30,7 @@
 
 ### add RData
 - data_version_HA, cf #25
+- data_model_spatial, cf #20 
 
 
 ### update vignette (inst/bookdown)
@@ -41,6 +42,7 @@
 - create one workflow per family of analysis for agro
 - run cross validation of model_bh_GxE, cf #26
 - add classic anova model, cf #45
+- update model spatial section, cf #20 
 
 
 ### create return report web site (inst/return_report_web_site)
