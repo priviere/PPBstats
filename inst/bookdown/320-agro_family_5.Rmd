@@ -1,7 +1,7 @@
 ## Family 5 of analysis : multivariate analysis {#family-5}
 
 Multivariate analysis can answer to multiple objective.
-On of then can be to study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits 
+One of them can be to study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits 
 
 ### Decision tree
 
@@ -34,5 +34,3 @@ knitr::include_graphics("figures/main-functions-agro-family-5.png")
 | `multivariate` | Run multivariate analysis with functions from `FactoMineR` |
 | `factoextra` |  Check outputs and results with the `factoextra` package |
 Table: (\#tab:function-descriptions-workflow-family-5) Function description.
-
-

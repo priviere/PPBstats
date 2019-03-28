@@ -51,7 +51,7 @@ p_case2 = design_experiment(
   year = "2016",
   expe.type = "row-column",
   germplasm = paste("germ", c(1:20), sep = ":"),
-  controls = "toto",
+  controls = "germ:ctrl",
   nb.controls.per.block = 7,
   nb.blocks = 1,
   nb.cols = 7)
