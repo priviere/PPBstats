@@ -15,7 +15,7 @@ $Y_{ijk} = \alpha_{i} + r_{j} + c_{k} + f(u,v) + \varepsilon_{ijk}; \quad \varep
 With,
 
 - $Y_{ijk}$ the phenotypic value for germplasm $i$, row $j$ and column $k$
-- $\alpha_{i}$ the effect of germplasm $i$
+- $\alpha_{i}$ the random effect of germplasm $i$
 - $r_{j}$ the effect of row $j$ 
 - $c_{k}$ the effect of col $k$ 
 - $f(u,v)$ the smooth bivariate function that simultaneously accounts for the spatial trend across both directions of the fiel (i.e. rows and columns)
@@ -51,7 +51,7 @@ p_case2 = design_experiment(
   year = "2016",
   expe.type = "row-column",
   germplasm = paste("germ", c(1:20), sep = ":"),
-  controls = "toto",
+  controls = "germ:ctrl",
   nb.controls.per.block = 7,
   nb.blocks = 1,
   nb.cols = 7)
@@ -93,7 +93,10 @@ head(out_spatial$info$data)
     ```
     - `var_res` the variance of the residuals
     ```{r}
-    out_spatial$model$var_res
+    out_spatial$model$df_residual
+    ```
+    ```{r}
+    out_spatial$model$MSerror
     ```
 
 #### Check and visualize model outputs
