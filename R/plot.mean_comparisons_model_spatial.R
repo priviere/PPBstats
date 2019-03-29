@@ -71,9 +71,15 @@ plot.mean_comparisons_model_spatial <- function(
     ggplot_LSDbarplot_germplasm = NULL
   }
   
-  # 6. return results ----------
+  # 4. Germplasm BLUPs with confidence intervalle
+  pre = x$blups_prediction
+  p_blup = ggplot(pre, aes(y = predicted.values, x = germplasm)) + geom_point() 
+  p_blup = p_blup + geom_errorbar(aes(ymin = lower, ymax = upper)) + coord_flip()
+  
+  # 5. return results ----------
   out = list(
-    "germplasm" = ggplot_LSDbarplot_germplasm
+    "germplasm_blup" = p_blup,
+    "germplasm_barplot" = ggplot_LSDbarplot_germplasm
   )
   
   return(out)

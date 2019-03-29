@@ -151,16 +151,20 @@ out_mean_comparisons_spatial = mean_comparisons(out_check_spatial, p.adj = "bonf
 p_out_mean_comparisons_spatial = plot(out_mean_comparisons_spatial)
 ```
 
-`p_out_mean_comparisons_spatial` is a list of one elements with barplots :
+`p_out_mean_comparisons_spatial` is a list of two elements
 
+- `germplasm_blup` whih represent the BLUPs with their confidence intervalle
+```{r}
+p_out_mean_comparisons_spatial$germplasm_blup
+```
+
+- `germplasm_barplot`. 
 For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
 Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
 The error I (alpha) and the alpha correction are displayed in the title. 
 
-`germplasm` : mean comparison for germplasm
 ```{r}
-pg = p_out_mean_comparisons_spatial$germplasm
-names(pg)
+pg = p_out_mean_comparisons_spatial$germplasm_barplot
 pg$`23`
 ```
 
@@ -194,5 +198,4 @@ workflow_spatial = function(x, data){
 # out = lapply(vec_variables, workflow_spatial, data)
 # names(out) = vec_variables
 ```
-
 

@@ -39,6 +39,8 @@
 #' 
 #' @import agricolae
 #' 
+#' @importFrom SpATS predict.SpATS
+#' 
 mean_comparisons.check_model_spatial <- function(
   x, 
   alpha = 0.05,
@@ -51,10 +53,16 @@ mean_comparisons.check_model_spatial <- function(
   variable = info$variable
   summary_model = x$spatial$model$summary
   
-  # 2. Mean comparison on germplasm ----------
+  # 2. Get prediction of BLUPs
+  pre = predict.SpATS(out_spatial$model$model, which = "germplasm")
+  pre$germplasm = factor(pre$germplasm, levels = pre$germplasm[order(pre$predicted.values)])
+  pre$lower = pre$predicted.values-pre$standard.errors
+  pre$upper = pre$predicted.values+pre$standard.errors
+
+  # 3. Mean comparison on germplasm ----------
   lsd = agricolae::LSD.test(
-    y = data[,variable],
-    trt = data$germplasm,
+    y = pre$predicted.values,
+    trt = pre$germplasm,
     DFerror = x$spatial$model$df_residual, 
     MSerror = x$spatial$model$MSerror, 
     alpha = alpha, 
@@ -73,6 +81,7 @@ mean_comparisons.check_model_spatial <- function(
   # 3. return results
   out <- list(
     "info" = info,
+    "blups_prediction" = pre,
     "data_ggplot_LSDbarplot_germplasm" = data_ggplot_LSDbarplot_germplasm
   )
   
