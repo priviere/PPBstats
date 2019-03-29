@@ -22,7 +22,7 @@ NULL
 #' Simulated data set for thousand kernel weight (tkw) of bread wheat to test model_bh_intra_location model
 #'
 #' @description
-#' A dataset containing one variable (tkw) and its date (tkw$date) 
+#' A dataset containing one variable (tkw) and its date (tkw_date) 
 #' and values for the following factors: location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create the dataset are also in columns: mu_ij, beta_jk, epsilon_ijk and sigma_j
 #'
@@ -45,7 +45,7 @@ NULL
 #'
 #' @description
 #' A dataset containing three variables (y1, y2 and y3) 
-#' with their respective dates (y1$date, y2$date and y3$date)
+#' with their respective dates (y1_date, y2_date and y3_date)
 #' and values for the following factors: location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create y1 are also in columns: alpha_i-1, beta_i-1, and theta_j-1.
 #' 
@@ -121,7 +121,7 @@ NULL
 #'
 #' @description
 #' A dataset containing five variables (y1, y2, y3, desease, vigor) 
-#' with their respective dates for the first three (y1$date, y2$date and y3$date)
+#' with their respective dates for the first three (y1_date, y2_date and y3_date)
 #' and values for the following factors: location, year, germplasm, block, X and Y. 
 #' As well as vlues of lat and long in order to get map.
 #'
