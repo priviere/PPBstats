@@ -1564,7 +1564,7 @@ plot_descriptive_data = function(
                           plot_type){
 
                    if(!is.null(x_axis)){
-                     if( x_axis == "date_julian") { x_axis = paste(variable, "$date_julian", sep = "") }
+                     if( x_axis == "date_julian") { x_axis = paste(variable, "_date_julian", sep = "") }
                    }
 
                    d = reshape_data_split_x_axis_in_col(d, variable, labels_on,

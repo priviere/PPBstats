@@ -7,7 +7,7 @@
 #'  It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
 #'  The variables can be linked to their corresponding dates. 
 #'  The dates are associated to their corresponding variable by $.
-#'  For example the date associated to variable y1 is y1$date.
+#'  For example the date associated to variable y1 is y1_date.
 #'  The date must have format year-month-day, e.g. 2017-12-05
 #'  
 #' @author Pierre Riviere
@@ -50,7 +50,7 @@ format_data_PPBstats.data_agro = function(data){
   }
   
   # check and format date
-  vec_date = grep("\\$date", colnames(d))
+  vec_date = grep("_date", colnames(d))
   if( length(vec_date) == 0 ) { vec_date = NULL }
   
   if(!is.null(vec_date)){

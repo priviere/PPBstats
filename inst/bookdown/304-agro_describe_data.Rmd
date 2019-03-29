@@ -166,7 +166,7 @@ p = plot(
   x_axis = "date_julian",
   in_col = "location"
 )
-p$y1$`y1$date_julian-1|location-1`
+p$y1$`y1_date_julian-1|location-1`
 ```
 
 
