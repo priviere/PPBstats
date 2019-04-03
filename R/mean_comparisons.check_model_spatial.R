@@ -54,7 +54,7 @@ mean_comparisons.check_model_spatial <- function(
   summary_model = x$spatial$model$summary
   
   # 2. Get prediction of BLUPs
-  pre = predict.SpATS(out_spatial$model$model, which = "germplasm")
+  pre = predict.SpATS(x$spatial$model$model, which = "germplasm")
   pre$germplasm = factor(pre$germplasm, levels = pre$germplasm[order(pre$predicted.values)])
   pre$lower = pre$predicted.values-pre$standard.errors
   pre$upper = pre$predicted.values+pre$standard.errors
