@@ -1,7 +1,12 @@
 # Communicate results to farmers {#com}
 
 Within a PPB programme, it is important to give results back to the farmers in order to discuss  and accompagny them in their selection.
-This can be done through the creation of a report with results coming from the analysis.
+This can be done through the creation of a report with results coming from the analysis as described in section \@ref(com-technic).
+
+The results coming from the analysis must be taken with caution by a group or farmers as it can influence collective organisation as described in section \@ref(com-rules).
+
+
+## Technical aspects {#com-technic}
 
 The workflow to create the report follow three steps:
 
@@ -10,9 +15,9 @@ The workflow to create the report follow three steps:
 3. run `rmarkdown::render()` in order to generate report for each location
 
 
-## Run the analysis
+### Run the analysis
 
-### Format data
+#### Format data
 
 ```{r}
 data("data_model_GxE")
@@ -20,7 +25,7 @@ data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
 ```
 
 
-### Descriptive plots for each location
+#### Descriptive plots for each location
 
 ```{r}
 vec_locations = levels(data_model_GxE$location)
@@ -38,7 +43,7 @@ names(list_hist_locations) = vec_locations
 
 Note that it is important that each element of the list refers to data of a given location in order to catch the right information in the next step when generating the report.
 
-### GGE model for all locations
+#### GGE model for all locations
 
 The function `workflow_gxe()` is coming from section \@ref(ammi).
 
@@ -48,7 +53,7 @@ res_gge = lapply(vec_variables, workflow_gxe, "GGE")
 names(res_gge) = vec_variables
 ```
 
-### Create a list with all results
+#### Create a list with all results
 
 ```{r}
 res = list("hist_locations" = list_hist_locations, 
@@ -57,7 +62,7 @@ res = list("hist_locations" = list_hist_locations,
 ```
 
 
-## Create a `.Rmd` template
+### Create a `.Rmd` template
 
 Your template call two objects:
 
@@ -112,7 +117,7 @@ res$res_gge$y1$p_out_biplot_gxe$biplot$which_won_where
 
 ````
 
-## Generate a report for each location
+### Generate a report for each location
 
 To generate the report, you need the `R` package `rmarkdown` installed.
 In the following example, the output is `.html`. 
@@ -141,4 +146,26 @@ The report generated can be visualized for
 
 
 More examples of worklows with script, template and outputs can be found [here](https://priviere.github.io/PPBstats_return_report_web_site).
+
+
+## Organisational aspects on collective work {#com-rules}
+
+Data analysis can influense the organisation of a group.
+It can have advantages and disadvantages.
+
+One advantage is that the results are discussed by all actors in the group bring information to the group and provide support for discussions between research teams and practicioners collectives
+
+On the other hand, the analyzes are necessarily reductionist.
+Be careful to discuss the results with all the actors in the group to avoid analyzes disconnected to the context. 
+Be careful also not to constrain too much or standardize the practices to meet statistical standards.
+
+The decision of the farmer to select is based on different elements for example
+
+- his experience on his farm
+- informal exchanges with farmers, researchers, technicians, ... 
+- information analysed with statistics
+
+What is the place of these elements in the decision to select a variety or a bouquet of spikes ?
+
+It seems important to discuss these issues when sharing results among farmers, researchers and facilitators.
 
