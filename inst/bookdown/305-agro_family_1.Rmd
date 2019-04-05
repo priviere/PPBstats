@@ -27,6 +27,8 @@ Figure \@ref(fig:main-workflow-family-1) displays the functions and their relati
 Table \@ref(tab:function-descriptions-workflow-family-1) describes each of the main functions.
 
 You can have more information for each function by typing `?function_name` in your R session.
+Note that `check_model()`, `mean_comparison()` and `plot()` are S3 method.
+Therefore, you should type `?check_model`, `?mean_comparison` or `?plot.PPBstats` to have general features and then see in details for specific functions.
 
 ```{r main-workflow-family-1, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow of family 1."}
 knitr::include_graphics("figures/main-functions-agro-family-1.png")

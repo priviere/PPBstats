@@ -24,6 +24,8 @@ Figure \@ref(fig:main-workflow-network) displays the functions and their relatio
 Table \@ref(tab:function-descriptions-workflow-network) describes each of the functions.
 
 You can have more information for each function by typing `?function_name` in your R session.
+Note that `plot()` is S3 method.
+Therefore, you should type `?plot.PPBstats` to have general features and then see in details for specific functions.
 
 ```{r main-workflow-network, out.width='80%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
 knitr::include_graphics("figures/main-functions-network.png")
