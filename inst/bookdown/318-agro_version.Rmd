@@ -55,8 +55,6 @@ Here, in location `loc-1`, `germ-25` and `germ-26` on one hand and `germ-1` and 
 
 Lets' make the plots:
 ```{r, warning=FALSE}
-load("~/Documents/data_PPBstats/out_mean_comparisons_model_bh_intra_location_mu.RData")
-
 p_barplot_mu_version = plot(
   out_mean_comparisons_model_bh_intra_location_mu,
   data_version = data_version,
