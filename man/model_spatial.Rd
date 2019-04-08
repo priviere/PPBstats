@@ -4,15 +4,13 @@
 \alias{model_spatial}
 \title{Run spatial row and column model}
 \usage{
-model_spatial(data, variable, genotype.as.random = TRUE)
+model_spatial(data, variable)
 }
 \arguments{
 \item{data}{The data frame on which the model is run. 
 It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
 \item{variable}{variable to analyse}
-
-\item{genotype.as.random}{TRUE of FALSE. TRUE by default.}
 }
 \value{
 The function returns a list with two elements :
@@ -20,10 +18,10 @@ The function returns a list with two elements :
  \item info : a list with variable
  \item model : 
   \itemize{
-   \item model : the output from SpATS function
-   \item summary : summary of the model
-   \item germplasm_effects : germplasm effects, BLUE or BLUP depending if it is fixed or random effect
-   \item var_res : variance of the residuals
+   \item model: the output from SpATS function
+   \item summary: summary of the model
+   \item df_residuals: effective degree of freedom of the residuals
+   \item MSerror: Mean Square error
   }
 }
 }

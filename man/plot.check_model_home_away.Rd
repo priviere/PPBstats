@@ -19,7 +19,7 @@
   \item qqplot
   }
  \item variability_repartition : pie with repartition of SumSq for each factor
- \item variance_intra_germplasm : repartition of the residuals for each germplasm (see Details for more information)
+ \item variance_intra_location : repartition of the residuals for each location (see Details for more information)
  }
 }
 \description{
@@ -28,19 +28,19 @@
 \details{
 S3 method.
 
-variance_intra_germplasm represents the repartition of the residuals for each germplasm.
+variance_intra_location represents the repartition of the residuals for each location.
    This has to been seen with caution:
    \itemize{
-    \item If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
-    \item If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
-    With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+    \item If location have no intra-location variance (i.e. pure line or hybrides) then the distribution of each location represent only the micro-environmental variation.
+    \item If location have intra-location variance (i.e. population such as landraces for example) then the distribution of each location represent the micro-environmental variation plus the intra-location variance.
+    With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each location represent the intra-location variance.
    }
-   
+
 See example in the book \href{https://priviere.github.io/PPBstats_book/family-4.html#family-4}{here}
 }
 \seealso{
 \code{\link{check_model.fit_model_home_away}}
 }
 \author{
-Pierre Riviere
+Pierre Riviere and Baptiste Rouger
 }
