@@ -28,7 +28,7 @@
 #'  }
 #' }
 #'
-#' @author Pierre Riviere
+#' @author Pierre Riviere and Baptiste Rouger
 #'
 #' @seealso
 #' \itemize{

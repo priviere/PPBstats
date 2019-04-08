@@ -26,6 +26,8 @@ knitr::include_graphics("figures/warning.png")
 
 **Gaelle Van Frank^2^** tested the package and updated the code regarding some functions
 
+**Baptiste Rouger^2^** tested the package, updated and wrote code regarding some functions
+
 **Olivier David^3^** wrote the `JAGS` code and reviewed the R code and the book regarding some functions
 
 **Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section regarding contributions.

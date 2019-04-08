@@ -31,7 +31,7 @@
 #'  \item variance_intra_location : repartition of the residuals for each location (see Details for more information)
 #'  }
 #'
-#' @author Pierre Riviere
+#' @author Pierre Riviere and Baptiste Rouger
 #'
 #' @seealso \code{\link{check_model.fit_model_home_away}}
 #'

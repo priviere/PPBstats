@@ -28,7 +28,7 @@
 #'    \item data_ggplot_LSDbarplot_year
 #'   }
 #'
-#' @author Pierre Riviere
+#' @author Pierre Riviere and Baptiste Rouger
 #'
 #' @seealso
 #' \itemize{

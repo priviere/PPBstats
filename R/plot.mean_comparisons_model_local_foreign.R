@@ -26,7 +26,7 @@
 #'  \item version : mean comparison for local and foreign
 #'  }
 #'
-#' @author Pierre Riviere
+#' @author Pierre Riviere and Baptiste Rouger
 #'
 #' @seealso \code{\link{mean_comparisons.check_model_local_foreign}}
 #'

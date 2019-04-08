@@ -24,7 +24,7 @@
 #' @details
 #' Find details in the book \href{https://priviere.github.io/PPBstats_book/family-4.html#family-4}{here}.
 #' @author
-#' Pierre Riviere and Gaelle Van Frank
+#' Pierre Riviere and Gaelle Van Frank and Baptiste Rouger
 #'
 #' @seealso
 #' \itemize{

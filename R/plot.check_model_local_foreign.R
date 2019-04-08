@@ -31,7 +31,7 @@
 #'  \item variance_intra_germplasm : repartition of the residuals for each germplasm (see Details for more information)
 #'  }
 #'
-#' @author Pierre Riviere
+#' @author Pierre Riviere and Baptiste Rouger
 #'
 #' @seealso \code{\link{check_model.fit_model_local_foreign}}
 #'
