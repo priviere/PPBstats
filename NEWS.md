@@ -1,20 +1,5 @@
 # **PPBstats 0.25 under process**
 
-### add home-away and local-foreign
-- correct home-away to local foreign cf #25
-    - model_local_foreign
-	- check_model.fit_model_local_foreign
-	- plot.check_model_local_foreign
-	- mean_comparisons.check_model_local_foreign
-	- plot.mean_comparisons_model_local_foreign
-- add home-away model cf #25
-    - model_home_away
-    - check_model.fit_model_home_away
-    - plot.check_model_home_away
-    - mean_comparisons.check_model_home_away
-    - plot.mean_comparisons_model_home_away
-- add LF_to_HA
-
 ### update fonctions
 - check and format code and roxygen part for each function, DESCRIPTION and NAMESPACE cf #97
 - plot_descriptive_data in common_function regarding data_version_HA and data_version_LF
@@ -30,12 +15,19 @@
 
 ### add new functions
 - HA_to_LF, cf #25
+- add LF_to_HA, cf #25
 - create workflow for home away model, cf #25
     - model_home_away
     - check_model.fit_model_home_away
     - plot.check_model_home_away
     - mean_comparisons.check_model_home_away
     - plot.mean_comparisons_model_home_away
+- create workflow for local foreign cf #25
+    - model_local_foreign
+	  - check_model.fit_model_local_foreign
+	  - plot.check_model_local_foreign
+	  - mean_comparisons.check_model_local_foreign
+	  - plot.mean_comparisons_model_local_foreign
 - add classic anova model, cf #45
     - model_anova
     - check_model.fit_anova
