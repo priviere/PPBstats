@@ -131,9 +131,9 @@ check_convergence = function(out.model, model_name = "model1"){
 
   if( length(conv_not_ok) > 0 ) {
     message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : ", paste(conv_not_ok, collapse = ", ") ,". Therefore, they are not present in MCMC output.")
-    } else {
+  } else {
     message("The two MCMC for each parameter converge thanks to the Gelman-Rubin test.")
-    }
+  }
   OUT = list("MCMC" = MCMC, "sq_MCMC" = sq_MCMC, "conv_not_ok" = conv_not_ok)
   return(OUT)
 }
@@ -169,7 +169,7 @@ get_mcmc_traceplot_density = function(MCMC){
     mcmc = as.data.frame(matrix(MCMC, ncol = 1))
     colnames(mcmc) = names(MCMC)[1]
     MCMC = mcmc
-    }
+  }
   conv_not_ok = colnames(MCMC)
   vec.plot = NULL
   for (para in conv_not_ok) {
@@ -323,7 +323,7 @@ reshape_data_split_x_axis_in_col = function(
     d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
   } else {
     d_var = d[,vec_variables]
-    }
+  }
 
   # get rid off rows with only NA
   tokeep = apply(d_var, 1, function(x){length(which(is.na(x))) != length(x)})
@@ -723,15 +723,15 @@ check_freq_anova = function(model){
   data_ggplot_var_intra = data.frame(x = model$model$germplasm, y = model$residuals)
 
   data_ggplot = list(
-      "data_ggplot_residuals" = list(
-        "data_ggplot_normality" = data_ggplot_normality,
-        "data_ggplot_skewness_test" = data_ggplot_skewness_test,
-        "data_ggplot_kurtosis_test" = data_ggplot_kurtosis_test,
-        "data_ggplot_qqplot" = data_ggplot_qqplot
-      ),
-      "data_ggplot_variability_repartition_pie" = data_ggplot_variability_repartition_pie,
-      "data_ggplot_var_intra" = data_ggplot_var_intra
-    )
+    "data_ggplot_residuals" = list(
+      "data_ggplot_normality" = data_ggplot_normality,
+      "data_ggplot_skewness_test" = data_ggplot_skewness_test,
+      "data_ggplot_kurtosis_test" = data_ggplot_kurtosis_test,
+      "data_ggplot_qqplot" = data_ggplot_qqplot
+    ),
+    "data_ggplot_variability_repartition_pie" = data_ggplot_variability_repartition_pie,
+    "data_ggplot_var_intra" = data_ggplot_var_intra
+  )
 
   return(data_ggplot)
 }
@@ -771,7 +771,7 @@ plot_check_freq_anova = function(x, variable){
   p = ggplot(data_ggplot_variability_repartition_pie,
              aes(x = "", y = percentage_Sum_sq, fill = factor,
                  label = paste(round(percentage_Sum_sq, 1), "%", sep = "")
-                 )
+             )
   )
   p = p + ggtitle(paste("Total variance distribution for", variable))
   p = p + geom_bar(width = 1, stat = "identity") + coord_polar("y", start = 0)
@@ -810,7 +810,7 @@ plot_check_freq_anova = function(x, variable){
 mean_comparisons_freq_anova = function(model, variable, alpha = 0.05,
                                        p.adj = "none", info = NULL,
                                        vec_fac = c("germplasm", "location", "year")
-                                       ){
+){
 
   data_ggplot_LSDbarplot = function(model, fac, p.adj, alpha){
     lsd = agricolae::LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
@@ -1528,6 +1528,7 @@ plot_descriptive_data = function(
     }
 
 
+
     # boxplot
     if(plot_type == "boxplot") {
       p = ggplot(d, aes( x = x_axis, y = variable))
@@ -1539,6 +1540,8 @@ plot_descriptive_data = function(
     }
 
     # interaction
+
+
     if(plot_type == "interaction") {
       p = ggplot(d, aes(y = variable, x = factor(x_axis), colour = factor(in_col), group = factor(in_col)))
       p = p + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line")
@@ -1548,7 +1551,6 @@ plot_descriptive_data = function(
       p = p + xlab("") + ylab(variable) + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.title = element_blank())
       p = p + coord_cartesian(xlim = NULL, ylim)
     }
-
     return(p)
   }
 
@@ -1584,6 +1586,7 @@ plot_descriptive_data = function(
     names(out) = vec_variables
     return(out)
   }
+
 
 
   # 2.3. Function to run biplot ----------
@@ -1793,7 +1796,7 @@ plot_descriptive_data = function(
 
     if( length(id_not_ok) > 0 ) {
       warning("The following rows are not taken into account in data_version: ", paste(id_not_ok, collape = ", "))
-      }
+    }
     if( length(id_not_ok) == length(t) ) { stop("There is not match between data_version and data. Not plot can be done.") }
     data_version = droplevels(dplyr::filter(data_version, id_azerty %in% id_ok))
     d = plyr::join(data_version, data, by = "id_azerty")
@@ -1819,7 +1822,7 @@ plot_descriptive_data = function(
         p = p + geom_boxplot(aes(fill = version), position = "dodge")
       }
       p2 = p
-      }
+    }
 
     # plot for each germplasm/location with all version separated
     colnames(d)[which(colnames(d) == factor_to_split)] = "factor_to_split"
@@ -1928,4 +1931,25 @@ HA_to_LF = function(data_version_HA){
   data_version_LF$version = as.factor(data_version_LF$version)
   class(data_version_LF) = c("PPBstats", "data_agro_version_LF", "data.frame")
   return(data_version_LF)
+}
+
+
+# transform local foreign data to home away data
+#' transform local foreign data to home away data
+#' @param data_version_LF data local foreign
+#' @details change local to home and foreign to away
+#' @return a data frame of class data_version_HA
+#' @importFrom methods is
+#' @export
+#'
+LF_to_HA <- function(data_version_LF){
+  if(!is(data_version_LF, "data_agro_version_LF")){ stop(substitute(data_version_LF), " must be formated with type = \"data_agro_version\" with local foreign format, see PPBstats::format_data_PPBstats().") }
+  is(data_version_LF)
+  data_version_HA = data_version_LF
+  data_version_HA$version = as.character(data_version_HA$version)
+  data_version_HA$version[which(data_version_HA$version == "local")] = "home"
+  data_version_HA$version[which(data_version_HA$version == "foreign")] = "away"
+  data_version_HA$version = as.factor(data_version_HA$version)
+  class(data_version_HA) = c("PPBstats", "data_agro_version_HA", "data.frame")
+  return(data_version_HA)
 }

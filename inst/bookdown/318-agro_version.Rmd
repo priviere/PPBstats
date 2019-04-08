@@ -11,7 +11,7 @@ data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
 #### Reponse to selection
 
 For a given trait, selection differential corresponds to the difference between mean of the selected spikes and
-mean of the bulk (i.e. spikes that have not been selected). 
+mean of the bulk (i.e. spikes that have not been selected).
 Response to selection correponds to the difference between mean of spikes coming from the selected spikes and the spikes coming from the bulk (Figure \@ref(fig:SR)).
 Selection differential ($S$) and response to selection ($R$) are linked with the realized heritability ($h^2_r$):
 $R = h^2_r \times S$.
@@ -31,7 +31,7 @@ Where `group` represents differential selection (S) or reponse to selection (R) 
 ##### Describe the data
 
 ```{r}
-p = plot(data_model_GxE, vec_variables = "y1", 
+p = plot(data_model_GxE, vec_variables = "y1",
          data_version =data_version_SR, plot_type = "barplot")
 p$y1$`loc-1:germ-1`
 ```
@@ -41,7 +41,7 @@ p$y1$`loc-1:germ-1`
 
 Version can be studied through the Hierarchical Bayesian intra-location model presented in section \@ref(model-1).
 
-Regarding pairs of entries in a given environment, 
+Regarding pairs of entries in a given environment,
 it is possible to get comparison of paris of entries in a given location.
 This is useful if you want to compare two versions within a group.
 For exemple:
@@ -55,8 +55,6 @@ Here, in location `loc-1`, `germ-25` and `germ-26` on one hand and `germ-1` and 
 
 Lets' make the plots:
 ```{r, warning=FALSE}
-load("./data_PPBstats/out_mean_comparisons_model_bh_intra_location_mu.RData")
-
 p_barplot_mu_version = plot(
   out_mean_comparisons_model_bh_intra_location_mu,
   data_version = data_version,
@@ -97,7 +95,7 @@ Home in a location refers to a germplasm that has been grown or selected in a gi
 The following model take into account germplasm and location effects in order to better study version (home or away) effect [@blanquart_practical_2013].
 The model is based on frequentist statistics (section \@ref(section-freq)).
 
-$Y_{ijkm} = \mu + \alpha_i + \theta_j + \omega_{k_{ij}} + (\omega \times \theta)_{k_{ij}j} + rep(\theta)_{mj} + \varepsilon_{ijkm}; \quad \varepsilon_{ijkm} \sim \mathcal{N} (0,\sigma^2)$
+$Y_{ijkm} = \mu + \alpha_i + \theta_j + \omega_{k_{ij}} + (\omega \times \alpha)_{k_{ij}j} + rep(\theta)_{mj} + \varepsilon_{ijkm}; \quad \varepsilon_{ijkm} \sim \mathcal{N} (0,\sigma^2)$
 
 with
 
@@ -111,11 +109,11 @@ with
 - $\varepsilon_{ijkm}$ the residuals.
 
 The comparisons of all germplasm in all location in sympatric or allopatric situation (measured by version effect $\omega_{k_{ij}}$) give a glocal measure of local adaptation [@blanquart_practical_2013].
-Interaction effect $(\omega \times \theta)_{k_{ij}j}$ give information on specific adaptation to each location.
+Interaction effect $(\omega \times \alpha)_{k_{ij}j}$ give information on specific adaptation to each location.
 
 If there are more than one year, then the model can be written :
 
-$Y_{ijklm} = \mu + \alpha_i + \theta_j + \beta_l + \omega_{k_{ij}} + (\theta \times \beta)_{jl} + (\omega \times \theta)_{k_{ij}j} + rep(\theta \times \beta)_{mjl} + (\omega \times \theta \times \beta)_{k_{ij}jl} + \varepsilon_{ijklm}; \quad \varepsilon_{ijklm} \sim \mathcal{N} (0,\sigma^2)$
+$Y_{ijklm} = \mu + \alpha_i + \theta_j + \beta_l + \omega_{k_{ij}} + (\theta \times \beta)_{jl} + (\omega \times \alpha)_{k_{ij}j} + rep(\theta \times \beta)_{mjl} + (\omega \times \alpha \times \beta)_{k_{ij}jl} + \varepsilon_{ijklm}; \quad \varepsilon_{ijklm} \sim \mathcal{N} (0,\sigma^2)$
 
 with
 
@@ -163,8 +161,8 @@ Where `version` represents away or home and `group` represents the location wher
 p = plot(data_model_GxE, vec_variables = "y1", data_version = data_version_HA, plot_type = "barplot")
 ```
 
-`p` is a list with as many element as variable. 
-For each variable, there are three elements : 
+`p` is a list with as many element as variable.
+For each variable, there are three elements :
 
 - A single plot with version for all germplasm merged
 ```{r}
@@ -182,9 +180,9 @@ p$y1$home_away_per_germplasm$`germ-1`
 ```
 
 
-##### Run the model 
+##### Run the model
 
-To run HOME AWAY model on the dataset, used the function `model_home_away`.
+To run HOME AWAY model on the dataset, use the function `model_home_away`.
 You can run it on one variable.
 
 ```{r}
@@ -271,7 +269,7 @@ p_out_check_ha$variance_intra_germplasm
 ##### Get and visualize mean comparisons
 
 The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
-Here, the computation is based on LSmeans.
+Here, the computation is based on emmeans.
 
 ###### Get mean comparisons
 
@@ -299,8 +297,8 @@ p_out_mean_comparisons_ha = plot(out_mean_comparisons_ha)
 `p_out_mean_comparisons_ha` is a list of three elements with barplots :
 
 For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
-Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
-The error I (alpha) and the alpha correction are displayed in the title. 
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction.
+The error I (alpha) and the alpha correction are displayed in the title.
 
 When comparing version for each germplasm, differences are displayed with stars.
 The stars corresponds to the pvalue:
@@ -344,7 +342,7 @@ Foreign in a location refers to a germplasm that has not been grown or selected 
 
 The following model take into account germplasm and location effects in order to better study version (local or foreign) effect [@blanquart_practical_2013]:
 
-$Y_{ijkm} = \mu + \alpha_i + \theta_j + \omega_{k_{ij}} + (\omega \times \alpha)_{k_{ij}j} + rep(\theta)_{mj} + \varepsilon_{ijkm}; \quad \varepsilon_{ijkm} \sim \mathcal{N} (0,\sigma^2)$
+$Y_{ijkm} = \mu + \alpha_i + \theta_j + \omega_{k_{ij}} + (\omega \times \theta)_{k_{ij}j} + rep(\theta)_{mj} + \varepsilon_{ijkm}; \quad \varepsilon_{ijkm} \sim \mathcal{N} (0,\sigma^2)$
 
 with
 
@@ -381,6 +379,17 @@ with
 
 Interaction $(\omega \times \theta \times \beta)_{k_{ij}jl}$ give information on specific adaptation to each germplasm for a given year.
 
+##### Steps with `PPBstats`
+
+For local foreign analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
+
+- Format the data with `format_data_PPBstats()`
+- describe the data with `plot()`
+- Run the model with `model_local_foreign()`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()` and vizualise it with `plot()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+
+
 
 ##### Format data
 The data are formated from the home away data set
@@ -396,8 +405,8 @@ head(data_version_LF)
 p = plot(data_model_GxE, vec_variables = "y1", data_version = data_version_LF, plot_type = "barplot")
 ```
 
-`p` is a list with as many element as variable. 
-For each variable, there are three elements : 
+`p` is a list with as many element as variable.
+For each variable, there are three elements :
 
 - A single plot with version for all location merged
 ```{r}
@@ -412,4 +421,153 @@ p$y1$local_foreign_merged_per_location
 p$y1$local_foreign_per_location$`loc-1`
 ```
 
+##### Run the model
 
+To run LOCAL FOREIGN model on the dataset, use the function `model_local_foreign`.
+You can run it on one variable.
+
+```{r}
+out_lf = model_local_foreign(data_model_GxE, data_version_LF, "y1")
+```
+
+`out_lf` is a list containing three elements :
+
+- `info` : a list with variable
+```{r}
+out_lf$info
+```
+- `ANOVA` a list with five elements :
+    - `model`
+    ```{r}
+    out_lf$ANOVA$model
+    ```
+    - `anova_model`
+    ```{r}
+    out_lf$ANOVA$anova_model
+    ```
+
+##### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-freq).
+
+
+###### Check the model
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from `check_model()`).
+
+```{r}
+out_check_lf = check_model(out_lf)
+```
+
+`out_check_lf` is a list containing four elements :
+
+- `model_local_foreign` the output from the model
+- `data_ggplot` a list containing information for ggplot:
+    - `data_ggplot_residuals` a list containing :
+        - `data_ggplot_normality`
+        - `data_ggplot_skewness_test`
+        - `data_ggplot_kurtosis_test`
+        - `data_ggplot_qqplot`
+    - `data_ggplot_variability_repartition_pie`
+    - `data_ggplot_var_intra`
+
+###### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot()`
+
+```{r}
+p_out_check_lf = plot(out_check_lf)
+```
+
+`p_out_check_lf` is a list with:
+
+- `residuals`
+    - `histogram` : histogram with the distribution of the residuals
+    ```{r}
+    p_out_check_lf$residuals$histogram
+    ```
+    - `qqplot`
+    ```{r}
+    p_out_check_lf$residuals$qqplot
+    ```
+
+- `variability_repartition` : pie with repartition of SumSq for each factor
+```{r}
+p_out_check_lf$variability_repartition
+```
+
+- `variance_intra_germplasm` : repartition of the residuals for each germplasm (see Details for more information)
+With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+This has to been seen with caution:
+    - If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+    - If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+```{r}
+p_out_check_lf$variance_intra_germplasm
+```
+
+
+##### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+Here, the computation is based on emmeans.
+
+###### Get mean comparisons
+
+Get mean comparisons with `mean_comparisons()`.
+
+```{r}
+out_mean_comparisons_lf = mean_comparisons(out_check_lf, p.adj = "tukey")
+```
+
+`out_mean_comparisons_lf` is a list of five elements:
+
+- `info` : a list with variable
+- `data_ggplot_LSDbarplot_version:germplasm`
+- `data_ggplot_LSDbarplot_germplasm`
+- `data_ggplot_LSDbarplot_location`
+- `data_ggplot_LSDbarplot_year` in case there is year in the model
+
+###### Visualize mean comparisons
+
+
+```{r}
+p_out_mean_comparisons_lf = plot(out_mean_comparisons_lf)
+```
+
+`p_out_mean_comparisons_lf` is a list of three elements with barplots :
+
+For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction.
+The error I (alpha) and the alpha correction are displayed in the title.
+
+When comparing version for each germplasm, differences are displayed with stars.
+The stars corresponds to the pvalue:
+
+| pvalue | stars |
+| --- | --- |
+| $< 0.001$ | *** |
+| $[0.001 , 0.05]$ | ** |
+| $[0.05 , 0.01]$ | * |
+| $> 0.01$ | . |
+
+
+- `version:germplasm` : mean comparison for version for each germplasm
+```{r}
+pvg = p_out_mean_comparisons_lf$"version:germplasm"
+pvg
+```
+
+- `germplasm` : mean comparison for germplasm
+```{r}
+pg = p_out_mean_comparisons_lf$germplasm
+pg$`1`
+```
+
+- `location` : mean comparison for location
+```{r}
+pl = p_out_mean_comparisons_lf$location
+pl$`1`
+```
+
+- `year` : mean comparison for year in case there is year in the model.
