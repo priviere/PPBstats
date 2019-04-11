@@ -267,8 +267,8 @@ names(mu_ij_estimated) = sapply(names(mu_ij_estimated),
                                 function(x){  sub("\\]", "", sub("mu\\[", "", x)) } 
                                 )
 
-d = filter(data_model_bh_intra_location, location != "loc-24")
-d = filter(d, location != "loc-25")
+d = dplyr::filter(data_model_bh_intra_location, location != "loc-24")
+d = dplyr::filter(d, location != "loc-25")
 d = droplevels(d)
 environment = paste(as.character(d$location), as.character(d$year), sep = ":")
 d$entry = as.factor(paste(as.character(d$germplasm), environment, sep = ","))

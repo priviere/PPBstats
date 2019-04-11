@@ -1,4 +1,4 @@
-### Variance intra : to estimate variance within germplasm {#variance-intra}
+### Study variance within germplasm {#variance-intra}
 
 #### Theory of the model
 The model is based on bayesian statistics (section \@ref(section-bayes)).
@@ -24,10 +24,10 @@ No specific experimental design is needed as long as there are several individua
 
 For variance intra analysis, you can follow these steps (Figure \ref(fig:main-workflow)) :
 
-- Format the data with `format_data_PPBstats`
-- Run the model with `model_bh_intra_location` 
-- Check model outputs with graphs to know if you can continue the analysis with `check_model`
-- Get mean comparisons for each factor with `mean_comparisons` and vizualise it with `plot`
+- Format the data with `format_data_PPBstats()`
+- Run the model with `model_bh_intra_location()` 
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
 
 #### Format the data
 
