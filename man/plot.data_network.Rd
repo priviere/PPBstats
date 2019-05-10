@@ -14,7 +14,7 @@
 \arguments{
 \item{x}{output from \code{\link{format_data_PPBstats.data_network}}}
 
-\item{data_to_pie}{output from format_data_PPBstats with data_type = "agro"}
+\item{data_to_pie}{output from format_data_PPBstats with data_type = "data_agro"}
 
 \item{variable}{when data_to_pie is not NULL, variable to plot in a pie}
 
@@ -61,7 +61,7 @@ For network diffusion are represented by a curve.
 For organize_sl, The representation is possible if the seed_lots are under the following format : 
 GERMPLASM_LOCATION_YEAR_DIGIT.
 
-The id column from data_to_pie must refer to the id of the network.
+The seed_lot column from data_to_pie must refer to the seed_lot of the network.
 The results is a list of two elements for each variable:
 \itemize{
  \item nb_received: number of seed lots that end the relation
