@@ -4,13 +4,13 @@
 \name{data_model_bh_intra_location}
 \alias{data_model_bh_intra_location}
 \title{Simulated data set for thousand kernel weight (tkw) of bread wheat to test model_bh_intra_location model}
-\format{A data frame with 1574 rows and 12 columns}
+\format{A data frame with 1574 rows and 13 columns}
 \usage{
 data(data_model_bh_intra_location)
 }
 \description{
 A dataset containing one variable (tkw) and its date (tkw$date) 
-and values for the following factors: location, year, germplasm, block, X and Y. 
+and values for the following factors: seed_lot, location, year, germplasm, block, X and Y. 
 The different values of the parameters to create the dataset are also in columns: mu_ij, beta_jk, epsilon_ijk and sigma_j
 }
 \details{

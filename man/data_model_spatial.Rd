@@ -4,13 +4,13 @@
 \name{data_model_spatial}
 \alias{data_model_spatial}
 \title{Data set for one variable to test spatial model}
-\format{A data frame with 211 rows and 7 columns}
+\format{A data frame with 211 rows and 8 columns}
 \usage{
 data(data_model_spatial)
 }
 \description{
 A dataset containing one variable y1 and 
-the following factors: location, year, germplasm, block, X and Y. 
+the following factors: seed_lot, location, year, germplasm, block, X and Y. 
 y1 refers to real value of interval in day degree of flowering between male and female flower of maize.
 }
 \author{
