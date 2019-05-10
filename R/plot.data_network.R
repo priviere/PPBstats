@@ -5,7 +5,7 @@
 #' 
 #' @param x output from \code{\link{format_data_PPBstats.data_network}}
 #' 
-#' @param data_to_pie output from format_data_PPBstats with data_type = "agro"
+#' @param data_to_pie output from format_data_PPBstats with data_type = "data_agro"
 #' 
 #' @param variable when data_to_pie is not NULL, variable to plot in a pie
 #'
@@ -41,7 +41,7 @@
 #' For organize_sl, The representation is possible if the seed_lots are under the following format : 
 #' GERMPLASM_LOCATION_YEAR_DIGIT.
 #' 
-#' The id column from data_to_pie must refer to the id of the network.
+#' The seed_lot column from data_to_pie must refer to the seed_lot of the network.
 #' The results is a list of two elements for each variable:
 #' \itemize{
 #'  \item nb_received: number of seed lots that end the relation
@@ -114,6 +114,7 @@ plot.data_network = function(
   
   pie_on_map = FALSE
   if( !is.null(data_to_pie) ){
+    if(!is(data_to_pie, "data_agro")){ stop(substitute(data_to_pie), " must be formated with type = \"data_agro\", see PPBstats::format_data_PPBstats().") }
     if( !is.element(plot_type, c("network", "map")) ) { stop("data_to_pie can be used only with plot_type = network or map") }
     if( is.null(vec_variables[1]) ) { stop("with data_to_pie, variable must not be NULL") }
     for(v in vec_variables){

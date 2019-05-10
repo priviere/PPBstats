@@ -105,8 +105,8 @@ It can be interesting to plot information regarding a variable on map with a pie
 
 ```{r, warning=FALSE}
 nb_values = 30
-data_to_pie = data.frame( # = data_agro : ajouter id_seed_lot dans les format agro
-  id = rep(c("germ-4_loc-4_2009_0001", "germ-9_loc-4_2009_0001", "germ-10_loc-3_2009_0001", "germ-12_loc-3_2007_0001", "germ-11_loc-2_2009_0001", "germ-10_loc-2_2009_0001"), each = nb_values),
+data_to_pie = data.frame(
+  seed_lot = rep(c("germ-4_loc-4_2009_0001", "germ-9_loc-4_2009_0001", "germ-10_loc-3_2009_0001", "germ-12_loc-3_2007_0001", "germ-11_loc-2_2009_0001", "germ-10_loc-2_2009_0001"), each = nb_values),
   location = rep(c("loc-1", "loc-1", "loc-3", "loc-3", "loc-2", "loc-2"), each = nb_values),
   year = rep(c("2009", "2008", "2007", "2007", "2009", "2009"), each = nb_values),
   germplasm = rep(c("germ-7", "germ-2", "germ-6", "germ-4", "germ-5", "germ-13"), each = nb_values),
@@ -116,6 +116,16 @@ data_to_pie = data.frame( # = data_agro : ajouter id_seed_lot dans les format ag
   y1 = rnorm(nb_values*6, 10, 2), # quanti
   y2 = rep(c("cat1", "cat1", "cat2", "cat3", "cat3", "cat4"), each = nb_values)  # quali
 )
+
+data_to_pie$seed_lot = as.factor(as.character(data_to_pie$seed_lot))
+data_to_pie$location = as.factor(as.character(data_to_pie$location))
+data_to_pie$year = as.factor(as.character(data_to_pie$year))
+data_to_pie$germplasm = as.factor(as.character(data_to_pie$germplasm))
+data_to_pie$block = as.factor(as.character(data_to_pie$block))
+data_to_pie$X = as.factor(as.character(data_to_pie$X))
+data_to_pie$Y = as.factor(as.character(data_to_pie$Y))
+
+data_to_pie = format_data_PPBstats(data_to_pie, type = "data_agro")
 ```
 
 
