@@ -22,9 +22,10 @@
 format_data_PPBstats.data_agro = function(data){
   d = data
   
-  mess = "The following column are compulsory : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
+  mess = "The following column are compulsory : c(\"seed_lot\", \"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
   # check columns
   # Factors compulsory
+  if(!is.element("seed_lot", colnames(d))) { stop(mess) }
   if(!is.element("location", colnames(d))) { stop(mess) }
   if(!is.element("year", colnames(d))) { stop(mess) }
   if(!is.element("germplasm", colnames(d))) { stop(mess) }
@@ -32,7 +33,8 @@ format_data_PPBstats.data_agro = function(data){
   if(!is.element("X", colnames(d))) { stop(mess) }
   if(!is.element("Y", colnames(d))) { stop(mess) }
   
-  mess = "The following column must be set as factor : c(\"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
+  mess = "The following column must be set as factor : c(\"seed_lot\", \"location\", \"year\", \"germplasm\", \"block\", \"X\", \"Y\"."
+  if(!is.factor(d$seed_lot)) { stop(mess) }
   if(!is.factor(d$location)) { stop(mess) }
   if(!is.factor(d$year)) { stop(mess) }
   if(!is.factor(d$germplasm)) { stop(mess) }
@@ -41,8 +43,7 @@ format_data_PPBstats.data_agro = function(data){
   if(!is.factor(d$Y)) { stop(mess) }
   
   # Variable in option to get map
-  vec_variables = c("long", "lat"
-  )
+  vec_variables = c("long", "lat")
   for(i in vec_variables) {
     if(!is.element(i, colnames(d))) { 
       warning("Column \"", i, "\" is needed to get map and not present in data.") 

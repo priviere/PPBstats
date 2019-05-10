@@ -23,14 +23,14 @@ NULL
 #'
 #' @description
 #' A dataset containing one variable (tkw) and its date (tkw$date) 
-#' and values for the following factors: location, year, germplasm, block, X and Y. 
+#' and values for the following factors: seed_lot, location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create the dataset are also in columns: mu_ij, beta_jk, epsilon_ijk and sigma_j
 #'
 #' @usage
 #' data(data_model_bh_intra_location)
 #'
 #' @format
-#' A data frame with 1574 rows and 12 columns
+#' A data frame with 1574 rows and 13 columns
 #'  
 #' @details
 #' tkw is in grams
@@ -46,14 +46,14 @@ NULL
 #' @description
 #' A dataset containing three variables (y1, y2 and y3) 
 #' with their respective dates (y1$date, y2$date and y3$date)
-#' and values for the following factors: location, year, germplasm, block, X and Y. 
+#' and values for the following factors: seed_lot, location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create y1 are also in columns: alpha_i-1, beta_i-1, and theta_j-1.
 #' 
 #' @usage
 #' data(data_model_bh_GxE)
 #'
 #' @format
-#' A data frame with 2430 rows and 15 columns
+#' A data frame with 2430 rows and 16 columns
 #' 
 #' @author Pierre Rivière
 "data_model_bh_GxE"
@@ -122,14 +122,14 @@ NULL
 #' @description
 #' A dataset containing five variables (y1, y2, y3, desease, vigor) 
 #' with their respective dates for the first three (y1$date, y2$date and y3$date)
-#' and values for the following factors: location, year, germplasm, block, X and Y. 
+#' and values for the following factors: seed_lot, location, year, germplasm, block, X and Y. 
 #' As well as vlues of lat and long in order to get map.
 #'
 #' @usage
 #' data(data_model_GxE)
 #'
 #' @format
-#' A data frame with 180 rows and 16 columns
+#' A data frame with 180 rows and 17 columns
 #' 
 #' @author Pierre Rivière
 "data_model_GxE"
@@ -141,14 +141,14 @@ NULL
 #'
 #' @description
 #' A dataset containing one variable (spike weight) 
-#' and values for the following factors: location, year, germplasm, block, X and Y. 
+#' and values for the following factors: seed_lot, location, year, germplasm, block, X and Y. 
 #' The different values of the parameters to create the dataset are also in columns: mu_ijk, sigma_ij and epsilon_ijkl
 #'
 #' @usage
 #' data(data_model_bh_variance_intra)
 #'
 #' @format
-#' A data frame with 1182 rows and 10 columns
+#' A data frame with 1182 rows and 11 columns
 #'  
 #' @details
 #' spike weight is in grams
@@ -272,13 +272,13 @@ NULL
 #'
 #' @description
 #' A dataset containing one variable y1 and 
-#' the following factors: location, year, germplasm, block, X and Y. 
+#' the following factors: seed_lot, location, year, germplasm, block, X and Y. 
 #' y1 refers to real value of interval in day degree of flowering between male and female flower of maize.
 #' @usage
 #' data(data_model_spatial)
 #'
 #' @format
-#' A data frame with 211 rows and 7 columns
+#' A data frame with 211 rows and 8 columns
 #' 
 #' @author Pierre Rivière
 "data_model_spatial"

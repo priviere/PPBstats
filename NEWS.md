@@ -39,6 +39,7 @@
 ### add RData
 - data_version_HA, cf #25
 - data_model_spatial, cf #20 
+- add colum "seed_lot" in all agro data format, cf #134 
 
 
 ### update vignette (inst/bookdown)
@@ -51,6 +52,7 @@
 - run cross validation of model_bh_GxE, cf #26
 - add classic anova model, cf #45
 - update model spatial section, cf #20 
+- add colum "seed_lot" in all agro data format, cf #134 
 
 
 ### create return report web site (inst/return_report_web_site)

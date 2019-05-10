@@ -26,7 +26,7 @@ It can be completed by specific analysis such as local-foreign (section \@ref(lo
 
 
 - **Study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits**.
-This can be done through multivariate analysis and clustering (**M2**, section \@ref(multivariate-analysis).
+This can be done through multivariate analysis and clustering (**M2**, section \@ref(family-5).
 It can be completed by analysis of molecular data and genetic distance trees (**M3**, section \@ref(molecular)).
 
 
@@ -62,7 +62,7 @@ The objectives is to study response of different germplasms over several locatio
 - **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses.
 This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.
 
-- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions and objectives such as study intra germplasm variation,  local foreign analysis and study differential and response to selection.
+- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions and objectives such as study intra germplasm variation, study  local adaptation with home-away and local-foreign analysis, study differential and response to selection based on models from Family 1.
 
 - **Family 5** (section \@ref(family-5)) refers to multivariate analysis
 
@@ -77,10 +77,11 @@ The different models in Family 1 and 2 correspond to experimental designs that a
 | 2 | IBD | \@ref(ibd) | | X | | | | | | | |
 |   | AMMI | \@ref(ammi) | | X | X | (X) | X | (X) | | | |
 |   | GGE | \@ref(gge) | | X | X | (X) | X | (X) | | | |
-|   | Local-foreign | \@ref(local-foreign) | X | X | (X) | (X) | (X) | (X) | X | | |
 |   | Bayesian hierarchical model $G \times E$ | \@ref(model-2) | | X | X | (X) | X | | | | |
 | 3 | Bayesian model 3 | \@ref(model-3) | X | X | X | | X | X | | | |
 | 4 | Variance intra | \@ref(variance-intra) | | | | | | | | | X |
+|   | Home-away | \@ref(home-away) | X | X | (X) | (X) | (X) | (X) | X | | |
+|   | Local-foreign | \@ref(local-foreign) | X | X | (X) | (X) | (X) | (X) | X | | |
 Table: (\#tab:summary-analysis) Analyses carried out in `PPBstats`. X: effects that are estimated. (X): effects that can be estimated.
 
 Analysis used in PPB programmes are mentionned in decision tree in Section \@ref(decision-tree).
@@ -278,20 +279,17 @@ Note that for some functions for specific model maybe used.
 Figure \@ref(fig:main-workflow) displays the functions and their relationships.
 
 
-```{r main-workflow, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
+```{r main-workflow, out.width='50%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
 knitr::include_graphics("figures/main-functions-agro.png")
 ```
 
 
 ### Data format {#data-agro}
 
-For agronomic analysis data must have a specific format.
-There are two format supported : `data-agro` and `data-agro-version`.
+For agronomic analysis data must have a specific format: `data_agro`
 
-#### `data-agro`
-
-`data-agro` format corresponds to all the data set used in the functions that run models.
-The data have always the following columns : `location`, `year`, `germplasm`, `block`, `X`, `Y` as factors followed by the variables and their corresponding dates.
+`data_agro` format corresponds to all the data set used in the functions that run models.
+The data have always the following columns : `seed_lot`, `location`, `year`, `germplasm`, `block`, `X`, `Y` as factors followed by the variables and their corresponding dates.
 The dates are associated to their corresponding variable by `$`.
 For example the date associated to variable `y1` is `y1$date`.
 In addition, to get map, columns `lat` and `long` can be added.
@@ -308,22 +306,4 @@ Note that a column with julian date is added.
 class(data_model_GxE)
 ```
 
-
-#### `data-agro-version`
-
-`data-agro-version` format corresponds to a specfic data set with pairs of entries in a given location.
-It is then possible to compare pairs: this is useful if you want to compare several versions within a group.
-The data must have the following columns: `year`, `germplasm`, `location`, `group`, `version` as factors.
-The group refers to an id that contains different versions.
-For example for group 1, there are version 1 and 2.
-
-
-```{r}
-data(data_version)
-data_version = format_data_PPBstats(data_version, type = "data_agro_version")
-head(data_version)
-```
-
-Here, in location `loc-1`, `germ-25` and `germ-26` on one hand and `germ-1` and `germ-12` on the other hand are two version belonging to the same groupe.
-
-Exemple regarding analysis of version are presented in section \@ref(family-4).
+Note that other formats exist in relation to specific reasearch questions as explained in section \@ref(family-4).
