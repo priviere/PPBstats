@@ -2,7 +2,7 @@
 
 In this section, several models are proposed for specific research questions:
 
-- Study response to selection (section \@ref(response-to-seletion)) based on models from Family 1 of analysis presented in section \@ref(family-1)
+- Study response to selection (section \@ref(response-to-selection)) based on models from Family 1 of analysis presented in section \@ref(family-1)
 - Study local adaptation with two models: home away (section \@ref(home-away)) and local foreign (section \@ref(local-foreign)) based on fully-replicated design (**D1**) (section \@ref(fully-replicated))
 - Study intra germplasm variance with a dedicated model (section \@ref(variance-intra))
 
