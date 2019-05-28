@@ -1082,7 +1082,7 @@ add_pies = function(p, n, format, plot_type, data_to_pie, variable, pie_size){
   }
 
   if( plot_type == "network" ){
-    colnames(data_to_pie)[which(colnames(data_to_pie) == "id")] = "id_ok"
+    colnames(data_to_pie)[which(colnames(data_to_pie) == "seed_lot")] = "id_ok"
     xmin = min(p$data$x); xmax = max(p$data$x)
     ymin = min(p$data$y); ymax = max(p$data$y)
   }
@@ -1360,7 +1360,6 @@ format_organo = function(data, threshold, var_sup){
 #'
 plot_descriptive_data = function(
   x,
-  data_version = NULL,
   plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"),
   x_axis = NULL,
   in_col = NULL,
@@ -1456,10 +1455,6 @@ plot_descriptive_data = function(
     if( length(test) == 2 | !test[1] ){ stop("To display map, you must have columns \"lat\" and \"long\" in your data.") }
   }
 
-  if( !is.null(data_version) ){
-    if( !is.element(plot_type, c("barplot", "boxplot")) ){ stop("With data_version, only plot_type \"barplot\" and \"boxplot\" are possible.") }
-  }
-
   # 2. Functions used in the newt steps ----------
 
   # 2.1. Function to run presence abscence matrix ----------
@@ -1507,6 +1502,7 @@ plot_descriptive_data = function(
       }
     }
 
+
     # barplot
     if(plot_type == "barplot") {
       if(is.null(in_col)) {
@@ -1528,7 +1524,6 @@ plot_descriptive_data = function(
     }
 
 
-
     # boxplot
     if(plot_type == "boxplot") {
       p = ggplot(d, aes( x = x_axis, y = variable))
@@ -1539,9 +1534,8 @@ plot_descriptive_data = function(
       }
     }
 
+    
     # interaction
-
-
     if(plot_type == "interaction") {
       p = ggplot(d, aes(y = variable, x = factor(x_axis), colour = factor(in_col), group = factor(in_col)))
       p = p + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line")
@@ -1748,124 +1742,6 @@ plot_descriptive_data = function(
     return(out)
   }
 
-  # 2.7. Function to run data_version ----------
-  fun_data_version_1 = function(variable, data, data_version, plot_type){
-    id_azerty = group = NULL  # to avoid no visible binding for global variable
-
-    data_version_class = class(data_version)[2]
-
-    factor_to_split = "location" # default value
-
-    if( data_version_class == "data_agro_version_SR" ){
-      data_version$lg = paste(data_version$location, data_version$germplasm, sep = ":")
-      factor_to_split = "lg"
-      data_version$group_bis = paste(data_version$germplasm, data_version$group, sep = "-")
-    }
-
-    if( data_version_class == "data_agro_version_HA" ){
-      data_version$group_bis =  paste("sown at", data_version$location, ", coming from", data_version$group)
-      factor_to_split = "germplasm"
-    }
-
-    if( data_version_class == "data_agro_version_LF" ){
-      data_version$group_bis = paste("sown at", data_version$location, ", coming from", data_version$group)
-      factor_to_split = "location"
-    }
-
-    colnames(data)[which(colnames(data) == variable)] = "variable"
-    data$id_azerty = paste(data$location, data$year, data$germplasm, sep = "-")
-    data_version$id_azerty = paste(data_version$location, data_version$year, data_version$germplasm, sep = "-")
-
-    if( data_version_class == "data_agro_version_SR" ){
-      # get row where id is present in both data set
-      t1 = is.element(data_version$id_azerty, data$id_azerty)
-      id_ok = data_version$id_azerty[t1]
-      id_not_ok = data_version$id_azerty[!t1]
-    }
-
-
-    if( data_version_class == "data_agro_version_HA" | data_version_class == "data_agro_version_LF" ){
-      # get row where id is present in both data set
-      t1 = is.element(data_version$id_azerty, data$id_azerty)
-      # get rid of row where group (location of origin) is not present in the data set
-      t2 = is.element(data_version[t1,]$group, data_version[t1,]$location)
-      id_ok = data_version[t1,]$id_azerty[t2]
-      id_not_ok = data_version[t2,]$id_azerty[!t2]
-    }
-
-
-    if( length(id_not_ok) > 0 ) {
-      warning("The following rows are not taken into account in data_version: ", paste(id_not_ok, collape = ", "))
-    }
-    if( length(id_not_ok) == length(t) ) { stop("There is not match between data_version and data. Not plot can be done.") }
-    data_version = droplevels(dplyr::filter(data_version, id_azerty %in% id_ok))
-    d = plyr::join(data_version, data, by = "id_azerty")
-    d = droplevels(na.omit(d))
-    d <- d[!duplicated(as.list(d))]
-
-    if( data_version_class == "data_agro_version_HA" | data_version_class == "data_agro_version_LF" ){
-      # single plot with version for all germplasm/location merged
-      p = ggplot(d, aes(x = version, y = variable))
-      p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + xlab("")
-      if( plot_type == "barplot"){ p = p + geom_bar(stat = "identity", position = "dodge") }
-      if( plot_type == "boxplot"){ p = p + geom_boxplot(position = "dodge") }
-      p1 = p
-
-      # single plot with version for each germplasm/location
-      if( data_version_class == "data_agro_version_HA" ){ p = ggplot(d, aes(x = germplasm, y = variable)) }
-      if( data_version_class == "data_agro_version_LF" ){ p = ggplot(d, aes(x = location, y = variable)) }
-      p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + xlab("")
-      if( plot_type == "barplot"){
-        p = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
-      }
-      if( plot_type == "boxplot"){
-        p = p + geom_boxplot(aes(fill = version), position = "dodge")
-      }
-      p2 = p
-    }
-
-    # plot for each germplasm/location with all version separated
-    colnames(d)[which(colnames(d) == factor_to_split)] = "factor_to_split"
-    dd = plyr:::splitter_d(d, .(factor_to_split))
-    out = lapply(dd, function(x){
-      p = ggplot(x, aes(x = group_bis, y = variable))
-      p = p + ggtitle(x[1, "factor_to_split"]) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-      p = p + xlab("")
-      if( plot_type == "barplot"){
-        p = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
-      }
-      if( plot_type == "boxplot"){
-        p = p + geom_boxplot(aes(fill = version), position = "dodge")
-      }
-      return(p)
-    })
-
-    if( data_version_class == "data_agro_version_SR" ){
-      out = out
-    }
-
-    if( data_version_class == "data_agro_version_HA" ){
-      out = list("home_away_merged" = p1,
-                 "home_away_merged_per_germplasm" = p2,
-                 "home_away_per_germplasm" = out)
-    }
-
-    if( data_version_class == "data_agro_version_LF" ){
-      out = list("local_foreign_merged" = p1,
-                 "local_foreign_merged_per_location" = p2,
-                 "local_foreign_per_location" = out)
-    }
-
-
-    return(out)
-  }
-
-  fun_data_version = function(vec_variables, data, data_version, plot_type){
-    out = lapply(vec_variables, fun_data_version_1, data, data_version, plot_type)
-    names(out) = vec_variables
-    return(out)
-  }
-
 
   # 3. Run code ----------
   # 3.1. Presence absence for each germplasm, location and year
@@ -1901,11 +1777,6 @@ plot_descriptive_data = function(
   # 3.6. map ------------
   if(plot_type == "map"){
     p_out = fun_map(data, vec_variables, labels_on, labels_size, pie_size)
-  }
-
-  # 3.7. data_version ----------
-  if( !is.null(data_version) ){
-    p_out = fun_data_version(vec_variables, data, data_version, plot_type)
   }
 
 
