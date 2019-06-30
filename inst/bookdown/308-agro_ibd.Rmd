@@ -6,6 +6,10 @@ The model is based on frequentist statistics (section \@ref(section-freq)).
 The tests to check the model are explained in section \@ref(check-model-freq).
 The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
 
+
+[@alternative_zystro_2018]
+
+
 ```{r}
 #library(ibd)
 #data(ibddata)
