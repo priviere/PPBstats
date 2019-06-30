@@ -1295,8 +1295,6 @@ format_organo = function(data, threshold, var_sup){
 #'
 #' @param x The data frame. It should come from \code{\link{format_data_PPBstats}}
 #'
-#' @param data_version data frame coming from \code{\link{format_data_PPBstats.data_agro_version}}
-#'
 #' @param plot_type the type of plot you wish. It can be :
 #' \itemize{
 #'  \item "pam" for presence abscence matrix that represent the combinaison of germplasm x location
@@ -1411,12 +1409,6 @@ plot_descriptive_data = function(
   }
   if( plot_type == "histogramm" & !is.null(x_axis) ){
     warning("Note than with plot_type == histogramm, x_axis can not be NULL.")
-  }
-  if( plot_type == "barplot" & is.null(x_axis) & is.null(data_version) ){
-    stop("With plot_type == barplot, x_axis can not be NULL.")
-  }
-  if( plot_type == "boxplot" & is.null(x_axis)  & is.null(data_version) ){
-    stop("With plot_type == boxplot, x_axis can not be NULL.")
   }
   if( plot_type == "interaction" & (is.null(x_axis) | is.null(in_col)) ){
     stop("With plot_type == interaction, x_axis and in_col can not be NULL.")
@@ -1784,43 +1776,3 @@ plot_descriptive_data = function(
   return(p_out)
 }
 
-# transform home away data to local foreign data
-#' transform home away data to local foreign data
-#' @param data_version_HA data home away
-#' @details change home to local and away to foreign
-#' @return a data frame of class data_version_LF
-#' @importFrom methods is
-#' @export
-#'
-HA_to_LF = function(data_version_HA){
-  if(!is(data_version_HA, "data_agro_version_HA")){ stop(substitute(data_version_HA), " must be formated with type = \"data_agro_version\" with home away format, see PPBstats::format_data_PPBstats().") }
-  is(data_version_HA)
-  data_version_LF = data_version_HA
-  data_version_LF$version = as.character(data_version_LF$version)
-  data_version_LF$version[which(data_version_LF$version == "home")] = "local"
-  data_version_LF$version[which(data_version_LF$version == "away")] = "foreign"
-  data_version_LF$version = as.factor(data_version_LF$version)
-  class(data_version_LF) = c("PPBstats", "data_agro_version_LF", "data.frame")
-  return(data_version_LF)
-}
-
-
-# transform local foreign data to home away data
-#' transform local foreign data to home away data
-#' @param data_version_LF data local foreign
-#' @details change local to home and foreign to away
-#' @return a data frame of class data_version_HA
-#' @importFrom methods is
-#' @export
-#'
-LF_to_HA <- function(data_version_LF){
-  if(!is(data_version_LF, "data_agro_version_LF")){ stop(substitute(data_version_LF), " must be formated with type = \"data_agro_version\" with local foreign format, see PPBstats::format_data_PPBstats().") }
-  is(data_version_LF)
-  data_version_HA = data_version_LF
-  data_version_HA$version = as.character(data_version_HA$version)
-  data_version_HA$version[which(data_version_HA$version == "local")] = "home"
-  data_version_HA$version[which(data_version_HA$version == "foreign")] = "away"
-  data_version_HA$version = as.factor(data_version_HA$version)
-  class(data_version_HA) = c("PPBstats", "data_agro_version_HA", "data.frame")
-  return(data_version_HA)
-}
