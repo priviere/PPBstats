@@ -13,7 +13,12 @@
 - implement spatial analysis, cf #20 
 - mean comparisons with spatial model, cf #124 
 - delete deprecated format_data function, cf #107: format_data_PPBstats.data_agro_version
-- update functions: delete all data_version argument, cf #107
+- update functions: delete all data_version argument, cf #104
+    - plot.data_agro
+    - plot.data_organo_hedonic
+    - plot.data_organo_napping
+    - plot.mean_comparisons_model_bh_intra_location
+    - plot.mean_comparisons_predict_the_past_model_bh_GxE
 
 
 ### add new functions

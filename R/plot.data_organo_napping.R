@@ -5,8 +5,6 @@
 #' 
 #' @param x The data frame coming from \code{\link{format_data_PPBstats.data_organo_napping}}
 #' 
-#' @param data_version data frame coming from \code{\link{format_data_PPBstats.data_agro_version}}
-#' 
 #' @param plot_type the type of plot you wish. It can be :
 #' \itemize{
 #'  \item "pam" for presence abscence matrix that represent the combinaison of germplasm x location
@@ -68,7 +66,6 @@
 #' @export
 #' 
 plot.data_organo_napping = function(  x,
-                                      data_version = NULL,
                                       plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"),
                                       x_axis = NULL,
                                       in_col = NULL,
@@ -81,7 +78,6 @@ plot.data_organo_napping = function(  x,
   
   p_out = plot_descriptive_data(
     x$data,
-    data_version,
     plot_type,
     x_axis,
     in_col,

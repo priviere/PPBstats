@@ -5,8 +5,6 @@
 #'
 #' @param x Output from \code{\link{mean_comparisons.check_model_bh_intra_location}}
 #'
-#' @param data_version Output from \code{\link{format_data_PPBstats.data_agro_version}}
-#'
 #' @param plot_type "interaction", "barplot" or "score"
 #'
 #' @param nb_parameters_per_plot number of parameter per plot to display
@@ -16,7 +14,6 @@
 #' @details
 #' S3 method.
 #' See example in the book: https://priviere.github.io/PPBstats_book/family-2.html#model-1
-#' For an example with data_version : https://priviere.github.io/PPBstats_book/family-4.html#version
 #'
 #' @return
 #' A list with ggplot object depending on plot_type.
@@ -33,8 +30,6 @@
 #'   \item data_env_with_no_controls : only environments where there were no controls are represented.
 #'   \item data_env_whose_param_did_not_converge : only environments where MCMC did not converge are represented.
 #'   }
-#'  Note that when using data_version, the pvalue is computed based on the MCMC.
-#'  For data that did not converge or without environments, it is a \code{t.test} which is perform.
 #'
 #'  \item interaction :
 #'  \itemize{
@@ -66,18 +61,12 @@
 #'
 plot.mean_comparisons_model_bh_intra_location <- function(
   x,
-  data_version = NULL,
   plot_type = c("interaction", "barplot", "score"),
   nb_parameters_per_plot = 8, ...
   ){
 
   # 1. Error message ----------
   plot_type <- match.arg(plot_type, several.ok = FALSE)
-  if( !is.null(data_version)){
-    if(!is(data_version, "data_agro_version")){
-      stop(substitute(data_version), " must be formated with type = \"data_agro_version\", see PPBstats::format_data_PPBstats().")
-    }
-  }
 
   # 2. get data ----------
   all_data = list(
@@ -89,75 +78,6 @@ plot.mean_comparisons_model_bh_intra_location <- function(
   # 3. get ggplot ----------
 
   # 3.1. function used in the code ----------
-  add_stars_version = function(dx, data, data_version){
-    group = NULL # to avoid no visible binding for global variable
-
-    # Add letters of significant groups
-    env = dx$environment[1]
-    if( !is.null(data) ){ data_Mpvalue_env = data[[env]]$Mpvalue } else { data_Mpvalue_env = NULL }
-    data_version_tmp = droplevels(dplyr::filter(data_version, environment == env))
-    gp = unique(data_version_tmp$group)
-
-    STARS = NULL
-    for(g in gp){
-      dtmp = droplevels(dplyr::filter(data_version_tmp, group == g))
-      vec_version = levels(dtmp$version)
-      v1 = unique(as.character(dplyr::filter(dtmp, version == vec_version[1])$parameter))
-      v2 = unique(as.character(dplyr::filter(dtmp, version == vec_version[2])$parameter))
-      if(length(v1)>0 & length(v2)>0){
-        if( !is.null(data_Mpvalue_env) ){
-
-          for (i in 1:ncol(data_Mpvalue_env)) {
-            if (colnames(data_Mpvalue_env)[i] == v1) {c1 = i}
-            if (colnames(data_Mpvalue_env)[i] == v2) {c2 = i}
-          }
-          pvalue = data_Mpvalue_env[min(c1,c2), max(c1,c2)]
-        } else {
-          if( length(v1) > 1 & length(v2) > 1) {
-            pvalue = t.test(v1, v2)$p.value
-          } else {
-            pvalue = NULL
-            warning(attributes(data)$PPBstats.object, ": no t.test are done as there are not enough observations.")
-          }
-        }
-
-        if(is.null(pvalue)) { stars = " "} else {
-          if(pvalue < 0.001) { stars = "***" }
-          if(pvalue > 0.001 & pvalue < 0.05) { stars = "**" }
-          if(pvalue > 0.05 & pvalue < 0.01) { stars = "*" }
-          if(pvalue > 0.01) { stars = "." }
-        }
-        names(stars) = g
-        STARS = c(STARS, stars)
-      }
-    }
-
- #   colnames(dx)[which(colnames(dx) == "parameter")] = "mu"
-    d = plyr::join(data_version_tmp, dx, by = "parameter")
-    d <- d[!duplicated(as.list(d))]
-
-    # delete version where there are not v1 AND v2
-    group_to_keep = NULL
-    vec_group = unique(d$group)
-
-    for(gp in vec_group){
-      d_tmp = droplevels(d[d$group %in% gp,])
-      t = tapply(d_tmp$median, d_tmp$version, mean, na.rm = TRUE)
-      if(!is.na(t[1]) & !is.na(t[2])){ group_to_keep = c(group_to_keep, gp)}
-    }
-
-    d = droplevels(d[d$group %in% group_to_keep,])
-    STARS = STARS[is.element(names(STARS), group_to_keep)]
-
-    p = ggplot(d, aes(x = group, y = median)) + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
-    y = tapply(d$median, d$group, mean, na.rm = TRUE)
-    y = y + (max(y) * 0.2)
-    label_stars = data.frame(group = names(STARS), median = y[names(STARS)], STARS = STARS)
-    p = p + geom_text(data = label_stars, aes(label = STARS))
-    p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + coord_cartesian(ylim = c(0, dx[1,"max"]))
-    return(p)
-  }
-
 
   get.loc.year = function(data, nb_parameters_per_plot){
     s = median_year = NULL # to avoid no visible binding for global variable
@@ -210,99 +130,10 @@ plot.mean_comparisons_model_bh_intra_location <- function(
   if( plot_type == "barplot") {
     if(round(nb_parameters_per_plot/2) != nb_parameters_per_plot/2){nb_parameters_per_plot = nb_parameters_per_plot-1}
 
-    fun_barplot = function(data, data_version, nb_parameters_per_plot){
+    fun_barplot = function(data, nb_parameters_per_plot){
       parameter = group = parameter = NULL # to avoid no visible binding for global variable
 
-      if(!is.null(data_version)) {
-        data_version$environment = paste(data_version$location, ":", data_version$year, sep = "")
-        data_version$parameter = paste("mu[", data_version$germplasm, ",", data_version$environment, "]", sep = "")
-
-        # check for env
-        vec_env = unique(data_version$environment)
-        vec_env_to_get = vec_env[is.element(vec_env, names(data))]
-        vec_env_not_to_get = vec_env[!is.element(vec_env, names(data))]
-        if( length(vec_env_not_to_get) > 0 ){
-          warning(attributes(data)$PPBstats.object, ": the following environments in data_version are not taken: ", paste(vec_env_not_to_get, collapse = ", "),".")
-        }
-
-        # check for entry in each element of data (i.e. in each environment)
-        vec_entry = data_version$germplasm
-        lapply(data, function(x, vec_entry){
-          vec_entry_not_ok = vec_entry[!is.element(vec_entry, x$mean.comparisons$entry)]
-          if( length(vec_entry_not_ok) > 0 ) {
-            warning("The following entries do not exist in ", x$mean.comparisons$environment[1]," : ", paste(vec_entry_not_ok, collapse = ", "), ". The graph is not done." ) }
-          }, vec_entry)
-
-        # If tests OK, lets go
-        if( length(vec_env_to_get) == 0 ) {
-          OUT = NULL
-          warning(attributes(data)$PPBstats.object, ": there are no environment to display")
-        } else {
-          d_env = data[vec_env_to_get]
-
-          fun = function(x, data_version, nb_parameters_per_plot){
-            Mpvalue = x$Mpvalue
-            x = x$mean.comparisons
-            p_to_get = dplyr::filter(data_version, environment == x$environment[1])$parameter
-            x = dplyr::filter(x, parameter %in% p_to_get)
-
-            x = unique(merge(x,data_version[,c("parameter","group")]))
-            x = x[order(x$group),]
-
-            # Check if we have all the data or if some is missing
-            gp = unique(data_version$group)
-            for(g in gp){
-              dtmp = droplevels(dplyr::filter(data_version, group == g))
-              vec_version = levels(dtmp$version)
-              v1 = unique(as.character(dplyr::filter(dtmp, version == vec_version[1])$parameter))
-              v2 = unique(as.character(dplyr::filter(dtmp, version == vec_version[2])$parameter))
-
-              if( !is.null(Mpvalue) ){
-                for (i in 1:ncol(Mpvalue)) {
-                  if(length(v1)>0){if(colnames(Mpvalue)[i] == v1) {c1 = i}}
-                  if(length(v2)>0){if (colnames(Mpvalue)[i] == v2) {c2 = i}}
-                }
-              }
-              if(!exists("c1") | !exists("c2")){x = x[-grep(g,x$group),]}
-            }
-            if(nrow(x)>0){
-              x$max = max(x$median, na.rm = TRUE)
-         #     x = arrange(x, parameter)
-              x$split = add_split_col(x, nb_parameters_per_plot)
-              x_split = plyr:::splitter_d(x, .(split))
-            }else{x_split=NULL}
-
-            return(x_split)
-          }
-
-          d_env_b = lapply(d_env, fun, data_version, nb_parameters_per_plot)
-      #    d_env_b = d_env_b[[!is.null(d_env_b)]]
-
-          fun_barplot_version = function(dx, data, data_version){
-            if(attributes(data)$PPBstats.object == "data_mean_comparisons") {
-              p = add_stars_version(dx, data, data_version)
-            }
-
-            if(attributes(data)$PPBstats.object == "data_env_with_no_controls" |
-               attributes(data)$PPBstats.object == "data_env_whose_param_did_not_converge") {
-              p = add_stars_version(dx, data = NULL, data_version)
-            }
-
-            return(p)
-          }
-
-          fun1 = function(x, data){ lapply(x, fun_barplot_version, data, data_version) }
-
-          OUT = lapply(d_env_b, fun1, data)
-          names(OUT) = names(d_env_b)
-          OUT=lapply(OUT,function(x){if(class(x) == "list"){if(length(x) ==0){x=NULL}else{return(x)}}else{return(x)}})
-
-          }
-
-
-        } else {
-
-        d_env_b = lapply(data, function(x){
+      d_env_b = lapply(data, function(x){
           x = x$mean.comparisons
           x = dplyr::arrange(x, median)
           x$max = max(x$median, na.rm = TRUE)
@@ -310,8 +141,8 @@ plot.mean_comparisons_model_bh_intra_location <- function(
           x_split = plyr:::splitter_d(x, .(split))
           return(x_split)
         } )
-
-        OUT = lapply(d_env_b, function(x){
+      
+      OUT = lapply(d_env_b, function(x){
           out = lapply(x, function(dx){
             p = ggplot(dx, aes(x = reorder(parameter, median), y = median)) + geom_bar(stat = "identity")
 
@@ -331,13 +162,12 @@ plot.mean_comparisons_model_bh_intra_location <- function(
           })
           return(out)
         })
-        names(OUT) = names(d_env_b)
-        OUT=lapply(OUT,function(x){if(class(x) == "list"){if(length(x) ==0){x=NULL}else{return(x)}}else{return(x)}})
-      }
+      names(OUT) = names(d_env_b)
+      OUT=lapply(OUT,function(x){if(class(x) == "list"){if(length(x) ==0){x=NULL}else{return(x)}}else{return(x)}})
       return(OUT)
-    }
+      }
 
-    out = lapply(all_data, fun_barplot, data_version, nb_parameters_per_plot)
+    out = lapply(all_data, fun_barplot, nb_parameters_per_plot)
     names(out) = names(all_data)
 
   }
