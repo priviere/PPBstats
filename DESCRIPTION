@@ -36,6 +36,7 @@ Depends:
     ibd,
     igraph,
     intergraph,
+    multcompView,
     parallel,
     plyr,
     png,
