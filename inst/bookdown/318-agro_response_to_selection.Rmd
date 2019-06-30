@@ -1,13 +1,5 @@
 ### Study reponse to selection {#response-to-selection}
 
-In this section, the main data set is the one used in $G \times E$ models:
-
-```{r}
-data("data_model_GxE")
-data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
-```
-
-
 For a given trait, selection differential corresponds to the difference between mean of the selected spikes and
 mean of the bulk (i.e. spikes that have not been selected).
 Response to selection correponds to the difference between mean of spikes coming from the selected spikes and the spikes coming from the bulk (Figure \@ref(fig:SR)).
@@ -18,50 +10,23 @@ $R = h^2_r \times S$.
 knitr::include_graphics("figures/SandR_EN-7.png")
 ```
 
+
 #### Format data
-```{r}
-data("data_version_SR")
-data_version_SR = format_data_PPBstats(data_version_SR, type = "data_agro_version")
-```
-Where `group` represents differential selection (S) or reponse to selection (R) and `version` represents bouquet or vrac.
+In this section, the data set used is coming from `data_model_GxE` (section \@ref(ammi)) with three dedicated columns: 
+
+- `group` which represents differential selection (S) or reponse to selection (R)
+- `version` which represents bouquet or vrac.
+- `expe_id`: an id with
+    - S couple and R couple (i.e. four rows) OR
+    - S couple (i.e. two rows) OR
+    - R couple (i.e. two rows)
+
+`expe_id` is useful for example if there are several selection in one germplasm or if there are several origin for a given germplasm.
 
 
-#### Describe the data
+#### Describe and get mean comparison from family 1's model
 
-```{r}
-p = plot(data_model_GxE, vec_variables = "y1",
-         data_version =data_version_SR, plot_type = "barplot")
-p$y1$`loc-1:germ-1`
-```
-
-
-#### Hierarchical Bayesian intra-location model
-
-Version can be studied through the Hierarchical Bayesian intra-location model presented in section \@ref(model-1).
-
-Regarding pairs of entries in a given environment,
-it is possible to get comparison of paris of entries in a given location.
-This is useful if you want to compare two versions within a group.
-For exemple:
-```{r}
-data(data_version)
-data_version = format_data_PPBstats(data_version, type = "data_agro_version")
-head(data_version)
-```
-
-Here, in location `loc-1`, `germ-25` and `germ-26` on one hand and `germ-1` and `germ-12` on the other hand are two version belonging to the same groupe.
-
-Lets' make the plots:
-```{r, warning=FALSE}
-p_barplot_mu_version = plot(
-  out_mean_comparisons_model_bh_intra_location_mu,
-  data_version = data_version,
-  plot_type = "barplot"
-)
-p_barplot_mu_version$data_mean_comparisons$`loc-1:2005`
-```
-
-The stars corresponds to the pvalue:
+For all model, stars on a pair of entries corresponds to the pvalue:
 
 | pvalue | stars |
 | --- | --- |
@@ -71,16 +36,66 @@ The stars corresponds to the pvalue:
 | $> 0.01$ | . |
 
 
-The pvalue is computed as describe in Section \@ref(mean-comp) if the parameters have been estimated with the model.
 
-For environments where MCMC did not converge or without environments, it is a \@ref(t.test) which is perform.
+##### Classic anova model
 
-```{r}
-p_barplot_mu_version$data_env_with_no_controls
-```
+To Do !!!
 
 ```{r}
-p_barplot_mu_version$data_env_whose_param_did_not_converge
+#data(data_agro_SR_1)
+#data_agro_SR_1 = format_data_PPBstats(data_agro_SR_1, type = "data_agro_SR")
 ```
 
+
+##### Spatial analysis model
+
+To Do !!!
+
+```{r}
+#data(data_agro_SR_2)
+#data_agro_SR_2 = format_data_PPBstats(data_agro_SR_2, type = "data_agro_SR")
+```
+
+
+##### Mixed model for incomplete block design
+
+To Do !!!
+
+```{r}
+#data(data_agro_SR_3)
+#data_agro_SR_3 = format_data_PPBstats(data_agro_SR_3, type = "data_agro_SR")
+```
+
+
+##### Hierarchical Bayesian intra-location model
+
+```{r}
+data(data_agro_SR_4)
+data_agro_SR_4 = format_data_PPBstats(data_agro_SR_4, type = "data_agro_SR")
+head(data_agro_SR_4)
+```
+
+
+First, describe the data. Each element of the list is an `expe_id`.
+
+```{r}
+p = plot(data_agro_SR_4, vec_variables = "tkw", plot_type = "barplot")
+p
+```
+
+In order to add significance differences from the Hierarchical Bayesian intra-location model presented in section \@ref(model-1), the argument `mean_comparisons` must be filled with the output of mean_comparisons of the model.
+
+The pvalue is computed as describe in Section \@ref(mean-comp-bayes) if the parameters have been estimated with the model.
+
+```{r}
+load("./data_PPBstats/out_mean_comparisons_model_bh_intra_location_mu.RData") # To save time
+p = plot(data_agro_SR_4,
+         mean_comparison = out_mean_comparisons_model_bh_intra_location_mu, 
+         vec_variables = "tkw",
+         plot_type = "barplot")
+p
+```
+
+
+For environments where MCMC did not converge or without environments, it is a \@ref(t.test) which is perform when there are more than 1 obervation for a given seed lot.
 

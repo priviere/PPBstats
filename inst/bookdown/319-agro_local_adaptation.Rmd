@@ -59,12 +59,9 @@ For home away analysis, you can follow these steps (Figure \@ref(fig:main-workfl
 ##### Format data
 
 ```{r}
-data("data_model_GxE")
-data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
-
-data("data_version_HA")
-data_version_HA = format_data_PPBstats(data_version_HA, type = "data_agro_version")
-head(data_version_HA)
+data("data_agro_HA")
+data_agro_HA = format_data_PPBstats(data_agro_HA, type = "data_agro_HA")
+head(data_agro_HA)
 ```
 
 Where `version` represents away or home and `group` represents the location where the germplasm come from.
@@ -72,7 +69,7 @@ Where `version` represents away or home and `group` represents the location wher
 ##### Describe the data
 
 ```{r}
-p = plot(data_model_GxE, vec_variables = "y1", data_version = data_version_HA, plot_type = "barplot")
+p = plot(data_agro_HA, vec_variables = "y1", plot_type = "barplot")
 ```
 
 `p` is a list with as many element as variable.
@@ -88,7 +85,7 @@ p$y1$home_away_merged
 p$y1$home_away_merged_per_germplasm
 ```
 
-- plot for each germplasm with all version separated
+- A list of plots for each germplasm with all version separated
 ```{r}
 p$y1$home_away_per_germplasm$`germ-1`
 ```
@@ -100,7 +97,7 @@ To run HOME AWAY model on the dataset, use the function `model_home_away`.
 You can run it on one variable.
 
 ```{r}
-out_ha = model_home_away(data_model_GxE, data_version_HA, "y1")
+out_ha = model_home_away(data_agro_HA, "y1")
 ```
 
 `out_ha` is a list containing three elements :
@@ -306,17 +303,17 @@ For local foreign analysis, you can follow these steps (Figure \@ref(fig:main-wo
 
 
 ##### Format data
-The data are formated from the home away data set
 
 ```{r}
-data_version_LF = HA_to_LF(data_version_HA)
-head(data_version_LF)
+data("data_agro_LF")
+data_agro_LF = format_data_PPBstats(data_agro_LF, type = "data_agro_LF")
+head(data_agro_LF)
 ```
 
 ##### Describe the data
 
 ```{r}
-p = plot(data_model_GxE, vec_variables = "y1", data_version = data_version_LF, plot_type = "barplot")
+p = plot(data_agro_LF, vec_variables = "y1", plot_type = "barplot")
 ```
 
 `p` is a list with as many element as variable.
@@ -341,7 +338,7 @@ To run LOCAL FOREIGN model on the dataset, use the function `model_local_foreign
 You can run it on one variable.
 
 ```{r}
-out_lf = model_local_foreign(data_model_GxE, data_version_LF, "y1")
+out_lf = model_local_foreign(data_agro_LF, "y1")
 ```
 
 `out_lf` is a list containing three elements :
@@ -466,9 +463,9 @@ The stars corresponds to the pvalue:
 | $> 0.01$ | . |
 
 
-- `version:germplasm` : mean comparison for version for each germplasm
+- `version:germplasm` : mean comparison for version for each location
 ```{r}
-pvg = p_out_mean_comparisons_lf$"version:germplasm"
+pvg = p_out_mean_comparisons_lf$"version:location"
 pvg
 ```
 
