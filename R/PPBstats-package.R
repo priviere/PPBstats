@@ -60,61 +60,41 @@ NULL
 NULL
 
 
-# data_version ----------
-#' Data with group of entry separeted in different versions
-#'
-#' @description
-#' A dataset containing values for the following factors: year, location, germplasm, group and version. 
-#' There are two versions per group.
-#'
-#' @usage
-#' data(data_version)
-#'
-#' @format
-#' A data frame with 12 rows and 5 columns
-#' 
-#' @author Pierre Rivière
-"data_version"
-NULL
-
-
-# data_version_SR ----------
-#' Data to study response to selection based on data_version format
-#'
-#' @description
-#' A dataset containing values for the following factors: year, location, germplasm, group and version.
-#' group represents differential selection (S) or reponse to selection (R)
-#' version represents bouquet or vrac.
-#'
-#' @usage
-#' data(data_version_SR)
-#'
-#' @format
-#' A data frame with 20 rows and 5 columns
-#' 
-#' @author Pierre Rivière
-"data_version_SR"
-NULL
-
-
-# data_version_HA ----------
+# data_agro_HA ----------
 #' Data to study home and away
 #'
 #' @description
-#' A dataset containing values for the following factors: year, location, germplasm, group and version.
+#' A dataset containing values for the following factors: seed_lot, location, year, germplasm, block, X, Y, group and version, Y1, Y1$date, y2, y2$date.
 #' group represents home or away
 #' version represents the location where come the germplasm from.
 #'
 #' @usage
-#' data(data_version_HA)
+#' data(data_agro_HA)
 #'
 #' @format
-#' A data frame with 25 rows and 5 columns
+#' A data frame with 27 rows and 13 columns
 #' 
 #' @author Pierre Rivière
-"data_version_HA"
+"data_agro_HA"
 NULL
 
+# data_agro_LF ----------
+#' Data to study local and foreign
+#'
+#' @description
+#' A dataset containing values for the following factors: seed_lot, location, year, germplasm, block, X, Y, group and version, Y1, Y1$date, y2, y2$date.
+#' group represents local or foreign
+#' version represents the location where come the germplasm from.
+#'
+#' @usage
+#' data(data_agro_LF)
+#'
+#' @format
+#' A data frame with 27 rows and 13 columns
+#' 
+#' @author Pierre Rivière
+"data_agro_LF"
+NULL
 
 # data_model_GxE ----------
 #' Simulated data set for three variables to test GxE model
@@ -282,5 +262,24 @@ NULL
 #' 
 #' @author Pierre Rivière
 "data_model_spatial"
+NULL
+
+# data_agro_SR_4 ----------
+#' data set to study response to selection from data set data_model_bh_intra_location
+#'
+#' @description
+#' data_model_bh_intra_location adapted with three more columns: expe_id, group and version
+#' 
+#' @usage
+#' data(data_agro_SR_4)
+#'
+#' @format
+#' A data frame with 998 rows and 12 columns
+#'  
+#' @details
+#' tkw is in grams
+#' 
+#' @author Pierre Rivière
+"data_agro_SR_4"
 NULL
 

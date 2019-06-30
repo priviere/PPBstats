@@ -12,6 +12,9 @@
 - pmap in common_functions : use stamen instead of google on map, cf #90
 - implement spatial analysis, cf #20 
 - mean comparisons with spatial model, cf #124 
+- delete deprecated format_data function, cf #107: format_data_PPBstats.data_agro_version
+- update functions: delete all data_version argument, cf #107
+
 
 ### add new functions
 - HA_to_LF, cf #25
@@ -34,12 +37,29 @@
     - plot.check_model_anova
     - mean_comparisons.check_model_anova
     - plot.mean_comparisons_model_anova
+- create new format_data function, cf #107
+  - format_data_PPBstats.data_agro_SR
+  - format_data_PPBstats.data_agro_HA
+  - format_data_PPBstats.data_agro_LF
+- create new function to switch from HA to LF, cf #107
+  - HA_to_LF
+  - LF_to_HA
 
 
 ### add RData
 - data_version_HA, cf #25
 - data_model_spatial, cf #20 
 - add colum "seed_lot" in all agro data format, cf #134 
+- create new RData, cf #107
+  - data agro SR
+  - data agro HA
+  - data agro LF
+- delete deprecated RData, cf #107
+  - data_version
+  - data_version_HA
+  - data_version_SR
+
+
 
 
 ### update vignette (inst/bookdown)

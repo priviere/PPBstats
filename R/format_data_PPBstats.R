@@ -9,9 +9,9 @@
 #' \itemize{
 #'  \item data_network
 #'  \item data_agro
-#'  \item data_agro_version
-#'  \item data_agro_version_SR
-#'  \item data_agro_version_MR
+#'  \item data_agro_SR
+#'  \item data_agro_HA
+#'  \item data_agro_LF
 #'  \item data_organo_napping
 #'  \item data_organo_hedonic
 #'  }
@@ -35,7 +35,9 @@
 #' \itemize{
 #'  \item \code{\link{format_data_PPBstats.data_network}} 
 #'  \item \code{\link{format_data_PPBstats.data_agro}} 
-#'  \item \code{\link{format_data_PPBstats.data_agro_version}} 
+#'  \item \code{\link{format_data_PPBstats.data_agro_SR}} 
+#'  \item \code{\link{format_data_PPBstats.data_agro_HA}} 
+#'  \item \code{\link{format_data_PPBstats.data_agro_LF}} 
 #'  \item \code{\link{format_data_PPBstats.data_organo_napping}} 
 #'  \item \code{\link{format_data_PPBstats.data_organo_hedonic}} 
 #' }
@@ -54,8 +56,8 @@ format_data_PPBstats = function(
   )
   {
   # 0. Error messages ----------
-  match.arg(type, c("data_network", 
-                    "data_agro_version", "data_agro", 
+  match.arg(type, c("data_network", "data_agro",
+                    "data_agro_SR", "data_agro_HA", "data_agro_LF",  
                     "data_organo_napping", "data_organo_hedonic")
             )
   
@@ -69,8 +71,16 @@ format_data_PPBstats = function(
     d = format_data_PPBstats.data_agro(data)
   }
   
-  if(type == "data_agro_version"){
-    d = format_data_PPBstats.data_agro_version(data)
+  if(type == "data_agro_SR"){
+    d = format_data_PPBstats.data_agro_SR(data)
+  }
+  
+  if(type == "data_agro_HA"){
+    d = format_data_PPBstats.data_agro_HA(data)
+  }
+  
+  if(type == "data_agro_LF"){
+    d = format_data_PPBstats.data_agro_LF(data)
   }
   
   # 3.Organo ----------
