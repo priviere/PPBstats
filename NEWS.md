@@ -49,6 +49,10 @@
 - create new function to switch from HA to LF, cf #107
   - HA_to_LF
   - LF_to_HA
+- create new function to plot data_agro_version, cf #104
+  - plot.data_agro_SR
+  - plot.data_agro_HA
+  - plot.data_agro_LF
 
 
 ### add RData
