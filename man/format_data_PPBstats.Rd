@@ -15,9 +15,9 @@ format_data_PPBstats(data, type, threshold, network_part = c("unipart",
 \itemize{
  \item data_network
  \item data_agro
- \item data_agro_version
- \item data_agro_version_SR
- \item data_agro_version_MR
+ \item data_agro_SR
+ \item data_agro_HA
+ \item data_agro_LF
  \item data_organo_napping
  \item data_organo_hedonic
  }}
@@ -43,7 +43,9 @@ See for more details :
 \itemize{
  \item \code{\link{format_data_PPBstats.data_network}} 
  \item \code{\link{format_data_PPBstats.data_agro}} 
- \item \code{\link{format_data_PPBstats.data_agro_version}} 
+ \item \code{\link{format_data_PPBstats.data_agro_SR}} 
+ \item \code{\link{format_data_PPBstats.data_agro_HA}} 
+ \item \code{\link{format_data_PPBstats.data_agro_LF}} 
  \item \code{\link{format_data_PPBstats.data_organo_napping}} 
  \item \code{\link{format_data_PPBstats.data_organo_hedonic}} 
 }

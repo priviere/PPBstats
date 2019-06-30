@@ -6,13 +6,10 @@
 \title{Get ggplot to visualize output from \code{\link{mean_comparisons.predict_the_past_model_bh_GxE}}}
 \usage{
 \method{plot}{mean_comparisons_predict_the_past_model_bh_GxE}(x,
-  data_version = NULL, plot_type = "interaction",
-  nb_parameters_per_plot = 8, ...)
+  plot_type = "interaction", nb_parameters_per_plot = 8, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{mean_comparisons.predict_the_past_model_bh_GxE}}}
-
-\item{data_version}{Output from \code{\link{format_data_PPBstats.data_agro_version}}}
 
 \item{plot_type}{"interaction", "barplot" or "score"}
 

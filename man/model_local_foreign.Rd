@@ -4,13 +4,12 @@
 \alias{model_local_foreign}
 \title{Run Local Foreign model}
 \usage{
-model_local_foreign(data, data_version, variable)
+model_local_foreign(data, variable)
 }
 \arguments{
 \item{data}{The data frame on which the model is run.
-It should come from \code{\link{format_data_PPBstats.data_agro}}}
-
-\item{data_version}{It should come from \code{\link{format_data_PPBstats.data_agro_version}} with local and foreign in version}
+It should come from \code{\link{format_data_PPBstats.data_agro_LF}}
+#'}
 
 \item{variable}{variable to analyse}
 }

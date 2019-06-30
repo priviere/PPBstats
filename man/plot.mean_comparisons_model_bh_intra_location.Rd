@@ -5,13 +5,11 @@
 \title{Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_bh_intra_location}}}
 \usage{
 \method{plot}{mean_comparisons_model_bh_intra_location}(x,
-  data_version = NULL, plot_type = c("interaction", "barplot",
-  "score"), nb_parameters_per_plot = 8, ...)
+  plot_type = c("interaction", "barplot", "score"),
+  nb_parameters_per_plot = 8, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{mean_comparisons.check_model_bh_intra_location}}}
-
-\item{data_version}{Output from \code{\link{format_data_PPBstats.data_agro_version}}}
 
 \item{plot_type}{"interaction", "barplot" or "score"}
 
@@ -34,8 +32,6 @@ For each element of the list, there are as many graph as needed with \code{nb_pa
   \item data_env_with_no_controls : only environments where there were no controls are represented.
   \item data_env_whose_param_did_not_converge : only environments where MCMC did not converge are represented.
   }
- Note that when using data_version, the pvalue is computed based on the MCMC.
- For data that did not converge or without environments, it is a \code{t.test} which is perform.
 
  \item interaction :
  \itemize{
@@ -60,7 +56,6 @@ For each element of the list, there are as many graph as needed with \code{nb_pa
 \details{
 S3 method.
 See example in the book: https://priviere.github.io/PPBstats_book/family-2.html#model-1
-For an example with data_version : https://priviere.github.io/PPBstats_book/family-4.html#version
 }
 \seealso{
 \code{\link{mean_comparisons.check_model_bh_intra_location}}

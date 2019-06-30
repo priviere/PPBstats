@@ -4,17 +4,14 @@
 \alias{plot_descriptive_data}
 \title{Plot agro object from format_data_PPBstats()}
 \usage{
-plot_descriptive_data(x, data_version = NULL, plot_type = c("pam",
-  "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar",
-  "raster", "map"), x_axis = NULL, in_col = NULL,
-  vec_variables = NULL, nb_parameters_per_plot_x_axis = 5,
-  nb_parameters_per_plot_in_col = 5, labels_on = NULL,
-  labels_size = 4, pie_size = 0.2, zoom = 6, ...)
+plot_descriptive_data(x, plot_type = c("pam", "histogramm", "barplot",
+  "boxplot", "interaction", "biplot", "radar", "raster", "map"),
+  x_axis = NULL, in_col = NULL, vec_variables = NULL,
+  nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5,
+  labels_on = NULL, labels_size = 4, pie_size = 0.2, zoom = 6, ...)
 }
 \arguments{
 \item{x}{The data frame. It should come from \code{\link{format_data_PPBstats}}}
-
-\item{data_version}{data frame coming from \code{\link{format_data_PPBstats.data_agro_version}}}
 
 \item{plot_type}{the type of plot you wish. It can be :
 \itemize{
