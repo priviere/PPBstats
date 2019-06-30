@@ -19,6 +19,9 @@
     - plot.data_organo_napping
     - plot.mean_comparisons_model_bh_intra_location
     - plot.mean_comparisons_predict_the_past_model_bh_GxE
+- update model following new RData, cf #104
+    - model_home_away
+    - model_local_foreign
 
 
 ### add new functions
