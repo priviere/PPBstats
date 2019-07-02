@@ -21,15 +21,7 @@ Anyhow, send me an email if you wish to participate in order to coordinate our e
 
 ## Test and report bugs
 
-First, load the current development version of the package: [download v0.24](https://github.com/priviere/PPBstats/archive/v0.24.zip)
-
-unzip the folder and then run 
-
-```{r, eval=FALSE}
-devtools::install("PPBstats-0.24")
-```
-
-Note that `JAGS` must be installed on your computer. See http://mcmc-jags.sourceforge.net/ for more details.
+First, download and install the current development version of the package as explained [here](https://priviere.github.io/PPBstats_web_site/download.html).
 
 The easiest way to start is to [look at the book](https://priviere.github.io/PPBstats_book/) to know how the package works.
 
@@ -127,9 +119,13 @@ knitr::include_graphics("figures/secondary-functions.png")
 | --- | --- |
 | `get.env.info` | Get regional farms data and satellite farms data |
 | `GxE_build_interaction_matrix` | Compute interaction matrix |
-| `format_data_PPBstats.data_agro` | Format data for agro |
-| `format_data_PPBstats.data_agro_version` | Format data for agro version  |
-| `format_data_PPBstats.data_network` | Format data for network |
+| `format_data_PPBstats.data_agro` | Check and format the data to be used by PPBstats functions for data in agronomic analyses |
+| `format_data_PPBstats.data_network` | Check and format the data to be used by PPBstats functions for network analyses |
+| `format_data_PPBstats.data_agro_SR` | Check and format the data to be used by PPBstats functions for data agro SR to study response to selection |
+| `format_data_PPBstats.data_agro_HA` | Check and format the data to be used by PPBstats functions for data agro HA to study local adaptation |
+| `format_data_PPBstats.data_agro_LF` | Check and format the data to be used by PPBstats functions for data agro LF to study local adaptation |
+| `format_data_PPBstats.data_organo_hedonic` | Check and format the data to be used by PPBstats functions for hedonic analyses |
+| `format_data_PPBstats.data_organo_napping` | Check and format the data to be used by PPBstats functions for napping analyses |
 | `check_model.fit_model_bh_intra-location` | Check if the `model_bh_intra-location` model went well  |
 | `check_model.fit_model_bh_GxE` | Check if the `model_bh_GxE` model went well |
 | `check_model.fit_model_GxE` | Check if the `GxE` model went well |
@@ -137,6 +133,9 @@ knitr::include_graphics("figures/secondary-functions.png")
 | `check_model.fit_model_variance_intra` | Check if the `model_variance_intra` model went well |
 | `check_model.fit_model_hedonic` | Check if the `model_hedonic` model went well |
 | `check_model.fit_model_napping` | Check if the `model_napping` model went well |
+| `check_model.fit_model_anova` | Check if the classic `anova` model went well | 
+| `check_model.fit_model_home_away` | Check if the `home_away` model went well |
+| `check_model.fit_model_local_foreign` | Check if the `local_foreign` model went well |
 | `biplot_data.check_model_GxE` | Format data for biplot |
 | `biplot_data.check_model_hedonic` |  Format data for biplot |
 | `biplot_data.check_model_napping` |  Format data for biplot |
@@ -149,28 +148,41 @@ knitr::include_graphics("figures/secondary-functions.png")
 | `mean_comparisons.check_model_bh_GxE` |Get mean comparisons from `check_model.fit_model_bh_GxE`  |
 | `mean_comparisons.check_model_bh_intra-location` | Get mean comparisons from `check_model.fit_model_bh_intra-location` |
 | `mean_comparisons.check_predict_the_past_model_bh_GxE` | Get mean comparisons from `predict_the_past_model\_2` |
-| `mean_comparisons.check_model_spatial` | Get mean comparisons from `check_model.fit_model_spatial`  |
+| `mean_comparisons.check_model_spatial` | Get mean comparisons from `check_model.fit_model_spatial`|
+| `mean_comparisons.check_model_anova` |  Get mean comparisons from `check_model.fit_model_anova`  |
+| `mean_comparisons.check_model_home_away` |  Get mean comparisons from `check_model.fit_model_home_away` |
+| `mean_comparisons.check_model_local_foreign` |  Get mean comparisons from `check_model.fit_model_local_foreign`  |
 | `mean_comparisons.check_model_variance_intra` | Get mean comparisons from `check_model.fit_model_variance_intra` |
 | `mean_comparisons.check_model_hedonic` | Get mean comparisons from `check_model.fit_model_hedonic` |
 | `plot.data_agro` | Plot agro object from `format_data_PPBstats()` |
-| `plot.data_network` | Plot network object `from format_data_PPBstats()` |
-| `plot.data_organo_hedonic` | Plot organo hedonic object `from format_data_PPBstats()` |
-| `plot.data_organo_napping` | Plot organo napping object `from format_data_PPBstats()` |
+| `plot.data_network` | Plot network object from `format_data_PPBstats()` |
+| `plot.data_organo_hedonic` | Plot organo hedonic object from `format_data_PPBstats.data_organo_hedonic` |
+| `plot.data_organo_napping` | Plot organo napping object from `format_data_PPBstats.data_organo_napping` |
+| `plot.data_agro_SR` | Plot agro object from `format_data_PPBstats.data_agro_SR` |
+| `plot.data_agro_HA` | Plot agro object from `format_data_PPBstats.data_agro_HA` |
+| `plot.data_agro_LF` | Plot agro object from `format_data_PPBstats.data_agro_LF` |
 | `plot.parameter_groups` | Get ggplot from `parameter_groups` |
 | `plot.check_model_GxE` | Get ggplot from `check_model.fit_model_GxE` |
 | `plot.check_model_model_bh_intra-location` | Get ggplot from `check_model.fit_model_bh_intra-location` |
 | `plot.check_model_model_bh_GxE` | Get ggplot from `check_model.fit_model_bh_GxE` |
 | `plot.check_model_model_spatial` | Get ggplot from `check_model.fit_model_spatial` |
+| `plot.check_model_anova` | Get ggplot from `check_model.fit_model_anova` |
+| `plot.check_model_home_away` | Get ggplot from `check_model.fit_model_home_away` |
+| `plot.check_model_local_foreign` | Get ggplot from `check_model.fit_model_local_foreign` |
 | `plot.check_model_variance_intra` | Get ggplot from `check_model.fit_model_variance_intra` |
 | `plot.check_model_hedonic` | Get ggplot from `check_model.fit_model_hedonic` |
 | `plot.check_model_napping` | Get ggplot from `check_model.fit_model_napping` |
 | `plot.cross_validation_model_bh_GxE` | Get ggplot from `cross_validation_model_bh_GxE` |
-| `plot.mean_comparisons_GxE` | Get ggplot from `mean_comparisons.check_model_GxE` |
-| `plot.mean_comparisons_model_bh_intra-location` | Get ggplot from `mean_comparisons.check_model_bh_intra-location` |
 | `plot.mean_comparisons_model_bh_GxE` | Get ggplot from `mean_comparisons.check_model_bh_GxE` |
+| `plot.mean_comparisons_model_bh_intra-location` | Get ggplot from `mean_comparisons.check_model_bh_intra-location` |
+| `plot.mean_comparisons_GxE` | Get ggplot from `mean_comparisons.check_model_GxE` |
+| `plot.mean_comparisons_model_hedonic` | Get ggplot from `mean_comparisons.check_model_hedonic` |
+| `plot.mean_comparisons_model_spatial` | Get ggplot from `mean_comparisons.check_model_spatial` |
 | `plot.mean_comparisons_predict_the_past_model_bh_GxE` | Get ggplot from `mean_comparisons.predict_the_past_model_bh_GxE` |
 | `plot.mean_comparisons_model_variance_intra` | Get ggplot from `mean_comparisons.check_model_variance_intra` |
-| `plot.mean_comparisons_model_hedonic` | Get ggplot from `mean_comparisons.check_model_hedonic` |
+| `plot.mean_comparisons_model_anova` | Get ggplot from `mean_comparisons.check_model_anova` |
+| `plot.mean_comparisons_model_home_away` | Get ggplot from `mean_comparisons.check_model_home_away` |
+| `plot.mean_comparisons_model_local_foreign` | Get ggplot from `mean_comparisons.check_model_local_foreign` |
 | `plot.biplot_GxE` | Get ggplot from `biplot_data` |
 | `ggplot_discrimitiveness_vs_representativeness` | Get "discrimitiveness vs representativeness" ggplot from PCA on interaction matrix |
 | `ggplot_mean_vs_stability` | Get "mean vs stability" ggplot from PCA on interaction matrix |
@@ -197,12 +209,12 @@ rmarkdown::render_site("inst/web_site/")
 ### Book
 The code of the book is on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
 
-If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.24/PPBstats_vignette_docx.zip).
+If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.24/PPBstats_book_docx.zip).
 Do not pay attention to strange words such as _#_, _[@blablabla]_, _\@ref_ ... that are `bookdown` specific.
 
 If your familiar with the code, to test any changes on the book:
 ```{r,eval=FALSE}
-bookdown::serve_book(dir = "./inst/bookdown/")
+bookdown::serve_book(dir = "inst/bookdown/")
 ```
 
 Note that it may be useful not to run the book for all files, which is a bit long ...
@@ -241,10 +253,11 @@ rmd_files: [
   "315-agro_family_3.Rmd",
   "316-agro_model_3.Rmd",
   "317-agro_family_4.Rmd",
-  "318-agro_version.Rmd",
-  "319-agro_variance_intra.Rmd",
-  "320-agro_family_5.Rmd",
-  "321-agro_multivariate_analysis.Rmd",
+  "318-agro_response_to_selection.Rmd",
+  "319-agro_local_adaptation.Rmd",
+  "320-agro_variance_intra.Rmd",
+  "321-agro_family_5.Rmd",
+  "322-agro_multivariate_analysis.Rmd",
   "400-organo.Rmd",
   "401-organo_intro.Rmd",
   "402-organo_taste.Rmd",
@@ -287,7 +300,7 @@ https://github.com/priviere/PPBstats/tree/master/inst/return_report_web_site.
 
 To test any changes on the website:
 ```{r,eval=FALSE}
-rmarkdown::render_site("./inst/return_report_web_site/")
+rmarkdown::render_site("inst/return_report_web_site/")
 ```
 
 

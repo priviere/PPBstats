@@ -1,4 +1,4 @@
-# **PPBstats 0.25 under process**
+# **PPBstats 0.25**
 
 ### update fonctions
 - check and format code and roxygen part for each function, DESCRIPTION and NAMESPACE cf #97
@@ -72,8 +72,6 @@
   - data_version_SR
 
 
-
-
 ### update vignette (inst/bookdown)
 - some typo here and there
 - format section on network
@@ -85,6 +83,7 @@
 - add classic anova model, cf #45
 - update model spatial section, cf #20 
 - add colum "seed_lot" in all agro data format, cf #134 
+- add workflow for family 4
 
 
 ### create return report web site (inst/return_report_web_site)
@@ -93,6 +92,7 @@
 
 ### update webiste (inst/web_site)
 - add in contribution how to run bookdown
+- update secondary functions
 
 
 # **PPBstats 0.24**

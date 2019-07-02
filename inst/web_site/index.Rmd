@@ -11,7 +11,7 @@ output:
       collapsed: false
 ---
 
-# Version 0.24
+# Version 0.25
 
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
 knitr::include_graphics("figures/warning.png")
@@ -103,7 +103,7 @@ More information can be found [here](https://priviere.github.io/PPBstats_web_sit
 # Web site architecture
 On this website you can
 
-- [download and install the `PPBstats`](https://priviere.github.io/PPBstats_web_site/download.html)
+- [download and install `PPBstats`](https://priviere.github.io/PPBstats_web_site/download.html)
 - [follow a full tutorial of `PPBstats`](https://priviere.github.io/PPBstats_web_site/book.html)
 - [see how to contrbute](https://priviere.github.io/PPBstats_web_site/contribute.html)
 - [know about licence and citation of the package](https://priviere.github.io/PPBstats_web_site/licence.html)

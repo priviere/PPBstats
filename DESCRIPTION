@@ -3,14 +3,18 @@ Type: Package
 Title: An R package to perform analysis found within PPB programmes
 Version: 0.25
 Encoding: UTF-8
-Date: 2018-06-10
+Date: 2019-07-02
 Authors@R: c(
     person("Pierre", "Riviere", role = c("aut", "cre"), email = "pierre@semencespaysannes.org"),
     person("Gaelle", "Van Frank", role = "ctb"),
     person("Olivier", "David", role = "ctb"),
-    person("Facundo", "Muñoz", role = "ctb")
+    person("Facundo", "Muñoz", role = "ctb"),
+    person("Baptiste", "Rouger", role = "ctb"),
+    person("Camille", "Vindras", role = "ctb"),
+    person("Mathieu", "Thomas", role = "ctb"),
+    person("Isabelle", "Goldringer", role = "ctb")
     )
-Author: Pierre Riviere and Gaelle Van Frank and Olivier David and Facundo Muñoz
+Author: Pierre Riviere and Gaelle Van Frank and Olivier David and Facundo Muñoz and Baptiste Rouger and Camille Vindras and Mathieu Thomas and Isabelle Goldringer
 Maintainer: Pierre Riviere <pierre@semencespaysannes.org>
 Description: This package performs analysis found within PPB programmes regarding 
   network of seeds circulation, agronomic trials, organoleptic tests and 
