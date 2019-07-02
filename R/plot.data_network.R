@@ -138,9 +138,6 @@ plot.data_network = function(
   if( format == "bipart" & plot_type == "network" & !is.null(data_to_pie) ) { 
     stop("With bipart network, pies on network are not possible.") 
   }
-  if( format == "unipart_location" & plot_type == "network" & !is.null(data_to_pie) ) { 
-    stop("With unipart network on location, pies on network are not possible.") 
-  }
   
   if( format == "unipart_location" & organize_sl ) { 
     stop("With unipart network on location, organize_sl can not be used.") 
@@ -574,7 +571,8 @@ plot.data_network = function(
       if( format == "unipart_location" ){
         out_m = pmap(net, format, labels_on, labels_size, zoom)
         out_pm = plot_network_unipart(net, n = NULL, plot_type, in_col, out_m) + theme_blank() 
-        out = list("map" =  out_pm)
+        out_data_to_pie = data_to_pie
+        out = list("map" =  out_m, "data_to_pie" = out_data_to_pie, "vec_variables" = vec_variables)
       }
       if( format == "unipart_sl" | format == "bipart" ){
         out_m = pmap(net, format, labels_on, labels_size, zoom)
@@ -595,7 +593,6 @@ plot.data_network = function(
   
   out_all = lapply(net, run_fun, format, plot_type, in_col, labels_on, labels_size, organize_sl, x_axis, 
                nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col, vec_variables, data_to_pie)
-  
   
   # add pies
   if( pie_on_map ) {
