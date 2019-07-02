@@ -134,7 +134,7 @@ bibtex entry
 
 @book{ppbstats_book_2018,
   title = "{PPBstats : An R package for Participatory Plant Breeding statisticial analyses.}",
-	author = "{Rivière, P. and Goldringer, I. and Rouger, B. and Vindras C.}",
+	author = "{Pierre Riviere and Gaelle {Van Franck} and Olivier David and Baptiste Rouger and Camille Vindras and Mathieu Thomas and Isabelle Goldringer}",
 	year = "2019",
 	version = "0.25",
 	licence = "CC BY NC SA",
