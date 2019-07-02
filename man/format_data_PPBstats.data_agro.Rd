@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_data_PPBstats.data_agro.R
 \name{format_data_PPBstats.data_agro}
 \alias{format_data_PPBstats.data_agro}
-\title{Check and format the data to be used by PPBstats functions for data version in agronomic analyses}
+\title{Check and format the data to be used by PPBstats functions for data in agronomic analyses}
 \usage{
 format_data_PPBstats.data_agro(data)
 }

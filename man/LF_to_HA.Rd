@@ -2,7 +2,7 @@
 % Please edit documentation in R/LF_to_HA.R
 \name{LF_to_HA}
 \alias{LF_to_HA}
-\title{transform local foreign data to home away data}
+\title{Transform local foreign data to home away data}
 \usage{
 LF_to_HA(data_agro_LF)
 }
@@ -13,7 +13,7 @@ LF_to_HA(data_agro_LF)
 a data frame of class data_agro_HA
 }
 \description{
-transform local foreign data to home away data
+Transform local foreign data to home away data
 }
 \details{
 change local to home and foreign to away
