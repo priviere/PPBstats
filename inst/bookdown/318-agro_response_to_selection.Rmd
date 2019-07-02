@@ -10,6 +10,36 @@ $R = h^2_r \times S$.
 knitr::include_graphics("figures/SandR_EN-7.png")
 ```
 
+#### Workflow and function relations in PPBstats regarding response to selection analysis
+
+Figure \@ref(fig:main-workflow-family-4-SR) displays the functions and their relationships.
+Table \@ref(tab:function-descriptions-workflow-family-4-SR) describes each of the main functions.
+
+You can have more information for each function by typing `?function_name` in your R session.
+
+```{r main-workflow-family-4-SR, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow to study response to selection."}
+knitr::include_graphics("figures/main-functions-agro-family-4-SR.png")
+```
+
+| function name | description |
+| --- | --- |
+| `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
+| `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
+| `plot` | Build ggplot objects to visualize output |
+Table: (\#tab:function-descriptions-workflow-family-4-SR) Function description.
+
+
+#### Steps with PPBstats
+
+To study response to selection, you can follow three steps (Figure \@ref(fig:main-workflow-family-4-SR)):
+
+- Format the data with `format_data_PPBstats()`
+- Describe the data with `plot()`
+- Get mean comparison from family 1's model as explained in section \@ref(family-1) by
+  - running the model 
+  - get mean comparisons
+  - use `plot()`
+
 
 #### Format data
 In this section, the data set used is coming from `data_model_GxE` (section \@ref(ammi)) with three dedicated columns: 

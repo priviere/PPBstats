@@ -1,5 +1,33 @@
 ### Study local adaptation
 
+
+#### Workflow and function relations in PPBstats regarding local adaptation analysis
+
+Figure \@ref(fig:main-workflow-family-4-HALF) displays the functions and their relationships.
+Table \@ref(tab:function-descriptions-workflow-family-4-HALF) describes each of the main functions.
+
+You can have more information for each function by typing `?function_name` in your R session.
+Note that `check_model()`, `mean_comparison()` and `plot()` are S3 method.
+Therefore, you should type `?check_model`, `?mean_comparison` or `?plot.PPBstats` to have general features and then see in details for specific functions.
+
+```{r main-workflow-family-4-HALF, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow to study local adaptation."}
+knitr::include_graphics("figures/main-functions-agro-family-4-HALF.png")
+```
+
+| function name | description |
+| --- | --- |
+| `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
+| `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
+| `HA_to_LF` | Transform home away data to local foreign data |
+| `LF_to_HA` | Transform local foreign data to home away data |
+| `model_home_away` | Run home away model |
+| `model_local_foreign` | Run local foreign model |
+| `check_model` | Check if the model went well |
+| `mean_comparisons` | Get mean comparisons |
+| `plot` | Build ggplot objects to visualize output |
+Table: (\#tab:function-descriptions-workflow-family-4-HALF) Function description.
+
+
 #### Home away {#home-away}
 
 Home away analysis allows to study local adaptation.
@@ -47,7 +75,7 @@ Interaction $(\omega \times \theta \times \beta)_{k_{ij}jl}$ give information on
 
 ##### Steps with `PPBstats`
 
-For home away analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
+For home away analysis, you can follow these steps (Figure \@ref(fig:main-workflow-family-4-HALF)):
 
 - Format the data with `format_data_PPBstats()`
 - describe the data with `plot()`
@@ -292,7 +320,7 @@ Interaction $(\omega \times \theta \times \beta)_{k_{ij}jl}$ give information on
 
 ##### Steps with `PPBstats`
 
-For local foreign analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
+For local foreign analysis, you can follow these steps (Figure \@ref(fig:main-workflow-family-4-HALF)):
 
 - Format the data with `format_data_PPBstats()`
 - describe the data with `plot()`
