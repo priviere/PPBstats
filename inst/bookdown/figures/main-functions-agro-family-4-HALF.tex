@@ -1,0 +1,46 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  %% nodes
+  \node[several-all] (DE) {design\_experiment};
+
+  \node[several-all] (FD) [below=1.5cm of DE] {format\_data\_PPBstats};
+  
+  \node[several-all] (HALF) [right=of FD] {HA\_to\_LF};
+  \node[several-all] (LFHA) [left=of FD] {LF\_to\_HA};
+  
+  \node[several-all]  (LF) [below=3cm of FD]  {model\_local\_foreign};
+  \node[several-all]   (HA)  [left=of LF] {model\_home\_away};
+
+  \node[several-all] (CM) [below=2cm of LF] {check\_model};
+
+  \node[several-all] (MC) [below=2cm of CM] {mean\_comparisons};
+
+  \node[several-all] (P) [right=of CM, xshift=5em] {plot};
+
+
+  %% arrows
+  \draw (FD.east) to[bend left] (HALF.west);
+  \draw (FD.west) to[bend right] (LFHA.east);
+  \draw (HALF.west) to[bend left] (FD.east);
+  \draw (LFHA.east) to[bend right] (FD.west);
+  
+  \draw (FD.south) to[out=0,in=20] (P.east);
+  \draw (FD) to (HA);
+  \draw (FD) to (LF);
+
+  \draw (HA) to (CM);
+  \draw (LF) to (CM);
+
+  \draw (CM) to (MC);
+
+  \draw (CM.east) to [left] (P);
+  \draw (MC.east) to [bend right] (P);
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,21 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  %% nodes
+  \node[several-all] (DE) {design\_experiment};
+  \node[several-all] (FD) [below=1cm of DE] {format\_data\_PPBstats};
+  \node[several-all] (F) [right=2cm of FD] {mean\_comparisons from Family 1};
+  \node[several-all] (P) [below=of FD, xshift=5em] {plot};
+
+  %% arrows
+  \draw (FD) to (P);
+  \draw (F) to (P.east);
+
+
+\end{tikzpicture}
+
+\end{document}

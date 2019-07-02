@@ -1,4 +1,5 @@
 # Tikz figure
+# cf here https://www.overleaf.com/project/5d1b33982e6ec5130bb4b3df
 setwd("inst/bookdown/figures/")
 
 vec_f = c(
@@ -17,7 +18,8 @@ vec_f = c(
   "main-functions-agro.tex",
   "main-functions-agro-family-1.tex",
   "main-functions-agro-family-2.tex",
-  "main-functions-agro-family-4.tex",
+  "main-functions-agro-family-4-SR.tex",
+  "main-functions-agro-family-4-HALF.tex",
   "main-functions-agro-family-5.tex",
   "main-functions-network.tex",
   "main-functions-organo.tex",
@@ -26,7 +28,7 @@ vec_f = c(
 
 for(f in vec_f){
   f = sub(".tex", "", f)
-  system(paste("pdflatex -no-file-line-error -interaction=nonstopmode ", f,".tex", sep = ""))
+#  system(paste("pdflatex -no-file-line-error -interaction=nonstopmode ", f,".tex", sep = ""))
   system(paste("convert -density 300 -quality 100 ", f,".pdf ", f,".png", sep = ""))
   system("rm *.aux *.log")
 }
