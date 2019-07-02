@@ -40,6 +40,7 @@ knitr::include_graphics("figures/main-functions-agro-family-1.png")
 | `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
 | `model_bh_intra-location` | Run Hierarchical Bayesian intra-location model |
 | `model_spatial` | Run spatial row and column model |
+| `model_anova` | Run classic anova model |
 | `check_model` |  Check if the model went well |
 | `mean_comparisons` |  Get mean comparisons |
 | `plot` | Build ggplot objects to visualize output |
