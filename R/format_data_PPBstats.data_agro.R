@@ -1,4 +1,4 @@
-#' Check and format the data to be used by PPBstats functions for data version in agronomic analyses
+#' Check and format the data to be used by PPBstats functions for data in agronomic analyses
 #'
 #' @description
 #' \code{format_data_PPBstats.data_agro} checks and formats the data to be used by PPBstats functions for data version in agronomic analyses

@@ -1,4 +1,4 @@
-#' transform home away data to local foreign data
+#' Transform home away data to local foreign data
 #' @param data_agro_HA data home away
 #' @details change home to local and away to foreign
 #' @return a data frame of class data_agro_LF
