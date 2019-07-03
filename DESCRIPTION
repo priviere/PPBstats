@@ -25,6 +25,7 @@ BugReports: http://github.com/priviere/PPBstats/issues
 Imports:
   methods
 Depends:
+    R (>= 3.5.0),
     agricolae,
     coda,
     combinat,

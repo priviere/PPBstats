@@ -1,3 +1,7 @@
+# **PPBstats 0.26 under process**
+
+- add depends on R version in DESCRIPTION file, cf#140
+
 # **PPBstats 0.25**
 
 ### update fonctions
