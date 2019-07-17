@@ -42,6 +42,13 @@ format_data_PPBstats.data_agro = function(data){
   if(!is.factor(d$X)) { stop(mess) }
   if(!is.factor(d$Y)) { stop(mess) }
   
+  # check if only NA in a column
+  for(i in 1:ncol(data)){ 
+    x = data[,i]
+    test = length(which(is.na(x))) == length(x)
+    if (test) { stop(paste("Column", colnames(data)[i], "is only with NA, please delete it and try again.")) }
+  }
+  
   # Variable in option to get map
   vec_variables = c("long", "lat")
   for(i in vec_variables) {

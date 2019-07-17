@@ -48,6 +48,13 @@ format_data_PPBstats.data_organo_hedonic = function(data, threshold){
   if(!is.numeric(data$note)) { stop("note must be numeric") }
   if(!is.factor(data$descriptors)) { stop("descriptors must be factor") }
   
+  # check if only NA in a column
+  for(i in 1:ncol(data)){ 
+    x = data[,i]
+    test = length(which(is.na(x))) == length(x)
+    if (test) { stop(paste("Column", colnames(data)[i], "is only with NA, please delete it and try again.")) }
+  }
+  
   # germplasm and location at the end as supplementary variables
   #data_tmp = data[,is.element(colnames(data), c("germplasm", "location"))]
   #data_tmp = cbind.data.frame(data_tmp, data[,c("germplasm", "location")])

@@ -34,6 +34,13 @@ format_data_PPBstats.data_organo_napping = function(data, threshold){
   if( !is.factor(data$germplasm) ) { stop("germplasm must be a factor") }
   if( !is.factor(data$location) ) { stop("location must be a factor") }
   
+  # check if only NA in a column
+  for(i in 1:ncol(data)){ 
+    x = data[,i]
+    test = length(which(is.na(x))) == length(x)
+    if (test) { stop(paste("Column", colnames(data)[i], "is only with NA, please delete it and try again.")) }
+  }
+  
   var_sup = colnames(data)[!is.element(colnames(data), c("juges", "X", "Y", "descriptors"))]
   N = format_organo(data, threshold, var_sup)$data_sample
   N = N[,c(6, 1, 2, 3, c(7:ncol(N)))]

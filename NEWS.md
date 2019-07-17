@@ -2,6 +2,9 @@
 
 - add depends on R version in DESCRIPTION file, cf#140
 
+### update fonctions
+- in format data functions, stop if column with only NA, cf #98
+
 # **PPBstats 0.25**
 
 ### update fonctions

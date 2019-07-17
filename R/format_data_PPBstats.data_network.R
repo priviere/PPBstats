@@ -137,6 +137,13 @@ format_data_PPBstats.data_network = function(
   if( length(network_split) > 1 ) { network_split = network_split[1] }
   if(!is.element(network_split, c("germplasm", "relation_year_start"))) { stop(mess) }
   
+  # check if only NA in a column
+  for(i in 1:ncol(data)){ 
+    x = data[,i]
+    test = length(which(is.na(x))) == length(x)
+    if (test) { stop(paste("Column", colnames(data)[i], "is only with NA, please delete it and try again.")) }
+  }
+  
   
   # Functions used in this function ----------
   # Check data format ----------
