@@ -10,7 +10,7 @@ Within a Participatory Plant Breeding programme, it is important to give results
 This can be done through the creation of a report with results coming from the analysis.
 
 This web site gives examples of reports to give back information to farmers based on analysis run with `PPBstats`.
-Please refer to [PPBstats documentation](https://priviere.github.io/PPBstats_book) for more information, especially section regarding [communication to farmers](https://priviere.github.io/PPBstats_web_site/com.html).
+Please refer to [PPBstats documentation](https://priviere.github.io/PPBstats_book) for more information, especially section regarding [communication to farmers](https://priviere.github.io/PPBstats_book/com.html).
 
 The workflow to create the report follow three steps:
 
