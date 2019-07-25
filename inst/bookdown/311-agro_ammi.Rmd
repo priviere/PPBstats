@@ -269,6 +269,7 @@ p_out_biplot_ammi = plot(out_biplot_ammi)
 ```
 
 `p_out_biplot_ammi` is a list of three elements :
+
 - `ecovalence`
 
 Ecovalence from @wricke_uber_1962 give part of interaction variance taken by germplasm and location.
