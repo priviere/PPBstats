@@ -386,6 +386,19 @@ cl$cluster_all
 cl$cluster_1
 ```
 
+
+#### post hoc analysis to visualize variation repartition for several variables
+
+
+```{r}
+list_out_check_model = list(out_check_ammi, out_check_ammi_2, out_check_ammi_3)
+names(list_out_check_model) = c("ammi_1", "ammi_2", "ammi_3")
+post_hoc_variation(list_out_check_model)
+
+```
+
+
+
 #### Apply the workflow to several variables {#workflow_gxe}
 
 If you wish to apply the AMMI workflow to several variables, you can use `lapply` with the following code :

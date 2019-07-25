@@ -5,6 +5,10 @@
 ### update fonctions
 - in format data functions, stop if column with only NA, cf #98
 
+### add new functions
+- post_hoc_variation, cf #141
+- post_hoc_variation_model_GxE, cf #141
+
 # **PPBstats 0.25**
 
 ### update fonctions
