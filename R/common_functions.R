@@ -1776,3 +1776,65 @@ plot_descriptive_data = function(
   return(p_out)
 }
 
+
+
+# check constitency of list with check_model ----------
+#' Check constitency of list with outputs from \code{\link{check_model()}}
+#'
+#' @description
+#' \code{check_list_out_check_model} checks consistency of list with outputs from \code{\link{check_model()}}
+#'
+#' @param valid_models A vector with valid models expected
+#' 
+#' @param list_out_check_model A list whose elements are output from \code{\link{check_model}}
+#'
+#' @return
+#' If the list do not contain valid models and all the elements of the list are coming from the same model, an error is returned.
+#' 
+#' If no error message are displayed the function returns a vector with the class of elements in list_out_check_model
+#' 
+#' @author Facundo Munoz and Pierre Riviere
+#'
+#' @export
+#'
+check_list_out_check_model = function(valid_models, list_out_check_model){
+  if( length(list_out_check_model) <= 1 ) { stop("list_out_check_model must have at least two elements (i.e. two variables).") }
+  if( is.null(names(list_out_check_model)) ){ stop("Each element of list_out_check_model must have a name") }
+  if( is.element(TRUE, is.element(names(list_out_check_model), "")) ){ stop("Each element of list_out_check_model must have a name") }
+  
+  if (!all(
+    idx <- vapply(list_out_check_model, inherits, TRUE, valid_models)
+  )) {
+    ## some (idx) elements of the list are either not a check_model or not
+    ## a model_bh_GxE nor model_GxE. Pinpoint all of them.
+    mess <- paste(
+      "Element(s)",
+      paste(names(list_out_check_model)[which(idx)], collapse = ", "),
+      "in", substitute(list_out_check_model), "must come from check_model()",
+      "from either", 
+      paste(valid_models, collapse = ",")
+    )
+    stop(mess)
+  }
+  
+  ## Check that all elements are consistently from the same model
+  ## Matrix where each column (element in the list) contains the idx of the
+  ## element's class in the position matching valid_models
+  model_classes.idx <- vapply(
+    list_out_check_model,
+    inherits,
+    rep(1,length(valid_models)),
+    valid_models,
+    which = TRUE)
+  if( !is.matrix(model_classes.idx) ){ model_classes.idx = t(as.matrix(model_classes.idx)) }
+  rownames(model_classes.idx) <- valid_models
+  all_by_model <- apply(model_classes.idx > 0, 1, all)
+  if (sum(all_by_model) != 1) {
+    ## not all elements are from the same model
+    model.idx <- apply(model_classes.idx > 0, 2, function(x) valid_models[which(x)])
+    print(model.idx)
+    stop("All elements in", substitute(list_out_check_model),
+         "need to come from the same model")
+  }
+  return(all_by_model)
+}
