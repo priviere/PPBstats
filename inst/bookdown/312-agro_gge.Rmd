@@ -191,7 +191,7 @@ gge_3 = model_GxE(data_model_GxE, variable = "y3", gxe_analysis = "GGE")
 out_check_gge_2 = check_model(gge_2)
 out_check_gge_3 = check_model(gge_3)
 
-# Then run the function for germplasm. It can also be done on location or year if there are year in the data set.
+# Then run the function for germplasm. It can also be done on location or intra germplasm variance
 out_parameter_groups = parameter_groups(
   list("y1" = out_check_gge, "y2" = out_check_gge_2, "y3" = out_check_gge_3), 
   "germplasm"

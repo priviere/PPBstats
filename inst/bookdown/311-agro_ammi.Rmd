@@ -312,9 +312,9 @@ p_out_biplot_ammi$biplot$discrimitiveness_vs_representativeness
 
 In order to cluster locations or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
 
-This is done with `parameter_groups` which do a PCA on this matrix.
+This is done with `parameter_groups()` which do a PCA on this matrix.
 
-Clusters are done based on HCPC method as explained here http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning
+Clusters are done based on HCPC method as explained [here](http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning) 
 
 Lets' have an example with three variables.
 
@@ -330,7 +330,7 @@ out_check_ammi_2 = check_model(out_ammi_2)
 out_check_ammi_3 = check_model(out_ammi_3)
 ```
 
-Then run the function for germplasm. It can also be done on location or year if there are year in the data set.
+Then run the function for germplasm. It can also be done on location or intra germplasm variance
 
 ```{r}
 out_parameter_groups = parameter_groups(
@@ -341,9 +341,9 @@ out_parameter_groups = parameter_groups(
 
 `out_parameter_groups` is list of two elements:
 
-- `obj.pca` : the PCA object from `FactoMineR::PCA`
+- `obj.pca` : the PCA object from `FactoMineR::PCA()`
 - `clust`, a list of two elements:
-    - `res.hcpc` : the HCPC object from `FactoMineR::HCPC`
+    - `res.hcpc` : the HCPC object from `FactoMineR::HCPC()`
     - `clust` : the dataframe with cluster assigned to each individual
 
 ##### Visualize groups of parameters
