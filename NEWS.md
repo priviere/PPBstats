@@ -9,7 +9,9 @@
 - post_hoc_variation, cf #141
 - post_hoc_variation_model_GxE, cf #141
 - post_hoc_variation_model_anova, cf #141
+- post_hoc_variation_model_spatial, cf #141
 - parameter_groups_model_anova, cf #144
+- parameter_groups_model_spatial, cf #144
 
 
 # **PPBstats 0.25**

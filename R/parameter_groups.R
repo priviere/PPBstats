@@ -44,12 +44,12 @@ parameter_groups = function(
 {
   
   # 1. Error message ----------
-  all_by_model = check_list_out_check_model(valid_models = c("check_model_bh_GxE", "check_model_GxE", "check_model_anova"), list_out_check_model)
+  all_by_model = check_list_out_check_model(valid_models = c("check_model_bh_GxE", "check_model_GxE", "check_model_anova", "check_model_spatial"), list_out_check_model)
 
   # 2. Get matrix
   ## function look-up (in the order of valid_models)
   get_matrix <- 
-    c(parameter_groups_model_bh_GxE, parameter_groups_model_GxE, parameter_groups_model_anova)[[which(all_by_model)]]
+    c(parameter_groups_model_bh_GxE, parameter_groups_model_GxE, parameter_groups_model_anova, parameter_groups_model_spatial)[[which(all_by_model)]]
   mat <- get_matrix(list_out_check_model, parameter)
   
   # 3. Run the PCA ----------
