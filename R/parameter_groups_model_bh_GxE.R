@@ -57,8 +57,7 @@ parameter_groups_model_bh_GxE = function(
   }
   
   out = fun_get_effect_for_all_variables(list_out_check_model_model_bh_GxE, parameter)
-    
-  attributes(out)$PPBstats.object = "parameter_groups_model_bh_GxE"
+  
   return(out)
 }
 

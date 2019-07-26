@@ -5,7 +5,7 @@
 #'
 #' @param list_out_check_model_GxE A list whose elements are output from \code{\link{check_model.fit_model_GxE}}
 #'  
-#' @param parameter parameter on which to get the matrix
+#' @param parameter parameter on which to get the matrix: germplasm, location or var_intra_germplasm
 #' 
 #' @return 
 #' The function returns a data frame with variables in column and effect of paramters in row
@@ -58,6 +58,5 @@ parameter_groups_model_GxE = function(
   if(parameter == "location") { out = df_E }
   
   # 3. Return results
-  attributes(out)$PPBstats.object = "parameter_groups_model_GxE"
   return(out)
 }
