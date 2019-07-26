@@ -17,11 +17,11 @@
 post_hoc_variation = function(list_out_check_model){
   
   # 1. Error message ----------
-  all_by_model = check_list_out_check_model(valid_models = c("check_model_GxE"), list_out_check_model)
+  all_by_model = check_list_out_check_model(valid_models = c("check_model_GxE", "check_model_anova"), list_out_check_model)
   
   # 2. Get dataframe
   ## function look-up (in the order of valid_models)
-  get_df =  c(post_hoc_variation_model_GxE)[[which(all_by_model)]]
+  get_df =  c(post_hoc_variation_model_GxE, post_hoc_variation_model_anova)[[which(all_by_model)]]
   df = get_df(list_out_check_model)
   
   # 3. Get ggplot
