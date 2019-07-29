@@ -251,14 +251,14 @@ NULL
 #' Data set for one variable to test spatial model
 #'
 #' @description
-#' A dataset containing one variable y1 and 
+#' A dataset containing three variables y1, y2 and y3
 #' the following factors: seed_lot, location, year, germplasm, block, X and Y. 
-#' y1 refers to real value of interval in day degree of flowering between male and female flower of maize.
+#' 
 #' @usage
 #' data(data_model_spatial)
 #'
 #' @format
-#' A data frame with 211 rows and 8 columns
+#' A data frame with 211 rows and 10 columns
 #' 
 #' @author Pierre Rivière
 "data_model_spatial"

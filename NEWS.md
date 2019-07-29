@@ -16,8 +16,8 @@
 - parameter_groups_model_spatial, cf #144
 
 ### update RData
--  new data_agro_HA and data_agro_LF, cf #146 
-
+- new data_agro_HA and data_agro_LF, cf #146 
+- new data_model_spatial, cf #145
 
 # **PPBstats 0.25**
 

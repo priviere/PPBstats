@@ -185,8 +185,8 @@ Lets' have an example with three variables.
 
 First run the models
 ```{r}
-out_spatial_2 = model_spatial(data_model_spatial, variable = "y1")
-out_spatial_3 = model_spatial(data_model_spatial, variable = "y1")
+out_spatial_2 = model_spatial(data_model_spatial, variable = "y2")
+out_spatial_3 = model_spatial(data_model_spatial, variable = "y3")
 ```
 
 Then check the models
