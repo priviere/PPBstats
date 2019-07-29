@@ -168,11 +168,105 @@ pg = p_out_mean_comparisons_spatial$germplasm_barplot
 pg$`23`
 ```
 
+
+
+#### Get and vizualise groups of parameters
+
+##### Get groups of parameters
+
+In order to cluster locations or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
+
+This is done with `parameter_groups()` which do a PCA on this matrix.
+
+Clusters are done based on HCPC method as explained [here](http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning) 
+
+
+Lets' have an example with three variables.
+
+First run the models
+```{r}
+out_spatial_2 = model_spatial(data_model_spatial, variable = "y1")
+out_spatial_3 = model_spatial(data_model_spatial, variable = "y1")
+```
+
+Then check the models
+```{r}
+out_check_spatial_2 = check_model(out_spatial_2)
+out_check_spatial_3 = check_model(out_spatial_3)
+```
+
+Then run the function for germplasm.
+
+```{r}
+list_out_check_model = list("spatial_1" = out_check_spatial, "spatial_2" = out_check_spatial_2, "spatial_3" = out_check_spatial_3)
+out_parameter_groups = parameter_groups(list_out_check_model, "germplasm")
+```
+
+`out_parameter_groups` is list of two elements:
+
+- `obj.pca` : the PCA object from `FactoMineR::PCA()`
+- `clust`, a list of two elements:
+    - `res.hcpc` : the HCPC object from `FactoMineR::HCPC()`
+    - `clust` : the dataframe with cluster assigned to each individual
+
+##### Visualize groups of parameters
+
+Visualize outputs with `plot`
+
+```{r}
+p_germplasm_group = plot(out_parameter_groups)
+```
+
+`p_germplasm_group` is list of two elements :
+
+- `pca` : a list with three elements on the PCA on the group of parameters :
+
+    - `composante_variance` : variance caught by each dimension of the PCA
+    ```{r}
+    p_germplasm_group$pca$composante_variance
+    ```
+
+    - `ind` : graph of individuals
+    ```{r}
+    p_germplasm_group$pca$ind
+    ```
+
+    - `var` : graph of variables
+    ```{r}
+    p_germplasm_group$pca$var
+    ```
+  
+- `clust` : output from `factextra::fviz_cluster()`, a list of number of cluster + 1 element
+```{r}  
+cl = p_germplasm_group$clust
+names(cl)
+```
+
+```{r}  
+cl$cluster_all
+```
+
+```{r}
+cl$cluster_1
+```
+
+
+#### post hoc analysis to visualize variation repartition for several variables
+
+
+```{r}
+list_out_check_model = list("spatial_1" = out_check_spatial, "spatial_2" = out_check_spatial_2, "spatial_3" = out_check_spatial_3)
+post_hoc_variation(list_out_check_model)
+
+```
+
+
+
 #### Apply the workflow to several variables
 
 If you wish to apply the spatial workflow to several variables, you can use `lapply` with the following code :
 
-```{r}
+```{r, eval=FALSE}
 workflow_spatial = function(x, data){
   out_spatial = model_spatial(data = data, variable = x)
   
@@ -192,10 +286,22 @@ workflow_spatial = function(x, data){
   return(out)
 }
 
-## Not run 
-# vec_variables = c("y1", "y2", "y3")
-#
-# out = lapply(vec_variables, workflow_spatial, data)
-# names(out) = vec_variables
+vec_variables = c("y1", "y1", "y1")
+out = lapply(vec_variables, workflow_spatial, data_model_spatial)
+names(out) = vec_variables
+
+
+list_out_check_model = list("spatial_1" = out_check_spatial, "spatial_2" = out_check_spatial_2, "spatial_3" = out_check_spatial_3)
+
+out_parameter_groups = parameter_groups(list_out_check_model, "germplasm" )
+p_germplasm_group = plot(out_parameter_groups)
+
+p_post_hoc_variation = post_hoc_variation(list_out_check_model)
+
 ```
+
+
+
+
+
 

@@ -272,6 +272,65 @@ pl$`1`
 
 
 
+##### post hoc analysis to visualize variation repartition for several variables
+
+First run the models
+```{r}
+out_ha_2 = model_home_away(data_agro_HA, "y2")
+out_ha_3 = model_home_away(data_agro_HA, "y3")
+```
+
+Then check the models
+```{r}
+out_check_ha_2 = check_model(out_ha_2)
+out_check_ha_3 = check_model(out_ha_3)
+```
+
+```{r}
+list_out_check_model = list("ha_1" = out_check_ha, "ha_2" = out_check_ha_2, "ha_3" = out_check_ha_3)
+post_hoc_variation(list_out_check_model)
+```
+
+
+
+##### Apply the workflow to several variables
+
+If you wish to apply the AMMI workflow to several variables, you can use `lapply()` with the following code :
+
+```{r}
+workflow_home_away = function(x, data){
+  out_home_away = model_home_away(data, variable = x)
+  
+  out_check_home_away = check_model(out_home_away)
+  p_out_check_home_away = plot(out_check_home_away)
+  
+  out_mean_comparisons_home_away = mean_comparisons(out_check_home_away, p.adj = "bonferroni")
+  p_out_mean_comparisons_home_away = plot(out_mean_comparisons_home_away)
+  
+  out = list(
+    "out_home_away" = out_home_away,
+    "out_check_home_away" = out_check_home_away,
+    "p_out_check_home_away" = p_out_check_home_away,
+    "out_mean_comparisons_home_away" = out_mean_comparisons_home_away,
+    "p_out_mean_comparisons_home_away" = p_out_mean_comparisons_home_away
+  )
+  
+  return(out)
+}
+
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_home_away, data_agro_HA)
+names(out) = vec_variables
+
+list_out_check_model = list("ha_1" = out$y1$out_check_home_away, "ha_2" = out$y2$out_check_home_away, "ha_3" = out$y3$out_check_home_away)
+
+p_post_hoc_variation = post_hoc_variation(list_out_check_model)
+
+```
+
+
+
 #### Local foreign {#local-foreign}
 
 Another way to study local adaptation of germplasm to their location from origin is to compare germplasm behavior on their original location with their behavior on other locations : if the first is greater than the second then the germplasm is more adapted to its original location rather than to the other locations.
@@ -510,3 +569,64 @@ pl$`1`
 ```
 
 - `year` : mean comparison for year in case there is year in the model.
+
+
+
+##### post hoc analysis to visualize variation repartition for several variables
+
+First run the models
+```{r}
+out_lf_2 = model_local_foreign(data_agro_LF, "y2")
+out_lf_3 = model_local_foreign(data_agro_LF, "y3")
+```
+
+Then check the models
+```{r}
+out_check_lf_2 = check_model(out_lf_2)
+out_check_lf_3 = check_model(out_lf_3)
+```
+
+```{r}
+list_out_check_model = list("lf_1" = out_check_lf, "lf_2" = out_check_lf_2, "lf_3" = out_check_lf_3)
+post_hoc_variation(list_out_check_model)
+```
+
+
+
+##### Apply the workflow to several variables
+
+If you wish to apply the AMMI workflow to several variables, you can use `lapply()` with the following code :
+
+```{r}
+workflow_local_foreign = function(x, data){
+  out_local_foreign = model_local_foreign(data, variable = x)
+  
+  out_check_local_foreign = check_model(out_local_foreign)
+  p_out_check_local_foreign = plot(out_check_local_foreign)
+  
+  out_mean_comparisons_local_foreign = mean_comparisons(out_check_local_foreign, p.adj = "bonferroni")
+  p_out_mean_comparisons_local_foreign = plot(out_mean_comparisons_local_foreign)
+  
+  out = list(
+    "out_local_foreign" = out_local_foreign,
+    "out_check_local_foreign" = out_check_local_foreign,
+    "p_out_check_local_foreign" = p_out_check_local_foreign,
+    "out_mean_comparisons_local_foreign" = out_mean_comparisons_local_foreign,
+    "p_out_mean_comparisons_local_foreign" = p_out_mean_comparisons_local_foreign
+  )
+  
+  return(out)
+}
+
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_local_foreign, data_agro_LF)
+names(out) = vec_variables
+
+list_out_check_model = list("lf_1" = out$y1$out_check_local_foreign, "lf_2" = out$y2$out_check_local_foreign, "lf_3" = out$y3$out_check_local_foreign)
+
+p_post_hoc_variation = post_hoc_variation(list_out_check_model)
+
+```
+
+

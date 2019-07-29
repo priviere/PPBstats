@@ -1812,7 +1812,7 @@ check_list_out_check_model = function(valid_models, list_out_check_model){
       paste(names(list_out_check_model)[which(idx)], collapse = ", "),
       "in", substitute(list_out_check_model), "must come from check_model()",
       "from either", 
-      paste(valid_models, collapse = ",")
+      paste(valid_models, collapse = ", ")
     )
     stop(mess)
   }

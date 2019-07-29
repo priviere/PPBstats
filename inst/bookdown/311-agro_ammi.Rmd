@@ -402,7 +402,7 @@ post_hoc_variation(list_out_check_model)
 
 #### Apply the workflow to several variables {#workflow_gxe}
 
-If you wish to apply the AMMI workflow to several variables, you can use `lapply` with the following code :
+If you wish to apply the AMMI workflow to several variables, you can use `lapply()` with the following code :
 
 ```{r}
 workflow_gxe = function(x, gxe){

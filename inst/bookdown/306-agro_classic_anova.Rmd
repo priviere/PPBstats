@@ -25,7 +25,7 @@ With,
 For classic anova analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
 
 - Format the data with `format_data_PPBstats()`
-- Run the model with `model_anova`
+- Run the model with `model_anova()`
 - Check model outputs to know if you can continue the analysis with `check_model()`  and vizualise it with `plot()`
 - Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
 
@@ -172,4 +172,138 @@ pg = p_out_mean_comparisons_anova$germplasm
 names(pg)
 pg$`1`
 ```
+
+#### Get and vizualise groups of parameters
+
+##### Get groups of parameters
+
+In order to cluster locations or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
+
+This is done with `parameter_groups()` which do a PCA on this matrix.
+
+Clusters are done based on HCPC method as explained [here](http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning) 
+
+
+Lets' have an example with three variables.
+
+First run the models
+```{r}
+out_anova_2 = model_anova(data_model_anova, variable = "y2")
+out_anova_3 = model_anova(data_model_anova, variable = "y3")
+```
+
+Then check the models
+```{r}
+out_check_anova_2 = check_model(out_anova_2)
+out_check_anova_3 = check_model(out_anova_3)
+```
+
+Then run the function for germplasm.
+
+```{r}
+out_parameter_groups = parameter_groups(
+  list("y1" = out_check_anova, "y2" = out_check_anova_2, "y3" = out_check_anova_3), 
+  "germplasm"
+  )
+```
+
+`out_parameter_groups` is list of two elements:
+
+- `obj.pca` : the PCA object from `FactoMineR::PCA()`
+- `clust`, a list of two elements:
+    - `res.hcpc` : the HCPC object from `FactoMineR::HCPC()`
+    - `clust` : the dataframe with cluster assigned to each individual
+
+##### Visualize groups of parameters
+
+Visualize outputs with `plot`
+
+```{r}
+p_germplasm_group = plot(out_parameter_groups)
+```
+
+`p_germplasm_group` is list of two elements :
+
+- `pca` : a list with three elements on the PCA on the group of parameters :
+
+    - `composante_variance` : variance caught by each dimension of the PCA
+    ```{r}
+    p_germplasm_group$pca$composante_variance
+    ```
+
+    - `ind` : graph of individuals
+    ```{r}
+    p_germplasm_group$pca$ind
+    ```
+
+    - `var` : graph of variables
+    ```{r}
+    p_germplasm_group$pca$var
+    ```
+  
+- `clust` : output from `factextra::fviz_cluster()`, a list of number of cluster + 1 element
+```{r}  
+cl = p_germplasm_group$clust
+names(cl)
+```
+
+```{r}  
+cl$cluster_all
+```
+
+```{r}
+cl$cluster_1
+```
+
+
+#### post hoc analysis to visualize variation repartition for several variables
+
+
+```{r}
+list_out_check_model = list("anova_1" = out_check_anova, "anova_2" = out_check_anova_2, "anova_3" = out_check_anova_3)
+post_hoc_variation(list_out_check_model)
+
+```
+
+
+
+#### Apply the workflow to several variables
+
+If you wish to apply the AMMI workflow to several variables, you can use `lapply()` with the following code :
+
+```{r}
+workflow_anova = function(x, data){
+  out_anova = model_anova(data, variable = x)
+  
+  out_check_anova = check_model(out_anova)
+  p_out_check_anova = plot(out_check_anova)
+  
+  out_mean_comparisons_anova = mean_comparisons(out_check_anova, p.adj = "bonferroni")
+  p_out_mean_comparisons_anova = plot(out_mean_comparisons_anova)
+  
+  out = list(
+    "out_anova" = out_anova,
+    "out_check_anova" = out_check_anova,
+    "p_out_check_anova" = p_out_check_anova,
+    "out_mean_comparisons_anova" = out_mean_comparisons_anova,
+    "p_out_mean_comparisons_anova" = p_out_mean_comparisons_anova
+  )
+  
+  return(out)
+}
+
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_anova, data_model_anova)
+names(out) = vec_variables
+
+list_out_check_model = list("anova_1" = out$y1$out_check_anova, "anova_2" = out$y2$out_check_anova, "anova_3" = out$y3$out_check_anova)
+
+out_parameter_groups = parameter_groups(list_out_check_model, "germplasm" )
+p_germplasm_group = plot(out_parameter_groups)
+
+p_post_hoc_variation = post_hoc_variation(list_out_check_model)
+
+```
+
 
