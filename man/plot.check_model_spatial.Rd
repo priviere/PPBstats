@@ -19,6 +19,7 @@
  \itemize{
   \item histogram : histogram with the distribution of the residuals
   \item qqplot
+  \item points
   }
  \item variability_repartition : pie with repartition of SumSq for each factor
  }
