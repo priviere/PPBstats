@@ -4,12 +4,12 @@
 \name{data_agro_LF}
 \alias{data_agro_LF}
 \title{Data to study local and foreign}
-\format{A data frame with 27 rows and 13 columns}
+\format{A data frame with 27 rows and 15 columns}
 \usage{
 data(data_agro_LF)
 }
 \description{
-A dataset containing values for the following factors: seed_lot, location, year, germplasm, block, X, Y, group and version, Y1, Y1$date, y2, y2$date.
+A dataset containing values for the following factors: seed_lot, location, year, germplasm, block, X, Y, group and version, Y1, Y1$date, y2, y2$date, y3, y3$date.
 group represents local or foreign
 version represents the location where come the germplasm from.
 }

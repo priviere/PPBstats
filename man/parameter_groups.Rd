@@ -35,6 +35,8 @@ Clusters are done based on HCPC method with FactoMineR package as explained here
  \item \code{\link{check_model}}
  \item \code{\link{parameter_groups_model_GxE}}
  \item \code{\link{parameter_groups_model_bh_GxE}}
+ \item \code{\link{parameter_groups_model_anova}}
+ \item \code{\link{parameter_groups_model_spatial}}
  \item \code{\link{plot.parameter_groups}}
 }
 }

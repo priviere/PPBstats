@@ -9,7 +9,7 @@ parameter_groups_model_GxE(list_out_check_model_GxE, parameter)
 \arguments{
 \item{list_out_check_model_GxE}{A list whose elements are output from \code{\link{check_model.fit_model_GxE}}}
 
-\item{parameter}{parameter on which to get the matrix}
+\item{parameter}{parameter on which to get the matrix: germplasm, location or var_intra_germplasm}
 }
 \value{
 The function returns a data frame with variables in column and effect of paramters in row
