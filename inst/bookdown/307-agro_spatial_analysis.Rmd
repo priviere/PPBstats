@@ -100,6 +100,7 @@ out_check_spatial = check_model(out_spatial)
         - `data_ggplot_normality`
         - `data_ggplot_skewness_test`
         - `data_ggplot_kurtosis_test`
+        - `data_ggplot_shapiro_test`
         - `data_ggplot_qqplot`
     - `data_ggplot_variability_repartition_pie`
 
@@ -123,6 +124,12 @@ p_out_check_spatial = plot(out_check_spatial)
     ```{r}
     p_out_check_spatial$residuals$qqplot
     ```
+
+    - `points`
+    ```{r}
+    p_out_check_spatial$residuals$points
+    ```
+
 
 - `variability_repartition` : pie with repartition of variance for each factor
 ```{r}

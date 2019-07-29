@@ -104,10 +104,16 @@ Regarding frequentist analysis, there are several ways to check if the model wen
     - Kurtosis > 3 - Leptokurtic distribution, sharper than a normal distribution, with values concentrated around the mean and thicker tails. This means high probability for extreme values.
     Kurtosis < 3 - Platykurtic distribution, flatter than a normal distribution with a wider peak. The probability for extreme values is less than for a normal distribution, and the values are wider spread around the mean.
     - Kurtosis = 3 - Mesokurtic distribution - normal distribution for example.
+- Shapiro test is an indicator of the normal distribution of the residuals. 
+The null hypothesis is: residuals follow a normal distribution.
+If p-value is significant (i.e. > 0.05), residuals follow a normal distribution.
+
 
 - Standardized residuals vs theoretical quantiles (qqplot).
 If the residuals come from a normal distribution the plot should resemble a straight line.
 A straight line connecting the 1st and 3rd quartiles is added to the plot to aid in visual assessment.
+
+- Distribution of residuals for each rows. It allos to llok for autocorrelation among residuals.
 
 - Repartition of variability among factors whici is a pie with repartition of SumSq for each factor.
 This allows to better understand how the variability is separated between each factor.

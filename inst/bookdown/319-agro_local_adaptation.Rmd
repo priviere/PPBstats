@@ -166,6 +166,7 @@ out_check_ha = check_model(out_ha)
         - `data_ggplot_normality`
         - `data_ggplot_skewness_test`
         - `data_ggplot_kurtosis_test`
+        - `data_ggplot_shapiro_test`
         - `data_ggplot_qqplot`
     - `data_ggplot_variability_repartition_pie`
     - `data_ggplot_var_intra`
@@ -189,6 +190,11 @@ p_out_check_ha = plot(out_check_ha)
     ```{r}
     p_out_check_ha$residuals$qqplot
     ```
+    - `points`
+    ```{r}
+    p_out_check_ha$residuals$points
+    ```
+
 
 - `variability_repartition` : pie with repartition of SumSq for each factor
 ```{r}
@@ -466,6 +472,7 @@ out_check_lf = check_model(out_lf)
         - `data_ggplot_normality`
         - `data_ggplot_skewness_test`
         - `data_ggplot_kurtosis_test`
+        - `data_ggplot_shapiro_test`
         - `data_ggplot_qqplot`
     - `data_ggplot_variability_repartition_pie`
     - `data_ggplot_var_intra`
@@ -488,6 +495,10 @@ p_out_check_lf = plot(out_check_lf)
     - `qqplot`
     ```{r}
     p_out_check_lf$residuals$qqplot
+    ```
+    - `points`
+    ```{r}
+    p_out_check_lf$residuals$points
     ```
 
 - `variability_repartition` : pie with repartition of SumSq for each factor

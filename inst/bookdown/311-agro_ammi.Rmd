@@ -152,6 +152,7 @@ out_check_ammi = check_model(out_ammi)
         - `data_ggplot_normality`
         - `data_ggplot_skewness_test`
         - `data_ggplot_kurtosis_test`
+        - `data_ggplot_shapiro_test`
         - `data_ggplot_qqplot`
     - `data_ggplot_variability_repartition_pie`
     - `data_ggplot_var_intra`
@@ -174,6 +175,11 @@ p_out_check_ammi = plot(out_check_ammi)
     - `qqplot`
     ```{r}
     p_out_check_ammi$residuals$qqplot
+    ```
+
+    - `points`
+    ```{r}
+    p_out_check_ammi$residuals$points
     ```
 
 - `variability_repartition` : pie with repartition of SumSq for each factor
