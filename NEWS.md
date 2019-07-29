@@ -4,20 +4,40 @@
 
 ### update fonctions
 - in format data functions, stop if column with only NA, cf #98
+- add shapiro test in `check_model()` for frequentist models, cf #101
+    - check_model.fit_model_GxE
+    - check_model.fit_model_anova
+    - check_model.fit_model_hedonic
+    - check_model.fit_model_home_away
+    - check_model.fit_model_local_foreign
+    - check_model.fit_model_spatial
+    - check_freq_anova in common_function
+- add shapiro test in `check_model()` and points of residuals for frequentist models, cf #101
+    - plot.check_model_GxE
+    - plot.check_model_anova
+    - plot.check_model_hedonic
+    - plot.check_model_home_away
+    - plot.check_model_spatial
+
 
 ### add new functions
 - post_hoc_variation, cf #141
-- post_hoc_variation_model_GxE, cf #141
-- post_hoc_variation_model_anova, cf #141
-- post_hoc_variation_model_spatial, cf #141
-- post_hoc_variation_model_home_away, cf #141
-- post_hoc_variation_model_local_foreign, cf #141
+    - post_hoc_variation_model_GxE, cf #141
+    - post_hoc_variation_model_anova, cf #141
+    - post_hoc_variation_model_spatial, cf #141
+    - post_hoc_variation_model_home_away, cf #141
+    - post_hoc_variation_model_local_foreign, cf #141
 - parameter_groups_model_anova, cf #144
 - parameter_groups_model_spatial, cf #144
 
 ### update RData
 - new data_agro_HA and data_agro_LF, cf #146 
 - new data_model_spatial, cf #145
+
+### update vignette (inst/bookdown)
+- some typos here and there
+- add shapiro test in `check_model()` and points of residuals for frequentist models, cf #101
+
 
 # **PPBstats 0.25**
 

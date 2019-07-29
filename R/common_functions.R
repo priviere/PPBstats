@@ -689,6 +689,7 @@ ggradar <- function(plot.data,
 #' @param model anova model
 #' @export
 #' @import agricolae
+#' @import stats
 check_freq_anova = function(model){
   r = y = percentage_Sum_sq  = NULL  # to avoid no visible binding for global variable
 
@@ -700,7 +701,8 @@ check_freq_anova = function(model){
   data_ggplot_normality = data.frame(r)
   data_ggplot_skewness_test = agricolae::skewness(r)
   data_ggplot_kurtosis_test = agricolae::kurtosis(r)
-
+  data_ggplot_shapiro_test = stats::shapiro.test(r)
+  
   # 1.2. Standardized residuals vs theoretical quantiles ----------
   s = sqrt(deviance(model)/stats::df.residual(model))
   rs = r/s
@@ -727,6 +729,7 @@ check_freq_anova = function(model){
       "data_ggplot_normality" = data_ggplot_normality,
       "data_ggplot_skewness_test" = data_ggplot_skewness_test,
       "data_ggplot_kurtosis_test" = data_ggplot_kurtosis_test,
+      "data_ggplot_shapiro_test" = data_ggplot_shapiro_test,
       "data_ggplot_qqplot" = data_ggplot_qqplot
     ),
     "data_ggplot_variability_repartition_pie" = data_ggplot_variability_repartition_pie,
@@ -750,6 +753,7 @@ plot_check_freq_anova = function(x, variable){
   data_ggplot_normality = data_ggplot$data_ggplot_residuals$data_ggplot_normality
   data_ggplot_skewness_test = data_ggplot$data_ggplot_residuals$data_ggplot_skewness_test
   data_ggplot_kurtosis_test = data_ggplot$data_ggplot_residuals$data_ggplot_kurtosis_test
+  data_ggplot_shapiro_test = data_ggplot$data_ggplot_residuals$data_ggplot_shapiro_test
   data_ggplot_qqplot = data_ggplot$data_ggplot_residuals$data_ggplot_qqplot
   data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
   data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
@@ -758,7 +762,12 @@ plot_check_freq_anova = function(x, variable){
   # 1.1. Histogram ----------
   p = ggplot(data_ggplot_normality, aes(x = r), binwidth = 2)
   p = p + geom_histogram() + geom_vline(xintercept = 0)
-  p = p + ggtitle("Test for normality", paste("Skewness:", signif(data_ggplot_skewness_test, 3), "; Kurtosis:", signif(data_ggplot_kurtosis_test, 3)))
+  p = p + ggtitle("Test for normality", 
+                  paste("Skewness:", signif(data_ggplot_skewness_test, 3), 
+                        "; Kurtosis:", signif(data_ggplot_kurtosis_test, 3),
+                        "; Shapiro:", signif(data_ggplot_shapiro_test$p.value, 3)
+                        )
+                  )
   p1.1 = p + theme(plot.title=element_text(hjust=0.5))
 
   # 1.2. Standardized residuals vs theoretical quantiles ----------
@@ -767,6 +776,11 @@ plot_check_freq_anova = function(x, variable){
   p = p + xlab("Theoretical Quantiles") + ylab("Standardized residuals")
   p1.2 = p + ggtitle("QQplot") + theme(plot.title=element_text(hjust=0.5))
 
+  # 1.3. simple points to look at autocorrelation ----------
+  data_ggplot_normality$x = c(1:nrow(data_ggplot_normality))
+  p = ggplot(data_ggplot_normality, aes(x = x, y = r)) + geom_point()
+  p1.3 = p + ggtitle("residuals") + theme(plot.title=element_text(hjust=0.5))
+  
   # 2. repartition of variability among factors ----------
   p = ggplot(data_ggplot_variability_repartition_pie,
              aes(x = "", y = percentage_Sum_sq, fill = factor,
@@ -789,7 +803,8 @@ plot_check_freq_anova = function(x, variable){
   out = list(
     "residuals" = list(
       "histogram" = p1.1,
-      "qqplot" = p1.2),
+      "qqplot" = p1.2,
+      "points" = p1.3),
     "variability_repartition" = p2,
     "variance_intra_germplasm" = p3
   )

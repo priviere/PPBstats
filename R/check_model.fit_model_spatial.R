@@ -21,6 +21,7 @@
 #'     \item data_ggplot_normality
 #'     \item data_ggplot_skewness_test
 #'     \item data_ggplot_kurtosis_test
+#'     \item data_ggplot_shapiro_test
 #'     \item data_ggplot_qqplot
 #'     }
 #'   \item data_ggplot_variability_repartition_pie
@@ -40,6 +41,7 @@
 #' @export
 #'
 #' @import agricolae
+#' @import stats
 #'
 check_model.fit_model_spatial <- function(
   x
@@ -47,13 +49,14 @@ check_model.fit_model_spatial <- function(
   model = x$model$model
   summary_model = x$model$summary
   
-  # 1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
+  # 1. Check residuals (qqplot, Skewness & Kurtosis & Shapiro tests) ----------
   r = na.omit(residuals(model))
   
   # 1.1. Normality ----------
   data_ggplot_normality = data.frame(r)
   data_ggplot_skewness_test = agricolae::skewness(r)
   data_ggplot_kurtosis_test = agricolae::kurtosis(r)
+  data_ggplot_shapiro_test = stats::shapiro.test(r)
   
   # 1.2. Standardized residuals vs theoretical quantiles ----------
   df.res = as.numeric(as.character(summary_model$p.table.dim["Residual", "Effective"]))
@@ -83,6 +86,7 @@ check_model.fit_model_spatial <- function(
         "data_ggplot_normality" = data_ggplot_normality,
         "data_ggplot_skewness_test" = data_ggplot_skewness_test,
         "data_ggplot_kurtosis_test" = data_ggplot_kurtosis_test,
+        "data_ggplot_shapiro_test" = data_ggplot_shapiro_test,
         "data_ggplot_qqplot" = data_ggplot_qqplot
       ),
       "data_ggplot_variability_repartition_pie" = data_ggplot_variability_repartition_pie

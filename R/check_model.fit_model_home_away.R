@@ -20,6 +20,7 @@
 #'     \item data_ggplot_normality
 #'     \item data_ggplot_skewness_test
 #'     \item data_ggplot_kurtosis_test
+#'     \item data_ggplot_shapiro_test
 #'     \item data_ggplot_qqplot
 #'     }
 #'   \item data_ggplot_variability_repartition_pie
