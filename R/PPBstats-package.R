@@ -64,7 +64,7 @@ NULL
 #' Data to study home and away
 #'
 #' @description
-#' A dataset containing values for the following factors: seed_lot, location, year, germplasm, block, X, Y, group and version, Y1, Y1$date, y2, y2$date.
+#' A dataset containing values for the following factors: seed_lot, location, year, germplasm, block, X, Y, group and version, Y1, Y1$date, y2, y2$date, y3, y3$date.
 #' group represents home or away
 #' version represents the location where come the germplasm from.
 #'
@@ -72,7 +72,7 @@ NULL
 #' data(data_agro_HA)
 #'
 #' @format
-#' A data frame with 27 rows and 13 columns
+#' A data frame with 27 rows and 15 columns
 #' 
 #' @author Pierre Rivière
 "data_agro_HA"
@@ -82,7 +82,7 @@ NULL
 #' Data to study local and foreign
 #'
 #' @description
-#' A dataset containing values for the following factors: seed_lot, location, year, germplasm, block, X, Y, group and version, Y1, Y1$date, y2, y2$date.
+#' A dataset containing values for the following factors: seed_lot, location, year, germplasm, block, X, Y, group and version, Y1, Y1$date, y2, y2$date, y3, y3$date.
 #' group represents local or foreign
 #' version represents the location where come the germplasm from.
 #'
@@ -90,7 +90,7 @@ NULL
 #' data(data_agro_LF)
 #'
 #' @format
-#' A data frame with 27 rows and 13 columns
+#' A data frame with 27 rows and 15 columns
 #' 
 #' @author Pierre Rivière
 "data_agro_LF"
