@@ -4,7 +4,7 @@
 \alias{plot.check_model_napping}
 \title{Get ggplot to visualize output from \code{\link{check_model.fit_model_napping}}}
 \usage{
-\method{plot}{check_model_napping}(x, ...)
+plot.check_model_napping(x, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{check_model.fit_model_napping}}}

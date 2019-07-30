@@ -4,7 +4,7 @@
 \alias{plot.check_model_spatial}
 \title{Get ggplot to visualize output from \code{\link{check_model.fit_model_spatial}}}
 \usage{
-\method{plot}{check_model_spatial}(x, nb_parameters_per_plot = 8, ...)
+plot.check_model_spatial(x, nb_parameters_per_plot = 8, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{check_model.fit_model_spatial}}}

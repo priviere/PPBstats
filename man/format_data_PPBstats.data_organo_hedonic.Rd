@@ -18,6 +18,7 @@ It returns a list of four elements
  \item data the data formated to run the anova and the multivariate analysis regarding
  \itemize{
   \item sample
+  \item sample means
   \item juges
  }
  \item var_sup the supplementary variables used in the multivariate analysis

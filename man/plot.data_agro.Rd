@@ -4,7 +4,7 @@
 \alias{plot.data_agro}
 \title{Plot agro object from format_data_PPBstats.data_agro()}
 \usage{
-\method{plot}{data_agro}(x, plot_type = c("pam", "histogramm", "barplot",
+plot.data_agro(x, plot_type = c("pam", "histogramm", "barplot",
   "boxplot", "interaction", "biplot", "radar", "raster", "map"),
   x_axis = NULL, in_col = NULL, vec_variables = NULL,
   nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5,

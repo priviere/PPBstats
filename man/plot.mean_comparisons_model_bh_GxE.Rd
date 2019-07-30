@@ -4,7 +4,7 @@
 \alias{plot.mean_comparisons_model_bh_GxE}
 \title{Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_bh_GxE}}}
 \usage{
-\method{plot}{mean_comparisons_model_bh_GxE}(x, y = NULL,
+plot.mean_comparisons_model_bh_GxE(x, y = NULL,
   plot_type = c("biplot-alpha-beta", "barplot"),
   nb_parameters_per_plot = 8, ...)
 }

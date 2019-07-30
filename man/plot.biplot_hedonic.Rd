@@ -4,7 +4,7 @@
 \alias{plot.biplot_hedonic}
 \title{Get ggplot to visualize output from \code{\link{biplot_data.check_model_hedonic}}}
 \usage{
-\method{plot}{biplot_hedonic}(x, ...)
+plot.biplot_hedonic(x, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{biplot_data.check_model_hedonic}}}

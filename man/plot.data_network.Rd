@@ -4,7 +4,7 @@
 \alias{plot.data_network}
 \title{Plot network object from format_data_PPBstats()}
 \usage{
-\method{plot}{data_network}(x, data_to_pie = NULL, variable = NULL,
+plot.data_network(x, data_to_pie = NULL, variable = NULL,
   pie_size = 0.2, plot_type = "network", in_col = "location",
   labels_on = FALSE, labels_size = 4, organize_sl = FALSE,
   x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5,

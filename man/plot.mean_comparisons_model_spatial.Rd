@@ -4,8 +4,7 @@
 \alias{plot.mean_comparisons_model_spatial}
 \title{Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_spatial}}}
 \usage{
-\method{plot}{mean_comparisons_model_spatial}(x,
-  nb_parameters_per_plot = 8, ...)
+plot.mean_comparisons_model_spatial(x, nb_parameters_per_plot = 8, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{mean_comparisons.check_model_spatial}}}

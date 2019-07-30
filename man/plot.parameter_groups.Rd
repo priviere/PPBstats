@@ -4,7 +4,7 @@
 \alias{plot.parameter_groups}
 \title{Get ggplot to visualize output from \code{\link{parameter_groups}}}
 \usage{
-\method{plot}{parameter_groups}(x, ind_to_highlight = NULL, ...)
+plot.parameter_groups(x, ind_to_highlight = NULL, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{parameter_groups}}}

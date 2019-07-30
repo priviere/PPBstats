@@ -4,7 +4,7 @@
 \alias{plot.check_model_GxE}
 \title{Get ggplot to visualize output from \code{\link{check_model.fit_model_GxE}}}
 \usage{
-\method{plot}{check_model_GxE}(x, ...)
+plot.check_model_GxE(x, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{check_model.fit_model_GxE}}}

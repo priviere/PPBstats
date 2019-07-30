@@ -4,7 +4,7 @@
 \alias{plot.check_model_anova}
 \title{Get ggplot to visualize output from \code{\link{check_model.fit_model_anova}}}
 \usage{
-\method{plot}{check_model_anova}(x, ...)
+plot.check_model_anova(x, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{check_model.fit_model_anova}}}

@@ -4,7 +4,7 @@
 \alias{plot.biplot_napping}
 \title{Get ggplot to visualize output from \code{\link{biplot_data.check_model_hedonic}}}
 \usage{
-\method{plot}{biplot_napping}(x, ...)
+plot.biplot_napping(x, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{biplot_data.check_model_hedonic}}}
