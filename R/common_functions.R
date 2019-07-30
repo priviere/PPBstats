@@ -1287,14 +1287,14 @@ format_organo = function(data, threshold, var_sup){
   for(i in 1:nrow(df)){
     j = df[i, "juges"]
     for(s in vec_samples){
-      note = dplyr::filter(data_sample, juges == j & sample == s)$note
+      dtmp = dplyr::filter(data_sample, juges == j & sample == s)
+      note = dtmp$note
       if( length(note) > 0 ) { df[i, s] = note } else { df[i, s] = NA }
-    }
-    for(v in var_sup){
-      vsup = dplyr::filter(data_sample, juges == j & sample == s)[,v]
-      if( length(vsup) > 0 ) { df[i, v] = vsup } else { df[i, v] = NA }
+      vsup = as.character(unlist(dtmp[,var_sup]))
+      if( length(vsup) > 0 ) { df[i, var_sup] = vsup } else { df[i, var_sup] = NA }
     }
   }
+  for(v in var_sup){ df[,v] = as.factor(df[,v]) }
   data_juges = df
   
   # 7. return results

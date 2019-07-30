@@ -81,11 +81,17 @@ names(data_hedonic)
 `data_hedonic` is a list of four elements : 
 
 - `data` the data formated to run the anova and the multivariate analysis regarding
-    - samples
+    - sample
 ```{r}
 head(data_hedonic$data$data_sample)
 ```
-    - juges
+
+    
+    - sample_mean which gathers for each sample a mean for note and descriptors
+```{r}
+head(data_hedonic$data$data_sample_mean)
+```
+    - juges which gathers for each juge a mean for note
 ```{r}
 head(data_hedonic$data$data_juges)
 ```

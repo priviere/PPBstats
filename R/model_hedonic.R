@@ -49,43 +49,45 @@ model_hedonic = function(
   var_sup = data$var_sup
   descriptors = data$descriptors
   data_sample = data$data$data_sample
+  data_sample_mean = data$data$data_sample_mean
   data_juges = data$data$data_juges
-  
-  quanti.sup = quali.sup = NULL
-  for(v in var_sup){
-    if( is.numeric(data_sample[,v]) ) { quanti.sup = c(quanti.sup, v) }
-    if( is.factor(data_sample[,v]) ) { quali.sup = c(quali.sup, v) }
-  }
   
   # ANOVA ----------
   model = stats::lm(note ~ juges + germplasm, data_sample)
   
   # CA ----------
-  quanti.sup_ca = c("note", quanti.sup)
-  quali.sup_ca = c("sample", "juges", quali.sup)
+  quanti.sup_ca = "note"
+  quali.sup_ca = c("sample", "germplasm", "location")
   
   for(v in quanti.sup_ca){ # CA does not work if NA on column
-    to_delete = which(is.na(data_sample[,v]))
+    to_delete = which(is.na(data_sample_mean[,v]))
     if( length(to_delete) > 0 ){
-      data_sample = data_sample[-to_delete,]
+      data_sample_mean = data_sample_mean[-to_delete,]
       warning("Rows in column \"", v, "\" has been deleted because of NA.", sep = "")
     }
   }
   
-  remove_row_with_no_descriptors = which(apply(data_sample[,is.element(colnames(data_sample), descriptors)], 1 , sum) == 0)
+  remove_row_with_no_descriptors = which(apply(data_sample_mean[,is.element(colnames(data_sample_mean), descriptors)], 1 , sum) == 0)
   if( length(remove_row_with_no_descriptors) > 0 ) { 
-    data_sample = data_sample[-remove_row_with_no_descriptors,]
+    data_sample_mean = data_sample_mean[-remove_row_with_no_descriptors,]
     warning("Some rows have been removed because there are no descriptors.")
   } 
   
-  out_CA = FactoMineR::CA(data_sample, 
-                          quanti.sup = which(is.element(colnames(data_sample), quanti.sup_ca)), 
-                          quali.sup  = which(is.element(colnames(data_sample), quali.sup_ca)), 
+  out_CA = FactoMineR::CA(data_sample_mean, 
+                          quanti.sup = which(is.element(colnames(data_sample_mean), quanti.sup_ca)), 
+                          quali.sup  = which(is.element(colnames(data_sample_mean), quali.sup_ca)), 
                           graph = FALSE)
   
   # HCPC ----------
   rownames(data_juges) = data_juges$juges
   data_juges_hcpc = data_juges[,c(2:ncol(data_juges))]
+  
+  quanti.sup = quali.sup = NULL
+  for(v in var_sup){
+    if( is.numeric(data_juges[,v]) ) { quanti.sup = c(quanti.sup, v) }
+    if( is.factor(data_juges[,v]) ) { quali.sup = c(quali.sup, v) }
+  }
+  
   id_quanti.sup = which(is.element(colnames(data_juges_hcpc), quanti.sup))
   if( length(id_quanti.sup) == 0 ) { id_quanti.sup = NULL}
   id_quali.sup = which(is.element(colnames(data_juges_hcpc), quali.sup))

@@ -17,6 +17,7 @@
 #'  \item data the data formated to run the anova and the multivariate analysis regarding
 #'  \itemize{
 #'   \item sample
+#'   \item sample means
 #'   \item juges
 #'  }
 #'  \item var_sup the supplementary variables used in the multivariate analysis
@@ -89,10 +90,25 @@ format_data_PPBstats.data_organo_hedonic = function(data, threshold){
     warning("The following row in data have been remove because there are no descriptors :", paste(remove_row_with_no_descriptors, collapse = ", "))
   }
   
-  var_sup = colnames(data_ok)[!is.element(colnames(data_ok), c("sample", "juges", "note", "descriptors"))]
+  var_sup = colnames(data_ok)[!is.element(colnames(data_ok), c("germplasm", "location", "sample", "juges", "note", "descriptors"))]
   d = format_organo(data_ok, threshold, var_sup)
   
-  descriptors = colnames(d$data_sample)[!is.element(colnames(d$data_sample), c("sample", "juges", "note", var_sup))]
+  descriptors = colnames(d$data_sample)[!is.element(colnames(d$data_sample), c("germplasm", "location", "sample", "juges", "note", var_sup))]
+  
+  # Format data sample: mean per sample + delete column juge and sup variable related to juges
+  ds = d$data_sample[,c("sample", "germplasm", "location", "note", descriptors)]
+  vec_sample = levels(ds$sample)
+  ds_ok = data.frame()
+  for(i in 1:length(vec_sample)){
+    sub_s = dplyr::filter(ds, sample == vec_sample[i])
+    a = sub_s[1, c("sample", "germplasm", "location")]
+    b = apply(sub_s[,c("note", descriptors)], 2, mean, na.rm = TRUE)
+    b = data.frame(matrix(b, nrow = 1))
+    names(b) = c("note", descriptors)
+    ds_ok = rbind.data.frame(ds_ok, cbind.data.frame(a, b))
+  }
+  
+  d = c(d, list(data_sample_mean = ds_ok))
   
   d = list("data" = d, 
            "var_sup" = var_sup,

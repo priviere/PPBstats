@@ -18,7 +18,9 @@
     - plot.check_model_hedonic
     - plot.check_model_home_away
     - plot.check_model_spatial
-
+- format_organo in common_function, cf #72
+- format_data_PPBstats.data_organo_hedonic, cf #72
+- model_hedonic, cf #72
 
 ### add new functions
 - post_hoc_variation, cf #141
