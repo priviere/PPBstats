@@ -25,6 +25,6 @@
 plot.check_model_napping <- function(
   x, ...
 ){
-  out = fviz_eig(x) + ggtitle("")
+  out = fviz_eig(x$out_MFA) + ggtitle("")
   return(out)
 }

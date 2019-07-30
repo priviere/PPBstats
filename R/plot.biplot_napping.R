@@ -15,9 +15,9 @@
 #' @return 
 #' It returns a list with 3 elements, which are outputs from MFA analysis:
 #'   \itemize{
-#'    \item ind
 #'    \item var
-#'    \item axes
+#'    \item p_ind_germplasm
+#'    \item p_ind_location
 #'   }
 #'   
 #' @author Pierre Riviere
@@ -33,10 +33,24 @@
 #' 
 plot.biplot_napping = function(x, ...){
   # see http://www.sthda.com/english/rpkgs/factoextra/reference/fviz_mfa.html
+  out_MFA = x$out_MFA
+  data = x$data
+  
+  p_var = fviz_mfa_var(out_MFA, repel = TRUE)
+  
+  grp = as.factor(data[, "germplasm"])
+  p_ind_germplasm = fviz_mfa_ind(out_MFA, repel = TRUE, habillage = grp)
+  
+  grp = as.factor(data[, "location"])
+  p_ind_location = fviz_mfa_ind(out_MFA, repel = TRUE, habillage = grp)
+  
   out = list(
-    "partial_axes" = fviz_mfa_axes(x),
-    "ind" = fviz_mfa_ind(x),
-    "var" = fviz_mfa_var(x)
-  )
+    var = p_var,
+    ind_germplasm = p_ind_germplasm,
+    ind_location = p_ind_location
+    )
+  
   return(out)
 }
+
+

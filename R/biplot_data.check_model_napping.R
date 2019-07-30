@@ -26,7 +26,7 @@ biplot_data.check_model_napping = function(x){
   if( !inherits(x, "check_model_napping") ) {
     stop("data must come from PPBstats::check_model() with output from PPBstats:model_napping.")
   }
-  out = x 
-  class(out) <- c("PPBstats", "biplot_napping", "MFA")  
+  out = x
+  class(out) <- c("PPBstats", "biplot_napping")  
   return(out)
 }

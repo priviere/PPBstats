@@ -86,7 +86,7 @@ First, you can describe the data regarding the descriptors for each germplasm fo
 ```{r}
 descriptors = data_napping$descriptors
 
-p_des = plot(data_napping, plot_type = "radar", vec_variables = descriptors, in_col = "sample")
+p_des = plot(data_napping, plot_type = "radar", vec_variables = descriptors, in_col = "sample") # in_col = germplasm or location
 p_des
 ```
 
@@ -99,7 +99,7 @@ To run the model on the dataset, used the function `model_napping`.
 out_napping = model_napping(data_napping)
 ```
 
-`out_napping` is an object coming from `FactoMineR::MFA`
+`out_napping` is a list with the MFA object coming from `FactoMineR::MFA` and the data.
 
 
 ### Check and visualize model outputs
@@ -153,14 +153,14 @@ p_out_biplot_napping = plot(out_biplot_napping)
 
 - partial_axes
 ```{r}
-p_out_biplot_napping$partial_axes
+p_out_biplot_napping$var
 ```
 - ind
 ```{r}
-p_out_biplot_napping$ind
+p_out_biplot_napping$ind_germplasm
 ```
 - var
 ```{r}
-p_out_biplot_napping$var
+p_out_biplot_napping$ind_location
 ```
 

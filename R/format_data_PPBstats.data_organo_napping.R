@@ -41,16 +41,13 @@ format_data_PPBstats.data_organo_napping = function(data, threshold){
     if (test) { stop(paste("Column", colnames(data)[i], "is only with NA, please delete it and try again.")) }
   }
   
-  var_sup = colnames(data)[!is.element(colnames(data), c("juges", "X", "Y", "descriptors"))]
-  N = format_organo(data, threshold, var_sup)$data_sample
-  N = N[,c(6, 1, 2, 3, c(7:ncol(N)))]
+  N = format_organo(data, threshold, var_sup = NULL)$data_sample
+  N = N[,c(6, 1, 2, 3, 4, 5, c(7:ncol(N)))]
   descriptors = colnames(N)[c(7:ncol(N))]
 
   # Get table with, for each judge, the X and Y for each sample tasted ----------
   juges = levels(N$juges)
-  f = nlevels(N$sample)
-  d_juges = as.data.frame(levels(N$sample))
-  colnames(d_juges) = "sample"
+  d_juges = unique(data.frame(sample = N$sample, germplasm = N$germplasm, location = N$location))
   nb = c(1:length(juges)); names(nb) = juges
   juges_to_delete = NULL
 
@@ -77,7 +74,7 @@ format_data_PPBstats.data_organo_napping = function(data, threshold){
   if( !is.null(juges_to_delete) ) { juges = juges[!is.element(juges, juges_to_delete)] }
 
   # 3.2. Add to d_juges the number of time the adjective was cited
-  adj = colnames(N)[5:ncol(N)]
+  adj = colnames(N)[7:ncol(N)]
   b = as.data.frame(matrix(0, ncol = length(adj), nrow = nrow(d_juges)))
   colnames(b) = adj
 

@@ -21,6 +21,13 @@
 - format_organo in common_function, cf #72
 - format_data_PPBstats.data_organo_hedonic, cf #72
 - model_hedonic, cf #72
+- biplot_data.check_model_napping, cf #72
+- check_model.fit_model_napping, cf #72
+- format_data_PPBstats.data_organo_napping, cf #72
+- model_napping, cf #72
+- plot.biplot_napping, cf #72
+- plot.check_model_napping, cf #72
+
 
 ### add new functions
 - post_hoc_variation, cf #141
@@ -39,6 +46,7 @@
 ### update vignette (inst/bookdown)
 - some typos here and there
 - add shapiro test in `check_model()` and points of residuals for frequentist models, cf #101
+- update hedonic and napping sections, cf #72
 
 
 # **PPBstats 0.25**
