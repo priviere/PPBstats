@@ -10,7 +10,7 @@ model_napping(data)
 \item{data}{data frame coming from \code{\link{format_data_PPBstats.data_organo_napping}}}
 }
 \value{
-The MFA object
+A list with two elements : the MFA object and the data
 }
 \description{
 \code{model_napping} runs napping analysis

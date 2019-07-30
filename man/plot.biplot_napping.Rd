@@ -14,9 +14,9 @@ plot.biplot_napping(x, ...)
 \value{
 It returns a list with 3 elements, which are outputs from MFA analysis:
   \itemize{
-   \item ind
    \item var
-   \item axes
+   \item p_ind_germplasm
+   \item p_ind_location
   }
 }
 \description{
