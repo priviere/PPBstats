@@ -5,7 +5,7 @@
 \alias{plot.mean_comparisons_predict_the_past_model_bh_GxE}
 \title{Get ggplot to visualize output from \code{\link{mean_comparisons.predict_the_past_model_bh_GxE}}}
 \usage{
-plot.mean_comparisons_predict_the_past_model_bh_GxE(x,
+\method{plot}{mean_comparisons_predict_the_past_model_bh_GxE}(x,
   plot_type = "interaction", nb_parameters_per_plot = 8, ...)
 }
 \arguments{

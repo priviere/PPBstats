@@ -4,7 +4,7 @@
 \alias{plot.cross_validation_model_bh_GxE}
 \title{Get ggplot to visualize output from \code{\link{cross_validation_model_bh_GxE}}}
 \usage{
-plot.cross_validation_model_bh_GxE(x, ...)
+\method{plot}{cross_validation_model_bh_GxE}(x, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{cross_validation_model_bh_GxE}}}

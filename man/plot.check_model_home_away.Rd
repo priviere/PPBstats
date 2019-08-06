@@ -4,7 +4,7 @@
 \alias{plot.check_model_home_away}
 \title{Get ggplot to visualize output from \code{\link{check_model.fit_model_home_away}}}
 \usage{
-plot.check_model_home_away(x)
+\method{plot}{check_model_home_away}(x)
 }
 \arguments{
 \item{x}{Output from \code{\link{check_model.fit_model_home_away}}}

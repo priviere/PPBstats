@@ -9,7 +9,7 @@ parameter_groups_model_bh_GxE(list_out_check_model_model_bh_GxE, parameter)
 \arguments{
 \item{list_out_check_model_model_bh_GxE}{A list whose elements are output from \code{\link{check_model.fit_model_bh_GxE}}}
 
-\item{parameter}{parameter on which to get the matrix}
+\item{parameter}{parameter on which to get the matrix: alpha, beta or theta}
 }
 \value{
 The function returns a data frame with variables in column and effect of paramters in row

@@ -4,7 +4,7 @@
 \alias{model_GxE}
 \title{Run AMMI or GGE model}
 \usage{
-model_GxE(data, variable, gxe_analysis = NULL)
+model_GxE(data, variable, gxe_analysis = "AMMI")
 }
 \arguments{
 \item{data}{The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}}

@@ -4,7 +4,7 @@
 \alias{plot.data_agro_HA}
 \title{Plot agro object from format_data_PPBstats.data_agro_HA()}
 \usage{
-plot.data_agro_HA(x, plot_type = c("barplot", "boxplot"),
+\method{plot}{data_agro_HA}(x, plot_type = "boxplot",
   vec_variables = NULL)
 }
 \arguments{

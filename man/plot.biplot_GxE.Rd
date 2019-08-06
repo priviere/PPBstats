@@ -4,7 +4,7 @@
 \alias{plot.biplot_GxE}
 \title{Get ggplot to visualize output from \code{\link{biplot_data.check_model_GxE}}}
 \usage{
-plot.biplot_GxE(x, ...)
+\method{plot}{biplot_GxE}(x, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{biplot_data.check_model_GxE}}}

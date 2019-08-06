@@ -4,7 +4,7 @@
 \alias{plot.check_model_bh_GxE}
 \title{Get ggplot to visualize output from \code{\link{check_model.fit_model_bh_GxE}}}
 \usage{
-plot.check_model_bh_GxE(x, nb_parameters_per_plot = 8, ...)
+\method{plot}{check_model_bh_GxE}(x, nb_parameters_per_plot = 8, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{check_model.fit_model_bh_GxE}}}
