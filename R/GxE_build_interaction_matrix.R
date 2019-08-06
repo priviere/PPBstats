@@ -28,6 +28,7 @@ GxE_build_interaction_matrix = function(
   gxe_analysis
   )
   {
+  match.arg(gxe_analysis, c("AMMI", "GGE"), several.ok = FALSE)
   
   if(nlevels(data$year) > 1) { 
     if( gxe_analysis == "AMMI"){

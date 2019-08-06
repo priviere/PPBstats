@@ -66,7 +66,7 @@
 #' @export
 #' 
 plot.data_organo_napping = function(  x,
-                                      plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"),
+                                      plot_type = "boxplot",
                                       x_axis = NULL,
                                       in_col = NULL,
                                       vec_variables = NULL,
@@ -76,7 +76,9 @@ plot.data_organo_napping = function(  x,
                                       labels_size = 4,
                                       pie_size = 0.2, zoom = 6, ...){
   
-  p_out = plot_descriptive_data(
+  match.arg(plot_type, c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"), several.ok = FALSE)
+
+    p_out = plot_descriptive_data(
     x$data,
     plot_type,
     x_axis,

@@ -53,14 +53,13 @@
 model_GxE = function(
   data, 
   variable,
-  gxe_analysis = NULL
+  gxe_analysis = "AMMI"
 )
   {
     # 1. Error messages ----------
     if(!is(data, "data_agro")){ stop(substitute(data), " must be formated with type = \"data_agro\", see PPBstats::format_data_PPBstats().") }
     check_data_vec_variables(data, variable)
-    if( is.null(gxe_analysis) ) { stop("You ust set gxe_analysis: AMMI or GGE") }
-    if(!is.element(gxe_analysis, c("AMMI", "GGE"))) { stop("gxe_analysis must be either \"AMMI\" or \"GGE\".") }
+    match.arg(gxe_analysis, c("AMMI", "GGE"), several.ok = FALSE)
     
     # 2. Set up data set ----------
       colnames(data)[which(colnames(data) == variable)] = "variable"

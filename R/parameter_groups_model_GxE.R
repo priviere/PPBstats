@@ -20,6 +20,7 @@ parameter_groups_model_GxE = function(
   list_out_check_model_GxE,
   parameter
   ){
+  match.arg(parameter, c("germplasm", "location", "var_intra_germplasm"), several.ok = FALSE)
 
   # 1. Prepare data set ----------
   n_G = n_E = n_varG = NULL

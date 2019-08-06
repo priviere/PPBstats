@@ -65,7 +65,8 @@ mean_comparisons.predict_the_past_model_bh_GxE <- function(
   p.adj = "soft.bonf",
   ...
 ){
-
+  match.arg(p.adj, "soft.bonf", several.ok = FALSE)
+  
   out <- mean_comparisons.check_model_bh_intra_location(
     x, parameter = "mu", alpha = alpha, type = type, threshold = threshold,
     p.adj = p.adj, get.at.least.X.groups = get.at.least.X.groups,

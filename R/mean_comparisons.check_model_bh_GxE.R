@@ -69,9 +69,8 @@ mean_comparisons.check_model_bh_GxE <- function(
   ){
   
   # 1. Error message
-  if(!is.element(parameter, c("alpha", "beta", "theta"))) {
-    stop("With outputs from bayesian hierarchical GxE model, the parameters must be alpha, beta or theta.")
-  }
+  match.arg(parameter, c("alpha", "beta", "theta"), several.ok = FALSE)
+  match.arg(p.adj, c("soft.bonf"), several.ok = FALSE)
   
   # 2. Get square matrice with pvalue or vector with pvalue ----------
   MCMC_par = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){

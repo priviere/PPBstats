@@ -40,6 +40,8 @@ comp.parameters = function(
   )
 {
 # 1. Error message and update arguments ----------
+match.arg(parameter, "mu", several.ok = FALSE)
+  
 if( !is.data.frame(MCMC) ) { stop("MCMC must be a data frame.") }
 
 if( length(grep(parameter, colnames(MCMC))) == 0 ) { stop(paste(parameter, "is not in the colnames of MCMC.")) }

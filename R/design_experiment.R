@@ -104,9 +104,9 @@ design_experiment = function(
     block = X = NULL # to avoid no visible binding for global variable
     
     # 1. Error message ----------  
-    if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
-    if(!is.element(return.format, c("standard", "shinemas"))) { stop("format.data must be either \"standard\" or \"shinemas\".") }
-
+    match.arg(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"), several.ok = FALSE)
+    match.arg(return.format, c("standard", "shinemas"), several.ok = FALSE)
+    
     nb.germplasm = length(germplasm)
 
     # 2. Functions used in the code ----------  

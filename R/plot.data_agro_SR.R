@@ -42,13 +42,14 @@
 plot.data_agro_SR = function(
   x,
   mean_comparisons = NULL,
-  plot_type = c("barplot", "boxplot", "interaction"),
+  plot_type = "boxplot",
   x_axis = NULL,
   in_col = NULL,
   vec_variables = NULL,
   nb_parameters_per_plot_x_axis = 5,
   nb_parameters_per_plot_in_col = 5, ...
 ){
+  match.arg(plot_type, c("barplot", "boxplot", "interaction"), several.ok = FALSE)
   
   d = droplevels(x[which(!is.na(x$expe_id)),])
   d$x_axis = paste(d$seed_lot, d$group, sep = " | ")

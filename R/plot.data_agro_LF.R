@@ -38,9 +38,10 @@
 #' 
 plot.data_agro_LF = function(
   x,
-  plot_type = c("barplot", "boxplot"),
+  plot_type = "boxplot",
   vec_variables = NULL
 ){
+  match.arg(plot_type, c("barplot", "boxplot"), several.ok = FALSE)
   
   x$group_bis =  paste("sown at", x$location, ", coming from", x$group)
   

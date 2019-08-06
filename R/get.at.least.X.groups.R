@@ -36,6 +36,8 @@ get.at.least.X.groups = function(
   precision = 0.0005
   )
 {
+match.arg(p.adj, "soft.bonf", several.ok = FALSE) 
+
 total_groups = nrow(Mpvalue)
 ALP = rep(NA, (total_groups - 1))
 names(ALP) = paste(c(2:(length(ALP) + 1)), "_groups", sep = "")

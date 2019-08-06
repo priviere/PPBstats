@@ -51,6 +51,7 @@ model_home_away <- function(data, variable){
     }
 
     anova_model <- stats::anova(model)
+    # anov = Anova(mod_MR1, type="III")
   
    # 3. Return results ----------
     out <- list(

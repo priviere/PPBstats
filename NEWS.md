@@ -1,6 +1,6 @@
 # **PPBstats 0.26 under process**
 
-- add depends on R version in DESCRIPTION file, cf#140
+- add depends on R version in DESCRIPTION file, cf #140
 
 ### update fonctions
 - in format data functions, stop if column with only NA, cf #98
@@ -27,6 +27,7 @@
 - model_napping, cf #72
 - plot.biplot_napping, cf #72
 - plot.check_model_napping, cf #72
+- add match.arg in several functions, cf #75
 
 
 ### add new functions

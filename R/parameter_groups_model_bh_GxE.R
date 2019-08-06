@@ -5,7 +5,7 @@
 #'
 #' @param list_out_check_model_model_bh_GxE A list whose elements are output from \code{\link{check_model.fit_model_bh_GxE}}
 #'  
-#' @param parameter parameter on which to get the matrix
+#' @param parameter parameter on which to get the matrix: alpha, beta or theta
 #' 
 #' @return 
 #' The function returns a data frame with variables in column and effect of paramters in row
@@ -20,6 +20,7 @@ parameter_groups_model_bh_GxE = function(
   list_out_check_model_model_bh_GxE,
   parameter
   ){
+  match.arg(parameter, c("alpha", "beta", "theta"), several.ok = FALSE)
   
   # 1. Error message
   for(m in 1:length(list_out_check_model_model_bh_GxE)) {

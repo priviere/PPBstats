@@ -78,7 +78,8 @@ mean_comparisons.check_model_bh_intra_location <- function(
   ...
 ){
   # 1. Error message
-  if(!is.element(parameter, c("mu", "beta"))) { stop("With outputs from bayesian hierarchical intra location model, the parameters must be mu or beta.") }
+  match.arg(parameter, c("mu", "beta"), several.ok = FALSE)
+  match.arg(p.adj, "soft.bonf", several.ok = FALSE)
   
   # 2. Get square matrice with pvalue or vector with pvalue ----------
   MCMC_par = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
