@@ -28,6 +28,9 @@
 - plot.biplot_napping, cf #72
 - plot.check_model_napping, cf #72
 - add match.arg in several functions, cf #75
+- implement type III anova in the models home away and local foreign, cf #133
+    - model_home_away
+    - model_local_foreign
 
 
 ### add new functions

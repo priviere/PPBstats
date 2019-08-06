@@ -27,6 +27,7 @@ Imports:
 Depends:
     R (>= 3.5.0),
     agricolae,
+    car,
     coda,
     combinat,
     dplyr,

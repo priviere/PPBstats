@@ -73,6 +73,8 @@ with
 
 Interaction $(\omega \times \theta \times \beta)_{k_{ij}jl}$ give information on specific adaptation to each location for a given year.
 
+A type III anova is done here as the data are not orthogonal.
+
 ##### Steps with `PPBstats`
 
 For home away analysis, you can follow these steps (Figure \@ref(fig:main-workflow-family-4-HALF)):
@@ -382,6 +384,9 @@ with
 - \varepsilon_{ijklm} the residuals.
 
 Interaction $(\omega \times \theta \times \beta)_{k_{ij}jl}$ give information on specific adaptation to each germplasm for a given year.
+
+A type III anova is done here as the data are not orthogonal.
+
 
 ##### Steps with `PPBstats`
 

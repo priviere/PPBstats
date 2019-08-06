@@ -35,6 +35,7 @@
 #' @import plyr
 #' @import dplyr
 #' @import stats
+#' @import car
 #'
 model_home_away <- function(data, variable){
   # 1. Error messages ----------
@@ -50,9 +51,8 @@ model_home_away <- function(data, variable){
         model <- stats::lm(variable ~ location + germplasm + version + version:germplasm + location/block, data = data)
     }
 
-    anova_model <- stats::anova(model)
-    # anov = Anova(mod_MR1, type="III")
-  
+      anova_model <- car::Anova(model, type="III")
+
    # 3. Return results ----------
     out <- list(
         "info" = list("variable" = variable),

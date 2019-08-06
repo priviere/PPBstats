@@ -35,6 +35,7 @@
 #' @import plyr
 #' @import dplyr
 #' @import stats
+#' @import car
 #'
 model_local_foreign <- function(data, variable){
     
@@ -50,8 +51,8 @@ model_local_foreign <- function(data, variable){
         model <- stats::lm(variable ~ location + germplasm + version + version:location + location/block, data = data)
     }
 
-    anova_model <- stats::anova(model)
-
+    anova_model <- car::Anova(model, type="III")
+    
     # 3. Return results ----------
     out <- list(
         "info" = list("variable" = variable),
