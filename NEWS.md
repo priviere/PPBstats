@@ -48,6 +48,9 @@
 - add shapiro test in `check_model()` and points of residuals for frequentist models, cf #101
 - update hedonic and napping sections, cf #72
 
+### update webiste (inst/web_site)
+- improve text
+- add references, cf #36
 
 # **PPBstats 0.25**
 
