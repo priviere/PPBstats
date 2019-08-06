@@ -105,6 +105,8 @@ plot.mean_comparisons_my_model <- function(x, y, ...){
   }
 ```
 
+- It may be useful to edit `parameter_groups()` and `post_hoc_variation()` functions.
+
 ### Internal function structure
 
 The internal function used in `PPBstats` are presented in Figure and Table below. 
