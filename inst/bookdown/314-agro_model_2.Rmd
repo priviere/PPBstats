@@ -434,6 +434,7 @@ Note that you can highlight some individual with the argument `ind_to_highlight`
 `out_parameter_groups` is list of two elements:
 
 -`obj.pca` : the PCA object from `FactoMineR::PCA`
+
 - `clust`, a list of two elements:
     - `res.hcpc` : the HCPC object from `FactoMineR::HCPC`
     -  `clust` : the dataframe with cluster assigned to each individual
