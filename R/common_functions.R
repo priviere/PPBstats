@@ -1557,8 +1557,13 @@ plot_descriptive_data = function(
       list_v = list("all-variables" = m)
     }
     
-    p = lapply(list_v, ggradar_bis)
-    return(p)
+    out_p = list()
+    for(i in 1:length(list_v)){
+      p = ggradar_bis(list_v[[i]]) + ggtitle(names(list_v)[i])
+      out_p = c(out_p, list(p))
+    }
+    names(out_p) = names(list_v)
+    return(out_p)
   }
 
   # 2.5. Function to run raster representation for factor variables ----------
