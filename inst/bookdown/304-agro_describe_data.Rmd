@@ -190,8 +190,8 @@ p$`y1 - y2`$`-NA|germplasm-1`
 
 
 ### radar
-Before ploting, here is a transofmration for each variable to be between 0 and 1.
-The maximum value is represented by 100%.
+
+Radar can be display either for all variable and a gien factor:
 
 ```{r}
 p = plot(
@@ -201,6 +201,19 @@ p = plot(
   )
 p
 ```
+
+
+or for each variable for two given factors:
+```{r}
+p = plot(
+  data_model_GxE, plot_type = "radar",
+  vec_variables = c("y1", "y2", "y3"),
+  x_axis = "location",
+  in_col = "germplasm"
+  )
+p$y1
+```
+
 
 ### raster
 

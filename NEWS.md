@@ -31,7 +31,7 @@
 - implement type III anova in the models home away and local foreign, cf #133
     - model_home_away
     - model_local_foreign
-
+- update ggradar in common_function
 
 ### add new functions
 - post_hoc_variation, cf #141

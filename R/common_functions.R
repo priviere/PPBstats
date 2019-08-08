@@ -367,226 +367,151 @@ reshape_data_split_x_axis_in_col = function(
   return(d)
 }
 
-# ggradar ----------
-#' ggradar
-#' @param plot.data arg
-#' @param font.radar arg
-#' @param values.radar arg
-#' @param axis.labels arg
-#' @param grid.min arg
-#' @param grid.mid arg
-#' @param grid.max arg
-#' @param centre.y arg
-#' @param plot.extent.x.sf arg
-#' @param plot.extent.y.sf arg
-#' @param x.centre.range arg
-#' @param label.centre.y arg
-#' @param grid.line.width arg
-#' @param gridline.min.linetype arg
-#' @param gridline.mid.linetype arg
-#' @param gridline.max.linetype arg
-#' @param gridline.min.colour arg
-#' @param gridline.mid.colour arg
-#' @param gridline.max.colour arg
-#' @param grid.label.size arg
-#' @param gridline.label.offset arg
-#' @param label.gridline.min arg
-#' @param axis.label.offset arg
-#' @param axis.label.size arg
-#' @param axis.line.colour arg
-#' @param group.line.width arg
-#' @param group.point.size arg
-#' @param group.colours arg
-#' @param background.circle.colour arg
-#' @param background.circle.transparency arg
-#' @param plot.legend arg
-#' @param legend.title arg
-#' @param plot.title arg
-#' @param legend.text.size arg
-#' @details taken from https://github.com/ricardo-bion/ggradar
+# ggradar_bis
+#' ggradar_bis
+#' @description ggplot radar
+#' @param data the data
 #' @export
-#' @import ggplot2
-ggradar <- function(plot.data,
-                    font.radar="Circular Air Light",
-                    values.radar = c("0%", "50%", "100%"),
-                    axis.labels=colnames(plot.data)[-1],
-                    grid.min=0,  #10,
-                    grid.mid=0.5,  #50,
-                    grid.max=1,  #100,
-                    centre.y=grid.min - ((1/9)*(grid.max-grid.min)),
-                    plot.extent.x.sf=1,
-                    plot.extent.y.sf=1.2,
-                    x.centre.range=0.02*(grid.max-centre.y),
-                    label.centre.y=FALSE,
-                    grid.line.width=0.5,
-                    gridline.min.linetype="longdash",
-                    gridline.mid.linetype="longdash",
-                    gridline.max.linetype="longdash",
-                    gridline.min.colour="grey",
-                    gridline.mid.colour="#007A87",
-                    gridline.max.colour="grey",
-                    grid.label.size=7,
-                    gridline.label.offset=-0.1*(grid.max-centre.y),
-                    label.gridline.min=TRUE,
-                    axis.label.offset=1.15,
-                    axis.label.size=8,
-                    axis.line.colour="grey",
-                    group.line.width=1.5,
-                    group.point.size=6,
-                    group.colours=NULL,
-                    background.circle.colour="#D7D6D1",
-                    background.circle.transparency=0.2,
-                    plot.legend=if (nrow(plot.data)>1) TRUE else FALSE,
-                    legend.title="",
-                    plot.title="",
-                    legend.text.size=grid.label.size ) {
-  x = y = text = axis.no  = NULL  # to avoid no visible binding for global variable
-
-  plot.data <- as.data.frame(plot.data)
-
-  plot.data[,1] <- as.factor(as.character(plot.data[,1]))
-  names(plot.data)[1] <- "group"
-
-  var.names <- colnames(plot.data)[-1]  #'Short version of variable names
-  #axis.labels [if supplied] is designed to hold 'long version' of variable names
-  #with line-breaks indicated using \n
-
-  #calculate total plot extent as radius of outer circle x a user-specifiable scaling factor
-  plot.extent.x=(grid.max+abs(centre.y))*plot.extent.x.sf
-  plot.extent.y=(grid.max+abs(centre.y))*plot.extent.y.sf
-
-  #Check supplied data makes sense
-  if (length(axis.labels) != ncol(plot.data)-1)
-    return("Error: 'axis.labels' contains the wrong number of axis labels")
-  if(min(plot.data[,-1])<centre.y)
-    return("Error: plot.data' contains value(s) < centre.y")
-  if(max(plot.data[,-1])>grid.max)
-    return("Error: 'plot.data' contains value(s) > grid.max")
-  #Declare required internal functions
-
-  CalculateGroupPath <- function(df) {
-    #Converts variable values into a set of radial x-y coordinates
-    #Code adapted from a solution posted by Tony M to
-    #http://stackoverflow.com/questions/9614433/creating-radar-chart-a-k-a-star-plot-spider-plot-using-ggplot2-in-r
-    #Args:
-    #  df: Col 1 -  group ('unique' cluster / group ID of entity)
-    #      Col 2-n:  v1.value to vn.value - values (e.g. group/cluser mean or median) of variables v1 to v.n
-
-    path <- df[,1]
-
-    ##find increment
-    angles = seq(from=0, to=2*pi, by=(2*pi)/(ncol(df)-1))
-    ##create graph data frame
-    graphData= data.frame(seg="", x=0,y=0)
-    graphData=graphData[-1,]
-
-    for(i in levels(path)){
-      pathData = subset(df, df[,1]==i)
-      for(j in c(2:ncol(df))){
-        #pathData[,j]= pathData[,j]
-
-
-        graphData=rbind(graphData, data.frame(group=i,
-                                              x=pathData[,j]*sin(angles[j-1]),
-                                              y=pathData[,j]*cos(angles[j-1])))
-      }
-      ##complete the path by repeating first pair of coords in the path
-      graphData=rbind(graphData, data.frame(group=i,
-                                            x=pathData[,2]*sin(angles[1]),
-                                            y=pathData[,2]*cos(angles[1])))
-    }
-    #Make sure that name of first column matches that of input data (in case !="group")
-    colnames(graphData)[1] <- colnames(df)[1]
-    graphData #data frame returned by function
+#' 
+ggradar_bis = function(data){
+  # code from https://github.com/region-spotteR/PrepPlot/tree/master/Radar_examples
+  #####################################################################################################
+  ############################ 0. Set up example data ####################################################
+  #####################################################################################################
+  ## a) You can either use data, which is rescaled between 0 and 1 for the radar OR
+  ## b) You can calculate the quantile moment of each data point
+  ## -> The latter method avoids overplotting if your data is clustered and provides meaningful grid-lines, 
+  ##    but since it distorts the data outliers won't be spotted easily. The first method
+  ##    doesn't distort the distribution, but with it the 50 % quantile will be on a different distance
+  ##    from the center of the radar. Thus a) only makes sense in special situations. 
+  ## -> If you are interested in outliers and the distribution: Make a boxplot! Not a radar ;)
+  
+  ### 0.1a Rescale the mtcars dataset and select the last four cars and the first nine variables 
+  ##       Warning: This will make any quantile lines 'meaningless'
+  #data %>% tibble::rownames_to_column(var = 'group' ) %>%  mutate_at(.vars=vars(),.funs=scales::rescale) -> data_radar
+  
+  ### 0.1b Create quantile data from the example dataset to create the grid (recommended)
+  # tmp<-lapply(1:ncol(data),function(j) rank(data[,j],na.last="keep")/sum(!is.na(data[,j]))) 
+  # => note done and the next line instead because of consistency of methods between data_radar and qdata. Otherwise the line do not set on the right x ans y coord
+  tmp<-lapply(1:ncol(data),function(j) scales::rescale(data[,j],na.omit=TRUE))
+  qdata<-do.call(data.frame,tmp)
+  colnames(qdata)=colnames(data)
+  rownames(qdata)=rownames(data)
+  ## do the same as with the rescaled data
+  qdata %>% tibble::rownames_to_column(var = 'group' ) -> data_radar
+  
+  ### 0.2 Create hover data for plotly - leave this out when you chose a)
+  data_hover<-cbind(data, data[,1])
+  colnames(data_hover) = c(colnames(data), colnames(data)[1])
+  
+  ### 0.3 Create quantile data for the hoverinfo of the gridlines - leave this out when you chose a)
+  qdata<-sapply(colnames(data_hover),function(j) quantile(data_hover[,j],probs = seq(0,1,0.25)))
+  
+  ### 0.4 Set the plot parameters - mostly similar to ggradar
+  plot.data <- data_radar
+  ### parameters
+  axis.labels=colnames(plot.data)[-1]                             
+  grid.min=0  
+  grid.mid=0.5
+  grid.max=1  
+  centre.y=grid.min - ((1/9)*(grid.max-grid.min))
+  plot.extent.x.sf=1.2
+  plot.extent.y.sf=1.2
+  axis.label.offset=1.15
+  axis.line.colour="grey"
+  background.circle.transparency=0.2
+  r<-seq(0,1,0.25) ## Radius of the gridlines
+  
+  #####################################################################################################
+  ############################ 1. Helper functions ####################################################
+  #####################################################################################################
+  CalculateGroupPath4 <- function(df) {
+    angles = seq(from=0, to=2*pi, by= (2*pi)/(ncol(df)-1)) # find increment
+    xx<-c(rbind(t(df[,-1])*sin(angles[-ncol(df)]),t(df[,2])*sin(angles[1]))) # The first observation needs to be repeated to allow the lines to close
+    yy<-c(rbind(t(df[,-1])*cos(angles[-ncol(df)]),t(df[,2])*cos(angles[1])))
+    graphData<-data.frame(group=rep(df[,1],each=ncol(df)),x=(xx),y=(yy))
+    return(graphData)
   }
-  CaclulateAxisPath = function(var.names,min,max) {
-    #Caculates x-y coordinates for a set of radial axes (one per variable being plotted in radar plot)
-    #Args:
-    #var.names - list of variables to be plotted on radar plot
-    #min - MININUM value required for the plotted axes (same value will be applied to all axes)
-    #max - MAXIMUM value required for the plotted axes (same value will be applied to all axes)
-    #var.names <- c("v1","v2","v3","v4","v5")
-    n.vars <- length(var.names) # number of vars (axes) required
+  CalculateAxisPath2 <- function(var.names,min,max) {
+    n<-length(var.names)
     #Cacluate required number of angles (in radians)
-    angles <- seq(from=0, to=2*pi, by=(2*pi)/n.vars)
+    angles <- seq(from=0, to=2*pi, by=(2*pi)/n)
     #calculate vectors of min and max x+y coords
     min.x <- min*sin(angles)
     min.y <- min*cos(angles)
     max.x <- max*sin(angles)
     max.y <- max*cos(angles)
-    #Combine into a set of uniquely numbered paths (one per variable)
-    axisData <- NULL
-    for (i in 1:n.vars) {
-      a <- c(i,min.x[i],min.y[i])
-      b <- c(i,max.x[i],max.y[i])
-      axisData <- rbind(axisData,a,b)
-    }
-    #Add column names + set row names = row no. to allow conversion into a data frame
-    colnames(axisData) <- c("axis.no","x","y")
-    rownames(axisData) <- seq(1:nrow(axisData))
-    #Return calculated axis paths
-    as.data.frame(axisData)
+    tmp<-lapply(1:n,function(i) matrix(c(i,i,min.x[i],max.x[i],min.y[i],max.y[i]),2,3))
+    res<-as.data.frame(do.call(rbind,tmp))
+    colnames(res) <- c("axis.no","x","y")
+    return(res)
   }
-  funcCircleCoords <- function(center = c(0,0), r = 1, npoints = 100){
+  funcCircleCoords <- function(center = centre.y, r = 1, npoints = ncol(plot.data)){
     #Adapted from Joran's response to http://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2
     tt <- seq(0,2*pi,length.out = npoints)
-    xx <- center[1] + r * cos(tt)
-    yy <- center[2] + r * sin(tt)
+    yy <- (center + r) * cos(tt)
+    xx <- (center + r) * sin(tt)
     return(data.frame(x = xx, y = yy))
   }
-
-  ### Convert supplied data into plottable format
-  # (a) add abs(centre.y) to supplied plot data
-  #[creates plot centroid of 0,0 for internal use, regardless of min. value of y
-  # in user-supplied data]
+  #####################################################################################################
+  ############################ 2. Prepare Plotting  ####################################################
+  #####################################################################################################
+  
+  ### 2.1. Create vector with all KPI/variable names; Set up the data for plotting 
+  var.names <- colnames(plot.data)[-1]  # Short version of variable names 
   plot.data.offset <- plot.data
   plot.data.offset[,2:ncol(plot.data)]<- plot.data[,2:ncol(plot.data)]+abs(centre.y)
-  #print(plot.data.offset)
-  # (b) convert into radial coords
-  group <-NULL
-  group$path <- CalculateGroupPath(plot.data.offset)
-
-  #print(group$path)
-  # (c) Calculate coordinates required to plot radial variable axes
-  axis <- NULL
-  axis$path <- CaclulateAxisPath(var.names,grid.min+abs(centre.y),grid.max+abs(centre.y))
-  #print(axis$path)
-  # (d) Create file containing axis labels + associated plotting coordinates
-  #Labels
-  axis$label <- data.frame(
-    text=axis.labels,
-    x=NA,
-    y=NA )
-  #print(axis$label)
-  #axis label coordinates
+  
+  ### 2.2. Calculate the x and y coordinates for our data
+  xy_lines <- CalculateGroupPath4(plot.data.offset)
+  xy_lines$annot<-  c(t(data_hover))
+  xy_lines$text <-  paste(paste(rep(colnames(data_hover),nrow(data_radar)),xy_lines$annot,sep=": "),'<br />')
+  
+  ### 2.3. Create a list containing all grid-objects
+  
+  ## 2.3.1 Calculate the data frame for the axis-lines
+  grid <- NULL
+  grid$axis_path  <- CalculateAxisPath2(var.names,grid.min+abs(centre.y),grid.max+abs(centre.y))
   n.vars <- length(var.names)
-  angles = seq(from=0, to=2*pi, by=(2*pi)/n.vars)
-  axis$label$x <- sapply(1:n.vars, function(i, x) {((grid.max+abs(centre.y))*axis.label.offset)*sin(angles[i])})
-  axis$label$y <- sapply(1:n.vars, function(i, x) {((grid.max+abs(centre.y))*axis.label.offset)*cos(angles[i])})
-  #print(axis$label)
-  # (e) Create Circular grid-lines + labels
-  #caclulate the cooridinates required to plot circular grid-lines for three user-specified
-  #y-axis values: min, mid and max [grid.min; grid.mid; grid.max]
-  gridline <- NULL
-  gridline$min$path <- funcCircleCoords(c(0,0),grid.min+abs(centre.y),npoints = 360)
-  gridline$mid$path <- funcCircleCoords(c(0,0),grid.mid+abs(centre.y),npoints = 360)
-  gridline$max$path <- funcCircleCoords(c(0,0),grid.max+abs(centre.y),npoints = 360)
-  #print(head(gridline$max$path))
-  #gridline labels
-  gridline$min$label <- data.frame(x=gridline.label.offset,y=grid.min+abs(centre.y),
-                                   text=as.character(grid.min))
-  gridline$max$label <- data.frame(x=gridline.label.offset,y=grid.max+abs(centre.y),
-                                   text=as.character(grid.max))
-  gridline$mid$label <- data.frame(x=gridline.label.offset,y=grid.mid+abs(centre.y),
-                                   text=as.character(grid.mid))
-  #print(gridline$min$label)
-  #print(gridline$max$label)
-  #print(gridline$mid$label)
-  ### Start building up the radar plot
-
-  # Declare 'theme_clear', with or without a plot legend as required by user
-  #[default = no legend if only 1 group [path] being plotted]
-  theme_clear <- theme_bw(base_size=20) +
+  
+  ## 2.3.2 Calculate the coordinates for the axis labels
+  grid$axis_label <-funcCircleCoords(0,(grid.max+abs(centre.y))*axis.label.offset,ncol(plot.data))[-ncol(plot.data),]
+  grid$axis_label$text=axis.labels
+  
+  ## 2.3.3a For polygon-radar (spider-chart): Calculate the grid-lines
+  grid$lines<- lapply(1:length(r),function(i) funcCircleCoords(0,r[i]+abs(centre.y),ncol(plot.data)))
+  names(grid$lines)<-paste("q",r*100,sep='')
+  
+  ## 2.3.3b For circular radar: Calculate the grid-lines
+  grid$lines_circle<- lapply(1:length(r),function(i) funcCircleCoords(0,r[i]+abs(centre.y),ncol(plot.data)*(2^7)))
+  names(grid$lines_circle)<-paste(r*100,'% Quantile',sep='')
+  
+  ## 2.3.4 Add the real values to the gridlines
+  rownames(qdata)=names(grid$lines)
+  grid$lines<-lapply(1:length(grid$lines),function(j) cbind(grid$lines[[j]],values=round(qdata[names(grid$lines[j]),],2)))
+  names(grid$lines)<-rownames(qdata)
+  
+  ## 2.3.5 Bind all the grid-lines in one data.frame
+  grid$all_lines<-do.call(rbind,grid$lines)
+  n<-nrow(grid$all_lines)/length(grid$lines)        # n 
+  grid$all_lines$q<-rep(names(grid$lines), each=n)  # The quantiles of each grid
+  
+  ## 2.3.5a For plotly: Create a data without 0 and 100 % Quantile to plot all grid-lines at once
+  myrows<-which(grid$all_lines$q%in%names(grid$lines)[-c(1,length(grid$lines))]) # Select all quantiles except q0 & q100
+  grid$inner_lines<-grid$all_lines[myrows,] # create df of the inner grid values
+  
+  ## 2.3.5b For a circular grid: Bind all the grid-lines in one df and add the real values
+  grid$all_lines_c<-do.call(rbind,grid$lines_circle)
+  n<-nrow(grid$all_lines_c)/length(grid$lines_circle)
+  grid$all_lines_c$q<-rep(names(grid$lines_circle),each=n) # The quantiles of each grid
+  
+  ### 2.4 Create a data.frame to annotate the maximum points of the radar-chart
+  data_max<-grid$axis_path[seq(2,nrow(grid$axis_path),2),]
+  data_max$text<-round(qdata['q100',-ncol(qdata)],2)
+  
+  
+  ### 3.1. Create an empty theme for ggplot
+  theme_clear <- theme_bw(base_size=20) + 
     theme(axis.text.y=element_blank(),
           axis.text.x=element_blank(),
           axis.ticks=element_blank(),
@@ -594,93 +519,35 @@ ggradar <- function(plot.data,
           panel.grid.minor=element_blank(),
           panel.border=element_blank(),
           legend.key=element_rect(linetype="blank"))
-
-  if (plot.legend==FALSE) theme_clear <- theme_clear + theme(legend.position="none")
-
-  #Base-layer = axis labels + plot extent
-  # [need to declare plot extent as well, since the axis labels don't always
-  # fit within the plot area automatically calculated by ggplot, even if all
-  # included in first plot; and in any case the strategy followed here is to first
-  # plot right-justified labels for axis labels to left of Y axis for x< (-x.centre.range)],
-  # then centred labels for axis labels almost immediately above/below x= 0
-  # [abs(x) < x.centre.range]; then left-justified axis labels to right of Y axis [x>0].
-  # This building up the plot in layers doesn't allow ggplot to correctly
-  # identify plot extent when plotting first (base) layer]
-
-  #base layer = axis labels for axes to left of central y-axis [x< -(x.centre.range)]
-  base <- ggplot(axis$label) + xlab(NULL) + ylab(NULL) + coord_equal() +
-    geom_text(data=subset(axis$label,axis$label$x < (-x.centre.range)),
-              aes(x=x,y=y,label=text),size=axis.label.size,hjust=1, family=font.radar) +
-    scale_x_continuous(limits=c(-1.5*plot.extent.x,1.5*plot.extent.x)) +
-    scale_y_continuous(limits=c(-plot.extent.y,plot.extent.y))
-
-  # + axis labels for any vertical axes [abs(x)<=x.centre.range]
-  base <- base + geom_text(data=subset(axis$label,abs(axis$label$x)<=x.centre.range),
-                           aes(x=x,y=y,label=text),size=axis.label.size,hjust=0.5, family=font.radar)
-  # + axis labels for any vertical axes [x>x.centre.range]
-  base <- base + geom_text(data=subset(axis$label,axis$label$x>x.centre.range),
-                           aes(x=x,y=y,label=text),size=axis.label.size,hjust=0, family=font.radar)
-  # + theme_clear [to remove grey plot background, grid lines, axis tick marks and axis text]
-  base <- base + theme_clear
-  #  + background circle against which to plot radar data
-  base <- base + geom_polygon(data=gridline$max$path,aes(x,y),
-                              fill=background.circle.colour,
-                              alpha=background.circle.transparency)
-
-  # + radial axes
-  base <- base + geom_path(data=axis$path,aes(x=x,y=y,group=axis.no),
-                           colour=axis.line.colour)
-
-
-  # ... + group (cluster) 'paths'
-  base <- base + geom_path(data=group$path,aes(x=x,y=y,group=group,colour=group),
-                           size=group.line.width)
-
-  # ... + group points (cluster data)
-  base <- base + geom_point(data=group$path,aes(x=x,y=y,group=group,colour=group),size=group.point.size)
-
-
-  #... + amend Legend title
-  if (plot.legend==TRUE) base  <- base + labs(colour=legend.title,size=legend.text.size)
-  # ... + circular grid-lines at 'min', 'mid' and 'max' y-axis values
-  base <- base +  geom_path(data=gridline$min$path,aes(x=x,y=y),
-                            lty=gridline.min.linetype,colour=gridline.min.colour,size=grid.line.width)
-  base <- base +  geom_path(data=gridline$mid$path,aes(x=x,y=y),
-                            lty=gridline.mid.linetype,colour=gridline.mid.colour,size=grid.line.width)
-  base <- base +  geom_path(data=gridline$max$path,aes(x=x,y=y),
-                            lty=gridline.max.linetype,colour=gridline.max.colour,size=grid.line.width)
-  # ... + grid-line labels (max; ave; min) [only add min. gridline label if required]
-  if (label.gridline.min==TRUE) {
-
-    base <- base + geom_text(aes(x=x,y=y,label=values.radar[1]),data=gridline$min$label,size=grid.label.size*0.8, hjust=1, family=font.radar) }
-  base <- base + geom_text(aes(x=x,y=y,label=values.radar[2]),data=gridline$mid$label,size=grid.label.size*0.8, hjust=1, family=font.radar)
-  base <- base + geom_text(aes(x=x,y=y,label=values.radar[3]),data=gridline$max$label,size=grid.label.size*0.8, hjust=1, family=font.radar)
-  # ... + centre.y label if required [i.e. value of y at centre of plot circle]
-  if (label.centre.y==TRUE) {
-    centre.y.label <- data.frame(x=0, y=0, text=as.character(centre.y))
-    base <- base + geom_text(aes(x=x,y=y,label=text),data=centre.y.label,size=grid.label.size, hjust=0.5, family=font.radar) }
-
-  if (!is.null(group.colours)){
-    colour_values=rep(group.colours,100)
-  } else {
-    colour_values=rep(c("#FF5A5F", "#FFB400", "#007A87",  "#8CE071", "#7B0051",
-                        "#00D1C1", "#FFAA91", "#B4A76C", "#9CA299", "#565A5C", "#00A04B", "#E54C20"), 100)
-  }
-
-  base <- base + theme(legend.key.width=unit(3,"line")) + theme(text = element_text(size = 20,
-                                                                                    family = font.radar)) +
-    theme(legend.text = element_text(size = legend.text.size), legend.position="left") +
-    theme(legend.key.height=unit(2,"line")) +
-    scale_colour_manual(values=colour_values) +
-    theme(text=element_text(family=font.radar)) +
-    theme(legend.title=element_blank())
-
-  if (plot.title != "") {
-    base <- base + ggtitle(plot.title)
-  }
-
-  return(base)
-
+  
+  
+  ### 3.2. Set the extent of the plot and the colors of the grid
+  plot.extent.x=(grid.max+abs(centre.y))*plot.extent.x.sf
+  plot.extent.y=(grid.max+abs(centre.y))*plot.extent.y.sf
+  bg_colors<-c(RColorBrewer::brewer.pal(9,'Purples')[2],'#DFDFED') # Set the grid colors
+  
+  ### 3.3. Set up a basic empty gg-object
+  basething <- ggplot() + xlab(NULL) + ylab(NULL) + coord_fixed() +
+    scale_x_continuous(limits=c(-plot.extent.x,plot.extent.x)) + 
+    scale_y_continuous(limits=c(-plot.extent.y,plot.extent.y)) + theme_clear 
+  
+  ### 3.4 For the polygon-radar (spider-chart): Add the gridlines
+  n<-nrow(grid$all_lines)/length(grid$lines)        # n 
+  base_grid<-basething+geom_polygon(data=grid$all_lines[nrow(grid$all_lines):1,],aes(x,y,group=rev(q)),
+                                    fill=c(rep(rep(rev(bg_colors),2),each=n),rep('white',n)))+
+    geom_polygon(data=grid$lines$q0,aes(x,y),fill="white")+
+    geom_path(data=grid$axis_path,aes(x=x,y=y,group=axis.no),
+              colour=axis.line.colour,alpha=0.4)
+  
+  ### 3.5 Add text to gg-object
+  font_size=3
+  base_text<-base_grid+geom_text(data=grid$all_lines,aes(x,y,label=values),size=font_size)+
+    geom_text(data=grid$axis_label,aes(x,y,label=text))
+  
+  ### 3.6 Add observation lines to gg-object
+  gg<-base_text+geom_path(data=xy_lines,aes(x=x,y=y,group=group,color=group),alpha=0.8,size=1)
+  
+  return(gg)
 }
 
 
@@ -819,6 +686,7 @@ plot_check_freq_anova = function(x, variable){
 #' @param variable variable
 #' @param alpha alpha
 #' @param p.adj p.adj
+#' @param vec_fac vec_fac
 #' @param info info from mean_comparisons
 #' @export
 #' @import agricolae
@@ -1655,23 +1523,41 @@ plot_descriptive_data = function(
 
   # 2.4. Function to run radar ----------
   fun_radar = function(d, vec_variables, in_col, labels_size){
-    d$group = d[,in_col]
-
+    
+    colnames(d)[which(colnames(d) == in_col)] = "in_col"
+    d$group = d$in_col
     m = data.frame(matrix(levels(d$group), ncol = 1))
-    for(variable in vec_variables){
-      value = tapply(d[,variable], d$group, mean, na.rm = TRUE)
-      # rescale all variables to lie between 0 and 1
-      value_ok = value / sum(value, na.rm = TRUE)
-      m = cbind.data.frame(m, value_ok)
+    colnames(m) = "group"
+    
+    if( !is.null(x_axis) ){
+      colnames(d)[which(colnames(d) == x_axis)] = "x_axis"
+      list_v = lapply(vec_variables, function(variable, d){
+        d_value = data.frame()
+        for(i in 1:nrow(m)){
+          dtmp = droplevels(dplyr::filter(d, in_col == m[i, "group"]))
+          value = tapply(dtmp[,variable], dtmp$x_axis, mean, na.rm = TRUE)
+          d_value = rbind.data.frame(d_value, value)
+        }
+        m = cbind.data.frame(m, d_value)
+        colnames(m) = c("group", levels(d$x_axis))
+        rownames(m) = m$group
+        m = m[,-1]
+        return(m)
+      }, d)
+      names(list_v) = vec_variables
+    } else {
+      for(variable in vec_variables){
+        value = tapply(d[,variable], d$group, mean, na.rm = TRUE)
+        # rescale all variables to lie between 0 and 1
+        # value_ok = value / sum(value, na.rm = TRUE)
+        m = cbind.data.frame(m, value)
+      }
+      colnames(m) = c("group", vec_variables)
+      m = m[,-1]
+      list_v = list("all-variables" = m)
     }
-    colnames(m) = c("group", vec_variables)
-    p = ggradar(m,
-                grid.label.size = labels_size,
-                axis.label.size = labels_size,
-                group.point.size = labels_size,
-                legend.text.size = labels_size*2.5,
-                group.line.width= labels_size/4)
-    p = p + theme(legend.title = element_blank())
+    
+    p = lapply(list_v, ggradar_bis)
     return(p)
   }
 
@@ -1794,10 +1680,10 @@ plot_descriptive_data = function(
 
 
 # check constitency of list with check_model ----------
-#' Check constitency of list with outputs from \code{\link{check_model()}}
+#' Check constitency of list with outputs from \code{\link{check_model}}
 #'
 #' @description
-#' \code{check_list_out_check_model} checks consistency of list with outputs from \code{\link{check_model()}}
+#' \code{check_list_out_check_model} checks consistency of list with outputs from \code{\link{check_model}}
 #'
 #' @param valid_models A vector with valid models expected
 #' 
