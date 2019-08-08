@@ -63,7 +63,7 @@
 #' See the book for more details : https://priviere.github.io/PPBstats_book/describe-data-network.html
 #' 
 #' @seealso
-#' \code{\link{format_data_PPBstats.data_network}}
+#' \code{\link{format_data_PPBstats}}
 #' 
 #' @export
 #' 

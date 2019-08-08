@@ -38,7 +38,7 @@
 #'
 #' @export
 #'
-plot.check_model_local_foreign <- function(x){
+plot.check_model_local_foreign <- function(x, ...){
   out = plot_check_freq_anova(x, variable = x$model_local_foreign$info$variable)
   return(out)
 }

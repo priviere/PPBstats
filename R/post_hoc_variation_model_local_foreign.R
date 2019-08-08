@@ -1,7 +1,7 @@
-#' Get dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model_local_foreign}}
+#' Get dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model.fit_model_local_foreign}}
 #' 
 #' @description 
-#' \code{post_hoc_variation_model_local_foreign} returns a dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model_local_foreign}}
+#' \code{post_hoc_variation_model_local_foreign} returns a dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model.fit_model_local_foreign}}
 #'
 #' @param list_out_check_model A list whose elements are output from \code{\link{check_model}}
 #' 

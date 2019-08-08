@@ -1,7 +1,7 @@
-#' Get dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model_anova}}
+#' Get dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model.fit_model_anova}}
 #' 
 #' @description 
-#' \code{post_hoc_variation_model_anova} returns a dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model_anova}}
+#' \code{post_hoc_variation_model_anova} returns a dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model.fit_model_anova}}
 #'
 #' @param list_out_check_model A list whose elements are output from \code{\link{check_model}}
 #' 

@@ -34,7 +34,8 @@
 #' 
 #' @seealso 
 #' \itemize{
-#'  \item \code{\link{format_data_PPBstats.data_agro_SR}}
+#'  \item \code{\link{format_data_PPBstats}}
+#'  \item \code{\link{format_data_PPBstats.data_agro}}
 #' }
 #' 
 #' @export
@@ -43,8 +44,6 @@ plot.data_agro_SR = function(
   x,
   mean_comparisons = NULL,
   plot_type = "boxplot",
-  x_axis = NULL,
-  in_col = NULL,
   vec_variables = NULL,
   nb_parameters_per_plot_x_axis = 5,
   nb_parameters_per_plot_in_col = 5, ...

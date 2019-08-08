@@ -31,7 +31,8 @@
 #' 
 #' @seealso 
 #' \itemize{
-#'  \item \code{\link{format_data_PPBstats.data_agro_HA}}
+#'  \item \code{\link{format_data_PPBstats}}
+#'  \item \code{\link{format_data_PPBstats.data_agro}}
 #' }
 #' 
 #' @export
@@ -39,7 +40,8 @@
 plot.data_agro_HA = function(
   x,
   plot_type = "boxplot",
-  vec_variables = NULL
+  vec_variables = NULL,
+  ...
 ){
   match.arg(plot_type, c("barplot", "boxplot"), several.ok = FALSE)
   

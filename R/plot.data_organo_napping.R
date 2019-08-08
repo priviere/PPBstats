@@ -61,7 +61,7 @@
 #' See the book for more details : https://priviere.github.io/PPBstats_book/napping.html#describe-the-data-3
 #' 
 #' @seealso 
-#' \code{\link{format_data_PPBstats.data_organo_napping}}
+#' \code{\link{format_data_PPBstats}}
 #' 
 #' @export
 #' 
