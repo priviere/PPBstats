@@ -5,7 +5,7 @@
 \title{Plot agro object from format_data_PPBstats.data_agro_LF()}
 \usage{
 \method{plot}{data_agro_LF}(x, plot_type = "boxplot",
-  vec_variables = NULL)
+  vec_variables = NULL, ...)
 }
 \arguments{
 \item{x}{The data frame. It should come from \code{\link{format_data_PPBstats.data_agro_LF}}}
@@ -37,7 +37,8 @@ See the book for more details \href{https://priviere.github.io/PPBstats_book/loc
 }
 \seealso{
 \itemize{
- \item \code{\link{format_data_PPBstats.data_agro_LF}}
+ \item \code{\link{format_data_PPBstats}}
+ \item \code{\link{format_data_PPBstats.data_agro}}
 }
 }
 \author{

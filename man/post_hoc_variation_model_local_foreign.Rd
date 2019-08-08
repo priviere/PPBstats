@@ -2,7 +2,7 @@
 % Please edit documentation in R/post_hoc_variation_model_local_foreign.R
 \name{post_hoc_variation_model_local_foreign}
 \alias{post_hoc_variation_model_local_foreign}
-\title{Get dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model_local_foreign}}}
+\title{Get dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model.fit_model_local_foreign}}}
 \usage{
 post_hoc_variation_model_local_foreign(list_out_check_model)
 }
@@ -13,7 +13,7 @@ post_hoc_variation_model_local_foreign(list_out_check_model)
 A dataframe with the following columns: variable, factor and percentage sum of square coming from the model
 }
 \description{
-\code{post_hoc_variation_model_local_foreign} returns a dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model_local_foreign}}
+\code{post_hoc_variation_model_local_foreign} returns a dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model.fit_model_local_foreign}}
 }
 \seealso{
 \code{\link{post_hoc_variation}}

@@ -69,7 +69,7 @@ of nb_parameters_per_plot_x_axis and nb_parameters_per_plot_in_col except for pl
 See the book for more details : https://priviere.github.io/PPBstats_book/hedonic.html#describe-the-data-2
 }
 \seealso{
-\code{\link{format_data_PPBstats.data_organo_hedonic}}
+\code{\link{format_data_PPBstats}}
 }
 \author{
 Pierre Riviere

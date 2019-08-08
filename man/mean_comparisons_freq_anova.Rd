@@ -18,6 +18,8 @@ mean_comparisons_freq_anova(model, variable, alpha = 0.05,
 \item{p.adj}{p.adj}
 
 \item{info}{info from mean_comparisons}
+
+\item{vec_fac}{vec_fac}
 }
 \description{
 mean comparisons for frequentist analysis

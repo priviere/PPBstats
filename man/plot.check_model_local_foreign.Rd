@@ -4,7 +4,7 @@
 \alias{plot.check_model_local_foreign}
 \title{Get ggplot to visualize output from \code{\link{check_model.fit_model_local_foreign}}}
 \usage{
-\method{plot}{check_model_local_foreign}(x)
+\method{plot}{check_model_local_foreign}(x, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{check_model.fit_model_local_foreign}}}

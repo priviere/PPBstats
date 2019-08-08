@@ -71,8 +71,7 @@ See the book for more details \href{https://priviere.github.io/PPBstats_book/des
 }
 \seealso{
 \itemize{
- \item \code{\link{format_data_PPBstats.data_agro}}
- \item \code{\link{format_data_PPBstats.data_agro_version}}
+ \item \code{\link{format_data_PPBstats}}
 }
 }
 \author{

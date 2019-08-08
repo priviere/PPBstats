@@ -2,7 +2,7 @@
 % Please edit documentation in R/common_functions.R
 \name{check_list_out_check_model}
 \alias{check_list_out_check_model}
-\title{Check constitency of list with outputs from \code{\link{check_model()}}}
+\title{Check constitency of list with outputs from \code{\link{check_model}}}
 \usage{
 check_list_out_check_model(valid_models, list_out_check_model)
 }
@@ -17,7 +17,7 @@ If the list do not contain valid models and all the elements of the list are com
 If no error message are displayed the function returns a vector with the class of elements in list_out_check_model
 }
 \description{
-\code{check_list_out_check_model} checks consistency of list with outputs from \code{\link{check_model()}}
+\code{check_list_out_check_model} checks consistency of list with outputs from \code{\link{check_model}}
 }
 \author{
 Facundo Munoz and Pierre Riviere
