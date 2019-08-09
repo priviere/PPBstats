@@ -46,11 +46,14 @@ Depends:
     parallel,
     plyr,
     png,
+    RColorBrewer,
     rjags,
+    scales,
     shiny,
     shinydashboard,
     SpATS,
-    stats
+    stats,
+    tibble
 Suggests:
     ggmcmc,
     knitr,

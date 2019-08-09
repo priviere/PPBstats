@@ -33,6 +33,7 @@
 #' @export
 #' 
 format_data_PPBstats.data_organo_hedonic = function(data, threshold){
+  juges = NULL # to avoid no visible binding for global variable
 
   mess = "In data, the following column are compulsory : \"sample\", \"germplasm\", \"location\", \"juges\", \"note\", \"descriptors\"."
   if(!is.element("sample", colnames(data))) { stop(mess) }
@@ -64,7 +65,7 @@ format_data_PPBstats.data_organo_hedonic = function(data, threshold){
   data_tmp = data
   data_tmp$row = c(1:nrow(data_tmp))
   data_tmp$id = paste("sample", data_tmp$sample, "by juge", data_tmp$juges, "on row", data_tmp$row)
-  data_per_juges = plyr:::splitter_d(data_tmp, .(juges))
+  data_per_juges = splitter_d(data_tmp, .(juges))
   data_per_juges_ok = lapply(data_per_juges, function(x){
     x$gl = paste(x$germplasm, x$location)
     dup = duplicated(x$gl)

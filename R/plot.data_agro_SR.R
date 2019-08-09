@@ -49,12 +49,13 @@ plot.data_agro_SR = function(
   nb_parameters_per_plot_in_col = 5, ...
 ){
   match.arg(plot_type, c("barplot", "boxplot", "interaction"), several.ok = FALSE)
+  stars = group = expe_id = NULL # to avoid no visible binding for global variable
   
   d = droplevels(x[which(!is.na(x$expe_id)),])
   d$x_axis = paste(d$seed_lot, d$group, sep = " | ")
   
   fun = function(variable, d, mean_comparisons, plot_type, nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col){
-    s = plyr:::splitter_d(d, .(expe_id))
+    s = splitter_d(d, .(expe_id))
     p_out = lapply(s,
                    plot_descriptive_data,
                    plot_type,

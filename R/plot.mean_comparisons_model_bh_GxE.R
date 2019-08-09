@@ -67,7 +67,7 @@ plot.mean_comparisons_model_bh_GxE <- function(
     data = dplyr::arrange(data, median)
     data$max = max(data$median, na.rm = TRUE)
     data$split = add_split_col(data, nb_parameters_per_plot)
-    data_split = plyr:::splitter_d(data, .(split))
+    data_split = splitter_d(data, .(split))
 
     para.name = unlist(strsplit(as.character(data[1, "parameter"]), "\\["))[1]
 
@@ -109,7 +109,7 @@ plot.mean_comparisons_model_bh_GxE <- function(
 
     spl = add_split_col(ab, nb_parameters_per_plot)
     ab$split  = sample(spl,size = length(spl), replace=F)
-    d_ab = plyr:::splitter_d(ab, .(split))
+    d_ab = splitter_d(ab, .(split))
 
     xlim = range(ab$alpha_i)
     ylim = range(ab$beta_i)

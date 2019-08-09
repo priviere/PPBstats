@@ -15,6 +15,7 @@
 #'
 #'
 post_hoc_variation = function(list_out_check_model){
+  variable = percentage_Sum_sq = NULL # to avoid no visible binding for global variable
   
   # 1. Error message ----------
   all_by_model = check_list_out_check_model(valid_models = c("check_model_GxE", 

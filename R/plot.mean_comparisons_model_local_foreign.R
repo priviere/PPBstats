@@ -36,12 +36,13 @@ plot.mean_comparisons_model_local_foreign <- function(
                                                       x,
                                                       nb_parameters_per_plot = 8, ...
                                                       ){
-
+    parameter = means = stars = NULL # to avoid no visible binding for global variable
+    
     d = x[["data_ggplot_LSDbarplot_version:location"]]
     d = dplyr::arrange(d, means)
     d$max = max(d$means, na.rm = TRUE)
     d$split = add_split_col(d, nb_parameters_per_plot)
-    d_split = plyr:::splitter_d(d, .(split))
+    d_split = splitter_d(d, .(split))
 
     STARS = unique(d[,c("parameter", "stars")])
     y = tapply(d$means, d$parameter, mean, na.rm = TRUE)

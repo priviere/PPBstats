@@ -40,6 +40,7 @@
 #' @export
 #'
 #' @import emmeans
+#' @import multcompView
 #'
 mean_comparisons.check_model_local_foreign <- function(
   x,

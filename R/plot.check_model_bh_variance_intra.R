@@ -57,11 +57,11 @@ plot.check_model_bh_variance_intra = function(
     xmin = min(data_ggplot_model_bh_variance_intra_sigma_ij$q1)
     xmax = max(data_ggplot_model_bh_variance_intra_sigma_ij$q5)
     
-    data_ggplot_model_bh_variance_intra_sigma_ij = plyr:::splitter_d(data_ggplot_model_bh_variance_intra_sigma_ij, .(environment))
+    data_ggplot_model_bh_variance_intra_sigma_ij = splitter_d(data_ggplot_model_bh_variance_intra_sigma_ij, .(environment))
     
     fun2 = function(x, nb_parameters_per_plot, xmin, xmax){ 
       x$split = add_split_col(x, nb_parameters_per_plot)
-      xx = plyr:::splitter_d(x, .(split))
+      xx = splitter_d(x, .(split))
       out = lapply(xx, function(x){ get.caterpillar.plot(x, xmin, xmax) } )
       return(out)
     }
@@ -76,7 +76,7 @@ plot.check_model_bh_variance_intra = function(
   if(!is.null(data_ggplot_model_bh_variance_intra_sigma_ij)){
     xmin = min(data_ggplot_model_bh_variance_intra_sigma_ij$q1); xmax = max(data_ggplot_model_bh_variance_intra_sigma_ij$q5)
     
-    data_ggplot_model_bh_variance_intra_sigma_ij = plyr:::splitter_d(data_ggplot_model_bh_variance_intra_sigma_ij, .(environment))
+    data_ggplot_model_bh_variance_intra_sigma_ij = splitter_d(data_ggplot_model_bh_variance_intra_sigma_ij, .(environment))
     
     out_sigma_ij = lapply(data_ggplot_model_bh_variance_intra_sigma_ij, fun2, nb_parameters_per_plot, xmin, xmax)
 

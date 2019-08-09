@@ -1,4 +1,4 @@
-#' Get dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_mode.fit_model_home_away}}
+#' Get dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model.fit_model_home_away}}
 #' 
 #' @description 
 #' \code{post_hoc_variation_model_home_away} returns a dataframe for factors' variation for each variable from a list whose elements are output from \code{\link{check_model.fit_model_home_away}}

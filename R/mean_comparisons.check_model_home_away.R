@@ -40,6 +40,8 @@
 #' @export
 #'
 #' @import emmeans
+#' @import multcompView
+#' 
 mean_comparisons.check_model_home_away <- function(
   x,
   alpha = 0.05,

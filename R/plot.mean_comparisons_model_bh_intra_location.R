@@ -87,7 +87,7 @@ plot.mean_comparisons_model_bh_intra_location <- function(
       for(i in 1:length(data)){ dtmp = rbind.data.frame(dtmp, data[[i]]$mean.comparisons) }
       data = dtmp
 
-      d_loc = plyr:::splitter_d(data, .(location))
+      d_loc = splitter_d(data, .(location))
 
       d_loc_b = lapply(d_loc, function(x){
 
@@ -115,7 +115,7 @@ plot.mean_comparisons_model_bh_intra_location <- function(
 
         seq_nb_para = unique(c(seq(1, max(x$split), nb_parameters_per_plot), max(x$split)*2))
         for(i in 1:(length(seq_nb_para) - 1) ) { x$split[seq_nb_para[i] <= x$split & x$split < seq_nb_para[i+1]] = i }
-        x_split = plyr:::splitter_d(x, .(split))
+        x_split = splitter_d(x, .(split))
         return(x_split)
       } )
     } else { d_loc_b = NULL }
@@ -138,7 +138,7 @@ plot.mean_comparisons_model_bh_intra_location <- function(
           x = dplyr::arrange(x, median)
           x$max = max(x$median, na.rm = TRUE)
           x$split = add_split_col(x, nb_parameters_per_plot)
-          x_split = plyr:::splitter_d(x, .(split))
+          x_split = splitter_d(x, .(split))
           return(x_split)
         } )
       
@@ -296,7 +296,7 @@ plot.mean_comparisons_model_bh_intra_location <- function(
             p = p + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line") + ggtitle(x_loc[1, "location"])
             p = p + xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.title = element_blank())
 
-            x_loc_year = plyr:::splitter_d(x_loc, .(year))
+            x_loc_year = splitter_d(x_loc, .(year))
 
             # Put lines for significant groups
             if( attributes(data)$PPBstats.object == "data_mean_comparisons" ){

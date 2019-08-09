@@ -20,6 +20,7 @@ parameter_groups_model_spatial = function(
   list_out_check_model_spatial,
   parameter
 ){
+  list_out_check_model = NULL # to avoid no visible binding for global variable
   
   # 1. Prepare data set ----------
   
