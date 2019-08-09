@@ -17,6 +17,8 @@
 }}
 
 \item{vec_variables}{vector of variables to display}
+
+\item{...}{further arguments passed to or from other methods}
 }
 \value{
 The function returns a list with ggplot objects for each variable of vec_variables divided into three elements:
