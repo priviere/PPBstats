@@ -22,6 +22,8 @@
 #' @param nb.cols Number of columns in the design. The number of rows is computed automaticaly.
 #' 
 #' @param return.format "standard" or "shinemas". See details for more information.
+#' 
+#' @param allow_XXXX TRUE or FALSE. Allow to have XXXX placed in stead of germplasm in order to fill the design.
 #'
 #' @return 
 #' The function returns a list with
@@ -97,13 +99,14 @@ design_experiment = function(
   nb.controls.per.block,
   nb.blocks,
   nb.cols,
-  return.format = "standard"
+  return.format = "standard",
+  allow_XXXX = TRUE
 )
   {
   
     block = X = NULL # to avoid no visible binding for global variable
     
-    # 1. Error message ----------  
+    # 1. Error message ----------
     match.arg(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"), several.ok = FALSE)
     match.arg(return.format, c("standard", "shinemas"), several.ok = FALSE)
     
@@ -117,9 +120,14 @@ design_experiment = function(
       
       vec_XXX = c(1:nb.germplasm)
       
-      if( expe.type == "row-column" | expe.type == "satellite-farm" | expe.type == "regional-farm" ) {
+      if( expe.type == "row-column" | expe.type == "satellite-farm" | expe.type == "regional-farm" | expe.type == "fully-replicated") {
         test = ceiling(nb.germplasm / nb.blocks) * nb.blocks
-        if( test > nb.germplasm ) { germplasm = c(germplasm, paste(rep("XXX", times = (test - nb.germplasm)), vec_XXX[1:(test - nb.germplasm)] , sep = "-") ); vec_XXX = vec_XXX[-c(1:(test - nb.germplasm))] }
+        if( test > nb.germplasm ) {
+          if(!allow_XXXX) { stop("Germplasm are missing to get complete design, set allow_XXXX to get XXXX placed in order to fill the design.") }
+          warning("Germplasm are missing to get complete design, therefore XXXX are placed in order to fill the design.")
+          germplasm = c(germplasm, paste(rep("XXX", times = (test - nb.germplasm)), vec_XXX[1:(test - nb.germplasm)] , sep = "-") )
+          vec_XXX = vec_XXX[-c(1:(test - nb.germplasm))] 
+          }
         l = split(germplasm, (1:nb.blocks))
       }
       

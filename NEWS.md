@@ -32,6 +32,7 @@
     - model_home_away
     - model_local_foreign
 - update ggradar in common_function
+- design_experiment, cf #39
 
 ### add new functions
 - post_hoc_variation, cf #141

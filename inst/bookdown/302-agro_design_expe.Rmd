@@ -51,7 +51,7 @@ head(p_fr$"fully-replicated"$data.frame)
 ```
 
 
-You can set the format to a `SHiNeMaS`^[Seeds History and Network Management System, see (here)[http://moulon.inra.fr/index.php/en/tranverse-team/atelier-de-bioinformatique/projects/181] for more details and a presentation in french (here)[http://moulon.inra.fr/index.php/fr/actualite/387-shinemas-la-base-de-donnees-concue-pour-le-reseau-semences-paysannes]] reproduction template file:
+You can set the format to a `SHiNeMaS`^[Seeds History and Network Management System, see [here](https://sourcesup.renater.fr/projects/shinemas/) for more details and a presentation in french [here](http://moulon.inra.fr/index.php/fr/actualite/387-shinemas-la-base-de-donnees-concue-pour-le-reseau-semences-paysannes) reproduction template file:
 
 ```{r}
 p_fr = design_experiment(
