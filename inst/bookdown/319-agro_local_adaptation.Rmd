@@ -356,10 +356,10 @@ with
 - $\mu$ the general mean,
 - $\alpha_i$ the effect of germplasm $i$,
 - $\theta_j$ the effect of location $j$,
-- $\omega_{k_{ij}}$ the effect of version, home or away for a germplasm $i$ in location $j$,
-- (\omega \times \alpha)_{k_{ij}j} the interaction effect of version $\times$ germplasm,
-- rep(\theta)_{mj} the effect of the replication $m$ nested in location,
-- \varepsilon_{ijkm} the residuals.
+- $\omega_{k_{ij}}$ the effect of version, local or foreign for a germplasm $i$ in location $j$,
+- $(\omega \times \alpha)_{k_{ij}j}$ the interaction effect of version $\times$ germplasm,
+- $rep(\theta)_{mj}$ the effect of the replication $m$ nested in location,
+- $\varepsilon_{ijkm}$ the residuals.
 
 As for home away model, version effect $\omega_{k_{ij}}$) give a glocal measure of local adaptation of germplasm to their location of origin [@blanquart_practical_2013].
 Interaction effect $(\omega \times \theta)_{k_{ij}j}$ give information on specific adaptation to each germplasm.

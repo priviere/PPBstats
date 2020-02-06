@@ -279,13 +279,17 @@ p_out_biplot_ammi = plot(out_biplot_ammi)
 - `ecovalence`
 
 Ecovalence from @wricke_uber_1962 give part of interaction variance taken by germplasm and location.
-It is an indicator of stability: a low ecovalence means low interaction, i.e. more stability.
+This parameter provides indications on the contribution of each variety to the interaction term and therefore on its stability over the different farms with respect to the productivity potential of each of them. 
+It is generally described as a dynamic stability indicator [@becker_stability_1988].
+A low ecovalence means low interaction, i.e. more stability.
 
 Ecovalance of germplasm $i$ is $W_{i}=\sum_{i}^{n} (\eta_{i}\nu_{j})^{2}$
 
 Ecovalance of location $j$ is $W_{j}=\sum_{j}^{n} (\eta_{i}\nu_{j})^{2}$.
 
 Ecovalances are represented in fonction of mean effects by germplasm and location.
+
+
 
 ```{r}
 p_out_biplot_ammi$ecovalence
