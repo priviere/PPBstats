@@ -37,6 +37,8 @@
 #'  \item \code{\link{format_data_PPBstats.data_agro}}
 #' }
 #' 
+#' @import plyr
+#' 
 #' @export
 #' 
 plot.data_agro_HA = function(
@@ -73,7 +75,7 @@ plot.data_agro_HA = function(
     
     # list of plots for each germplasm with all version separated
     colnames(d)[which(colnames(d) == "germplasm")] = "factor_to_split"
-    dd = splitter_d(d, .(factor_to_split))
+    dd = plyr:::splitter_d(d, .(factor_to_split))
     out = lapply(dd, function(x){
       p = ggplot(x, aes(x = group_bis, y = variable))
       p = p + ggtitle(x[1, "factor_to_split"]) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
