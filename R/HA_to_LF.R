@@ -6,7 +6,7 @@
 #' @export
 #'
 HA_to_LF = function(data_agro_HA){
-  if(!is(data_agro_HA, "data_agro_HA")){ stop(substitute(data_agro_HA), " must be formated with type = \"data_agro_HA\"t, see PPBstats::format_data_PPBstats().") }
+  if(!is(data_agro_HA, "data_agro_HA")){ stop(substitute(data_agro_HA), " must be formated with type = \"data_agro_HA\", see PPBstats::format_data_PPBstats().") }
   data_agro_LF = data_agro_HA
   data_agro_LF$version = as.character(data_agro_LF$version)
   data_agro_LF$version[which(data_agro_LF$version == "home")] = "local"

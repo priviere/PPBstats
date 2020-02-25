@@ -117,9 +117,12 @@ p$y1$home_away_merged_per_germplasm
 
 - A list of plots for each germplasm with all version separated
 ```{r}
-p$y1$home_away_per_germplasm$`germ-1`
+p$y1$home_away_per_germplasm$`germ-1`$version
 ```
 
+```{r}
+p$y1$home_away_per_germplasm$`germ-1`$origin
+```
 
 ##### Run the model
 
@@ -427,8 +430,14 @@ p$y1$local_foreign_merged_per_location
 ```
 - plot for each location with all version separated
 ```{r}
-p$y1$local_foreign_per_location$`loc-1`
+p$y1$local_foreign_per_location$`loc-1`$version
 ```
+
+
+```{r}
+p$y1$local_foreign_per_location$`loc-1`$origin
+```
+
 
 ##### Run the model
 

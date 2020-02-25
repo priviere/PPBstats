@@ -48,9 +48,9 @@ plot.data_agro_LF = function(
   ...
 ){
   match.arg(plot_type, c("barplot", "boxplot"), several.ok = FALSE)
-  group_bis = factor_to_split = NULL # to avoid no visible binding for global variable
+  origin_bis = factor_to_split = NULL # to avoid no visible binding for global variable
   
-  x$group_bis =  paste("sown at", x$location, ", coming from", x$group)
+  x$origin_bis =  paste("sown at", x$location, ", coming from", x$origin)
   
   fun_var = function(variable, d, plot_type){
     colnames(d)[which(colnames(d) == variable)] = "variable"
@@ -77,16 +77,16 @@ plot.data_agro_LF = function(
     colnames(d)[which(colnames(d) == "location")] = "factor_to_split"
     dd = plyr:::splitter_d(d, .(factor_to_split))
     out = lapply(dd, function(x){
-      p = ggplot(x, aes(x = group_bis, y = variable))
+      p = ggplot(x, aes(x = origin_bis, y = variable))
       p = p + ggtitle(x[1, "factor_to_split"]) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       p = p + xlab("")
       if( plot_type == "barplot"){
         p1 = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge") + facet_grid(.~year)
-        p2 = p + geom_bar(aes(fill = group), stat = "identity", position = "dodge") + facet_grid(.~year)
+        p2 = p + geom_bar(aes(fill = origin), stat = "identity", position = "dodge") + facet_grid(.~year)
       }
       if( plot_type == "boxplot"){
         p1 = p + geom_boxplot(aes(fill = version), position = "dodge") + facet_grid(.~year)
-        p2 = p + geom_boxplot(aes(fill = group), position = "dodge") + facet_grid(.~year)
+        p2 = p + geom_boxplot(aes(fill = origin), position = "dodge") + facet_grid(.~year)
       }
       p_out = list("version" = p1, "origin" = p2)
       return(p_out)

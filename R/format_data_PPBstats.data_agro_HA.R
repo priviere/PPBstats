@@ -4,7 +4,7 @@
 #' \code{format_data_PPBstats.data_agro_HA} checks and formats the data to be used by PPBstats functions for agro HA to study local adpatation
 #'  
 #' @param data The data frame to format.
-#'  It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "group", "version", "..."), 
+#'  It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "origin", "version", "..."), 
 #'  with "..." the variables.
 #'  The variables can be linked to their corresponding dates. 
 #'  The dates are associated to their corresponding variable by $.
@@ -13,7 +13,7 @@
 #' 
 #' @details 
 #' \itemize{
-#'  \item group: the location where the germplasm come from
+#'  \item origin: the location where the germplasm come from
 #'  \item version: away or home
 #' }
 #' 
@@ -29,13 +29,13 @@ format_data_PPBstats.data_agro_HA = function(data){
   
   d = suppressMessages(format_data_PPBstats(data, type = "data_agro"))
   
-  mess = "The following column are compulsory : \"group\", \"version\"."
+  mess = "The following column are compulsory : \"origin\", \"version\"."
   # check columns
-  if(!is.element("group", colnames(d))) { stop(mess) }
+  if(!is.element("origin", colnames(d))) { stop(mess) }
   if(!is.element("version", colnames(d))) { stop(mess) }
   
-  mess = "The following column must be set as factor : \"group\", \"version\"."
-  if(!is.factor(d$group)) { stop(mess) }
+  mess = "The following column must be set as factor : \"origin\", \"version\"."
+  if(!is.factor(d$origin)) { stop(mess) }
   if(!is.factor(d$version)) { stop(mess) }
   
   test = which(!is.element(na.omit(d$version), c("home", "away")))
