@@ -58,18 +58,18 @@ plot.data_agro_LF = function(
     # single plot with version for all location merged
     p = ggplot(d, aes(x = version, y = variable))
     p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + xlab("")
-    if( plot_type == "barplot"){ p = p + geom_bar(stat = "identity", position = "dodge") }
-    if( plot_type == "boxplot"){ p = p + geom_boxplot(position = "dodge") }
+    if( plot_type == "barplot"){ p = p + geom_bar(stat = "identity", position = "dodge") + facet_grid(.~year) }
+    if( plot_type == "boxplot"){ p = p + geom_boxplot(position = "dodge") + facet_grid(.~year) }
     p1 = p
     
     # single plot with version for each location
     p = ggplot(d, aes(x = location, y = variable))
     p = p + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + xlab("")
     if( plot_type == "barplot"){
-      p = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
+      p = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge") + facet_grid(.~year)
     }
     if( plot_type == "boxplot"){
-      p = p + geom_boxplot(aes(fill = version), position = "dodge")
+      p = p + geom_boxplot(aes(fill = version), position = "dodge") + facet_grid(.~year)
     }
     p2 = p
     
@@ -81,12 +81,12 @@ plot.data_agro_LF = function(
       p = p + ggtitle(x[1, "factor_to_split"]) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       p = p + xlab("")
       if( plot_type == "barplot"){
-        p1 = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
-        p2 = p + geom_bar(aes(fill = group), stat = "identity", position = "dodge")
+        p1 = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge") + facet_grid(.~year)
+        p2 = p + geom_bar(aes(fill = group), stat = "identity", position = "dodge") + facet_grid(.~year)
       }
       if( plot_type == "boxplot"){
-        p1 = p + geom_boxplot(aes(fill = version), position = "dodge")
-        p2 = p + geom_boxplot(aes(fill = group), position = "dodge")
+        p1 = p + geom_boxplot(aes(fill = version), position = "dodge") + facet_grid(.~year)
+        p2 = p + geom_boxplot(aes(fill = group), position = "dodge") + facet_grid(.~year)
       }
       p_out = list("version" = p1, "origin" = p2)
       return(p_out)
