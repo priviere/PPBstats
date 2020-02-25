@@ -76,17 +76,21 @@ plot.data_agro_HA = function(
     # list of plots for each germplasm with all version separated
     colnames(d)[which(colnames(d) == "germplasm")] = "factor_to_split"
     dd = plyr:::splitter_d(d, .(factor_to_split))
+    
     out = lapply(dd, function(x){
       p = ggplot(x, aes(x = group_bis, y = variable))
       p = p + ggtitle(x[1, "factor_to_split"]) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
       p = p + xlab("")
       if( plot_type == "barplot"){
-        p = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
+        p1 = p + geom_bar(aes(fill = version), stat = "identity", position = "dodge")
+        p2 = p + geom_bar(aes(fill = group), stat = "identity", position = "dodge")
       }
       if( plot_type == "boxplot"){
-        p = p + geom_boxplot(aes(fill = version), position = "dodge")
+        p1 = p + geom_boxplot(aes(fill = version), position = "dodge")
+        p2 = p + geom_boxplot(aes(fill = group), position = "dodge")
       }
-      return(p)
+      p_out = list("version" = p1, "origin" = p2)
+      return(p_out)
     })
    
     out = list("home_away_merged" = p1,
