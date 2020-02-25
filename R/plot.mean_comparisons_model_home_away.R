@@ -30,6 +30,9 @@
 #'
 #' @seealso \code{\link{mean_comparisons.check_model_home_away}}
 #'
+#' @import dplyr
+#' @import plyr
+#'
 #' @export
 #'
 plot.mean_comparisons_model_home_away <- function(
@@ -42,7 +45,7 @@ plot.mean_comparisons_model_home_away <- function(
     d = dplyr::arrange(d, means)
     d$max = max(d$means, na.rm = TRUE)
     d$split = add_split_col(d, nb_parameters_per_plot)
-    d_split = splitter_d(d, .(split))
+    d_split = plyr:::splitter_d(d, .(split))
 
     STARS = unique(d[,c("parameter", "stars")])
     y = tapply(d$means, d$parameter, mean, na.rm = TRUE)
