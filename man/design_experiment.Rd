@@ -7,7 +7,7 @@ the choosen family of analysis}
 \usage{
 design_experiment(expe.type, location = "location", year = "2016",
   germplasm, controls, nb.controls.per.block, nb.blocks, nb.cols,
-  return.format = "standard")
+  return.format = "standard", allow_XXXX = TRUE)
 }
 \arguments{
 \item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD". See details for more information.}
@@ -27,6 +27,8 @@ design_experiment(expe.type, location = "location", year = "2016",
 \item{nb.cols}{Number of columns in the design. The number of rows is computed automaticaly.}
 
 \item{return.format}{"standard" or "shinemas". See details for more information.}
+
+\item{allow_XXXX}{TRUE or FALSE. Allow to have XXXX placed in stead of germplasm in order to fill the design.}
 }
 \value{
 The function returns a list with

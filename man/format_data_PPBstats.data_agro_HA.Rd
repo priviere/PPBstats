@@ -8,7 +8,7 @@ format_data_PPBstats.data_agro_HA(data)
 }
 \arguments{
 \item{data}{The data frame to format.
-It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "group", "version", "..."), 
+It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "origin", "version", "..."), 
 with "..." the variables.
 The variables can be linked to their corresponding dates. 
 The dates are associated to their corresponding variable by $.
@@ -20,7 +20,7 @@ The date must have format year-month-day, e.g. 2017-12-05}
 }
 \details{
 \itemize{
- \item group: the location where the germplasm come from
+ \item origin: the location where the germplasm come from
  \item version: away or home
 }
 

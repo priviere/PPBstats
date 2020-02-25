@@ -20,5 +20,5 @@ This file group functions used in several functions of PPBstats
 \author{
 Pierre Riviere
 
-copy paste from pluyr:::splitter_d in order to avoid NOTE in the package check ... I know it is quite dirty to do that !
+copy paste from plyr:::splitter_d in order to avoid NOTE in the package check ... I know it is quite dirty to do that !
 }
