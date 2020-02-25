@@ -38,6 +38,8 @@
 #'  \item \code{\link{format_data_PPBstats.data_agro}}
 #' }
 #' 
+#' @import plyr
+#' 
 #' @export
 #' 
 plot.data_agro_SR = function(
@@ -55,7 +57,7 @@ plot.data_agro_SR = function(
   d$x_axis = paste(d$seed_lot, d$group, sep = " | ")
   
   fun = function(variable, d, mean_comparisons, plot_type, nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col){
-    s = splitter_d(d, .(expe_id))
+    s = plyr:::splitter_d(d, .(expe_id))
     p_out = lapply(s,
                    plot_descriptive_data,
                    plot_type,

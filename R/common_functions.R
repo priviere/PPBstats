@@ -10,7 +10,7 @@
 
 
 # splitter_d ----------
-#'copy paste from pluyr:::splitter_d in order to avoid NOTE in the package check ... I know it is quite dirty to do that !
+#'copy paste from plyr:::splitter_d in order to avoid NOTE in the package check ... I know it is quite dirty to do that !
 #' @param data data
 #' @param .variables .variables
 #' @param drop drop
@@ -61,7 +61,7 @@ split_data_for_ggplot = function(data, factor, nb_param){
   s = rep(c(1:length(ns)), each = nb_param)[1:length(ns)]
   names(s) = ns
   data$split_factor = s[data[,factor]]
-  data_f =  splitter_d(data, .(split_factor))
+  data_f =  plyr:::splitter_d(data, .(split_factor))
   return(data_f)
 }
 
@@ -391,7 +391,7 @@ reshape_data_split_x_axis_in_col = function(
     paste(in_col, d$split_in_col, sep = "-"),
     sep = "|")
   d = dplyr::select(d, - split_x_axis, - split_in_col)
-  d = splitter_d(d, .(split))
+  d = plyr:::splitter_d(d, .(split))
 
   return(d)
 }
@@ -777,7 +777,7 @@ plot_mean_comparisons_freq_anova = function(x, variable, nb_parameters_per_plot 
     d_LSD = dplyr::arrange(d_LSD, means)
     d_LSD$max = max(d_LSD$means, na.rm = TRUE)
     d_LSD$split = add_split_col(d_LSD, nb_parameters_per_plot)
-    d_LSD_split = splitter_d(d_LSD, .(split))
+    d_LSD_split = plyr:::splitter_d(d_LSD, .(split))
 
     out = lapply(d_LSD_split, function(dx){
       p = ggplot(dx, aes(x = reorder(parameter, means), y = means)) + geom_bar(stat = "identity")
