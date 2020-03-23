@@ -5,7 +5,7 @@
 \title{Plot agro object from format_data_PPBstats.data_agro_HA()}
 \usage{
 \method{plot}{data_agro_HA}(x, plot_type = "boxplot",
-  vec_variables = NULL, ...)
+  vec_variables = NULL, f_grid = NULL, ...)
 }
 \arguments{
 \item{x}{The data frame. It should come from \code{\link{format_data_PPBstats.data_agro_HA}}}
@@ -17,6 +17,8 @@
 }}
 
 \item{vec_variables}{vector of variables to display}
+
+\item{f_grid}{facet grid to add, possible value is "year"}
 
 \item{...}{further arguments passed to or from other methods}
 }
@@ -40,7 +42,6 @@ See the book for more details \href{https://priviere.github.io/PPBstats_book/hom
 \seealso{
 \itemize{
  \item \code{\link{format_data_PPBstats}}
- \item \code{\link{format_data_PPBstats.data_agro}}
 }
 }
 \author{
