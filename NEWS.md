@@ -34,6 +34,9 @@
 - update ggradar in common_function
 - design_experiment, cf #39
 - home away and local foreign workflow: change column name group to origin to be more clear
+- add grid argument, cf #88 for
+    - plot.data_agro_LF
+    - plot.data_agro_HA
 
 ### add new functions
 - post_hoc_variation, cf #141

@@ -124,6 +124,15 @@ p$y1$home_away_per_germplasm$`germ-1`$version
 p$y1$home_away_per_germplasm$`germ-1`$origin
 ```
 
+If you have several year in the data, you can set argument `f_gris = "year"` in order to have plot for each year.
+In the example below t is not really relevent beaause there is only one year in the data set!
+
+```{r}
+p = plot(data_agro_HA, vec_variables = "y1", plot_type = "barplot", f_grid = "year")
+p$y1$home_away_merged_per_germplasm
+```
+
+
 ##### Run the model
 
 To run HOME AWAY model on the dataset, use the function `model_home_away`.
@@ -438,6 +447,13 @@ p$y1$local_foreign_per_location$`loc-1`$version
 p$y1$local_foreign_per_location$`loc-1`$origin
 ```
 
+If you have several year in the data, you can set argument `f_gris = "year"` in order to have plot for each year.
+In the example below t is not really relevent beaause there is only one year in the data set!
+
+```{r}
+p = plot(data_agro_LF, vec_variables = "y1", plot_type = "barplot", f_grid = "year")
+p$y1$local_foreign_merged_per_location
+```
 
 ##### Run the model
 
