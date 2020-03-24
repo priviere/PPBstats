@@ -14,19 +14,18 @@
 #' 
 #' @seealso \code{\link{parameter_groups}}
 #'
+#'
+#' @import SpATS
+#' 
 #' @export
 #'
 parameter_groups_model_spatial = function(
   list_out_check_model_spatial,
   parameter
 ){
-  list_out_check_model = NULL # to avoid no visible binding for global variable
-  
-  # 1. Prepare data set ----------
-  
   n_G = NULL
   for(i in 1:length(list_out_check_model_spatial)){
-    pre = predict.SpATS(list_out_check_model[[i]]$spatial$model$model, which = "germplasm")
+    pre = SpATS::predict.SpATS(list_out_check_model_spatial[[i]]$spatial$model$model, which = "germplasm")
     n_G = c(n_G, as.character(pre$germplasm))
   }
   n_G = unique(n_G)
@@ -36,12 +35,11 @@ parameter_groups_model_spatial = function(
   rownames(df_G) = n_G
   
   for(i in 1:length(list_out_check_model_spatial)){
-    pre = predict.SpATS(list_out_check_model[[i]]$spatial$model$model, which = "germplasm")
+    pre = SpATS::predict.SpATS(list_out_check_model[[i]]$spatial$model$model, which = "germplasm")
     df_G[as.character(pre$germplasm), i] = pre$predicted.values
   }
   
   if(parameter == "germplasm") { out = df_G }
 
-  # 3. Return results
   return(out)
 }
