@@ -52,7 +52,7 @@ plot.mean_comparisons_model_spatial <- function(
     d_LSD = dplyr::arrange(d_LSD, means) 
     d_LSD$max = max(d_LSD$means, na.rm = TRUE)
     d_LSD$split = add_split_col(d_LSD, nb_parameters_per_plot)
-    d_LSD_split = splitter_d(d_LSD, .(split))  
+    d_LSD_split = plyr:::splitter_d(d_LSD, .(split))  
     
     out = lapply(d_LSD_split, function(dx){
       p = ggplot(dx, aes(x = reorder(parameter, means), y = means)) + geom_bar(stat = "identity")

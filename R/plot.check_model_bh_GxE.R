@@ -62,7 +62,7 @@ plot.check_model_bh_GxE <- function(
     xmax = max(data_ggplot_model_bh_GxE_alpha$q5)
     
     data_ggplot_model_bh_GxE_alpha$split = add_split_col(data_ggplot_model_bh_GxE_alpha, each = nb_parameters_per_plot)
-    data_ggplot_model_bh_GxE_alpha_split = splitter_d(data_ggplot_model_bh_GxE_alpha, .(split))      
+    data_ggplot_model_bh_GxE_alpha_split = plyr:::splitter_d(data_ggplot_model_bh_GxE_alpha, .(split))      
     
     out_alpha = lapply(data_ggplot_model_bh_GxE_alpha_split, function(x){ get.caterpillar.plot(x, xmin, xmax) } )
   } else { out_alpha = NULL }
@@ -74,7 +74,7 @@ plot.check_model_bh_GxE <- function(
     xmax = max(data_ggplot_model_bh_GxE_beta$q5)
     
     data_ggplot_model_bh_GxE_beta$split = add_split_col(data_ggplot_model_bh_GxE_beta, each = nb_parameters_per_plot)
-    data_ggplot_model_bh_GxE_beta_split = splitter_d(data_ggplot_model_bh_GxE_beta, .(split))      
+    data_ggplot_model_bh_GxE_beta_split = plyr:::splitter_d(data_ggplot_model_bh_GxE_beta, .(split))      
     
     out_beta = lapply(data_ggplot_model_bh_GxE_beta_split, function(x){ get.caterpillar.plot(x, xmin, xmax) }) 
     message("The beta_i posterior distributions are done.")      
@@ -87,7 +87,7 @@ plot.check_model_bh_GxE <- function(
     xmax = max(data_ggplot_model_bh_GxE_theta$q5)
     
     data_ggplot_model_bh_GxE_theta$split = add_split_col(data_ggplot_model_bh_GxE_theta, each = nb_parameters_per_plot)
-    data_ggplot_model_bh_GxE_theta_split = splitter_d(data_ggplot_model_bh_GxE_theta, .(split))      
+    data_ggplot_model_bh_GxE_theta_split = plyr:::splitter_d(data_ggplot_model_bh_GxE_theta, .(split))      
     
     out_theta = lapply(data_ggplot_model_bh_GxE_theta_split, function(x){ get.caterpillar.plot(x, xmin, xmax) } )
     message("The theta_j posterior distributions are done.")

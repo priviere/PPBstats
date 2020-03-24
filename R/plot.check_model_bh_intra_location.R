@@ -82,11 +82,11 @@ plot.check_model_bh_intra_location <- function(
     xmin = min(data_ggplot_model_1_mu_ij$q1)
     xmax = max(data_ggplot_model_1_mu_ij$q5)
     
-    data_ggplot_model_1_mu_ij = splitter_d(data_ggplot_model_1_mu_ij, .(environment))
+    data_ggplot_model_1_mu_ij = plyr:::splitter_d(data_ggplot_model_1_mu_ij, .(environment))
     
     fun2 = function(x, nb_parameters_per_plot, xmin, xmax){ 
       x$split = add_split_col(x, nb_parameters_per_plot)
-      xx = splitter_d(x, .(split))
+      xx = plyr:::splitter_d(x, .(split))
       out = lapply(xx, function(x){ get.caterpillar.plot(x, xmin, xmax) } )
       return(out)
     }
@@ -101,7 +101,7 @@ plot.check_model_bh_intra_location <- function(
     xmin = min(data_ggplot_model_1_beta_jk$q1)
     xmax = max(data_ggplot_model_1_beta_jk$q5)
     
-    data_ggplot_model_1_beta_jk = splitter_d(data_ggplot_model_1_beta_jk, .(environment))
+    data_ggplot_model_1_beta_jk = plyr:::splitter_d(data_ggplot_model_1_beta_jk, .(environment))
     
     out_beta_jk = lapply(data_ggplot_model_1_beta_jk, fun2, nb_parameters_per_plot, xmin, xmax)
     message("The beta_jk posterior distributions are done.")      
@@ -112,7 +112,7 @@ plot.check_model_bh_intra_location <- function(
     xmin = min(data_ggplot_model_1_sigma_j_2$q1); xmax = max(data_ggplot_model_1_sigma_j_2$q5)
     
     data_ggplot_model_1_sigma_j_2$split = add_split_col(data_ggplot_model_1_sigma_j_2, nb_parameters_per_plot)
-    data_ggplot_model_1_sigma_j_2 = splitter_d(data_ggplot_model_1_sigma_j_2, .(split))
+    data_ggplot_model_1_sigma_j_2 = plyr:::splitter_d(data_ggplot_model_1_sigma_j_2, .(split))
     
     fun1 = function(x, xmin, xmax){ get.caterpillar.plot(x, xmin, xmax) + ggtitle("") }
     
