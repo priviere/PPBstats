@@ -12,7 +12,7 @@ Anyhow, send me an email if you wish to participate in order to coordinate our e
 
 ## Test and report bugs
 
-First, download and install the current development version of the package as explained [here](https://priviere.github.io/PPBstats_web_site/download.html).
+First, download and install the current version of the package as explained [here](../docs/1.install.html).
 
 The easiest way to start is to [look at the book](../docs/articles/2.book.html) to know how the package works.
 
@@ -127,7 +127,7 @@ pkgdown::build_site()
 ### Book
 The code of the book is on github: https://github.com/priviere/PPBstats/tree/master/inst/bookdown
 
-If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.24/PPBstats_book_docx.zip).
+If you are not familiar with the code, you can edit `docx` documents that can be downloaded [here](https://github.com/priviere/PPBstats/releases/download/v0.26/PPBstats_book_docx.zip).
 Do not pay attention to strange words such as _#_, _[@blablabla]_, _\@ref_ ... that are `bookdown` specific.
 
 If your familiar with the code, to test any changes on the book:

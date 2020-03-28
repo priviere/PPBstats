@@ -1,11 +1,11 @@
 Package: PPBstats
 Type: Package
 Title: An R package to perform analysis found within PPB programmes
-Version: 0.25
+Version: 0.26
 Encoding: UTF-8
-Date: 2019-07-02
+Date: 2020-03-28
 Authors@R: c(
-    person("Pierre", "Riviere", role = c("aut", "cre"), email = "pierre@semencespaysannes.org"),
+    person("Pierre", "Riviere", role = c("aut", "cre"), email = "pamriviere@protonmail.com"),
     person("Gaelle", "Van Frank", role = "ctb"),
     person("Olivier", "David", role = "ctb"),
     person("Facundo", "Muñoz", role = "ctb"),

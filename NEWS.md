@@ -1,4 +1,4 @@
-# PPBstats 0.26 under process
+# PPBstats 0.26
 
 - add depends on R version in DESCRIPTION file, cf #140
 

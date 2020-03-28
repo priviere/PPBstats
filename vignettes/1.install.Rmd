@@ -16,13 +16,13 @@ install.packages("devtools")
 library(devtools)
 ```
 
-3. **download the current version of the package**: [download v0.25](https://github.com/priviere/PPBstats/archive/v0.25.zip)
+3. **download the current version of the package**: [download v0.25](https://github.com/priviere/PPBstats/archive/v0.26.zip)
 
 4. **unzip the folder** on your local directory 
 
 5. **install the package** thanks to the `install` funtion from the `devtool` package 
 ```{r, eval=FALSE}
-devtools::install("PPBstats-0.25")
+devtools::install("PPBstats-0.26")
 ```
 
 Note that when installing the package, `R` will load several package and may ask you to download dependencies. 

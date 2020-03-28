@@ -113,13 +113,13 @@ To cite the book :
 ```
 bibtex entry
 
-@book{ppbstats_book_2018,
+@book{ppbstats_book_2020,
   title = "{PPBstats : An R package for Participatory Plant Breeding statisticial analyses.}",
 	author = "{Pierre Riviere and Gaelle {Van Franck} and Olivier David and Baptiste Rouger and Camille Vindras and Mathieu Thomas and Isabelle Goldringer}",
-	year = "2019",
-	version = "0.25",
+	year = "2020",
+	version = "0.26",
 	licence = "CC BY NC SA",
-	url = "https://priviere.github.io/PPBstats_book/"
+	url = "https://priviere.github.io/PPBstats_web_site/book/index.html"
 }
 ```
 
