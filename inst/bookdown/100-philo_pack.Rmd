@@ -65,7 +65,7 @@ Contributions to `PPBstats` are very welcome and can be made in four different w
 3. improving the documentation and 
 4. translating
 
-More information can be found [here](https://priviere.github.io/PPBstats_web_site/contribute.html).
+More information can be found [here](../CONTRIBUTING.html).
 
 
 
@@ -99,7 +99,7 @@ knitr::include_graphics("figures/decision-tree_all.png")
 
 ## Let's go: install `PPBstats` and the data used in the book!
 
-To install the package, follow the instructions [here](https://priviere.github.io/PPBstats_web_site/download.html).
+To install the package, follow the instructions [here](../articles/1.install.html).
 
 Once it is install, load the package
 ```{r,warning=FALSE,message=FALSE}

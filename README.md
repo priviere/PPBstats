@@ -12,8 +12,8 @@ on the data collected during PPB programs at four levels:
 
 The objectives of `PPBstats` are
 
-1.  to have a single package capable of performing all analyses required
-    for PPB programmes with comprehensive documentation, and
+1.  to have a single package capable of performing several analyses
+    required for PPB programmes with comprehensive documentation, and
 2.  to create a community working on PPB programmes in order to improve
     the package, exchange on how to process data from PPB programmes and
     develop good practices.
@@ -65,9 +65,6 @@ Statistical analysis can be done
 -   To study response of germplasm over several locations for selection:
     -   AMMI and GGE,
     -   bayesian hierarchical model G×E.
-
-    In this section, several models are proposed for specific research
-    questions:
 -   To study specific research questions on one farm or more
     -   response to selection
     -   local adaptation with two models: home away and local foreign

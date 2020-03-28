@@ -16,34 +16,15 @@ description: "Tutorial on how to use the R package PPBstats."
 
 `PPBstats` is an R package that performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
 
-`PPBstats` is now at version 0.25.
-
 ```{r, out.width='10%', fig.align='left', echo=FALSE}
 knitr::include_graphics("figures/warning.png")
 ```
 Be aware that this package is under development and test: do not 100% trust the functions!!! 
-You're welcome to contribute: see [here](https://priviere.github.io/PPBstats_web_site/contribute.html) for more informations.
+You're welcome to contribute: see [here](../CONTRIBUTING.html) for more informations.
 
 ```{r , out.width='90%', fig.align='center', echo=FALSE, fig.cap="Wheat trials on farm within our participatory plant breeding programme, summer 2012, Auvergne, France. CC-BY-NC-SA. Pierre Rivière. [@JSG_2012_1]"}
 knitr::include_graphics("figures/wheat.JPG")
 ```
-
-## Contact {-}
-**Pierre Rivière**
-
-pierre@semencespaysannes.org
-
-```{r, out.width='20%', fig.align='left', echo=FALSE}
-knitr::include_graphics("../bookdown/figures/Logo-RSP.png")
-```
-
-Réseau Semences Paysannes
-
-3 avenue de la gare
-
-47190 Aiguillon
-
-[www.semencespaysannes.org](http://www.semencespaysannes.org)
 
 
 ## Authors and contributors of `PPBstats` and the book {-}
