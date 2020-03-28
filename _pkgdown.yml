@@ -1,0 +1,64 @@
+destination: docs
+navbar:
+ left:
+    - text: "Download and install"
+      href: articles/1.install.html
+    - text: "Book"
+      href: articles/2.book.html
+    - text: "Functions"
+      href: reference/index.html
+    - text: "News"
+      href: news/index.html
+    - text: "Aknowledgement"
+      href: articles/3.thanks.html
+reference:
+  - title: "Design experiment"
+  - contents: 
+    - starts_with("design_experiment")
+  - title: "Format data"
+  - contents: 
+    - starts_with("format_data")
+    - HA_to_LF
+    - LF_to_HA
+  - title: "Run models"
+  - contents:
+    - starts_with("model_")
+  - title: "Check models"
+  - contents:
+    - starts_with("check_model")
+  - title: "Mean comparisons"
+  - contents:
+    - starts_with("mean_comparisons")
+  - title: "Parameter groups"
+  - contents:
+    - starts_with("parameter_groups")
+  - title: "Plot"
+  - contents:
+    - starts_with("plot")
+    - ggplot_discimitiveness_representativeness
+    - ggplot_mean_vs_stability
+    - ggplot_which_won_where
+  - title: "Biplot"
+  - contents:
+    - starts_with("biplot")
+  - title: "Post hoc variation"
+  - contents:
+    - starts_with("post_hoc")
+  - title: "Others"
+  - contents:
+    - common_functions
+    - comp.parameters
+    - cross_validation_model_bh_GxE
+    - get.at.least.X.groups
+    - get.env.info
+    - get.significant.group
+    - GxE_build_interaction_matrix
+    - multivariate
+    - predict_the_past
+    - rank_comparisons
+news:
+ releases:
+ - text: "PPBstats v0.25"
+   href: https://github.com/priviere/PPBstats/releases/tag/v0.25
+
+

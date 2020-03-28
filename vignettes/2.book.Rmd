@@ -1,0 +1,55 @@
+---
+title: "Book"
+---
+
+A full tutorial of `PPBstats` is available [in a book](../book/index.html).
+
+Each section present a decision tree to chose the right analysis according to the quesitons and the constraints, theory behind each model is presented as well as complete reproductible examples based on a workflow.
+
+Table of contents:
+
+- [Preface](../book/index.html)
+- [1 Philosophy of PPBstats](../book/philo.html)
+    + [1.1 What is Participatory Plant Bredding ?](../book/what-is-participatory-plant-bredding.html)
+    + [1.2 Objectives of PPBstats](../book/objectives-of-ppbstats.html)
+    + [1.3 Contribute](../book/contribute.html)
+    + [1.4 Design and statistical methods according to the objectives](../book/design-and-statistical-methods-according-to-the-objectives.html)
+    + [1.5 Let’s go: install PPBstats and the data used in the book!](../book/lets-go-install-ppbstats-and-the-data-used-in-the-book.html)
+- [2 Analysis of network seed circulation (M8)](../book/network.html)
+    + [2.1 Introduction](../book/introduction.html)
+    + [2.2 Unipart network for seed lots analysis](../book/unipart-network-for-seed-lots-analysis.html)
+    + [2.3 Unipart network for location analysis](../book/unipart-network-for-location-analysis.html)
+    + [2.4 Bipart network analysis](../book/bipart-network-analysis.html)
+- [3 Analysis of agronomic traits](../book/agronomic.html)
+    + [3.1 Introduction](../book/intro-agro.html)
+    + [3.2 Design the experiment](../book/doe.html)
+    + [3.3 Sow, note, harvest, measure …](../book/sow.html)
+    + [3.4 Describe the data](../book/describe-data-agro.html)
+    + [3.5 Family 1 of analysis : Compare different varieties evaluated for selection in different locations](../book/family-1.html)
+    + [3.6 Family 2 of analysis : Study the response of varieties under selection over several environments](../book/family-2.html)
+    + [3.7 Family 3 of analysis : effects from family 1 and 2 in a network of farms](../book/family-3.html)
+    + [3.8 Family 4 of analysis : specific research questions on one farm or more](../book/family-4.html)
+    + [3.9 Family 5 of analysis : multivariate analysis](../book/family-5.html)
+- [4 Sensory analysis](../book/organoleptic.html)
+    + [4.1 Introduction](../book/intro-organo.html)
+    + [4.2 Taste and measure …](../book/taste.html)
+    + [4.3 Hedonic analysis (M9b)](../book/hedonic.html)
+    + [4.4 Napping analysis (M9a)](../book/napping.html)
+    + [4.5 Rank analysis (M9c)](../book/rank.html)
+- [5 Molecular analysis (M3)](../book/molecular.html)
+- [6 Communicate results to farmers](../book/com.html)
+    + [6.1 Technical aspects](../book/com-technic.html)
+    + [6.2 Organisational aspects on collective work](../book/com-rules.html)
+- [Acknowledgement](../book/acknowledgement.html)
+- [References](../book/references.html)
+
+
+```{r out.width='80%', fig.align='center', echo=FALSE, fig.cap="Example of workflow for family 2 of agronomic analysis."}
+knitr::include_graphics("../book/figures/main-functions-agro-family-2.png")
+```
+
+
+```{r out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with objectives and analysis carry out in `PPBstats`. **M** refers to methods. **D** refers to experimental design."}
+knitr::include_graphics("../book/figures/decision-tree_all.png")
+```
+

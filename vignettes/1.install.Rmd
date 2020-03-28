@@ -1,21 +1,26 @@
+# Download and install
 
-Here are the following step to install `PPBstats`:
+```{r, out.width='10%', fig.align='left', echo=FALSE}
+knitr::include_graphics("figures/warning.png")
+```
+**Be aware that this package is under development and test do not 100% trust the functions!!!**
+**You're welcome to [contribute](../CONTRIBUTING.html)!**
 
-1.**install `R`** on your computer.
+1. **install `R`** on your computer.
 Follow instruction at https://cloud.r-project.org/.
 If your not familiar with `R`, it is advised to start with a tutorial (there are a lot on internet).
 
-2.**install the `R` package `devtools` and load it**
+2. **install the `R` package `devtools` and load it**
 ```{r, eval=FALSE}
 install.packages("devtools")
 library(devtools)
 ```
 
-3.**download the current version of the package**: [download v0.25](https://github.com/priviere/PPBstats/archive/v0.25.zip)
+3. **download the current version of the package**: [download v0.25](https://github.com/priviere/PPBstats/archive/v0.25.zip)
 
-4.**unzip the folder** on your local directory 
+4. **unzip the folder** on your local directory 
 
-5.**install the package** thanks to the `install` funtion from the `devtool` package 
+5. **install the package** thanks to the `install` funtion from the `devtool` package 
 ```{r, eval=FALSE}
 devtools::install("PPBstats-0.25")
 ```
@@ -30,8 +35,11 @@ devtools::install_github("priviere/PPBstats")
 The evolution of the code regarding the development version are
 [here](https://github.com/priviere/PPBstats/blob/master/NEWS.md).
 
-6.**load the package** :
+6. **load the package** :
 ```{r,warning=FALSE,message=FALSE}
 library(PPBstats)
 ```
+
+
+
 
