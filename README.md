@@ -51,7 +51,7 @@ Below an example on unipart network for seed lots analysis:
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
-Other examples can be found in the book [here](book/network.html).
+Other examples can be found in the book.
 
 ### Agronomic trials
 
@@ -161,8 +161,6 @@ Below an example on hedonic analysis
 
 A model can also be run.
 
-Other examples can be found in the book [here](book/organoleptic.html).
-
 ### Molecular analyses
 
 Under development …
@@ -170,8 +168,7 @@ Under development …
 Tutorial
 --------
 
-A full tutorial of `PPBstats` is available [in a
-book](articles/2.book.html).
+A full tutorial of `PPBstats` is available in the book on the website.
 
 Mailing list `ppbstats@framalistes.org`
 ---------------------------------------

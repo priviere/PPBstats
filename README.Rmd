@@ -54,7 +54,7 @@ net_unipart_sl = format_data_PPBstats(
 plot(net_unipart_sl, plot_type = "network", organize_sl = TRUE)
 ```
 
-Other examples can be found in the book [here](book/network.html).
+Other examples can be found in the book.
 
 ### Agronomic trials
 
@@ -158,7 +158,6 @@ p_des$`all-variables`
 
 A model can also be run.
 
-Other examples can be found in the book [here](book/organoleptic.html).
 
 ### Molecular analyses
 
@@ -166,7 +165,7 @@ Under development ...
 
 ## Tutorial
 
-A full tutorial of `PPBstats` is available [in a book](articles/2.book.html).
+A full tutorial of `PPBstats` is available in the book on the website.
 
 
 ## Mailing list `ppbstats@framalistes.org`
