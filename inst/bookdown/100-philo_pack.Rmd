@@ -106,7 +106,7 @@ Once it is install, load the package
 library(PPBstats)
 ```
 
-and download the data used in this tutorial (this is useful to earn lots of time!) [here](https://github.com/priviere/PPBstats/releases/download/v0.26/data_PPBstats.zip).
+and download the data used in this tutorial (this is useful to earn lots of time!) [here](https://github.com/priviere/PPBstats/releases/download/v0.24/data_PPBstats.zip).
 
 The following examples have been performed with the following R version :
 ```{r}
