@@ -12,9 +12,9 @@ Anyhow, send me an email if you wish to participate in order to coordinate our e
 
 ## Test and report bugs
 
-First, download and install the current version of the package.
+First, download and install the current version of the package [here](articles/1.install.html).
 
-The easiest way to start is to look at the book to know how the package works.
+The easiest way to start is to [look at the book](articles/2.book.html) to know how the package works.
 
 
 Do not hesitate to let a message [in the issues](https://github.com/priviere/PPBstats/issues) if
@@ -106,6 +106,8 @@ Note that one additional funtion is also defined in the package: `common_functio
 
 
 ![Internal functions used within main functions.](../vignettes/figures/secondary-functions.png)
+
+A description of each function can be found [here](reference/index.html)
 
 
 ## Improve the documentation
