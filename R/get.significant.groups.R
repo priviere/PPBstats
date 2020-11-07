@@ -1,7 +1,9 @@
-#' Get significant groups of differences for a set of parameters based on MCMC outputs
+#' Get significant groups of means that are significantly different from each others
+#'  for a set of parameters based on MCMC outputs
 #'
 #' @description
-#' \code{get.significant.groups} gets significant groups of differences for a set of parameters based on MCMC outputs
+#' \code{get.significant.groups} gets significant groups of means that are significantly different 
+#' from each others for a set of parameters based on MCMC outputs
 #' 
 #' @param Mpvalue Square matrix with the probability of having a common distribution for each pair of parameter. It comes from \code{\link{comp.parameters}}
 #'
@@ -18,9 +20,11 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{mean_comparisons_model_1}}
-#' \item \code{\link{mean_comparisons_model_2}}
+#' \item \code{\link{mean_comparisons.check_model_bh_intra_location}}
+#' \item \code{\link{mean_comparisons.check_model_bh_GxE}}
 #' } 
+#' 
+#' @export
 #' 
 get.significant.groups = function(
   Mpvalue,

@@ -24,9 +24,13 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{mean_comparisons_model_1}}
-#' \item \code{\link{mean_comparisons_model_2}}
+#' \item \code{\link{mean_comparisons.check_model_bh_intra_location}}
+#' \item \code{\link{mean_comparisons.check_model_bh_GxE}}
 #' }
+#' 
+#' @export
+#' 
+#' @import combinat
 #' 
 comp.parameters = function(
   MCMC,
@@ -36,6 +40,8 @@ comp.parameters = function(
   )
 {
 # 1. Error message and update arguments ----------
+match.arg(parameter, "mu", several.ok = FALSE)
+  
 if( !is.data.frame(MCMC) ) { stop("MCMC must be a data frame.") }
 
 if( length(grep(parameter, colnames(MCMC))) == 0 ) { stop(paste(parameter, "is not in the colnames of MCMC.")) }

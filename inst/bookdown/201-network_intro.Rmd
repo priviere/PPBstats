@@ -1,0 +1,40 @@
+## Introduction
+
+Describing the topology of networks of seed circulation is interesting since it gives insight on how exchanges are organized within a PPB programme or a Community Seed Bank[@bioversity_csb_2015][@pautasso_seed_2013]. 
+Analysis can be done at several geographical or organizing scales, for example local, regional or national.
+
+Two types of network are handled within `PPBstats` :
+
+- unipart network where nodes are:
+    - seed lots (i.e. a combinaison of a germplasm in a given location a given year) and edges are relationships such as diffusion, mixture, reproduction, crosses or selection for example.
+    - locations and edges are diffusion events between locations
+
+- bipart network where nodes are either location or germplasm
+
+
+### Workflow and function relations in `PPBstats` regarding network analysis
+
+The workflow is very simple as only descriptive analysis can be done based on network format (Figure \@ref(fig:decision-tree-Study-network-of-seed-circulation)).
+
+```{r decision-tree-Study-network-of-seed-circulation, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with objectives and analysis carry out in `PPBstats` regarding network analysis. **M** refers to methods."}
+knitr::include_graphics("figures/decision-tree_Study-network-of-seed-circulation.png")
+```
+
+Figure \@ref(fig:main-workflow-network) displays the functions and their relationships.
+Table \@ref(tab:function-descriptions-workflow-network) describes each of the functions.
+
+You can have more information for each function by typing `?function_name` in your R session.
+Note that `plot()` is S3 method.
+Therefore, you should type `?plot.PPBstats` to have general features and then see in details for specific functions.
+
+```{r main-workflow-network, out.width='80%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
+knitr::include_graphics("figures/main-functions-network.png")
+```
+
+
+| function name | description |
+|---|---|
+|`format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions|
+| `plot` | Build ggplot objects to visualize output |
+Table: (\#tab:function-descriptions-workflow-network) Main function descriptions.
+

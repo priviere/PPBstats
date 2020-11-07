@@ -1,0 +1,30 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}[grow cyclic, align=flush center,
+every node/.style=concept, concept color=level-1, font=\huge, text width=7cm,
+every node/.append style={scale=1},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=10cm, sibling angle=65, concept color=level-2, font=\huge, text width=4cm},
+    level 2/.style={level distance=10cm, sibling angle=50, concept color=level-3, font=\huge, text width=4cm},
+    level 3/.style={level distance=10cm, sibling angle=45, concept color=level-4, font=\huge, text width=4cm},
+    level 4/.style={level distance=12cm, sibling angle=45, concept color=level-5, font=\huge, text width=6cm},
+    level 5/.style={level distance=12cm, sibling angle=45, concept color=level-6, font=\huge, text width=6cm},
+    level 6/.style={level distance=12cm, sibling angle=45, concept color=level-7, font=\huge, text width=5cm},
+    ]
+\node{\textbf{Compare different varieties evaluated for selection in different locations}}
+  child{ node {Analysis of agronomic traits}
+    child { node {Quantitative traits, single-trait approach}
+      child { node {Number of plots per location: large}
+        child { node {One or several locations and one or several years}
+     	    child { node {Full or incomplete replications; one control is replicated in rows and columns \\ \textbf{D3 - row-colum} }
+     	  	child { node {\textbf{M4b - Spatial analysis} } }
+       		}
+        }
+      }
+    }
+  }
+\end{tikzpicture}
+\end{document}

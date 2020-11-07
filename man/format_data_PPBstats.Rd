@@ -2,60 +2,52 @@
 % Please edit documentation in R/format_data_PPBstats.R
 \name{format_data_PPBstats}
 \alias{format_data_PPBstats}
-\title{Check and format the data to be used in PPBstats functions}
+\title{Check and format the data to be used by PPBstats functions}
 \usage{
-format_data_PPBstats(data, type = "data_agro", code, threshold = NULL)
+format_data_PPBstats(data, type, threshold, network_part = c("unipart",
+  "bipart"), network_split = c("germplasm", "relation_year_start"),
+  vertex_type = NULL)
 }
 \arguments{
-\item{data}{The data frame. See details.}
+\item{data}{The data frame to format}
 
 \item{type}{type of format : 
 \itemize{
  \item data_network
  \item data_agro
- \item data_agro_version
+ \item data_agro_SR
+ \item data_agro_HA
+ \item data_agro_LF
  \item data_organo_napping
  \item data_organo_hedonic
- }
-See details.}
-
-\item{code}{For type = data_organo, data frame with code of samles. See details.}
+ }}
 
 \item{threshold}{For type = data_organo, number of occurence of descriptors <= threshold are kept}
-}
-\value{
-The function returns the data with the right format (i.e. class)
+
+\item{network_part}{For type = "data_network", element of the network, it can be "unipart" or "bipart"}
+
+\item{network_split}{For type = "data_network" and network_part = "unipart" and 
+vertex_type = "location", split of the data that can be "germplasm" or "relation_year_start"}
+
+\item{vertex_type}{For type = "data_network",
+\itemize{
+ \item for unipart network : "seed_lots" or "location"
+ \item for bipart network : c("germplasm", "location")
+ }}
 }
 \description{
-\code{format_data_PPBstats} checks and formats the data to be used in PPBstats functions
+\code{format_data_PPBstats} checks and formats the data to be used by PPBstats functions
 }
 \details{
+See for more details :
 \itemize{
- \item For type = "data_network" :
- 
- \item For type = "data_agro" : 
- It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.
- The variables can be linked to their corresponding dates. 
- The dates are associated to their corresponding variable by $.
- For example the date associated to variable y1 is y1$date.
- The date must have format year-month-day, e.g. 2017-12-05
- 
- \item For type = "data_agro_version" : 
- It should have the following columns: c("year", "germplasm", "location", "group", "version").
- The group refers to an id that contains two different versions.
- For example for group 1, there is version 1 and 2. 
- See data(data_version) for an example.
- 
- \item For type = "data_organo_napping"
- \itemize{
-  \item data is a data frame with the following columns: sample, juges, X, Y, descriptors. 
-  The descriptors must be separated by ";"
-  \item code is data frame with the following columns germplasm, location, code.
-  The function merge data and code to join the information.
- }
-
- \item For type = "data_organo_hedonic"
- 
+ \item \code{\link{format_data_PPBstats.data_network}} 
+ \item \code{\link{format_data_PPBstats.data_agro}} 
+ \item \code{\link{format_data_PPBstats.data_agro_SR}} 
+ \item \code{\link{format_data_PPBstats.data_agro_HA}} 
+ \item \code{\link{format_data_PPBstats.data_agro_LF}} 
+ \item \code{\link{format_data_PPBstats.data_organo_napping}} 
+ \item \code{\link{format_data_PPBstats.data_organo_hedonic}} 
 }
 }
 \author{

@@ -1,0 +1,116 @@
+# Philosophy of PPBstats {#philo}
+
+This chapter describes what is participatory plant breeding, the objectives of `PPBstats`, the design and statistical methods according to the objectives and how to install `PPBstats`.
+
+## What is Participatory Plant Bredding ?
+
+### Decentralize the selection
+
+The following development is adapted from @bernardo_breeding_2002 and @gallais_theorie_1990.
+
+When considering multiple environments for evaluation and selection, the phenotypic value of a trait of any individual in a given environment can be written as the sum of its random genetic effect (or overall genetic potential, $G$ ), the random environmental effect ($E$) and the random interaction ($G \times E$), i.e. : $P = G + E + G \times E + e$ with $e$ the random residual effect within each environment following a normal distribution $N(0, \sigma^2)$. 
+
+In classical centralized breeding, the objective is to predict the overall genetic potential ($G$) of the candidates for selection to detect the highest values assuming that this potential would express in all farmers’ fields. 
+These genetic potentials are predicted based on the average phenotypic values over all testing environments (usually experimental stations) and therefore the broad sense heritability for prediction is :
+
+$h^2_{sl} = \frac{var(G)}{var(G) + \frac{1}{nE} (var(E) + var(G \times E)) + \frac{1}{nEnR} (var(e))}$
+
+with $nE$ (resp. $nR$) the number of environments (resp. the number of replicates in each environment). 
+As environmental effect and $G \times E$ interactions limit prediction accuracy, the option is to increase the number of environments and to use environments that are homogeneous and similar and that minimize $G \times E$ interactions.
+
+On the contrary, in decentralized on farm breeding, it has been shown that the environments are very contrasted due to diverse pedo-climatic conditions associated to various agroecological farming practices, and that $G \times E$ interactions can be strong [@desclaux_changes_2008]. 
+Therefore, the prediction of the overall genotypic value ($G$) is not interesting and the objective is rather to predict the «local» genetic value of genotype $i$ in environment $j$, $Gloc_{ij}$
+which also includes the interaction with the local environment, i.e.: $Gloc_{ij} = G_i + (G \times E)_{ij}$
+
+Then, the genetic variance in each local environment can be written as: $var(Gloc) = var(G) + var(G \times E)$ and the heritability to predict the local genetic values based on the phenotypic values observed in the local environments is:
+
+$h^2_{sl} = \frac{var(Gloc)}{var(Gloc) + \frac{1}{nR} var(e)} = \frac{var(G) + var(G \times E)}{var(G) + var(G \times E) + \frac{1}{nR} var(e)}$
+
+It can be noted that the $G \times E$ interactions contributes to both denominator and numerator therefore leading to no limiting effect on prediction accuracy.
+Hence, when facing a wide diversity of agroecological environment and practices, decentralized breeding is a key point to select adapted varieties to local agro-systems.
+
+
+### Involve all actors in the breeding decision process
+
+All actors are part of the breeding programme : farmers, technicians, researchers, facilitators, consumers ... Such involvements empower all actors and may better answer the real needs of actors [@sperling_framework_2001].
+
+
+## Objectives of `PPBstats`
+
+`PPBstats` is a freely available package based on the R software [R_Core_Team] that performs analyses on the data collected during PPB programs at four levels: 
+
+- network of seed management (section \@ref(network)), 
+- agronomic trials (section \@ref(agronomic)) in order to set, describe and analyse balanced and unbalanced trials in decentralized participatory plant breeding programmes.
+Nutritional data are also dealt here as it is the same data structure as agronomic data.
+The statistical procedures are based on frequentist and bayesian approaches.
+- organoleptic tests (section \@ref(organoleptic))
+- molecular experiments (section \@ref(molecular))
+
+
+Within a PPB programme, it is important to give results back to the farmers in order to discuss results and accompagny them in their selection.
+This can be done through the creation of reports with results coming from the analysis (section \@ref(com)).
+
+
+**The objectives of `PPBstats` are**
+
+1. to have a single package capable of performing all analyses required for PPB programmes with comprehensive documentation, and 
+2. to create a community working on PPB programmes in order to improve the package, exchange on how to process data from PPB programmes and develop good practices. 
+
+
+## Contribute
+Contributions to `PPBstats` are very welcome and can be made in four different ways: 
+
+1. testing the package and reporting bugs, 
+2. improving the code, 
+3. improving the documentation and 
+4. translating
+
+More information can be found [here](../CONTRIBUTING.html).
+
+
+
+## Design and statistical methods according to the objectives
+
+The analyses of data from PPB programmes aim to address the following main objectives:
+
+- **To study networks of seed circulation** through analysis of network topology (section \@ref(network)).
+
+- **To improve the prediction of a target variable for selection** through analysis of agronomic and nutritional traits but this is not done in `PPBstats`.
+
+- **To compare different varieties or populations (hereafter called germplasms) evaluated for selection in different locations** through analysis of agronomic and nutritional traits (section \@ref(agronomic)) and sensory analysis (section \@ref(organoleptic)).
+
+- **To study the response of germplasms under selection over several environments** through analysis of agronomic traits (section \@ref(agronomic)).
+
+- **To study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits** through analysis of agronomic traits (section \@ref(agronomic)) and molecular data (section \@ref(molecular)).
+
+For each objective, there are severals method based on different experimental designs based on number of plots per location, the number of locations, the number of replicated germplasms within and between locations (section \@ref(doe)) ... all being dependant to the amount of seeds available.
+
+Figure \@ref(fig:decision-tree-all-head) and \@ref(fig:decision-tree-all) present a decision tree with all objectives, experimental constraints, designs (**D**) and methods (**M**) of analysis carry out in `PPBstats`.
+Each branch is explained through an example for each experimental design and analysis in the corresponding section.
+
+```{r decision-tree-all-head, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with objectives and type of analysis carry out in `PPBstats`."}
+knitr::include_graphics("figures/decision-tree_all-head.png")
+```
+
+```{r decision-tree-all, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with objectives, experimental constraints, designs and methods of analysis carry out in `PPBstats`. **D** refers to designs and **M** to methods."}
+knitr::include_graphics("figures/decision-tree_all.png")
+```
+
+
+## Let's go: install `PPBstats` and the data used in the book!
+
+To install the package, follow the instructions [here](../articles/1.install.html).
+
+Once it is install, load the package
+```{r,warning=FALSE,message=FALSE}
+library(PPBstats)
+```
+
+and download the data used in this tutorial (this is useful to earn lots of time!) [here](https://github.com/priviere/PPBstats/releases/download/v0.25/data_PPBstats.zip).
+
+The following examples have been performed with the following R version :
+```{r}
+unlist(sessionInfo()$R.version)
+```
+
+

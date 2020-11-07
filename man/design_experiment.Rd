@@ -2,11 +2,12 @@
 % Please edit documentation in R/design_experiment.R
 \name{design_experiment}
 \alias{design_experiment}
-\title{Provides experimental design for several situations}
+\title{Provides experimental design for the different situations corresponding to 
+the choosen family of analysis}
 \usage{
 design_experiment(expe.type, location = "location", year = "2016",
   germplasm, controls, nb.controls.per.block, nb.blocks, nb.cols,
-  return.format = "standard")
+  return.format = "standard", allow_XXXX = TRUE)
 }
 \arguments{
 \item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD". See details for more information.}
@@ -21,11 +22,13 @@ design_experiment(expe.type, location = "location", year = "2016",
 
 \item{nb.controls.per.block}{Number of controls per blocks.}
 
-\item{nb.blocks}{Number of blocks.}
+\item{nb.blocks}{Number of blocks. For expe.type = "IBD", it corresponds to the number of locations.}
 
 \item{nb.cols}{Number of columns in the design. The number of rows is computed automaticaly.}
 
 \item{return.format}{"standard" or "shinemas". See details for more information.}
+
+\item{allow_XXXX}{TRUE or FALSE. Allow to have XXXX placed in stead of germplasm in order to fill the design.}
 }
 \value{
 The function returns a list with
@@ -35,7 +38,8 @@ The function returns a list with
  }
 }
 \description{
-\code{design_experiment} provides experimental design for several situations
+\code{design_experiment} provides experimental design for the different situations corresponding to 
+the choosen family of analysis
 }
 \details{
 regarding return.format :
@@ -84,6 +88,8 @@ In this function, the code is based on the following algorithms:
  \item "IBD"
 the randomization is based on the ibd function in the ibd package. See \code{?ibd} for more information
 }
+
+See exampels in the book : \href{https://priviere.github.io/PPBstats_book/doe.html}{here}.
 }
 \author{
 Pierre Riviere

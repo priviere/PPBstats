@@ -1,0 +1,144 @@
+## Unipart network for location analysis
+
+This section deals with unipart network that represent relationship of germplasm diffusion between locations.
+The representation can be done for each germplasm or for each year.
+
+### Steps with `PPBstats`
+
+- Format the data with `format_data_PPBstats()`
+- get descriptive plot with `plot()`
+
+### Format the data
+The format required is a data frame with the following compulsory columns as factor:
+
+- `"location_parent"` : the location associated to the parent seed lot
+- `"location_child"` : the location associated to the child seed lot
+- `"relation_year_start"` : the year when the relationship starts
+- `"relation_year_end"` : the year when the relationship stops
+
+Possible column options are : 
+
+- `"germplasm_parent"` : the germplasm associated to the parent seed lot
+- `"year_parent"` : the year of the last relationship of the parent seed lot
+- `"germplasm_child"` : the germplasm associated to the child seed lot
+- `"year_child"` : represents the year of the last relation event of the child seed lot
+
+Other possibles column option are : `"long_parent"`, `"lat_parent"`, `"long_child"`, `"lat_child"` to get map representation.
+
+Note that data frame with unipart network for seed lots format can also be used.
+
+The format of the data are checked by the function `format_data_PPBstats()` with the following arguments :
+
+- `type` : `"data_network"`
+- `network_part` : `"unipart"` 
+- `vertex_type` : `"location"`
+- `network_split` : `"germplasm"` or `"relation_year_start"`.
+
+The function returns list of `igraph` object^[http://igraph.org/r/] coming from `igraph::graph_from_data_frame()`.
+
+```{r}
+data(data_network_unipart_sl)
+head(data_network_unipart_sl)
+```
+
+### Format and describe the data for each germplasm
+
+For `network_split = "germplasm"`, it returns a list with as many elements as germplam in the data
+as well as all germplasms merged in the first element of the list.
+
+```{r}
+net_unipart_location_g = format_data_PPBstats(
+  type = "data_network",
+  data = data_network_unipart_sl, 
+  network_part = "unipart", 
+  vertex_type =  "location",
+  network_split = "germplasm")
+
+names(net_unipart_location_g)
+```
+
+The different representations are done with the `plot()` function.
+
+For network representation, set `plot_type = "network"` diffusion event are display with curve.
+`in_col` can be settle to customize color of vertex.
+The curve between location represent the diffusion, the number of diffusion is displayed on a color scale.
+
+```{r,warning=FALSE}
+p_net = plot(net_unipart_location_g, plot_type = "network", 
+                          labels_on = "location", labels_size = 4)
+names(p_net) # one element per germplasm, the first element with all the data
+p_net$`germ-2`
+```
+
+
+
+### Format and describe the data for each year
+
+For `network_split = "relation_year_start"`, it returns a list with as many elements as year in the data
+as well as all years merged in the first element of the list.
+
+```{r}
+net_unipart_location_y = format_data_PPBstats(
+  type = "data_network",
+  data = data_network_unipart_sl,
+  network_part = "unipart", 
+  vertex_type =  "location",
+  network_split = "relation_year_start")
+
+names(net_unipart_location_y)
+```
+
+The different representations are done with the `plot()` function.
+
+For network representation, set `plot_type = "network"` diffusion event are display with curve.
+`in_col` can be settle to customize color of vertex.
+The curve between location represent the diffusion, the number of diffusion is displayed on a color scale.
+
+
+```{r,warning=FALSE}
+p_net = plot(net_unipart_location_y, plot_type = "network", 
+                          labels_on = "location", labels_size = 4)
+names(p_net) # one element per year, the first element with all the data
+p_net$`2007-2008-2009`
+```
+
+With barplots, it represents the number of germplasm received or given.
+```{r}
+p_bar = plot(net_unipart_location_y, plot_type = "barplot", x_axis = "location", in_col = "germplasm")
+names(p_bar) # one element per year, the first element with all the data
+p_bar = p_bar$`2007-2008-2009`
+p_bar$barplot$received
+p_bar$barplot$given
+```
+
+Location present on the network can be displayed on a map with `plot_type = "map"`.
+When using map, do not forget to use credit :
+Map tiles by [Stamen Design](http://stamen.com), 
+under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0). 
+Data by [OpenStreetMap](http://openstreetmap.org), 
+under [ODbL](http://www.openstreetmap.org/copyright).
+
+
+```{r,warning=FALSE,message=FALSE}
+p_map = PPBstats:::plot.data_network(net_unipart_location_y[1], plot_type = "map", labels_on = "location")
+# Note if you want to do it on all element of the list, you should use 
+# plot(net_unipart_location_y, plot_type = "map", labels_on = "location")
+# Here we use PPBstats:::plot.data_network only not to ask to often the map server that may bug if there are too many query
+# We use ::: because the function is not exported as it is an S3 method
+p_map$`2007-2008-2009`
+```
+
+As well as plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `vec_variables`:
+
+```{r,warning=FALSE,message=FALSE}
+# y1 is a quantitative variable
+p_map_pies_y1 = PPBstats:::plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y1")
+p_map_pies_y1$`2007-2008-2009`
+```
+
+```{r,warning=FALSE,message=FALSE}
+# y2 is a qualitative variable
+p_map_pies_y2 = PPBstats:::plot.data_network(net_unipart_location_y[1], data_to_pie, plot_type = "map", vec_variables = "y2")
+p_map_pies_y2$`2007-2008-2009`
+```
+

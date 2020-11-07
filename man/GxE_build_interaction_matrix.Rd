@@ -2,7 +2,7 @@
 % Please edit documentation in R/GxE_build_interaction_matrix.R
 \name{GxE_build_interaction_matrix}
 \alias{GxE_build_interaction_matrix}
-\title{Compute interaction matrix}
+\title{Compute interaction matrix for AMMI or GGE model}
 \usage{
 GxE_build_interaction_matrix(data, gxe_analysis)
 }
@@ -23,7 +23,7 @@ Another way to do was explored but did not succeed regarding missing data.
 The code is inside the function within a if(FALSE){}.
 }
 \seealso{
-\code{\link{GxE}}
+\code{\link{model_GxE}}
 }
 \author{
 Pierre Riviere

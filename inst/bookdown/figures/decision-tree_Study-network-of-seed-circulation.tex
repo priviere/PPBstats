@@ -1,0 +1,30 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}[grow cyclic, align=flush center,
+every node/.style=concept, concept color=level-1, font=\huge, text width=7cm,
+every node/.append style={scale=1},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=10cm, sibling angle=65, concept color=level-2, font=\huge, text width=4cm},
+    level 2/.style={level distance=10cm, sibling angle=50, concept color=level-3, font=\huge, text width=4cm},
+    level 3/.style={level distance=10cm, sibling angle=45, concept color=level-4, font=\huge, text width=4cm},
+    level 4/.style={level distance=12cm, sibling angle=45, concept color=level-5, font=\huge, text width=6cm},
+    level 5/.style={level distance=12cm, sibling angle=45, concept color=level-6, font=\huge, text width=6cm},
+    level 6/.style={level distance=12cm, sibling angle=45, concept color=level-7, font=\huge, text width=5cm},
+    ]
+\node{\textbf{Study network of seed circulation}}
+  child{ node {Analysis of network topology}
+    child { node {unipart network for seed lots} 
+    	child { node {\textbf{M8 - Network analysis}} }
+    }
+    child { node {unipart network for location} 
+    	child { node {\textbf{M8 - Network analysis}} }
+    }
+    child { node {bipart network for germplasm and location} 
+    	child { node {\textbf{M8 - Network analysis}} }
+    }
+  }
+\end{tikzpicture}
+\end{document}

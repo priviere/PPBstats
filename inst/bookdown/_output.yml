@@ -1,0 +1,22 @@
+bookdown::gitbook:
+  css: style.css
+  split_by: section
+  config:
+    toc:
+      before: |
+        <li><a href="../index.html" >PPBstats website</a></li>
+      after: |
+        <li><a href="../index.html" target="_blank">PPBstats website</a></li>
+    edit: https://github.com/priviere/PPBstats/edit/master/%s
+    download: ["pdf", "epub"]
+    sharing:
+      github: yes
+      facebook: no
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+  toc_depth: 5
+bookdown::epub_book: default

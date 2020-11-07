@@ -1,0 +1,574 @@
+### Hierarchical Bayesian $G \times E$ model to analyse $G \times E$ interaction in the network of farms (**M7b**) {#model-2}
+
+At the **network level**, there is a large number of germplasm $\times$ environment combinations that are missing, leading to a poor estimation of germplasm, environment and interaction effects.
+Hence, model_bh_GxE should be implemented.
+
+For model_bh_GxE, it gives nice results with at least around 75 environments and 120 germplasms present in at least two environments (95\% of missing $G \times E$ combinations) [@riviere_hierarchical_2016].
+It is based on bayesian statistics (section \@ref(section-bayes)).
+
+#### Theory of the model
+The experimental design used is satellite and regional farms (**D4**). 
+
+The model is describe in @riviere_hierarchical_2016.
+
+The phenotypic value $Y_{ij}$ for a given variable $Y$, germplasm $i$ and environment $j$, is modeled as :
+
+$Y_{ij} = \alpha_{i} + \theta_{j} + \eta_{i}\theta_{j} + \varepsilon_{ij} ; \quad \varepsilon_{ij} \sim \mathcal{N} (0,\sigma^2_{e})$
+
+for $i = 1,\ldots, I$ and $j = 1,\ldots, J$, where 
+
+- $I$ is the number of germplasms, 
+- $J$ is the number of environments,
+- $\alpha_{i}$ is the main effect of germplasm $i$,
+- $\theta_{j}$ is the main effect of environnment $j$,
+- $\varepsilon_{ij}$ is the residual and 
+- $\mathcal{N} (0,\sigma^2_{e})$ is the normal distribution with mean 0 and variance $\sigma^2_{e}$.
+The interaction between germplasm $i$ and environment $j$ was divided into a multiplicative term $\eta_{i}\theta_{j}$ and a remaining term that contributed to the residual $\varepsilon_{ij}$.
+
+This model is further written as :
+
+$Y_{ij}  = \alpha_{i} + \beta_{i} \theta_{j} + \varepsilon_{ij}; \quad \varepsilon_{ij} \sim \mathcal{N} (0,\sigma_{\varepsilon})$,
+
+Where $\beta_{i} = (1 + \eta_{i})$ is the sensitivity of germplasm $i$ to environments.
+This model is known as the Finlay Wilkinson model or as joint regression [@finlay_analysis_1963].
+Germplasms' sensitivity quantifies the stability of germplasms' performances over environments.
+The average sensitivity is equal to 1 so that a gemplasm with $\beta_{i} > 1$ ($\beta_{i} < 1$) is more (less) sensitive to environments than a germplasm with the average sensitivity [@nabugoomu_analysis_1999].
+
+Given the high disequilibrium of the data and the large amount of data, this model is implemented with a hierarchical Bayesian approach.
+
+We use hierarchical priors for $\alpha_i$, $\beta_i$ and $\theta_j$ and a vague prior for $\sigma_{\varepsilon}$.
+
+$\alpha_{i} \sim \mathcal{N} (\mu,\sigma^2_{\alpha}), \quad \beta_{i} \sim \mathcal{N} (1,\sigma^2_{\beta}), \quad \theta_{j} \sim \mathcal{N} (0,\sigma^2_{\theta}), \quad \sigma^{-2}_{\varepsilon} \sim \mathcal{G}amma (10^{-6},10^{-6})$,
+
+where $\mu$, $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ are unknown parameters.
+The mean of $\beta_i$ is set to 1 [@nabugoomu_analysis_1999].
+
+Then, we place weakly-informative priors on the hyperparmeters  $\mu$, $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$:
+
+$\mu \sim \mathcal{N} (\nu,\nu^2), \quad \sigma_{\alpha} \sim \mathcal{U}niforme (0,\nu), \quad  \sigma_{\beta} \sim \mathcal{U}niforme (0,1), \quad \sigma_{\theta} \sim \mathcal{U}niforme (0,\nu)$,
+
+where $\nu$ is the arithmetic mean of the data : $\nu = \sum_{ij} {Y_{ij}/n}$ with $n$ the number of observations.
+Uniform priors are used for $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ to reduce the influence of these priors on posterior results [@gelman_inference_1992].
+The support of these priors take account of the prior knowledge that $\sigma^2_{\alpha}$, $\sigma^2_{\beta}$ and $\sigma^2_{\theta}$ is expected to be respectively smaller than $\nu$, 1 and $\nu$.
+
+Initial values for each chain are taken randomly except for $\mu$, $\sigma_{\alpha}$ and $\sigma_{\theta}$ whose initial values are equal to their posterior median from additive model (i.e. model \ref{model2} with $\forall i, \beta_{i}=1$).
+
+
+The main parameter of interest are 
+the germplasm main effects ($\alpha_{i}, i = 1,\ldots, I$), 
+the environment main effects ($\theta_{j}, j = 1,\ldots, J$) and 
+the germplasm sensitivities ($\beta_{i}, i = 1,\ldots, I$).
+For $\alpha_i$, the average posterior response of each germplasm over the environments of the network is calculated as:
+
+$\gamma_i = \alpha_i + \beta_{i} \bar{\theta}$,
+
+where
+
+$\bar{\theta} = \sum_{}^{J} \theta_j/J$.
+
+To simplify, the $\alpha_i$ notation is kept instead of $\gamma_i$ (i.e. $\alpha_i = \gamma_i$).
+But keep in mind it has been corrected.
+
+#### Steps with `PPBstats`
+
+For model_bh_GxE, you can follow these steps (Figure \@ref(fig:main-workflow)):
+
+- Format the data with `format_data_PPBstats()`
+- Run the model with `model_bh_GxE()`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Perform cross validation studies with `cross_validation_model_bh_GxE()` in order to assess the quality of the model
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+- Get groups of parameters for $\alpha$, $\beta$ and $\theta$ with `parameters_groups()` and visualise it with `plot()`
+- Predict the past with `predict_the_past_model_bh_GxE()` and vizualise it with `plot()`
+
+#### Format the data
+The values for $\alpha_i$, $\beta_i$, $\theta_j$ are the real value taken to create the dataset for y1.
+This dataset is representative of data you can get in a PPB programme.
+
+```{r}
+data(data_model_bh_GxE)
+data_model_bh_GxE = format_data_PPBstats(data_model_bh_GxE, type = "data_agro")
+head(data_model_bh_GxE)
+```
+
+#### Run the model
+
+To run model_bh_GxE on the dataset, use the function `model_bh_GxE()`.
+You can run it on one variable.
+Here it is on thousand kernel weight (tkw)
+
+By default, `model_bh_GxE` returns posteriors for 
+$\alpha_i$ (`return.alpha = TRUE`),
+$\sigma_{\alpha}$ (`return.sigma_alpha = TRUE`),
+$\beta_i$ (`return.beta = TRUE`),
+$\sigma_{\beta}$ (`return.sigma_beta = TRUE`),
+$\theta_j$ (`return.theta = TRUE`),
+$\sigma_{\theta}$ (`return.sigma_theta = TRUE`) and
+$\sigma_{\epsilon}$ (`return.sigma_epsilon = TRUE`).
+You can also get $\epsilon_{ij}$ with `return.epsilon = TRUE`.
+
+By default, DIC is not display, you may want this value to compare to other model (`DIC = TRUE`).
+DIC criterion is a generalization of the AIC criterion that can be used for hierarchical models [@spiegelhalter_bayesian_2002].
+The smaller the DIC value, the better the model [@plummer_penalized_2008].
+
+```{r}
+# out_model_bh_GxE = model_bh_GxE(data = data_model_bh_GxE, variable = "y1", return.epsilon = TRUE)
+
+# Run additive model ...
+# Compiling model graph
+# Resolving undeclared variables
+# Allocating nodes
+# Graph information:
+#   Observed stochastic nodes: 2379
+# Unobserved stochastic nodes: 228
+# Total graph size: 9834
+# 
+# Initializing model
+# 
+# |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
+# |**************************************************| 100%
+# |**************************************************| 100%
+# Run FWH model ...
+# Compiling model graph
+# Resolving undeclared variables
+# Allocating nodes
+# Graph information:
+#   Observed stochastic nodes: 2379
+# Unobserved stochastic nodes: 386
+# Total graph size: 14913
+# 
+# Initializing model
+# 
+# |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
+# |**************************************************| 100%
+# |**************************************************| 100%
+# |**************************************************| 100%
+# 
+
+load("./data_PPBstats/out_model_bh_GxE.RData")
+```
+
+It may be useful to see which germplasm were not use in the analysis because they were in only one environment.
+
+```{r}
+out_model_bh_GxE$germplasm.not.used
+```
+
+#### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-bayes).
+
+##### Check the model
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence. 
+This step is needed before going ahead in the analysis (in fact, the MCMC object used in the next functions must come from `check_model()`!).
+
+
+```{r}
+# out_check_model_bh_GxE = check_model(out_model_bh_GxE)
+
+# The Gelman-Rubin test is running for each parameter ...
+# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
+
+load("./data_PPBstats/out_check_model_bh_GxE.RData")
+```
+
+`out_check_model_bh_GxE` is a list containing three elements:
+
+- `MCMC` : a data fame resulting from the concatenation of the two MCMC for each parameter. This object can be used for further analysis. There are as many columns than parameters and as many rows than iterations/thin (the thin value is 10 by default in the models).
+```{r}
+dim(out_check_model_bh_GxE$MCMC)
+```
+
+- `MCMC_conv_not_ok` : a data fame resulting from the concatenation of the two MCMC for each parameter for environment where  some parameters did not converge for mu and beta
+
+- `model2.presence.absence.matrix` : a matrix germplasm x environment with the number of occurence in the data used for the model (i.e. with at least two germplasm by environments.)
+
+- `data_ggplot` a list containing information for ggplot:
+    - `alpha`
+    - `beta`
+    - `theta`
+    - `epsilon`
+
+##### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot`
+```{r}
+p_out_check_model_bh_GxE = plot(out_check_model_bh_GxE)
+```
+
+`p_out_check_model_bh_GxE` is a list with 4 elements:
+
+- `alpha_i` : distribution of each alpha\_i. There are as many graph as needed with `nb_parameters_per_plot` `alpha_i` per graph.
+```{r}
+p_a = p_out_check_model_bh_GxE$alpha_i
+names(p_a)
+p_a$`1`
+```
+
+- `beta_i` : distribution of each beta\_i. There are as many graph as needed with `nb_parameters_per_plot` `beta_i` per graph.
+```{r}
+p_a = p_out_check_model_bh_GxE$beta_i
+names(p_a)
+p_a$`1`
+```
+
+- `theta_j` : distribution of each theta_j. There are as many graph as needed with `nb_parameters_per_plot` `theta_j` per graph.
+```{r}
+p_a = p_out_check_model_bh_GxE$theta_j
+names(p_a)
+p_a$`1`
+```
+
+- `epsilon_ij` : standardised residuals distribution.
+If the model went well it should be between -2 and 2.
+```{r}
+p_out_check_model_bh_GxE$epsilon_ij
+```
+
+
+- `mcmc_not_converge_traceplot_density` : a list with the plots of trace and density to check the convergence of the two MCMC only for chains that are not converging thanks to the Gelman-Rubin test. 
+If all the chains converge, it is NULL
+```{r}
+p_out_check_model_bh_GxE$mcmc_not_converge_traceplot_density
+```
+
+Just for fun, you compare the posterior medians and the arithmetic means for the $\alpha_i$'s.
+
+```{r}
+MCMC = out_check_model_bh_GxE$MCMC
+effects = apply(MCMC, 2, median)
+alpha_i_estimated = effects[grep("alpha\\[",names(effects))]
+names(alpha_i_estimated) = sapply(names(alpha_i_estimated), function(x){  
+sub("\\]", "", sub("alpha\\[", "", x)) } )
+ 
+alpha_i = tapply(data_model_bh_GxE$alpha_i, data_model_bh_GxE$germplasm, mean, na.rm = TRUE)
+ 
+check_data = cbind.data.frame(alpha_i = alpha_i, alpha_i_estimated = alpha_i_estimated[names(alpha_i)])
+```
+
+Let’s have a look at the relation between both values.
+
+```{r}
+p = ggplot(check_data, aes(x = alpha_i, y = alpha_i_estimated))
+p + stat_smooth(method = "lm") + geom_point()
+```
+
+#### Perform cross validation studies
+
+This step is useful to assess the quality of the model.
+This step is higly computing consuming as model_bh_GxE is run as many time as there is value of $Y_{ij}$ (i.e. number of rows of the data set).
+
+The complete cross validation is done with `cross_validation_model_bh_GxE()`: 
+each Value of $Y_{ij}$ is estimated by the entire data set without this value.
+
+The convergence is not check for each validation. 
+If the parameters in the FWH converge, then it is assumed that the FWH in the cross validation converge as well.
+
+The model is run on dataset where germplasms are in three environments at least so the smallest data set where the cross valisation is run has germplasms present in two environments at least. 
+
+You may parallelise to gain time with the `mc.cores` argument of the function.
+
+The number of iterations is set to 100 000 but you can change it with the `nb_iterations` argument.
+
+
+```{r}
+# out_cross_validation_model_bh_GxE = cross_validation_model_bh_GxE(data_model_bh_GxE, "y1")
+# Note that it takes lots of time to run !!!
+load("./data_PPBstats/out_cross_validation_model_bh_GxE.RData") # to save lots of time
+
+head(out_cross_validation_model_bh_GxE)
+```
+
+The outputs are visualized with `plot`
+
+```{r}
+p_out_cv = plot(out_cross_validation_model_bh_GxE)
+```
+
+`p_out_cv` is a list of two elements:
+
+- `plot` : plot estimated.value = f(observed.value). 
+The probability mean = 0 is display.
+
+The percentage of confidence is calculated with a t-test:
+
+$t = \frac{m - 0}{s/\sqrt{N}}$
+
+with,
+
+$N$ the number of observations in the data set,
+
+$m = \frac{1}{N} \sum\limits_{n=1}^N Y_{n} - \hat{Y_{n}}$, the average bias
+
+$s = \sqrt{\frac{1}{N-1} \sum\limits_{n=1}^N (Y_{n} - \hat{Y_{n}})^2}$, the standard deviation of the bias
+
+$t$ follows a Student distribution with $N-1$ degree of freedom.
+
+The percentage of confidence (i.e. the probability $H0$: the bias is equal to zero) comes from this distribution.
+
+```{r}
+p_out_cv$plot
+```
+
+- `regression` : output of the model observed.value = a x estimated.value + b
+```{r}
+p_out_cv$regression
+```
+
+#### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-bayes).
+
+##### Get mean comparisons
+
+For mean comparisons of parameters, it is the same method that presented in Section \@ref{mean-comp}.
+It can be done for $\alpha_i$, $\beta_i$ and $\theta_j$.
+
+```{r}
+# model_bh_GxE_alpha = mean_comparisons(out_check_model_bh_GxE, parameter = "alpha")
+# model_bh_GxE_beta = mean_comparisons(out_check_model_bh_GxE, parameter = "beta", precision = 0.05)
+# model_bh_GxE_theta = mean_comparisons(out_check_model_bh_GxE, parameter = "theta", precision = 0.05)
+
+load("./data_PPBstats/model_bh_GxE_alpha.RData")
+load("./data_PPBstats/model_bh_GxE_beta.RData")
+load("./data_PPBstats/model_bh_GxE_theta.RData")
+```
+
+##### Vizualise mean comparisons
+
+To see the output, use `plot`.
+
+There are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+
+For `plot_type = "barplot"`,
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+The error I (alpha) and the alpha correction are displayed in the title. 
+alpha = Imp means that no differences were possible to find.
+
+For `plot_type = "biplot-alpha-beta"`, the biplot with $\alpha_i$ on the x axis and $\beta_i$ on the y axis.
+
+```{r}
+p_a = plot(model_bh_GxE_alpha, plot_type = "barplot")
+names(p_a$alpha)
+p_a$alpha$`1`
+```
+
+```{r}
+p_b = plot(model_bh_GxE_beta, plot_type = "barplot")
+names(p_b$beta)
+p_b$beta$`1`
+```
+
+It is interessting to compare genetic effect versus sensibility to interaction.
+A germplasm with an high genetic effect and a low sensitivity to interaction (i.e. close to 0) may be a good candidate to sown.
+
+```{r}
+p_ab = plot(model_bh_GxE_alpha, model_bh_GxE_beta, plot_type = "biplot-alpha-beta")
+p_ab$`1`
+```
+
+```{r}
+p_t = plot(model_bh_GxE_theta, plot_type = "barplot")
+names(p_t$theta)
+p_t$theta$`9`
+```
+
+
+#### Get and vizualise groups of parameters
+
+##### Get groups of parameters
+
+In order to cluster environments or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
+
+This is done with `parameter_groups` which do a PCA on this matrix.
+
+Clusters are done based on HCPC method as explained here http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning
+
+Lets' have an example with three variables.
+
+First run the models
+
+```{r}
+# out_model_bh_GxE_y1 = model_bh_GxE(data_model_bh_GxE, variable = "y1")
+# out_model_bh_GxE_y2 = model_bh_GxE(data_model_bh_GxE, variable = "y2")
+# out_model_bh_GxE_y3 = model_bh_GxE(data_model_bh_GxE, variable = "y3")
+
+load("./data_PPBstats/out_model_bh_GxE_y1.RData")
+load("./data_PPBstats/out_model_bh_GxE_y2.RData")
+load("./data_PPBstats/out_model_bh_GxE_y3.RData")
+```
+
+Then check the models
+
+```{r}
+# c_mbhgxe_y1 = check_model(out_model_bh_GxE_y1)
+# The Gelman-Rubin test is running for each parameter ...
+# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
+
+# c_mbhgxe_y2 = check_model(out_model_bh_GxE_y2)
+# The Gelman-Rubin test is running for each parameter ...
+# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
+
+# c_mbhgxe_y3 = check_model(out_model_bh_GxE_y3)
+# The Gelman-Rubin test is running for each parameter ...
+# The two MCMC for each parameter converge thanks to the Gelman-Rubin test.
+
+load("./data_PPBstats/c_mbhgxe_y1.RData")
+load("./data_PPBstats/c_mbhgxe_y2.RData")
+load("./data_PPBstats/c_mbhgxe_y3.RData")
+```
+
+Then run the function on alpha. 
+It can also be done on beta or theta.
+
+```{r}
+out_parameter_groups = parameter_groups(
+  list("y1" = c_mbhgxe_y1, "y2" = c_mbhgxe_y2, "y3" = c_mbhgxe_y3), 
+  "alpha"
+  )
+```
+
+Note that you can highlight some individual with the argument `ind_to_highlight`.
+
+`out_parameter_groups` is list of two elements:
+
+-`obj.pca` : the PCA object from `FactoMineR::PCA`
+
+- `clust`, a list of two elements:
+    - `res.hcpc` : the HCPC object from `FactoMineR::HCPC`
+    -  `clust` : the dataframe with cluster assigned to each individual
+
+##### Visualize groups of parameters
+
+Visualize outputs with `plot`
+
+```{r}
+ppg = plot(out_parameter_groups)
+```
+
+`ppg` is list of two elements:
+
+- `pca` : a list with three elements on the PCA on the group of parameters :
+    - `composante_variance` : variance caught by each dimension of the PCA
+    ```{r}
+    ppg$pca$composante_variance
+    ```
+    - `ind` : graph of individuals
+    ```{r}
+    ppg$pca$ind
+    ```
+    - `var` : graph of variables
+    ```{r}
+    ppg$pca$var
+    ```
+
+- `clust` : output from `factextra::fviz_cluster()`, a list of number of cluster + 1 element
+```{r}
+cl = ppg$clust
+names(cl)
+```
+
+```{r}
+cl$cluster_all
+```
+
+```{r}
+cl$cluster_1
+```
+
+
+A farmer may find a germplasm that behaves well according to informations from model_1 (Section \@ref(model-1)) in a farm that shares its cluster.
+
+
+
+#### Predict the past
+
+In order to choose a new germplasm to test on his farm, a farmer may choose a germplasm according to the value it would have obtained on his farm.
+
+For example for `"loc-6:year-5"`
+```{r}
+ptp = predict_the_past_model_bh_GxE(out_check_model_bh_GxE, env = "loc-1:2005")
+```
+
+`ptp` can be handle exacly as `out_model_1` for mean comparisons
+
+```{r}
+m_ptp = mean_comparisons(ptp)
+```
+
+and visualize the output, for `plot_type = "barplot"`, there is two colors regarding estimated and predicted results.
+
+```{r}
+p = plot(m_ptp, plot_type = "barplot")
+p$data_mean_comparisons$`loc-1:2005`$`1`
+```
+
+For `plot_type = "score"` and `plot_type = "interaction"`, predicted and estimated are mention between brakets after germplasm name.
+
+```{r}
+p = plot(m_ptp, plot_type = "score")
+p$`loc-1`$`1`
+
+p = plot(m_ptp, plot_type = "interaction")
+p$data_mean_comparisons$`loc-1`$`1`
+```
+
+
+#### Apply the workflow to several variables
+
+If you wish to apply the model\_2 workflow to several variables, you can use `lapply` with the following code :
+
+```{r}
+workflow_model_bh_GxE = function(x){
+  out_model_bh_GxE = model_bh_GxE(data = data_model_bh_GxE, variable = x, return.epsilon = TRUE)
+  
+  out_check_model_bh_GxE = check_model(out_model_bh_GxE)
+  p_out_check_model_bh_GxE = plot(out_check_model_bh_GxE)
+  
+  out_cross_validation_model_bh_GxE = cross_validation_model_bh_GxE(data_model_bh_GxE, x, nb_iterations = 10)
+  p_out_cv = plot(out_cross_validation_model_bh_GxE)
+  
+  model_bh_GxE_alpha = mean_comparisons(out_check_model_bh_GxE, parameter = "alpha")
+  model_bh_GxE_beta = mean_comparisons(out_check_model_bh_GxE, parameter = "beta", precision = 0.05)
+  model_bh_GxE_theta = mean_comparisons(out_check_model_bh_GxE, parameter = "theta", precision = 0.05)
+  p_a = plot(model_bh_GxE_alpha, plot_type = "barplot")
+  p_b = plot(model_bh_GxE_beta, plot_type = "barplot")
+  p_ab = plot(model_bh_GxE_alpha, model_bh_GxE_beta, plot_type = "biplot-alpha-beta")
+  p_t = plot(model_bh_GxE_theta, plot_type = "barplot")
+  
+  out = list(
+      out_model_bh_GxE = out_model_bh_GxE,
+      out_check_model_bh_GxE = out_check_model_bh_GxE,
+      p_out_check_model_bh_GxE = p_out_check_model_bh_GxE,
+      out_cross_validation_model_bh_GxE = out_cross_validation_model_bh_GxE,
+      p_out_cv = p_out_cv,
+      model_bh_GxE_alpha = model_bh_GxE_alpha,
+      model_bh_GxE_beta = model_bh_GxE_beta,
+      model_bh_GxE_theta = model_bh_GxE_theta,
+      p_a = p_a,
+      p_b = p_b,
+      p_ab = p_ab,
+      p_t = p_t
+      )
+  return(out)
+}
+
+## Not run because of memory and time issues !
+# vec_variables = c("y1", "y2", "y3")
+#
+# out = lapply(vec_variables, workflow_model_bh_GxE)
+# names(out) = vec_variables
+#
+# out_parameter_groups = parameter_groups(
+#   list("y1" = out$y1$out_check_model_bh_GxE, 
+#        "y2" = out$y2$out_check_model_bh_GxE, "
+#        y3" = out$y3$out_check_model_bh_GxE), 
+#   "germplasm" )
+#
+# ppg = plot(out_parameter_groups)
+#
+# predict the past is not done here as it is more specific question
+#
+```
+

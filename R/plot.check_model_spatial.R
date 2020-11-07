@@ -1,7 +1,43 @@
+#' Get ggplot to visualize output from \code{\link{check_model.fit_model_spatial}}
+#'
+#' @description
+#' \code{plot.check_model_spatial} returns ggplot to visualize outputs from \code{\link{check_model.fit_model_spatial}}
+#'
+#' @param x Output from \code{\link{check_model.fit_model_spatial}}
+#' 
+#' @param nb_parameters_per_plot number of parameter per plot to display
+#'
+#' @param ... further arguments passed to or from other methods
+#'
+#' @details
+#' S3 method.
+#' See example in the book: https://priviere.github.io/PPBstats_book/family-1.html#spatial-analysis
+#' 
+#' @return 
+#' \itemize{
+#'  \item residuals
+#'  \itemize{
+#'   \item histogram : histogram with the distribution of the residuals
+#'   \item qqplot
+#'   \item points
+#'   }
+#'  \item variability_repartition : pie with repartition of SumSq for each factor
+#'  }
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{check_model.fit_model_spatial}}
+#' 
+#' @export
+#' 
+#' @import ggplot2
+#' 
 plot.check_model_spatial <- function(
   x,
-  nb_parameters_per_plot = 8
+  nb_parameters_per_plot = 8, ...
 ){
+  r = y = percentage_Sum_sq = NULL  # to avoid no visible binding for global variable
+  
   # Get data ----------
   
   variable = x$spatial$info$variable
@@ -11,6 +47,7 @@ plot.check_model_spatial <- function(
   data_ggplot_normality = data_ggplot$data_ggplot_residuals$data_ggplot_normality
   data_ggplot_skewness_test = data_ggplot$data_ggplot_residuals$data_ggplot_skewness_test
   data_ggplot_kurtosis_test = data_ggplot$data_ggplot_residuals$data_ggplot_kurtosis_test
+  data_ggplot_shapiro_test = data_ggplot$data_ggplot_residuals$data_ggplot_shapiro_test
   data_ggplot_qqplot = data_ggplot$data_ggplot_residuals$data_ggplot_qqplot
   data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
   data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
@@ -20,7 +57,12 @@ plot.check_model_spatial <- function(
   # 1.1. Histogram ----------
   p = ggplot(data_ggplot_normality, aes(x = r), binwidth = 2)
   p = p + geom_histogram() + geom_vline(xintercept = 0)
-  p = p + ggtitle("Test for normality", paste("Skewness:", signif(data_ggplot_skewness_test, 3), "; Kurtosis:", signif(data_ggplot_kurtosis_test, 3)))
+  p = p + ggtitle("Test for normality", 
+                  paste("Skewness:", signif(data_ggplot_skewness_test, 3), 
+                        "; Kurtosis:", signif(data_ggplot_kurtosis_test, 3),
+                        "; Shapiro:", signif(data_ggplot_shapiro_test$p.value, 3)
+                  )
+  )
   p1.1 = p + theme(plot.title=element_text(hjust=0.5))
   
   # 1.2. Standardized residuals vs theoretical quantiles ----------
@@ -28,6 +70,11 @@ plot.check_model_spatial <- function(
   p = p + geom_abline(slope = 1, intercept = 0, color = "red")
   p = p + xlab("Theoretical Quantiles") + ylab("Standardized residuals")
   p1.2 = p + ggtitle("QQplot") + theme(plot.title=element_text(hjust=0.5))
+  
+  # 1.3. simple points to look at autocorrelation ----------
+  data_ggplot_normality$x = c(1:nrow(data_ggplot_normality))
+  p = ggplot(data_ggplot_normality, aes(x = x, y = r)) + geom_point()
+  p1.3 = p + ggtitle("residuals") + theme(plot.title=element_text(hjust=0.5))
   
   # 2. repartition of variability among factors ----------
   p = ggplot(data_ggplot_variability_repartition_pie, aes(x = "", y = percentage_Sum_sq, fill = factor)) 
@@ -41,7 +88,8 @@ plot.check_model_spatial <- function(
   out = list(
     "residuals" = list(
       "histogram" = p1.1,
-      "qqplot" = p1.2),
+      "qqplot" = p1.2,
+      "points" = p1.3),
     "variability_repartition" = p2
   )
   

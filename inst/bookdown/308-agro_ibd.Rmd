@@ -1,0 +1,19 @@
+### Mixted model for incomplete block design (**M5**) {#ibd-model}
+
+!!! TO DO !!!
+
+The model is based on frequentist statistics (section \@ref(section-freq)).
+The tests to check the model are explained in section \@ref(check-model-freq).
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+
+
+[@alternative_zystro_2018]
+
+
+```{r}
+#library(ibd)
+#data(ibddata)
+#aov.ibd(y~factor(trt)+factor(blk),data=ibddata)
+#contrast=matrix(c(1,-1,0,0,0,0,0,0,0,0,0,1,-1,0,0,0,0,0),nrow=2,byrow=TRUE)
+#aov.ibd(y~factor(trt)+factor(blk),specs="trt",data=ibddata,contrast=contrast)
+```

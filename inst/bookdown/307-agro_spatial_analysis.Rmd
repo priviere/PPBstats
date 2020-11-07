@@ -1,0 +1,314 @@
+### Spatial analysis (**M4b**) {#spatial-analysis}
+
+#### Theory of the model
+
+The experimental design used is the row-column design (**D3**).
+The following model is based on frequentist statistics (section \@ref(section-freq)).
+The model allows taking into account environmental variation within a block with few control replicated in rows and columns.
+
+It is based on a SpATS (Spatial Analysis of Field Trials with Splines) model proposed by @rodriguez_spatial_2016 :
+
+$Y_{ijk} = \alpha_{i} + r_{j} + c_{k} + f(u,v) + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
+
+With,
+
+- $Y_{ijk}$ the phenotypic value for germplasm $i$, row $j$ and column $k$
+- $\alpha_{i}$ the random effect of germplasm $i$
+- $r_{j}$ the effect of row $j$ 
+- $c_{k}$ the effect of col $k$ 
+- $f(u,v)$ the smooth bivariate function that simultaneously accounts for the spatial trend across both directions of the fiel (i.e. rows and columns)
+- $\varepsilon_{ijk}$ the residuals
+
+
+Note that $f(u,v)$ is divided into 8 components excluding the intercept [@rodriguez_spatial_2016]:
+
+- the linear effect of the rows (row),
+- the linear effect of the columns (col), 
+- the linear interaction of rows and columns (row:col),
+- the main row effect (f(row)),
+- the main column effect (f(col)),
+- the smooth varying coefficient term regarding rows (f(col):row),
+- the smooth varying coefficient term regarding columns (row:f(col))),
+- the smooth-by-smooth interaction component (f(col):f(row))
+
+Much more information regarding the model as well as example of R package `SpATS` can be found in @rodriguez_spatial_2016.
+
+
+#### Steps with `PPBstats`
+
+- Format the data with `format_data_PPBstats()`
+- Run the model with `model_spatial()`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()` and vizualise it with `plot()`
+- Get mean comparisons for germplasms with `mean_comparisons()` and vizualise it with `plot()`
+
+#### Format the data
+
+```{r}
+data("data_model_spatial")
+data_model_spatial = format_data_PPBstats(data_model_spatial, type = "data_agro")
+```
+
+
+#### Run the model
+
+By default, germplasm are settled as random.
+
+```{r}
+out_spatial = model_spatial(data = data_model_spatial, variable = "y1")
+```
+
+`out_spatial` is a list containing two elements :
+
+- `info` : a list with variable and data
+```{r}
+out_spatial$info$variable
+
+head(out_spatial$info$data)
+```
+- `model` a list with four elements :
+    - `model`
+    ```{r}
+    out_spatial$model$model
+    ```
+    - `summary`
+    ```{r}
+    out_spatial$model$summary
+    ```
+     - `var_res` the variance of the residuals
+    ```{r}
+    out_spatial$model$df_residual
+    ```
+    ```{r}
+    out_spatial$model$MSerror
+    ```
+
+#### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-freq).
+
+##### Check the model
+
+```{r}
+out_check_spatial = check_model(out_spatial)
+```
+
+`out_check_spatial` is a list containing two elements :
+
+- `spatial` the output from the model
+- `data_ggplot` a list containing information for ggplot:
+    - `data_ggplot_residuals` a list containing :
+        - `data_ggplot_normality`
+        - `data_ggplot_skewness_test`
+        - `data_ggplot_kurtosis_test`
+        - `data_ggplot_shapiro_test`
+        - `data_ggplot_qqplot`
+    - `data_ggplot_variability_repartition_pie`
+
+
+##### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot`
+
+```{r}
+p_out_check_spatial = plot(out_check_spatial)
+```
+
+`p_out_check_spatial` is a list with:
+
+- `residuals`
+    - `histogram` : histogram with the distribution of the residuals
+    ```{r}
+    p_out_check_spatial$residuals$histogram
+    ```
+    - `qqplot`
+    ```{r}
+    p_out_check_spatial$residuals$qqplot
+    ```
+
+    - `points`
+    ```{r}
+    p_out_check_spatial$residuals$points
+    ```
+
+
+- `variability_repartition` : pie with repartition of variance for each factor
+```{r}
+p_out_check_spatial$variability_repartition
+```
+
+#### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+
+#### Get mean comparisons
+
+Get mean comparisons with `mean_comparisons`.
+
+```{r}
+out_mean_comparisons_spatial = mean_comparisons(out_check_spatial, p.adj = "bonferroni")
+```
+
+`out_mean_comparisons_spatial` is a list of two elements:
+
+- `info` : a list with variable and data
+- `data_ggplot_LSDbarplot_germplasm`
+
+#### Visualize mean comparisons
+```{r}
+p_out_mean_comparisons_spatial = plot(out_mean_comparisons_spatial)
+```
+
+`p_out_mean_comparisons_spatial` is a list of two elements
+
+- `germplasm_blup` whih represent the BLUPs with their confidence intervalle
+```{r}
+p_out_mean_comparisons_spatial$germplasm_blup
+```
+
+- `germplasm_barplot`. 
+For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+The error I (alpha) and the alpha correction are displayed in the title. 
+
+```{r}
+pg = p_out_mean_comparisons_spatial$germplasm_barplot
+pg$`23`
+```
+
+
+
+#### Get and vizualise groups of parameters
+
+##### Get groups of parameters
+
+In order to cluster locations or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
+
+This is done with `parameter_groups()` which do a PCA on this matrix.
+
+Clusters are done based on HCPC method as explained [here](http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning) 
+
+
+Lets' have an example with three variables.
+
+First run the models
+```{r}
+out_spatial_2 = model_spatial(data_model_spatial, variable = "y2")
+out_spatial_3 = model_spatial(data_model_spatial, variable = "y3")
+```
+
+Then check the models
+```{r}
+out_check_spatial_2 = check_model(out_spatial_2)
+out_check_spatial_3 = check_model(out_spatial_3)
+```
+
+Then run the function for germplasm.
+
+```{r}
+list_out_check_model = list("spatial_1" = out_check_spatial, "spatial_2" = out_check_spatial_2, "spatial_3" = out_check_spatial_3)
+out_parameter_groups = parameter_groups(list_out_check_model, "germplasm")
+```
+
+`out_parameter_groups` is list of two elements:
+
+- `obj.pca` : the PCA object from `FactoMineR::PCA()`
+- `clust`, a list of two elements:
+    - `res.hcpc` : the HCPC object from `FactoMineR::HCPC()`
+    - `clust` : the dataframe with cluster assigned to each individual
+
+##### Visualize groups of parameters
+
+Visualize outputs with `plot`
+
+```{r}
+p_germplasm_group = plot(out_parameter_groups)
+```
+
+`p_germplasm_group` is list of two elements :
+
+- `pca` : a list with three elements on the PCA on the group of parameters :
+
+    - `composante_variance` : variance caught by each dimension of the PCA
+    ```{r}
+    p_germplasm_group$pca$composante_variance
+    ```
+
+    - `ind` : graph of individuals
+    ```{r}
+    p_germplasm_group$pca$ind
+    ```
+
+    - `var` : graph of variables
+    ```{r}
+    p_germplasm_group$pca$var
+    ```
+  
+- `clust` : output from `factextra::fviz_cluster()`, a list of number of cluster + 1 element
+```{r}  
+cl = p_germplasm_group$clust
+names(cl)
+```
+
+```{r}  
+cl$cluster_all
+```
+
+```{r}
+cl$cluster_1
+```
+
+
+#### post hoc analysis to visualize variation repartition for several variables
+
+
+```{r}
+list_out_check_model = list("spatial_1" = out_check_spatial, "spatial_2" = out_check_spatial_2, "spatial_3" = out_check_spatial_3)
+post_hoc_variation(list_out_check_model)
+
+```
+
+
+
+#### Apply the workflow to several variables
+
+If you wish to apply the spatial workflow to several variables, you can use `lapply` with the following code :
+
+```{r, eval=FALSE}
+workflow_spatial = function(x, data){
+  out_spatial = model_spatial(data = data, variable = x)
+  
+  out_check_spatial = check_model(out_spatial)
+  p_out_check_spatial = plot(out_check_spatial)
+  
+  out_mean_comparisons_spatial = mean_comparisons(out_check_spatial, p.adj = "bonferroni")
+  p_out_mean_comparisons_spatial = plot(out_mean_comparisons_spatial)
+  
+  out = list(
+    out_spatial = out_spatial,
+    out_check_spatial = out_check_spatial,
+    p_out_check_spatial = p_out_check_spatial,
+    out_mean_comparisons_spatial = out_mean_comparisons_spatial,
+    p_out_mean_comparisons_spatial = p_out_mean_comparisons_spatial
+    )
+  return(out)
+}
+
+vec_variables = c("y1", "y1", "y1")
+out = lapply(vec_variables, workflow_spatial, data_model_spatial)
+names(out) = vec_variables
+
+
+list_out_check_model = list("spatial_1" = out_check_spatial, "spatial_2" = out_check_spatial_2, "spatial_3" = out_check_spatial_3)
+
+out_parameter_groups = parameter_groups(list_out_check_model, "germplasm" )
+p_germplasm_group = plot(out_parameter_groups)
+
+p_post_hoc_variation = post_hoc_variation(list_out_check_model)
+
+```
+
+
+
+
+
+

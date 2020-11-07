@@ -1,0 +1,39 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}[grow cyclic, align=flush center,
+every node/.style=concept, concept color=level-1, font=\huge, text width=7cm,
+every node/.append style={scale=1},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=10cm, sibling angle=65, concept color=level-2, font=\huge, text width=4cm},
+    level 2/.style={level distance=10cm, sibling angle=50, concept color=level-3, font=\huge, text width=4cm},
+    level 3/.style={level distance=10cm, sibling angle=45, concept color=level-4, font=\huge, text width=4cm},
+    level 4/.style={level distance=12cm, sibling angle=45, concept color=level-5, font=\huge, text width=6cm},
+    level 5/.style={level distance=12cm, sibling angle=45, concept color=level-6, font=\huge, text width=6cm},
+    level 6/.style={level distance=12cm, sibling angle=45, concept color=level-7, font=\huge, text width=5cm},
+    ]
+\node{\textbf{Compare different varieties evaluated for selection in different locations}}
+  child{ node {Sensory analysis}
+    child { node {\textbf{Napping test}: Characterize products sensory properties}
+      child { node {Number of product $<$  12; Number of tasters $>$ 10}
+        child { node {\textbf{M9a - Multiple Factors Analyses; Projection Word Frequency}}
+        }
+      }
+    }
+    child { node {\textbf{Hedonic test}: Understand and check consumers preferences}
+      child { node {Number of product  $<$ 7; Number of tasters $>$ 60}
+        child { node {\textbf{M9b - ANOVA; Hierarchical Cluster Analysis; Correspondance Analysis on additionnal sensory descriptors}}
+        }
+      }
+    }
+    child { node {\textbf{Ranking test}: Rank product according to few sensory descriptors}
+      child { node {Number of product $<$ 6; Number of tasters $>$ 12}
+        child { node {\textbf{M9c - Non parametric Test on Rank Sums; Friedman's Test}}
+        }
+      }
+    }
+  }
+\end{tikzpicture}
+\end{document}

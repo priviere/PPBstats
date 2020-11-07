@@ -1,0 +1,64 @@
+% cf http://cloford.com/resources/colours/websafe1.htm
+\definecolor{sv-all}{RGB}{255,153,255}
+\definecolor{sv-gxe-m2}{RGB}{255,204,255}
+\definecolor{sv}{RGB}{255,153,255}
+\definecolor{m1}{RGB}{153,153,255}
+\definecolor{m2}{RGB}{153,255,153}
+\definecolor{ge}{RGB}{255,255,153}
+\definecolor{sp}{RGB}{255,153,153}
+\definecolor{vi}{RGB}{255,204,153}
+\definecolor{ma}{RGB}{204,255,153}
+\definecolor{hedo}{RGB}{102,102,204}
+\definecolor{nap}{RGB}{102,204,102}
+\definecolor{ca}{RGB}{255,51,0}
+\definecolor{half}{RGB}{153,153,0}
+
+\definecolor{level-1}{RGB}{255,204,255}
+\definecolor{level-2}{RGB}{153,153,255}
+\definecolor{level-3}{RGB}{153,255,153}
+\definecolor{level-4}{RGB}{255,255,153}
+\definecolor{level-5}{RGB}{255,153,153}
+\definecolor{level-6}{RGB}{255,204,153}
+\definecolor{level-7}{RGB}{204,255,153}
+
+\usetikzlibrary{
+  mindmap,
+  decorations.pathreplacing,    % paths with shoapes of curly braces
+  positioning,     % positions like above of node
+  fit              % legend bounding box fitting all nodes
+}
+\tikzset{
+  node distance=4ex and 4ex,
+  % on grid,  % node distance from the centers
+  every node/.style = {
+    rectangle,
+    minimum width=5em,
+    minimum height=3ex,
+    text depth=1pt,
+    draw,
+    outer sep = 2pt,
+    inner sep = 3pt
+  },
+  every edge/.style = {->,draw},
+  virtual/.append style = {draw=none, circle, minimum width=1em},
+  % virtual/.append style = {draw, color=black!50},   % debugging purposes
+  several-all/.append style = {fill = sv-all},
+  several-gxe-m2/.append style = {fill = sv-gxe-m2},
+  m1/.append style = {fill = m1},
+  m2/.append style = {fill = m2},
+  gxe/.append style = {fill = ge},
+  sp/.append style = {fill = sp},
+  vi/.append style = {fill = vi},
+  ma/.append style = {fill = ma},
+  aux/.append style = {fill = none},
+  hedo/.append style = {fill = hedo},
+  nap/.append style = {fill = nap},
+  ca/.append style = {fill = ca},
+  half/.append style = {fill = half},
+  legendkey/.append style = {minimum width=3ex},
+  legendtext/.append style = {draw=none, fill = black!10},
+  ->,        % arrows for all
+  >=stealth  % arrow type
+}
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}

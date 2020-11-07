@@ -1,0 +1,5 @@
+# Sensory analysis {#organoleptic}
+
+In section \@ref(intro-organo), you will chose your objective in order to compare different varieties evaluated for selection in different locations, the analyses and the experimental design based on a decision tree, and see how to implement it based on the workflow and function relations from formated data.
+
+Then, thanks to `PPBstats`, you will describe the data and run statistical analysis (sections \@ref(hedonic), \@ref(napping), \@ref(rank)).

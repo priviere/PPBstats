@@ -1,0 +1,29 @@
+---
+title: "Examples of reports to give back information to farmers based on analysis run with `PPBstats`"
+author: "Pierre Rivière"
+date: "`r Sys.Date()`"
+output:
+  html_document
+---
+
+Within a Participatory Plant Breeding programme, it is important to give results back to the farmers in order to discuss and accompagny them in their selection.
+This can be done through the creation of a report with results coming from the analysis.
+
+This web site gives examples of reports to give back information to farmers based on analysis run with `PPBstats`.
+Please refer to [PPBstats documentation](https://priviere.github.io/PPBstats_book) for more information, especially section regarding [communication to farmers](https://priviere.github.io/PPBstats_book/com.html).
+
+The workflow to create the report follow three steps:
+
+1. run the analysis and create a list with all results
+2. create a `.Rmd` template that will be shared by all locations
+3. run `rmarkdown::render()` in order to generate report for each location
+
+For each example you have a dedicated page with the script used as well as links to download the template and see reports
+
+- [example_1](https://priviere.github.io/PPBstats_return_report_web_site/example_1.html)
+
+Every contribution are welcome!
+Feel free to add examples based on your experience!
+See how to contribute on [PPBstats web site](https://priviere.github.io/PPBstats_web_site/index.html#contribute).
+
+

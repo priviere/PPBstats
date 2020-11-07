@@ -1,4 +1,4 @@
-#' Compute interaction matrix
+#' Compute interaction matrix for AMMI or GGE model
 #'
 #' @description
 #' \code{GxE_build_interaction_matrix} computes interaction matrix for AMMI or GGE model
@@ -17,31 +17,36 @@
 #' @author 
 #' Pierre Riviere
 #' 
-#' @seealso \code{\link{GxE}}
+#' @seealso \code{\link{model_GxE}}
+#' 
+#' @import stats
+#' 
+#' @export
 #' 
 GxE_build_interaction_matrix = function(
   data, 
   gxe_analysis
   )
   {
+  match.arg(gxe_analysis, c("AMMI", "GGE"), several.ok = FALSE)
   
   if(nlevels(data$year) > 1) { 
     if( gxe_analysis == "AMMI"){
-      model = lm(variable ~ germplasm + location + block %in% year:location + year + year:germplasm + year:location , data = data)
+      model = stats::lm(variable ~ germplasm + location + block %in% year:location + year + year:germplasm + year:location , data = data)
     }
     if( gxe_analysis == "GGE"){
-      model = lm(variable ~ location + block %in% location + year + year:germplasm + year:location, data = data)
+      model = stats::lm(variable ~ location + block %in% location + year + year:germplasm + year:location, data = data)
     }
   } else {
     if( gxe_analysis == "AMMI"){
-      model = lm(variable ~ germplasm + location + block %in% location, data = data)
+      model = stats::lm(variable ~ germplasm + location + block %in% location, data = data)
     }
     if( gxe_analysis == "GGE"){
-      model = lm(variable ~ location + block %in% location, data = data)
+      model = stats::lm(variable ~ location + block %in% location, data = data)
     }
   }
   
-  data$residuals = residuals(model)
+  data$residuals = stats::residuals(model)
   Mgxe_by = by(data[, "residuals"], data[, c("germplasm", "location")], function(x) sum(x,na.rm = TRUE))
   Mgxe = data.frame()
   for(i in 1:nrow(Mgxe_by)){ for(j in 1:ncol(Mgxe_by)){ Mgxe[i,j] = Mgxe_by[i,j] }}

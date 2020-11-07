@@ -1,0 +1,45 @@
+# Download and install
+
+```{r, out.width='10%', fig.align='left', echo=FALSE}
+knitr::include_graphics("figures/warning.png")
+```
+**Be aware that this package is under development and test do not 100% trust the functions!!!**
+**You're welcome to [contribute](../CONTRIBUTING.html)!**
+
+1. **install `R`** on your computer.
+Follow instruction at https://cloud.r-project.org/.
+If your not familiar with `R`, it is advised to start with a tutorial (there are a lot on internet).
+
+2. **install the `R` package `devtools` and load it**
+```{r, eval=FALSE}
+install.packages("devtools")
+library(devtools)
+```
+
+3. **download the current version of the package**: [download v0.26](https://github.com/priviere/PPBstats/archive/v0.26.zip)
+
+4. **unzip the folder** on your local directory 
+
+5. **install the package** thanks to the `install` funtion from the `devtool` package 
+```{r, eval=FALSE}
+devtools::install("PPBstats-0.26")
+```
+
+Note that when installing the package, `R` will load several package and may ask you to download dependencies. 
+For exemple `JAGS` software in order to do bayesian analysis (http://mcmc-jags.sourceforge.net/).
+
+You can also load the development version:
+```{r, eval=FALSE}
+devtools::install_github("priviere/PPBstats")
+```
+The evolution of the code regarding the development version are
+[here](https://github.com/priviere/PPBstats/blob/master/NEWS.md).
+
+6. **load the package** :
+```{r,warning=FALSE,message=FALSE}
+library(PPBstats)
+```
+
+
+
+

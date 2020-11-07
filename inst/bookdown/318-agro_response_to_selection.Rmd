@@ -1,0 +1,131 @@
+### Study reponse to selection {#response-to-selection}
+
+For a given trait, selection differential corresponds to the difference between mean of the selected spikes and
+mean of the bulk (i.e. spikes that have not been selected).
+Response to selection correponds to the difference between mean of spikes coming from the selected spikes and the spikes coming from the bulk (Figure \@ref(fig:SR)).
+Selection differential ($S$) and response to selection ($R$) are linked with the realized heritability ($h^2_r$):
+$R = h^2_r \times S$.
+
+```{r SR, out.width='80%', fig.align='center', echo=FALSE, fig.cap="Seletion differential (S) in 2014-2015 and response to selection (R) in 2015-2016. Circles and arrows in gray represent the seed-lots that have been sown in 2015 after harvest in 2015.[@SandR_EN]"}
+knitr::include_graphics("figures/SandR_EN-7.png")
+```
+
+#### Workflow and function relations in PPBstats regarding response to selection analysis
+
+Figure \@ref(fig:main-workflow-family-4-SR) displays the functions and their relationships.
+Table \@ref(tab:function-descriptions-workflow-family-4-SR) describes each of the main functions.
+
+You can have more information for each function by typing `?function_name` in your R session.
+
+```{r main-workflow-family-4-SR, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow to study response to selection."}
+knitr::include_graphics("figures/main-functions-agro-family-4-SR.png")
+```
+
+| function name | description |
+| --- | --- |
+| `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
+| `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
+| `plot` | Build ggplot objects to visualize output |
+Table: (\#tab:function-descriptions-workflow-family-4-SR) Function description.
+
+
+#### Steps with PPBstats
+
+To study response to selection, you can follow three steps (Figure \@ref(fig:main-workflow-family-4-SR)):
+
+- Format the data with `format_data_PPBstats()`
+- Describe the data with `plot()`
+- Get mean comparison from family 1's model as explained in section \@ref(family-1) by
+  - running the model 
+  - get mean comparisons
+  - use `plot()`
+
+
+#### Format data
+In this section, the data set used is coming from `data_model_GxE` (section \@ref(ammi)) with three dedicated columns: 
+
+- `group` which represents differential selection (S) or reponse to selection (R)
+- `version` which represents bouquet or vrac.
+- `expe_id`: an id with
+    - S couple and R couple (i.e. four rows) OR
+    - S couple (i.e. two rows) OR
+    - R couple (i.e. two rows)
+
+`expe_id` is useful for example if there are several selection in one germplasm or if there are several origin for a given germplasm.
+
+
+#### Describe and get mean comparison from family 1's model
+
+For all model, stars on a pair of entries corresponds to the pvalue:
+
+| pvalue | stars |
+| --- | --- |
+| $< 0.001$ | *** |
+| $[0.001 , 0.05]$ | ** |
+| $[0.05 , 0.01]$ | * |
+| $> 0.01$ | . |
+
+
+
+##### Classic anova model
+
+To Do !!!
+
+```{r}
+#data(data_agro_SR_1)
+#data_agro_SR_1 = format_data_PPBstats(data_agro_SR_1, type = "data_agro_SR")
+```
+
+
+##### Spatial analysis model
+
+To Do !!!
+
+```{r}
+#data(data_agro_SR_2)
+#data_agro_SR_2 = format_data_PPBstats(data_agro_SR_2, type = "data_agro_SR")
+```
+
+
+##### Mixed model for incomplete block design
+
+To Do !!!
+
+```{r}
+#data(data_agro_SR_3)
+#data_agro_SR_3 = format_data_PPBstats(data_agro_SR_3, type = "data_agro_SR")
+```
+
+
+##### Hierarchical Bayesian intra-location model
+
+```{r}
+data(data_agro_SR_4)
+data_agro_SR_4 = format_data_PPBstats(data_agro_SR_4, type = "data_agro_SR")
+head(data_agro_SR_4)
+```
+
+
+First, describe the data. Each element of the list is an `expe_id`.
+
+```{r}
+p = plot(data_agro_SR_4, vec_variables = "tkw", plot_type = "barplot")
+p
+```
+
+In order to add significance differences from the Hierarchical Bayesian intra-location model presented in section \@ref(model-1), the argument `mean_comparisons` must be filled with the output of mean_comparisons of the model.
+
+The pvalue is computed as describe in Section \@ref(mean-comp-bayes) if the parameters have been estimated with the model.
+
+```{r}
+load("./data_PPBstats/out_mean_comparisons_model_bh_intra_location_mu.RData") # To save time
+p = plot(data_agro_SR_4,
+         mean_comparison = out_mean_comparisons_model_bh_intra_location_mu, 
+         vec_variables = "tkw",
+         plot_type = "barplot")
+p
+```
+
+
+For environments where MCMC did not converge or without environments, it is a \@ref(t.test) which is perform when there are more than 1 obervation for a given seed lot.
+

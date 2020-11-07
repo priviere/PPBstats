@@ -7,11 +7,11 @@
 mutlivariate(data, vec_variables, FUN)
 }
 \arguments{
-\item{data}{The data frame. See details.}
+\item{data}{The data frame. It should come from \code{\link{format_data_PPBstats.data_agro}}}
 
 \item{vec_variables}{vector of variables to use in the analysis}
 
-\item{FUN}{function to apply : PCA}
+\item{FUN}{function to apply coming from FactoMineR, for example PCA}
 }
 \value{
 The function returns the FactoMineR object corresponding to FUN
@@ -21,6 +21,8 @@ The function returns the FactoMineR object corresponding to FUN
 }
 \details{
 This function is useful to settle the right data set and quali.sup
+
+More information can be found in the book : https://priviere.github.io/PPBstats_book/family-5.html
 }
 \author{
 Pierre Riviere
