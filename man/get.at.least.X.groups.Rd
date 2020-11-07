@@ -4,7 +4,8 @@
 \alias{get.at.least.X.groups}
 \title{Get the value of type one error needed to have X groups.}
 \usage{
-get.at.least.X.groups(Mpvalue, MCMC, p.adj = "soft.bonf", precision = 5e-04)
+get.at.least.X.groups(Mpvalue, MCMC, p.adj = "soft.bonf",
+  precision = 5e-04)
 }
 \arguments{
 \item{Mpvalue}{A vector or a matrix with the probabilities for two parameters to be equal. It comes from the function \code{\link{comp.parameters}}}
@@ -28,8 +29,9 @@ When there is no data, it returns NA. It may depend on the precision. For exempl
 }
 \seealso{
 \itemize{
-\item \code{\link{mean_comparisons_model_1}}
-\item \code{\link{mean_comparisons_model_2}}
+\item \code{\link{mean_comparisons.check_model_bh_intra_location}}
+\item \code{\link{mean_comparisons.check_model_bh_GxE}}
+\item \code{\link{mean_comparisons.check_model_bh_variance_intra}}
 }
 }
 \author{

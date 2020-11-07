@@ -1,0 +1,66 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  %% nodes
+  \node[several-all] (DE)                   {design\_experiment};
+
+  \node[several-all] (FD) [below=2.5cm of DE]                {format\_data\_PPBstats};
+
+  \node[m2]   (MA)  [below=2cm of FD]        {model\_anova};
+  \node[sp]  (SP) [right=of MA]  {model\_spatial};
+  \node[m1]   (M1)  [left=of MA]   {model\_bh\_intra\_location};
+
+  \node[several-all] (CM) [below=2cm of MA]     {check\_model};
+
+  \node[several-all] (MC) [below=2cm of CM] {mean\_comparisons};
+
+  \node[several-all] (P) [right=of CM, xshift=5em] {plot};
+
+
+  %% arrows
+  % \draw node[vertex] (Joint) at (1,0) {};
+  \draw (FD.east) to[out=0,in=20] (P.east);
+  \draw (FD) to (MA);
+  \draw (FD) to (SP);
+  \draw (FD) to (M1);
+
+  \draw (MA) to (CM);
+  \draw (SP) to (CM);
+  \draw (M1) to (CM);
+
+  \draw (CM) to (MC);
+
+  \draw (CM.east) to [left] (P);
+  \draw (MC.east) to [bend right] (P);
+
+  %% legend
+  \node[several-all,legendkey]  (LS)  [right=of DE, xshift=6em] {};
+  \node[right,legendtext] (LStext) at (LS.east) {Functions for all models};
+
+  \node[ma,legendkey]  (LMA)  [below=of LS,yshift=3ex] {};
+  \node[right,legendtext] (LMAtext) at (LMA.east) {Classic Anova functions};
+
+  \node[sp,legendkey]  (LSP)  [below=of LMA,yshift=3ex] {};
+  \node[right,legendtext] (LSPtext) at (LSP.east) {Spatial model functions};
+
+  \node[m1,legendkey]  (LM1)  [below=of LSP,yshift=3ex] {};
+  \node[right,legendtext] (LM1text) at (LM1.east) {Hierarchical Bayesian intra\_location model functions};
+
+
+  %% legend bounding box
+  \begin{pgfonlayer}{background}
+    \node[
+      fill=black!10,
+      rounded corners,
+      fit = (LS)(LMA)(LM1text)
+    ] {};
+  \end{pgfonlayer}
+
+
+\end{tikzpicture}
+
+\end{document}

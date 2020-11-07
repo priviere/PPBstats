@@ -1,22 +1,62 @@
-#' Some functions used in several functions of PPBstats
-#' 
+#' Some functions used in one or several functions of PPBstats
+#'
 #' @name common_functions
-#' 
+#'
 #' @description
-#' This file group several functions used in several functions of PPBstats
-#' 
+#' This file group functions used in several functions of PPBstats
+#'
 #' @author Pierre Riviere
-#' 
+#'
 
-# Function use in describe_data.R, GxE.R, model_1.R, model_2.R ----------
+
+# splitter_d ----------
+#'copy paste from plyr:::splitter_d in order to avoid NOTE in the package check ... I know it is quite dirty to do that !
+#' @param data data
+#' @param .variables .variables
+#' @param drop drop
+#'
+splitter_d = function(data, .variables = NULL, drop = TRUE) 
+{
+  indexed_df = NULL # to avoid no visible binding for global variable
+  stopifnot(is.quoted(.variables))
+  if (length(.variables) == 0) {
+    splitv <- rep(1, nrow(data))
+    split_labels <- NULL
+    attr(splitv, "n") <- max(splitv)
+    vars <- character(0)
+  }
+  else {
+    splits <- eval.quoted(.variables, data)
+    splitv <- id(splits, drop = drop)
+    split_labels <- split_labels(splits, drop = drop, id = splitv)
+    vars <- unlist(lapply(.variables, all.vars))
+  }
+  index <- split_indices(as.integer(splitv), attr(splitv, "n"))
+  il <- indexed_df(data, index, vars)
+  structure(il, class = c(class(il), "split", "list"), split_type = "data.frame", 
+            split_labels = split_labels)
+}
+
+# check_data_vec_variables ----------
+#' check if variable are part of the data
+#' @param data data frame
+#' @param vec_variables variables to check
+#' @export
 check_data_vec_variables = function(data, vec_variables){
   for(variable in vec_variables) { if(!is.element(variable, colnames(data))) { stop(variable," is not in data") } }
-  for(variable in vec_variables) { 
+  for(variable in vec_variables) {
     if(!is.numeric(data[,variable])) { stop(variable," is not numeric") } }
 }
 
-# Function use in describe_data.R ----------
+# split_data_for_ggplot ----------
+#' split data into several list for a given factor and a number of rows
+#' @param data data frame
+#' @param factor factor on which the split is done
+#' @param nb_param number of rows
+#' @export
+#' @import plyr
 split_data_for_ggplot = function(data, factor, nb_param){
+  split_factor = NULL # to avoid no visible binding for global variable
   ns = unique(data[,factor])
   s = rep(c(1:length(ns)), each = nb_param)[1:length(ns)]
   names(s) = ns
@@ -25,89 +65,120 @@ split_data_for_ggplot = function(data, factor, nb_param){
   return(data_f)
 }
 
-# Function use in which_won_where.R, mean_vs_stability.R ----------
+# get_biplot ----------
+#' get ggplot object for a biplot based on output from FactoMineR::PCA
+#' @param res.pca output from FactoMineR::PCA
+#' @export
+#' @import ggplot2
 get_biplot = function(res.pca){
-  
+  x = y = label = NULL # to avoid no visible binding for global variable
+
   var = as.data.frame(res.pca$var$coord)
   var = cbind.data.frame(rownames(var), var, color = "darkgreen"); colnames(var)[1:3] = c("label", "x", "y")
-  
+
   ind = as.data.frame(res.pca$ind$coord)
   ind = cbind.data.frame(rownames(ind), ind, color = "black"); colnames(ind)[1:3] = c("label", "x", "y")
-  
+
   r <- min((max(ind[, "x"]) - min(ind[, "x"])/(max(var[, "x"]) - min(var[, "x"]))), (max(ind[, "y"]) - min(ind[, "y"])/(max(var[, "y"]) - min(var[, "y"]))))
   var[, c("x", "y")] <- var[, c("x", "y")] * r * 0.7 # taken from factoextra::fviz_pca_biplot
-  
+
   vi = rbind.data.frame(var, ind)
   vi$size = 4
   vi$size[which(vi$color == "darkgreen")] = 6
-  
-  dimvar = round(res.pca$eig$`percentage of variance`[1:2], 1)
-  
+
+  dimvar = round(as.data.frame(res.pca$eig)$`percentage of variance`[1:2], 1)
+
   p = ggplot(data = vi, aes(x = x, y = y, label = label)) + geom_text(color = as.character(vi$color), size = vi$size) + geom_point(color = as.character(vi$color))
   p = p + xlab(paste("Dim 1 (", dimvar[1], "%)", sep = "")) + ylab(paste("Dim 2 (", dimvar[2], "%)", sep = ""))
   p = p + ggtitle("Biplot germplasm and locations")
   p = p + geom_vline(xintercept = 0, linetype = "longdash",color="grey") + geom_hline(yintercept = 0, linetype = "longdash",color="grey")
-  
+
   return(p)
 }
 
+# get_perpendicular_segment ----------
+#' get coordinate to draw perpendicular segment
+#' @param x1 x coordinate of point 1
+#' @param y1 y coordinate of point 1
+#' @param x2 x coordinate of point 2
+#' @param y2 y coordinate of point 2
+#' @param x3 x coordinate of point 3
+#' @param y3 y coordinate of point 3
+#' @param longer TRUE or FALSE
+#' @details following formulas thanks to jdbertron cf http://stackoverflow.com/questions/10301001/perpendicular-on-a-line-segment-from-a-given-point
+#' @export
 get_perpendicular_segment = function(x1, y1, x2, y2, x3, y3, longer = FALSE){
-  # following formulas thanks to jdbertron cf http://stackoverflow.com/questions/10301001/perpendicular-on-a-line-segment-from-a-given-point
   px = x2-x1
   py = y2-y1
   dAB = px*px + py*py
   u = ((x3 - x1) * px + (y3 - y1) * py) / dAB
   x4 = x1 + u * px
   y4 = y1 + u * py
-  
+
   # to make the segment longer
   if(longer & x4 != 0){
     y4 = y4/x4 * x4*1000000
     x4 = x4*1000000
   }
-  
+
   return(c(x1 = x3, y1 = y3, x2 = x4, y2 = y4))
 }
 
 
-# Function use in check_model_model_1.R, check_model_model_2.R ----------
+# check_analysis_argument ----------
+#' error message regadring check_model of bayesian analysis
+#' @param analysis type of analysis : "experimental_design", "convergence" or "posteriors"
+#' @export
 check_analysis_argument = function(analysis){
-  if(!is.null(analysis)) { 
-    if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }  
-    if( !is.element(analysis, c("convergence")) ){ warning("\"convergence\" is not chosen! You may make mistakes in the interpretation of the results !!!") }  
+  if(!is.null(analysis)) {
+    if( !is.element(analysis, c("experimental_design", "convergence", "posteriors")) ){ stop("analysis must be \"experimental_design\", \"convergence\" or \"posteriors\".") }
+    if( !is.element(analysis, c("convergence")) ){ warning("\"convergence\" is not chosen! You may make mistakes in the interpretation of the results !!!") }
   } else { analysis = "all" }
   return(analysis)
 }
 
+# check_convergence ----------
+#' check convergence of bayesian model
+#' @param out.model output from bayesian model
+#' @param model_name name of the model
+#' @export
+#' @import coda
 check_convergence = function(out.model, model_name = "model1"){
   MCMC = out.model$MCMC
   MCMC = rbind.data.frame(MCMC[[1]], MCMC[[2]])
   attributes(MCMC)$model = model_name
-  
+
   s = summary(out.model$MCMC)
   sq_MCMC = as.data.frame(s$quantiles)
   sq_MCMC$parameter = as.factor(rownames(sq_MCMC))
   colnames(sq_MCMC) = c("q1", "q2", "q3", "q4", "q5", "parameter")
-  
+
   message("The Gelman-Rubin test is running for each parameter ...")
-  test = gelman.diag(out.model$MCMC, multivariate = FALSE)$psrf[,1]
+  test = coda::gelman.diag(out.model$MCMC, multivariate = FALSE)$psrf[,1]
   conv_ok = names(which(test < 1.05))
   conv_not_ok = names(which(test > 1.05))
-  
+
   if( length(conv_not_ok) > 0 ) {
     message("The two MCMC of the following parameters do not converge thanks to the Gelman-Rubin test : ", paste(conv_not_ok, collapse = ", ") ,". Therefore, they are not present in MCMC output.")
-    } else { 
+  } else {
     message("The two MCMC for each parameter converge thanks to the Gelman-Rubin test.")
-    }
+  }
   OUT = list("MCMC" = MCMC, "sq_MCMC" = sq_MCMC, "conv_not_ok" = conv_not_ok)
   return(OUT)
 }
 
-# Function use in ggplot_check_model_model_1.R, ggplot_check_model_model_2.R ----------
-
+# get.caterpillar.plot ----------
+#' get caterpillar plot to view posterior of bayesian model
+#' @param x data frame
+#' @param xmin xmin of the plot
+#' @param xmax xmax of the plot
+#' @export
+#' @import ggplot2
 get.caterpillar.plot = function(x, xmin, xmax){ # cf ggmcmc:ggs_caterpillar
-  p = ggplot(x, aes(x = q3, y = reorder(parameter, q3))) 
-  p = p + geom_point(size = 3) # median 
+  parameter = q1 = q2 = q3 = q4 = q5 = NULL # to avoid no visible binding for global variable
+
+  p = ggplot(x, aes(x = q3, y = reorder(parameter, q3)))
+  p = p + geom_point(size = 3) # median
   p = p + geom_segment(aes(x = q2, xend = q4, yend = reorder(parameter, q3)), size = 1.5) # 25%-75%
   p = p + geom_segment(aes(x = q1, xend = q5, yend = reorder(parameter, q3)), size = 0.5) # 2.5%-25% and 75%-97.5%
   p = p + ylab("parameter") + xlab("value") + ggtitle(x[1, "environment"])
@@ -115,19 +186,25 @@ get.caterpillar.plot = function(x, xmin, xmax){ # cf ggmcmc:ggs_caterpillar
   return(p)
 }
 
-
+# get_mcmc_traceplot_density ----------
+#' get mcmc traceplot density to view posterior of bayesian model
+#' @param MCMC MCMC chain from bayesian model
+#' @export
+#' @import ggplot2
 get_mcmc_traceplot_density = function(MCMC){
-  if( is.vector(MCMC) ) { 
+  Iteration = value = Chain  = NULL # to avoid no visible binding for global variable
+
+  if( is.vector(MCMC) ) {
     mcmc = as.data.frame(matrix(MCMC, ncol = 1))
     colnames(mcmc) = names(MCMC)[1]
     MCMC = mcmc
-    }
+  }
   conv_not_ok = colnames(MCMC)
   vec.plot = NULL
   for (para in conv_not_ok) {
-    D = cbind.data.frame(Iteration = rep(c(1:(nrow(MCMC)/2)), 2), 
-                         Chain = factor(rep(c(1,2), each = (nrow(MCMC)/2))), 
-                         Parameter = para, 
+    D = cbind.data.frame(Iteration = rep(c(1:(nrow(MCMC)/2)), 2),
+                         Chain = factor(rep(c(1,2), each = (nrow(MCMC)/2))),
+                         Parameter = para,
                          value = as.vector(MCMC[,para])
     )
     traceplot = ggplot(D, aes(x = Iteration, y = value, color = Chain)) + geom_line() + ggtitle(para) # cf ggmcmc:ggs_traceplot
@@ -139,67 +216,91 @@ get_mcmc_traceplot_density = function(MCMC){
   return(vec.plot)
 }
 
-  
 
-# Function used in mean_comparisons_model_1.R and mean_comparisons_model_2.R ----------
-
+# get_mean_comparisons_and_Mpvalue ----------
+#' get mean comparisons and square matrix with pvalue from MCMC for bayesian models
+#' @param MCMC MCMC
+#' @param parameter parameter
+#' @param type type
+#' @param threshold threshold
+#' @param alpha alpha
+#' @param p.adj p.adj
+#' @param precision precision
+#' @param get.at.least.X.groups get.at.least.X.groups
+#' @details see \code{\link{mean_comparisons}}
+#' @export
 get_mean_comparisons_and_Mpvalue = function(MCMC, parameter, type, threshold, alpha, p.adj, precision, get.at.least.X.groups){
-  
+  element = NULL # to avoid no visible binding for global variable
+
   if( !is.element(type, c(1,2)) ){ stop("type must be 1 or 2") }
 
   Mpvalue = comp.parameters(MCMC = MCMC, parameter = parameter, type = type, threshold = threshold)
-  
+
   if(type == 1 & is.null(Mpvalue)) { message("mean comparisons not done for ", sub("\\\\\\[", "", element), " because there are less than two parameters to compare.") }
-  
-  
+
+
   if(type == 1 & !is.null(Mpvalue)) {
     Comparison = get.significant.groups(Mpvalue = Mpvalue, MCMC = MCMC, alpha = alpha, p.adj = p.adj)
-    
+
     # number of groups
     a = unlist(strsplit(paste(Comparison[, "groups"], collapse = ""), ""))
     nb_group = length(unique(a))
-    
+
     # get at least X groups
     if(nb_group == 1 & !is.null(get.at.least.X.groups)) {
       env = sub("\\]", "", unique(sapply(colnames(MCMC), function(x){unlist(strsplit(x, ","))[2]})))
       message(paste("Get at least X groups for ", sub("\\\\\\[", "", env),". It may take some time ...", sep = "")) # The sub is useful for model2
-      ALPHA = get.at.least.X.groups(Mpvalue, MCMC, p.adj = p.adj, precision = precision)  
-      alp = ALPHA[paste(get.at.least.X.groups, "_groups", sep = "")]  
+      ALPHA = get.at.least.X.groups(Mpvalue, MCMC, p.adj = p.adj, precision = precision)
+      alp = ALPHA[paste(get.at.least.X.groups, "_groups", sep = "")]
       if(is.numeric(alp)){ alp = round(alp, 3) }
       message(paste("Get at least X groups for", sub("\\\\\\[", "", env),"is done."))
     } else { alp = alpha }
-    
+
     TAB = cbind.data.frame("parameter" = Comparison$parameter,
-                           "median" = Comparison$median, 
-                           "groups" = Comparison$groups, 
-                           "nb_group" = rep(nb_group, nrow(Comparison)), 
+                           "median" = Comparison$median,
+                           "groups" = Comparison$groups,
+                           "nb_group" = rep(nb_group, nrow(Comparison)),
                            "alpha" = rep(alp, nrow(Comparison)),
                            "alpha.correction" = rep(p.adj, nrow(Comparison))
     )
-    
+
   }
-  
-  if(type == 2) { 
-    TAB = cbind.data.frame("proba" = Mpvalue) 
+
+  if(type == 2) {
+    TAB = cbind.data.frame("proba" = Mpvalue)
     o = order(TAB$proba)
     tab = as.data.frame(matrix(TAB[o,], ncol = 1)); rownames(tab) = rownames(TAB)[o]
     TAB = tab
   }
-  
+
   out = list(TAB, Mpvalue)
   names(out) = c("mean.comparisons", "Mpvalue")
   return(out)
 }
 
-# Function use in check_model_model_1.R, check_model_model_2.R ----------
-add_split_col = function(x, each){ rep(c(1:nrow(x)), each = each)[1:nrow(x)] } 
+# add_split_col ----------
+#' add a column to split a dataframe
+#' @param x vector
+#' @param each nb of element iln each split
+#' @export
+add_split_col = function(x, each){ rep(c(1:nrow(x)), each = each)[1:nrow(x)] }
 
-# Function use in ggplot_which_won_where.R, ggplot_mean_vs_stability.R ----------
-
+# is.inside.sector ----------
+#' to know if a point is inside an area
+#' @param x x coordinate of point to know if it is inside the area or not
+#' @param y y coordinate of point to know if it is inside the area or not
+#' @param x1 x coordinate of point 1 of the area
+#' @param y1 y coordinate of point 1 of the area
+#' @param x2 x coordinate of point 2 of the area
+#' @param y2 y coordinate of point 2 of the area
+#' @param x3 x coordinate of point 3 of the area
+#' @param y3 y coordinate of point 3 of the area
+#' @details it is used for ggplot_which_won_where.R, ggplot_mean_vs_stability.R
+#' @export
 is.inside.sector = function(x, y, x1, y1, x2, y2, x3, y3){
   # resolve it with barycentric coordinates
   # thanks to andreasdr, cf http://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
-  
+
   p0y = y1
   p0x = x1
   p1y = y2
@@ -208,14 +309,1474 @@ is.inside.sector = function(x, y, x1, y1, x2, y2, x3, y3){
   p2x = x3
   py = y
   px = x
-  
+
   Area = 0.5 *(-p1y*p2x + p0y*(-p1x + p2x) + p0x*(p1y - p2y) + p1x*p2y)
   s = 1/(2*Area)*(p0y*p2x - p0x*p2y + (p2y - p0y)*px + (p0x - p2x)*py)
   t = 1/(2*Area)*(p0x*p1y - p0y*p1x + (p0y - p1y)*px + (p1x - p0x)*py)
-  
+
   test = s > 0 & t > 0 & (1-s-t) > 0
   return(test)
 }
 
 
+# reshape_data_split_x_axis_in_col ----------
+#' Reshape data in a list based on nb_parameters_per_plot arguments
+#' @details used in describe_data.data_agro.R and plot.data_network.R
+#' @param d data frame
+#' @param vec_variables vectors of variables
+#' @param labels_on which label to display
+#' @param x_axis x axis
+#' @param nb_parameters_per_plot_x_axis nb of paramters for x axis on the lpot
+#' @param in_col in color
+#' @param nb_parameters_per_plot_in_col nb of paramters for color on the plot
+#' @export
+#' @import dplyr
+#' @import plyr
+reshape_data_split_x_axis_in_col = function(
+  d,
+  vec_variables,
+  labels_on,
+  x_axis,
+  nb_parameters_per_plot_x_axis,
+  in_col,
+  nb_parameters_per_plot_in_col
+){
+  split_x_axis = split_in_col  = NULL  # to avoid no visible binding for global variable
 
+  if(!is.null(x_axis)){ d$x_axis = as.factor(as.character(d[,x_axis])) } else { d$x_axis = NA }
+  if(!is.null(in_col)){ d$in_col = as.factor(as.character(d[,in_col])) } else { d$in_col = NA }
+  if(!is.null(labels_on)){ d$labels_text = d[,labels_on] } else { d$labels_text = NA }
+  d_head = d[,c("labels_text", "x_axis", "in_col")]
+
+  if( length(vec_variables) == 1) {
+    d_var = as.data.frame(as.matrix(d[,vec_variables], ncol = 1))
+  } else {
+    d_var = d[,vec_variables]
+  }
+
+  # get rid off rows with only NA
+  tokeep = apply(d_var, 1, function(x){length(which(is.na(x))) != length(x)})
+  t = length(which(!tokeep))
+  if( t > 0 ) { warning(t, " rows have been deleted for ", paste(vec_variables, collapse = ", "), " because of only NA on the row for these variables.") }
+
+  if( length(vec_variables) == 1) {
+    d_var = as.data.frame(as.matrix(d_var[tokeep,], ncol = 1))
+  } else {
+    d_var = d_var[tokeep,]
+  }
+  colnames(d_var) = vec_variables
+
+  d_head = d_head[tokeep,]
+  d = droplevels(cbind.data.frame(d_head, d_var))
+
+  # split for x_axis
+  if(!is.null(x_axis)){
+    ns = unique(d$x_axis)
+    s = rep(c(1:length(ns)), each = nb_parameters_per_plot_x_axis)[1:length(ns)]
+    names(s) = ns
+    d$split_x_axis = s[d$x_axis]
+  } else { d$split_x_axis = NA }
+
+  # split for in_col
+  if(!is.null(in_col)){
+    ns = unique(d$in_col)
+    s = rep(c(1:length(ns)), each = nb_parameters_per_plot_in_col)[1:length(ns)]
+    names(s) = ns
+    d$split_in_col = s[d$in_col]
+  } else { d$split_in_col = NA }
+
+  # Overall split
+  d$split = paste(
+    paste(x_axis, d$split_x_axis, sep = "-"),
+    paste(in_col, d$split_in_col, sep = "-"),
+    sep = "|")
+  d = dplyr::select(d, - split_x_axis, - split_in_col)
+  d = plyr:::splitter_d(d, .(split))
+
+  return(d)
+}
+
+# ggradar_bis
+#' ggradar_bis
+#' @description ggplot radar
+#' @param data the data
+#' @export
+#' @import scales
+#' @import tibble
+#' @import RColorBrewer
+#' 
+ggradar_bis = function(data){
+  x = y = axis.no = values = text = group = NULL # to avoid no visible binding for global variable
+  
+  # code from https://github.com/region-spotteR/PrepPlot/tree/master/Radar_examples
+  #####################################################################################################
+  ############################ 0. Set up example data ####################################################
+  #####################################################################################################
+  ## a) You can either use data, which is rescaled between 0 and 1 for the radar OR
+  ## b) You can calculate the quantile moment of each data point
+  ## -> The latter method avoids overplotting if your data is clustered and provides meaningful grid-lines, 
+  ##    but since it distorts the data outliers won't be spotted easily. The first method
+  ##    doesn't distort the distribution, but with it the 50 % quantile will be on a different distance
+  ##    from the center of the radar. Thus a) only makes sense in special situations. 
+  ## -> If you are interested in outliers and the distribution: Make a boxplot! Not a radar ;)
+  
+  ### 0.1a Rescale the mtcars dataset and select the last four cars and the first nine variables 
+  ##       Warning: This will make any quantile lines 'meaningless'
+  #data %>% tibble::rownames_to_column(var = 'group' ) %>%  mutate_at(.vars=vars(),.funs=scales::rescale) -> data_radar
+  
+  ### 0.1b Create quantile data from the example dataset to create the grid (recommended)
+  # tmp<-lapply(1:ncol(data),function(j) rank(data[,j],na.last="keep")/sum(!is.na(data[,j]))) 
+  # => note done and the next line instead because of consistency of methods between data_radar and qdata. Otherwise the line do not set on the right x ans y coord
+  tmp<-lapply(1:ncol(data),function(j) scales::rescale(data[,j],na.omit=TRUE))
+  qdata<-do.call(data.frame,tmp)
+  colnames(qdata)=colnames(data)
+  rownames(qdata)=rownames(data)
+  ## do the same as with the rescaled data
+  qdata %>% tibble::rownames_to_column(var = 'group' ) -> data_radar
+  
+  ### 0.2 Create hover data for plotly - leave this out when you chose a)
+  data_hover<-cbind(data, data[,1])
+  colnames(data_hover) = c(colnames(data), colnames(data)[1])
+  
+  ### 0.3 Create quantile data for the hoverinfo of the gridlines - leave this out when you chose a)
+  qdata<-sapply(colnames(data_hover),function(j) quantile(data_hover[,j],probs = seq(0,1,0.25)))
+  
+  ### 0.4 Set the plot parameters - mostly similar to ggradar
+  plot.data <- data_radar
+  ### parameters
+  axis.labels=colnames(plot.data)[-1]                             
+  grid.min=0  
+  grid.mid=0.5
+  grid.max=1  
+  centre.y=grid.min - ((1/9)*(grid.max-grid.min))
+  plot.extent.x.sf=1.2
+  plot.extent.y.sf=1.2
+  axis.label.offset=1.15
+  axis.line.colour="grey"
+  background.circle.transparency=0.2
+  r<-seq(0,1,0.25) ## Radius of the gridlines
+  
+  #####################################################################################################
+  ############################ 1. Helper functions ####################################################
+  #####################################################################################################
+  CalculateGroupPath4 <- function(df) {
+    angles = seq(from=0, to=2*pi, by= (2*pi)/(ncol(df)-1)) # find increment
+    xx<-c(rbind(t(df[,-1])*sin(angles[-ncol(df)]),t(df[,2])*sin(angles[1]))) # The first observation needs to be repeated to allow the lines to close
+    yy<-c(rbind(t(df[,-1])*cos(angles[-ncol(df)]),t(df[,2])*cos(angles[1])))
+    graphData<-data.frame(group=rep(df[,1],each=ncol(df)),x=(xx),y=(yy))
+    return(graphData)
+  }
+  CalculateAxisPath2 <- function(var.names,min,max) {
+    n<-length(var.names)
+    #Cacluate required number of angles (in radians)
+    angles <- seq(from=0, to=2*pi, by=(2*pi)/n)
+    #calculate vectors of min and max x+y coords
+    min.x <- min*sin(angles)
+    min.y <- min*cos(angles)
+    max.x <- max*sin(angles)
+    max.y <- max*cos(angles)
+    tmp<-lapply(1:n,function(i) matrix(c(i,i,min.x[i],max.x[i],min.y[i],max.y[i]),2,3))
+    res<-as.data.frame(do.call(rbind,tmp))
+    colnames(res) <- c("axis.no","x","y")
+    return(res)
+  }
+  funcCircleCoords <- function(center = centre.y, r = 1, npoints = ncol(plot.data)){
+    #Adapted from Joran's response to http://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2
+    tt <- seq(0,2*pi,length.out = npoints)
+    yy <- (center + r) * cos(tt)
+    xx <- (center + r) * sin(tt)
+    return(data.frame(x = xx, y = yy))
+  }
+  #####################################################################################################
+  ############################ 2. Prepare Plotting  ####################################################
+  #####################################################################################################
+  
+  ### 2.1. Create vector with all KPI/variable names; Set up the data for plotting 
+  var.names <- colnames(plot.data)[-1]  # Short version of variable names 
+  plot.data.offset <- plot.data
+  plot.data.offset[,2:ncol(plot.data)]<- plot.data[,2:ncol(plot.data)]+abs(centre.y)
+  
+  ### 2.2. Calculate the x and y coordinates for our data
+  xy_lines <- CalculateGroupPath4(plot.data.offset)
+  xy_lines$annot<-  c(t(data_hover))
+  xy_lines$text <-  paste(paste(rep(colnames(data_hover),nrow(data_radar)),xy_lines$annot,sep=": "),'<br />')
+  
+  ### 2.3. Create a list containing all grid-objects
+  
+  ## 2.3.1 Calculate the data frame for the axis-lines
+  grid <- NULL
+  grid$axis_path  <- CalculateAxisPath2(var.names,grid.min+abs(centre.y),grid.max+abs(centre.y))
+  n.vars <- length(var.names)
+  
+  ## 2.3.2 Calculate the coordinates for the axis labels
+  grid$axis_label <-funcCircleCoords(0,(grid.max+abs(centre.y))*axis.label.offset,ncol(plot.data))[-ncol(plot.data),]
+  grid$axis_label$text=axis.labels
+  
+  ## 2.3.3a For polygon-radar (spider-chart): Calculate the grid-lines
+  grid$lines<- lapply(1:length(r),function(i) funcCircleCoords(0,r[i]+abs(centre.y),ncol(plot.data)))
+  names(grid$lines)<-paste("q",r*100,sep='')
+  
+  ## 2.3.3b For circular radar: Calculate the grid-lines
+  grid$lines_circle<- lapply(1:length(r),function(i) funcCircleCoords(0,r[i]+abs(centre.y),ncol(plot.data)*(2^7)))
+  names(grid$lines_circle)<-paste(r*100,'% Quantile',sep='')
+  
+  ## 2.3.4 Add the real values to the gridlines
+  rownames(qdata)=names(grid$lines)
+  grid$lines<-lapply(1:length(grid$lines),function(j) cbind(grid$lines[[j]],values=round(qdata[names(grid$lines[j]),],2)))
+  names(grid$lines)<-rownames(qdata)
+  
+  ## 2.3.5 Bind all the grid-lines in one data.frame
+  grid$all_lines<-do.call(rbind,grid$lines)
+  n<-nrow(grid$all_lines)/length(grid$lines)        # n 
+  grid$all_lines$q<-rep(names(grid$lines), each=n)  # The quantiles of each grid
+  
+  ## 2.3.5a For plotly: Create a data without 0 and 100 % Quantile to plot all grid-lines at once
+  myrows<-which(grid$all_lines$q%in%names(grid$lines)[-c(1,length(grid$lines))]) # Select all quantiles except q0 & q100
+  grid$inner_lines<-grid$all_lines[myrows,] # create df of the inner grid values
+  
+  ## 2.3.5b For a circular grid: Bind all the grid-lines in one df and add the real values
+  grid$all_lines_c<-do.call(rbind,grid$lines_circle)
+  n<-nrow(grid$all_lines_c)/length(grid$lines_circle)
+  grid$all_lines_c$q<-rep(names(grid$lines_circle),each=n) # The quantiles of each grid
+  
+  ### 2.4 Create a data.frame to annotate the maximum points of the radar-chart
+  data_max<-grid$axis_path[seq(2,nrow(grid$axis_path),2),]
+  data_max$text<-round(qdata['q100',-ncol(qdata)],2)
+  
+  
+  ### 3.1. Create an empty theme for ggplot
+  theme_clear <- theme_bw(base_size=20) + 
+    theme(axis.text.y=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          panel.border=element_blank(),
+          legend.key=element_rect(linetype="blank"))
+  
+  
+  ### 3.2. Set the extent of the plot and the colors of the grid
+  plot.extent.x=(grid.max+abs(centre.y))*plot.extent.x.sf
+  plot.extent.y=(grid.max+abs(centre.y))*plot.extent.y.sf
+  bg_colors<-c(RColorBrewer::brewer.pal(9,'Purples')[2],'#DFDFED') # Set the grid colors
+  
+  ### 3.3. Set up a basic empty gg-object
+  basething <- ggplot() + xlab(NULL) + ylab(NULL) + coord_fixed() +
+    scale_x_continuous(limits=c(-plot.extent.x,plot.extent.x)) + 
+    scale_y_continuous(limits=c(-plot.extent.y,plot.extent.y)) + theme_clear 
+  
+  ### 3.4 For the polygon-radar (spider-chart): Add the gridlines
+  n<-nrow(grid$all_lines)/length(grid$lines)        # n 
+  base_grid<-basething+geom_polygon(data=grid$all_lines[nrow(grid$all_lines):1,],aes(x,y,group=rev(q)),
+                                    fill=c(rep(rep(rev(bg_colors),2),each=n),rep('white',n)))+
+    geom_polygon(data=grid$lines$q0,aes(x,y),fill="white")+
+    geom_path(data=grid$axis_path,aes(x=x,y=y,group=axis.no),
+              colour=axis.line.colour,alpha=0.4)
+  
+  ### 3.5 Add text to gg-object
+  font_size=3
+  base_text<-base_grid+geom_text(data=grid$all_lines,aes(x,y,label=values),size=font_size)+
+    geom_text(data=grid$axis_label,aes(x,y,label=text))
+  
+  ### 3.6 Add observation lines to gg-object
+  gg<-base_text+geom_path(data=xy_lines,aes(x=x,y=y,group=group,color=group),alpha=0.8,size=1)
+  
+  return(gg)
+}
+
+
+# check_freq_anova ----------
+#' check freq anova
+#' @param model anova model
+#' @export
+#' @import agricolae
+#' @import stats
+check_freq_anova = function(model){
+  r = y = percentage_Sum_sq  = NULL  # to avoid no visible binding for global variable
+
+  anova_model = stats::anova(model)
+  # 1. Check residuals (qqplot, Skewness & Kurtosis tests) ----------
+  r = stats::residuals(model)
+
+  # 1.1. Normality ----------
+  data_ggplot_normality = data.frame(r)
+  data_ggplot_skewness_test = agricolae::skewness(r)
+  data_ggplot_kurtosis_test = agricolae::kurtosis(r)
+  data_ggplot_shapiro_test = stats::shapiro.test(r)
+  
+  # 1.2. Standardized residuals vs theoretical quantiles ----------
+  s = sqrt(deviance(model)/stats::df.residual(model))
+  rs = r/s
+  data_ggplot_qqplot = data.frame(x = qnorm(ppoints(rs)), y = sort(rs))
+
+  # Test for homogeneity of variances
+  #ft = fligner.test(variable ~ interaction(germplasm,location), data=data)
+  #print(ft)
+
+  # 2. repartition of variability among factors ----------
+  total_Sum_Sq = sum(anova_model$"Sum Sq")
+  Sum_sq = anova_model$"Sum Sq"
+  pvalue = anova_model$"Pr(>F)"
+  percentage_Sum_sq = Sum_sq/total_Sum_Sq*100
+  factor = rownames(anova_model)
+  data_ggplot_variability_repartition_pie = cbind.data.frame(factor, pvalue, Sum_sq, percentage_Sum_sq)
+
+  # 3. variance intra germplasm
+  var_intra = tapply(model$residuals, model$model$germplasm, var, na.rm = TRUE)
+  data_ggplot_var_intra = data.frame(x = model$model$germplasm, y = model$residuals)
+
+  data_ggplot = list(
+    "data_ggplot_residuals" = list(
+      "data_ggplot_normality" = data_ggplot_normality,
+      "data_ggplot_skewness_test" = data_ggplot_skewness_test,
+      "data_ggplot_kurtosis_test" = data_ggplot_kurtosis_test,
+      "data_ggplot_shapiro_test" = data_ggplot_shapiro_test,
+      "data_ggplot_qqplot" = data_ggplot_qqplot
+    ),
+    "data_ggplot_variability_repartition_pie" = data_ggplot_variability_repartition_pie,
+    "data_ggplot_var_intra" = data_ggplot_var_intra
+  )
+
+  return(data_ggplot)
+}
+
+# plot check_freq_anova ----------
+#' plot check freq anova
+#' @param x output from check_model
+#' @param variable variable
+#' @export
+#' @import ggplot2
+plot_check_freq_anova = function(x, variable){
+  r = y = percentage_Sum_sq = NULL # to avoid no visible binding for global variable
+
+  data_ggplot = x$data_ggplot
+
+  data_ggplot_normality = data_ggplot$data_ggplot_residuals$data_ggplot_normality
+  data_ggplot_skewness_test = data_ggplot$data_ggplot_residuals$data_ggplot_skewness_test
+  data_ggplot_kurtosis_test = data_ggplot$data_ggplot_residuals$data_ggplot_kurtosis_test
+  data_ggplot_shapiro_test = data_ggplot$data_ggplot_residuals$data_ggplot_shapiro_test
+  data_ggplot_qqplot = data_ggplot$data_ggplot_residuals$data_ggplot_qqplot
+  data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
+  data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
+
+  # 1. Normality ----------
+  # 1.1. Histogram ----------
+  p = ggplot(data_ggplot_normality, aes(x = r), binwidth = 2)
+  p = p + geom_histogram() + geom_vline(xintercept = 0)
+  p = p + ggtitle("Test for normality", 
+                  paste("Skewness:", signif(data_ggplot_skewness_test, 3), 
+                        "; Kurtosis:", signif(data_ggplot_kurtosis_test, 3),
+                        "; Shapiro:", signif(data_ggplot_shapiro_test$p.value, 3)
+                        )
+                  )
+  p1.1 = p + theme(plot.title=element_text(hjust=0.5))
+
+  # 1.2. Standardized residuals vs theoretical quantiles ----------
+  p = ggplot(data_ggplot_qqplot, aes(x = x, y = y)) + geom_point() + geom_line()
+  p = p + geom_abline(slope = 1, intercept = 0, color = "red")
+  p = p + xlab("Theoretical Quantiles") + ylab("Standardized residuals")
+  p1.2 = p + ggtitle("QQplot") + theme(plot.title=element_text(hjust=0.5))
+
+  # 1.3. simple points to look at autocorrelation ----------
+  data_ggplot_normality$x = c(1:nrow(data_ggplot_normality))
+  p = ggplot(data_ggplot_normality, aes(x = x, y = r)) + geom_point()
+  p1.3 = p + ggtitle("residuals") + theme(plot.title=element_text(hjust=0.5))
+  
+  # 2. repartition of variability among factors ----------
+  p = ggplot(data_ggplot_variability_repartition_pie,
+             aes(x = "", y = percentage_Sum_sq, fill = factor,
+                 label = paste(round(percentage_Sum_sq, 1), "%", sep = "")
+             )
+  )
+  p = p + ggtitle(paste("Total variance distribution for", variable))
+  p = p + geom_bar(width = 1, stat = "identity") + coord_polar("y", start = 0)
+  p = p + geom_text(position = position_stack(vjust = 0.5))
+  p2 = p + ylab("") + xlab("") + theme(plot.title=element_text(hjust=0.5))
+
+
+  # 3. variance intra germplasm
+  p = ggplot(data_ggplot_var_intra, aes(x = x, y = y))  + geom_boxplot(aes(color=x))
+  p = p + ggtitle("Distribution of residuals") + xlab("germplasm") + ylab(variable)
+  p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90), plot.title=element_text(hjust=0.5))
+  p3 = p
+
+  # 4. return results
+  out = list(
+    "residuals" = list(
+      "histogram" = p1.1,
+      "qqplot" = p1.2,
+      "points" = p1.3),
+    "variability_repartition" = p2,
+    "variance_intra_germplasm" = p3
+  )
+
+  return(out)
+}
+
+
+# mean_comparisons_freq_anova ----------
+#' mean comparisons for frequentist analysis
+#' @param model anova model
+#' @param variable variable
+#' @param alpha alpha
+#' @param p.adj p.adj
+#' @param vec_fac vec_fac
+#' @param info info from mean_comparisons
+#' @export
+#' @import agricolae
+mean_comparisons_freq_anova = function(model, variable, alpha = 0.05,
+                                       p.adj = "none", info = NULL,
+                                       vec_fac = c("germplasm", "location", "year")
+){
+
+  data_ggplot_LSDbarplot = function(model, fac, p.adj, alpha){
+    lsd = agricolae::LSD.test(model, fac, alpha = alpha, p.adj = p.adj)
+
+    parameter = factor(rownames(lsd$groups), levels = rownames(lsd$groups))
+    means = lsd$groups[,1]
+    groups = lsd$groups[,2]
+    alpha = rep(alpha, length(parameter))
+    alpha.correction = rep(p.adj, length(parameter))
+
+    out_LSD = data.frame(parameter, means, groups, alpha, alpha.correction)
+    if( nrow(out_LSD) == 0 ) { out_LSD = NULL }
+    return(out_LSD)
+  }
+
+  # vec_fac = attr(model$terms,"term.labels")
+  out = list()
+  for(fac in vec_fac){
+    out = c(out, list(data_ggplot_LSDbarplot(model, fac, p.adj, alpha)))
+  }
+  names(out) = paste("data_ggplot_LSDbarplot_", vec_fac, sep = "")
+
+  # Return results
+  out <- c(list("info" = info), out)
+
+  return(out)
+}
+
+# plot_mean_comparisons_freq_anova ----------
+#' plot mean comparisons for frequentist analysis
+#' @param x output from mean comparison
+#' @param variable variable
+#' @param nb_parameters_per_plot nb paramter per plot
+#' @export
+#' @import ggplot2
+#' @import dplyr
+#' @import plyr
+plot_mean_comparisons_freq_anova = function(x, variable, nb_parameters_per_plot = 8){
+
+  data_ggplot_LSDbarplot_germplasm = x$data_ggplot_LSDbarplot_germplasm
+  data_ggplot_LSDbarplot_location = x$data_ggplot_LSDbarplot_location
+  data_ggplot_LSDbarplot_year = x$data_ggplot_LSDbarplot_year
+
+  ggplot_LSDbarplot = function(d_LSD, fac, variable, nb_parameters_per_plot){
+    parameter = means  = NULL  # to avoid no visible binding for global variable
+
+    d_LSD = dplyr::arrange(d_LSD, means)
+    d_LSD$max = max(d_LSD$means, na.rm = TRUE)
+    d_LSD$split = add_split_col(d_LSD, nb_parameters_per_plot)
+    d_LSD_split = plyr:::splitter_d(d_LSD, .(split))
+
+    out = lapply(d_LSD_split, function(dx){
+      p = ggplot(dx, aes(x = reorder(parameter, means), y = means)) + geom_bar(stat = "identity")
+      p = p + geom_text(aes(x = reorder(parameter, means), y = means/2, label = groups), angle = 90, color = "white")
+      p = p + ggtitle(paste(fac, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
+      p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + coord_cartesian(ylim = c(0, dx[1,"max"])) + ylab(variable)
+      return(p)
+    })
+
+    return(out)
+  }
+  
+  out = list()
+  
+  # Germplasm
+  if( !is.null(data_ggplot_LSDbarplot_germplasm) ){
+    ggplot_LSDbarplot_germplasm = ggplot_LSDbarplot(data_ggplot_LSDbarplot_germplasm, "germplasm", variable, nb_parameters_per_plot)
+    out = c(out, list("germplasm" = ggplot_LSDbarplot_germplasm))
+  } else {
+    ggplot_LSDbarplot_germplasm = NULL
+  }
+
+  
+  # Location
+  if( !is.null(data_ggplot_LSDbarplot_location) ){
+    ggplot_LSDbarplot_location = ggplot_LSDbarplot(data_ggplot_LSDbarplot_location, "location", variable, nb_parameters_per_plot)
+    out = c(out, list("location" = ggplot_LSDbarplot_location))
+  } else {
+    ggplot_LSDbarplot_location = NULL
+  }
+
+  # Year
+  if( !is.null(data_ggplot_LSDbarplot_year) ){
+    ggplot_LSDbarplot_year = ggplot_LSDbarplot(data_ggplot_LSDbarplot_year, "year", variable, nb_parameters_per_plot)
+    out = c(out, list("year" = ggplot_LSDbarplot_year))
+  } else {
+    ggplot_LSDbarplot_year = NULL
+  }
+  
+  return(out)
+}
+
+# pmap -----
+#' map background for plot.data_agro, plot.data_network
+#' @param net network object or data frame
+#' @param format network format
+#' @param labels_on where display label
+#' @param labels_size label size
+#' @param zoom zoom of the text on the map. See ?get_stamenmap for more details.
+#' @export
+#' @details The box of the map is settle based on lat and long data and stamen map.
+#' See ?get_stamenmap for more details.
+#' Do not forget to cite credit:
+#' Map tiles by \href{http://stamen.com}{Stamen Design}, 
+#' under \href{http://creativecommons.org/licenses/by/3.0}{CC BY 3.0}. 
+#' Data by \href{http://openstreetmap.org}{OpenStreetMap}, 
+#' under \href{http://www.openstreetmap.org/copyright}{ODbL}.
+#' 
+#' @import ggmap
+#' @import ggnetwork
+#' @import intergraph
+#' @import png
+#' @import grid
+#'
+pmap = function(net, format, labels_on, labels_size, zoom){
+  wt = mpg = long = lat  = NULL  # to avoid no visible binding for global variable
+
+  # As it is not possible to use annotation_custom with polar coordinates (i.e. output from ggmap) in order to add pies on map,
+  # I decided to transfer ggmap output to a png that is inserted in a background of a plot with cartesian coordinates
+  # Note there is a change in the look of the map because of coordinates changes ...
+  if( is_igraph(net) ){
+    d = ggnetwork::ggnetwork(net, arrow.gap = 0)
+
+    if( format == "bipart" ) {
+      d = d[which(d$type == "location"), c("lat", "long", "vertex.names")]
+      colnames(d)[ncol(d)] = "location"
+    }
+    if( format == "unipart_location" ){
+      d = d[c("lat", "long", "vertex.names")]
+      colnames(d)[ncol(d)] = "location"
+    }
+  } else { d = net }
+
+  n = unique(d[, c("lat", "long", "location")])
+  n$lat = as.numeric(as.character(n$lat))
+  n$long = as.numeric(as.character(n$long))
+  n = na.omit(n)
+  long_min = min(n$long) - 1
+  long_max = max(n$long) + 1
+  lat_min = min(n$lat) - 1
+  lat_max = max(n$lat) + 1
+  
+  # Calculates the geodesic distance between two points specified by radian latitude/longitude using the
+  # Haversine formula (hf)
+  # https://www.r-bloggers.com/great-circle-distance-calculations-in-r/
+  gcd.hf <- function(long1, lat1, long2, lat2) {
+    long1 = long1*pi/180
+    lat1 = lat1*pi/180
+    long2 = long2*pi/180
+    lat2 = lat2*pi/180
+    R <- 6371 # Earth mean radius [km]
+    delta.long <- (long2 - long1)
+    delta.lat <- (lat2 - lat1)
+    a <- sin(delta.lat/2)^2 + cos(lat1) * cos(lat2) * sin(delta.long/2)^2
+    c <- 2 * asin(min(1,sqrt(a)))
+    d = R * c
+    return(d) # Distance in km
+  }
+  
+  left_box = gcd.hf(long_min, lat_min, long_min, lat_max)
+  bottom_box = gcd.hf(long_min, lat_min, long_max, lat_min)
+  if( bottom_box < left_box ){ # increase long_max and decrease lat min
+      l = 0
+      longmax = long_max
+      longmin = long_min
+      while(l < left_box){ 
+        longmax = longmax + 0.01
+        longmin = longmin - 0.01
+        l = gcd.hf(longmin, lat_min, longmax, lat_min) 
+        }
+      long_max = longmax
+      long_min = longmin
+  }
+  if( left_box < bottom_box ){ # increase lat_max and decrease lat_min
+    l = 0
+    latmax = lat_max
+    latmin = lat_min
+    while(l < left_box){ 
+      latmax = lat_max + 0.01
+      latmin = lat_min + 0.01
+      l = gcd.hf(long_min, latmin, long_min, latmax)
+    }
+    lat_max = latmax
+    lat_min = latmin
+  }
+  
+  # update box
+  box = c(long_min, lat_min, long_max, lat_max)
+  map = ggmap::get_map(location = box, source = "stamen", zoom = zoom)
+  m = ggmap::ggmap(map, extent = "device")
+  # m = m + geom_text(x = (long_min + long_max)/2 , y = lat_min + 0.2 , size = 2,
+  #              label = "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.")
+  ggsave("tmp_map.png", m, width = 1, height = 1) # get a perfect square
+  p = ggplot() # support for the map background
+  p = p + coord_cartesian(xlim = range(m$data$lon), ylim = range(m$data$lat), expand = FALSE)
+  img = png::readPNG("tmp_map.png")
+  pmap = p + annotation_custom(grid::rasterGrob(img, width = unit(1,"npc"), height = unit(1,"npc")),
+                               -Inf, Inf, -Inf, Inf) # change in the look of the map because of coordinates changes
+  pmap = pmap + xlab("long") + ylab("lat")
+  file.remove("tmp_map.png")
+  if( !is.null(labels_on) ){
+    if( labels_on == "location" ){
+      pmap = pmap + geom_nodelabel_repel(data = n, aes(x = long, y = lat, label = location), size = labels_size, inherit.aes = FALSE)
+    }
+  }
+  return(pmap)
+}
+
+
+# add_pies ----------
+#' Add_pies on map or network for plot.data_agro, plot.data_network
+#' @param p network or map ggplot
+#' @param n network object from igraph or data frame with coordinates
+#' @param format format of n
+#' @param plot_type network or map
+#' @param data_to_pie data with the variables
+#' @param variable variable to display
+#' @param pie_size size of the pie
+#' @details
+#' script adapted from
+#' Pies On A Map, Demonstration script, By QDR :
+#' https://qdrsite.wordpress.com/2016/06/26/pies-on-a-map/
+#'
+#' Guangchuang YU code :
+#' https://cran.r-project.org/web/packages/ggimage/vignettes/ggimage.html#geom_subview
+#' https://github.com/GuangchuangYu/ggimage/blob/master/R/geom_subview.R
+#'
+#' @export
+#' @importFrom ggimage geom_subview
+#' @import plyr
+#' @import ggnetwork
+#' @import intergraph
+#' @import ggplot2
+#' @import igraph
+#'
+add_pies = function(p, n, format, plot_type, data_to_pie, variable, pie_size){
+
+  id_ok = NULL # to avoid no visible binding for global variable ‘id_ok’
+
+  # add a invisible point with variable value to get the legend of pies + set the legend
+  colnames(data_to_pie)[which(colnames(data_to_pie) == variable)] = "variable"
+
+  col_low = "red" # "#132B43"
+  col_high = "green" # "#56B1F7"
+
+  if( is.numeric(data_to_pie$variable) ) {
+    p = p + geom_point(data = data_to_pie, x = 0, y = 0, size = -10, aes(fill = variable), inherit.aes = FALSE)
+    p = p + scale_fill_continuous(low = col_low, high = col_high)
+    scale_ok = scales::seq_gradient_pal(low = col_low, high = col_high)(seq(0, 1, length.out = nrow(data_to_pie)))
+    s = seq(min(data_to_pie$variable, na.rm = TRUE), max(data_to_pie$variable, na.rm = TRUE), length.out = nrow(data_to_pie))
+    data_to_pie$scale_col = sapply(data_to_pie$variable, function(x){scale_ok[which(s >= x)[1]]})
+  }
+
+  if( is.factor(data_to_pie$variable) ) {
+    p = p + geom_point(data = data_to_pie, x = -10, y = 10, aes(shape = variable, fill = variable), inherit.aes = FALSE)
+    p = p + scale_shape_manual(values = rep(22, nlevels(data_to_pie$variable)))
+    scale_ok = scales::seq_gradient_pal(low = col_low, high = col_high)(seq(0, 1, length.out = nlevels(data_to_pie$variable)))
+    p = p + scale_fill_manual(values = scale_ok)
+    s = seq(1, nlevels(data_to_pie$variable))
+    data_to_pie$scale_col = sapply(as.numeric(data_to_pie$variable), function(x){scale_ok[which(s >= x)[1]]})
+  }
+
+
+  # Set colnames for next step according to plot type and get range for x and y
+  if( plot_type == "map" ) {
+    colnames(data_to_pie)[which(colnames(data_to_pie) == "location")] = "id_ok"
+    xmin = min(p$coordinates$limits$x); xmax = max(p$coordinates$limits$x)
+    ymin = min(p$coordinates$limits$y); ymax = max(p$coordinates$limits$y)
+  }
+
+  if( plot_type == "network" ){
+    colnames(data_to_pie)[which(colnames(data_to_pie) == "seed_lot")] = "id_ok"
+    xmin = min(p$data$x); xmax = max(p$data$x)
+    ymin = min(p$data$y); ymax = max(p$data$y)
+  }
+
+  # Create a list of ggplot objects. Each one is the pie chart for each site with all labels removed.
+  pies <- plyr::dlply(data_to_pie, .(id_ok), function(z){
+    z = dplyr::arrange(z, variable)
+    s_col = z$scale_col; names(s_col) = z$variable
+    s_col = s_col[unique(names(s_col))]
+    ggplot(z, aes(x = factor(1), fill = factor(variable))) +
+      geom_bar(width = 1) +
+      coord_polar(theta = "y") +
+      scale_fill_manual(values = s_col) +
+      theme(axis.line=element_blank(),
+            axis.text.x=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks=element_blank(),
+            axis.title.x=element_blank(),
+            axis.title.y=element_blank(),
+            legend.position="none",
+            panel.background=element_blank(),
+            panel.border=element_blank(),
+            panel.grid.major=element_blank(),
+            panel.grid.minor=element_blank(),
+            plot.background=element_blank())
+  }
+  )
+
+  # Get coordinates of each pie and select pies
+  if( igraph::is_igraph(n) ){
+    d = ggnetwork::ggnetwork(n, arrow.gap = 0)
+  } else { d = n }
+  v_id = c(unique(as.character(data_to_pie$id_ok)))
+
+  if( plot_type == "map" & format == "bipart" ){
+    d = droplevels(d[which(d$type == "location"),])
+    v_ok = v_id[which(is.element(v_id, as.character(d$vertex.names) ))]
+    v_not_ok = v_id[which(!is.element(v_id, as.character(d$vertex.names) ))]
+  }
+  if( plot_type == "map" & format == "unipart_location" ){
+    v_ok = v_id[which(is.element(v_id, as.character(d$vertex.names) ))]
+    v_not_ok = v_id[which(!is.element(v_id, as.character(d$vertex.names) ))]
+  }
+  if( plot_type == "map" & format == "unipart_sl" ){
+    v_ok = v_id[which(is.element(v_id, as.character(d$location) ))]
+    v_not_ok = v_id[which(!is.element(v_id, as.character(d$location) ))]
+  }
+  if( plot_type == "network" & format == "unipart_sl" ){
+    v_ok = v_id[which(is.element(v_id, as.character(d$vertex.names) ))]
+    v_not_ok = v_id[which(!is.element(v_id, as.character(d$vertex.names) ))]
+  }
+  if( plot_type == "map" & format == "data_agro" ){
+    v_ok = v_id[which(is.element(v_id, as.character(d$location) ))]
+    v_not_ok = v_id[which(!is.element(v_id, as.character(d$location) ))]
+  }
+  pies = pies[v_ok]
+
+  if( length(v_ok) == 0) {
+    warning("In the data with the variable, no id exist in the data with coordinates and therefore no pies are displayed")
+  }
+  if( length(v_ok) < length(v_id) ){
+    warning("In the data with the variable, the following id does not exist in the data with the coordinates: ", paste(v_not_ok, collapse = ", "))
+  }
+
+  if( plot_type == "map" ){
+    if( length(v_ok) > 0 ) {
+      if( format == "bipart" ) {
+        d = ggnetwork::ggnetwork(n, arrow.gap = 0)
+        d = d[which(d$type == "location"), c("lat", "long", "vertex.names")]
+        colnames(d)[ncol(d)] = "location"
+      }
+      if( format == "unipart_location" ){
+        d = ggnetwork::ggnetwork(n, arrow.gap = 0)
+        d = d[c("lat", "long", "vertex.names")]
+        colnames(d)[ncol(d)] = "location"
+      }
+      d = unique(d[, c("lat", "long", "location")])
+
+      piecoords = lapply(names(pies), function(x){
+        c(x = as.numeric(as.character(d[which(d$location == x), "long"])),
+          y = as.numeric(as.character(d[which(d$location == x), "lat"]))
+        )
+      }
+      )
+    }
+  }
+
+
+  if( plot_type == "network" ){
+    if( length(v_ok) > 0 ) {
+      piecoords = lapply(names(pies), function(x){
+        c(x = unique(p$data[which(p$data$vertex.names == x), "x"]), y = unique(p$data[which(p$data$vertex.names == x), "y"]))
+      }
+      )
+    }
+  }
+
+  # add pies on plot
+  if( length(v_ok) > 0 ) {
+    for(i in 1:length(pies)){
+      p = p + geom_subview(x = piecoords[[i]]["x"], y = piecoords[[i]]["y"],
+                           subview = pies[[i]],
+                           width = (xmax-xmin)*pie_size, height = (ymax-ymin)*pie_size)
+      # p = p + labs(fill = variable) # not good with factor variables ...
+      p = p + ggtitle(variable)
+    }
+  }
+
+  return(p)
+}
+
+# format_organo ----------
+#' format data for organoleptic analysis
+#' @param data data frame
+#' @param threshold threshold
+#' @param var_sup supplementary variables
+#' @details see \code{\link{format_data_PPBstats.data_organo_napping}} and 
+#' \code{\link{format_data_PPBstats.data_organo_hedonic}}
+#' @import dplyr
+#' @export
+format_organo = function(data, threshold, var_sup){
+  juges = NULL # to avoid no visible binding for global variable
+  
+  # 1. Merge and create data frame ----------
+  N = data
+  N$sample = factor(paste(N$location, N$germplasm, sep = ":"))
+
+  # 2. Add the occurence of the different descriptors ----------
+  descriptors = as.vector(as.character(N$descriptors))
+  vec_adj = unlist(strsplit(descriptors, ";"))
+  vec_adj = sort(unique(vec_adj))
+  if( length(which(vec_adj == "")) > 0 ) { vec_adj = vec_adj[-which(vec_adj == "")] }
+
+  df = matrix(0, ncol = length(vec_adj), nrow = nrow(N))
+  df = as.data.frame(df)
+  colnames(df) = vec_adj
+  out = cbind.data.frame(N, df)
+
+  for (i in 1:nrow(out)){
+    v_adj = out[i, "descriptors"]
+    v_adj = unlist(strsplit(as.character(v_adj), ";"))
+    if( length(which(v_adj == "")) > 0 ) { v_adj = v_adj[-which(v_adj == "")] }
+
+    for (j in 1:length(v_adj)) {
+      e = v_adj[j]
+      if (length(e)>0) {
+        if (!is.na(e)) { out[i, e] = 1 }
+      }
+    }
+  }
+
+  N = out[,-which(colnames(out) == "descriptors")]
+
+  # 3. Apply the threshold to keep certain descriptors ----------
+  if( !is.null(threshold) ) {
+    test = apply(N[, vec_adj], 2, sum)
+    to_delete = which(test <= threshold)
+    to_keep = which(test > threshold)
+    if( length(to_delete) > 0 ) {
+      adj_to_delete = vec_adj[to_delete]
+      N = N[,-which(colnames(N) %in% adj_to_delete)]
+      message("The following descriptors have been remove because there were less or equal to ", threshold, " occurences : ", paste(adj_to_delete, collapse = ", "))
+      if( ncol(N) == 4 ){ stop("There are no more descriptors with threshold = ", threshold,
+                               ". You must set another value.") }
+    }
+    vec_adj = vec_adj[to_keep]
+  }
+
+
+  # 4. Get frequency for each descriptor ----------
+  N_freq = N_raw = N
+  for (ad in vec_adj) {
+    if( sum(N_raw[, ad], na.rm = TRUE) != 0 ) {
+      N_freq[, ad] = N_raw[, ad] / sum(N_raw[, ad], na.rm = TRUE)
+    }
+  }
+  
+  # 5. format data for sample, i.e. one row per sample tasted
+  data_sample = N_freq
+  
+  # 6. format data for juges, i.e. one row per juges and add one column per sample with note
+  vec_juges = as.character(unique(data_sample$juges))
+  vec_samples = as.character(unique(data_sample$sample))
+  
+  df = matrix(0, ncol = (1 + length(vec_samples) + length(var_sup)), nrow = length(vec_juges))
+  df = as.data.frame(df)
+  colnames(df) = c("juges", vec_samples, var_sup)
+  df$juges = vec_juges
+  for(i in 1:nrow(df)){
+    j = df[i, "juges"]
+    for(s in vec_samples){
+      dtmp = dplyr::filter(data_sample, juges == j & sample == s)
+      note = dtmp$note
+      if( length(note) > 0 ) { df[i, s] = note } else { df[i, s] = NA }
+      vsup = as.character(unlist(dtmp[,var_sup]))
+      if( length(vsup) > 0 ) { df[i, var_sup] = vsup } else { df[i, var_sup] = NA }
+    }
+  }
+  for(v in var_sup){ df[,v] = as.factor(df[,v]) }
+  data_juges = df
+  
+  # 7. return results
+  out = list("data_sample" = data_sample, "data_juges" = data_juges)
+  return(out)
+}
+
+# plot descriptive data ----------
+#' Plot agro object from format_data_PPBstats()
+#'
+#' @description
+#' \code{plot_descriptive_data} gets ggplot to describe the data
+#'
+#' @param x The data frame. It should come from \code{\link{format_data_PPBstats}}
+#'
+#' @param plot_type the type of plot you wish. It can be :
+#' \itemize{
+#'  \item "pam" for presence abscence matrix that represent the combinaison of germplasm x location
+#'  \item "histogramm"
+#'  \item "barplot", where sd error are displayed
+#'  \item "boxplot"
+#'  \item "interaction"
+#'  \item "biplot"
+#'  \item "radar"
+#'  \item "raster"
+#'  \item "map"
+#' }
+#'
+#' @param x_axis factor displayed on the x.axis of a plot.
+#' "date_julian" can be choosen: it will  display julian day for a given variable automatically calculated from format_data_PPBstats().
+#' This is possible only for plot_type = "histogramm", "barplot", "boxplot" and "interaction".
+#' @param in_col factor displayed in color of a plot
+#'
+#' @param vec_variables vector of variables to display
+#'
+#' @param nb_parameters_per_plot_x_axis the number of parameters per plot on x_axis arguments
+#'
+#' @param nb_parameters_per_plot_in_col the number of parameters per plot for in_col arguments
+#'
+#' @param labels_on factor to display for plot_type = "biplot"
+#'
+#' @param labels_size size of the label for plot_type = "biplot" and "radar"
+#'
+#' @param pie_size when plot_type = "map" and vec_variables is not NULL, size of the pie
+#'
+#' @param zoom zoom of the map, see ?get_map for more details
+#'
+#' @param ... further arguments passed to or from other methods
+#'
+#' @return
+#' \itemize{
+#'  \item For plot_type "histogramm", "barplot", "boxplot" or "interaction",
+#'  the function returns a list with ggplot objects for each variable of vec_variables.
+#'  \item For plot_type "biplot",
+#'  the function returns a list with ggplot objects for each pairs of variables of vec_variables.
+#'  \item For plot_type "radar" and "raster,
+#'  the function returns a list with ggplot objects with all variables of vec_variables.
+#'  \item For plot_type "map", it returns a map with location
+#'  if vec_variables = NULL and labels_on = "location".
+#'  If vec_variables is not NULL, it displays pie on map.
+#' }
+#' Each list is divided in several lists according to values
+#' of nb_parameters_per_plot_x_axis and nb_parameters_per_plot_in_col except for plot_type = "map".
+#'
+#' @author Pierre Riviere
+#'
+#' @details
+#' S3 method.
+#'
+#' @seealso \code{\link{format_data_PPBstats}}
+#'
+#' @export
+#'
+#' @import ggplot2
+#' @import plyr
+#'
+plot_descriptive_data = function(
+  x,
+  plot_type = c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"),
+  x_axis = NULL,
+  in_col = NULL,
+  vec_variables = NULL,
+  nb_parameters_per_plot_x_axis = 5,
+  nb_parameters_per_plot_in_col = 5,
+  labels_on = NULL,
+  labels_size = 4,
+  pie_size = 0.2,
+  zoom = 6, ...
+){
+
+  data = x
+
+  # 1. Error message ----------
+  mess = "plot_type must be \"pam\", \"histogramm\", \"barplot\", \"boxplot\", \"interaction\", \"biplot\", \"radar\", \"raster\" or \"map\"."
+  if(length(plot_type) != 1) { stop(mess) }
+  if(!is.element(plot_type, c("pam", "histogramm", "barplot", "boxplot", "interaction", "biplot", "radar", "raster", "map"))) {
+    stop(mess)
+  }
+
+  if(is.null(vec_variables) & plot_type != "map"){ stop("You must settle vec_variables") }
+
+  check_arg = function(x, vec_x) {
+    for(i in x) {
+      if(!is.element(i, vec_x)) {
+        stop("Regarding ", substitute(x),", ", i," is not in data")
+      }
+    }
+  }
+
+  if(!is.null(x_axis)){
+    if( x_axis != "date_julian") {
+      check_arg(x_axis, colnames(data))
+    } else {
+      warning("x_axis = \"date_julian\" is a special feature that will display julian day for a given variable automatically calculated from format_data_PPBstats().")
+      if(!is.element(plot_type, c("histogramm", "barplot", "boxplot", "interaction"))){
+        stop("x_axis = \"date_julian\" is possible only for plot_type = \"histogramm\", \"barplot\", \"boxplot\" and \"interaction\".")
+      }
+    }
+  }
+
+  if(!is.null(in_col)){ check_arg(in_col, colnames(data)) }
+  check_arg(vec_variables, colnames(data))
+  if(!is.null(labels_on)){ check_arg(labels_on, colnames(data)) }
+
+  if( plot_type == "pam" & (!is.null(x_axis) | !is.null(in_col)) ){
+    warning("Note than with plot_type == pam, x_axis and in_col are not used.")
+  }
+  if( plot_type == "histogramm" & !is.null(x_axis) ){
+    warning("Note than with plot_type == histogramm, x_axis can not be NULL.")
+  }
+  if( plot_type == "interaction" & (is.null(x_axis) | is.null(in_col)) ){
+    stop("With plot_type == interaction, x_axis and in_col can not be NULL.")
+  }
+  if( plot_type == "biplot" & !is.null(x_axis) ){
+    warning("Note than with plot_type == biplot, x_axis is not used can not be NULL.")
+  }
+  if( plot_type == "biplot" & length(vec_variables) < 2 ){
+    stop("With plot_type == biplot, vec_variables must have at least 2 elements.")
+  }
+  if( plot_type == "biplot" & is.null(labels_on) ){
+    stop("With plot_type == biplot, labels_on can not be NULL.")
+  }
+  if( plot_type == "biplot" & length(labels_on) != 1 ){
+    stop("labels_on must be of length one..")
+  }
+  if( plot_type == "radar" & length(vec_variables) < 2 ){
+    stop("With plot_type == radar, vec_variables must have at least 2 elements.")
+  }
+  if( plot_type == "radar" & is.null(in_col) ){
+    stop("With plot_type == radar, in_col must not be NULL.")
+  }
+  if( plot_type == "radar" & !is.null(labels_on) ){
+    warning("Note that with plot_type == radar, labels_on is not used.")
+  }
+
+  if( plot_type == "raster" & !is.null(in_col) ){
+    warning("Note that with plot_type == raster, in_col is not used.")
+  }
+  if( plot_type == "raster" & !is.null(labels_on) ){
+    warning("Note that with plot_type == raster, labels_on is not used.")
+  }
+
+  if( plot_type == "map" ){
+    test = unique(is.element(c("lat", "long"), colnames(data)))
+    if( length(test) == 2 | !test[1] ){ stop("To display map, you must have columns \"lat\" and \"long\" in your data.") }
+  }
+
+  # 2. Functions used in the newt steps ----------
+
+  # 2.1. Function to run presence abscence matrix ----------
+  fun_pam = function(data, vec_variables){
+
+    fun_pam_1 = function(variable, data){
+      nb_measures = germplasm = NULL  # to avoid no visible binding for global variable
+
+      dtmp = droplevels(na.omit(data[,c("germplasm", "location", "year", variable)]))
+      dtmp[,variable] = as.numeric(dtmp[,variable])
+
+      xlim = c(min(dtmp[,variable], na.rm = TRUE), max(dtmp[,variable], na.rm = TRUE))
+      ylim = c(0,max(dtmp[,variable], na.rm = TRUE))
+      m = as.data.frame(with(dtmp, table(germplasm, location, year)))
+      m$Freq = as.factor(m$Freq)
+      colnames(m)[4] = "nb_measures"
+
+      p = ggplot(m, aes(x = germplasm, y = location))
+      p = p + geom_raster(aes(fill = nb_measures)) + facet_grid(year ~ .)
+      nb_NA = round(length(which(m$nb_measures == 0)) / ( length(which(m$nb_measures == 0)) + length(which(m$nb_measures != 0)) ), 2) * 100
+      p = p + ggtitle(
+        paste("Presence absence repartition for ", variable, sep = ""),
+        paste("(",  nb_NA, "% of 0)", sep = "")
+      ) + theme(axis.text.x=element_text(angle=90))
+      return(p)
+    }
+    out = lapply(vec_variables, fun_pam_1, data)
+    names(out) = vec_variables
+    return(out)
+  }
+
+
+  # 2.2. Function to run histogramm, barplot, boxplot, interaction ----------
+  fun_hbbi_1 = function(d, x_axis, in_col, plot_type, variable, ylim){
+
+    d$variable = d[,variable]
+
+    # histogramm
+    if(plot_type == "histogramm") {
+      p = ggplot(d, aes( x = variable))
+      if( is.null(in_col) ) {
+        p = p + geom_histogram()
+      } else {
+        p = p + geom_histogram(aes(fill = in_col))
+      }
+    }
+
+
+    # barplot
+    if(plot_type == "barplot") {
+      if(is.null(in_col)) {
+        mm2 = plyr::ddply(d, "x_axis", summarise, mean = mean(variable, na.rm = TRUE), sd = sd(variable, na.rm = TRUE))
+        p = ggplot(mm2, aes(x = x_axis, y = mean)) + geom_bar(stat = "identity")
+        limits <- aes(ymax = mean + sd, ymin = mean - sd)
+        p = p + geom_errorbar(limits, position = position_dodge(width=0.9), width=0.25)
+      } else {
+        d$toto = paste(d$in_col, d$x_axis, sep = "azerty")
+        mm = ddply(d, "toto", summarise, mean = mean(variable, na.rm = TRUE), sd = sd(variable, na.rm = TRUE))
+        mm$in_col = as.factor(sapply(mm$toto, function(x){unlist(strsplit(x, "azerty"))[1]}))
+        mm$x_axis = as.factor(sapply(mm$toto, function(x){unlist(strsplit(x, "azerty"))[2]}))
+
+        p = ggplot(mm, aes(x = x_axis, y = mean, fill = in_col))
+        p = p + geom_bar(position = "dodge", stat = "identity")
+        limits <- aes(ymax = mean + sd, ymin = mean - sd)
+        p = p + geom_errorbar(limits, position = position_dodge(width=0.9), width=0.25)
+      }
+    }
+
+
+    # boxplot
+    if(plot_type == "boxplot") {
+      p = ggplot(d, aes( x = x_axis, y = variable))
+      if( is.null(in_col) ) {
+        p = p + geom_boxplot(position="dodge")
+      } else {
+        p = p + geom_boxplot(aes(fill = in_col))
+      }
+    }
+
+    
+    # interaction
+    if(plot_type == "interaction") {
+      p = ggplot(d, aes(y = variable, x = factor(x_axis), colour = factor(in_col), group = factor(in_col)))
+      p = p + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line")
+    }
+
+    if(is.element(plot_type, c("barplot", "boxplot", "interaction"))) {
+      p = p + xlab("") + ylab(variable) + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.title = element_blank())
+      p = p + coord_cartesian(xlim = NULL, ylim)
+    }
+    return(p)
+  }
+
+  fun_hbbi = function(d, vec_variables,
+                      x_axis, nb_parameters_per_plot_x_axis,
+                      in_col, nb_parameters_per_plot_in_col,
+                      plot_type){
+
+    out = lapply(vec_variables,
+                 function(variable, d, labels_on,
+                          x_axis, nb_parameters_per_plot_x_axis,
+                          in_col, nb_parameters_per_plot_in_col,
+                          plot_type){
+
+                   if(!is.null(x_axis)){
+                     if( x_axis == "date_julian") { x_axis = paste(variable, "$date_julian", sep = "") }
+                   }
+
+                   d = reshape_data_split_x_axis_in_col(d, variable, labels_on,
+                                                        x_axis, nb_parameters_per_plot_x_axis,
+                                                        in_col, nb_parameters_per_plot_in_col
+                   )
+                   ylim = range(unlist(lapply(d, function(x){ range(x[,variable], na.omit = TRUE) } )))
+
+                   out = lapply(d, fun_hbbi_1, x_axis, in_col, plot_type, variable, ylim)
+                   return(out)
+                 },
+                 d, labels_on,
+                 x_axis, nb_parameters_per_plot_x_axis,
+                 in_col, nb_parameters_per_plot_in_col,
+                 plot_type
+    )
+    names(out) = vec_variables
+    return(out)
+  }
+
+
+
+  # 2.3. Function to run biplot ----------
+  fun_biplot = function(d, vec_variables, labels_on, labels_size,
+                        x_axis, nb_parameters_per_plot_x_axis,
+                        in_col, nb_parameters_per_plot_in_col
+  ){
+    labels_text = NULL  # to avoid no visible binding for global variable
+
+    d = reshape_data_split_x_axis_in_col(d, vec_variables, labels_on,
+                                         x_axis, nb_parameters_per_plot_x_axis,
+                                         in_col, nb_parameters_per_plot_in_col
+    )
+
+    ylim = NULL
+    for(variable in vec_variables){
+      ylim = c(ylim, list(
+        range(unlist(lapply(d, function(x){ range(x[,variable], na.omit = TRUE) } )))
+      )
+      )
+    }
+    names(ylim) = vec_variables
+
+    fun_biplot_1 = function(pair_var, d, in_col, labels_size, ylim){
+      fun_biplot_2 = function(d, pair_var, in_col, labels_size, ylim){
+        var_ = unlist(strsplit(pair_var, " -azerty- "))
+        var1 = var_[1]; d$var1 = d[,var1]
+        var2 = var_[2]; d$var2 = d[,var2]
+        ylim = range(unlist(ylim[c(var_[1], var_[2])]))
+        if(!is.null(in_col)){
+          dtmp = d[,c("in_col", "var1", "var2", "labels_text")]
+        } else {
+          dtmp = d[,c("var1", "var2", "labels_text")]
+        }
+        dtmp = na.omit(dtmp)
+        if( nrow(dtmp) == 0){
+          warning("No biplot is done for ", var1, " and ", var2, " as there are only NA. This can be due to missing data.");
+          p = NULL
+        } else {
+          p = ggplot(dtmp, aes(x = var1, y = var2, label = labels_text))
+          if(!is.null(in_col)){
+            p = p + geom_text(aes(colour = in_col), size = labels_size)
+          } else {
+            p = p + geom_text(size = labels_size)
+          }
+          p = p + coord_cartesian(xlim = NULL, ylim = ylim)
+          p = p + stat_smooth(method = "lm", se = FALSE)
+          p = p  + xlab(var1) + ylab(var2) + theme(axis.text.x = element_text(angle=90, hjust=1), legend.title = element_blank())
+
+          m <- lm(var2 ~ var1, dtmp)
+          eq = paste("y = ", format(coef(m)[1], digits = 2), " x +", format(coef(m)[2], digits = 2), "; r2 = ", format(summary(m)$r.squared, digits = 3), sep = "")
+          p = p + ggtitle(eq) + theme(plot.title = element_text(hjust = 0.5))
+        }
+        return(p)
+      }
+      p = lapply(d, fun_biplot_2, pair_var, in_col, labels_size, ylim)
+      return(p)
+    }
+
+    pair_var = apply(combn(vec_variables, 2), 2, function(x){paste(x, collapse = " -azerty- ")})
+    out = lapply(pair_var, fun_biplot_1, d, in_col, labels_size, ylim)
+    names(out) = sub(" -azerty- ", " - ", pair_var)
+    return(out)
+  }
+
+  # 2.4. Function to run radar ----------
+  fun_radar = function(d, vec_variables, in_col, labels_size){
+    
+    colnames(d)[which(colnames(d) == in_col)] = "in_col"
+    d$group = d$in_col
+    m = data.frame(matrix(levels(d$group), ncol = 1))
+    colnames(m) = "group"
+    
+    if( !is.null(x_axis) ){
+      colnames(d)[which(colnames(d) == x_axis)] = "x_axis"
+      list_v = lapply(vec_variables, function(variable, d){
+        d_value = data.frame()
+        for(i in 1:nrow(m)){
+          dtmp = droplevels(dplyr::filter(d, in_col == m[i, "group"]))
+          value = tapply(dtmp[,variable], dtmp$x_axis, mean, na.rm = TRUE)
+          d_value = rbind.data.frame(d_value, value)
+        }
+        m = cbind.data.frame(m, d_value)
+        colnames(m) = c("group", levels(d$x_axis))
+        rownames(m) = m$group
+        m = m[,-1]
+        return(m)
+      }, d)
+      names(list_v) = vec_variables
+    } else {
+      for(variable in vec_variables){
+        value = tapply(d[,variable], d$group, mean, na.rm = TRUE)
+        # rescale all variables to lie between 0 and 1
+        # value_ok = value / sum(value, na.rm = TRUE)
+        m = cbind.data.frame(m, value)
+      }
+      colnames(m) = c("group", vec_variables)
+      m = m[,-1]
+      list_v = list("all-variables" = m)
+    }
+    
+    out_p = list()
+    for(i in 1:length(list_v)){
+      p = ggradar_bis(list_v[[i]]) + ggtitle(names(list_v)[i])
+      out_p = c(out_p, list(p))
+    }
+    names(out_p) = names(list_v)
+    return(out_p)
+  }
+
+  # 2.5. Function to run raster representation for factor variables ----------
+  fun_raster_1 = function(data, vec_variable){
+    variable = value = NULL  # to avoid no visible binding for global variable
+
+    vv = vm = vx = NULL
+    for(v in vec_variables) {
+      vv = c(vv, as.character(rep(v, nrow(data))))
+      vm = c(vm, as.character(data[,v]))
+      vx = c(vx, as.character(data$x_axis))
+    }
+
+    dtmp = cbind.data.frame(
+      variable = as.factor(vv),
+      value = as.factor(vm),
+      x_axis = as.factor(vx)
+    )
+
+    p = ggplot(dtmp, aes(x = x_axis, y = variable))
+    p = p + geom_raster(aes(fill = value))
+    p = p + theme(axis.text.x=element_text(angle=90))
+    return(p)
+  }
+
+  fun_raster = function(d, vec_variables,
+                        x_axis, nb_parameters_per_plot_x_axis){
+    vec_variable = NULL  # to avoid no visible binding for global variable
+
+    vv = vm = vx = NULL
+    for(v in vec_variables) {
+      vv = c(vv, as.character(rep(v, nrow(d))))
+      vm = c(vm, as.character(d[,v]))
+      vx = c(vx, as.character(d[,x_axis]))
+    }
+
+    dtmp = cbind.data.frame(
+      variable = as.factor(vv),
+      value = as.factor(vm),
+      x_axis = as.factor(vx)
+    )
+
+    test = table(dtmp$x_axis)
+    if( sum(test) != length(test) ) {
+      warning("There are no single value for each x_axis, therefore block, X and Y colums have been added in order to have single value.")
+      d$new_x_axis = paste(d[,x_axis], d$block, d$X, d$Y, sep = "-")
+    } else { d$new_x_axis = d[,x_axis] }
+    d = d[,-which(colnames(d) == x_axis)]
+    x_axis = paste(x_axis, "block", "X", "Y", sep = "-")
+    colnames(d)[which(colnames(d) == "new_x_axis")] = x_axis
+
+    d = reshape_data_split_x_axis_in_col(d, vec_variables, labels_on = NULL,
+                                         x_axis, nb_parameters_per_plot_x_axis,
+                                         in_col = NULL, nb_parameters_per_plot_in_col = NULL
+    )
+    out = lapply(d, fun_raster_1, vec_variable)
+    return(out)
+  }
+
+  # 2.6. Functions to run map ----------
+  fun_pies_on_map = function(variable, p, data, pie_size){
+    data_to_map = droplevels(unique(data[c("location", "long", "lat")]))
+    p = add_pies(p, data_to_map, format = "data_agro", plot_type = "map", data, variable, pie_size)
+    return(p)
+  }
+
+  fun_map = function(data, vec_variables, labels_on, labels_size, pie_size){
+    data_to_map = droplevels(unique(data[c("location", "long", "lat")]))
+    p = pmap(data_to_map, format = NULL, labels_on, labels_size, zoom)
+    if( !is.null(vec_variables) ){
+      out = lapply(vec_variables, fun_pies_on_map, p, data, pie_size)
+      names(out) = paste("pies_on_map", vec_variables, sep="_")
+    } else { out = list(p); names(out) = "map" }
+    return(out)
+  }
+
+
+  # 3. Run code ----------
+  # 3.1. Presence absence for each germplasm, location and year
+  if(plot_type == "pam"){
+    p_out = fun_pam(data, vec_variables)
+  }
+
+  # 3.2. histogramm, barplot, boxplot, interaction ----------
+  if( is.element(plot_type, c("histogramm", "barplot", "boxplot", "interaction") )) {
+    p_out = fun_hbbi(data, vec_variables,
+                     x_axis, nb_parameters_per_plot_x_axis,
+                     in_col, nb_parameters_per_plot_in_col,
+                     plot_type)
+  }
+
+  # 3.3. biplot ----------
+  if(plot_type == "biplot") {
+    p_out = fun_biplot(data, vec_variables, labels_on, labels_size,
+                       x_axis, nb_parameters_per_plot_x_axis,
+                       in_col, nb_parameters_per_plot_in_col)
+  }
+
+  # 3.4. radar ----------
+  if(plot_type == "radar") {
+    p_out = fun_radar(data, vec_variables, in_col, labels_size)
+  }
+
+  # 3.5. raster ----------
+  if(plot_type == "raster") {
+    p_out = fun_raster(data, vec_variables, x_axis, nb_parameters_per_plot_x_axis)
+  }
+
+  # 3.6. map ------------
+  if(plot_type == "map"){
+    p_out = fun_map(data, vec_variables, labels_on, labels_size, pie_size)
+  }
+
+
+  # 4. Return results ----------
+  return(p_out)
+}
+
+
+
+# check constitency of list with check_model ----------
+#' Check constitency of list with outputs from \code{\link{check_model}}
+#'
+#' @description
+#' \code{check_list_out_check_model} checks consistency of list with outputs from \code{\link{check_model}}
+#'
+#' @param valid_models A vector with valid models expected
+#' 
+#' @param list_out_check_model A list whose elements are output from \code{\link{check_model}}
+#'
+#' @return
+#' If the list do not contain valid models and all the elements of the list are coming from the same model, an error is returned.
+#' 
+#' If no error message are displayed the function returns a vector with the class of elements in list_out_check_model
+#' 
+#' @author Facundo Munoz and Pierre Riviere
+#'
+#' @export
+#'
+check_list_out_check_model = function(valid_models, list_out_check_model){
+  if( length(list_out_check_model) <= 1 ) { stop("list_out_check_model must have at least two elements (i.e. two variables).") }
+  if( is.null(names(list_out_check_model)) ){ stop("Each element of list_out_check_model must have a name") }
+  if( is.element(TRUE, is.element(names(list_out_check_model), "")) ){ stop("Each element of list_out_check_model must have a name") }
+  
+  if (!all(
+    idx <- vapply(list_out_check_model, inherits, TRUE, valid_models)
+  )) {
+    ## some (idx) elements of the list are either not a check_model or not
+    ## a model_bh_GxE nor model_GxE. Pinpoint all of them.
+    mess <- paste(
+      "Element(s)",
+      paste(names(list_out_check_model)[which(idx)], collapse = ", "),
+      "in", substitute(list_out_check_model), "must come from check_model()",
+      "from either", 
+      paste(valid_models, collapse = ", ")
+    )
+    stop(mess)
+  }
+  
+  ## Check that all elements are consistently from the same model
+  ## Matrix where each column (element in the list) contains the idx of the
+  ## element's class in the position matching valid_models
+  model_classes.idx <- vapply(
+    list_out_check_model,
+    inherits,
+    rep(1,length(valid_models)),
+    valid_models,
+    which = TRUE)
+  if( !is.matrix(model_classes.idx) ){ model_classes.idx = t(as.matrix(model_classes.idx)) }
+  rownames(model_classes.idx) <- valid_models
+  all_by_model <- apply(model_classes.idx > 0, 1, all)
+  if (sum(all_by_model) != 1) {
+    ## not all elements are from the same model
+    model.idx <- apply(model_classes.idx > 0, 2, function(x) valid_models[which(x)])
+    print(model.idx)
+    stop("All elements in", substitute(list_out_check_model),
+         "need to come from the same model")
+  }
+  return(all_by_model)
+}

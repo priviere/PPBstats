@@ -1,0 +1,315 @@
+## Introduction {#intro-agro}
+
+First, chose your objective (\@ref(objective-agro)), then the analyses (\@ref(family-analysis-agro)) and the experimental design (\@ref(expe-design)) based on a decision tree (\@ref(decision-tree)).
+Finally see how to implement it based on the workflow and function relations (\@ref(workflow-agro)) from formated data (\@ref(data-agro)).
+
+### Analysis according to the objectives {#objective-agro}
+
+The three main objectives in PPB are to :
+
+- **Compare different varieties evaluated for selection in different locations**.
+This can be done through family 1 of analyses (section \@ref(family-1))
+    - classic anova (**M4a**, section \@ref(classic-anova)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
+    - spatial analysis (**M4b**, section \@ref(spatial-analysis)) based on row-column designs (**D3**, section \@ref(row-column)),
+    - mixed models (**M5**, section\@ref(ibd-model)) for incomplete blocks designs (**D2**, section \@ref(ibd)),
+    - bayesian hierarchical model intra-location (**M7a**, section \@ref(model-1)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)).
+
+It can be completed by organoleptic analysis (section \@ref(organoleptic)).
+Based on these analysis, specific objective including response to selection analysis can also be done.
+
+
+- **Study the response of varieties under selection over several environments**.
+This can be done through family 2 of analyses (section \@ref(family-2)):
+    - AMMI (**M6a**, section \@ref(ammi) and GGE (**M6b**, sections \@ref(gge)) based on on fully replicated designs (**D1**, section \@ref(fully-replicated)),
+    - bayesian hierarchical model $G \times E$ (**M7b**, section \@ref(model-2)) based on satellite-regional farms designs (**D4**, section \@ref(rf-sf)),
+It can be completed by specific analysis such as local-foreign (section \@ref(local-foreign)) which corresponds to a specific objective : study local and foreign effect, where foreign in a location refers to a germplasm that has not been grown or selected in a given location and local in a location refers to a germplasm that has been grown or selected in a given location.
+
+
+- **Study diversity structure and identify parents to cross based on either good complementarity or similarity for some traits**.
+This can be done through multivariate analysis and clustering (**M2**, section \@ref(family-5).
+It can be completed by analysis of molecular data and genetic distance trees (**M3**, section \@ref(molecular)).
+
+
+### Family of analyses {#family-analysis-agro}
+
+After describing the data (section \@ref(describe-data-agro)), you can run statistical analysis.
+
+Table \@ref(tab:summary-analysis) summarizes the analyses available in `PPBstats` and their specificities.
+The various effects that can be estimated are:
+
+- **germplasm**: a variety or a population
+- **location**: a farm or a station where a trial is carried out
+- **environment**: a combination of a location and a year
+- **entry**: the occurence of a germplasm in a given environment or location
+- **interaction**: interaction between germplasm and location or germplasm and environment
+- **year**
+- **local-foreign**: foreign in a location refers to a germplasm that has not been grown or selected in a given location; local in a location refers to a germplasm that has been grown or selected in a given location.
+- **version**: version within a germplasm, for example selected vs non-selected
+
+The analyses are divided into five families:
+
+- **Family 1** (section \@ref(family-1)) gathers analyses that estimate entry effects.
+It allows to compare different entries on each location and test for significant differences among entries.
+Specific analysis including response to selection can also be done.
+The objective to compare different germplasms on each location for selection.
+
+- **Family 2** (section \@ref(family-2)) gathers analyses that estimate germplasm and location and interaction effects.
+This is to analyse the response over a network of locations.
+Estimation of environment and year effects is possible depending of the model.
+It allows to study the response of germplasm over several location or environments.
+The objectives is to study response of different germplasms over several locations for selection.
+
+- **Family 3** (section \@ref(family-3)) correspond to combining family 1 and 2 analyses.
+This allows to analyse network of farms and to study the response of entries over several locations and environnements for selection.
+
+- **Family 4** (section \@ref(family-4)) gathers analyses answering specific research questions and objectives such as study intra germplasm variation, study  local adaptation with home-away and local-foreign analysis, study differential and response to selection based on models from Family 1.
+
+- **Family 5** (section \@ref(family-5)) refers to multivariate analysis
+
+The different models in Family 1 and 2 correspond to experimental designs that are mentionned in the next section \@ref(expe-design) and in the decision tree \@ref(decision-tree).
+
+| Family | Name | Section | entry effects | germpasm effects | location effects | environments effects | interaction effects | year effects | local-foreign effects | version effects | variance intra germplasm effects |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Anova | \@ref(classic-anova) | X | | | | | | | |
+|   | Spatial analysis | \@ref(spatial-analysis) | X | | | | | | | | |
+|   | IBD | \@ref(ibd) | | X | | | | | | | |
+|   | Bayesian hierarchical model intra-location | \@ref(model-1) | X | | | | | | | | |
+| 2 | IBD | \@ref(ibd) | | X | | | | | | | |
+|   | AMMI | \@ref(ammi) | | X | X | (X) | X | (X) | | | |
+|   | GGE | \@ref(gge) | | X | X | (X) | X | (X) | | | |
+|   | Bayesian hierarchical model $G \times E$ | \@ref(model-2) | | X | X | (X) | X | | | | |
+| 3 | Bayesian model 3 | \@ref(model-3) | X | X | X | | X | X | | | |
+| 4 | Variance intra | \@ref(variance-intra) | | | | | | | | | X |
+|   | Home-away | \@ref(home-away) | X | X | (X) | (X) | (X) | (X) | X | | |
+|   | Local-foreign | \@ref(local-foreign) | X | X | (X) | (X) | (X) | (X) | X | | |
+Table: (\#tab:summary-analysis) Analyses carried out in `PPBstats`. X: effects that are estimated. (X): effects that can be estimated.
+
+Analysis used in PPB programmes are mentionned in decision tree in Section \@ref(decision-tree).
+
+#### Frequentist statistics {#section-freq}
+
+##### Theory
+
+##### Check model {#check-model-freq}
+
+Regarding frequentist analysis, there are several ways to check if the model went well.
+
+- Residuals distribution. If it looks normal then the hypothesis seems fullfiled.
+
+- Skewness test which is an indicator used in distribution analysis as a sign of asymmetry and deviation from a normal distribution.
+    - Skewness > 0 - Right skewed distribution - most values are concentrated on left of the mean, with extreme values to the right.
+    - Skewness < 0 - Left skewed distribution - most values are concentrated on the right of the mean, with extreme values to the left.
+    - Skewness = 0 - mean = median, the distribution is symmetrical around the mean.
+- Kurtosis test which is an indicator used in distribution analysis as a sign of flattening or "peakedness" of a distribution.
+    - Kurtosis > 3 - Leptokurtic distribution, sharper than a normal distribution, with values concentrated around the mean and thicker tails. This means high probability for extreme values.
+    Kurtosis < 3 - Platykurtic distribution, flatter than a normal distribution with a wider peak. The probability for extreme values is less than for a normal distribution, and the values are wider spread around the mean.
+    - Kurtosis = 3 - Mesokurtic distribution - normal distribution for example.
+- Shapiro test is an indicator of the normal distribution of the residuals. 
+The null hypothesis is: residuals follow a normal distribution.
+If p-value is significant (i.e. > 0.05), residuals follow a normal distribution.
+
+
+- Standardized residuals vs theoretical quantiles (qqplot).
+If the residuals come from a normal distribution the plot should resemble a straight line.
+A straight line connecting the 1st and 3rd quartiles is added to the plot to aid in visual assessment.
+
+- Distribution of residuals for each rows. It allos to llok for autocorrelation among residuals.
+
+- Repartition of variability among factors whici is a pie with repartition of SumSq for each factor.
+This allows to better understand how the variability is separated between each factor.
+
+- Variance intra germplasm whici is the repartition of the residuals for each germplasm.
+With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+This has to been seen with caution:
+    - If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+    - If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+
+
+
+##### Mean comparisons {#mean-comp-check-freq}
+
+LSD, LSmeans for home away and local foreign), etc
+
+#### Bayesian statistics {#section-bayes}
+
+##### Theory
+
+Some analyses performed in `PPBstats` are based on Bayesian statistics.
+
+Bayesian statistics are based on the Bayes theorem:
+
+$Pr(\theta|y) \propto Pr(\theta) Pr(y|\theta)$
+
+with
+$y$ the observed value,
+$\theta$ the parameter to estimate,
+$Pr(\theta|y)$ the posterior distribution of the parameter given the data,
+$Pr(y|\theta)$ the likelihood of the observation and
+$Pr(\theta)$ the prior distribution of the parameter.
+
+The parameters' distribution, knowing the data (the posterior), is proportional to the distribution of parameters *a  priori* (the prior) $\times$ the information brought by the data (the likelihood).
+
+The more information (i.e. the larger the data set and the better the model fits the data), the less important is the prior.
+If the priors equal the posteriors, it means that there is not enough data or the model does not fit the data.
+
+Bayesian inference is based on the posterior distribution of model parameters.
+This distribution can not be calculated explicitely for the hierarchical model used in here (section \@ref(model-1) and section \@ref(model-2)) but can be estimated using Markov Chain and Monte Carlo (MCMC) methods.
+
+These methods simulate parameters according to a Markov chain that converges to the posterior distribution of model parameters [@robert_bayesian_2001].
+
+MCMC methods were implemented using `JAGS` by the R package `rjags` that performed Gibbs sampling [@robert_bayesian_2001].
+Two MCMC chains were run independently to test for convergence using the Gelman-Rubin test.
+This test was based on the variance within and between the chains [@gelman_inference_1992].
+
+A burn-in and lots of iterations were needed in the MCMC procedure.
+Here the burn-in has 1000 iterations, then 100 000 iterations are done by default
+^[You can change it with the argument `nb_iterations` in functions `model_bh_intra_location` and `model_bh_GxE`] with a thinning interval of 10 to reduce autocorrelations between samples, so that 10 000 samples are available for inference for each chain by default
+^[There are `nb_iterations/10` values for each chain. This can be changed with the `thin` argument of the functions.]
+The final distribution of a posterior is the concatenation of the two MCMC chains: 20 000 samples.
+
+##### Check model {#check-model-bayes}
+
+<!-- The test used for convergence is the Gelman-Rubin test. -->
+<!-- It may take some time to run. -->
+<!-- More details with ?\code{gelman.diag} from the \code{coda} package. -->
+<!-- Note that for \code{gelman.diag}, the argument \code{multivariate = FALSE} is used. -->
+<!-- MCMC outputs are a data fame resulting from the concatenation of the two MCMC for each parameter.  -->
+<!-- This object can be used for further analysis.  -->
+<!-- There are as many columns as parameters and as many rows as iterations/10 (10 being the thin value by default in the models).  -->
+<!-- The MCMC contains only parameters that converge thanks to the Gelman-Rubin test (if it has been done).  -->
+
+
+##### Mean comparisons {#mean-comp-bayes}
+
+In this part, the mean of each entry is compared to the mean of each other entry.
+Let $H_{0}$ and $H_{1}$ denote the hypotheses:
+
+$H_{0} : \mu_{ij} \ge \mu_{i'j} , \; H_{1} : \mu_{ij} < \mu_{i'j}$.
+
+The difference $\mu_{ij}-\mu_{i'j}$ between the means of entry $ij$ and entry $i'j$ in environment $j$ is considered as significant if either $H_{0}$ or $H_{1}$ has a high posterior probability, that is if $Pr\{H_{0}|y\} > 1 - \alpha$ or $Pr\{H_{1}|y\}> 1 - \alpha$, where
+$\alpha$ is some specified threshold.
+The difference is considered as not significant otherwise.
+The posterior probability of a hypothesis is estimated by the proportion of MCMC simulations for which this hypothesis is satisfied (Figure \@ref(fig:proba)).
+
+Groups are made based on the probabilites.
+Entries that belong to the same group are not significantly different.
+Entries that do not belong to the same group are significantly different.
+
+Note that the term "significant" is not really correct^[Thank you to Facundo for its comments!].
+Statistical significance refers to the variability of some estimator (e.g. $\mu_{ij} - \mu_{i'j}$) under replications of the same experiment (i.e. different datasets), while the posterior probability quantifies the information about some variable given the current dataset.
+It may be better to claim - based on thershold $\alpha$ so that whenever the posterior probability of $H_0$ or $H_1$ exceeds $1 - \alpha$ - that the data provides evidence of some difference (not necessarily large) between groups.
+
+
+The threshold $\alpha$ depends on agronomic objectives.
+This threshold is set by default to $\alpha=0.1/I$ (with $I$ the number of entries in a given location).
+It corresponds to a `soft' Bonferroni correction, the Bonferroni correction being very conservative.
+
+As one objective of this PPB programme is that farmers (re)learn selection methods, the threshold could be adjusted to allow the detection of at least two groups instead of having farmers choose at random.
+The initial value could be set to $\alpha=0.1/I$ and if only one group is obtained, then this value could be adjusted to allow the detection of two groups.
+In this cases, the farmers should be informed that there is a lower degree of confidence for significant differences among entries.
+
+```{r proba, out.width='70%', fig.align='center', echo=FALSE, fig.cap="Mean comparison between $\\mu_{ij}$ and $\\mu_{i'j}$"}
+library(ggplot2)
+
+nb = 100000
+a = rnorm(nb, 55, 4)
+b = rnorm(nb, 60, 4)
+c = b - a
+
+d1 <- with(density(a), data.frame(x, y))
+d2 <- with(density(b), data.frame(x, y))
+d3 <- with(density(c), data.frame(x, y))
+d = rbind.data.frame(d1, d2, d3)
+n = c(rep("mu_ij", nrow(d1)), rep("mu_i'j", nrow(d2)), rep("mu_i'j - mu_ij", nrow(d3)))
+d = cbind.data.frame(d, n)
+
+p = ggplot(data = d, mapping = aes(x = x, y = y, color = n))
+p = p + geom_area(mapping = aes(x = ifelse(x<0 , x, 0)), fill = "red")
+p = p + geom_area(mapping = aes(x = ifelse(x>0 & x<30 , x, 0)), fill = "gold")
+p = p + geom_line(size = 2)
+p = p + ylim(0,0.11) + theme(legend.position="none")
+
+d_text = data.frame(
+  n = c("mu_ij", "mu_i'j", "mu_i'j - mu_ij", "H1", "H0"),
+  x = c(mean(a)-mean(a)/5, mean(b) + mean(b)/5, mean(c), -4, 4),
+  y = c(0.1, 0.1, 0.075, 0.005, 0.005)
+  )
+
+p = p + geom_text(data = d_text, aes(x = x, y = y, label = n), size = 6) + theme_bw() + ylab("density") + xlab("")
+p = p + theme(legend.position="none") + geom_abline() + scale_color_manual(values = c("#000000", "#000000", "#E69F00", "#009E73", "#CC79A7"))
+p
+
+# library(latex2exp)
+# n = c(TeX("$\\mu_ij$"), TeX("$\\mu_i'j$"), TeX("$\\mu_i'j - \\mu_ij$"), "H1", "H0")
+
+```
+
+In `PPBstats`, mean comparisons are done with `mean_comparisons`.
+You can choose on which parameters to run the comparison (`parameter` argument) and the $\alpha$ type one error (`alpha` argument).
+The soft Bonferonni correction is applied by default (`p.adj` argument).
+More informations can be obtain on this function by typing `?mean_comparisons`.
+
+
+### Experimental design {#expe-design}
+
+Before sowing, you must plan the experiment regarding your research question, the amount of seeds available, the number of locations and the number of plots available in each location.
+
+The trial is designed in relation to the analysis you will perform.
+The key elements to choose an appropriate experimental design are:
+
+- the number of locations
+- the number of years
+- the replication of entries within and between locations
+
+Several designs used in PPB programmes are mentionned in decision tree in section \@ref(decision-tree) and are presented in section \@ref(doe).
+
+
+### Decision tree {#decision-tree}
+
+For each family of analysis, a decision tree is displayed in the corresponding section.
+Once you have chosen your objective, analysis and experimental design, you can sow, measure and harvest ... (section \@ref(sow)).
+
+
+### Workflow and function relations in `PPBstats` regarding agronomic analysis {#workflow-agro}
+
+After designing the experiment and describing the data, each family of analysis is implemented by several analysis with the same workflow :
+
+- Format the data
+- Run the model
+- Check the model and visualize outputs
+- Compare means and visualize outputs
+
+Note that for some functions for specific model maybe used.
+<!-- Hierarchical Bayesian GxE model and GGE other analyses are possible : predict the past and cross validation regarding Hierarchical Bayesian GxE model and biplot regarding GGE. -->
+
+Figure \@ref(fig:main-workflow) displays the functions and their relationships.
+
+
+```{r main-workflow, out.width='50%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
+knitr::include_graphics("figures/main-functions-agro.png")
+```
+
+
+### Data format {#data-agro}
+
+For agronomic analysis data must have a specific format: `data_agro`
+
+`data_agro` format corresponds to all the data set used in the functions that run models.
+The data have always the following columns : `seed_lot`, `location`, `year`, `germplasm`, `block`, `X`, `Y` as factors followed by the variables and their corresponding dates.
+The dates are associated to their corresponding variable by `$`.
+For example the date associated to variable `y1` is `y1$date`.
+In addition, to get map, columns `lat` and `long` can be added.
+
+```{r}
+data("data_model_GxE")
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
+head(data_model_GxE)
+```
+
+Note that a column with julian date is added.
+
+```{r}
+class(data_model_GxE)
+```
+
+Note that other formats exist in relation to specific reasearch questions as explained in section \@ref(family-4).

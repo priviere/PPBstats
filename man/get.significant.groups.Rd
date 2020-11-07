@@ -2,7 +2,8 @@
 % Please edit documentation in R/get.significant.groups.R
 \name{get.significant.groups}
 \alias{get.significant.groups}
-\title{Get significant groups of differences for a set of parameters based on MCMC outputs}
+\title{Get significant groups of means that are significantly different from each others
+ for a set of parameters based on MCMC outputs}
 \usage{
 get.significant.groups(Mpvalue, MCMC, alpha = 0.05, p.adj = NULL)
 }
@@ -19,12 +20,13 @@ get.significant.groups(Mpvalue, MCMC, alpha = 0.05, p.adj = NULL)
 The function returns a data frame of four columns and (nb of parameters) rows. Columns are parameters, mean, median and groups
 }
 \description{
-\code{get.significant.groups} gets significant groups of differences for a set of parameters based on MCMC outputs
+\code{get.significant.groups} gets significant groups of means that are significantly different 
+from each others for a set of parameters based on MCMC outputs
 }
 \seealso{
 \itemize{
-\item \code{\link{mean_comparisons_model_1}}
-\item \code{\link{mean_comparisons_model_2}}
+\item \code{\link{mean_comparisons.check_model_bh_intra_location}}
+\item \code{\link{mean_comparisons.check_model_bh_GxE}}
 }
 }
 \author{

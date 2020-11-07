@@ -1,7 +1,9 @@
-#' Provides experimental design for several situations
-#'
+#' Provides experimental design for the different situations corresponding to 
+#' the choosen family of analysis
+#' 
 #' @description
-#' \code{design_experiment} provides experimental design for several situations
+#' \code{design_experiment} provides experimental design for the different situations corresponding to 
+#' the choosen family of analysis
 #' 
 #' @param expe.type The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD". See details for more information.
 #' 
@@ -15,11 +17,13 @@
 #' 
 #' @param nb.controls.per.block Number of controls per blocks.
 #' 
-#' @param nb.blocks Number of blocks.
+#' @param nb.blocks Number of blocks. For expe.type = "IBD", it corresponds to the number of locations.
 #' 
 #' @param nb.cols Number of columns in the design. The number of rows is computed automaticaly.
 #' 
 #' @param return.format "standard" or "shinemas". See details for more information.
+#' 
+#' @param allow_XXXX TRUE or FALSE. Allow to have XXXX placed in stead of germplasm in order to fill the design.
 #'
 #' @return 
 #' The function returns a list with
@@ -77,7 +81,14 @@
 #' the randomization is based on the ibd function in the ibd package. See \code{?ibd} for more information
 #' }
 #' 
+#' See exampels in the book : \href{https://priviere.github.io/PPBstats_book/doe.html}{here}.
+#' 
 #' @author Pierre Riviere
+#' 
+#' @import dplyr
+#' @import ibd
+#' 
+#' @export
 #' 
 design_experiment = function(
   expe.type,
@@ -88,13 +99,17 @@ design_experiment = function(
   nb.controls.per.block,
   nb.blocks,
   nb.cols,
-  return.format = "standard"
+  return.format = "standard",
+  allow_XXXX = TRUE
 )
   {
-    # 1. Error message ----------  
-    if(!is.element(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"))) { stop("expe.type must be either \"satellite-farm\", \"regional-farm\", \"row-column\", \"fully-replicated\" or \"IBD\".") }
-    if(!is.element(return.format, c("standard", "shinemas"))) { stop("format.data must be either \"standard\" or \"shinemas\".") }
-
+  
+    block = X = NULL # to avoid no visible binding for global variable
+    
+    # 1. Error message ----------
+    match.arg(expe.type, c("satellite-farm", "regional-farm", "row-column", "fully-replicated", "IBD"), several.ok = FALSE)
+    match.arg(return.format, c("standard", "shinemas"), several.ok = FALSE)
+    
     nb.germplasm = length(germplasm)
 
     # 2. Functions used in the code ----------  
@@ -105,9 +120,14 @@ design_experiment = function(
       
       vec_XXX = c(1:nb.germplasm)
       
-      if( expe.type == "row-column" | expe.type == "satellite-farm" | expe.type == "regional-farm" ) {
+      if( expe.type == "row-column" | expe.type == "satellite-farm" | expe.type == "regional-farm" | expe.type == "fully-replicated") {
         test = ceiling(nb.germplasm / nb.blocks) * nb.blocks
-        if( test > nb.germplasm ) { germplasm = c(germplasm, paste(rep("XXX", times = (test - nb.germplasm)), vec_XXX[1:(test - nb.germplasm)] , sep = "-") ); vec_XXX = vec_XXX[-c(1:(test - nb.germplasm))] }
+        if( test > nb.germplasm ) {
+          if(!allow_XXXX) { stop("Germplasm are missing to get complete design, set allow_XXXX to get XXXX placed in order to fill the design.") }
+          warning("Germplasm are missing to get complete design, therefore XXXX are placed in order to fill the design.")
+          germplasm = c(germplasm, paste(rep("XXX", times = (test - nb.germplasm)), vec_XXX[1:(test - nb.germplasm)] , sep = "-") )
+          vec_XXX = vec_XXX[-c(1:(test - nb.germplasm))] 
+          }
         l = split(germplasm, (1:nb.blocks))
       }
       
@@ -149,10 +169,11 @@ design_experiment = function(
     }
     
     place_controls = function(d, expe.type){
+      block = NULL # to avoid no visible binding for global variable
       dok = data.frame()
       vec_block = levels(d$block)
       for(b in vec_block){
-        dtmp = droplevels(filter(d, block == b))
+        dtmp = droplevels(dplyr::filter(d, block == b))
         c = grep("control", dtmp$germplasm)
         e = c(1:length(dtmp$germplasm))[-c]
         ent = c(as.character(dtmp$germplasm[c]), as.character(dtmp$germplasm[e]))
@@ -306,6 +327,8 @@ design_experiment = function(
     }
     
     get_ggplot_plan = function(d){
+      X = Y = xmin = xmax = ymin = ymax = block = NULL # to avoid no visible binding for global variable
+      
       color_till = rep("white", length(d$statut))
       color_till[grep("control", d$statut)] = "black"
       
@@ -323,15 +346,23 @@ design_experiment = function(
       d$ymin = a[d$block]
       a = tapply(as.numeric(d$Y), d$block, max) + 0.45
       d$ymax = a[d$block]
+      if( !is.null(d[1,"location"])) {  
+        tit = paste(d[1,"location"], d[1,"year"], sep = ":")
+      } else {
+        tit = d[1,"year"]
+        }
       
       p = ggplot(data = d, aes(x = X, y = Y, label = germplasm))
       p = p + geom_tile(color = "black", fill = color_till) + geom_text(color = color_text) + theme(legend.position="none") + theme_bw()
       p = p + geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, color = block), fill = NA, size = 1)
-      p = p + ggtitle(paste(d[1,"location"], d[1,"year"], sep = ":")) + theme(plot.title = element_text(hjust = 0.5))
+      p = p + ggtitle(tit) + theme(plot.title = element_text(hjust = 0.5))
       return(p)
     }
     
     format_data = function(d, return.format){
+      
+      statut = NULL # to avoid no visible binding for global variable
+      
       if( return.format == "standard" ) { 
         d = dplyr::select(d,-statut)
       }
@@ -419,18 +450,18 @@ design_experiment = function(
 
       for(b in 2:length(vec_block)){
         
-        d1 = droplevels(filter(d, block %in% vec_block[1:(b-1)]))
+        d1 = droplevels(dplyr::filter(d, block %in% vec_block[1:(b-1)]))
         germplasm_tmp = unique(as.character(d1$germplasm))
         
-        d2 = droplevels(filter(d, block == vec_block[b]))
+        d2 = droplevels(dplyr::filter(d, block == vec_block[b]))
         
         E = NULL
         for(i in 1:nrow(d2)){
           e = d2[i, "germplasm"]
           x = d2[i, "X"]
           y = d2[i, "Y"]
-          test = is.element(e, filter(d1, X == x)$germplasm); ii = 0
-          while(test & ii < 100 ){ e = sample(germplasm_tmp, 1) ; test = is.element(e, filter(d1, X == x)$germplasm); ii = ii + 1 }
+          test = is.element(e, dplyr::filter(d1, X == x)$germplasm); ii = 0
+          while(test & ii < 100 ){ e = sample(germplasm_tmp, 1) ; test = is.element(e, dplyr::filter(d1, X == x)$germplasm); ii = ii + 1 }
           germplasm_tmp = germplasm_tmp[-which(germplasm_tmp == e)]
           E = c(E, e)
         }
@@ -448,7 +479,7 @@ design_experiment = function(
     
     # 3.5. expe.type == "IBD" ----------
     if( expe.type == "IBD" ) {
-      d = ibd(v = nb.germplasm, b = nb.blocks, k = nb.cols)$design
+      d = ibd::ibd(v = nb.germplasm, b = nb.blocks, k = nb.cols)$design
       if( is.null(nrow(d)) ){ stop("Design not found") }
       
       d = data.frame(
@@ -461,7 +492,6 @@ design_experiment = function(
       d$block = as.factor(d$block)
       d$X = as.factor(d$X)
       d$Y = as.factor(d$Y)
-      d$location = location
       d$year = year
       
       d = rename_d(d, germplasm, controls = NULL)

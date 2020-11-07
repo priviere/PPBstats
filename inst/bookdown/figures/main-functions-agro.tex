@@ -1,0 +1,34 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  %% nodes
+  \node[several-all] (DE)                   {design\_experiment};
+
+  \node[several-all] (FD) [below=1cm of DE]                {format\_data\_PPBstats};
+
+  \node[several-all]   (M)  [below=1cm of FD]        {model};
+
+  \node[several-all] (CM) [below=1cm of M]     {check\_model};
+
+  \node[several-all] (MC) [below=1cm of CM] {mean\_comparisons};
+
+  \node[several-all] (P) [right=of CM, xshift=1cm] {plot};
+
+
+  %% arrows
+  % \draw node[vertex] (Joint) at (1,0) {};
+  \draw (FD.east) to [bend left](P);
+  \draw (FD) to (M);
+  \draw (M) to (CM);
+  \draw (CM) to (MC);
+  \draw (CM.east) to [left] (P);
+  \draw (MC.east) to [bend right] (P);
+
+
+\end{tikzpicture}
+
+\end{document}

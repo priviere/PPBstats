@@ -1,0 +1,72 @@
+## Introduction {#intro-organo}
+
+First, chose your objective (\@ref(objective-organo)), then the analyses and the experimental design based on a decision tree.
+
+Finally see how to implement it based on the workflow and function relations (\@ref(workflow-organo)) from formated data (\@ref(data-organo)).
+
+### Analysis according to the objectives {#objective-organo}
+In order to compare different germplasms on each location for selection, three main objectives dealing with PPB programmes organoleptic analyses can be :
+
+- **Understand and check consumers preferences**.
+This can be done through hedonic analysis (section \@ref(hedonic)).
+
+- **Characterize products sensory properties**.
+This can be done through napping analysis (section \@ref(napping)).
+
+- **Rank product according to few sensory descriptors**.
+This can be done through rank analysis (section \@ref(rank)).
+
+
+### Decision tree {#decision-tree-organo}
+
+For each analysis, a decision tree is proposed (Figure \@ref(fig:decision-tree-Compare-different-varieties-evaluated-for-selection-in-different-locations-senso)) based on the objective, the number of products and the number of tasters.
+For all analysis, no training is needed for tasters.
+
+```{r decision-tree-Compare-different-varieties-evaluated-for-selection-in-different-locations-senso, out.width='100%', fig.align='center', echo=FALSE, fig.cap="Decision tree with experimental constraints, designs and methods of sensory analysis carry out in `PPBstats` regarding the objective : Compare different varieties evaluated for selection in different locations. **D** refers to designs and **M** to methods."}
+knitr::include_graphics("figures/decision-tree_Compare-different-varieties-evaluated-for-selection-in-different-locations_senso.png")
+```
+
+Once you have chosen your objective, analysis and experimental design, you can taste and measure ... (section \@ref(taste)).
+
+
+### Workflow and function relations in `PPBstats` regarding organoleptic analysis {#workflow-organo}
+
+After designing the experiment and describing the data, each family of analysis is implemented by several analysis with the same workflow :
+
+- Format the data
+- Run the model
+- Check the model and visualize outputs
+- Compare means, format data for biplot and visualize outputs
+
+Figure \@ref(fig:main-workflow-organo) displays the functions and their relationships.
+Table \@ref(tab:function-descriptions-workflow-organo) describes each of the main functions.
+
+You can have more information for each function by typing `?function_name` in your R session.
+Note that `check_model()`, `mean_comparison()`, `biplot_data()` and `plot()` are S3 method.
+Therefore, you should type `?check_model`, `?mean_comparison`, `?biplot_data` or `?plot.PPBstats` to have general features and then see in details for specific functions.
+
+```{r main-workflow-organo, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow."}
+knitr::include_graphics("figures/main-functions-organo.png")
+```
+
+
+| function name | description |
+| --- | --- |
+| `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
+| `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
+| `describe_data` | Describe the data set in order to choose the appropriate analysis to carry out |
+| `hedonic` | Run hedonic analysis |
+| `napping` | Run napping anaysis |
+| `rank` | Run rank analysis |
+| `check_model` |  Check if the model went well |
+| `mean_comparisons` |  Get mean comparisons |
+| `biplot_data` | Format multivariate results |
+| `plot` | Build ggplot objects to visualize output |
+Table: (\#tab:function-descriptions-workflow-organo) Function description.
+
+
+### Data format {#data-organo}
+
+For organoleptic analysis data must have a specific format.
+Each format is displayed in the corresponding analysis section.
+

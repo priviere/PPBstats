@@ -1,0 +1,28 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  %% nodes
+  \node[several-all] (DE) {design\_experiment};
+
+  \node[several-all]   (M2)  [below=2cm of DE] {ggcorrplot};
+
+  \node[several-all] (FD) [below=2cm of M2] {format\_data\_PPBstats};
+
+  \node[several-all]  (MA) [below=2cm of FD] {multivariate};
+  
+  \node[several-all] (CM) [below=2cm of MA] {factoextra};
+
+
+  %% arrows
+  % \draw node[vertex] (Joint) at (1,0) {};
+  \draw (FD) to (MA);
+  \draw (MA) to (CM);
+
+
+\end{tikzpicture}
+
+\end{document}

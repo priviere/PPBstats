@@ -1,0 +1,171 @@
+# Communicate results to farmers {#com}
+
+Within a PPB programme, it is important to give results back to the farmers in order to discuss  and accompagny them in their selection.
+This can be done through the creation of a report with results coming from the analysis as described in section \@ref(com-technic).
+
+The results coming from the analysis must be taken with caution by a group or farmers as it can influence collective organisation as described in section \@ref(com-rules).
+
+
+## Technical aspects {#com-technic}
+
+The workflow to create the report follow three steps:
+
+1. run the analysis and create a list with all results
+2. create a `.Rmd` template that will be shared by all locations
+3. run `rmarkdown::render()` in order to generate report for each location
+
+
+### Run the analysis
+
+#### Format data
+
+```{r}
+data("data_model_GxE")
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
+```
+
+
+#### Descriptive plots for each location
+
+```{r}
+vec_locations = levels(data_model_GxE$location)
+list_hist_locations = lapply(
+  vec_locations, function(x){
+    p = plot(
+      data_model_GxE, plot_type = "histogramm",
+      vec_variables = c("y1")
+      )
+    p$y1
+    }
+  )
+names(list_hist_locations) = vec_locations
+```
+
+Note that it is important that each element of the list refers to data of a given location in order to catch the right information in the next step when generating the report.
+
+#### GGE model for all locations
+
+The function `workflow_gxe()` is coming from section \@ref(ammi).
+
+```{r}
+vec_variables = c("y1")
+res_gge = lapply(vec_variables, workflow_gxe, "GGE")
+names(res_gge) = vec_variables
+```
+
+#### Create a list with all results
+
+```{r}
+res = list("hist_locations" = list_hist_locations, 
+           "res_gge" = res_gge
+           )
+```
+
+
+### Create a `.Rmd` template
+
+Your template call two objects:
+
+- `params` which is list with parameter of the report
+- `res` which is a list with all results coming from the analysis
+
+
+Below is an example of a minimal template:
+
+```{yaml, eval=FALSE}
+---
+title: "`r params$title`"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+author: Flower Seed
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+```
+
+````r
+
+`r ''````{r global_options,include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+# Introduction
+Here is a beautiful report with all results of the year !
+
+# Description of data on the location
+
+`r ''````{r}
+p = res$hist_locations[[location]]
+if(is.null(p)){print("No data for y1")}else {p}
+```
+
+
+# GGE analysis for the three locations
+
+The germplasm effects are the following:
+
+`r ''````{r}
+res$res_gge$y1$p_out_mean_comparisons_gxe$germplasm
+```
+
+The which won where plot is the following:
+
+`r ''````{r}
+res$res_gge$y1$p_out_biplot_gxe$biplot$which_won_where
+```
+
+````
+
+### Generate a report for each location
+
+To generate the report, you need the `R` package `rmarkdown` installed.
+In the following example, the output is `.html`. 
+You can choose `.pdf` or `.docx`.
+See `?rmarkdown::render` for more information.
+
+```{r, eval=FALSE}
+library(rmarkdown)
+
+vec_locations = names(res$hist_locations)
+for (location in vec_locations){ # For each location, render a report
+  params = list("title" = paste("Agronomic analyses for", location))
+  rmarkdown::render("./template.Rmd", 
+                    output_file =  paste("report_", location, "_", ".html", sep = ""), 
+                    output_dir = "."
+                    )
+  }
+
+```
+
+
+The report generated can be visualized for 
+[loc-1](https://priviere.github.io/PPBstats_return_report_web_site/example_1_report_loc-1.html), 
+[loc-2](https://priviere.github.io/PPBstats_return_report_web_site/example_1_report_loc-2.html) and 
+[loc-3](https://priviere.github.io/PPBstats_return_report_web_site/example_1_report_loc-3.html).
+
+
+More examples of worklows with script, template and outputs can be found [here](https://priviere.github.io/PPBstats_return_report_web_site).
+
+
+## Organisational aspects on collective work {#com-rules}
+
+Data analysis can influense the organisation of a group.
+It can have advantages and disadvantages.
+
+One advantage is that the results are discussed by all actors in the group bring information to the group and provide support for discussions between research teams and practicioners collectives
+
+On the other hand, the analyzes are necessarily reductionist.
+Be careful to discuss the results with all the actors in the group to avoid analyzes disconnected to the context. 
+Be careful also not to constrain too much or standardize the practices to meet statistical standards.
+
+The decision of the farmer to select is based on different elements for example
+
+- his experience on his farm
+- informal exchanges with farmers, researchers, technicians, ... 
+- information analysed with statistics
+
+What is the place of these elements in the decision to select a variety or a bouquet of spikes ?
+
+It seems important to discuss these issues when sharing results among farmers, researchers and facilitators.
+

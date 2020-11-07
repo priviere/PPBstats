@@ -1,0 +1,41 @@
+---
+title: "`r params$title`"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+author: Flower Seed
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r global_options,include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE,message=FALSE)
+```
+
+# Introduction
+Here is a beautiful report with all results of the year !
+
+# Description of data on the location
+
+```{r}
+p = res$hist_locations[[location]]
+if(is.null(p)){print("No data for y1")}else{p}
+```
+
+
+# GGE analysis for the three locations
+
+The germplasm effects are the following:
+
+```{r}
+res$res_gge$y1$p_out_mean_comparisons_gxe$germplasm
+```
+
+The which won where plot is the following:
+
+```{r}
+res$res_gge$y1$p_out_biplot_gxe$biplot$which_won_where
+```
+
+
+

@@ -2,14 +2,23 @@
 % Please edit documentation in R/common_functions.R
 \name{common_functions}
 \alias{common_functions}
-\alias{check_data_vec_variables}
-\title{Some functions used in several functions of PPBstats}
+\alias{splitter_d}
+\title{Some functions used in one or several functions of PPBstats}
 \usage{
-check_data_vec_variables(data, vec_variables)
+splitter_d(data, .variables = NULL, drop = TRUE)
+}
+\arguments{
+\item{data}{data}
+
+\item{.variables}{.variables}
+
+\item{drop}{drop}
 }
 \description{
-This file group several functions used in several functions of PPBstats
+This file group functions used in several functions of PPBstats
 }
 \author{
 Pierre Riviere
+
+copy paste from plyr:::splitter_d in order to avoid NOTE in the package check ... I know it is quite dirty to do that !
 }

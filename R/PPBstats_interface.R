@@ -1,7 +1,7 @@
 #' Run interface to use the package
 #'
 #' @description
-#' \code{PPBstats_interface} runs an interface ti use the package
+#' \code{PPBstats_interface} runs an interface to use the package
 #' 
 #' @param interface Type of interface : "network", "agro", "organo" or "mol"
 #' 
@@ -14,6 +14,11 @@
 #' 
 #' @author 
 #' Pierre Riviere
+#' 
+#' @import shiny
+#' @import shinydashboard
+#' 
+#' @export
 #' 
 PPBstats_interface <- function(interface) {
   # locate all the shiny app that exist

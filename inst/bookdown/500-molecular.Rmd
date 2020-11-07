@@ -1,0 +1,4 @@
+# Molecular analysis (**M3**) {#molecular}
+
+Please, feel free to contribute to this part of analysis, see [here](https://priviere.github.io/PPBstats_web_site/contribute.html) for more informations.
+

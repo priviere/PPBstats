@@ -1,0 +1,673 @@
+### Study local adaptation
+
+
+#### Workflow and function relations in PPBstats regarding local adaptation analysis
+
+Figure \@ref(fig:main-workflow-family-4-HALF) displays the functions and their relationships.
+Table \@ref(tab:function-descriptions-workflow-family-4-HALF) describes each of the main functions.
+
+You can have more information for each function by typing `?function_name` in your R session.
+Note that `check_model()`, `mean_comparison()` and `plot()` are S3 method.
+Therefore, you should type `?check_model`, `?mean_comparison` or `?plot.PPBstats` to have general features and then see in details for specific functions.
+
+```{r main-workflow-family-4-HALF, out.width='90%', fig.align='center', echo=FALSE, fig.cap="Main functions used in the workflow to study local adaptation."}
+knitr::include_graphics("figures/main-functions-agro-family-4-HALF.png")
+```
+
+| function name | description |
+| --- | --- |
+| `design_experiment` | Provides experimental design for the different situations corresponding to the choosen family of analysis |
+| `format_data_PPBstats` | Check and format the data to be used in `PPBstats` functions |
+| `HA_to_LF` | Transform home away data to local foreign data |
+| `LF_to_HA` | Transform local foreign data to home away data |
+| `model_home_away` | Run home away model |
+| `model_local_foreign` | Run local foreign model |
+| `check_model` | Check if the model went well |
+| `mean_comparisons` | Get mean comparisons |
+| `plot` | Build ggplot objects to visualize output |
+Table: (\#tab:function-descriptions-workflow-family-4-HALF) Function description.
+
+
+#### Home away {#home-away}
+
+Home away analysis allows to study local adaptation.
+Away in a location refers to a germplasm that has not been grown or selected in a given location.
+Home in a location refers to a germplasm that has been grown or selected in a given location.
+
+The following model take into account germplasm and location effects in order to better study version (home or away) effect [@blanquart_practical_2013].
+The model is based on frequentist statistics (section \@ref(section-freq)).
+
+$Y_{ijkm} = \mu + \alpha_i + \theta_j + \omega_{k_{ij}} + (\omega \times \alpha)_{k_{ij}j} + rep(\theta)_{mj} + \varepsilon_{ijkm}; \quad \varepsilon_{ijkm} \sim \mathcal{N} (0,\sigma^2)$
+
+with
+
+- $Y_{ijkm}$ the phenotypic value for replication $m$, germplasm $i$ and location $j$, and version $k$,
+- $\mu$ the general mean,
+- $\alpha_i$ the effect of germplasm $i$,
+- $\theta_j$ the effect of location $j$,
+- $\omega_{k_{ij}}$ the effect of version, home or away for a germplasm $i$ in location $j$,
+- $(\omega \times \theta)_{k_{ij}j}$ the interaction effect of version $\times$ location,
+- $rep(\theta)_{mj}$ the effect of the replication $m$ nested in location,
+- $\varepsilon_{ijkm}$ the residuals.
+
+The comparisons of all germplasm in all location in sympatric or allopatric situation (measured by version effect $\omega_{k_{ij}}$) give a glocal measure of local adaptation [@blanquart_practical_2013].
+Interaction effect $(\omega \times \alpha)_{k_{ij}j}$ give information on specific adaptation to each location.
+
+If there are more than one year, then the model can be written :
+
+$Y_{ijklm} = \mu + \alpha_i + \theta_j + \beta_l + \omega_{k_{ij}} + (\theta \times \beta)_{jl} + (\omega \times \alpha)_{k_{ij}j} + rep(\theta \times \beta)_{mjl} + (\omega \times \alpha \times \beta)_{k_{ij}jl} + \varepsilon_{ijklm}; \quad \varepsilon_{ijklm} \sim \mathcal{N} (0,\sigma^2)$
+
+with
+
+- $Y_{ijklm}$ the phenotypic value for replication $m$, germplasm $i$ and location $j$, year $l$ and version $k$,
+- $\mu$ the general mean,
+- $\alpha_i$ the effect of germplasm $i$,
+- $\theta_j$ the effect of location $j$,
+- $\beta_l$ the effect of year $l$,
+- $\omega_{k_{ij}}$ the effect of version, home or away for a germplasm $i$ in location $j$,
+- $(\theta \times \beta)_{jl}$ the interaction effect of location $\times$ year,
+- $(\omega \times \theta)_{k_{ij}j}$ the interaction effect of version $\times$ location,
+- $rep(\theta \times \beta)_{mjl}$ the effect of the replication $m$ nested in location $\times$ year,
+- $(\omega \times \theta \times \beta)_{k_{ij}jl}$ the interaction effect of version $\times$ location $\times$ year,
+- $\varepsilon_{ijklm}$ the residuals.
+
+Interaction $(\omega \times \theta \times \beta)_{k_{ij}jl}$ give information on specific adaptation to each location for a given year.
+
+A type III anova is done here as the data are not orthogonal.
+
+##### Steps with `PPBstats`
+
+For home away analysis, you can follow these steps (Figure \@ref(fig:main-workflow-family-4-HALF)):
+
+- Format the data with `format_data_PPBstats()`
+- describe the data with `plot()`
+- Run the model with `model_home_away()`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()` and vizualise it with `plot()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+
+
+##### Format data
+
+```{r}
+data("data_agro_HA")
+data_agro_HA = format_data_PPBstats(data_agro_HA, type = "data_agro_HA")
+head(data_agro_HA)
+```
+
+Where `version` represents away or home and `group` represents the location where the germplasm come from.
+
+##### Describe the data
+
+```{r}
+p = plot(data_agro_HA, vec_variables = "y1", plot_type = "barplot")
+```
+
+`p` is a list with as many element as variable.
+For each variable, there are three elements :
+
+- A single plot with version for all germplasm merged
+```{r}
+p$y1$home_away_merged
+```
+
+- A single plot with version for each germplasm
+```{r}
+p$y1$home_away_merged_per_germplasm
+```
+
+- A list of plots for each germplasm with all version separated
+```{r}
+p$y1$home_away_per_germplasm$`germ-1`$version
+```
+
+```{r}
+p$y1$home_away_per_germplasm$`germ-1`$origin
+```
+
+If you have several year in the data, you can set argument `f_gris = "year"` in order to have plot for each year.
+In the example below t is not really relevent beaause there is only one year in the data set!
+
+```{r}
+p = plot(data_agro_HA, vec_variables = "y1", plot_type = "barplot", f_grid = "year")
+p$y1$home_away_merged_per_germplasm
+```
+
+
+##### Run the model
+
+To run HOME AWAY model on the dataset, use the function `model_home_away`.
+You can run it on one variable.
+
+```{r}
+out_ha = model_home_away(data_agro_HA, "y1")
+```
+
+`out_ha` is a list containing three elements :
+
+- `info` : a list with variable
+```{r}
+out_ha$info
+```
+- `ANOVA` a list with five elements :
+    - `model`
+    ```{r}
+    out_ha$ANOVA$model
+    ```
+    - `anova_model`
+    ```{r}
+    out_ha$ANOVA$anova_model
+    ```
+
+##### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-freq).
+
+
+###### Check the model
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from `check_model()`).
+
+```{r}
+out_check_ha = check_model(out_ha)
+```
+
+`out_check_ha` is a list containing four elements :
+
+- `model_home_away` the output from the model
+- `data_ggplot` a list containing information for ggplot:
+    - `data_ggplot_residuals` a list containing :
+        - `data_ggplot_normality`
+        - `data_ggplot_skewness_test`
+        - `data_ggplot_kurtosis_test`
+        - `data_ggplot_shapiro_test`
+        - `data_ggplot_qqplot`
+    - `data_ggplot_variability_repartition_pie`
+    - `data_ggplot_var_intra`
+
+###### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot()`
+
+```{r}
+p_out_check_ha = plot(out_check_ha)
+```
+
+`p_out_check_ha` is a list with:
+
+- `residuals`
+    - `histogram` : histogram with the distribution of the residuals
+    ```{r}
+    p_out_check_ha$residuals$histogram
+    ```
+    - `qqplot`
+    ```{r}
+    p_out_check_ha$residuals$qqplot
+    ```
+    - `points`
+    ```{r}
+    p_out_check_ha$residuals$points
+    ```
+
+
+- `variability_repartition` : pie with repartition of SumSq for each factor
+```{r}
+p_out_check_ha$variability_repartition
+```
+
+- `variance_intra_germplasm` : repartition of the residuals for each germplasm (see Details for more information)
+With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+This has to been seen with caution:
+    - If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+    - If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+```{r}
+p_out_check_ha$variance_intra_germplasm
+```
+
+
+##### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+Here, the computation is based on emmeans.
+
+###### Get mean comparisons
+
+Get mean comparisons with `mean_comparisons()`.
+
+```{r}
+out_mean_comparisons_ha = mean_comparisons(out_check_ha, p.adj = "tukey")
+```
+
+`out_mean_comparisons_ha` is a list of five elements:
+
+- `info` : a list with variable
+- `data_ggplot_LSDbarplot_version:germplasm`
+- `data_ggplot_LSDbarplot_germplasm`
+- `data_ggplot_LSDbarplot_location`
+- `data_ggplot_LSDbarplot_year` in case there is year in the model
+
+###### Visualize mean comparisons
+
+
+```{r}
+p_out_mean_comparisons_ha = plot(out_mean_comparisons_ha)
+```
+
+`p_out_mean_comparisons_ha` is a list of three elements with barplots :
+
+For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction.
+The error I (alpha) and the alpha correction are displayed in the title.
+
+When comparing version for each germplasm, differences are displayed with stars.
+The stars corresponds to the pvalue:
+
+| pvalue | stars |
+| --- | --- |
+| $< 0.001$ | *** |
+| $[0.001 , 0.05]$ | ** |
+| $[0.05 , 0.01]$ | * |
+| $> 0.01$ | . |
+
+
+- `version:germplasm` : mean comparison for version for each germplasm
+```{r}
+pvg = p_out_mean_comparisons_ha$"version:germplasm"
+pvg
+```
+
+- `germplasm` : mean comparison for germplasm
+```{r}
+pg = p_out_mean_comparisons_ha$germplasm
+pg$`1`
+```
+
+- `location` : mean comparison for location
+```{r}
+pl = p_out_mean_comparisons_ha$location
+pl$`1`
+```
+
+- `year` : mean comparison for year in case there is year in the model.
+
+
+
+##### post hoc analysis to visualize variation repartition for several variables
+
+First run the models
+```{r}
+out_ha_2 = model_home_away(data_agro_HA, "y2")
+out_ha_3 = model_home_away(data_agro_HA, "y3")
+```
+
+Then check the models
+```{r}
+out_check_ha_2 = check_model(out_ha_2)
+out_check_ha_3 = check_model(out_ha_3)
+```
+
+```{r}
+list_out_check_model = list("ha_1" = out_check_ha, "ha_2" = out_check_ha_2, "ha_3" = out_check_ha_3)
+post_hoc_variation(list_out_check_model)
+```
+
+
+
+##### Apply the workflow to several variables
+
+If you wish to apply the AMMI workflow to several variables, you can use `lapply()` with the following code :
+
+```{r}
+workflow_home_away = function(x, data){
+  out_home_away = model_home_away(data, variable = x)
+  
+  out_check_home_away = check_model(out_home_away)
+  p_out_check_home_away = plot(out_check_home_away)
+  
+  out_mean_comparisons_home_away = mean_comparisons(out_check_home_away, p.adj = "bonferroni")
+  p_out_mean_comparisons_home_away = plot(out_mean_comparisons_home_away)
+  
+  out = list(
+    "out_home_away" = out_home_away,
+    "out_check_home_away" = out_check_home_away,
+    "p_out_check_home_away" = p_out_check_home_away,
+    "out_mean_comparisons_home_away" = out_mean_comparisons_home_away,
+    "p_out_mean_comparisons_home_away" = p_out_mean_comparisons_home_away
+  )
+  
+  return(out)
+}
+
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_home_away, data_agro_HA)
+names(out) = vec_variables
+
+list_out_check_model = list("ha_1" = out$y1$out_check_home_away, "ha_2" = out$y2$out_check_home_away, "ha_3" = out$y3$out_check_home_away)
+
+p_post_hoc_variation = post_hoc_variation(list_out_check_model)
+
+```
+
+
+
+#### Local foreign {#local-foreign}
+
+Another way to study local adaptation of germplasm to their location from origin is to compare germplasm behavior on their original location with their behavior on other locations : if the first is greater than the second then the germplasm is more adapted to its original location rather than to the other locations.
+
+Local in a location refers to a germplasm that has been grown or selected in a given location.
+Foreign in a location refers to a germplasm that has not been grown or selected in a given location.
+
+The following model take into account germplasm and location effects in order to better study version (local or foreign) effect [@blanquart_practical_2013]:
+
+$Y_{ijkm} = \mu + \alpha_i + \theta_j + \omega_{k_{ij}} + (\omega \times \theta)_{k_{ij}j} + rep(\theta)_{mj} + \varepsilon_{ijkm}; \quad \varepsilon_{ijkm} \sim \mathcal{N} (0,\sigma^2)$
+
+with
+
+- $Y_{ijkm}$ the phenotypic value for replication $m$, germplasm $i$ and location $j$, and version $k$,
+- $\mu$ the general mean,
+- $\alpha_i$ the effect of germplasm $i$,
+- $\theta_j$ the effect of location $j$,
+- $\omega_{k_{ij}}$ the effect of version, local or foreign for a germplasm $i$ in location $j$,
+- $(\omega \times \alpha)_{k_{ij}j}$ the interaction effect of version $\times$ germplasm,
+- $rep(\theta)_{mj}$ the effect of the replication $m$ nested in location,
+- $\varepsilon_{ijkm}$ the residuals.
+
+As for home away model, version effect $\omega_{k_{ij}}$) give a glocal measure of local adaptation of germplasm to their location of origin [@blanquart_practical_2013].
+Interaction effect $(\omega \times \theta)_{k_{ij}j}$ give information on specific adaptation to each germplasm.
+
+
+If there are more than one year, then the model can be written :
+
+$Y_{ijklm} = \mu + \alpha_i + \theta_j + \beta_l + \omega_{k_{ij}} + (\theta \times \beta)_{jl} + (\omega \times \alpha)_{k_{ij}i} + rep(\theta \times \beta)_{mjl} + (\omega \times \alpha \times \beta)_{k_{ij}il} + \varepsilon_{ijklm}; \quad \varepsilon_{ijklm} \sim \mathcal{N} (0,\sigma^2)$
+
+with
+
+- $Y_{ijklm}$ the phenotypic value for replication $m$, germplasm $i$ and location $j$, year $l$ and version $k$,
+- $\mu$ the general mean,
+- $\alpha_i$ the effect of germplasm $i$,
+- $\theta_j$ the effect of location $j$,
+- $\beta_l$ the effect of year $l$,
+- $\omega_{k_{ij}}$ the effect of version, home or away for a germplasm $i$ in location $j$,
+- (\theta \times \beta)_{jl} the interaction effect of location $\times$ year,
+- (\omega \times \alpha)_{k_{ij}i} the interaction effect of version $\times$ germplasm,
+- rep(\theta \times \beta)_{mjl} the effect of the replication $m$ nested in location $\times$ year,
+- (\omega \times \alpha \times \beta)_{k_{ij}il} the interaction effect of version $\times$ germplasm $\times$ year,
+- \varepsilon_{ijklm} the residuals.
+
+Interaction $(\omega \times \theta \times \beta)_{k_{ij}jl}$ give information on specific adaptation to each germplasm for a given year.
+
+A type III anova is done here as the data are not orthogonal.
+
+
+##### Steps with `PPBstats`
+
+For local foreign analysis, you can follow these steps (Figure \@ref(fig:main-workflow-family-4-HALF)):
+
+- Format the data with `format_data_PPBstats()`
+- describe the data with `plot()`
+- Run the model with `model_local_foreign()`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()` and vizualise it with `plot()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+
+
+
+##### Format data
+
+```{r}
+data("data_agro_LF")
+data_agro_LF = format_data_PPBstats(data_agro_LF, type = "data_agro_LF")
+head(data_agro_LF)
+```
+
+##### Describe the data
+
+```{r}
+p = plot(data_agro_LF, vec_variables = "y1", plot_type = "barplot")
+```
+
+`p` is a list with as many element as variable.
+For each variable, there are three elements :
+
+- A single plot with version for all location merged
+```{r}
+p$y1$local_foreign_merged
+```
+- A single plot with version for each location
+```{r}
+p$y1$local_foreign_merged_per_location
+```
+- plot for each location with all version separated
+```{r}
+p$y1$local_foreign_per_location$`loc-1`$version
+```
+
+
+```{r}
+p$y1$local_foreign_per_location$`loc-1`$origin
+```
+
+If you have several year in the data, you can set argument `f_gris = "year"` in order to have plot for each year.
+In the example below t is not really relevent beaause there is only one year in the data set!
+
+```{r}
+p = plot(data_agro_LF, vec_variables = "y1", plot_type = "barplot", f_grid = "year")
+p$y1$local_foreign_merged_per_location
+```
+
+##### Run the model
+
+To run LOCAL FOREIGN model on the dataset, use the function `model_local_foreign`.
+You can run it on one variable.
+
+```{r}
+out_lf = model_local_foreign(data_agro_LF, "y1")
+```
+
+`out_lf` is a list containing three elements :
+
+- `info` : a list with variable
+```{r}
+out_lf$info
+```
+- `ANOVA` a list with five elements :
+    - `model`
+    ```{r}
+    out_lf$ANOVA$model
+    ```
+    - `anova_model`
+    ```{r}
+    out_lf$ANOVA$anova_model
+    ```
+
+##### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-freq).
+
+
+###### Check the model
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from `check_model()`).
+
+```{r}
+out_check_lf = check_model(out_lf)
+```
+
+`out_check_lf` is a list containing four elements :
+
+- `model_local_foreign` the output from the model
+- `data_ggplot` a list containing information for ggplot:
+    - `data_ggplot_residuals` a list containing :
+        - `data_ggplot_normality`
+        - `data_ggplot_skewness_test`
+        - `data_ggplot_kurtosis_test`
+        - `data_ggplot_shapiro_test`
+        - `data_ggplot_qqplot`
+    - `data_ggplot_variability_repartition_pie`
+    - `data_ggplot_var_intra`
+
+###### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot()`
+
+```{r}
+p_out_check_lf = plot(out_check_lf)
+```
+
+`p_out_check_lf` is a list with:
+
+- `residuals`
+    - `histogram` : histogram with the distribution of the residuals
+    ```{r}
+    p_out_check_lf$residuals$histogram
+    ```
+    - `qqplot`
+    ```{r}
+    p_out_check_lf$residuals$qqplot
+    ```
+    - `points`
+    ```{r}
+    p_out_check_lf$residuals$points
+    ```
+
+- `variability_repartition` : pie with repartition of SumSq for each factor
+```{r}
+p_out_check_lf$variability_repartition
+```
+
+- `variance_intra_germplasm` : repartition of the residuals for each germplasm (see Details for more information)
+With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+This has to been seen with caution:
+    - If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+    - If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+```{r}
+p_out_check_lf$variance_intra_germplasm
+```
+
+
+##### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+Here, the computation is based on emmeans.
+
+###### Get mean comparisons
+
+Get mean comparisons with `mean_comparisons()`.
+
+```{r}
+out_mean_comparisons_lf = mean_comparisons(out_check_lf, p.adj = "tukey")
+```
+
+`out_mean_comparisons_lf` is a list of five elements:
+
+- `info` : a list with variable
+- `data_ggplot_LSDbarplot_version:germplasm`
+- `data_ggplot_LSDbarplot_germplasm`
+- `data_ggplot_LSDbarplot_location`
+- `data_ggplot_LSDbarplot_year` in case there is year in the model
+
+###### Visualize mean comparisons
+
+
+```{r}
+p_out_mean_comparisons_lf = plot(out_mean_comparisons_lf)
+```
+
+`p_out_mean_comparisons_lf` is a list of three elements with barplots :
+
+For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction.
+The error I (alpha) and the alpha correction are displayed in the title.
+
+When comparing version for each germplasm, differences are displayed with stars.
+The stars corresponds to the pvalue:
+
+| pvalue | stars |
+| --- | --- |
+| $< 0.001$ | *** |
+| $[0.001 , 0.05]$ | ** |
+| $[0.05 , 0.01]$ | * |
+| $> 0.01$ | . |
+
+
+- `version:germplasm` : mean comparison for version for each location
+```{r}
+pvg = p_out_mean_comparisons_lf$"version:location"
+pvg
+```
+
+- `germplasm` : mean comparison for germplasm
+```{r}
+pg = p_out_mean_comparisons_lf$germplasm
+pg$`1`
+```
+
+- `location` : mean comparison for location
+```{r}
+pl = p_out_mean_comparisons_lf$location
+pl$`1`
+```
+
+- `year` : mean comparison for year in case there is year in the model.
+
+
+
+##### post hoc analysis to visualize variation repartition for several variables
+
+First run the models
+```{r}
+out_lf_2 = model_local_foreign(data_agro_LF, "y2")
+out_lf_3 = model_local_foreign(data_agro_LF, "y3")
+```
+
+Then check the models
+```{r}
+out_check_lf_2 = check_model(out_lf_2)
+out_check_lf_3 = check_model(out_lf_3)
+```
+
+```{r}
+list_out_check_model = list("lf_1" = out_check_lf, "lf_2" = out_check_lf_2, "lf_3" = out_check_lf_3)
+post_hoc_variation(list_out_check_model)
+```
+
+
+
+##### Apply the workflow to several variables
+
+If you wish to apply the AMMI workflow to several variables, you can use `lapply()` with the following code :
+
+```{r}
+workflow_local_foreign = function(x, data){
+  out_local_foreign = model_local_foreign(data, variable = x)
+  
+  out_check_local_foreign = check_model(out_local_foreign)
+  p_out_check_local_foreign = plot(out_check_local_foreign)
+  
+  out_mean_comparisons_local_foreign = mean_comparisons(out_check_local_foreign, p.adj = "bonferroni")
+  p_out_mean_comparisons_local_foreign = plot(out_mean_comparisons_local_foreign)
+  
+  out = list(
+    "out_local_foreign" = out_local_foreign,
+    "out_check_local_foreign" = out_check_local_foreign,
+    "p_out_check_local_foreign" = p_out_check_local_foreign,
+    "out_mean_comparisons_local_foreign" = out_mean_comparisons_local_foreign,
+    "p_out_mean_comparisons_local_foreign" = p_out_mean_comparisons_local_foreign
+  )
+  
+  return(out)
+}
+
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_local_foreign, data_agro_LF)
+names(out) = vec_variables
+
+list_out_check_model = list("lf_1" = out$y1$out_check_local_foreign, "lf_2" = out$y2$out_check_local_foreign, "lf_3" = out$y3$out_check_local_foreign)
+
+p_post_hoc_variation = post_hoc_variation(list_out_check_model)
+
+```
+
+

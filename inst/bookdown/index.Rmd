@@ -1,0 +1,129 @@
+--- 
+title: "`PPBstats` : An `R` package for Participatory Plant Breeding statisticial analyses"
+author: "Pierre Rivière"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: biblio.bib
+biblio-style: apalike
+link-citations: yes
+github-repo: priviere/PPBstats
+description: "Tutorial on how to use the R package PPBstats."
+---
+
+
+# Preface {-}
+
+`PPBstats` is an R package that performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments.
+
+```{r, out.width='10%', fig.align='left', echo=FALSE}
+knitr::include_graphics("figures/warning.png")
+```
+Be aware that this package is under development and test: do not 100% trust the functions!!! 
+You're welcome to contribute: see [here](../CONTRIBUTING.html) for more informations.
+
+```{r , out.width='90%', fig.align='center', echo=FALSE, fig.cap="Wheat trials on farm within our participatory plant breeding programme, summer 2012, Auvergne, France. CC-BY-NC-SA. Pierre Rivière. [@JSG_2012_1]"}
+knitr::include_graphics("figures/wheat.JPG")
+```
+
+
+## Authors and contributors of `PPBstats` and the book {-}
+
+**Pierre Rivière^1^** coordinated the package development, wrote the R functions and the present book
+
+**Gaelle Van Frank^2^** tested the package and updated the code regarding sections \@ref(ammi), \@ref(gge), \@ref(model-1), \@ref(model-2), \@ref(home-away), \@ref(local-foreign) and \@ref(variance-intra)
+
+**Baptiste Rouger^2^** tested the package, updated and wrote code regarding sections \@ref(home-away) and \@ref(local-foreign).
+
+**Olivier David^3^** wrote the `JAGS` code and reviewed the R code and the book regarding sections \@ref(model-1), \@ref(model-2), \@ref(model-1) and \@ref(variance-intra).
+
+**Facundo Muñoz^4^** reformated and improved all the code regarding S3 methods, format figures with `Tikz`, improve section regarding [contributions](https://priviere.github.io/PPBstats_web_site/contribute.html).
+
+**Camille Vindras^5^** wrote text to present method description in sensory analysis in section \@ref(organoleptic).
+
+**Mathieu Thomas^6,7^** proposed the data format as well as the descriptive analysis regarding network section \@ref(network).
+
+**Isabelle Goldringer^2^** reviewed and improved all the text of the book
+
+
+^1^ Réseau Semences Paysannes, 3 avenue de la gare, F-47190 Aiguillon, France
+```{r , out.width='30%', fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/Logo-RSP.png")
+```
+Le Réseau Semences Paysannes (the French Farmers' Seeds Network (RSP)), created in 2003, brings together a great diversity of collectives and people who preserve farmers' seeds in fields, orchards, vineyards and gardens. They are involved in supporting the consolidation of local initiatives to maintain and renew cultivated biodiversity through Community Seeds Systems. Over 90 organizations have come together to promote and develop farmers' seeds, and to protect farmers' rights over their seeds.
+http://www.semencespaysannes.org
+
+
+^2^ INRA, UMR 0320, Génétique Quantitative et Evolution, Ferme du Moulon F-91190 Gif sur Yvette, France
+```{r , out.width='30%', fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/Logo-UMRGV.jpg")
+```
+The Diversity, Evolution and Adaptation of Populations (DEAP) team led by Isabelle Goldringer is part of INRA UMR 0320 Quantitative Genetic and Evolution.
+Its work is based on the analysis of the genetic and evolutionary mechanisms underlying evolution and adaptation of crop populations.
+DEAP develops strategies for on farm management of crop genetic diversity and
+for plant breeding (evolutionary and/or participatory) adated to organic and low input agriculture.
+Assessing the benefits of in-field genetic diversity (variety mixtures, populations) and designing
+/ breeding optimized mixtures adapted to local conditions are also key research objectives.
+http://moulon.inra.fr/index.php/en/team/deap
+
+
+^3^ INRA, UR 1404 Unité Mathématiques et Informatique Appliquées du Génome à l'Environnement, F-78352 Jouy-en-Josas, France
+
+```{r , out.width='30%', fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/Logo-maiage.png")
+```
+The INRA UR1404 MaIAGE research laboratory gathers mathematicians, computer scientists, bioinformaticians and biologists to tackle problems coming from biology, agronomy and ecology; The addressed questions may concern processes at very different levels: molecular, cellular or multicellular, individual, populations, ecosystems oy landscapes. 
+MaIAGE develops original methods in mathematics, statistics and computer science which are generic or driven by specific biological problems. A particular attention is paid to develop and make available softwares, databases, ontologies and web services so that biologists can use them easily to analyze their data or to mine the scientific literature.
+http://maiage.jouy.inra.fr/?q=en/home
+
+
+^4^ INRA, Centre Val de Loire, Unité Amélioration, Génétique et Physiologie Forestières, F-45075 Orléans, France
+
+^5^ ITAB, Ferme Expérimentale, 2485 Route des Pécolets, F-26800 Etoile-sur-Rhône, France
+
+^6^ CIRAD, UMR AGAP, F-34398 Montpellier, France
+
+^7^ AGAP, Univ Montpellier, CIRAD, INRA, Montpellier SupAgro, Montpellier, France
+
+## Copyright, Licence, citation {-}
+
+Copyright Réseau Semences Paysannes and Institut National de la Recherche Agronomique
+
+The R code is under licence [GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+```{r , out.width='20%', fig.align='center', echo=FALSE}
+knitr::include_graphics("../bookdown/figures/gpl3.png")
+```
+
+
+The book is under [licence creative commons BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+```{r , out.width='20%', fig.align='center', echo=FALSE}
+knitr::include_graphics("../bookdown/figures/cc-by-nc-sa.png")
+```
+
+To cite the package :
+
+```{r}
+citation("PPBstats")
+```
+
+To cite the book :
+
+```
+bibtex entry
+
+@book{ppbstats_book_2020,
+  title = "{PPBstats : An R package for Participatory Plant Breeding statisticial analyses.}",
+	author = "{Pierre Riviere and Gaelle {Van Franck} and Olivier David and Baptiste Rouger and Camille Vindras and Mathieu Thomas and Isabelle Goldringer}",
+	year = "2020",
+	version = "0.26",
+	licence = "CC BY NC SA",
+	url = "https://priviere.github.io/PPBstats_web_site/book/index.html"
+}
+```
+
+
+
+
+

@@ -1,0 +1,95 @@
+## Bipart network analysis
+This section deals with bipart network that represents "which location has which germplasm which year".
+
+### Steps with `PPBstats`
+
+- Format the data with `format_data_PPBstats()`
+- get descriptive plot with `plot()`
+
+### Format the data
+
+The format required is a data frame with the following compulsory columns as factor: `"germplasm"`, `"location"`, `"year"`.
+Possible options are : `"long"`, `"lat"` to get map representation
+
+Note that data frame with unipart network for seed lots format can also be used.
+
+The format of the data are checked by the function `format_data_PPBstats()` with the following arguments :
+
+- `type` : `"data_network"`
+- `network_part` : `"bipart"`
+- `vertex_type` : `c("germplasm", "location")`
+
+
+The function returns list of `igraph` object^[http://igraph.org/r/] coming from `igraph::graph_from_data_frame()`.
+
+```{r}
+data(data_network_unipart_sl)
+head(data_network_unipart_sl)
+```
+
+```{r}
+net_bipart = format_data_PPBstats(
+  type = "data_network",
+  data = data_network_unipart_sl, 
+  network_part = "bipart", 
+  vertex_type =  c("germplasm", "location")
+  )
+```
+
+For bipart network, it returns a list with as many elements as year in the data 
+as well as all years merged in the first element of the list.
+If no year are provided into the data, all information are merged.
+
+```{r}
+names(net_bipart)
+```
+
+### Describe the data
+
+The different representations are done with the `plot()` function.
+
+```{r,warning=FALSE}
+p_net = plot(net_bipart, plot_type = "network", 
+                          labels_on = TRUE, labels_size = 4)
+names(p_net) # one element per year, the first element with all the data
+p_net$`2009`
+```
+
+
+With barplots, it represents the number of edges per vertex for each germplasm and each location.
+```{r,warning=FALSE}
+p_bar = plot(net_bipart, plot_type = "barplot")
+names(p_bar) # one element per year, the first element with all the data
+p_bar = p_bar$`2005-2006-2007-2008-2009`$barplot
+p_bar$germplasm
+p_bar$location
+```
+
+
+Location present on the network can be displayed on a map with `plot_type = "map"`.
+When using map, do not forget to use credit :
+Map tiles by [Stamen Design](http://stamen.com), 
+under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0). 
+Data by [OpenStreetMap](http://openstreetmap.org), 
+under [ODbL](http://www.openstreetmap.org/copyright).
+
+
+```{r,warning=FALSE,message=FALSE}
+p_map = PPBstats:::plot.data_network(net_bipart[1], plot_type = "map", labels_on = "location")
+p_map$`2005-2006-2007-2008-2009`
+```
+
+As well as plot information regarding a variable on map with a pie with `plot_type = "map"` and by setting arguments `data_to_pie` and `vec_variables`:
+
+```{r,warning=FALSE,message=FALSE}
+# y1 is a quantitative variable
+p_map_pies_y1 = PPBstats:::plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y1")
+p_map_pies_y1$`2005-2006-2007-2008-2009`
+```
+
+```{r,warning=FALSE,message=FALSE}
+# y2 is a qualitative variable
+p_map_pies_y2 = PPBstats:::plot.data_network(net_bipart[1], data_to_pie, plot_type = "map", vec_variables = "y2")
+p_map_pies_y2$`2005-2006-2007-2008-2009`
+```
+

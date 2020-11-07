@@ -7,7 +7,7 @@
 get.env.info(D, nb_ind)
 }
 \arguments{
-\item{D}{The data frame with its specific column names used in \code{\link{model_1}}}
+\item{D}{The data frame with its specific column names used in \code{\link{model_bh_intra_location}}}
 
 \item{nb_ind}{The minimal number of individuals per variable}
 }
@@ -24,10 +24,10 @@ The function returns a list with
 }
 }
 \description{
-\code{get.env.info} look at a data set and separate regional farms and satellite farms in two datasets. This function is used in \code{\link{model_1}}.
+\code{get.env.info} look at a data set and separate regional farms and satellite farms in two datasets. This function is used in \code{\link{model_bh_intra_location}}.
 }
 \seealso{
-\code{\link{model_1}}
+\code{\link{model_bh_intra_location}}
 }
 \author{
 Pierre Riviere

@@ -1,0 +1,224 @@
+### GGE (**M6b**) {#gge}
+
+#### Theory of the model
+The experimental design used is fully replicated (**D1**).
+The GGE model is the same as the AMMI model except that the PCA is done on a matrix centered on the locations: germplasm and interaction effects are merged ^[Note than in `PPBstats`, as for AMMI, the PCA is done on germplasm and interaction effects + residuals.] [@gauch_statistical_2006][@gauch_statistical_2008][@yan_gge_2007]. 
+The model is based on frequentist statistics (section \@ref(section-freq)).
+
+The GGE model can be written as followed:
+
+$Y_{ijk} = \mu + \theta_{j} + rep_{k}(\theta_{j}) + \sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
+
+with,
+
+- $Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and location $j$,
+- $\mu$ the general mean,
+- $\theta_{j}$ the effect of location $j$,
+- $rep_{k}(\theta_{j})$ the effect of replication $k$ nested in location,
+- $N$ the number of dimension (PCA componant) which has as maximum value the number of location,
+- $\lambda_{n}$ the eigen value for componant $n$,
+- $\gamma_{in}$ the eigen vector for germplasm $i$ for componant $n$,
+- $\omega_{jn}$ the eigen vector for  location $j$  for componant $n$.
+- $\varepsilon_{ijk}$ the residuals.
+
+or, if there is year effect:
+
+$Y_{ijkl} = \mu + \theta_{j} + rep_{k}(\theta_{j}\beta_{l}) +\sum_{n}^{N} \lambda_{n} \gamma_{in} \omega_{jn} +  \beta_{l} + \beta_{l}\alpha_{i} + \beta_{l}\theta_{j} +  \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
+
+With,
+
+- $Y_{ijkl}$ the phenotypic value for replication $k$, germplasm $i$, location $j$ and year $l$,
+- $\beta_{l}$ the year $l$ effect,
+- $\beta_{l}\alpha_{i}$ the year $\times$ germplasm interaction effect,
+- $\beta_{l}\theta_{j}$ the year $\times$ location interaction effect,
+- $\varepsilon_{ijk}$ the residuals,
+- and all other effects are the same as in the previous model.
+
+
+#### Steps with `PPBstats`
+
+For GGE analysis, everything is exactly the same than for AMMI analysis except you should settle `gxe_analysis = "GGE"` in `model_GxE`.
+You can follow these steps (Figure \@ref(fig:main-workflow)):
+
+- Format the data with `format_data_PPBstats()`
+- Run the model with `model_GxE()` and `gxe_analysis = "GGE"`
+- Check model outputs with graphs to know if you can continue the analysis with `check_model()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+- Get and visualize biplot with `biplot_data()` and `plot()` 
+- Get groups of each parameters with `parameters_groups()` and visualise it with `plot()`
+
+We will not details everything as it the same than AMMI in the code.
+Of course the calculation is different on the interaction matrix so you'll get different results.
+
+The workflow is therefore :
+
+#### Format the data
+
+```{r}
+data(data_model_GxE)
+data_model_GxE = format_data_PPBstats(data_model_GxE, type = "data_agro")
+head(data_model_GxE)
+```
+
+#### Run the model
+```{r}
+out_gge = model_GxE(data_model_GxE, variable = "y1", gxe_analysis = "GGE")
+```
+
+#### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-freq).
+
+##### Check the model
+```{r}
+out_check_gge = check_model(out_gge)
+```
+
+##### Visualize outputs
+```{r}
+p_out_check_gge = plot(out_check_gge)
+```
+
+#### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+
+##### Get mean comparisons
+```{r}
+out_mean_comparisons_gge = mean_comparisons(out_check_gge, p.adj = "bonferroni")
+```
+
+##### Visualize mean comparisons
+```{r}
+p_out_mean_comparisons_gge = plot(out_mean_comparisons_gge)
+```
+
+#### Get and visualize biplot
+
+##### Get biplot
+```{r}
+out_biplot_gge = biplot_data(out_check_gge)
+```
+
+##### Visualize biplot
+```{r}
+p_out_biplot_gge = plot(out_biplot_gge)
+```
+
+Compared to AMMI analysis, in the output of `p_out_biplot_gge`, 
+`which_won_where`,
+`mean_vs_stability` and 
+`discrimitiveness_vs_representativeness`
+are displayed.
+
+The description of these following graphs are greatly inspired from @ceccarelli_manual_2012.
+
+```{r}
+biplot = p_out_biplot_gge$biplot
+```
+
+- The which won where graph
+
+This graph allow to detect location where germplasm (and the interaction) behave better : 'which won where' [@gauch_statistical_2008,@yan_gge_2007].
+The germplasms which have the largest value in a sector "win" in the location present in that sector.
+The information is summarized in the legend of the plot.
+See `?plot.PPBstats` for more details on this plot.
+
+```{r}
+biplot$which_won_where
+```
+
+- The mean vs stability graph.
+
+    - mean
+    A red circle define the average location.
+    An high score mean a greater mean performance of an entry.
+    Entries with a score above zero means entries with above-average means.
+    Entries with a score below zero means entries with below-average means.
+    Note that the distance from the biplot origin to the average location circle (represented with an arrow), is a measure of the relative importance of the germplasm main effect versus the entry by location interaction.
+    The longer the arrow is, the more important is germplasm effect and the more meaningful is the selection based on mean performance. 
+    ```{r}
+    biplot$mean_vs_stability$mean_performance
+    ```
+
+    - stability
+    This information is related to the ecovalence graph.
+    The score is equal to the length of the projection.
+    A high score represents a low stability (i.e. an high entry by location interaction).
+    ```{r}
+    biplot$mean_vs_stability$stability_performance
+    ```
+
+- The discrimitiveness vs representativeness graph. 
+It is interessting to assess the ability of the locations to discriminate the germplasms and their ability to represent the target locations. 
+
+The closer a given location is next to the averge location (represented by a red circle), the more desirable it is judged on both discrimination and representativeness.
+
+- discrimitiveness
+The higher the value, the highest the discrimitiveness for locations.
+
+```{r}
+biplot$discrimitiveness_vs_representativeness$discrimitiveness
+```
+
+- representativeness
+The highest the value, the less representative the location.
+
+```{r}
+biplot$discrimitiveness_vs_representativeness$representativeness
+```
+
+- discrimitiveness vs representativeness
+The location combining better score (i. e.discrimination and representativeness) are the ones that could be used to test germplasms as they are more representative of all the locations.
+This has to be done severals year to get robust results.
+The highest the score, the more representative the location.
+
+```{r}
+biplot$discrimitiveness_vs_representativeness$discrimitiveness_vs_representativeness
+```
+
+
+#### Get and vizualise groups of parameters
+
+##### Get groups of parameters
+
+```{r}
+# First run the models
+gge_2 = model_GxE(data_model_GxE, variable = "y2", gxe_analysis = "GGE")
+gge_3 = model_GxE(data_model_GxE, variable = "y3", gxe_analysis = "GGE")
+
+# Then check the models
+out_check_gge_2 = check_model(gge_2)
+out_check_gge_3 = check_model(gge_3)
+
+# Then run the function for germplasm. It can also be done on location or intra germplasm variance
+out_parameter_groups = parameter_groups(
+  list("y1" = out_check_gge, "y2" = out_check_gge_2, "y3" = out_check_gge_3), 
+  "germplasm"
+  )
+```
+
+##### Visualize groups of parameters
+```{r}
+p_germplasm_group = plot(out_parameter_groups)
+```
+
+
+#### Apply the workflow to several variables
+
+If you wish to apply the AMMI workflow to several variables, you can use the function `workflow_gxe()` presented in section \@ref{workflow-gxe} with the following code :
+
+```{r}
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_gxe, "GGE")
+names(out) = vec_variables
+
+out_parameter_groups = parameter_groups(
+  list("y1" = out$y1$out_check_gxe, "y2" = out$y2$out_check_gxe, "y3" = out$y3$out_check_gxe), 
+  "germplasm" )
+
+p_germplasm_group = plot(out_parameter_groups)
+
+```
+

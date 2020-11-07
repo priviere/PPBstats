@@ -1,42 +1,66 @@
 Package: PPBstats
 Type: Package
-Title: An R package to perform analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments
-Version: 0.23
+Title: An R package to perform analysis found within PPB programmes
+Version: 0.26
 Encoding: UTF-8
-Date: 2017-08-07
-Authors@R: c(person("Pierre", "Riviere", role = c("aut", "cre")),
+Date: 2020-03-28
+Authors@R: c(
+    person("Pierre", "Riviere", role = c("aut", "cre"), email = "pamriviere@protonmail.com"),
     person("Gaelle", "Van Frank", role = "ctb"),
     person("Olivier", "David", role = "ctb"),
-    person("Facundo", "Muñoz", role = "ctb")
+    person("Facundo", "Muñoz", role = "ctb"),
+    person("Baptiste", "Rouger", role = "ctb"),
+    person("Camille", "Vindras", role = "ctb"),
+    person("Mathieu", "Thomas", role = "ctb"),
+    person("Isabelle", "Goldringer", role = "ctb")
     )
-Author: Pierre Riviere and Gaelle Van Frank and Olivier David and Facundo Muñoz
+Author: Pierre Riviere and Gaelle Van Frank and Olivier David and Facundo Muñoz and Baptiste Rouger and Camille Vindras and Mathieu Thomas and Isabelle Goldringer
 Maintainer: Pierre Riviere <pierre@semencespaysannes.org>
-Description: This package performs analysis found within PPB programmes regarding network of seeds circulation, agronomic trials, organoleptic tests and molecular experiments
+Description: This package performs analysis found within PPB programmes regarding 
+  network of seeds circulation, agronomic trials, organoleptic tests and 
+  molecular experiments.
 License: GPL-3
-URL: http://github.com/priviere/PPBstats
+URL: http://github.com/priviere/PPBstats_web_site
 BugReports: http://github.com/priviere/PPBstats/issues
+Imports:
+  methods
 Depends:
-    rjags,
-    FactoMineR, 
-    ggplot2,
-    plyr,
-    dplyr,
-    gridExtra,
-    parallel,
+    R (>= 3.5.0),
     agricolae,
+    car,
+    coda,
+    combinat,
+    dplyr,
+    emmeans,
     factoextra,
+    FactoMineR, 
+    ggimage,
+    ggmap,
+    ggnetwork,
+    ggplot2,
+    grid,
     ibd,
-    bitops,
-    SpATS,
-    qdapRegex,
+    igraph,
+    intergraph,
+    multcompView,
+    parallel,
+    plyr,
+    png,
+    RColorBrewer,
+    rjags,
+    scales,
     shiny,
-    shinydashboard
+    shinydashboard,
+    SpATS,
+    stats,
+    tibble
 Suggests:
     ggmcmc,
-    GGEBiplotGUI,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggcorrplot
 LazyLoad: yes
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
+SystemRequirements: JAGS in order to do bayesian analysis. See http://mcmc-jags.sourceforge.net/ for more details.

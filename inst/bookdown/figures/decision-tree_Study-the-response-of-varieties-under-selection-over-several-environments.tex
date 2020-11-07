@@ -1,0 +1,37 @@
+\documentclass[tikz, border=10pt]{standalone}
+\input{tikz-head}
+
+\begin{document}
+
+\begin{tikzpicture}[grow cyclic, align=flush center,
+every node/.style=concept, concept color=level-1, font=\huge, text width=7cm,
+every node/.append style={scale=1},
+%every concept/.style={rectangle},
+    level 1/.style={level distance=10cm, sibling angle=65, concept color=level-2, font=\huge, text width=4cm},
+    level 2/.style={level distance=10cm, sibling angle=50, concept color=level-3, font=\huge, text width=4cm},
+    level 3/.style={level distance=10cm, sibling angle=45, concept color=level-4, font=\huge, text width=4cm},
+    level 4/.style={level distance=12cm, sibling angle=45, concept color=level-5, font=\huge, text width=6cm},
+    level 5/.style={level distance=12cm, sibling angle=45, concept color=level-6, font=\huge, text width=6cm},
+    level 6/.style={level distance=12cm, sibling angle=45, concept color=level-7, font=\huge, text width=5cm},
+    ]
+\node{\textbf{Study the response of varieties under selection over several environments}}
+  child{ node {Analysis of agronomic traits}
+    child { node {Quantitative traits, single-trait approach}
+      child { node {Number of plots per location: large}
+        child { node {At least two locations and one year or more}
+          child { node {Same entries in all locations; all entries are replicated at least twice in each location \\ \textbf{D1 - fully-repicated} }
+            child { node {\textbf{M6a - AMMI, M6b - GGE} }}
+          }
+        }
+      }
+      child { node {Number of plots per farm: low}
+        child { node {At least 25 environnements (i.e. number location $\times$ number year $\geq$~25)}
+          child { node { All locations share a one replicated control or more; entries are not replicated within and among locations \\ \textbf{D4 - satellite-farm \& regional-farm} }
+            child { node {\textbf{M7b - Bayesian hierarchical model GxE} }}
+          }
+        }
+      }
+    }
+  }
+\end{tikzpicture}
+\end{document}

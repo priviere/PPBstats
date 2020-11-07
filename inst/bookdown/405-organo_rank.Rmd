@@ -1,0 +1,30 @@
+## Rank analysis (**M9c**) {#rank}
+
+### Method description
+
+A panel of assessors compares several products simultaneously and ranks them according to the perceived magnitude of a given sensory characteristic (e.g. acidity, fibrousness).
+This method has the advantage of being easy to implement. 
+The jury ideally comprises 12 semi-naive assessors (consumers initiated to sensory analyses) according to the ISO 8587 standard^[ISO 8587:2006 is a standard from International Organisation for Standardisation which describes a method for sensory evaluation with the aim of placing a series of test samples in rank order.], although it is possible to highlight significant differences with a smaller number of assessors.
+Key Characteristics:
+
+- Products are presented simultaneously 
+This requires that the whole set of samples to be tested is available at the same time.  Some vegetable species show marked differences in precocity (e.g. broccoli), and therefore care should be taken to ensure that samples of the same precocity are compared.
+- The assessors can taste as much as they need.
+- When they answer, assessors cannot put any two products at the same rank, i.e. all ranks assigned must be unique.
+
+It is advised not to exceed 6 samples per session. 
+Null hypothesis (H0): all varieties have exactly the same responses (rank means are equal) 
+Friedman’s test (non parametric test on k independent samples) leads to the rejection or acceptance of this hypothesis, based on α value (<0.05).
+
+
+### Steps with `PPBstats`
+
+
+### Format the data
+
+
+### Run the model
+
+
+
+

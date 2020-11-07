@@ -22,9 +22,12 @@
 #' 
 #' @seealso 
 #' \itemize{
-#' \item \code{\link{mean_comparisons_model_1}}
-#' \item \code{\link{mean_comparisons_model_2}}
+#' \item \code{\link{mean_comparisons.check_model_bh_intra_location}}
+#' \item \code{\link{mean_comparisons.check_model_bh_GxE}}
+#' \item \code{\link{mean_comparisons.check_model_bh_variance_intra}}
 #' } 
+#' 
+#' @export
 #' 
 get.at.least.X.groups = function(
   Mpvalue, 
@@ -33,6 +36,8 @@ get.at.least.X.groups = function(
   precision = 0.0005
   )
 {
+match.arg(p.adj, "soft.bonf", several.ok = FALSE) 
+
 total_groups = nrow(Mpvalue)
 ALP = rep(NA, (total_groups - 1))
 names(ALP) = paste(c(2:(length(ALP) + 1)), "_groups", sep = "")

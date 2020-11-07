@@ -1,63 +1,57 @@
+#' Get ggplot to visualize output from \code{\link{check_model.fit_model_GxE}}
+#'
+#' @description
+#' \code{plot.check_model_GxE} returns ggplot to visualize outputs from \code{\link{check_model.fit_model_GxE}}
+#'
+#' @param x Output from \code{\link{check_model.fit_model_GxE}}
+#' 
+#' @param ... further arguments passed to or from other methods
+#'
+#' @details
+#' S3 method.
+#' 
+#' variance_intra_germplasm represents the repartition of the residuals for each germplasm.
+#'    This has to been seen with caution:
+#'    \itemize{
+#'     \item If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+#'     \item If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+#'     With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+#'    }
+#'    
+#' See example in the book regarding \href{https://priviere.github.io/PPBstats_book/family-2.html#ammi}{AMMI} and \href{https://priviere.github.io/PPBstats_book/family-2.html#gge}{GGE}.
+#' 
+#' @return 
+#' \itemize{
+#'  \item residuals
+#'  \itemize{
+#'   \item histogram : histogram with the distribution of the residuals
+#'   \item qqplot
+#'   \item points
+#'   }
+#'  \item variability_repartition : pie with repartition of SumSq for each factor
+#'  \item variance_intra_germplasm : repartition of the residuals for each germplasm (see Details for more information)
+#'  \item pca_composante_variance : variance caught by each dimension of the PCA run on the interaction matrix
+#'  }
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{check_model.fit_model_GxE}}
+#' 
+#' @export
+#' 
+#' @import factoextra
+#' 
 plot.check_model_GxE <- function(
-  x,
-  nb_parameters_per_plot = 8
+  x, ...
 ){
-  # Get data ----------
-  
-  variable = x$GxE$info$variable
-  
-  data_ggplot = x$data_ggplot
-  
-  data_ggplot_normality = data_ggplot$data_ggplot_residuals$data_ggplot_normality
-  data_ggplot_skewness_test = data_ggplot$data_ggplot_residuals$data_ggplot_skewness_test
-  data_ggplot_kurtosis_test = data_ggplot$data_ggplot_residuals$data_ggplot_kurtosis_test
-  data_ggplot_qqplot = data_ggplot$data_ggplot_residuals$data_ggplot_qqplot
-  data_ggplot_variability_repartition_pie = data_ggplot$data_ggplot_variability_repartition_pie
-  data_ggplot_var_intra = data_ggplot$data_ggplot_var_intra
-  
-  data_ggplot_pca = x$GxE$PCA
-  
-  
-  # 1. Normality ----------
-  # 1.1. Histogram ----------
-  p = ggplot(data_ggplot_normality, aes(x = r), binwidth = 2)
-  p = p + geom_histogram() + geom_vline(xintercept = 0)
-  p = p + ggtitle("Test for normality", paste("Skewness:", signif(data_ggplot_skewness_test, 3), "; Kurtosis:", signif(data_ggplot_kurtosis_test, 3)))
-  p1.1 = p + theme(plot.title=element_text(hjust=0.5))
-  
-  # 1.2. Standardized residuals vs theoretical quantiles ----------
-  p = ggplot(data_ggplot_qqplot, aes(x = x, y = y)) + geom_point() + geom_line() 
-  p = p + geom_abline(slope = 1, intercept = 0, color = "red")
-  p = p + xlab("Theoretical Quantiles") + ylab("Standardized residuals")
-  p1.2 = p + ggtitle("QQplot") + theme(plot.title=element_text(hjust=0.5))
+  # anova  
+  out = plot_check_freq_anova(x, variable = x$model_GxE$info$variable)
 
-  # 2. repartition of variability among factors ----------
-  p = ggplot(data_ggplot_variability_repartition_pie, aes(x = "", y = percentage_Sum_sq, fill = factor)) 
-  p = p + ggtitle(paste("Total variance distribution for", variable))
-  p = p + geom_bar(width = 1, stat = "identity") + coord_polar("y", start = 0)
-  #pie = pie + geom_text(data=DFtemp, aes(y = value/3 + c(0, cumsum(value)[-length(value)]), label = paste("  ",round(valuep*100), "%")))
-  p2 = p + ylab("") + xlab("") + theme(plot.title=element_text(hjust=0.5))
+  # pca composante variance
+  data_ggplot_pca = x$model_GxE$PCA
+  p = fviz_eig(data_ggplot_pca) + ggtitle("")
   
-  
-  # 3. variance intra germplasm
-  p = ggplot(data_ggplot_var_intra, aes(x = x, y = y))  + geom_boxplot(aes(color=x))
-  p = p + ggtitle("Distribution of residuals") + xlab("germplasm") + ylab(variable)
-  p = p + theme(legend.position = "none", axis.text.x = element_text(angle = 90), plot.title=element_text(hjust=0.5))
-  p3 = p 
-  
-  # 4. pca composante variance ----------
-  p4 = fviz_eig(data_ggplot_pca) + ggtitle("")
-  
-  # 5. return results
-  
-  out = list(
-    "residuals" = list(
-      "histogram" = p1.1,
-      "qqplot" = p1.2),
-    "variability_repartition" = p2,
-    "variance_intra_germplasm" = p3,
-    "pca_composante_variance" = p4
-  )
-  
+  # return results
+  out = c(out, list("pca_composante_variance" = p))
   return(out)
 }

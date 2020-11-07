@@ -1,64 +1,42 @@
+#' Get ggplot to visualize output from \code{\link{mean_comparisons.check_model_GxE}}
+#'
+#' @description
+#' \code{plot.mean_comparisons_model_GxE} returns ggplot to visualize outputs from \code{\link{mean_comparisons.check_model_GxE}}
+#'
+#' @param x Output from \code{\link{mean_comparisons.check_model_GxE}} 
+#' 
+#' @param nb_parameters_per_plot number of parameter per plot to display
+#' 
+#' @param ... further arguments passed to or from other methods
+#'
+#' @details
+#' S3 method.
+#' See example in the book regarding 
+#' \href{https://priviere.github.io/PPBstats_book/family-2.html#ammi}{AMMI} and 
+#' \href{https://priviere.github.io/PPBstats_book/family-2.html#gge}{GGE}.
+#' 
+#' @return 
+#' A list with barplot.
+#' For each element of the list, there are as many graph as needed with \code{nb_parameters_per_plot} parameters per graph.
+#' Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+#' The error I (alpha) and the alpha correction are displayed in the title. 
+#' \itemize{
+#'  \item germplasm : mean comparison for germplasm
+#'  \item location : mean comparison for location
+#'  \item year : mean comparison for year
+#'  }
+#' 
+#' @author Pierre Riviere
+#' 
+#' @seealso \code{\link{mean_comparisons.check_model_GxE}}
+#' 
+#' @export
+#' 
 plot.mean_comparisons_model_GxE <- function(
   x,
-  nb_parameters_per_plot = 8
+  nb_parameters_per_plot = 8, ...
   ){
-  
-  # 1. Error message ----------
-
-  variable = x$info$variable
-  
-  data_ggplot_LSDbarplot_germplasm = x$data_ggplot_LSDbarplot_germplasm
-  data_ggplot_LSDbarplot_location = x$data_ggplot_LSDbarplot_location
-  data_ggplot_LSDbarplot_year = x$data_ggplot_LSDbarplot_year
-  
-  # 2. Functions used in the function ----------
-  
-  ggplot_LSDbarplot = function(d_LSD, fac, variable, nb_parameters_per_plot){
-  
-    d_LSD = arrange(d_LSD, means) 
-    d_LSD$max = max(d_LSD$means, na.rm = TRUE)
-    d_LSD$split = add_split_col(d_LSD, nb_parameters_per_plot)
-    d_LSD_split = plyr:::splitter_d(d_LSD, .(split))  
-    
-    out = lapply(d_LSD_split, function(dx){
-      p = ggplot(dx, aes(x = reorder(parameter, means), y = means)) + geom_bar(stat = "identity")
-      p = p + geom_text(aes(x = reorder(parameter, means), y = means/2, label = groups), angle = 90, color = "white")
-      p = p + ggtitle(paste(fac, "\n alpha = ", dx[1, "alpha"], "; alpha correction :", dx[1, "alpha.correction"]))
-      p = p + xlab("") + theme(axis.text.x = element_text(angle = 90)) + coord_cartesian(ylim = c(0, dx[1,"max"])) + ylab(variable)
-      return(p)
-    })
-    
-    return(out)
-  }
-  
-  # 3. Germplasm ----------
-  if( !is.null(data_ggplot_LSDbarplot_germplasm) ){ 
-    ggplot_LSDbarplot_germplasm = ggplot_LSDbarplot(data_ggplot_LSDbarplot_germplasm, "germplasm", variable, nb_parameters_per_plot) 
-  } else {
-    ggplot_LSDbarplot_germplasm = NULL
-    }
-  
-  # 4. Location ----------
-  if( !is.null(data_ggplot_LSDbarplot_location) ){ 
-    ggplot_LSDbarplot_location = ggplot_LSDbarplot(data_ggplot_LSDbarplot_location, "location", variable, nb_parameters_per_plot) 
-  } else {
-    ggplot_LSDbarplot_location = NULL
-  }
-  
-  # 5. Year ----------
-  if( !is.null(data_ggplot_LSDbarplot_year) ){ 
-    ggplot_LSDbarplot_year = ggplot_LSDbarplot(data_ggplot_LSDbarplot_year, "year", variable, nb_parameters_per_plot) 
-  } else {
-    ggplot_LSDbarplot_year = NULL
-  }
-  
-  # 6. return results ----------
-  out = list(
-    "germplasm" = ggplot_LSDbarplot_germplasm, 
-    "location" = ggplot_LSDbarplot_location, 
-    "year" = ggplot_LSDbarplot_year
-    )
-  
+  out = plot_mean_comparisons_freq_anova(x, variable = x$info$variable, nb_parameters_per_plot)
   return(out)
 }
 

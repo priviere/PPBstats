@@ -1,0 +1,314 @@
+### Classic ANOVA (**M4a**) {#classic-anova}
+
+
+#### Theory of the model
+
+The experimental design used is fully replicated (**D1**) on one location.
+The model is based on frequentist statistics (section \@ref(section-freq)).
+The tests to check the model are explained in section \@ref(check-model-freq).
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+The analysis is done the following model :
+
+$Y_{ijk} = \mu + \alpha_{i} + rep_{k} + \varepsilon_{ijk}; \quad \varepsilon_{ijk} \sim \mathcal{N} (0,\sigma^2)$
+
+With,
+
+- $Y_{ijk}$ the phenotypic value for replication $k$, germplasm $i$ and individual $j$,
+- $\mu$ the general mean,
+- $\alpha_{i}$ the effect of germplasm $i$,
+- $rep_{k}$ the effect of the replication $k$,
+- $\varepsilon_{ijk}$ the residuals.
+
+
+#### Steps with `PPBstats`
+
+For classic anova analysis, you can follow these steps (Figure \@ref(fig:main-workflow)):
+
+- Format the data with `format_data_PPBstats()`
+- Run the model with `model_anova()`
+- Check model outputs to know if you can continue the analysis with `check_model()`  and vizualise it with `plot()`
+- Get mean comparisons for each factor with `mean_comparisons()` and vizualise it with `plot()`
+
+#### Format the data
+
+A subset of `data_model_GxE` is used in this exemple.
+
+```{r}
+data(data_model_GxE)
+data_model_anova = droplevels(dplyr::filter(data_model_GxE, location == "loc-1"))  
+data_model_anova = format_data_PPBstats(data_model_anova, type = "data_agro")
+head(data_model_anova)
+```
+
+
+#### Run the model
+To run model on the dataset, used the function `model_anova`.
+You can run it on one variable.
+
+```{r}
+out_anova = model_anova(data_model_anova, variable = "y1")
+```
+
+`out_anova` is a list containing two elements :
+
+- `info` : a list with variable
+```{r}
+out_anova$info
+```
+- `ANOVA` a list with two elements :
+    - `model`
+    ```{r}
+    out_anova$ANOVA$model
+    ```
+    - `anova_model`
+    ```{r}
+    out_anova$ANOVA$anova_model
+    ```
+    - `germplasm_effects` a list of two elements :
+        - `effects`
+        ```{r}
+        out_anova$ANOVA$germplasm_effects$effects
+        ```
+        - `intra_variance`
+        ```{r}
+        out_anova$ANOVA$germplasm_effects$intra_variance
+        ```
+
+#### Check and visualize model outputs
+
+The tests to check the model are explained in section \@ref(check-model-freq).
+
+##### Check the model
+
+Once the model is run, it is necessary to check if the outputs can be taken with confidence.
+This step is needed before going ahead in the analysis (in fact, object used in the next functions must come from `check_model()`).
+
+```{r}
+out_check_anova = check_model(out_anova)
+```
+
+`out_check_anova` is a list containing four elements :
+
+- `info` : a list with variable
+- `model_anova` the output from the model
+- `data_ggplot` a list containing information for ggplot:
+    - `data_ggplot_residuals` a list containing :
+        - `data_ggplot_normality`
+        - `data_ggplot_skewness_test`
+        - `data_ggplot_kurtosis_test`
+        - `data_ggplot_shapiro_test`
+        - `data_ggplot_qqplot`
+    - `data_ggplot_variability_repartition_pie`
+    - `data_ggplot_var_intra`
+
+##### Visualize outputs
+
+Once the computation is done, you can visualize the results with `plot()`
+
+```{r}
+p_out_check_anova = plot(out_check_anova)
+```
+
+`p_out_check_anova` is a list with:
+
+- `residuals`
+    - `histogram` : histogram with the distribution of the residuals
+    ```{r}
+    p_out_check_anova$residuals$histogram
+    ```
+    - `qqplot`
+    ```{r}
+    p_out_check_anova$residuals$qqplot
+    ```
+    - `points`
+    ```{r}
+    p_out_check_anova$residuals$points
+    ```
+
+- `variability_repartition` : pie with repartition of SumSq for each factor
+```{r}
+p_out_check_anova$variability_repartition
+```
+
+- `variance_intra_germplasm` : repartition of the residuals for each germplasm (see Details for more information)
+With the hypothesis than the micro-environmental variation is equaly distributed on all the individuals (i.e. all the plants), the distribution of each germplasm represent the intra-germplasm variance.
+This has to been seen with caution:
+    - If germplasm have no intra-germplasm variance (i.e. pure line or hybrides) then the distribution of each germplasm represent only the micro-environmental variation.
+    - If germplasm have intra-germplasm variance (i.e. population such as landraces for example) then the distribution of each germplasm represent the micro-environmental variation plus the intra-germplasm variance.
+
+
+```{r}
+p_out_check_anova$variance_intra_germplasm
+```
+
+
+#### Get and visualize mean comparisons
+
+The method to compute mean comparison are explained in section \@ref(mean-comp-check-freq).
+
+##### Get mean comparisons
+
+Get mean comparisons with `mean_comparisons()`.
+
+```{r}
+out_mean_comparisons_anova = mean_comparisons(out_check_anova, p.adj = "bonferroni")
+```
+
+`out_mean_comparisons_anova` is a list of two elements:
+
+- `info` : a list with variable
+- `data_ggplot_LSDbarplot_germplasm`
+
+##### Visualize mean comparisons
+
+```{r}
+p_out_mean_comparisons_anova = plot(out_mean_comparisons_anova)
+```
+
+`p_out_mean_comparisons_anova` is a list of one element with barplots :
+
+For each element of the list, there are as many graph as needed with `nb_parameters_per_plot` parameters per graph.
+Letters are displayed on each bar. Parameters that do not share the same letters are different regarding type I error (alpha) and alpha correction. 
+The error I (alpha) and the alpha correction are displayed in the title. 
+
+- `germplasm` : mean comparison for germplasm
+```{r}
+pg = p_out_mean_comparisons_anova$germplasm
+names(pg)
+pg$`1`
+```
+
+#### Get and vizualise groups of parameters
+
+##### Get groups of parameters
+
+In order to cluster locations or germplasms, you may use mulivariate analysis on a matrix with several variables in columns and parameter in rows.
+
+This is done with `parameter_groups()` which do a PCA on this matrix.
+
+Clusters are done based on HCPC method as explained [here](http://www.sthda.com/english/wiki/hcpc-hierarchical-clustering-on-principal-components-hybrid-approach-2-2-unsupervised-machine-learning) 
+
+
+Lets' have an example with three variables.
+
+First run the models
+```{r}
+out_anova_2 = model_anova(data_model_anova, variable = "y2")
+out_anova_3 = model_anova(data_model_anova, variable = "y3")
+```
+
+Then check the models
+```{r}
+out_check_anova_2 = check_model(out_anova_2)
+out_check_anova_3 = check_model(out_anova_3)
+```
+
+Then run the function for germplasm.
+
+```{r}
+out_parameter_groups = parameter_groups(
+  list("y1" = out_check_anova, "y2" = out_check_anova_2, "y3" = out_check_anova_3), 
+  "germplasm"
+  )
+```
+
+`out_parameter_groups` is list of two elements:
+
+- `obj.pca` : the PCA object from `FactoMineR::PCA()`
+- `clust`, a list of two elements:
+    - `res.hcpc` : the HCPC object from `FactoMineR::HCPC()`
+    - `clust` : the dataframe with cluster assigned to each individual
+
+##### Visualize groups of parameters
+
+Visualize outputs with `plot`
+
+```{r}
+p_germplasm_group = plot(out_parameter_groups)
+```
+
+`p_germplasm_group` is list of two elements :
+
+- `pca` : a list with three elements on the PCA on the group of parameters :
+
+    - `composante_variance` : variance caught by each dimension of the PCA
+    ```{r}
+    p_germplasm_group$pca$composante_variance
+    ```
+
+    - `ind` : graph of individuals
+    ```{r}
+    p_germplasm_group$pca$ind
+    ```
+
+    - `var` : graph of variables
+    ```{r}
+    p_germplasm_group$pca$var
+    ```
+  
+- `clust` : output from `factextra::fviz_cluster()`, a list of number of cluster + 1 element
+```{r}  
+cl = p_germplasm_group$clust
+names(cl)
+```
+
+```{r}  
+cl$cluster_all
+```
+
+```{r}
+cl$cluster_1
+```
+
+
+#### post hoc analysis to visualize variation repartition for several variables
+
+
+```{r}
+list_out_check_model = list("anova_1" = out_check_anova, "anova_2" = out_check_anova_2, "anova_3" = out_check_anova_3)
+post_hoc_variation(list_out_check_model)
+
+```
+
+
+
+#### Apply the workflow to several variables
+
+If you wish to apply the AMMI workflow to several variables, you can use `lapply()` with the following code :
+
+```{r}
+workflow_anova = function(x, data){
+  out_anova = model_anova(data, variable = x)
+  
+  out_check_anova = check_model(out_anova)
+  p_out_check_anova = plot(out_check_anova)
+  
+  out_mean_comparisons_anova = mean_comparisons(out_check_anova, p.adj = "bonferroni")
+  p_out_mean_comparisons_anova = plot(out_mean_comparisons_anova)
+  
+  out = list(
+    "out_anova" = out_anova,
+    "out_check_anova" = out_check_anova,
+    "p_out_check_anova" = p_out_check_anova,
+    "out_mean_comparisons_anova" = out_mean_comparisons_anova,
+    "p_out_mean_comparisons_anova" = p_out_mean_comparisons_anova
+  )
+  
+  return(out)
+}
+
+vec_variables = c("y1", "y2", "y3")
+
+out = lapply(vec_variables, workflow_anova, data_model_anova)
+names(out) = vec_variables
+
+list_out_check_model = list("anova_1" = out$y1$out_check_anova, "anova_2" = out$y2$out_check_anova, "anova_3" = out$y3$out_check_anova)
+
+out_parameter_groups = parameter_groups(list_out_check_model, "germplasm" )
+p_germplasm_group = plot(out_parameter_groups)
+
+p_post_hoc_variation = post_hoc_variation(list_out_check_model)
+
+```
+
+
