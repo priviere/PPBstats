@@ -5,7 +5,7 @@
 #' 
 #' @param data output from the \code{shinemas2R::get.data} function
 #' 
-#' @param person the person wanted
+#' @param location the location wanted
 #' 
 #' @param type_result the results wanted : parameters comparison ("comparison") or MCMC ("MCMC")
 #
@@ -24,10 +24,11 @@
 #' @seealso \code{\link{PPBstats::analyse.outputs}}, \code{\link{shinemas2R::get.data}}
 #' 
 #' 
-get_result_model = function(res_model, data, person = NULL,  type_result = "comparison", variable, model, param = NULL, year = NULL) 
+get_result_model = function(res_model, data, location = NULL,  type_result = "comparison", variable, model, param = NULL, year = NULL) 
 {
 
-
+## A MODIFIER POUR PRENDRE EN COMPTE LES AUTRES FONCTIONS PPBSTAT !!!
+  
 # 1. Check parameters -------------
 	if ( type_result %in% c("comparison","MCMC") == FALSE ) {stop("Type_result must be comparison or MCMC." )}
 	if ( type_result == "comparison" & is.null(param) ) {stop("If type_result == comparison then param must be mu, beta, sigma if model 1 is used, alpha, beta, theta if model 2 is used, or  sigma if variance_intra model is used." )}
@@ -46,57 +47,64 @@ get_result_model = function(res_model, data, person = NULL,  type_result = "comp
     }
   }
   #	if ( "comp.mu" %in% names(res_model[[variable]]) ) {modele = 1}
-	if(is.null(data) & is.null(person) | is.null(year)){stop("If there is no data provided, person or year must not be NULL")}
+	if(is.null(data) & (is.null(location) | is.null(year))){stop("If there is no data provided, location or year must not be NULL")}
   
   if(!is.null(data)){
     # 2. Get ID ------------------
     if ( "data" %in% names(data) == TRUE ) {data = data$data}
     
-    noms=unique(data$son)
-    noms = unique(gsub("^([^_]*_[^_]*_[^_]*)_.*$", "\\1", noms))
+    noms  <- unique(data$son)
+    noms <- unique(gsub("^([^_]*_[^_]*_[^_]*)_.*$", "\\1", noms))
     
-    germplasm = unlist(lapply(as.character(noms),function(x){strsplit(x,"_")[[1]][1]}))
-    env = unlist(lapply(as.character(noms),function(x){strsplit(x,"_")[[1]][2]}))
-    block = data$block
-    if(is.null(year)){year = unlist(lapply(as.character(noms),function(x){return(strsplit(x,"_")[[1]][3])}))}
+    germplasm <- unlist(lapply(as.character(noms),function(x){strsplit(x,"_")[[1]][1]}))
+    env <- unlist(lapply(as.character(noms),function(x){strsplit(x,"_")[[1]][2]}))
+    block <- data$block
+    if(is.null(year)){year <- unlist(lapply(as.character(noms),function(x){return(strsplit(x,"_")[[1]][3])}))}
     
-    if (type_result == "comparison") {	
-      comp.param = paste("comp",param,sep=".")
-      comp = res_model[[variable]]$comp.par[[comp.param]]$data_mean_comparisons 
-      if(param != "sigma") {comp = comp[grep(paste(paste(env,year,sep=":"),collapse="|"),names(comp))]}
-      COMP = NULL
-      for (i in 1:length(comp)){
-        COMP=rbind(COMP,comp[[i]]$mean.comparisons)
-      }
-      COMP = unique(COMP)
-    }
-    
+  
     if (model == "model_1"){
-      if (param == "mu") {	ID = as.data.frame(cbind(as.character(noms),paste(param,"[",paste(germplasm,paste(env,year,sep=":"), sep=","),"]",sep=""))) }
-      if (param == "beta") { ID = unique(as.data.frame(cbind(paste("[",paste(paste(env,year,sep=":"), block, sep=","),"]",sep=""),paste(param,"[",paste(paste(env,year,sep=":"), block, sep=","),"]",sep="")))) }
-      if (param == "sigma") {	ID = unique(as.data.frame(cbind(paste(param,"[",paste(env,year,sep=":"),"]",sep=""),paste(param,"[",paste(env,year,sep=":"),"]",sep="")))) }
+      if (param == "mu") {	ID <- as.data.frame(cbind(as.character(noms),paste(param,"[",paste(germplasm,paste(env,year,sep=":"), sep=","),"]",sep=""))) }
+      if (param == "beta") { ID <- unique(as.data.frame(cbind(paste("[",paste(paste(env,year,sep=":"), block, sep=","),"]",sep=""),paste(param,"[",paste(paste(env,year,sep=":"), block, sep=","),"]",sep="")))) }
+      if (param == "sigma") {	ID <- unique(as.data.frame(cbind(paste(param,"[",paste(env,year,sep=":"),"]",sep=""),paste(param,"[",paste(env,year,sep=":"),"]",sep="")))) }
     }
     
     if (model == "model_2"){
-      if (param == "alpha") {	ID = as.data.frame(cbind(as.character(noms),paste(param,"[",germplasm,"]",sep=""))) }
-      if (param == "beta") { ID = as.data.frame(cbind(as.character(noms),paste(param,"[",germplasm,"]",sep="")))  }
-      if (param == "theta") {	ID = unique(as.data.frame(cbind(paste(param,"[",paste(env,year,sep=":"),"]",sep=""),paste(param,"[",paste(env,year,sep=":"),"]",sep="")))) }
+      if (param == "alpha") {	ID <- as.data.frame(cbind(as.character(noms),paste(param,"[",germplasm,"]",sep=""))) }
+      if (param == "beta") { ID <- as.data.frame(cbind(as.character(noms),paste(param,"[",germplasm,"]",sep="")))  }
+      if (param == "theta") {	ID <- unique(as.data.frame(cbind(paste(param,"[",paste(env,year,sep=":"),"]",sep=""),paste(param,"[",paste(env,year,sep=":"),"]",sep="")))) }
     }
     
     if (model == "model_varintra"){
-      if (param == "sigma") {		ID = as.data.frame(cbind(as.character(noms),paste(param,"[",paste(germplasm,paste(env,year,sep=":"), sep=","),"]",sep=""))) }
+      if (param == "sigma") {		ID <- as.data.frame(cbind(as.character(noms),paste(param,"[",paste(germplasm,paste(env,year,sep=":"), sep=","),"]",sep=""))) }
     }
     
-    if (!is.null(ID)) { colnames(ID) = c("ID","parameter")}
+    if (!is.null(ID)) { colnames(ID) <- c("ID","parameter")}
     
     
     # 3. Get model results -------------
     if (type_result == "comparison") {	
-      D=merge(COMP,ID, by="parameter")
-      D$entry = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][1]}))
-      D$environment = paste(unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][2]})),unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][3]})),sep=":")
-      D$location = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][2]}))
-      D$year = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][3]}))
+      
+      comp.param <- paste("comp",param,sep=".")
+      comp <- res_model[[variable]]$comp.par[[comp.param]]$data_mean_comparisons 
+      if(param != "sigma") {comp <- comp[grep(paste(paste(env,year,sep=":"),collapse="|"),names(comp))]}
+      if(length(comp) == 0){
+        return(list(list("mean.comparisons" = NA, "Mpvalue" = NA)))
+      }else{
+        D <- lapply(comp, function(x){
+          y <- x$mean.comparisons
+          D <- y[y$parameter %in% ID$parameter,]
+          D <- merge(D, ID, by="parameter")
+          D$entry = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][1]}))
+          D$environment = paste(unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][2]})),unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][3]})),sep=":")
+          D$location = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][2]}))
+          D$year = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][3]}))
+          
+          y <- x$Mpvalue
+          y <- y[rownames(y) %in% ID$parameter, colnames(y) %in% ID$parameter]
+          return(list("mean.comparisons" = D, "Mpvalue" = y))
+        })
+        
+      }
     }
     if (type_result == "MCMC") {	
       MCMC = res_model[[variable]]$model.outputs$MCMC
@@ -107,23 +115,28 @@ get_result_model = function(res_model, data, person = NULL,  type_result = "comp
     }
     
     D=unique(D)
-  }else{ # Get all data from this person and/or this year
+  }else{ # Get all data from this location and/or this year
     if (type_result == "comparison") {	
       comp.param <- paste("comp",param,sep=".")
       comp <- res_model[[variable]]$comp.par[[comp.param]]$data_mean_comparisons 
-      if(!is.null(person)){comp <- comp[grep(person, names(comp))]}
-      if(!is.null(year)){comp <- comp[grep(year, names(comp))]}
-      COMP <- NULL
-      for (i in 1:length(comp)){
-        COMP=rbind(COMP,comp[[i]]$mean.comparisons)
-      }
-      COMP = unique(COMP)
+      if(!is.null(location)){comp <- comp[grep(paste(location,collapse="|"), names(comp))]}
+      if(!is.null(year)){comp <- comp[grep(paste(year,collapse="|"), names(comp))]}
+      D <- lapply(comp, function(x){
+        D <- x$mean.comparisons
+        D$entry = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][1]}))
+        D$environment = paste(unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][2]})),unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][3]})),sep=":")
+        D$location = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][2]}))
+        D$year = unlist(lapply(as.character(D$ID), function(x){strsplit(x,"_")[[1]][3]}))
+        
+        y <- x$Mpvalue
+        return(list("mean.comparisons" = D, "Mpvalue" = y))
+      })
     }
     
     if (type_result == "MCMC") {	
       MCMC = res_model[[variable]]$model.outputs$MCMC
-      if(!is.null(person)){MCMC <- MCMC[,grep(person, colnames(MCMC))]}
-      if(!is.null(year)){MCMC <- MCMC[,grep(year, colnames(MCMC))]}
+      if(!is.null(location)){MCMC <- MCMC[,grep(paste(location,collapse="|"), colnames(MCMC))]}
+      if(!is.null(year)){MCMC <- MCMC[,grep(paste(year,collapse="|"), colnames(MCMC))]}
       D <- MCMC
       if(class(D)=="numeric"){D <- as.data.frame(D)}
       #		colnames(D) = ID[ID$parameter %in% colnames(MCMC),1]
