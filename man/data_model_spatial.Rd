@@ -4,7 +4,9 @@
 \name{data_model_spatial}
 \alias{data_model_spatial}
 \title{Data set for one variable to test spatial model}
-\format{A data frame with 211 rows and 10 columns}
+\format{
+A data frame with 211 rows and 10 columns
+}
 \usage{
 data(data_model_spatial)
 }

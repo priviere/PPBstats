@@ -4,8 +4,15 @@
 \alias{reshape_data_split_x_axis_in_col}
 \title{Reshape data in a list based on nb_parameters_per_plot arguments}
 \usage{
-reshape_data_split_x_axis_in_col(d, vec_variables, labels_on, x_axis,
-  nb_parameters_per_plot_x_axis, in_col, nb_parameters_per_plot_in_col)
+reshape_data_split_x_axis_in_col(
+  d,
+  vec_variables,
+  labels_on,
+  x_axis,
+  nb_parameters_per_plot_x_axis,
+  in_col,
+  nb_parameters_per_plot_in_col
+)
 }
 \arguments{
 \item{d}{data frame}

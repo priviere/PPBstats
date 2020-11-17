@@ -4,8 +4,16 @@
 \alias{get_mean_comparisons_and_Mpvalue}
 \title{get mean comparisons and square matrix with pvalue from MCMC for bayesian models}
 \usage{
-get_mean_comparisons_and_Mpvalue(MCMC, parameter, type, threshold, alpha,
-  p.adj, precision, get.at.least.X.groups)
+get_mean_comparisons_and_Mpvalue(
+  MCMC,
+  parameter,
+  type,
+  threshold,
+  alpha,
+  p.adj,
+  precision,
+  get.at.least.X.groups
+)
 }
 \arguments{
 \item{MCMC}{MCMC}

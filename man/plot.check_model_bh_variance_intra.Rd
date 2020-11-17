@@ -4,8 +4,7 @@
 \alias{plot.check_model_bh_variance_intra}
 \title{Get ggplot to visualize output from \code{\link{check_model.fit_model_bh_variance_intra}}}
 \usage{
-\method{plot}{check_model_bh_variance_intra}(x,
-  nb_parameters_per_plot = 10, ...)
+\method{plot}{check_model_bh_variance_intra}(x, nb_parameters_per_plot = 10, ...)
 }
 \arguments{
 \item{x}{Output from \code{\link{check_model.fit_model_bh_variance_intra}}}

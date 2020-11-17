@@ -4,7 +4,9 @@
 \name{data_model_bh_GxE}
 \alias{data_model_bh_GxE}
 \title{Simulated data set for three variables to test model_bh_GxE model}
-\format{A data frame with 2430 rows and 16 columns}
+\format{
+A data frame with 2430 rows and 16 columns
+}
 \usage{
 data(data_model_bh_GxE)
 }

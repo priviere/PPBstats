@@ -4,7 +4,9 @@
 \name{data_network_bipart}
 \alias{data_network_bipart}
 \title{Simulated data set for bipart network which represents "which location has which germplasm which year":}
-\format{A data frame with 73 rows and 14 columns}
+\format{
+A data frame with 73 rows and 14 columns
+}
 \usage{
 data(data_network_bipart)
 }

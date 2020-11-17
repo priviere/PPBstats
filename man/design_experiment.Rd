@@ -5,9 +5,18 @@
 \title{Provides experimental design for the different situations corresponding to 
 the choosen family of analysis}
 \usage{
-design_experiment(expe.type, location = "location", year = "2016",
-  germplasm, controls, nb.controls.per.block, nb.blocks, nb.cols,
-  return.format = "standard", allow_XXXX = TRUE)
+design_experiment(
+  expe.type,
+  location = "location",
+  year = "2016",
+  germplasm,
+  controls,
+  nb.controls.per.block,
+  nb.blocks,
+  nb.cols,
+  return.format = "standard",
+  allow_XXXX = TRUE
+)
 }
 \arguments{
 \item{expe.type}{The type of experiment to settle "satellite-farm", "regional-farm", "row-column", "fully-repicated", "IBD". See details for more information.}

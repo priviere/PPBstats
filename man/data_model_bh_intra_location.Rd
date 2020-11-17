@@ -4,7 +4,9 @@
 \name{data_model_bh_intra_location}
 \alias{data_model_bh_intra_location}
 \title{Simulated data set for thousand kernel weight (tkw) of bread wheat to test model_bh_intra_location model}
-\format{A data frame with 1574 rows and 13 columns}
+\format{
+A data frame with 1574 rows and 13 columns
+}
 \usage{
 data(data_model_bh_intra_location)
 }

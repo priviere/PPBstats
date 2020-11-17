@@ -4,8 +4,12 @@
 \alias{cross_validation_model_bh_GxE}
 \title{Run complete cross validation with Hierarchical Bayesian GxE model}
 \usage{
-cross_validation_model_bh_GxE(data, variable, nb_iterations = 1e+05,
-  mc.cores = 1)
+cross_validation_model_bh_GxE(
+  data,
+  variable,
+  nb_iterations = 1e+05,
+  mc.cores = 1
+)
 }
 \arguments{
 \item{data}{The data frame on which the model will be run. It should have at least the following columns : c("year", "germplasm", "location", "block", "X", "Y", "..."), with "..." the variables.}

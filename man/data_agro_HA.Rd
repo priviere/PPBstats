@@ -4,7 +4,9 @@
 \name{data_agro_HA}
 \alias{data_agro_HA}
 \title{Data to study home and away}
-\format{A data frame with 27 rows and 15 columns}
+\format{
+A data frame with 27 rows and 15 columns
+}
 \usage{
 data(data_agro_HA)
 }

@@ -4,8 +4,7 @@
 \alias{mean_comparisons.check_model_spatial}
 \title{Get mean comparisons from \code{\link{check_model.fit_model_spatial}} object}
 \usage{
-\method{mean_comparisons}{check_model_spatial}(x, alpha = 0.05,
-  p.adj = "none", ...)
+\method{mean_comparisons}{check_model_spatial}(x, alpha = 0.05, p.adj = "none", ...)
 }
 \arguments{
 \item{x}{outputs from \code{\link{check_model.fit_model_spatial}}}

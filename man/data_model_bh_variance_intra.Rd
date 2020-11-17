@@ -4,7 +4,9 @@
 \name{data_model_bh_variance_intra}
 \alias{data_model_bh_variance_intra}
 \title{Simulated data set for spike weight of bread wheat to test model_variance_intra}
-\format{A data frame with 1182 rows and 11 columns}
+\format{
+A data frame with 1182 rows and 11 columns
+}
 \usage{
 data(data_model_bh_variance_intra)
 }

@@ -5,9 +5,16 @@
 \alias{mean_comparisons.predict_the_past_model_bh_GxE}
 \title{Get mean comparisons from \code{\link{predict_the_past_model_bh_GxE}} object}
 \usage{
-\method{mean_comparisons}{predict_the_past_model_bh_GxE}(x, alpha = 0.05,
-  type = 1, get.at.least.X.groups = 2, precision = 5e-04,
-  threshold = 1, p.adj = "soft.bonf", ...)
+\method{mean_comparisons}{predict_the_past_model_bh_GxE}(
+  x,
+  alpha = 0.05,
+  type = 1,
+  get.at.least.X.groups = 2,
+  precision = 5e-04,
+  threshold = 1,
+  p.adj = "soft.bonf",
+  ...
+)
 }
 \arguments{
 \item{x}{outputs from \code{\link{predict_the_past_model_bh_GxE}}}

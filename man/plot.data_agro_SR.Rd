@@ -4,10 +4,15 @@
 \alias{plot.data_agro_SR}
 \title{Plot agro object from format_data_PPBstats.data_agro_SR()}
 \usage{
-\method{plot}{data_agro_SR}(x, mean_comparisons = NULL,
-  plot_type = "boxplot", vec_variables = NULL,
-  nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5,
-  ...)
+\method{plot}{data_agro_SR}(
+  x,
+  mean_comparisons = NULL,
+  plot_type = "boxplot",
+  vec_variables = NULL,
+  nb_parameters_per_plot_x_axis = 5,
+  nb_parameters_per_plot_in_col = 5,
+  ...
+)
 }
 \arguments{
 \item{x}{The data frame. It should come from \code{\link{format_data_PPBstats.data_agro_SR}}}

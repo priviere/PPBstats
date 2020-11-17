@@ -4,9 +4,14 @@
 \alias{format_data_PPBstats}
 \title{Check and format the data to be used by PPBstats functions}
 \usage{
-format_data_PPBstats(data, type, threshold, network_part = c("unipart",
-  "bipart"), network_split = c("germplasm", "relation_year_start"),
-  vertex_type = NULL)
+format_data_PPBstats(
+  data,
+  type,
+  threshold,
+  network_part = c("unipart", "bipart"),
+  network_split = c("germplasm", "relation_year_start"),
+  vertex_type = NULL
+)
 }
 \arguments{
 \item{data}{The data frame to format}

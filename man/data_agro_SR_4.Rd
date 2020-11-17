@@ -4,7 +4,9 @@
 \name{data_agro_SR_4}
 \alias{data_agro_SR_4}
 \title{data set to study response to selection from data set data_model_bh_intra_location}
-\format{A data frame with 998 rows and 12 columns}
+\format{
+A data frame with 998 rows and 12 columns
+}
 \usage{
 data(data_agro_SR_4)
 }

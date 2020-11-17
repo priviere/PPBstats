@@ -4,7 +4,9 @@
 \name{data_hedonic}
 \alias{data_hedonic}
 \title{data coming from tomatoes hedonic test:}
-\format{A data frame with 244 rows and 11 columns}
+\format{
+A data frame with 244 rows and 11 columns
+}
 \usage{
 data(data_hedonic)
 }

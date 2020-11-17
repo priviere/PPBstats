@@ -4,8 +4,7 @@
 \alias{plot.data_agro_LF}
 \title{Plot agro object from format_data_PPBstats.data_agro_LF()}
 \usage{
-\method{plot}{data_agro_LF}(x, plot_type = "boxplot",
-  vec_variables = NULL, f_grid = NULL, ...)
+\method{plot}{data_agro_LF}(x, plot_type = "boxplot", vec_variables = NULL, f_grid = NULL, ...)
 }
 \arguments{
 \item{x}{The data frame. It should come from \code{\link{format_data_PPBstats.data_agro_LF}}}

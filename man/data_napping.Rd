@@ -4,7 +4,9 @@
 \name{data_napping}
 \alias{data_napping}
 \title{data coming from tomatoes hedonic test:}
-\format{A data frame with 63 rows and 6 columns}
+\format{
+A data frame with 63 rows and 6 columns
+}
 \usage{
 data(data_napping)
 }

@@ -4,10 +4,20 @@
 \alias{model_bh_intra_location}
 \title{Run Hierarchical Bayesian intra-location model}
 \usage{
-model_bh_intra_location(data, variable, nb_iterations = 1e+05,
-  thin = 10, return.mu = TRUE, return.beta = TRUE,
-  return.sigma = TRUE, return.nu = TRUE, return.rho = TRUE,
-  return.epsilon = FALSE, return.DIC = FALSE, nu.max = 10)
+model_bh_intra_location(
+  data,
+  variable,
+  nb_iterations = 1e+05,
+  thin = 10,
+  return.mu = TRUE,
+  return.beta = TRUE,
+  return.sigma = TRUE,
+  return.nu = TRUE,
+  return.rho = TRUE,
+  return.epsilon = FALSE,
+  return.DIC = FALSE,
+  nu.max = 10
+)
 }
 \arguments{
 \item{data}{The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}}

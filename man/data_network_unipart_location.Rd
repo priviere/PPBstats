@@ -4,7 +4,9 @@
 \name{data_network_unipart_location}
 \alias{data_network_unipart_location}
 \title{Simulated data set for unipart network which represents relation of germplasm diffusion between location}
-\format{A data frame with 22 rows and 14 columns}
+\format{
+A data frame with 22 rows and 14 columns
+}
 \usage{
 data(data_network_unipart_location)
 }

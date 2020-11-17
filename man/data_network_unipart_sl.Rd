@@ -4,7 +4,9 @@
 \name{data_network_unipart_sl}
 \alias{data_network_unipart_sl}
 \title{Simulated data set for unipart network for seed lots which represents relation between between seed lots}
-\format{A data frame with 104 rows and 17 columns}
+\format{
+A data frame with 104 rows and 17 columns
+}
 \usage{
 data(data_network_unipart_sl)
 }

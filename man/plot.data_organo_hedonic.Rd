@@ -4,10 +4,20 @@
 \alias{plot.data_organo_hedonic}
 \title{Plot hedonic object from \code{\link{format_data_PPBstats.data_organo_hedonic}}}
 \usage{
-\method{plot}{data_organo_hedonic}(x, plot_type = "boxplot",
-  x_axis = NULL, in_col = NULL, vec_variables = NULL,
-  nb_parameters_per_plot_x_axis = 5, nb_parameters_per_plot_in_col = 5,
-  labels_on = NULL, labels_size = 4, pie_size = 0.2, zoom = 6, ...)
+\method{plot}{data_organo_hedonic}(
+  x,
+  plot_type = "boxplot",
+  x_axis = NULL,
+  in_col = NULL,
+  vec_variables = NULL,
+  nb_parameters_per_plot_x_axis = 5,
+  nb_parameters_per_plot_in_col = 5,
+  labels_on = NULL,
+  labels_size = 4,
+  pie_size = 0.2,
+  zoom = 6,
+  ...
+)
 }
 \arguments{
 \item{x}{The data frame coming from \code{\link{format_data_PPBstats.data_organo_hedonic}}}

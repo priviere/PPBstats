@@ -3,7 +3,6 @@
 \docType{package}
 \name{PPBstats}
 \alias{PPBstats}
-\alias{PPBstats-package}
 \title{PPBstats}
 \description{
 \code{PPBstats} is an R package to perform analysis found within PPB programmes

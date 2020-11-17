@@ -4,7 +4,9 @@
 \name{data_model_GxE}
 \alias{data_model_GxE}
 \title{Simulated data set for three variables to test GxE model}
-\format{A data frame with 180 rows and 17 columns}
+\format{
+A data frame with 180 rows and 17 columns
+}
 \usage{
 data(data_model_GxE)
 }

@@ -4,11 +4,21 @@
 \alias{model_bh_GxE}
 \title{Run Hierarchical Bayesian GxE model}
 \usage{
-model_bh_GxE(data, variable, nb_iterations = 1e+05, thin = 10,
-  return.alpha = TRUE, return.sigma_alpha = TRUE, return.beta = TRUE,
-  return.sigma_beta = TRUE, return.theta = TRUE,
-  return.sigma_theta = TRUE, return.epsilon = FALSE,
-  return.sigma_epsilon = TRUE, return.DIC = FALSE)
+model_bh_GxE(
+  data,
+  variable,
+  nb_iterations = 1e+05,
+  thin = 10,
+  return.alpha = TRUE,
+  return.sigma_alpha = TRUE,
+  return.beta = TRUE,
+  return.sigma_beta = TRUE,
+  return.theta = TRUE,
+  return.sigma_theta = TRUE,
+  return.epsilon = FALSE,
+  return.sigma_epsilon = TRUE,
+  return.DIC = FALSE
+)
 }
 \arguments{
 \item{data}{The data frame on which the model is run. It should come from \code{\link{format_data_PPBstats.data_agro}}}
