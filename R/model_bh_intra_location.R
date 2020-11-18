@@ -136,6 +136,7 @@ model_bh_intra_location = function(
   attributes(data.model1)$PPBstats.object = "data.model1"
   
   # Get regional farms (RF) and satellite farms (SF)
+  print(get.env.info)
   out = get.env.info(DD, nb_ind = 1)
   vec_env_with_no_data = out$vec_env_with_no_data
 
