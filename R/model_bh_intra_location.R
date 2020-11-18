@@ -148,8 +148,6 @@ model_bh_intra_location = function(
   }
   data_env_with_no_controls = data_env_with_no_controls[,-which(colnames(data_env_with_no_controls) == "ID")]
 
-  print(vec_env_with_no_controls)
-  print(vec_env_with_no_controls %in% DD$environment)
   if( length(vec_env_with_no_controls) > 0 ){
     data_env_with_no_controls = droplevels(dplyr::filter(DD, environment %in% vec_env_with_no_controls))
     data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
