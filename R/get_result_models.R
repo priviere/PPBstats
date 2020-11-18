@@ -23,6 +23,7 @@
 #' 
 #' @seealso \code{\link{PPBstats::analyse.outputs}}, \code{\link{shinemas2R::get.data}}
 #' 
+#' @export
 #' 
 get_result_model = function(res_model, data, location = NULL,  type_result = "comparison", variable, model, param = NULL, year = NULL) 
 {
