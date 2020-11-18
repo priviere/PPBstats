@@ -136,12 +136,11 @@ model_bh_intra_location = function(
   attributes(data.model1)$PPBstats.object = "data.model1"
   
   # Get regional farms (RF) and satellite farms (SF)
-  print(get.env.info)
   out = get.env.info(DD, nb_ind = 1)
   vec_env_with_no_data = out$vec_env_with_no_data
 
   vec_env_with_no_controls = out$vec_env_with_no_controls
-  data_env_with_no_controls = droplevels(filter(DD, environment %in% vec_env_with_no_controls))
+  data_env_with_no_controls = droplevels(dplyr::filter(DD, environment %in% vec_env_with_no_controls))
   if(length(vec_env_with_no_controls)>0){
     data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
     data_env_with_no_controls$location = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
@@ -149,9 +148,10 @@ model_bh_intra_location = function(
   }
   data_env_with_no_controls = data_env_with_no_controls[,-which(colnames(data_env_with_no_controls) == "ID")]
 
-  
+  print(vec_env_with_no_controls)
+  print(vec_env_with_no_controls %in% DD$environment)
   if( length(vec_env_with_no_controls) > 0 ){
-    data_env_with_no_controls = droplevels(filter(DD, environment %in% vec_env_with_no_controls))
+    data_env_with_no_controls = droplevels(dplyr::filter(DD, environment %in% vec_env_with_no_controls))
     data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
     data_env_with_no_controls$location = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
     data_env_with_no_controls$year = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
@@ -253,7 +253,7 @@ model_bh_intra_location = function(
   BETA = NULL
   for(e in unique(a$environment)) {
     
-    ddd = filter(a, environment == e)
+    ddd = dplyr::filter(a, environment == e)
     b = ddd[,"block"]
     
     if(length(b) > 1) { # For environments with blocks
