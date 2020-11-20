@@ -74,7 +74,7 @@ check_model.fit_model_bh_intra_location <- function(
     # update data
     env_not_ok = unique(c(env_not_ok_mu, env_not_ok_beta, env_not_ok_sigma))
     if( length(env_not_ok) > 0 ) {
-      data_env_whose_param_did_not_converge = droplevels(filter(x$data.model1, environment %in% env_not_ok))
+      data_env_whose_param_did_not_converge = droplevels(dplyr::filter(x$data.model1, environment %in% env_not_ok))
       data_env_whose_param_did_not_converge = plyr::rename(data_env_whose_param_did_not_converge, replace = c("variable" = "median"))
       data_env_whose_param_did_not_converge$parameter = paste("mu", data_env_whose_param_did_not_converge$parameter, sep = "")
       data_env_whose_param_did_not_converge$location = unlist(lapply(as.character(data_env_whose_param_did_not_converge$environment),function(x){strsplit(x,":")[[1]][1]}))
