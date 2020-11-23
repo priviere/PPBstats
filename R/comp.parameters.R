@@ -59,7 +59,7 @@ if(type == 1) {
 
 	if(length(vec_element)>1) {
 		vec_combi = combn(vec_element, m = 2)
-		if(class(vec_combi) != "data.frame"){vec_combi <- data.frame(vec_combi)}
+		if(class(vec_combi) != "matrix"){vec_combi <- matrix(vec_combi)}
 		rownames(vec_combi) = c("para1", "para2")
 	
 		Mpvalue = matrix(0, ncol = length(vec_element), nrow = length(vec_element))
