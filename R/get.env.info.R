@@ -47,7 +47,7 @@ get.env.info = function(
 
   for (env in vec_env_na) {
     
-    d = droplevels(filter(Dna, environment == env))
+    d = droplevels(dplyr::filter(Dna, environment == env))
     
     test_g = length(unique(d$germplasm))
     
