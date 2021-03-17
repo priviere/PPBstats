@@ -142,7 +142,7 @@ model_bh_intra_location = function(
   vec_env_with_no_controls = out$vec_env_with_no_controls
   
   if( length(vec_env_with_no_controls) > 0 ){
-    data_env_with_no_controls = droplevels(filter(DD, environment %in% vec_env_with_no_controls))
+    data_env_with_no_controls = droplevels(dplyr::filter(DD, environment %in% vec_env_with_no_controls))
     data_env_with_no_controls$parameter = paste("[", data_env_with_no_controls$germplasm, ",", data_env_with_no_controls$environment, "]", sep = "") # To have a compatible format for get.ggplot
     data_env_with_no_controls$location = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[1]})
     data_env_with_no_controls$year = sapply(data_env_with_no_controls$environment, function(x){unlist(strsplit(as.character(x), ":"))[2]})
@@ -244,7 +244,7 @@ model_bh_intra_location = function(
   BETA = NULL
   for(e in unique(a$environment)) {
     
-    ddd = filter(a, environment == e)
+    ddd = dplyr::filter(a, environment == e)
     b = ddd[,"block"]
     
     if(length(b) > 1) { # For environments with blocks
