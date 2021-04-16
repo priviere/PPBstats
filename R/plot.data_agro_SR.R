@@ -14,6 +14,8 @@
 #'  \item "interaction"
 #' }
 #' 
+#' @param heritability if TRUE, display estimated heritability
+#' 
 #' @param vec_variables vector of variables to display
 #' 
 #' @param nb_parameters_per_plot_x_axis the number of parameters per plot on x_axis arguments
@@ -46,6 +48,7 @@ plot.data_agro_SR = function(
   x,
   mean_comparisons = NULL,
   plot_type = "boxplot",
+  heritability = FALSE,
   vec_variables = NULL,
   nb_parameters_per_plot_x_axis = 5,
   nb_parameters_per_plot_in_col = 5, ...
@@ -81,6 +84,14 @@ plot.data_agro_SR = function(
       p_out[[i]] = p_out[[i]] + geom_text(label = lab,
                                           position = position_dodge(0.9),
                                           angle = 90, hjust = 1)
+      
+      if(heritability){
+        S = dplyr::filter(s[[i]], group == "S" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "S" & version == "vrac")[,variable]
+        R = dplyr::filter(s[[i]], group == "R" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "R" & version == "vrac")[,variable]
+        h = round(R/S, 2)
+        if( length(h) > 0 ){ p_out[[i]] = p_out[[i]] + ggtitle(paste("heritability = ", h)) }
+      }
+      
       } # add seed lot name on bar
     
     
@@ -141,10 +152,15 @@ plot.data_agro_SR = function(
               pvalue_S = max(mc[sl1_S, sl2_S], mc[sl2_S, sl1_S]) # One is 0 (cf triangular matrix)
               stars_S = get_stars(pvalue_S)
             } else { stars_S = NULL }
+            
+            S = dplyr::filter(s[[i]], group == "S" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "S" & version == "vrac")[,variable]
+            R = dplyr::filter(s[[i]], group == "R" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "R" & version == "vrac")[,variable]
+            h = round(R/S, 2)
+            
+            if(heritability & length(h) > 0){ subtitle = paste("heritability = ", h) } else { subtitle = NULL }
           }
           
           if( !is.null(mc_ttest) ) {
-            title = "Significant differences with t test"
             mc = mc_ttest
             
             R = dplyr::filter(s[[i]], group == "R")
@@ -168,19 +184,25 @@ plot.data_agro_SR = function(
               stars_S = NULL
               warning("No t.test are done as there are not enough observations.")
             }
+            
+            S = dplyr::filter(s[[i]], group == "S" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "S" & version == "vrac")[,variable]
+            R = dplyr::filter(s[[i]], group == "R" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "R" & version == "vrac")[,variable]
+            h = round(R/S, 2)
+            
+            if(heritability & length(h) > 0){ subtitle = paste("heritability = ", h) } else { subtitle = NULL }
           }
           
           if( !is.null(stars_R) & !is.null(stars_S) ){
             label_stars = data.frame(x_axis = c("R", "S"), mean = c(20, 20) , stars = c(stars_R, stars_S)) 
-            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title)
+            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title, subtitle)
           }
           if( is.null(stars_R) & !is.null(stars_S) ){
             label_stars = data.frame(x_axis = c("S"), mean = c(20) , stars = c(stars_S)) 
-            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title)
+            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title, subtitle)
           }
           if( !is.null(stars_R) & is.null(stars_S) ){
             label_stars = data.frame(x_axis = c("R"), mean = c(20) , stars = c(stars_R)) 
-            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title)
+            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title, subtitle)
           }
           if( !is.null(stars_R) & !is.null(stars_S) ){ "nothing" }
           }
@@ -207,6 +229,8 @@ plot.data_agro_SR = function(
     d_post_hoc_plot = NULL
     for(id in unique(d_post_hoc$expe_id)){
       dtmp = dplyr::filter(d_post_hoc, expe_id == id)
+      S = dplyr::filter(dtmp, group == "S" & version == "bouquet")[,variable] - dplyr::filter(dtmp, group == "S" & version == "vrac")[,variable]
+      R = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,variable] - dplyr::filter(dtmp, group == "R" & version == "vrac")[,variable]
       d_post_hoc_plot = rbind.data.frame(d_post_hoc_plot,
         data.frame(
           seed_lot = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"seed_lot"],
@@ -214,18 +238,28 @@ plot.data_agro_SR = function(
           year = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"year"],
           germplasm = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"germplasm"],
           block = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"block"],
-          S = dplyr::filter(dtmp, group == "S" & version == "bouquet")[,variable] - dplyr::filter(dtmp, group == "S" & version == "vrac")[,variable],
-          R = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,variable] - dplyr::filter(dtmp, group == "R" & version == "vrac")[,variable]
+          S = S,
+          R = R,
+          h = round(R/S, 1)
         )
       )
     }
-    p_post_hoc = ggplot(d_post_hoc_plot, aes(x = S, y = R)) + xlab("selection differential") + ylab("response to selection")
+    p_post_hoc = ggplot(d_post_hoc_plot, aes(x = S, y = R, label = h)) + xlab("selection differential") + ylab("response to selection")
     p_post_hoc = p_post_hoc + geom_vline(xintercept = 0) + geom_hline(yintercept = 0)
     
-    p_post_hoc_g = list(p_post_hoc + geom_point(aes(color = germplasm))); names(p_post_hoc_g) = "germplasm"
-    p_post_hoc_l = list(p_post_hoc + geom_point(aes(color = location))); names(p_post_hoc_l) = "location"
-    p_post_hoc_y = list(p_post_hoc + geom_point(aes(color = year))); names(p_post_hoc_y) = "year"
+    if(heritability){
+      p_post_hoc_g = p_post_hoc + geom_text(aes(color = germplasm))
+      p_post_hoc_l = p_post_hoc + geom_text(aes(color = location))
+      p_post_hoc_y = p_post_hoc + geom_text(aes(color = year))
+    } else {
+      p_post_hoc_g = p_post_hoc + geom_point(aes(color = germplasm))
+      p_post_hoc_l = p_post_hoc + geom_point(aes(color = location))
+      p_post_hoc_y = p_post_hoc + geom_point(aes(color = year))
+    }
     
+    p_post_hoc_g = list(p_post_hoc_g); names(p_post_hoc_g) = "germplasm"
+    p_post_hoc_l = list(p_post_hoc_l); names(p_post_hoc_l) = "location"
+    p_post_hoc_y = list(p_post_hoc_y); names(p_post_hoc_y) = "year"
     
     p_out_2 = c(p_post_hoc_g, p_post_hoc_l, p_post_hoc_y)
     p_out_2 = list(p_out_2); names(p_out_2) = "post_hoc_analysis"
