@@ -56,7 +56,10 @@ plot.data_agro_SR = function(
   d = droplevels(x[which(!is.na(x$expe_id)),])
   d$x_axis = paste(d$seed_lot, d$group, sep = " | ")
   
-  fun = function(variable, d, mean_comparisons, plot_type, nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col){
+  fun = function(variable, d, mean_comparisons, plot_type, nb_parameters_per_plot_x_axis, nb_parameters_per_plot_in_col, ...){
+    
+    # analysis for each id -----
+    
     s = plyr:::splitter_d(d, .(expe_id))
     p_out = lapply(s,
                    plot_descriptive_data,
@@ -65,7 +68,7 @@ plot.data_agro_SR = function(
                    in_col = "version",
                    vec_variables = variable,
                    nb_parameters_per_plot_x_axis,
-                   nb_parameters_per_plot_in_col
+                   nb_parameters_per_plot_in_col, ...
     )
     p_out = lapply(p_out, function(x){ x[[1]] = x[[1]][[1]] }) # remove variable name in list
     
@@ -184,6 +187,51 @@ plot.data_agro_SR = function(
       }
     }
     
+    p_out = list(p_out)
+    names(p_out) = "analysis_for_each_id"
+    
+    # post hoc analysis with all data where there are S and R -----
+    d_post_hoc = NULL
+    nb_id = 0
+    for(id in unique(d$expe_id)){
+      dtmp = dplyr::filter(d, expe_id == id)
+      if(nrow(dtmp) == 4){
+        nb_id = nb_id + 1
+        d_post_hoc = rbind.data.frame(d_post_hoc, dtmp)
+      }
+    }
+    message("Regarding post_hoc analysis, ", nb_id," couples S and R are displayed. ", 
+            length(unique(d$expe_id)), " S without corresponding R or R without corresponding S are not displayed.")
+    
+    d_post_hoc = droplevels(d_post_hoc)
+    d_post_hoc_plot = NULL
+    for(id in unique(d_post_hoc$expe_id)){
+      dtmp = dplyr::filter(d_post_hoc, expe_id == id)
+      d_post_hoc_plot = rbind.data.frame(d_post_hoc_plot,
+        data.frame(
+          seed_lot = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"seed_lot"],
+          location = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"location"],
+          year = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"year"],
+          germplasm = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"germplasm"],
+          block = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,"block"],
+          S = dplyr::filter(dtmp, group == "S" & version == "bouquet")[,variable] - dplyr::filter(dtmp, group == "S" & version == "vrac")[,variable],
+          R = dplyr::filter(dtmp, group == "R" & version == "bouquet")[,variable] - dplyr::filter(dtmp, group == "R" & version == "vrac")[,variable]
+        )
+      )
+    }
+    p_post_hoc = ggplot(d_post_hoc_plot, aes(x = S, y = R)) + xlab("selection differential") + ylab("response to selection")
+    p_post_hoc = p_post_hoc + geom_vline(xintercept = 0) + geom_hline(yintercept = 0)
+    
+    p_post_hoc_g = list(p_post_hoc + geom_point(aes(color = germplasm))); names(p_post_hoc_g) = "germplasm"
+    p_post_hoc_l = list(p_post_hoc + geom_point(aes(color = location))); names(p_post_hoc_l) = "location"
+    p_post_hoc_y = list(p_post_hoc + geom_point(aes(color = year))); names(p_post_hoc_y) = "year"
+    
+    
+    p_out_2 = c(p_post_hoc_g, p_post_hoc_l, p_post_hoc_y)
+    p_out_2 = list(p_out_2); names(p_out_2) = "post_hoc_analysis"
+    
+    p_out = c(p_out, p_out_2)
+    
     return(p_out)
   }
   
@@ -193,7 +241,7 @@ plot.data_agro_SR = function(
                mean_comparisons,
                plot_type, 
                nb_parameters_per_plot_x_axis, 
-               nb_parameters_per_plot_in_col
+               nb_parameters_per_plot_in_col, ...
                )
   names(out) = vec_variables
   
