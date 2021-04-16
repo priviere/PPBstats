@@ -4,6 +4,7 @@
 - plot.data_agro_SR
   - add post hoc analysis, cf #128
   - add heritability for each plot
+  - debug, cf #139
 
 
 # PPBstats 0.26

@@ -153,6 +153,8 @@ plot.data_agro_SR = function(
               stars_S = get_stars(pvalue_S)
             } else { stars_S = NULL }
             
+            stars_y = max(s[[i]][,variable])/3
+            
             S = dplyr::filter(s[[i]], group == "S" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "S" & version == "vrac")[,variable]
             R = dplyr::filter(s[[i]], group == "R" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "R" & version == "vrac")[,variable]
             h = round(R/S, 2)
@@ -185,6 +187,8 @@ plot.data_agro_SR = function(
               warning("No t.test are done as there are not enough observations.")
             }
             
+            stars_y = max(s[[i]][,variable])/3
+            
             S = dplyr::filter(s[[i]], group == "S" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "S" & version == "vrac")[,variable]
             R = dplyr::filter(s[[i]], group == "R" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "R" & version == "vrac")[,variable]
             h = round(R/S, 2)
@@ -193,15 +197,15 @@ plot.data_agro_SR = function(
           }
           
           if( !is.null(stars_R) & !is.null(stars_S) ){
-            label_stars = data.frame(x_axis = c("R", "S"), mean = c(20, 20) , stars = c(stars_R, stars_S)) 
-            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title, subtitle)
+            label_stars = data.frame(x_axis = c("R", "S"), mean = c(stars_y, stars_y) , stars = c(stars_R, stars_S)) 
+            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars), fill = "white") + ggtitle(title, subtitle)
           }
           if( is.null(stars_R) & !is.null(stars_S) ){
-            label_stars = data.frame(x_axis = c("S"), mean = c(20) , stars = c(stars_S)) 
+            label_stars = data.frame(x_axis = c("S"), mean = c(stars_y), stars = c(stars_S)) 
             p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title, subtitle)
           }
           if( !is.null(stars_R) & is.null(stars_S) ){
-            label_stars = data.frame(x_axis = c("R"), mean = c(20) , stars = c(stars_R)) 
+            label_stars = data.frame(x_axis = c("R"), mean = c(stars_y), stars = c(stars_R)) 
             p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title, subtitle)
           }
           if( !is.null(stars_R) & !is.null(stars_S) ){ "nothing" }
