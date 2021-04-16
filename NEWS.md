@@ -7,6 +7,8 @@
   - debug, cf #139
   - debug code
 
+### update vignette (inst/bookdown)
+- update regarding changes in plot.data_agro_SR.R
 
 # PPBstats 0.26
 

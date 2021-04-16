@@ -106,12 +106,38 @@ head(data_agro_SR_4)
 ```
 
 
-First, describe the data. Each element of the list is an `expe_id`.
+First, describe the data. 
 
 ```{r}
 p = plot(data_agro_SR_4, vec_variables = "tkw", plot_type = "barplot")
-p
 ```
+
+The plot has two lists:
+  - one for each id where each element of the list is an `expe_id`.
+  - one on post hoc analysis with all couple S (election differential) and R (response to selection) where each element of the list refer to germplasm, location or year
+
+```{r}
+p$tkw$analysis_for_each_id$id_1
+```
+
+```{r}
+p$tkw$post_hoc_analysis$germplasm
+```
+
+In addition, the realized heritability ($h^2_r$: $R = h^2_r \times S$) can be displayed.
+
+```{r}
+p = plot(data_agro_SR_4, vec_variables = "tkw", plot_type = "barplot", heritability = TRUE)
+```
+
+```{r}
+p$tkw$analysis_for_each_id$id_1
+```
+
+```{r}
+p$tkw$post_hoc_analysis$germplasm
+```
+
 
 In order to add significance differences from the Hierarchical Bayesian intra-location model presented in section \@ref(model-1), the argument `mean_comparisons` must be filled with the output of mean_comparisons of the model.
 
@@ -123,9 +149,15 @@ p = plot(data_agro_SR_4,
          mean_comparison = out_mean_comparisons_model_bh_intra_location_mu, 
          vec_variables = "tkw",
          plot_type = "barplot")
-p
+p$tkw$analysis_for_each_id$id_1
 ```
 
 
 For environments where MCMC did not converge or without environments, it is a \@ref(t.test) which is perform when there are more than 1 obervation for a given seed lot.
+
+```{r}
+p$tkw$analysis_for_each_id$id_1
+```
+
+By setting `heritability = TRUE`, the realized heritability is displayed.
 
