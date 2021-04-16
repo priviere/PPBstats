@@ -117,23 +117,26 @@ plot.data_agro_SR = function(
           to_get = which(names(mc_mcmc) == locyear)
           if( length(to_get) > 0 ){
             mc_mcmc = mean_comparisons$data_mean_comparisons[to_get][[1]]$Mpvalue # MCMC
-          } else { mc_mcmc = NULL }
+            mc_mcmc_1 = TRUE
+          } else { mc_mcmc = FALSE }
 
-          mc_ttest_1 = mean_comparisons$data_env_with_no_controls
-          to_get_1 = which(names(mc_ttest_1) == locyear)
+          mc_ttest = mean_comparisons$data_env_with_no_controls
+          to_get_1 = which(names(mc_ttest) == locyear)
           if( length(to_get_1) > 0 ){
-            mc_ttest = mc_ttest_1[to_get_1][[to_get_1]]$mean.comparisons # t.test to perform on pairs 
-          } else { mc_ttest = NULL }
-
-          mc_ttest_2 = mean_comparisons$data_env_whose_param_did_not_converge
-          to_get_2 = which(names(mc_ttest_2) == locyear)
+            mc_ttest = mc_ttest[to_get_1][[to_get_1]]$mean.comparisons # t.test to perform on pairs 
+            mc_ttest_1 = TRUE
+          } else { mc_ttest_1 = FALSE }
+          
+          mc_ttest = mean_comparisons$data_env_whose_param_did_not_converge
+          to_get_2 = which(names(mc_ttest) == locyear)
           if( length(to_get_2) > 0 ){
-            mc_ttest = mc_ttest_2[to_get_2][[to_get_2]]$mean.comparisons # t.test to perform on pairs 
-          } else { mc_ttest = NULL }
+            mc_ttest = mc_ttest[to_get_2][[to_get_2]]$mean.comparisons # t.test to perform on pairs 
+            mc_ttest_2 = TRUE
+          } else { mc_ttest_2 = FALSE }
           
           title = NULL
           
-          if( !is.null(mc_mcmc) ) {
+          if( mc_mcmc_1 ) {
             title = "Significant differences with Hierarchical Bayesian model intra location"
             mc = mc_mcmc
                         
@@ -162,7 +165,8 @@ plot.data_agro_SR = function(
             if(heritability & length(h) > 0){ subtitle = paste("heritability = ", h) } else { subtitle = NULL }
           }
           
-          if( !is.null(mc_ttest) ) {
+          if( mc_ttest_1 | mc_ttest_2 ) {
+            title = "t.test"
             mc = mc_ttest
             
             R = dplyr::filter(s[[i]], group == "R")
@@ -171,9 +175,10 @@ plot.data_agro_SR = function(
             if( length(sl1_R) > 1 & length(sl2_R) > 1) {
               pvalue_R = t.test(sl1_R, sl2_R)$p.value
               stars_R = get_stars(pvalue_R)
+              subtitle_R = NULL
             } else {
               stars_R = NULL
-              warning("No t.test are done as there are not enough observations.")
+              subtitle_R = "No t.test are done on R data as there are not enough observations."
             }
             
             S = dplyr::filter(s[[i]], group == "S")
@@ -182,10 +187,16 @@ plot.data_agro_SR = function(
             if( length(sl1_S) > 1 & length(sl2_S) > 1) {
               pvalue_S = t.test(sl1_S, sl2_S)$p.value
               stars_S = get_stars(pvalue_S)
+              subtitle_S = NULL
             } else {
               stars_S = NULL
-              warning("No t.test are done as there are not enough observations.")
+              subtitle_S = "No t.test are done on S data as there are not enough observations."
             }
+            
+            if( is.null(subtitle_S) & !is.null(subtitle_R)){ subtitle = subtitle_R }
+            if( !is.null(subtitle_S) & is.null(subtitle_R)){ subtitle = subtitle_S }
+            if( !is.null(subtitle_S) & !is.null(subtitle_R)){ subtitle = "No t.test are done on S and R data as there are not enough observations." }
+            if( is.null(subtitle_S) & is.null(subtitle_R)){ subtitle = NULL }
             
             stars_y = max(s[[i]][,variable])/3
             
@@ -193,22 +204,26 @@ plot.data_agro_SR = function(
             R = dplyr::filter(s[[i]], group == "R" & version == "bouquet")[,variable] - dplyr::filter(s[[i]], group == "R" & version == "vrac")[,variable]
             h = round(R/S, 2)
             
-            if(heritability & length(h) > 0){ subtitle = paste("heritability = ", h) } else { subtitle = NULL }
+            if(heritability & length(h) > 0 & !is.null(subtitle)){ subtitle = paste(subtitle, "\nHeritability = ", h) }
+            if(heritability & length(h) > 0 & is.null(subtitle)){ subtitle = paste("Heritability = ", h) }
           }
           
           if( !is.null(stars_R) & !is.null(stars_S) ){
             label_stars = data.frame(x_axis = c("R", "S"), mean = c(stars_y, stars_y) , stars = c(stars_R, stars_S)) 
-            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars), fill = "white") + ggtitle(title, subtitle)
+            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars), fill = "white")
           }
           if( is.null(stars_R) & !is.null(stars_S) ){
             label_stars = data.frame(x_axis = c("S"), mean = c(stars_y), stars = c(stars_S)) 
-            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title, subtitle)
+            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars), fill = "white")
           }
           if( !is.null(stars_R) & is.null(stars_S) ){
             label_stars = data.frame(x_axis = c("R"), mean = c(stars_y), stars = c(stars_R)) 
-            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars)) + ggtitle(title, subtitle)
+            p_out[[i]] = p_out[[i]] + geom_label(data = label_stars, aes(label = stars), fill = "white")
           }
           if( !is.null(stars_R) & !is.null(stars_S) ){ "nothing" }
+          
+          p_out[[i]] = p_out[[i]] + ggtitle(title, subtitle)
+          
           }
       }
     }

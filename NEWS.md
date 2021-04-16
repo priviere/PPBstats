@@ -1,10 +1,11 @@
-# PPBstats under development
+# PPBstats 0.27 under development
 
 ### update fonctions
 - plot.data_agro_SR
   - add post hoc analysis, cf #128
   - add heritability for each plot
   - debug, cf #139
+  - debug code
 
 
 # PPBstats 0.26
