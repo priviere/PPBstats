@@ -6,6 +6,11 @@
   - add heritability for each plot
   - debug, cf #139
   - debug code
+- format_data_PPBstats.data_network
+  - for unipart seed lot network and organize_sl = TRUE: change year of seed lot to year of relation, cf #156
+- plot.data_network
+  - for unipart seed lot network and organize_sl = TRUE: change year of seed lot to year of relation, cf #156
+
 
 ### update vignette (inst/bookdown)
 - update regarding changes in plot.data_agro_SR.R

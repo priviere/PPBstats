@@ -310,7 +310,6 @@ plot.data_network = function(
   
   organize_sl_unipart = function(net){
     n = ggnetwork::ggnetwork(net, arrow.gap = 0)
-    
     a = n
     a$names = n$vertex.names
     
@@ -321,9 +320,10 @@ plot.data_network = function(
     }
     )
     
-    a$g = sapply(a$names, function(x){ unlist(strsplit(as.character(x), "_"))[1] })
-    a$p = sapply(a$names, function(x){ unlist(strsplit(as.character(x), "_"))[2] })
-    a$ye = sapply(a$names, function(x){ unlist(strsplit(as.character(x), "_"))[3] })
+    a$g = as.character(a$germplasm)
+    a$p = as.character(a$location)
+    a$ye = as.character(a$relation_year) # the year here corresponds to the year of relation and not the year of seed-lot !
+    
     a$d = sapply(a$names, function(x){ unlist(strsplit(as.character(x), "_"))[4] })
     a$gd = paste(a$g, a$d, sep = "_")
     
@@ -393,7 +393,6 @@ plot.data_network = function(
   
   plot_network_unipart = function(net = NULL, n = NULL, plot_type, in_col, pmap = "NULL"){
     x = y = xend = yend = relation_type = nb_diff = NULL  # to avoid no visible binding for global variable
-    
     if( plot_type == "map" ){ # only use fo format = unipart_location
       if(is.null(n)) { n = ggnetwork::ggnetwork(net, arrow.gap = 0) }
       nd = n[which(n$relation_type == "diffusion"),]
@@ -457,7 +456,6 @@ plot.data_network = function(
                        y = tapply(n$y, n$location, function(x){mean(range(x))}),
                        location = c(names(person_limit))
     )
-    
     p = p + geom_hline(yintercept = c(0, person_limit)) 
     p = p + geom_label(data = d_lab, aes(x = x, y = y, label = location), inherit.aes = FALSE)
     p = p + theme(axis.title.y = element_blank(),

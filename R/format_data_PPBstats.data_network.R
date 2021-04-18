@@ -396,15 +396,16 @@ format_data_PPBstats.data_network = function(
       )
     }
     colnames(d_vertex) = t
+    d_vertex = cbind.data.frame(d_vertex, "relation_year" = c(as.character(d$relation_year_start), as.character(d$relation_year_end)))
     d_vertex = unique(d_vertex)
     
     dup = which(duplicated(d_vertex$seed_lot))
     if( length(dup) > 0 ){
-      warning(paste("The following seed_lots are duplicated : ",
-                    paste(as.character(d_vertex$seed_lot[dup]), collapse = ","),
-                    ". Only one information per seed_lots has been kept.", sep = ""
-                    )
-              )
+      #warning(paste("The following seed_lots are duplicated : ",
+      #              paste(as.character(d_vertex$seed_lot[dup]), collapse = ","),
+      #              ". Only one information per seed_lots has been kept.", sep = ""
+      #              )
+      #        )
       d_vertex = d_vertex[!duplicated(d_vertex$seed_lot),]
     }
     d_vertex$format = "unipart_sl"
