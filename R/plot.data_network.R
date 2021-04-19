@@ -585,7 +585,6 @@ plot.data_network = function(
     }
     
     out_all = list("net" = net, "out" = out)
-    
     return(out_all)
   }
   

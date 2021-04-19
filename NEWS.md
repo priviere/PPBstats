@@ -8,6 +8,7 @@
   - debug code
 - format_data_PPBstats.data_network
   - for unipart seed lot network and organize_sl = TRUE: change year of seed lot to year of relation, cf #156
+  - unipart network for seed lots: list too deep, name the list "all_data", cf #157 
 - plot.data_network
   - for unipart seed lot network and organize_sl = TRUE: change year of seed lot to year of relation, cf #156
 

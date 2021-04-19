@@ -413,6 +413,7 @@ format_data_PPBstats.data_network = function(
     relation = unique(d[,c("seed_lot_parent", "seed_lot_child", "relation_type")])
     
     OUT = list(list("d_vertex" = d_vertex, "relation" = relation))
+    names(OUT) = "all_data"
   }
 
   # unipart & location ----------

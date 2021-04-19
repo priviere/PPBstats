@@ -49,6 +49,7 @@ head(net_unipart_sl)
 ### Describe the data
 
 The different representations are done with the `plot()` function.
+The name of the list is `all_data` as representation takes all data (and not only a given year or location as unipart network for location or bipart network).
 
 For network representation, set `plot_type = "network"` diffusion event are displayed with a curve.
 `in_col` can be settled to customize color of vertex.
@@ -73,7 +74,7 @@ Choose what to represent on the x axis and in color as well as the number of par
 p_bar = plot(net_unipart_sl, plot_type = "barplot", in_col = "location", 
                           x_axis = "germplasm", nb_parameters_per_plot_x_axis = 5, 
                           nb_parameters_per_plot_in_col = 5)
-p_bar[[1]]$barplot$`germplasm-1|location-1` # first element of the plot
+p_bar$all_data$barplot$`germplasm-1|location-1` # first element of the plot
 ```
 
 Barplot can also be use to study the relation within the network.
