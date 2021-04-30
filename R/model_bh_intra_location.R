@@ -159,9 +159,9 @@ model_bh_intra_location = function(
   D_RF = out$D_RF
   D_SF = out$D_SF
   
-  presence.absence.matrix = with(rbind.data.frame(D_RF, D_SF), table(entry, environment))
-  
   if( length(vec_env_with_controls) == 0 ) { stop("There are no controls on any environment so the model can not be run.") }
+  
+  presence.absence.matrix = with(rbind.data.frame(D_RF, D_SF), table(entry, environment))
   
   # 3. Get the informations for the model ----------
   if( !is.null(D_RF) ) {
